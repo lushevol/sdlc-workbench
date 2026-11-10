@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ADAPTER-IMPLEMENTATION
-version: 7
+version: 8
 status: draft
 owner: unknown
 source_refs: [USER-UPPER-APP-IMPACT-20261107, USER-MINIMIZE-FRONTEND-20261106, USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
@@ -27,9 +27,10 @@ writing_review:
 > Consequence: Cashflow checks, Trades confirmation menus, and Rules flow selection can change.
 > Owner: unknown. Evidence: [current reconciled audit](11-zero-upper-change-audit.md#role-dependent-upper-application-gaps).
 >
-> **The latest clarification accepts mapped grants from either provider.**
-> Action: simplify shared permission checks and add provider-source logs without changing upper callers.
-> Current source still uses strict dispatch. See the [current gap table](11-zero-upper-change-audit.md#remaining-shared-layer-and-configuration-gaps).
+> **The shared optimization is applied without new upper-application arguments.**
+> `hasPermission(code)` accepts an existing EMS2 grant or a complete mapped CES grant and records the decision path.
+> Unused scope/facade plumbing is removed. Legacy duplicate launches and valid active workspaces retain their earlier behavior.
+> See the [current gap table](11-zero-upper-change-audit.md#remaining-shared-layer-and-configuration-gaps) for resolved adapter differences and remaining warnings.
 
 > **CES role-owned writes remain pending under the user decision.**
 > Action: agree ownership, query, exclusion, and trusted data-profile rules before expanding role-sensitive CES behavior.
@@ -38,20 +39,55 @@ writing_review:
 
 ## Frontend optimization
 
-Current reassessment: [user gap clarification, 9 November 2026](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
-This clarification takes priority over earlier provider-isolation assumptions.
-Either EMS2 or CES may satisfy `hasPermission`; provider logs must identify the grant used.
-Readiness: `READY` for source reassessment and conditional removal of unused Cashflow entitlement flag support.
-Scope: all five UI snapshots and their BFF mappings. Risk: moderate because role consumers remain sensitive.
-Other application changes remain proposals during this reassessment.
+Applied source update: 10 November 2026.
 
-Earlier explanation request: [plain-language code walkthrough, 9 November 2026](evidence/frontend-entitlement-impact-20261105/user-explanation-request-20261109.txt).
-That explanation stage inspected existing changes. The later clarification additionally authorizes conditional Cashflow cleanup.
+The current source implements the [user clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
+An existing EMS2 grant is sufficient. Otherwise, CES must match the configured application ID, entity name, feature, and action.
+Provider conflicts no longer deny an otherwise valid mapped grant. Independent tile admission remains in base.
+Decision logs record the checked path (`EMS2`, `EMS3`, or `NONE`), code, result, and CES application ID when used.
+Repeated identical decisions are logged once per grant snapshot and user; decisions themselves are recalculated.
+The existing logger suppresses UAT HTTP delivery. These logs identify the checked projection, not independently verified upstream provenance.
 
-The [latest request](evidence/frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input) requires minor changes in both frontends.
-Readiness: `READY` for reducing the existing implementation while preserving its authorized behavior.
-Scope: frontend implementation and affected checks. Risk: moderate because permission and ownership decisions must remain identical.
-The BFF routing contract and source remain unchanged during this optimization.
+Base no longer passes `entitlementScope`; container no longer exports `createAuthenticator` or `EntitlementScope`.
+Existing mount fields, launch signatures, and `hasPermission(code)` remain unchanged.
+All-EMS2 duplicate names retain first-match launch/restore behavior. Ambiguous matches involving CES still deny.
+Grant refresh retains the active workspace when it remains valid.
+A CES tile in the current server-authorized catalog needs one matching EMS3 route; a blank feature no longer creates a shell/BFF admission mismatch.
+Actual CES action checks still require the full nonblank grant chain.
+The BFF source and routing contract are unchanged by this optimization.
+
+The [applied source review](/Users/lushevol/Documents/Codex/2026-11-10/do-you-want-to-optimize-mfe/applied-optimization-review.json) records inspected hashes and no actionable findings within its declared scope.
+The [base optimization evidence](/Users/lushevol/Documents/Codex/2026-11-10/do-you-want-to-optimize-mfe/base-optimization-results.json) records changed files and local test limits.
+The [final optimization results](/Users/lushevol/Documents/Codex/2026-11-10/do-you-want-to-optimize-mfe/optimization-results.json) bind current execution and source hashes; the historical results below do not verify this newer policy.
+
+| Current check | Result and limit |
+| --- | --- |
+| Base | Full suite: 515/515 across 130 suites. The final mount-test typing correction passed 9/9 focused checks; full base TypeScript passed. Production source was unchanged after the full suite. |
+| Container | 84/84 across nine focused suites, including the actual logger with mocked transport. Selected types pass through an explicit logger declaration. The full owning container build was not run. |
+| Browser and portal | 16/16 shared-module browser checks and 4/4 portal checkpoints; source hashes verified. Services remain synthetic. |
+
+The container uses a borrowed local runtime. Its missing declared `loglevel` dependency was restored offline from verified cache integrity into the output test-dependencies directory and supplied through Jest `--modulePaths`.
+The incremental production diff is base: five files, +13/-16; container: two files, +63/-83. Combined net reduction: 23 lines.
+The initial verification used uncommitted edits. The subsequent user-requested squash is recorded below; main refs remain unchanged.
+Scalar roles, new role-owned items, PSS exclusions, and live validation remain unresolved as described below.
+
+## Squashed delivery and internal patches, 10 November 2026
+
+The latest optimization is amended into each frontend's existing delivery commit.
+Base is now `10560f39a57e8ce4010cee634f7682559b1a6bdd`; container is `a7e38d048545dd913ae5996a1475980056de18bd`.
+Each remains one commit above its original baseline. Source bytes are unchanged by the history operation.
+Backup ref `refs/backup/ces-optimization-20261110/pre-amend` preserves the previous tip in each frontend repository.
+
+The [internal patch bundle](delivery/20261110-frontend-optimization/README.md) contains complete Git diffs including tests.
+Its [manifest](delivery/20261110-frontend-optimization/manifest.json) records exact baselines, amended targets, checksums, and per-file counts.
+Both patches passed application checks against temporary baseline indexes and reproduced their target Git trees exactly.
+BFF remains unchanged at `95480c0`. Workbench published history is preserved; the export is recorded separately. No push or deployment occurred.
+
+## Historical first optimization, 6–7 November 2026
+
+The following metrics and retained results describe the earlier optimization, before the accepted provider-union change.
+The [earlier request](evidence/frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input) required minor frontend changes.
+These records retain their original source and policy boundaries.
 
 | Repository | Earlier production diff | Optimized production diff | Net added lines removed |
 | --- | --- | --- | --- |
@@ -76,34 +112,31 @@ The [failed full run](evidence/frontend-minimize-20261106/base-complete-jest.jso
 The [container baseline](evidence/frontend-minimize-20261106/container-before-jest.json) also retains the mutable-assignment failure.
 The final runs below bind only the corrected source.
 
-## Source walkthrough, 9 November 2026
+## Current source walkthrough
 
-Source: [current explanation request](evidence/frontend-entitlement-impact-20261105/user-explanation-request-20261109.txt).
-Readiness: `READY` for explaining existing code. This stage changes no application source.
-Confidence: `HIGH` for the inspected changes. Deployed behavior remains unverified.
-Both frontend checkouts are clean on `codex/ces-entitlement-migration-20261106`.
-Base comparison: `4c36f8e14e3d9f178b226000ebbcb41aa611616a` to `5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7`.
-Container comparison: supplied snapshot `647e6b3e703e5144ab4b37c4b43aa22a28dfdd07` to `72a446f1a6b2be4a44a4dad6df7c4c37530cae85`.
-The container snapshot does not establish the PROD revision.
+Source: [earlier explanation request](evidence/frontend-entitlement-impact-20261105/user-explanation-request-20261109.txt) and the applied optimization evidence above.
+Confidence: `HIGH` for inspected source; deployed behavior remains unverified.
+Changes remain on `codex/ces-entitlement-migration-20261106`, not main.
+Earlier delivery commits are `5295bd7` for base and `72a446f` for container; current optimization hashes are in the linked evidence.
+The container supplied snapshot `647e6b3` does not establish the PROD revision.
 
 Base stores the returned CES data and keeps tile identity through launch, mount, restore, and refresh.
-Container selects the configured provider before checking an action.
+Container accepts an existing EMS2 grant or a complete mapped CES grant through the same action API.
 `X_RATANONE` remains in legacy checks. CES uses a separate path rather than a global name replacement.
 
 | Claim | Class and confidence | Code evidence | Consequence and limit |
 | --- | --- | --- | --- |
 | C1: Base adds optional CES fields and stores routes with refreshed entities. | Inspected implementation; HIGH. | [Models](../../repos/ui/mfe-base/src/hooks/model/root.ts#L42), [login](../../repos/ui/mfe-base/src/utils/login.ts#L87). | Existing fields remain. Explicit empty drawers clear old tiles. Omitted drawers preserve them. |
-| C2: Base preserves database identity separately from each opened instance. | Inspected implementation; HIGH. | [Tile resolution](../../repos/ui/mfe-base/src/utils/drawer.ts#L4), [mount](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L13). | Current authorized catalog controls mounting. Duplicate legacy names now reject. Optional scope does not bind global permission imports automatically. |
+| C2: Base preserves database identity separately from each opened instance. | Inspected implementation; HIGH. | [Tile resolution](../../repos/ui/mfe-base/src/utils/drawer.ts#L4), [mount](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L13). | Current authorized catalog controls mounting. All-EMS2 duplicates retain first-match behavior. CES/mixed ambiguity denies. Existing mount fields remain; no scope prop is added. |
 | C3: Base displays CES roles and exposes tile migration settings. | Inspected implementation; HIGH. | [Profile formatter](../../repos/ui/mfe-base/src/components/Profile/util.ts#L1), [tile editor](../../repos/ui/mfe-base/src/admin/Tile/common/useController.tsx#L339). | Commas format display only. BFF supplies the team mapping. No scalar CES role is created. |
-| C4: Container keeps `hasPermission(code): boolean` and chooses EMS2 or CES internally. | Inspected implementation; HIGH. | [Resolver](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L153), [grant check](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L199). | CES requires matching application ID, entity name, feature, and action. Denial never retries EMS2. Conflicting global targets return false. |
+| C4: Container keeps `hasPermission(code): boolean` and accepts either valid path internally. | Inspected implementation; HIGH. | [Union check](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L168), [decision logging](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L150). | An EMS2 grant remains sufficient. CES requires matching application ID, entity name, feature, and action. Conflicting provider routes do not force denial. Logs preserve the decision path. |
 | C5: Container preserves the user envelope without selecting one CES role. | Inspected implementation; HIGH. | [User projection](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L27). | Legacy scalar fallback remains. CES-only users can have undefined `role`. Raw flattened entitlements do not carry application IDs. |
 | C6: Container enforces the agreed hold on role-owned writes. | Inspected implementation; HIGH. | [View guard](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts#L83), [ownership cache](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ts#L8). | Enabled builders block role-owned or unknown updates/deletes before HTTP. Known private operations retain existing checks. Multi-role list queries remain unresolved. |
 
 The route catalog describes configured permission targets. Entity data describes the user's grants.
-The implemented strict dispatcher rejects conflicts and exports an optional `createAuthenticator(scope)`.
-The [latest clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json) accepts mapped EMS2 or CES grants through existing calls.
-The current dispatcher therefore exceeds that intended restriction and should be simplified centrally.
-No upper application must adopt the unused scope API under this clarification.
+The applied union helper follows the [latest clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
+No upper application adopts a scope prop or bound facade. CES grants remain tied to their application identity.
+The scalar role projection and pending ownership policy are unchanged.
 
 ## Upper application impact
 
@@ -116,9 +149,10 @@ Cashflow's current saved-view configuration uses private owner IDs. Its unused e
 Trades' legacy parsing helper has no production caller. Dashboard findings are excluded from this scope.
 Scalar roles still affect Cashflow limit checks, Trades confirmation menus, Rules flows, and role-shared data.
 
-Only the authorised Cashflow cleanup changed application files during this reassessment.
+The earlier authorised Cashflow cleanup changed two snapshot files.
 Its [patch](evidence/frontend-entitlement-impact-20261105/cashflow-unused-entitlements-20261109.patch) and [validation](evidence/frontend-entitlement-impact-20261105/cashflow-unused-entitlements-audit-20261109.json) retain exact bytes and execution limits.
-Other changes in the new tables remain proposals. No migration activation or deployment approval is inferred.
+Shared adapter fixes are now applied as recorded above. Role mappings and backend policy remedies remain proposals.
+No migration activation or deployment approval is inferred.
 
 Candidate [migration intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#independent-tile-provider-selection) now records the latest shared permission rule.
 Version 6 preserves the earlier role-owned-write hold and adds FE-COMPAT-AC-004 for grant union and source logs.
@@ -126,7 +160,7 @@ The [knowledge update](evidence/frontend-entitlement-impact-20261105/provider-un
 I independently reviewed its changed rule and four examples against the exact clarification.
 No new scalar role, owner rule, human review, or publication approval was inferred.
 
-The [current validation](evidence/frontend-entitlement-impact-20261105/gap-reassessment-validation-20261109.json) binds sources, links, report checks, and limits.
+The [historical 9 November validation](evidence/frontend-entitlement-impact-20261105/gap-reassessment-validation-20261109.json) binds that earlier source, links, report checks, and limits.
 Historical controlled evidence below retains its original source and policy boundaries.
 Earlier strict-provider tests do not establish conformance to the newly clarified grant-union rule.
 
@@ -134,22 +168,23 @@ Earlier strict-provider tests do not establish conformance to the newly clarifie
 
 The [latest user instruction](evidence/frontend-entitlement-implementation-20261106/user-delivery-branches-20261106.md#exact-user-input) reserves main for PROD.
 All three repositories now use `codex/ces-entitlement-migration-20261106` for delivery.
-The [squash record](evidence/frontend-minimize-20261106/squash-20261107.json) records current refs and unchanged Git trees.
+The [squash record](evidence/frontend-minimize-20261106/squash-20261107.json) records refs and unchanged Git trees at that earlier checkpoint.
 The [user request](evidence/frontend-minimize-20261106/user-squash-20261107.md#exact-user-input) authorizes combining each frontend commit pair.
-Each frontend now has one delivery commit above its original baseline.
+At the squash checkpoint, each frontend had one delivery commit above its original baseline.
+The table below records those earlier refs; applied optimization hashes are linked above.
 Backup refs retain both earlier commit pairs. Existing execution evidence retains its original commit identities.
 
 | Repository | Delivery commit | Main disposition |
 | --- | --- | --- |
-| mfe-base | `5295bd7` | Restored to the pre-migration revision `4c36f8e`. |
-| mfe-ratan-container | `72a446f` | No authoritative main was supplied. Local snapshot baseline: `647e6b3`. |
+| mfe-base | `10560f3` | Preserved at the pre-migration revision `4c36f8e`. |
+| mfe-ratan-container | `a7e38d0` | No authoritative main was supplied. Local snapshot baseline: `647e6b3`. |
 | single-ui-bff | `95480c0` | Preserved unchanged at `834b415`. |
 
 The container now owns local Git history, reconstructed from the supplied snapshot and verified patch.
 The original delivery contained seven modified files and five added files. The optimization commits refine that implementation.
 The [container binding](evidence/frontend-entitlement-implementation-20261106/container-delivery-branch.json) preserves baseline provenance and source checks.
 Do not treat that reconstructed snapshot as an authoritative PROD revision.
-Final source and worktree checks are recorded in the optimization reconciliation.
+Historical source and worktree checks are recorded in the earlier optimization reconciliation.
 No remote is configured. No push or deployment occurred.
 
 ## Request and source facts
@@ -160,14 +195,14 @@ The [canonical catalog](06-test-cases.md#tests-first-shared-adapter-implementati
 The user requested implementation after cases and E2E scripts exist.
 Local controlled execution is authorized. Enterprise access remains outside this stage.
 
-## Proposed change
+## Applied shared contract
 
-Add an authoritative BFF `entitlementRouting` field without changing existing response fields.
+The existing authoritative BFF `entitlementRouting` field supplements the prior response fields.
 Each route contains tile ID, effective source, entity names, features, and optional CES application ID.
 Build routes before assignment filtering, using the same effective mode as authorized drawers.
 Keep base login and upper-application permission signatures.
 Preserve tile database IDs and resolve current authorized definitions at launch and restore.
-Keep scoped CES permission dispatch in the shared container. Read role arrays through existing entity data.
+Keep EMS2-or-CES permission checks in the shared container. Read role arrays through existing entity data.
 Do not infer scalar ownership or data-profile meaning from CES assignment names.
 
 ## Proposed acceptance and validation
@@ -175,8 +210,8 @@ Do not infer scalar ownership or data-profile meaning from CES assignment names.
 | Intent | Canonical cases | Planned changes |
 | --- | --- | --- |
 | Preserve ordinary application calls | [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012) | Shared permission dispatch and base launch/restore. |
-| Isolate providers and applications | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006), [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009), [TC-FE-CES-010](06-test-cases.md#tc-fe-ces-010) | BFF routing, state replacement, and exact grant matching. |
-| Migrate each tile independently | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012) | Bound facade for conflicting features and current tile identity. |
+| Preserve application grant identity | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006), [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009), [TC-FE-CES-010](06-test-cases.md#tc-fe-ces-010) | BFF routing, state replacement, and exact grant matching. |
+| Migrate each tile independently | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012) | Provider-union checks through the existing API and current tile identity. |
 | Preserve identity and role boundaries | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011) | Profile display, preserved role arrays, and conservative role-sensitive checks. |
 
 Definitions, inspected assertions, application conformance, and passing execution remain separate measures.
@@ -189,7 +224,7 @@ Use additive shared adapters and keep ordinary application calls.
 This option needs complete BFF routing before CES tiles are enabled.
 Keep CES role-owned writes pending under the [user decision](evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer).
 Do not select one role or submit joined roles as a scalar owner.
-A bound facade handles identical features under conflicting providers. Such callers need an explicit binding point.
+Either valid provider can satisfy the existing permission call. CES action checks retain application identity; callers need no explicit binding point.
 
 ## Scope and affected artifacts
 
@@ -200,13 +235,13 @@ A bound facade handles identical features under conflicting providers. Such call
 | [single-ui-bff](../../repos/services/single-ui-bff/) | Additive effective route catalog, response propagation, and effective drawer source marker. | Actual-source routing, serialization, and drawer tests. |
 
 The container began as a filesystem copy. It now owns local snapshot and delivery branches.
-The retained patch is historical. Current delivery commits own the optimized implementation. Each repository owns its Git history.
+The retained patch is historical. Delivery branches contain the applied optimization. Each repository owns its Git history.
 
 ## Implementation and release proposal
 
 Deploy the BFF routing field with the corresponding base and container adapters before enabling CES tile migration.
 Keep ordinary EMS2-only deployments compatible when routing is absent and no CES entities exist.
-Deny unresolved mixed-provider targets. Do not interpret missing CES grants as an EMS2 route.
+Accept a valid grant from either path. Missing CES grants do not fabricate an EMS2 grant.
 No deployment, publication, or release approval is requested or inferred here.
 Complete missing full application and service validation before a delivery recommendation.
 
@@ -227,8 +262,7 @@ No local result establishes live CES assignments, deployed import-map compatibil
 | --- | --- | --- |
 | CES scalar ownership and role-query policy. | Role-owned writes remain unavailable. Query parity remains unverified. | unknown; agree the business rule and backend contract. |
 | CES multiple-role exclusions and data profiles. | Two role-restricted exception helper paths remain unavailable under CES. | unknown; define the exclusion and trusted profile rules. |
-| Identical feature calls under different providers/apps. | Global one-argument calls cannot identify the caller. | application owner unknown; use an explicit bound facade for those callers. |
-| Blank CES feature policy. | The frontend admits feature-controlled CES tiles only. | policy owner unknown; reconcile the existing BFF bypass before expanding admission. |
+| Decision-log delivery. | Existing UAT suppression remains; decision-path logs do not prove upstream provider provenance. | shared logger owner unknown; verify required deployed log delivery without changing upper callers. |
 | Full BFF suite and live enterprise verification. | Release readiness and live parity remain unestablished. | service owner unknown; restore private dependencies and execute the declared environment cases. |
 
 ## Requested decision and actual disposition
@@ -242,7 +276,7 @@ Human publication review and business acceptance remain separate from implementa
 
 The [tests-first checkpoint](evidence/frontend-entitlement-implementation-20261106/tests-first-checkpoint.json) precedes application edits.
 The original controlled browser baseline has one passing and eight failing checks.
-The following results describe the optimized frontend source within the declared local scope.
+The following results describe the 6–7 November frontend source within its declared local scope; they do not verify the applied provider-union optimization.
 The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) records exact baseline, candidate, and execution bindings.
 No release, publication, or business acceptance is established by this stage.
 
@@ -267,6 +301,8 @@ The [fixture correction](evidence/frontend-entitlement-implementation-20261106/b
 
 ### Final source identities
 
+Historical delivery identities, before the current optimization:
+
 | Source | Baseline | Candidate or retained patch |
 | --- | --- | --- |
 | mfe-base | `4c36f8e14e3d9f178b226000ebbcb41aa611616a` | `5295bd7`; 17 production files plus tests. |
@@ -275,8 +311,9 @@ The [fixture correction](evidence/frontend-entitlement-implementation-20261106/b
 
 The historical [container patch](frontend-tests/mfe-ratan-container.patch) represents the earlier `d5b5cc5` implementation.
 Its SHA-256 remains `cecbdf2710e3f26643e60de018dfe39aa70634011eb39fb5680890fe2b50b58a`.
-Use the optimized delivery commits for current code.
-The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) binds current sources, scripts, and retained results.
+These delivery commits precede the current optimization.
+The [historical final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) binds that earlier source, scripts, and retained results.
+Use the applied optimization hashes above for the newer source.
 No deployment or remote write occurred.
 The [pre-squash document and script checks](evidence/frontend-minimize-20261106/validation.json) passed within their declared scope.
 The [squash checks](evidence/frontend-minimize-20261106/squash-20261107.json) confirm identical source trees and current document validation.
@@ -288,9 +325,9 @@ The [Maven failure](evidence/frontend-entitlement-implementation-20261106/bff-ma
 Ordinary mapped permission calls, getUser envelope, and launch signatures remain available.
 CES roleList remains an array. Joined role labels have display meaning only.
 [Existing entity data](../../repos/ui/mfe-base/src/utils/login.ts) preserves role arrays without inventing a scalar role or data profile.
-Conflicting feature/provider bindings need additive `createAuthenticator({ tileId })`; unbound conflicting calls deny.
+Conflicting provider routes no longer need a facade; a valid EMS2 or mapped CES grant suffices.
 Old EMS2-only responses retain their legacy path without routing metadata.
-Responses with CES data require complete BFF routing before permission evaluation.
+CES action checks require matching BFF routing; its absence does not invalidate an otherwise valid EMS2 grant.
 Private creator-owned writes and established EMS2 writes remain available.
 Full admin maker/checker workflow, deployed import-map compatibility, and live query policy remain unverified.
 
@@ -317,7 +354,8 @@ The [upper-application assessment](#upper-application-impact) records additional
 
 These historical matrices bind candidate intent version 5 at Git `0047479bec4c29edf0dd9d9a484020998a6c523d`.
 Its full-file SHA-256 is `4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5`.
-The linked knowledge file now contains version 6. Its revised provider criteria need new implementation assertions.
+The linked knowledge file now contains version 6. Current provider-union assertions replace the earlier strict-dispatch expectations; their source review is linked above.
+The bound-facade and strict-conflict descriptions below are historical and are not requirements for current upper callers.
 See the [current coverage boundary](11-zero-upper-change-audit.md#proposed-acceptance-and-validation) before reusing historical pass results.
 
 Scope: five candidate version 5 criteria and eight production behavior groups below.

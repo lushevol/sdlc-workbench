@@ -21,7 +21,8 @@ catch (error) { if (error.code !== 'ENOENT') throw error; }
 const run = { startedAt: new Date().toISOString(), scope: 'ACTUAL_BASE_REACT_CONTROLLED_SERVICES', cases: [],
   substitutions: ['Login and validation APIs return synthetic fixtures; no real identity acceptance.',
     'Remote upper application is an isolated React consumer using the actual shared hasPermission API.',
-    'Corporate toolkit custom elements are stubbed; native desktop startup and analytics are disabled.'],
+    'Corporate toolkit custom elements are stubbed; native desktop startup and analytics are disabled.',
+    'Permission logger transport is replaced by a local capture; no remote log acceptance is tested.'],
   limits: ['No live CES, BFF controller, saved-view service, deployed import map, or native desktop execution.'] };
 let browser, server;
 try {
@@ -32,8 +33,10 @@ try {
     define: { 'process.env.NODE_ENV': '"development"', 'process.env.MFE_APP_PREFIX_STYLE': '"MicroWebUI_base"', 'process.env.orgName': '"fm"' },
     plugins: [{ name: 'declared-local-boundaries', setup(build) {
       build.onResolve({ filter: /\/Root\/import$/ }, args => args.importer.includes('mfe-ratan-container') ? { path: 'container-hooks', namespace: 'fixture' } : undefined);
+      build.onResolve({ filter: /^\.\/logger$/ }, args => args.importer.endsWith('ratanutils/authenticator.ts') ? { path: 'entitlement-logger', namespace: 'fixture' } : undefined);
       build.onResolve({ filter: /^@sctoolkit\/webkit/ }, () => ({ path: 'toolkit', namespace: 'fixture' }));
-      build.onLoad({ filter: /.*/, namespace: 'fixture' }, args => ({ contents: args.path === 'container-hooks'
+      build.onLoad({ filter: /.*/, namespace: 'fixture' }, args => ({ contents: args.path === 'entitlement-logger'
+        ? `export const logger = {info: message => { const prefix = 'Entitlement permission '; if (typeof message === 'string' && message.startsWith(prefix)) (window.__permissionLogs ??= []).push(JSON.parse(message.slice(prefix.length))); }};` : args.path === 'container-hooks'
         ? 'export const Hooks = {getHooks: () => window.__base.Hooks.getHooks()};' : '', loader: 'js' }));
     } }],
   });
@@ -107,11 +110,9 @@ try {
     const state=await page.evaluate(()=>window.__base.Hooks.getHooks().store);
     const opened=state.workspaces.flatMap(item=>item.containers).find(item=>item.parameters?.label==='CES fixture');
     assert.equal(String(opened.applicationTileId),'1');assert.notEqual(opened.id,'1');
-    await expect(page.getByTestId('consumer-CES fixture').getByTestId('scope')).toHaveText('1');
     await page.evaluate(()=>window.__dispatcher.dispatchOpenTile({label:'EMS2 fixture',permissionCode:'feature-b:action-a'},'legacy-fixture'));
     await expect(page.getByTestId('consumer-EMS2 fixture').getByRole('button',{name:'Export fixture data'})).toBeEnabled();
-    await expect(page.getByTestId('consumer-EMS2 fixture').getByTestId('scope')).toHaveText('2');
-    return {applicationTileId:opened.applicationTileId,scopeForwarded:true,ordinaryDispatcherArguments:2};
+    return {applicationTileId:opened.applicationTileId,ordinaryDispatcherArguments:2};
   });
   await check('TC-FE-CES-013','refresh-withdraws-access',async()=>{
     await page.evaluate(()=>{

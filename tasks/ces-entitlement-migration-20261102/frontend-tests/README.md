@@ -23,7 +23,9 @@ Both browser scripts require permission to launch Chromium and listen on loopbac
 
 The shared-module runner bundles actual login, drawer, profile formatter, and authenticator source.
 It substitutes hooks, dispatch, token decoding, and persistence.
-It asserts ordinary calls, provider isolation, bound conflicting tiles, state replacement, display, and restore identity.
+It asserts unchanged calls, EMS2-or-CES grant union, source logs, application/feature/action boundaries, state replacement, display, and restore identity.
+Legacy-only duplicate names retain first-match behavior. Ambiguous CES matches remain denied.
+The permission logger uses a local capture. These checks do not prove remote log collection.
 
 The portal runner bundles the actual base React App and shared authenticator.
 It exercises login, profile actions, drawer launch, ordinary dispatcher launch, and permission withdrawal.

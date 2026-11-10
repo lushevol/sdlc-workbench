@@ -10,6 +10,7 @@ module.exports = {
   testEnvironment: "node",
   testMatch: [
     "**/authenticator.ces.test.ts",
+    "**/authenticator.logging.test.ts",
     "**/authenticator.test.ts",
     "**/authenticator[01].test.ts",
     "**/authenticator.xratanone.test.ts",

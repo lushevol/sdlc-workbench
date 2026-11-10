@@ -16,6 +16,7 @@ const selected = [
 ];
 const virtual = new Map([
   [path.join(repo, ".ces-typecheck/hooks.d.ts"), "export const Hooks: { getHooks(): { store?: any } };"],
+  [path.join(repo, ".ces-typecheck/logger.d.ts"), "export const logger: { info(message: string): void };"],
   [path.join(repo, ".ces-typecheck/monitor.d.ts"), "export class MonitorUser {}"],
   [path.join(repo, ".ces-typecheck/crypto.d.ts"), "export function encode(value: string): string;"],
 ]);
@@ -42,6 +43,7 @@ host.getSourceFile = (file, languageVersion) => {
 host.resolveModuleNames = (names, containing) => names.map(name => {
   let stub;
   if (containing.endsWith("/ratanutils/authenticator.ts") && name === "../Root/import") stub = "hooks";
+  if (containing.endsWith("/ratanutils/authenticator.ts") && name === "./logger") stub = "logger";
   if (containing.endsWith("/User/utils.ts")) {
     if (name === "../import") stub = "hooks";
     if (name === "./index") stub = "monitor";
@@ -67,7 +69,8 @@ const result = {
   substituted_boundaries: [...virtual].map(([file, declaration]) => ({ name: path.basename(file), declaration })),
   diagnostics,
   limits: [
-    "Four selected production source files only; shared Hooks, MonitorUser, and crypto boundaries use declared substitutes.",
+    "Four selected production source files only; shared Hooks, logger, MonitorUser, and crypto boundaries use declared substitutes.",
+    "Actual logger initialization and transport calls are covered separately by authenticator.logging.test.ts.",
     "This does not type-check the complete container, UI components, consuming applications, or installed @fm/base package.",
     "The container has no local node_modules; cached existing mfe-base TypeScript is reused without downloads.",
   ],

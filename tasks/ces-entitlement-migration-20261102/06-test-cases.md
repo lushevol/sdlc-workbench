@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 14
+version: 15
 status: draft
 owner: unknown
-source_refs: [USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-PROVIDER-UNION-20261109, USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -910,11 +910,11 @@ Existing [base tests](evidence/frontend-entitlement-impact-20261105/mfe-base-tes
 
 ### TC-FE-CES-003
 
-Purpose: characterize admission when CES features differ from legacy subjects.
-Level: proposed contract integration case; `NOT_RUN`. Owner: unknown.
+Purpose: preserve BFF-authorized CES admission when legacy subjects differ or feature checks are bypassed.
+Definition version: 2. Level: base unit and controlled contract integration checks. Owner: unknown.
 Setup: select an approved feature-controlled CES tile. Use an isolated fixture, without database writes.
 The fixture grants `feature-a` and sets the tile's legacy subject to `legacy-a`.
-Blank-feature access is excluded pending policy reconciliation.
+A BFF-authorized blank-feature tile uses its explicit catalog admission and unique EMS3 route.
 
 1. Load the isolated authorized-tile fixture.
 2. Evaluate direct launch and saved workspace retention.
@@ -931,10 +931,17 @@ Feature: Use one reviewed CES tile admission decision
     Then both paths use the reviewed CES grant decision
     And neither path denies access solely because "legacy-a" differs from "feature-a"
     And a tile absent from the current authorized drawer remains denied
+
+  Scenario: Preserve the BFF blank-feature admission bypass
+    Given the BFF-authorized catalog contains a CES tile with no configured feature check
+    And exactly one EMS3 route identifies that tile
+    When the portal evaluates that catalog tile
+    Then the tile is admitted
+    And an absent catalog tile or missing route remains denied
 ```
 
-Assertion implementation: unavailable. Contract basis: [BFF drawer analysis](evidence/frontend-entitlement-impact-20261105/bff-contract.json).
-This proposed expectation requires the shared admission contract before implementation acceptance.
+Assertions: [base admission cases](../../repos/ui/mfe-base/src/utils/tileEntitlements.test.ts). Contract basis: [BFF drawer analysis](evidence/frontend-entitlement-impact-20261105/bff-contract.json).
+The shared admission adapter preserves the existing BFF decision. This does not invent a feature/action grant.
 CSV tile `192` has blank fields and is inactive. It does not reproduce this case.
 
 ### TC-FE-CES-004
@@ -996,65 +1003,64 @@ Do not infer multiple assigned role names from this aggregate or select a first 
 
 ### TC-FE-CES-006
 
-Purpose: prevent permissions from crossing applications or migration providers.
-Level: proposed resolver boundary case; `NOT_RUN`. Owner: unknown.
-Setup: use isolated EMS2 and CES fixtures with explicit application scope.
+Purpose: preserve CES application, feature, and action boundaries while allowing either mapped provider.
+Definition version: 2. Level: actual-source controlled resolver and browser checks. Owner: unknown.
+Source: [provider-union clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
+Earlier strict-provider executions retain their historical catalog hashes and do not establish this revised behavior.
+Setup: use isolated EMS2 and CES fixtures with explicit CES application routes.
 Duplicate rows belong to one selected application. Unrelated application grants cannot satisfy its requested permission.
 
-1. Load the isolated application fixtures.
-2. Resolve the requested action within `app-a`.
-3. Inspect the scoped permission map and unrelated grants.
-
 ```gherkin
-Feature: Preserve application scope during mixed migration
+Feature: Preserve CES application scope during mixed migration
   @TC-FE-CES-006
-  Scenario: Reject another application's grant
-    Given application "app-a" has no "feature-a:action-a" grant
+  Scenario: Reject another application's CES grant
+    Given configured CES application "app-a" has no "feature-a:action-a" grant
     And application "app-b" grants "feature-a:action-a"
-    When the resolver checks "feature-a:action-a" within "app-a"
-    Then the resolver returns false
+    And EMS2 grants no matching permission
+    When the shared helper checks "feature-a:action-a"
+    Then the helper returns false
 
-  Scenario: Preserve duplicate grants within the selected application
-    Given two rows for "app-a" grant different actions for "feature-a"
-    When the resolver builds the scoped permission map
-    Then both granted actions remain available within "app-a"
-    And the resolver adds 0 actions from unrelated applications
+  Scenario: Preserve duplicate grants within a configured CES application
+    Given two rows for configured "app-a" grant different actions for "feature-a"
+    When the shared helper checks each granted action
+    Then both granted actions remain available
+    And the helper adds zero actions from unrelated applications
 
-  Scenario: Route a legacy tile to its selected provider
-    Given a tile selects "EMS2" for feature "feature-a"
-    And EMS2 denies "feature-a:action-a"
-    And CES grants "feature-a:action-a"
-    When the shared resolver checks "feature-a:action-a" for that tile
-    Then the resolver returns false through the EMS2 path
-    And the CES grant does not override the selected provider
+  Scenario: Reject an unrelated feature or action
+    Given configured CES application "app-a" grants "feature-a:action-a"
+    And EMS2 grants no matching permission
+    When the shared helper checks an unrelated feature or absent action
+    Then the helper returns false
 
-  Scenario: Route a CES tile to its selected provider
-    Given a tile selects "EMS3" with configured application "app-a"
-    And CES denies "feature-a:action-a" within "app-a"
-    And EMS2 grants "feature-a:action-a"
-    When the shared resolver checks "feature-a:action-a" for that tile
-    Then the resolver returns false through the CES path
-    And the EMS2 grant does not override the selected provider
+  Scenario Outline: Deny CES-only grants without a valid application route
+    Given CES grants "feature-a:action-a"
+    And EMS2 grants no matching permission
+    And the route catalog is <catalog>
+    When the shared helper checks "feature-a:action-a"
+    Then the helper returns false
+
+    Examples:
+      | catalog |
+      | absent  |
+      | empty   |
 ```
 
-Assertion implementation: unavailable. Source: [resolver boundary analysis](evidence/frontend-entitlement-impact-20261105/ratan-container.json).
+Assertions: [shared-module browser checks](frontend-tests/run-browser.mjs) and [container assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts).
 Matching names alone cannot establish cross-application equivalence.
-Effective migration mode and provider precedence require a bound target configuration.
-Intent: [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002).
-The resolver interface above is internal. It does not require new upper-application arguments.
+The [union case](#tc-fe-ces-008) defines provider combination. This case defines the CES application boundary.
 
 ### TC-FE-CES-007
 
 Purpose: preserve existing upper-application permission APIs during provider adaptation.
-Definition version: 1. Level: proposed compatibility integration case; `NOT_RUN`. Owner: unknown.
+Definition version: 2. Level: actual-source controlled integration case. Owner: unknown.
 Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
 Setup: retain an unchanged upper-application consumer and equivalent mapped EMS2/CES feature/action fixtures.
-Bind one tile unambiguously to its provider inside the shared frontend layer.
+Keep existing upper imports and arguments. Configure the corresponding CES application in the shared layer.
 Use no production state. Dispose of isolated fixture processes after saving results.
 
 1. Load the unchanged consumer with an EMS2 tile fixture.
 2. Invoke the existing permission helper.
-3. Select the equivalent CES fixture through the shared tile context.
+3. Select the equivalent CES fixture through shared configuration.
 4. Invoke the same consumer call.
 
 ```gherkin
@@ -1064,48 +1070,57 @@ Feature: Preserve upper-application permission calls
     Given an upper application imports the existing shared permission helpers
     And the upper application calls hasPermission with "feature-a:action-a"
     And equivalent EMS2 and CES fixtures grant that mapped permission
-    When each fixture is evaluated through its selected tile provider
+    When each fixture is evaluated through the existing shared helper
     Then both helper calls return boolean true
     And the upper application requires 0 new mandatory arguments
     And the upper application requires 0 provider-specific import changes
     And the upper application requires 0 feature or action string changes
 ```
 
-Assertion implementation: unavailable. Design basis: [shared boundary inspection](evidence/frontend-entitlement-impact-20261105/compatibility-design.json).
+Assertions: [shared-module runner](frontend-tests/run-browser.mjs). Design basis: [shared boundary inspection](evidence/frontend-entitlement-impact-20261105/compatibility-design.json).
 Include denied equivalents and unchanged higher-level helper calls before acceptance.
 The scalar role contract is excluded from this case. Its exception remains in [TC-FE-CES-005](#tc-fe-ces-005).
 
 ### TC-FE-CES-008
 
-Purpose: migrate one tile without changing another tile's provider or permission result.
-Definition version: 1. Level: proposed mixed-instance integration case; `NOT_RUN`. Owner: unknown.
-Intent: [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
-Setup: mount two isolated tile instances in one session with distinct internal tile identities.
-Both use `feature-a:action-a`. EMS2 grants it, while CES denies it within the configured application.
-Start both tiles on EMS2. Keep both mounted during the provider change.
-The case does not approve any specific context-binding implementation.
-
-1. Observe both tile permission results on EMS2.
-2. Change only tile A to CES.
-3. Evaluate both tiles while they remain mounted.
-4. Re-evaluate tile B after activating tile A.
+Purpose: preserve existing permission calls while either mapped provider can supply the grant.
+Definition version: 2. Level: actual-source controlled integration case. Owner: unknown.
+Intent: [FE-COMPAT-AC-004](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004).
+Source: [provider-union clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
+Tile admission remains separate and follows each tile's configured provider.
+CES fixtures retain a complete configured application route, including when an EMS2 route shares the feature.
 
 ```gherkin
-Feature: Select entitlement providers independently for each tile
+Feature: Preserve permission callers during provider migration
   @TC-FE-CES-008
-  Scenario: Change one tile while another tile retains EMS2 behavior
-    Given tile A and tile B both select "EMS2"
-    And both tiles return true for "feature-a:action-a"
-    When only tile A changes to "EMS3" with configured application "app-a"
-    Then tile A returns false through the CES path
-    And tile B still returns true through its unchanged EMS2 path
-    And activating tile A does not change tile B's result
-    And tile B requires 0 provider changes
+  Scenario Outline: Accept a mapped grant from either provider
+    Given EMS2 has <ems2> matching grant for "feature-a:action-a"
+    And configured CES application "app-a" has <ces> matching grant for that code
+    When the upper application calls hasPermission with only that code
+    Then the returned boolean equals <expected>
+    And the decision source log identifies <source>
+    And the caller requires zero additional arguments
+
+    Examples:
+      | ems2 | ces | expected | source |
+      | 1    | 0   | true     | EMS2   |
+      | 0    | 1   | true     | EMS3   |
+      | 1    | 1   | true     | EMS2   |
+      | 0    | 0   | false    | NONE   |
+
+  Scenario: Preserve legacy access when no routing catalog is available
+    Given EMS2 grants "feature-a:action-a"
+    And CES data is also present
+    And the routing catalog is absent
+    When the upper application calls hasPermission with only that code
+    Then the returned boolean equals true
+    And the decision source log identifies EMS2
 ```
 
-Assertion implementation: unavailable. No simultaneous mixed-provider execution was performed.
-The [context inspection](evidence/frontend-entitlement-impact-20261105/compatibility-design.json) identifies shared-state and early-evaluation boundaries.
-Run module-initialization and mounted-instance variants before claiming complete unchanged-caller compatibility.
+The EMS2 source in the both-granted example records the chosen satisfying provider.
+It does not remove the CES grant or change tile admission.
+Assertions: [shared-module browser runner](frontend-tests/run-browser.mjs) and [container assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts).
+The logger transport is captured locally. Remote log collection remains unverified.
 
 ## Tests-first shared adapter implementation
 
@@ -1113,7 +1128,8 @@ Source: [implementation request](evidence/frontend-entitlement-impact-20261105/u
 Definition version: 1. Owner: unknown. Environment: isolated local fixtures and Chromium.
 Create these definitions and [browser scripts](frontend-tests/run-browser.mjs) before application edits.
 The [stage record](10-change-review-frontend-adapters.md) separates definitions, baseline failures, candidate execution, and remaining policy.
-Existing [TC-FE-CES-003](#tc-fe-ces-003), [TC-FE-CES-006](#tc-fe-ces-006), [TC-FE-CES-007](#tc-fe-ces-007), and [TC-FE-CES-008](#tc-fe-ces-008) retain their canonical behaviors.
+The latest clarification revises [TC-FE-CES-006](#tc-fe-ces-006), [TC-FE-CES-007](#tc-fe-ces-007), and [TC-FE-CES-008](#tc-fe-ces-008).
+Earlier executions remain bound to their recorded catalog hashes. [TC-FE-CES-003](#tc-fe-ces-003) retains its existing behavior.
 Their new unit and browser assertions use synthetic named grants. They do not claim live CES assignments.
 No production database, identity provider, or CES endpoint is contacted.
 Each browser check receives a fresh context. Close contexts and the local server after retaining each result.
@@ -1177,7 +1193,7 @@ Feature: Replace current authorization state on refresh
   Scenario: Preserve routing without changing the login envelope
     Given a login response contains userInfo, entities, drawers, and entitlementRouting
     When the existing login response handlers process that response
-    Then the root store and user retain the supplied routing definitions
+    Then the root store retains the supplied routing definitions
     And the user retains the structured CES entities and roleList
     And an omitted drawers field does not clear existing drawers
 ```
@@ -1225,6 +1241,7 @@ CES saved-view ownership, new owner selection, role query semantics, and trusted
 
 ### TC-FE-CES-012
 
+Definition version: 2. Source: [latest compatibility clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
 Purpose: preserve tile identity through launches and restore current authorized definitions.
 Level: base unit tests and actual shared-module browser integration.
 Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001) and [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
@@ -1241,9 +1258,15 @@ Feature: Restore only the current authorized tile definition
     Then the selected tile ID equals 2
     And the workspace UUID does not replace the database tile ID
 
-  Scenario: Reject ambiguous legacy workspace matching
+  Scenario: Preserve first-match legacy workspace behavior
     Given a legacy workspace has no applicationTileId
-    And two current tiles match its container, module, route, and entry name
+    And two current EMS2 tiles match its container, module, route, and entry name
+    When the portal resolves that workspace
+    Then the first matching EMS2 tile is selected
+
+  Scenario: Reject ambiguous CES workspace matching
+    Given a workspace has no applicationTileId
+    And two matching current tiles include a CES tile
     When the portal resolves that workspace
     Then no tile is selected
 
@@ -1292,7 +1315,7 @@ Feature: Use shared CES adapters through the actual portal
     And the user fills the text input with placeholder "Enter Password" on the login page with the fixture password
     And the user clicks the button "Sign In" on the login page
     Then the tab "Workspace 1" is visible in the portal
-    And the root and user stores contain the complete supplied routing and entities
+    And the root store contains supplied routing and the user store contains supplied entities
     When the user clicks the avatar icon button "MicroWebUI_base_avatar_IconButton" in the portal page
     And the user clicks the menu item "MicroWebUI_base_avatar_Profile" in the portal avatar menu
     And the user clicks the button "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B" in the profile dialog
@@ -1302,11 +1325,9 @@ Feature: Use shared CES adapters through the actual portal
     And the user clicks the section "New Tile" in the portal application bar region
     And the user clicks the section "CES fixture" in the drawer panel
     Then the button "Export fixture data" is enabled in the CES contract consumer region
-    And its internal tile scope equals "1"
     And its saved applicationTileId equals "1" independently of the workspace UUID
     When the existing dispatcher receives the ordinary parameters and tile name "legacy-fixture"
     Then the button "Export fixture data" is enabled in the EMS2 contract consumer region
-    And its internal tile scope equals "2"
     When the existing response handlers receive empty entities, routing, and drawers
     Then the mounted contract consumer count equals zero in the portal
     And the permission helper result is false for each withdrawn permission

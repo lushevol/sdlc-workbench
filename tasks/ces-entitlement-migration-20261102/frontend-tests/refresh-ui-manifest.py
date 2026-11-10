@@ -79,7 +79,7 @@ for number, line in enumerate(catalog.read_text().splitlines(), 1):
         selected, symbol = ["C_SIGN_IN"], "getByRole('button',{name:'Sign In',exact:true}).click"
     elif 'tab "Workspace 1"' in text:
         selected, symbol = ["C_WORKSPACE"], "getByRole('tab',{name:'Workspace 1',exact:true})"
-    elif "stores contain" in text:
+    elif "store contains supplied routing" in text:
         symbol = "assert.deepEqual(state.entitlementRouting,routing)"
     elif "avatar icon button" in text:
         selected, symbol = ["C_AVATAR"], "getByTestId('MicroWebUI_base_avatar_IconButton').click"
@@ -101,9 +101,6 @@ for number, line in enumerate(catalog.read_text().splitlines(), 1):
         ces = "CES contract" in text and "EMS2" not in text
         selected = ["C_CES_EXPORT" if ces else "C_EMS2_EXPORT"]
         symbol = f"getByTestId('consumer-{'CES' if ces else 'EMS2'} fixture').getByRole('button',{{name:'Export fixture data'}})"
-    elif "tile scope" in text:
-        label = "CES" if '"1"' in text else "EMS2"
-        symbol = f"getByTestId('consumer-{label} fixture').getByTestId('scope')"
     elif "applicationTileId" in text:
         symbol = "assert.equal(String(opened.applicationTileId),'1')"
     elif "existing dispatcher" in text:
@@ -131,7 +128,7 @@ review = {"state": "UNVERIFIED", "reviewer": None, "reviewed_at": None,
           "notes": "Source and local runtime selectors inspected. Business candidate review and deployed-service acceptance remain pending."}
 manifest = {"version": 1, "evidence": evidence, "scenarios": {"TC-FE-CES-013": {
     "file": str(catalog.relative_to(root)), "sha256": hashlib.sha256(catalog.read_bytes()).hexdigest(),
-    "behavior": {"intent": "Preserve ordinary calls while independently routing CES and EMS2 tiles.",
+    "behavior": {"intent": "Preserve ordinary calls while admitting CES and EMS2 tiles through their configured providers.",
                  "requirement": "E_REQUIREMENT", "criterion": "knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001"},
     "components": components, "steps": steps, "review": review,
     "automation": {"framework": "Playwright Chromium with actual React base and controlled services", "mode": "mapped", "bindings": bindings,
@@ -144,4 +141,4 @@ output_dir = root / os.environ.get(
 )
 output = output_dir / "ui-gherkin-manifest.json"
 output.write_text(json.dumps(manifest, indent=2) + "\n")
-print(json.dumps({"steps": len(steps), "output": str(output.relative_to(root))}))
+print(json.dumps({"steps": len(steps), "output": str(output.relative_to(root)) if output.is_relative_to(root) else str(output)}))

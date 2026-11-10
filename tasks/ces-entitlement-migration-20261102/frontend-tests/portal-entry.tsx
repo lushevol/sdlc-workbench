@@ -18,7 +18,6 @@ const Consumer = (props: any) => {
   return <section data-testid={`consumer-${props.parameters.label}`}>
     <h2>{props.parameters.label}</h2>
     <button disabled={!allowed}>Export fixture data</button>
-    <output data-testid="scope">{props.entitlementScope?.tileId ?? 'missing'}</output>
   </section>;
 };
 bridge.System = { import: async (name: string) => {

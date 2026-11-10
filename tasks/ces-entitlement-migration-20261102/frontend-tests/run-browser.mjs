@@ -33,11 +33,19 @@ const built = await esbuild.build({
   bundle: true, write: false, format: 'iife', platform: 'browser', metafile: true,
   plugins: [{ name: 'controlled-hooks', setup(build) {
     build.onResolve({ filter: /HooksBase$|\/Root\/import$/ }, () => ({ path: 'hooks', namespace: 'fixture' }));
+    build.onResolve({ filter: /^\.\/logger$/ }, args => args.importer === path.join(container, 'ratanutils/authenticator.ts')
+      ? { path: 'entitlement-logger', namespace: 'fixture' } : undefined);
     build.onResolve({ filter: /^\.\/common$/ }, args => args.importer === path.join(base, 'utils/login.ts')
       ? { path: 'login-transport', namespace: 'fixture' } : undefined);
     build.onLoad({ filter: /.*/, namespace: 'fixture' }, args => {
       fixtures.push(args.path);
-      return { contents: args.path === 'hooks' ? `
+      return { contents: args.path === 'entitlement-logger' ? `
+        export const logger = {info: message => {
+          const prefix = 'Entitlement permission ';
+          if (typeof message === 'string' && message.startsWith(prefix)) {
+            (window.__permissionLogs ??= []).push(JSON.parse(message.slice(prefix.length)));
+          }
+        }};` : args.path === 'hooks' ? `
         export const getHooksBase = () => ({store: window.__store, baseDispatch: action => Object.assign(window.__store, action.data)});
         export const Hooks = { getHooks: getHooksBase };` : `
         export const clearStorageWhenLogout = () => {};
@@ -56,6 +64,7 @@ const run = { phase, startedAt: new Date().toISOString(), scope: 'ACTUAL_SHARED_
   sourceBindings, catalog: { path: path.relative(root, catalog), sha256: hash(await fs.readFile(catalog)) },
   substitutions: [...new Set(fixtures)], limits: ['Hooks store and dispatcher are controlled fixtures.',
     'Login token decoding and persistence are substituted; neither identity nor session acceptance is tested.',
+    'Permission logger transport is substituted with local capture; remote log acceptance is not tested.',
     'The complete portal, saved-view backend, CES service, and BFF controller are not executed.'], cases: [] };
 await fs.writeFile(path.join(output, 'run-binding.json'), JSON.stringify(run, null, 2));
 const bundle = built.outputFiles[0].text;
@@ -73,7 +82,7 @@ const route = (source = 'EMS3', tileId = '1') => ({ tileId, source, entityNames:
 try {
   browser = await chromium.launch({ channel: 'chromium', headless: true, chromiumSandbox: true });
   run.browserVersion = browser.version();
-  async function check(id, name, fixture, operation, expected) {
+  async function check(id, name, fixture, operation, expected, expectedSource) {
     const context = await browser.newContext();
     const page = await context.newPage();
     const record = { id, name, startedAt: new Date().toISOString(), expected, status: 'RUNNING' };
@@ -82,6 +91,10 @@ try {
       await page.evaluate(fixture => { window.__store = fixture; }, fixture);
       record.actual = await page.evaluate(operation);
       assert.deepEqual(record.actual, expected);
+      if (expectedSource) {
+        record.sourceLogs = await page.evaluate(() => window.__permissionLogs ?? []);
+        assert.ok(record.sourceLogs.some(log => log.code === 'feature-a:action-a' && log.source === expectedSource && log.allowed === expected), `Missing ${expectedSource} decision log`);
+      }
       record.status = 'PASSED';
     } catch (error) { record.status = 'FAILED'; record.error = error.message; }
     finally {
@@ -95,14 +108,26 @@ try {
   }
   await check('TC-FE-CES-007', 'unchanged-calls', { entities: [ces], entitlementRouting: [route()] },
     () => [window.ces.auth.hasPermission('feature-a:action-a'), window.ces.auth.hasPermission('feature-a:missing')], [true, false]);
-  await check('TC-FE-CES-006', 'ces-denial-isolated', { entities: [legacy, { ...ces, subjects: [] }], entitlementRouting: [route()], user: { entitlement: { actions: ['feature-a:action-a'] } } },
-    () => window.ces.auth.hasPermission('feature-a:action-a'), false);
-  await check('TC-FE-CES-006', 'ems2-denial-isolated', { entities: [{ ...legacy, subjects: [] }, ces], entitlementRouting: [route('EMS2')] },
-    () => window.ces.auth.hasPermission('feature-a:action-a'), false);
+  await check('TC-FE-CES-008', 'union-legacy-only', { entities: [legacy, { ...ces, subjects: [] }], entitlementRouting: [route()], user: { entitlement: { actions: ['feature-a:action-a'] } } },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), true, 'EMS2');
+  await check('TC-FE-CES-008', 'union-ces-only', { entities: [{ ...legacy, subjects: [] }, ces], entitlementRouting: [route('EMS2'), route('EMS3', '2')] },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), true, 'EMS3');
   await check('TC-FE-CES-006', 'duplicate-and-app-scope', { entities: [{ ...ces, subjects: [] }, ces, { ...ces, applicationId: 'other' }], entitlementRouting: [route()] },
     () => window.ces.auth.hasPermission('feature-a:action-a'), true);
-  await check('TC-FE-CES-008', 'bound-mixed-tiles', { entities: [legacy, { ...ces, subjects: [] }], entitlementRouting: [route(), route('EMS2', '2')] },
-    () => [window.ces.auth.hasPermission('feature-a:action-a'), window.ces.auth.createAuthenticator({ tileId: '1' }).hasPermission('feature-a:action-a'), window.ces.auth.createAuthenticator({ tileId: '2' }).hasPermission('feature-a:action-a')], [false, false, true]);
+  await check('TC-FE-CES-008', 'union-both', { entities: [legacy, ces], entitlementRouting: [route(), route('EMS2', '2')] },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), true, 'EMS2');
+  await check('TC-FE-CES-008', 'union-neither', { entities: [{ ...legacy, subjects: [] }, { ...ces, subjects: [] }], entitlementRouting: [route(), route('EMS2', '2')] },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), false, 'NONE');
+  await check('TC-FE-CES-008', 'legacy-without-routes', { entities: [legacy, ces] },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), true, 'EMS2');
+  await check('TC-FE-CES-006', 'ces-requires-application-route', { entities: [ces] },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), false, 'NONE');
+  await check('TC-FE-CES-006', 'ces-empty-routes-deny', { entities: [ces], entitlementRouting: [] },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), false, 'NONE');
+  await check('TC-FE-CES-006', 'reject-unrelated-application', { entities: [{ ...ces, applicationId: 'other' }], entitlementRouting: [route()] },
+    () => window.ces.auth.hasPermission('feature-a:action-a'), false);
+  await check('TC-FE-CES-006', 'reject-unrelated-feature-action', { entities: [ces], entitlementRouting: [route()] },
+    () => [window.ces.auth.hasPermission('other-feature:action-a'), window.ces.auth.hasPermission('feature-a:missing'), window.ces.auth.hasPermission('feature-a:action-a:extra')], [false, false, false]);
   await check('TC-FE-CES-010', 'refresh-removes-grant', { entities: [ces], entitlementRouting: [route()], drawers: [{ tiles: [{ id: 1 }] }] },
     () => { window.ces.login.handleEntities({ data: { entities: [] } }); window.ces.login.handleDrawers({ data: { drawers: [] } }); return [window.ces.auth.hasPermission('feature-a:action-a'), window.__store.drawers.length]; }, [false, 0]);
   await check('TC-FE-CES-011', 'profile-and-roles', { entities: [ces], user: { id: '1481696', fullName: 'Fixture User' } },
@@ -111,7 +136,9 @@ try {
   const tile = { id: 1, container: '@fixture/container', module: 'feature-a', tile: 'main', entryName: 'a' };
   await check('TC-FE-CES-012', 'restore-exact-id', { drawers: [{ tiles: [tile, { ...tile, id: 2, entryName: 'b' }] }] },
     () => window.ces.drawer.findTile(window.__store.drawers, { containers: [{ applicationTileId: '2', container: '@fixture/container', module: 'feature-a', tile: 'main', entryName: 'b' }] })?.id, 2);
-  await check('TC-FE-CES-012', 'restore-ambiguous', { drawers: [{ tiles: [tile, { ...tile, id: 2 }] }] },
+  await check('TC-FE-CES-012', 'restore-legacy-first-match', { drawers: [{ tiles: [tile, { ...tile, id: 2 }] }] },
+    () => window.ces.drawer.findTile(window.__store.drawers, { containers: [{ container: '@fixture/container', module: 'feature-a', tile: 'main', entryName: 'a' }] })?.id ?? null, 1);
+  await check('TC-FE-CES-012', 'restore-ces-ambiguous', { drawers: [{ tiles: [{ ...tile, entitlementSource: 'EMS3' }, { ...tile, id: 2, entitlementSource: 'EMS3' }] }] },
     () => window.ces.drawer.findTile(window.__store.drawers, { containers: [{ container: '@fixture/container', module: 'feature-a', tile: 'main', entryName: 'a' }] })?.id ?? null, null);
 } finally {
   await browser?.close();
