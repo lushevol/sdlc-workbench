@@ -39,8 +39,8 @@
     {
       "id": "shell-loader",
       "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
-      "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
-      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "99adb2893aeab22907452f0cb52b2facb47e5a3ac32b5d0e5a394bec5a65e80d",
+      "revision": "10560f39a57e8ce4010cee634f7682559b1a6bdd",
       "kind": "SOURCE_REVIEW"
     },
     {
@@ -165,8 +165,8 @@
     {
       "id": "bff-auth-controller",
       "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
-      "sha256": "c5e50cb1272af3a27354b1a28b3f092999a7011922343284984ef854aee56af3",
-      "revision": "134a340472f29d2a4136e07e516690de6a18e323",
+      "sha256": "fcfdf57d6147f484edc1645da85dd04c99f73852dbe996ec9e4856142c2340b9",
+      "revision": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
       "kind": "SOURCE_REVIEW"
     },
     {
@@ -179,8 +179,8 @@
     {
       "id": "bff-catalog-props",
       "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
-      "sha256": "2c94705e7d6bdb6cfb9bfe883f6532df7cd1855e58e2cbf311bf188fbaaee66d",
-      "revision": "134a340472f29d2a4136e07e516690de6a18e323",
+      "sha256": "b4d289d8efc0d6f88afe6d7f4408197434b046569538d2effc2e01e4f5a722c4",
+      "revision": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
       "kind": "SOURCE_REVIEW"
     },
     {
@@ -256,22 +256,22 @@
     {
       "id": "auth-ems2-client",
       "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
-      "sha256": "fa9f08835a5ef91d687923ba14cf48a787f0c857c4ca063a445308e4359d3e59",
-      "revision": "dd6ebe87371d0fd484b68ce254fd2f18cc58bfd2",
+      "sha256": "f9c16ff337a239f081eabe2ca70c6dea6f5479d5c1812a4c696728ad5dffe059",
+      "revision": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
       "kind": "SOURCE_REVIEW"
     },
     {
       "id": "auth-ems3-client",
       "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
-      "sha256": "856cdc13554c9e8a92c9c54d9b3f7410ac1a453feb83f0959f531d11c164fe85",
-      "revision": "dd6ebe87371d0fd484b68ce254fd2f18cc58bfd2",
+      "sha256": "79a47c2d60384ee4337a71f73563ace50d29c508f76ba846d1001f63cf39bed9",
+      "revision": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
       "kind": "SOURCE_REVIEW"
     },
     {
       "id": "auth-entitlement-routing",
       "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
-      "sha256": "b3d9c7da44b6c3673eddbe25c013c38b79f49ed229a9d312bdc274e8d7b70860",
-      "revision": "dd6ebe87371d0fd484b68ce254fd2f18cc58bfd2",
+      "sha256": "a6fd52424c5774110113f376e00994e0a8431cc8dc4d6a90a5197579ff1aaf81",
+      "revision": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
       "kind": "SOURCE_REVIEW"
     },
     {
@@ -607,7 +607,7 @@
       "source": "base-shell",
       "target": "ratan-container",
       "kind": "LOADS_CONTAINER",
-      "description": "Runtime container props can select RATAN container. Catalog code and SQL seeds support this inference; active catalog values remain unavailable.",
+      "description": "Runtime tile metadata or container props can select RATAN container. Catalog code and SQL seeds support this inference; active catalog values remain unavailable.",
       "source_ids": [
         "architecture-clarification",
         "shell-loader",
@@ -783,7 +783,7 @@
       "source": "ratan-auth",
       "target": "ems2",
       "kind": "DELEGATES_AUTHORIZATION",
-      "description": "Auth full-entitlement modes can select EMS2 or dual reads. Data-role reads still use EMS2 directly. Active mode remains unverified.",
+      "description": "Auth full reads use EMS2 outside the EMS3 mode and allowed-user gate. Dual mode also reads EMS2 for comparison. Data-role reads use EMS2 when that gate does not select EMS3. Active mode remains unverified.",
       "source_ids": [
         "architecture-clarification",
         "auth-ems2-client",
@@ -795,7 +795,7 @@
       "source": "ratan-auth",
       "target": "ems3",
       "kind": "DELEGATES_AUTHORIZATION",
-      "description": "Auth declares EMS3 HTTP entitlement calls behind full-entitlement migration modes. Active mode remains unverified.",
+      "description": "Auth declares EMS3 HTTP entitlement calls. The mode and allowed-user gate selects EMS3 or dual full reads and EMS3 data-role reads. Active mode remains unverified.",
       "source_ids": [
         "architecture-clarification",
         "auth-ems3-client",
@@ -979,7 +979,7 @@
         "ems2",
         "ems3"
       ],
-      "description": "Full entitlement reads select EMS2, EMS3, or dual modes. Data-role reads still use EMS2 directly. Source declarations do not select deployed modes.",
+      "description": "Full entitlement reads use EMS2 for users outside the EMS3 gate, and EMS3 or dual reads for selected users. Data-role reads choose EMS2 or EMS3 through the same mode and allowed-user gate. Source declarations do not select deployed modes.",
       "source_ids": [
         "auth-entitlement-routing"
       ]
@@ -1038,17 +1038,17 @@
       "relationship_id": "shell-loads-container",
       "status": "INFERRED",
       "family": "structure",
-      "rationale": "The shell imports a runtime container prop. Catalog code and migration seeds identify RATAN container. Active catalog values remain unavailable.",
+      "rationale": "The shell imports the resolved tile container, with the incoming container prop as a fallback. It calls the tile-admission helper before rendering. Catalog code and migration seeds identify RATAN container. Active catalog values and runtime rendering remain unverified.",
       "source_refs": [
         {
           "source_id": "shell-loader",
-          "line": 10,
-          "end_line": 32
+          "line": 13,
+          "end_line": 47
         },
         {
           "source_id": "bff-catalog-props",
-          "line": 181,
-          "end_line": 191
+          "line": 203,
+          "end_line": 217
         },
         {
           "source_id": "bff-importmap-seed",
@@ -1195,13 +1195,13 @@
         },
         {
           "source_id": "bff-auth-controller",
-          "line": 167,
-          "end_line": 169
+          "line": 171,
+          "end_line": 173
         },
         {
           "source_id": "bff-auth-controller",
-          "line": 317,
-          "end_line": 319
+          "line": 327,
+          "end_line": 329
         },
         {
           "source_id": "shell-analytics",
@@ -1240,28 +1240,28 @@
         },
         {
           "source_id": "bff-auth-controller",
-          "line": 209,
-          "end_line": 211
+          "line": 215,
+          "end_line": 217
         },
         {
           "source_id": "bff-auth-controller",
-          "line": 259,
-          "end_line": 261
+          "line": 267,
+          "end_line": 269
         },
         {
           "source_id": "bff-auth-controller",
-          "line": 289,
-          "end_line": 291
+          "line": 299,
+          "end_line": 301
         },
         {
           "source_id": "bff-auth-controller",
-          "line": 342,
-          "end_line": 344
+          "line": 352,
+          "end_line": 354
         },
         {
           "source_id": "bff-auth-controller",
-          "line": 372,
-          "end_line": 374
+          "line": 384,
+          "end_line": 386
         }
       ],
       "canonical_edge_ids": []
@@ -1431,27 +1431,32 @@
       "relationship_id": "auth-ems2",
       "status": "SUPPORTED",
       "family": "api",
-      "rationale": "Full entitlement modes can select EMS2 or dual reads. Data-role reads still call EMS2 directly. Active mode and endpoint values remain unverified.",
+      "rationale": "Full entitlement reads use EMS2 outside the EMS3 mode and allowed-user gate. Dual mode also reads EMS2 for comparison. Data-role reads use EMS2 when that gate does not select EMS3. Active mode, allowed users, and endpoint values remain unverified.",
       "source_refs": [
         {
           "source_id": "auth-ems2-client",
-          "line": 158,
-          "end_line": 166
+          "line": 153,
+          "end_line": 173
         },
         {
           "source_id": "auth-ems2-client",
-          "line": 196,
-          "end_line": 204
+          "line": 203,
+          "end_line": 211
         },
         {
           "source_id": "auth-entitlement-routing",
-          "line": 40,
-          "end_line": 51
+          "line": 36,
+          "end_line": 42
         },
         {
           "source_id": "auth-entitlement-routing",
-          "line": 58,
-          "end_line": 61
+          "line": 49,
+          "end_line": 65
+        },
+        {
+          "source_id": "auth-entitlement-routing",
+          "line": 78,
+          "end_line": 83
         }
       ],
       "canonical_edge_ids": []
@@ -1461,17 +1466,27 @@
       "relationship_id": "auth-ems3",
       "status": "SUPPORTED",
       "family": "api",
-      "rationale": "Auth declares EMS3 HTTP entitlement calls. Full entitlement modes can select EMS3 or dual reads. Active mode and deployed endpoints remain unverified.",
+      "rationale": "Auth declares EMS3 HTTP entitlement calls. The mode and allowed-user gate selects EMS3 or dual full reads and EMS3 data-role reads. Active mode, allowed users, and deployed endpoints remain unverified.",
       "source_refs": [
         {
           "source_id": "auth-ems3-client",
           "line": 38,
-          "end_line": 51
+          "end_line": 60
         },
         {
           "source_id": "auth-entitlement-routing",
-          "line": 40,
-          "end_line": 51
+          "line": 36,
+          "end_line": 42
+        },
+        {
+          "source_id": "auth-entitlement-routing",
+          "line": 49,
+          "end_line": 65
+        },
+        {
+          "source_id": "auth-entitlement-routing",
+          "line": 78,
+          "end_line": 83
         }
       ],
       "canonical_edge_ids": []
