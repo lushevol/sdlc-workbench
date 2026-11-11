@@ -2,6 +2,7 @@
 
 Date: 11 November 2026, Asia/Singapore.
 Reference: [implementation request](user-implementation.md#exact-user-input).
+Follow-up: [source and knowledge folder question](user-layout-question.md#exact-user-input).
 Design: [pipeline and storage design](recommendation.md#full-export-pipeline).
 
 **The local source preparation pipeline is implemented. MOM remains held for missing attachment context.**
@@ -237,3 +238,21 @@ Wheel command: `.venv/bin/python -m pip wheel . --no-deps --no-build-isolation -
 After the complete-suite run, SP-6 gained explicit canonical-record and wiki-alias preservation assertions.
 All 18 focused cases passed again in 1.680 seconds. Runtime code and wheel bytes were unchanged.
 Final focused output SHA-256: `9f677223e1da15812c73ded8e4d2b95af9c1a4cd7b670c320ef1cc11b2a78a30`.
+
+## Folder layout clarification
+
+Reference: [the user's folder question](user-layout-question.md#exact-user-input).
+
+Inspection found one README under top-level `raw/`, with no source payloads.
+All 85 Confluence Markdown sources remain under `evidence/knowledge/sources/confluence/`.
+Both wiki source folders contain 12 symbolic links and no regular source copies.
+
+| Claim | Class and confidence | Supporting source |
+| --- | --- | --- |
+| The added raw directory describes a replaceable import inbox. | Inspected documentation; high. | [Raw guide](../../../raw/README.md). |
+| Evidence and canonical knowledge have different responsibilities. | Documented contract; high. | [Evidence guide](../../../evidence/knowledge/README.md) and [knowledge guide](../../../knowledge/README.md). |
+| Core knowledge contains authoring resources. | Documented contract; high. | [Core resource guide](../../../core/knowledge/README.md). |
+
+The separate import lifecycle protects retained snapshot bytes from overwritten exports.
+It does not require another top-level directory. The added name makes the existing source layout harder to understand.
+This question does not authorize source relocation or deletion. No source or folder location changed during this clarification.
