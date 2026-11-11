@@ -14,7 +14,7 @@ The UI guild aims to provide consistent design, shared components, and utilities
 
 The portal introduction names affirmation, confirmation, settlements, and reporting as supported post-trade activities, with blotters and a rules engine as examples. That page remains under edit, so the examples describe stated scope, not a complete application inventory. The supplied materials cover the portal and UI platform, including draft principles and a future deployment proposal. They do not establish complete Financial Markets business-domain coverage.
 
-Portal entry and tile authorization are handled by the [[entities/portal-team]], while authentication and entitlement retrieval are delegated to the [[entities/single-ui-sdk]].
+The [[entities/portal-team]] owns the user-stated portal-entry and tile-authorization rules. The documented Entra UI SSO design assigns authorization-code exchange, user information, EMS2 entitlement retrieval and token issuance to [[entities/single-ui-bff]]. The [[entities/single-ui-sdk]] supplies JWT validation and separate entitlement helpers for downstream Spring applications. Consumer adoption remains conditional and unconfirmed. See the canonical [authentication responsibilities](../../../candidates/security/KT-authentication-and-sessions.md#authentication-responsibilities) and [SDK responsibility boundary](../../../candidates/security/KT-sdk-and-entitlements.md#integration-purpose-and-responsibility-boundary).
 
 ## Working vocabulary
 

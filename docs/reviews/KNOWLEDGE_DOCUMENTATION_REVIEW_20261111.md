@@ -23,7 +23,7 @@ Review scope: current knowledge management guides, shared skill instructions and
 | Finding | Status | Change and verification |
 | --- | --- | --- |
 | F1 | RESOLVED | Root, bridge and nested instructions translate upstream commands through the project-scoped launcher. Independent forward check from `/private/tmp` selected this wiki, returned 12 indexed documents, and found no launch ambiguity. Skill validation and both upstream source locks pass. |
-| F2 | PENDING | Generated responsibility claims. |
+| F2 | RESOLVED | Corrected BFF/SDK responsibilities, conditional SDK adoption, and unsupported interceptor mappings. Independent source comparison confirmed the revised scope and all six initial canonical anchors; local wiki verification passes and all 12 canonical hashes remain unchanged. |
 | F3 | PENDING | Fallback authoring and provenance completion. |
 | F4 | PENDING | Reserved storage exception. |
 | F5 | PENDING | Standalone claim traceability. |

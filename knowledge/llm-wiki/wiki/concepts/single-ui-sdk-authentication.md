@@ -55,7 +55,7 @@ Keeping these two token types distinct is a security requirement, not a convenie
 
 Portal tile visibility and launch authorization are decided before application data access. Those rules are recorded in [[concepts/portal-entry-and-tile-authorization]]. A visible tile does not establish permission to read or modify the business data behind it. The tile-security proposal assigns data access and editing permissions to each tile application.
 
-The [[entities/portal-team]] owns the user-stated portal entry rules. SDK authentication is the prerequisite control that supplies the authenticated identity those rules consume.
+The [[entities/portal-team]] owns the user-stated portal-entry rules. The [documented BFF UI SSO design](../../../candidates/security/KT-authentication-and-sessions.md#authentication-responsibilities) supplies user information and authentication tokens. The [SDK filter](../../../candidates/security/KT-sdk-and-entitlements.md#integration-purpose-and-responsibility-boundary) validates JWTs in downstream Spring applications; its registration and consumer adoption remain conditional, as the [architecture record](../../../candidates/architecture/ARC-portal-service-relationships.md#portal-and-sdk-boundaries) explains.
 
 ## Unresolved questions
 

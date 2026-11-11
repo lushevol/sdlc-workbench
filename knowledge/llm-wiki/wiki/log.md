@@ -63,3 +63,7 @@ Clarified active summaries, concepts, and entities against canonical `KT-ces-mig
 Removed six obvious self-wikilinks from five concept pages. Added the candidate/draft authority preamble and source-manifest binding link to the catalog. Verified that all six retained exploration pages already have catalog entries with descriptions. Original benchmark material and canonical source content remain unchanged.
 
 Native OpenKB structural functions after these repairs found zero broken wikilinks, index synchronization issues, orphan pages, invalid frontmatter, or missing required OKF fields. These structural checks used the local installation without model-provider calls and do not establish semantic correctness or publication approval.
+
+## [2026-11-11 15:50:35] lint | ADE source-fidelity corrections (F2)
+
+Corrected BFF/SDK responsibility statements in the portal entity and SDK concept, and removed an unsupported HTTP-interceptor dependency from the MFE Base entity. Read the cited canonical responsibility and permission-criterion sections. This was current-agent maintenance, with no external model call or new compilation. All 12 canonical input hashes and source bindings remain unchanged.
