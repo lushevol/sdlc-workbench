@@ -10,7 +10,8 @@ Each root Markdown template, except this guide, is a complete illustrative candi
 The fixture has no business authority. No example records approval or verification.
 The example source and manifest are in `examples/`.
 
-Copy the relevant template into `knowledge/candidates/` to instantiate it.
+Copy the relevant domain-record template into `knowledge/candidates/` to instantiate it.
+Place `GovernanceFinding` records under `evidence/knowledge/findings/`; they are governance evidence rather than domain candidates.
 Describe intended rules, contracts, responsibilities, and target architecture.
 Keep inspected implementation, actual deployment, execution results, and differences in an independent task gap Markdown document.
 Link canonical knowledge from each gap. Do not change the expected rule to match code.

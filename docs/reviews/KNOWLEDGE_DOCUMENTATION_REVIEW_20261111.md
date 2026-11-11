@@ -29,7 +29,7 @@ Review scope: current knowledge management guides, shared skill instructions and
 | F5 | RESOLVED | All 91 derived pages show source-status notes; 12 summaries link exact canonical IDs/versions and seven key concepts link canonical sections. Repaired the damaged criterion locator, 14 evidence paths and eight malformed wikilink wrappers. All 137 plain Markdown targets/anchors resolve; native metadata and all canonical hashes remain unchanged, and native verification passes. |
 | F6 | RESOLVED | Four historical reports now identify their baseline and current conditional policy. Replaced three dead wiki links with frozen Git locators verified against repository objects. Current structure is distinguished from historical lint failures; management-document file-target audit has zero missing files. |
 | F7 | RESOLVED within safe scope | Added focused reading routes, merged duplicate navigation with its old anchor preserved, added the missing title and aligned page-scope guidance. Independent review found no lost facts, limits, page targets or heading anchors; all native checks pass. All 91 pages and useful single-source topics remain. This improves navigation rather than claiming text compression; unproven bulk trimming was not applied. |
-| F8 | PENDING | Procedure ownership and examples. |
+| F8 | RESOLVED | Five caller sections now link bridge-owned mechanics while retaining triggers, authorization limits and verification. Independent scenario review found no regressions; all nine scoped links resolve. Repeated sections fell from 795 to 305 words. Corrected the real-source example and governance-finding destination; six skill validators and both packaging suites pass. |
 
 ## What makes sense
 

@@ -108,15 +108,9 @@ Use an independent reader when available to distinguish target rules from actual
 Disclose self-review when independent review is unavailable. Automated checks cannot establish semantic accuracy alone.
 
 Update domain navigation, related references, the independent gap document, the task knowledge-update log, and Markdown/HTML release-report views.
-When canonical knowledge or navigation changes, use the [llm-wiki bridge](../llm-wiki/SKILL.md) to reconcile affected pages from exact changed sources.
-Select [OpenKB](../openkb/SKILL.md) with both private `OPENAI_API_BASE` and `LLM_API_KEY`; otherwise use llm-wiki-agent in the current ADE context.
-The fallback reads original llm-wiki-agent `AGENTS.md` and applies the bridge's semantic instructions for the existing OpenKB layout.
-Preserve metadata, use summaries as derived source pages and explorations for saved synthesis, and keep source symlinks immutable.
-Do not run upstream scripted ingest or refresh against this layout.
-Run local OpenKB verification and original graph generation in either semantic mode when graph maintenance is in scope.
-Keep the stable workspace at `knowledge/llm-wiki/` derived from exact source records linked relatively under both `raw/` and `wiki/sources/`, with declared lifecycle states intact.
-Use the bridge's `compile` route with source links and hashes preserved. OpenKB uses explicit provider URL and token; no automatic OAuth.
-Wiki updates and model-inferred connections cannot establish rollout, publication, synchronization completion, or passing behavior.
+When canonical knowledge or navigation changes, use the [llm-wiki bridge](../llm-wiki/SKILL.md) and its [compile procedure](../llm-wiki/references/workflows.md#compile-canonical-records) to reconcile affected pages from exact changed sources.
+Follow the bridge's selected engine, linked-source and provenance-completion rules. Run `verify`; refresh the native wiki graph when graph maintenance is in scope.
+Wiki updates and model-inferred connections cannot establish rollout, publication, synchronization completion or passing behavior.
 An inspected knowledge no-change disposition does not require rewriting unchanged wiki content.
 Keep one canonical row inventory and synchronization summary. Link report views to it and compare displayed counts and dispositions.
 Preserve frozen assessments. Record later synchronization in the maintained current view or a linked successor.

@@ -29,12 +29,8 @@ Use this skill for read-only questions about project knowledge. Answer from insp
 5. Inspect the raw manifest and cited source bytes when available. Record the source ID, path, revision, SHA-256, locator, and retrieval limit. Disclose truncation, stale snapshots, unavailable resources, and bounded search scope.
 6. Read surrounding context, linked records, callers, providers, tests, and retained action results when they affect the claim. Do not infer a runtime relationship from a catalog declaration.
 
-Select OpenKB with both private `OPENAI_API_BASE` and `LLM_API_KEY`; otherwise follow llm-wiki-agent in the current ADE context.
-Both routes read the same existing wiki and exact cited sources; fallback needs no second model client.
-In fallback mode, read original llm-wiki-agent `AGENTS.md` and apply the bridge's OpenKB-layout and immutable source-link constraints.
-The [query route](../llm-wiki/references/workflows.md#query-and-saved-synthesis) describes the selected engine and saved synthesis.
-Native OpenKB queries make independent LiteLLM calls with the explicit settings and may write operation state. Do not select OAuth automatically.
-The bridge's semantic `compile` transaction and saving an exploration require the corresponding requested work.
+Use the bridge's [query procedure](../llm-wiki/references/workflows.md#query-and-saved-synthesis) for project selection and engine routing. Prefer direct index/page/source reads in the ADE context.
+Native queries can make an independent provider call and write operation state; the bridge documents those limits. Compilation and saved explorations require the corresponding requested work.
 
 For a behavior ID or story rule, use the shared [behavior trace](../verify-implementation/references/behavior-review.md#trace-one-behavior).
 Follow intent, criteria, exact implementation, assertions, and retained execution with grades and limits on each relationship.

@@ -100,17 +100,7 @@ Do not force either workflow onto a simple document review.
 
 ## Connect the compiled wiki
 
-Use the [Workbench llm-wiki bridge](../llm-wiki/SKILL.md) for compiled summaries, concepts, entities, queries, and the original OpenKB wiki graph.
-Use [OpenKB](../openkb/SKILL.md) when both private `OPENAI_API_BASE` and `LLM_API_KEY` are configured; otherwise use llm-wiki-agent in the current ADE context.
-After authorized canonical changes, read the affected source records fully and inspect `knowledge/llm-wiki/wiki/index.md` and related compiled pages.
-In fallback mode, read llm-wiki-agent's original `AGENTS.md` and follow its semantic instructions with the bridge's existing-layout constraints.
-This route uses the agent's existing model access and maintains the current page layout without a parallel wiki.
-Treat summaries as derived source pages, preserve OpenKB metadata, and use explorations for saved synthesis.
-Keep both raw and full-text source entries as relative links to canonical records.
-Use the bridge's `compile [--source PATH]` to select the configured engine; OpenKB invokes its original compiler with source links and hashes preserved.
-Keep source symlinks immutable; do not invoke upstream scripted ingest or refresh against this linked layout.
-Run local OpenKB `verify` and original graph generation in either mode when the handoff includes graph output.
-OpenKB requires both explicit provider settings; do not select device OAuth automatically.
-Keep derived output under `knowledge/llm-wiki/`, with lifecycle states and exact source bindings intact.
-Treat compiled pages as derived proposals until canonical ingestion and governance requirements are met.
-Read-only review mode leaves source and compiled-page mutation outside its scope.
+After authorized canonical changes, use the [llm-wiki bridge](../llm-wiki/SKILL.md) to reconcile affected summaries, concepts, entities and index entries from the complete changed records.
+Follow its [compile procedure](../llm-wiki/references/workflows.md#compile-canonical-records), including the linked-source boundaries and reviewed provenance completion for the selected engine.
+Run bridge `verify` before reporting current coverage; generate the native wiki graph when graph output is requested.
+Compiled pages remain derived and retain canonical lifecycle qualifications. Read-only review mode authorizes no source or compiled-page mutation.

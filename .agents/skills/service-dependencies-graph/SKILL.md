@@ -12,13 +12,8 @@ The graph records static source declarations and supported identity joins.
 It does not establish deployment, runtime execution, or approved business intent.
 Its [knowledge projection](references/architecture/knowledge-graph.md) connects declared knowledge, provenance, catalogs, and behavior-review evidence.
 
-Use the [llm-wiki bridge](../llm-wiki/SKILL.md) for the original OpenKB wiki graph from native `[[wikilinks]]`.
-Select [OpenKB](../openkb/SKILL.md) with both private `OPENAI_API_BASE` and `LLM_API_KEY`; otherwise use llm-wiki-agent in the current ADE context.
-Both routes use one active wiki at `knowledge/llm-wiki/`, preserving the existing rich pages.
-Original OpenKB `visualize --no-open` reads the existing layout in either semantic mode and writes `knowledge/llm-wiki/output/visualize/graph.html`.
-Local visualization needs no model credentials.
-Keep wiki page relationships and output separate from this skill's governed-evidence graph and snapshot contracts.
-A requested wiki graph uses OpenKB's original local visualizer; this graph's Knowledge tab remains its separate evidence projection.
+Use the [llm-wiki bridge](../llm-wiki/SKILL.md) and [native wiki graph procedure](../llm-wiki/references/workflows.md#wiki-graph) for wiki page navigation. Its local OpenKB visualizer needs no model credentials.
+Keep that output separate from this skill's governed-evidence graph and snapshot contracts; this graph's Knowledge tab remains its own evidence projection.
 
 The `.claude/skills/service-dependencies-graph/` alias points to this canonical directory.
 Initialization creates the directory link where the platform permits it.

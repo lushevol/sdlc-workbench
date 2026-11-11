@@ -36,7 +36,7 @@ When either value is absent, select **llm-wiki-agent in the current ADE session*
 
 ```sh
 python3 .agents/skills/llm-wiki/scripts/wiki.py compile
-python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/confirmed
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates/security
 ```
 
 With both credentials configured, `compile` invokes OpenKB's original `compile_short_doc` using the selected URL and token explicitly, native configuration and an ingest lock. It reads full canonical records, deduplicates equal IDs, rejects conflicting records and filenames, links raw/full-text sources, and advances provenance bindings only after successful compilation and an unchanged source. Native failures are reported; they do not silently switch engines. Partial derived edits may remain after a failure, so inspect the diff before retrying.
