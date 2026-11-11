@@ -269,22 +269,26 @@ Use [connectors](.agents/skills/connectors/SKILL.md) for external tool setup, ro
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
 Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
-Use [llm-wiki](.agents/skills/llm-wiki/SKILL.md) to generate a native wiki from `knowledge/candidates/`; confirmed source records can be selected later.
-The complete [upstream project](.agents/skills/llm-wiki/upstream/README.md) ships unchanged, with a separate Workbench workflow wrapper.
-Install its dependencies, export candidate knowledge, and build its native graph:
+Use the [Workbench llm-wiki bridge](.agents/skills/llm-wiki/SKILL.md) to select the knowledge compiler.
+[OpenKB](.agents/skills/openkb/SKILL.md) is primary when both an LLM URL and token are configured.
+Otherwise use the unchanged llm-wiki-agent skill in the current agent development environment, without another model client.
+Both engines maintain one active workspace at `knowledge/llm-wiki/`; retain its existing rich pages and relative canonical-source links.
+Check the shared wiki and generate its original OpenKB graph through the bridge:
 
 ```sh
 python3 .agents/skills/llm-wiki/scripts/wiki.py install
-python3 .agents/skills/llm-wiki/scripts/wiki.py export
-python3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save
 python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+python3 .agents/skills/llm-wiki/scripts/wiki.py run status
+python3 .agents/skills/llm-wiki/scripts/wiki.py graph
 ```
 
-The separate `.venv-llm-wiki` environment uses compatible Python; the operational workspace is `knowledge/llm-wiki/`.
-Its graph appears at [knowledge/llm-wiki/graph/graph.html](knowledge/llm-wiki/graph/graph.html) after generation.
-`--no-infer` builds explicit wiki relationships without model calls.
-Ingestion, scripted queries, semantic analysis, and inferred relationships use the configured model provider.
-See [installation and network requirements](docs/SETUP.md#install-the-complete-llm-wiki-agent).
+The optional OpenKB CLI uses Python 3.13 in `.venv-openkb`, independently of Workbench's runtime.
+Configure `OPENAI_API_BASE` and `LLM_API_KEY` privately to select OpenKB.
+The bridge reads the project KB `.env` and process environment; unrelated global authentication does not select OpenKB.
+The bridge's `compile` command selects native OpenKB compilation with both settings; otherwise follow its llm-wiki-agent procedure.
+Both routes preserve canonical source links and hashes. No route creates a second active wiki.
+See [installation and engine selection](docs/SETUP.md#openkb-primary-wiki) for authentication, graph output, and offline installation.
+Engine selection controls semantic work. Local OpenKB verification and visualization work in either mode without provider credentials.
 
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
 It separates automated checks from content review and unresolved evidence.

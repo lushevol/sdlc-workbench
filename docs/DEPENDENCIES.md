@@ -357,47 +357,60 @@ It does not run during ordinary local report generation.
 The package already contains raw wiki snapshots, their manifest, and the derived control registry.
 Preserve those bytes and add new snapshots when sources change.
 
-## Complete llm-wiki-agent
+<a id="openkb-primary-wiki"></a>
+## Knowledge wiki engines
 
-The complete upstream source is vendored unchanged at revision `f03eff653886672ee8a92bb6a28faae9190d90d2`.
-The [file lock](../.agents/skills/llm-wiki/upstream-lock.json) binds every retained file.
-The [workflow wrapper](../.agents/skills/llm-wiki/scripts/wiki.py) supplies installation, export, graph execution, direct tool execution, and integrity checks.
-Its environment is `.venv-llm-wiki`; its operational workspace is `knowledge/llm-wiki/`.
-Neither location changes the original files under `.agents/skills/llm-wiki/upstream/`.
+The primary compiler is [VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB) when both an LLM URL and token are configured.
+It is pinned at revision `ff54396e575ee6feb0113b631a34caa082b441cc` (`0.5.0rc2.dev3+gff54396e5`).
+Its [official skill](../.agents/skills/openkb/SKILL.md) supplies native procedures; the [Workbench bridge](../.agents/skills/llm-wiki/SKILL.md) preserves canonical source and governance boundaries.
+The [launcher](../.agents/skills/llm-wiki/scripts/wiki.py) installs the optional runtime, compiles selected sources with OpenKB's original semantic compiler and provider setup, verifies source links and pages, forwards supported native commands, and invokes OpenKB visualization.
+Its environment is `.venv-openkb`; the stable operational workspace is `knowledge/llm-wiki/`.
+The `raw/` and `wiki/sources/` entries are relative links to canonical records; the bridge's compile transaction preserves those links and source hashes.
+Otherwise use the unchanged llm-wiki-agent instructions under `.agents/skills/llm-wiki/upstream/` in the current ADE context.
+This fallback requires no additional model client. Both routes retain the current rich pages in one shared active wiki.
 
-| Declared prerequisite | Version constraint | Consumer |
+| Declared prerequisite | Version | Consumer |
 | --- | --- | --- |
-| Python | 3.11–3.13 for the wrapper and NetworkX; upstream metadata declares `>=3.10,<3.14`. | All upstream scripts; install separately from Workbench's Python 3.14 environment. |
-| `markitdown[all]` | `>=0.1.5,<0.2.0` | Multi-format conversion and ingestion helpers. |
-| `tqdm` | `>=4.67.3,<5.0.0` | Batch conversion progress. |
-| `litellm` | `~=1.83.10` | Provider calls from ingestion, query, semantic lint, healing, and graph inference. |
-| `networkx` | `~=3.6.1` | Native graph community detection and reports. |
+| Python | 3.13 selected for the Workbench environment; upstream declares `>=3.10`. | Separate OpenKB CLI runtime. |
+| `pageindex` | `0.3.0.dev3` | Document indexing and retrieval. |
+| `markitdown[docx,pptx,xlsx,xls]` | `0.1.5` | Selected document conversions. |
+| `trafilatura` | `2.0.0` | Web-document text extraction. |
+| `click` | `8.4.0` | Native CLI. |
+| `watchdog` | `6.0.0` | Explicitly selected file watching. |
+| `litellm` | `1.87.2` | Independent provider calls with explicit URL and token configuration. |
+| `openai-agents` / `openai` | `0.17.3` / `2.44.0` | Native model-agent execution and API client. |
+| `pyyaml` / `python-dotenv` | `6.0.3` / `1.2.2` | OpenKB metadata and private configuration. |
+| `json-repair` | `0.59.10` | Model-output parsing. |
+| `prompt_toolkit` / `rich` | `3.0.52` / `15.0.0` | Interactive CLI and terminal output. |
+| `portalocker` | `3.2.0` | Concurrent file-operation coordination. |
 
-The constraints come from the untouched upstream [project metadata](../.agents/skills/llm-wiki/upstream/pyproject.toml) and [requirements file](../.agents/skills/llm-wiki/upstream/requirements.txt).
-The installer consumes both declarations.
-The upstream [optional conversion backends](../.agents/skills/llm-wiki/upstream/README.md#optional-dependencies) have separate package and platform requirements.
-Supplying their scripts does not establish that every optional backend or document format has been verified.
+These are the exact declared pins in the selected OpenKB revision; transitive dependencies follow the prepared wheel set.
+The separate environment isolates these versions from Workbench's core package pins.
+The optional OpenKB web/API extras and server are not required for the local wiki workflow.
 
 Installation downloads Python packages through the configured package index and its artifact hosts.
 Public defaults commonly use `pypi.org` and `files.pythonhosted.org`; company mirrors can replace them.
 An absent interpreter can require separate installation through the selected Python distribution mechanism.
-The source itself ships in the Workbench wheel and needs no startup GitHub download.
-The standard Workbench offline bundle includes these source files but does not provision `.venv-llm-wiki` dependencies.
-Prepare matching packages separately for that interpreter and platform when direct package access is unavailable.
+Installing the pinned package from GitHub requires access to `github.com` and its archive/artifact hosts when a prepared wheel is unavailable.
+The standard Workbench offline bundle includes the skill and bridge but keeps the separate OpenKB runtime outside its wheelhouse.
+Prepare a complete matching-platform Python 3.13 wheelhouse containing the pinned OpenKB wheel and dependencies, then use `install --wheelhouse PATH`.
+Regenerate the Workbench offline bundle after skill changes so its source fingerprint matches.
 
-The `graph --no-infer` workflow executes upstream `tools/build_graph.py` without model calls.
-It produces native graph JSON, HTML, and optional reports under `knowledge/llm-wiki/graph/`.
-It does not invoke Workbench's service-dependencies graph as a substitute.
-Native HTML loads vis-network from `https://unpkg.com/vis-network/standalone/umd/vis-network.min.js`.
-The viewer therefore has a browser network dependency even when graph extraction runs locally.
+The bridge's `graph` command uses original OpenKB `visualize --no-open` in both semantic engine modes without model calls.
+It writes `knowledge/llm-wiki/output/visualize/graph.html`, embedding graph data without an external script URL.
+OpenKB's local structural checks also need no LLM URL or token; both tools read the one existing page layout.
+The wiki graph and Workbench's service-dependencies graph have distinct inputs and contracts.
 
-Inference and other scripted model features send selected input to the provider configured through LiteLLM.
-Model selection uses `LLM_MODEL` and `LLM_MODEL_FAST`; credentials follow the selected provider's environment configuration.
-Provider endpoints, access, and usage costs remain specific to that configuration.
-The upstream converter can also fetch selected arXiv sources when explicitly invoked.
-No automatic scheduler or update check is enabled merely by retaining the complete upstream source.
+Use private `OPENAI_API_BASE` and `LLM_API_KEY` to select OpenKB.
+The selector reads `knowledge/llm-wiki/.env` and the process environment, excluding unrelated global authentication.
+With both settings, compilation, native queries, and semantic lint independently send selected content through LiteLLM.
+If either is absent, the current ADE agent reads original llm-wiki-agent `AGENTS.md` and maintains the same page layout and source links.
+The bridge preserves OpenKB metadata, immutable canonical symlinks, and explorations; upstream scripted ingest and refresh are not used.
+The bridge does not select device OAuth automatically or reuse the ADE login for OpenKB.
+Runtime network access, permitted models, and usage costs follow the configured provider; live provider execution remains unverified.
+The local graph and installed package alone do not establish successful model access.
 
-See [the installation procedure](SETUP.md#install-the-complete-llm-wiki-agent) for native graph commands and runtime separation.
+See [the installation and ADE procedure](SETUP.md#openkb-primary-wiki) for portable commands, blocked native source transactions, authentication choices, and the native CLI full-source reading limit.
 
 ## Browser assets and documentation
 
@@ -412,8 +425,8 @@ The Workbench service graph viewer embeds its CSS, JavaScript, and graph data.
 The [knowledge graph](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) uses existing Python, PyYAML, and jsonschema dependencies.
 It adds no database, service, package prerequisite, download domain, or runtime network call.
 Connected and prepared-bundle installation use the same existing package paths.
-The [complete llm-wiki-agent](#complete-llm-wiki-agent) has its own Python dependencies, provider calls, and native viewer CDN dependency.
-Its entire upstream tree ships in the Workbench package; generated project wiki content does not.
+The [OpenKB wiki](#openkb-primary-wiki) has a separate Python runtime and optional provider calls; its native wiki graph viewer embeds its assets.
+Its official skill and the Workbench bridge ship in the package; generated project wiki content does not.
 The initial TDA HTML report also uses local generated content.
 Their inspected renderers contain no external script or stylesheet dependency.
 Following report hyperlinks still requires the linked business service.

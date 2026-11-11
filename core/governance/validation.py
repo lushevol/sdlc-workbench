@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 
@@ -30,6 +31,15 @@ _TRANSITIONS = {
     "contested": {"investigated", "stale", "superseded"},
     "stale": {"investigated", "superseded"}, "superseded": set(),
 }
+
+
+def is_derived_knowledge_path(path: Path, root: Path) -> bool:
+    """Recognize the reserved wiki workspace before resolving source links."""
+    try:
+        relative = Path(os.path.abspath(path)).relative_to(Path(os.path.abspath(root)))
+    except ValueError:
+        return False
+    return tuple(part.casefold() for part in relative.parts[:2]) == ("knowledge", "llm-wiki")
 
 
 def _timestamp(value):
@@ -268,6 +278,8 @@ def validate_knowledge(root: Path) -> dict:
 
     domain_documents = []
     for path in sorted(knowledge.rglob("*")):
+        if is_derived_knowledge_path(path, root):
+            continue
         relative = path.relative_to(knowledge)
         if not confined(path):
             continue

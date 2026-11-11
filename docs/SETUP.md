@@ -313,53 +313,80 @@ This installation excludes upstream hooks, dashboards, global plugins, and auxil
 Static discovery does not prove that a model follows the instructions.
 Native Windows runtime remains untested; existing tests cover forwarding when directory links are denied.
 
-## Install the complete llm-wiki-agent
+<a id="openkb-primary-wiki"></a>
+## Knowledge wiki engine selection
 
-The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) includes the complete upstream project at revision `f03eff653886672ee8a92bb6a28faae9190d90d2`.
-The original files remain under [`.agents/skills/llm-wiki/upstream/`](../.agents/skills/llm-wiki/upstream/README.md), without upstream Git metadata.
-The [file inventory](../.agents/skills/llm-wiki/upstream-lock.json) binds their original bytes.
-The Workbench wrapper and its configuration remain separate from those files.
+[OpenKB](../.agents/skills/openkb/SKILL.md) is primary when both an LLM URL and token are configured.
+Otherwise the [llm-wiki bridge](../.agents/skills/llm-wiki/SKILL.md) selects llm-wiki-agent in the current ADE agent context.
+The bridge applies Workbench source, lifecycle, and publication boundaries and supplies a portable launcher.
+The installation pins OpenKB revision `ff54396e575ee6feb0113b631a34caa082b441cc` from [VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB).
+The original llm-wiki-agent source remains unchanged under [`.agents/skills/llm-wiki/upstream/`](../.agents/skills/llm-wiki/upstream/README.md) and supplies the fallback procedure.
+Both engines maintain one active wiki at `knowledge/llm-wiki/`; retain its current rich pages when switching engines.
 
 Run the wrapper from the selected workspace root:
 
 | Action | Windows 11 | macOS |
 | --- | --- | --- |
-| Install declared dependencies | `py -3 .agents/skills/llm-wiki/scripts/wiki.py install` | `python3 .agents/skills/llm-wiki/scripts/wiki.py install` |
-| Export candidate knowledge | `py -3 .agents/skills/llm-wiki/scripts/wiki.py export` | `python3 .agents/skills/llm-wiki/scripts/wiki.py export` |
-| Build the upstream graph | `py -3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save` | `python3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save` |
-| Verify source integrity | `py -3 .agents/skills/llm-wiki/scripts/wiki.py verify` | `python3 .agents/skills/llm-wiki/scripts/wiki.py verify` |
+| Install pinned OpenKB | `py -3 .agents/skills/llm-wiki/scripts/wiki.py install` | `python3 .agents/skills/llm-wiki/scripts/wiki.py install` |
+| Select compilation route | `py -3 .agents/skills/llm-wiki/scripts/wiki.py compile` | `python3 .agents/skills/llm-wiki/scripts/wiki.py compile` |
+| Verify local wiki and source links | `py -3 .agents/skills/llm-wiki/scripts/wiki.py verify` | `python3 .agents/skills/llm-wiki/scripts/wiki.py verify` |
+| Inspect native status | `py -3 .agents/skills/llm-wiki/scripts/wiki.py run status` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run status` |
+| Build the original OpenKB wiki graph | `py -3 .agents/skills/llm-wiki/scripts/wiki.py graph` | `python3 .agents/skills/llm-wiki/scripts/wiki.py graph` |
 
-Installation creates `.venv-llm-wiki` independently of Workbench's `.venv`.
-The installer selects compatible Python, preferring Python 3.13 when available.
+Installation creates `.venv-openkb` independently of Workbench's `.venv`.
+The Workbench installation selects Python 3.13; OpenKB's upstream metadata declares Python `>=3.10`.
 Use `install --python /absolute/path/to/python3.13` to select an interpreter explicitly.
-The wrapper requires Python 3.11–3.13 because NetworkX requires Python 3.11 or newer.
-The upstream project metadata independently declares Python `>=3.10,<3.14`.
-Workbench's Python 3.14 environment cannot supply this separate runtime.
+The native executable is `.venv-openkb/bin/openkb` on macOS and `.venv-openkb/Scripts/openkb.exe` on Windows.
+For OpenKB, the wrapper supplies `--kb-dir knowledge/llm-wiki` and forwards supported native commands through `run`.
+Use `run query --help` and the [native skill](../.agents/skills/openkb/SKILL.md) before selecting command-specific arguments.
 
-The installer consumes both upstream `pyproject.toml` and `requirements.txt` dependency declarations.
-These include MarkItDown with its declared extras, tqdm, LiteLLM, and NetworkX.
-The dependency installation command has a 600-second deadline.
-The root Workbench setup and its standard offline bundle do not install this separate environment.
-Use approved package access or prepare matching packages for the selected interpreter and platform.
-See [the dependency inventory](DEPENDENCIES.md#complete-llm-wiki-agent) for download and runtime boundaries.
+The installer consumes the pinned OpenKB distribution and its declared dependency set, including PageIndex, LiteLLM, the OpenAI agents SDK, and document converters.
+The root Workbench setup and its standard offline bundle keep this runtime separate.
+For disconnected installation, prepare a complete wheelhouse for Python 3.13 and the target OS/architecture, including the pinned OpenKB wheel, then run `install --wheelhouse PATH`.
+Prepare wheels on a connected machine with approved package access and verify their hashes before transfer; do not copy installed virtual environments.
+Regenerate the Workbench offline bundle after changing skill files because its source fingerprint includes the packaged skills.
+See [the dependency inventory](DEPENDENCIES.md#openkb-primary-wiki) for the package pins and network boundaries.
 
 The operational workspace is `knowledge/llm-wiki/`.
-Its native `wiki/`, `raw/`, and `graph/` directories remain separate from the immutable vendored source.
-Export prepares upstream-compatible pages from `knowledge/candidates/` and retains source mappings. Use `export --source knowledge/confirmed` when confirmed source records become available.
-The graph command executes upstream `tools/build_graph.py`.
-It writes `knowledge/llm-wiki/graph/graph.json`, `graph.html`, and the requested graph report.
-Open `graph.html` in a browser to inspect the native result.
-This command is separate from `ai-sdlc graph build`.
+Workbench canonical knowledge scanners exclude this reserved derived workspace; the bridge's `verify` command checks its native page schema and source bindings separately.
+Its `wiki/` contains the index, source summaries, concepts, entities, explorations, and linked full-text source entries.
+Both `raw/` entries and `wiki/sources/` entries are relative symlinks to the selected canonical records, preserving a single source-content copy.
+The bridge's `compile` command defaults to `knowledge/candidates`; use `compile --source PATH` for another authorized source corpus.
+With both private provider settings, it calls original OpenKB `compile_short_doc` with native provider setup and locking.
+It preserves source links and registers hashes after successful compilation.
+Otherwise follow its llm-wiki-agent procedure in the current ADE context against the same pages and canonical sources.
 
-`--no-infer` builds explicit wikilink relationships without calling a model provider.
-Omitting that option enables upstream semantic inference through LiteLLM.
-Scripted ingestion, query, semantic lint, and healing can also call the configured model provider.
-Configure provider credentials privately through its supported environment variables.
-The native HTML viewer loads vis-network from `unpkg.com`; opening it can require network access.
-Optional PDF backends follow their separate [upstream installation instructions](../.agents/skills/llm-wiki/upstream/README.md#optional-dependencies).
+Native `add`, `recompile`, `watch`, and `remove` transactions assume owned regular source files and can reject or replace source links.
+The bridge rejects those commands through `run`, together with `init`, `use`, and `delete-kb`; use `compile` for scripted compilation and canonical ingestion/governance for source changes or removal.
+This keeps upstream OpenKB unchanged while protecting the linked Workbench corpus.
+The graph command runs original OpenKB `visualize --no-open` in either semantic engine mode, without service graph substitution.
+It reads the shared OpenKB page layout and writes `knowledge/llm-wiki/output/visualize/graph.html`.
+OpenKB's viewer embeds its graph data and assets and can open without a CDN request.
+This wiki graph remains separate from `ai-sdlc graph build` and its governed-evidence/service graph.
 
-Generated workspaces receive the complete upstream source and wrapper, without this project's wiki data or installed environment.
-Run installation and export in each selected workspace.
+### ADE usage and model authentication
+
+Set both `OPENAI_API_BASE` and `LLM_API_KEY` in `knowledge/llm-wiki/.env` or the process environment to select OpenKB.
+The selector ignores unrelated global authentication. Missing either setting selects llm-wiki-agent.
+Keep the token in private environment configuration, outside tracked wiki files and reports.
+The OpenKB CLI is a separate model client: compilation, native queries, and semantic lint send selected content through LiteLLM.
+Do not select device OAuth automatically or reuse the ADE's login.
+
+If either URL or token is absent, use llm-wiki-agent's unchanged instructions with the current ADE agent and bridge constraints.
+Read its original `AGENTS.md` before semantic work.
+Read complete linked sources, revise summaries and focused concept/entity pages, preserve contradictions, and reconcile the index and log.
+Retain the current OpenKB page layout; the fallback procedure does not require a parallel wiki or regenerated overview.
+Treat summaries as derived source pages, preserve OpenKB metadata fields, and store saved synthesis under explorations.
+Keep `raw/` and `wiki/sources/` immutable canonical symlinks; do not run upstream scripted ingest or refresh on this layout.
+This fallback uses the existing agent session without additional LLM credentials.
+Source copying or metadata export alone does not complete semantic compilation.
+Semantic engine selection controls compilation, queries, and semantic lint. Local OpenKB verification and original visualization need no model calls.
+Native CLI `query` can read compiled pages, but upstream `read_wiki_file` denies full-text symlinks that resolve outside the wiki root.
+Use ADE direct reads of the linked canonical sources when an answer needs full-source context; this source-reading limit is preserved in the unchanged upstream implementation.
+Live provider calls were not exercised by the local migration checks.
+
+Generated workspaces receive the OpenKB skill and Workbench bridge, without this project's wiki data or installed environment.
+Install the optional CLI separately in each workspace that uses OpenKB, then follow the selected compilation workflow.
 
 ## Runtime dependencies
 
@@ -388,7 +415,7 @@ The [knowledge graph](../.agents/skills/service-dependencies-graph/references/ar
 Run `ai-sdlc --workspace PATH graph build` to generate its snapshot and viewer.
 It needs no graph database, LLM service, API key, or additional installation step.
 Connected setup and prepared offline bundles already contain its dependencies.
-The [complete llm-wiki-agent installation](#install-the-complete-llm-wiki-agent) uses its own Python environment and native graph generator.
+The [knowledge wiki](#openkb-primary-wiki) uses a separate Python environment for OpenKB operations and its original local visualizer.
 Its project wiki content and installed environment are excluded from initialized workspace defaults.
 Nexus target scanning can install or resolve target dependencies.
 Nexus fixes can change target manifests and lockfiles.

@@ -12,10 +12,13 @@ The graph records static source declarations and supported identity joins.
 It does not establish deployment, runtime execution, or approved business intent.
 Its [knowledge projection](references/architecture/knowledge-graph.md) connects declared knowledge, provenance, catalogs, and behavior-review evidence.
 
-Use [llm-wiki](../llm-wiki/SKILL.md) for the original upstream wiki graph from native `[[wikilinks]]`.
-Its launcher invokes unchanged `llm-wiki-agent` graph code and writes `knowledge/llm-wiki/graph/graph.json` and `graph.html`.
-Keep that `{nodes, edges, built}` output separate from this skill's evidence graph and snapshot contracts.
-Do not substitute this graph's Knowledge tab for a requested upstream llm-wiki graph.
+Use the [llm-wiki bridge](../llm-wiki/SKILL.md) for the original OpenKB wiki graph from native `[[wikilinks]]`.
+Select [OpenKB](../openkb/SKILL.md) with both private `OPENAI_API_BASE` and `LLM_API_KEY`; otherwise use llm-wiki-agent in the current ADE context.
+Both routes use one active wiki at `knowledge/llm-wiki/`, preserving the existing rich pages.
+Original OpenKB `visualize --no-open` reads the existing layout in either semantic mode and writes `knowledge/llm-wiki/output/visualize/graph.html`.
+Local visualization needs no model credentials.
+Keep wiki page relationships and output separate from this skill's governed-evidence graph and snapshot contracts.
+A requested wiki graph uses OpenKB's original local visualizer; this graph's Knowledge tab remains its separate evidence projection.
 
 The `.claude/skills/service-dependencies-graph/` alias points to this canonical directory.
 Initialization creates the directory link where the platform permits it.
@@ -34,7 +37,7 @@ Use direct source inspection and existing project tools for unsupported scope, a
 | --- | --- | --- |
 | Build or audit the repository census | Run the skill build command, then inspect coverage. | Snapshot, census, diagnostics, and fingerprints. |
 | Explore knowledge and provenance | Read the [knowledge graph guide](references/architecture/knowledge-graph.md), then query records, references, or bounded paths. | Exact identities, lifecycle states, grades, evidence, and freshness. |
-| Build the native llm-wiki graph | Use the [llm-wiki graph workflow](../llm-wiki/references/workflows.md#original-upstream-graph). | Original upstream nodes, edges, HTML, and optional connectivity report. |
+| Build the active wiki graph | Use the [wiki graph workflow](../llm-wiki/references/workflows.md#wiki-graph). | Original OpenKB wikilink visualization in either semantic engine mode. |
 | Explain the architecture | Check coverage, services, and repository relationships. | Analysis roots, confirmed links, and unresolved boundaries. |
 | Discover relationships from initial instructions | Follow [instruction investigation](references/architecture/initial-instruction-investigation.md), then [the context contract](references/architecture/user-architecture-context.md). | Investigated relationships integrated into the graph, with source support, inference, conflicts, and limits. |
 | Trace one repository or boundary | Search concrete names or paths, then inspect neighborhoods and cited source. | Consumer/provider evidence and identity limits. |

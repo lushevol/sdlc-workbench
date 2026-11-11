@@ -26,7 +26,7 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 CANONICAL_SKILL_IDS = (
     "analyze-requirement", "code-review", "connectors", "detect-gaps", "gherkin-quality", "govern-knowledge",
-    "impact-analysis", "ingest-knowledge", "llm-wiki", "ponytail", "query-knowledge", "release-clinic", "release-confidence", "repository-onboarding",
+    "impact-analysis", "ingest-knowledge", "llm-wiki", "openkb", "ponytail", "query-knowledge", "release-clinic", "release-confidence", "repository-onboarding",
     "service-dependencies-graph", "sync-release-knowledge", "validate-sdlc-documents", "verify-implementation",
 )
 
@@ -208,6 +208,11 @@ class WorkspacePackagingTests(unittest.TestCase):
         expected = inventory(source_root / vendor)
         locked = json.loads((source_root / vendor.parent / "upstream-lock.json").read_text(encoding="utf-8"))
         self.assertEqual(expected, locked["files"])
+        native_skill = Path(".agents/skills/openkb")
+        expected_native = inventory(source_root / native_skill)
+        native_lock = json.loads((source_root / native_skill / "source-lock.json").read_text(encoding="utf-8"))
+        for name, expected_hash in native_lock["files"].items():
+            self.assertEqual(expected_native[name], expected_hash)
         required = {"LICENSE", "pyproject.toml", "requirements.txt", ".gitignore", "raw/.gitkeep",
                     "graph/.gitkeep", "assets/star-history.svg", ".github/workflows/star-history.yml",
                     ".claude/commands/wiki-graph.md", "tools/build_graph.py", "tools/ingest.py",
@@ -267,6 +272,8 @@ class WorkspacePackagingTests(unittest.TestCase):
                     destination.write_bytes(payload)
                 self.assertEqual(actual, expected)
 
+            self.assertEqual(inventory(unpacked / native_skill), expected_native)
+
             build("wheel", unpacked, distributions)
             wheels = list(distributions.glob("*.whl"))
             self.assertEqual(len(wheels), 1)
@@ -277,6 +284,7 @@ class WorkspacePackagingTests(unittest.TestCase):
                           for name in archive.namelist() if name.startswith(prefix) and not name.endswith("/")}
                 self.assertEqual(actual, expected)
                 archive.extractall(installed)
+            self.assertEqual(inventory(installed / "ai_sdlc_workbench/scaffold" / native_skill), expected_native)
 
             workspace = base / "workspace"
             result = subprocess.run([
@@ -289,8 +297,11 @@ class WorkspacePackagingTests(unittest.TestCase):
                 text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertEqual(inventory(workspace / vendor), expected)
+            self.assertEqual(inventory(workspace / native_skill), expected_native)
+            self.assertTrue((workspace / ".claude/skills/openkb/SKILL.md").is_file())
             self.assertFalse((workspace / "knowledge/llm-wiki").exists())
             self.assertFalse((workspace / ".venv-llm-wiki").exists())
+            self.assertFalse((workspace / ".venv-openkb").exists())
 
 
 class WorkspaceLayoutTests(unittest.TestCase):

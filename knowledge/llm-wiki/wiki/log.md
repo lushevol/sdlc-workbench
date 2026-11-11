@@ -1,93 +1,65 @@
-# Wiki Log
+# Operations Log
 
-Append-only chronological record of all operations.
+## [2026-11-11 14:26:03] ingest | KT-sdk-and-entitlements.md
 
-Format: `## [YYYY-MM-DD] <operation> | <title>`
+## [2026-11-11 14:27:46] ingest | ARC-portal-service-relationships.md
 
-Parse recent entries: `grep "^## \[" wiki/log.md | tail -10`
+## [2026-11-11 14:28:36] ingest | KT-frontend-composition.md
 
----
+## [2026-11-11 14:30:19] ingest | KT-portal-purpose.md
 
-## [2026-11-11] ingest | Portal composition and service relationships
+## [2026-11-11 14:31:41] ingest | KT-architecture-evolution.md
 
-Workbench export of `knowledge/candidates/architecture/ARC-portal-service-relationships.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:32:54] ingest | KT-application-interoperability.md
 
-## [2026-11-11] ingest | Frontend composition and application ownership
+## [2026-11-11 14:33:59] ingest | KT-observability-and-performance.md
 
-Workbench export of `knowledge/candidates/architecture/KT-frontend-composition.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:35:40] ingest | KT-admin-and-onboarding.md
 
-## [2026-11-11] ingest | Portal purpose and capability map
+## [2026-11-11 14:37:30] ingest | KT-release-operations.md
 
-Workbench export of `knowledge/candidates/background/KT-portal-purpose.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:38:23] ingest | REQ-active-session-renewal.md
 
-## [2026-11-11] ingest | Architecture evolution and proposal boundaries
+## [2026-11-11 14:40:06] ingest | KT-authentication-and-sessions.md
 
-Workbench export of `knowledge/candidates/evolution/KT-architecture-evolution.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:41:25] ingest | KT-ces-migration-parity.md
 
-## [2026-11-11] ingest | Portal application interoperability and OpenFin context
+## [2026-11-11 14:42:53] query | What is the candidate target behavior for active session renewal after refresh-token expiry, including manual recovery?
 
-Workbench export of `knowledge/candidates/interoperability/KT-application-interoperability.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:44:23] query | How should the candidate CES migration preserve EMS2 permission meaning, and what equivalence limits remain?
 
-## [2026-11-11] ingest | Portal observability, performance, and cache behavior
+## [2026-11-11 14:44:43] query | What are the candidate Portal frontend layers and their ownership boundaries?
 
-Workbench export of `knowledge/candidates/observability/KT-observability-and-performance.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:45:14] query | What responsibilities do Portal and tenant teams have during routing, validation, onboarding, and release?
 
-## [2026-11-11] ingest | Admin and onboarding
+## [2026-11-11 14:45:38] query | What candidate contract is required for application interoperability and OpenFin context readiness?
 
-Workbench export of `knowledge/candidates/operations/KT-admin-and-onboarding.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:46:04] query | What do the candidate records say about portal interaction analytics, cache behavior, and performance evidence?
 
-## [2026-11-11] ingest | Portal release and tenant operation boundaries
+## [2026-11-11 14:48:34] lint | report → lint_20261111_144834.md
 
-Workbench export of `knowledge/candidates/operations/KT-release-operations.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:57:10] query | How should the Portal preserve an active session across refresh-token expiry, and what manual recovery is required after a rejected renewal?
 
-## [2026-11-11] ingest | Active session renewal
+## [2026-11-11 14:57:54] query | What candidate mapping rules map EMS2 roles and entitlements to CES permissions, and what parity limits remain unresolved?
 
-Workbench export of `knowledge/candidates/requirements/REQ-active-session-renewal.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:58:20] query | What are the Portal frontend composition layers and ownership boundaries among root config, base, container, feature, module, and tile?
 
-## [2026-11-11] ingest | Authentication and sessions
+## [2026-11-11 14:58:38] query | Which responsibilities belong to Portal and tenant teams for routing, release, validation, and rollback?
 
-Workbench export of `knowledge/candidates/security/KT-authentication-and-sessions.md`; existing derived content, no LLM invocation.
+## [2026-11-11 14:58:56] query | What candidate interoperability contract and OpenFin/FDC3 context readiness are required between caller and provider applications?
 
-## [2026-11-11] ingest | CES migration permission preservation
+## [2026-11-11 14:59:16] query | What telemetry and performance or capacity evidence exists for portal interactions, cache behavior, and response time, and what remains proposed or missing?
 
-Workbench export of `knowledge/candidates/security/KT-ces-migration-parity.md`; existing derived content, no LLM invocation.
+## [2026-11-11 17:06:07] repair | Restore release-window concept
 
-## [2026-11-11] ingest | SDK and entitlements
+Added `concepts/release-window-governance.md` from canonical candidate/draft `KT-release-operations` version 2 and added its catalog entry. Preserved the unresolved 10-versus-24-hour duration and explicit-confirmation-versus-silence alternatives. The repair supplies the missing target for 14 existing references and does not approve a release rule.
 
-Workbench export of `knowledge/candidates/security/KT-sdk-and-entitlements.md`; existing derived content, no LLM invocation.
+## [2026-11-11 17:06:07] repair | Clarify CES field additions
 
-## [2026-11-11] export | Candidate knowledge base
+Clarified active summaries, concepts, and entities against canonical `KT-ces-migration-parity`: `roleList` and `applicationId` are the two new fields; `name` and `applicationName` remain existing fields with the source's clarified meanings. Preserved application scope, scalar-role limits, candidate status, and unchanged EMS2 behavior requirements.
 
-Generated from `knowledge/candidates`; candidate records remain unconfirmed.
+## [2026-11-11 17:06:07] repair | Catalog and navigation boundaries
 
-## [2026-11-11] graph | Knowledge graph rebuilt
+Removed six obvious self-wikilinks from five concept pages. Added the candidate/draft authority preamble and source-manifest binding link to the catalog. Verified that all six retained exploration pages already have catalog entries with descriptions. Original benchmark material and canonical source content remain unchanged.
 
-13 nodes, 43 edges (43 extracted, 0 inferred).
-
-## [2026-11-11] report | Graph health report generated
-
-13 nodes analyzed.
-
-## [2026-11-11] graph | Knowledge graph rebuilt
-
-13 nodes, 43 edges (43 extracted, 0 inferred).
-
-## [2026-11-11] report | Graph health report generated
-
-13 nodes analyzed.
-
-## [2026-11-11] graph | Knowledge graph rebuilt
-
-13 nodes, 43 edges (43 extracted, 0 inferred).
-
-## [2026-11-11] report | Graph health report generated
-
-13 nodes analyzed.
-
-## [2026-11-11] graph | Knowledge graph rebuilt
-
-18 nodes, 63 edges (63 extracted, 0 inferred).
-
-## [2026-11-11] report | Graph health report generated
-
-18 nodes analyzed.
+Native OpenKB structural functions after these repairs found zero broken wikilinks, index synchronization issues, orphan pages, invalid frontmatter, or missing required OKF fields. These structural checks used the local installation without model-provider calls and do not establish semantic correctness or publication approval.

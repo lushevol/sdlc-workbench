@@ -1,75 +1,37 @@
 ---
 name: llm-wiki
-description: Use the fully installed llm-wiki-agent to ingest, refresh, query, and review a source-linked native wiki and build its original wikilink graph over Workbench knowledge.
+description: Maintain the single Workbench knowledge wiki with OpenKB when an LLM URL and token are configured, otherwise with llm-wiki-agent in the current ADE session.
 ---
 
-# Build and maintain the knowledge wiki
+# Maintain the project knowledge wiki
 
-Use the complete, unchanged [SamurAIGPT/llm-wiki-agent](references/upstream.md) installed under [upstream/](upstream/).
-Its original tools, agent instructions, converters, workflows, and native graph implementation remain available.
-Read [the mode procedures](references/workflows.md) for the requested operation and its model or write requirements.
-The external [launcher](scripts/wiki.py) manages installation, source integrity, export, and isolated execution.
-Do not edit vendored files or replace upstream algorithms with Workbench implementations.
+Use one active wiki at `knowledge/llm-wiki/`. Keep its existing detailed summaries, focused concepts, entities, saved explorations and cross-links. Do not create another wiki when the selected engine changes.
 
-## Select the source and output boundary
-
-The persistent native workspace is `knowledge/llm-wiki/`, with `wiki/`, `raw/`, and `graph/` data directories.
-The runtime uses unchanged upstream implementation copies beside those data directories under `knowledge/llm-wiki/`.
-Those runtime code copies remain ignored; the complete vendored source stays pristine.
-Dependencies live in `.venv-llm-wiki/`, separate from the Workbench runtime.
-Changing the shell directory alone cannot redirect upstream data paths. Use the launcher.
-
-The native wiki is derived knowledge, separate from canonical Workbench records and publication.
-Retain canonical IDs, versions, hashes, lifecycle states, source citations, conflicts, and applicability limits in exported pages.
-Reopen canonical records and relevant sources before using a wiki claim for engineering decisions.
-Use [ingest-knowledge](../ingest-knowledge/SKILL.md) and [govern-knowledge](../govern-knowledge/SKILL.md) for changes to canonical intended meaning.
-Native ingestion, saved answers, semantic lint, healing, graph edges, and successful commands cannot promote canonical knowledge.
-
-## Use the supported wiki layout
-
-```text
-knowledge/llm-wiki/
-  raw/                              # Native source inputs.
-  wiki/
-    index.md                        # Native catalog.
-    log.md                          # Upstream operation log.
-    overview.md                     # Living synthesis.
-    sources/<unique-stem>.md
-    entities/<unique-stem>.md
-    concepts/<unique-stem>.md
-    syntheses/<unique-stem>.md
-  graph/
-    graph.json                      # Original {nodes, edges, built} output.
-    graph.html                      # Original upstream renderer.
-    graph-report.md                  # Optional upstream graph report.
-```
-
-Use upstream page frontmatter and native `[[filename-stem]]` links.
-Export uses unique lowercase filename stems, including across directories, and retains provenance.
-Directory `index.md` navigation pages cannot be used directly as graph nodes: upstream excludes that filename everywhere.
-Keep canonical records and registered original evidence at their existing locations.
-
-## Complete the requested mode
-
-Run from the selected workspace root:
+## Select the semantic engine
 
 ```sh
-python3 .agents/skills/llm-wiki/scripts/wiki.py install
-python3 .agents/skills/llm-wiki/scripts/wiki.py export
-python3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save
-python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+python3 .agents/skills/llm-wiki/scripts/wiki.py engine
 ```
 
-`export` defaults to the raw `knowledge/candidates/` records and converts them to native source pages and wikilinks.
-Use `export --source knowledge/confirmed` when confirmed source records become available.
-`graph` invokes the original upstream `tools/build_graph.py`, with arguments passed through unchanged.
-Use `run <tool> [args...]` for original tools such as `health`, `ingest`, `query`, `lint`, `refresh`, and `heal`.
-For another workspace, put `--project PATH` before the command. Inspect launcher and tool help for options.
+When **both** `OPENAI_API_BASE` and `LLM_API_KEY` are configured in `knowledge/llm-wiki/.env` or the process environment, use [OpenKB](../openkb/SKILL.md) as primary for semantic compilation, query and lint. KB-local nonempty values take precedence. Use a provider-compatible model in the ignored `.openkb/config.yaml`. URL and token presence selects the engine; it does not verify authentication or endpoint availability.
 
-Use `--no-infer` for an explicit-link graph without model calls.
-The original renderer loads vis-network from an external CDN; graph generation itself does not need that asset.
-Use the [service graph skill](../service-dependencies-graph/SKILL.md) for its separate architecture and governed-evidence projection.
-It must not substitute for the upstream wiki graph when the user requests llm-wiki graph generation.
+Otherwise use the original [llm-wiki-agent instructions](upstream/AGENTS.md) in the **current ADE session**, without another model URL or token. Do not automatically substitute OAuth or infer a URL from a provider-specific key. The launcher's `compile` and semantic `run` commands return an explicit agent handoff in this mode; that output does not mean compilation ran. Carry out the requested semantic work using the current agent's tools.
 
-Report exported record coverage, actual tool results, source integrity, model use, and material limits.
-Structural health and connected pages do not establish semantic truth, publication, deployment, or verified business behavior.
+## Maintain the shared documents
+
+Read the complete canonical source, the index and relevant existing pages before writing. In fallback mode, apply the original agent's ingest/query/contradiction workflows with these external layout constraints: derived source summaries live in `wiki/summaries/`; `wiki/sources/` and `raw/` are immutable relative links to canonical records; saved synthesis lives in `wiki/explorations/`. Preserve the existing page metadata and wiki-relative links. Use the current index as the synthesis map; a second overview or duplicate source-summary tree is unnecessary.
+
+Never run upstream scripted `ingest` or `refresh` against those source aliases: they assume owned source-summary files and could write through canonical symlinks. The [Workbench procedures](references/workflows.md) explain source bindings, supported commands and validation. Both original upstream code and the official OpenKB skill remain unchanged.
+
+Use [ingest-knowledge](../ingest-knowledge/SKILL.md) and [govern-knowledge](../govern-knowledge/SKILL.md) for canonical changes and publication. Retain source IDs, hashes, versions, lifecycle, applicability and unresolved conflicts. Derived wiki content and graph connectivity do not approve policy or prove implementation behavior.
+
+## Verify and visualize
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+python3 .agents/skills/llm-wiki/scripts/wiki.py graph
+```
+
+These local checks use the stored OpenKB page format in either semantic mode. Verification and original OpenKB visualization make no model calls. The graph at `knowledge/llm-wiki/output/visualize/graph.html` is the wiki's native wikilink graph; keep it separate from the service dependency graph.
+
+Report the selected semantic engine, actual work performed, source integrity, structural findings and remaining knowledge limits. Reading or exporting metadata is not semantic compilation.

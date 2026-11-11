@@ -7,7 +7,7 @@ import os
 import tempfile
 from pathlib import Path
 
-from ..governance.validation import _document_content, _FORBIDDEN_KNOWLEDGE_PARTS, _NAVIGATION
+from ..governance.validation import _document_content, _FORBIDDEN_KNOWLEDGE_PARTS, _NAVIGATION, is_derived_knowledge_path
 from ..models import Context, Operation, Resource, WorkbenchError
 from .common import BuiltinProvider, ProviderError, configured_path, integer_schema, object_schema, relative_path, string_schema
 
@@ -66,6 +66,7 @@ class LocalKnowledgeProvider(BuiltinProvider):
         truncated = False
         for directory, directories, filenames in os.walk(base, followlinks=False):
             directories[:] = sorted(name for name in directories if name.casefold() not in _FORBIDDEN_KNOWLEDGE_PARTS
+                                    and not is_derived_knowledge_path(Path(directory) / name, context.workspace_root)
                                     and not (Path(directory) / name).is_symlink())
             for name in sorted(filenames):
                 candidate = Path(directory) / name
@@ -83,6 +84,10 @@ class LocalKnowledgeProvider(BuiltinProvider):
 
     def _invoke(self, operation: str, resource: Resource, arguments: dict, context: Context) -> dict:
         base = configured_path(resource, context)
+        requested = base / arguments["path"] if operation in {"read", "ingest"} else base
+        if (is_derived_knowledge_path(requested, context.workspace_root)
+                or is_derived_knowledge_path(requested.resolve(), context.workspace_root)):
+            raise ProviderError("INVALID_DOCUMENT", "The derived wiki is separate from canonical domain knowledge.")
         if operation == "ingest":
             path = relative_path(base, arguments["path"], context)
             if not _domain_path(path, base):

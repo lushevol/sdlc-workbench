@@ -1,1 +1,0 @@
-../../../../../../candidates/architecture/KT-frontend-composition.md

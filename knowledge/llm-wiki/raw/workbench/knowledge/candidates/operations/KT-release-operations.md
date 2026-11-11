@@ -1,1 +1,0 @@
-../../../../../../candidates/operations/KT-release-operations.md

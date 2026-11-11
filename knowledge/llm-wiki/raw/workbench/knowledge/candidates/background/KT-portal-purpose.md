@@ -1,1 +1,0 @@
-../../../../../../candidates/background/KT-portal-purpose.md

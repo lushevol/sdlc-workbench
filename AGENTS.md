@@ -199,6 +199,23 @@ A passing command alone does not establish verified behavior.
 
 Follow the [coverage output rules](#coverage-output) for requirement, defect, implementation, and verification reviews.
 
+## Primary knowledge wiki
+
+Use the [Workbench llm-wiki bridge](.agents/skills/llm-wiki/SKILL.md) to select the wiki engine.
+Use [OpenKB](.agents/skills/openkb/SKILL.md) as primary only when both an LLM URL and token are configured.
+Use private `OPENAI_API_BASE` and `LLM_API_KEY` in the project KB `.env` or process environment.
+If either value is absent, use the unchanged llm-wiki-agent skill in the current ADE agent context.
+Keep the active compiled workspace at `knowledge/llm-wiki/` and link source inputs to canonical records.
+Reserve that directory for the single derived wiki, source aliases, state, and visualization; canonical knowledge validation, ingestion and service-graph projection exclude it and continue checking the original records.
+Validate its engine-specific format and source bindings with the bridge's `verify` command.
+In fallback mode, read llm-wiki-agent's original `AGENTS.md`, then apply the bridge's source-link and existing-layout constraints.
+Maintain summaries, concepts, entities, contradictions, and the index. Preserve OpenKB fields and use explorations for saved synthesis.
+Keep `raw/` and `wiki/sources/` immutable canonical symlinks; do not invoke upstream scripted ingest or refresh on them.
+Keep the existing rich pages in that shared workspace; switching engines does not regenerate a parallel wiki.
+Use the bridge for installation, semantic engine selection, source bindings, and local OpenKB verification and visualization in either mode.
+OpenKB model operations use explicit URL and token configuration. Do not select device OAuth automatically or reuse the ADE login.
+Reopen canonical sources before relying on derived claims, preserve unresolved conflicts, and keep publication and actual-behavior evidence under their existing procedures.
+
 ## Coverage output
 
 High-priority source: user message, 25 October 2026. Exact wording:

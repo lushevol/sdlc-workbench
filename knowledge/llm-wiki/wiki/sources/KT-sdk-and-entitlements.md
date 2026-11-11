@@ -1,0 +1,1 @@
+../../../candidates/security/KT-sdk-and-entitlements.md

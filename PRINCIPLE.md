@@ -64,6 +64,7 @@ Keep actual implementation and intent-to-reality gaps in independent task gap Ma
 Implementation evidence cannot redefine intent. A fix that restores intent leaves that rule unchanged.
 Source: [user clarification, 1 November 2026](docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Exclude Workbench maintenance, raw sources, logs, code copies, execution results, reports, fixtures, and intermediate files.
+The reserved `knowledge/llm-wiki/` directory holds one derived wiki, canonical source links, local engine state, and visualization. Use OpenKB when both an LLM URL and token are configured; otherwise use llm-wiki-agent in the current ADE context. Retain the existing pages when the engine changes. Its own verification checks that format; canonical record scanners exclude it to prevent duplicate authority and graph feedback. Canonical knowledge elsewhere retains the domain schema and provenance requirements below.
 Store source provenance, governance findings, and immutable audit events under `evidence/knowledge/`.
 Keep business investigation evidence under its task and reusable record resources under `core/knowledge/`.
 

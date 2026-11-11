@@ -1,1 +1,0 @@
-../../../../../../candidates/operations/KT-admin-and-onboarding.md

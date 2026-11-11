@@ -115,6 +115,10 @@ def _walk(root, relative, suffixes):
         raise ValueError('Knowledge input roots must be directories: ' + relative)
     result = []
     for directory, directories, files in os.walk(base, followlinks=False):
+        if relative == 'knowledge' and Path(directory) == base:
+            # The compiled wiki owns its schema, state, and canonical-source links.
+            directories[:] = [name for name in directories if name.casefold() != 'llm-wiki']
+            files = [name for name in files if name.casefold() != 'llm-wiki']
         for name in sorted(directories + files):
             path = Path(directory) / name
             _safe(root, path.relative_to(root).as_posix())

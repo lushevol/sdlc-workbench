@@ -63,15 +63,22 @@ It does not authenticate humans, decide business correctness, or prove passing e
 Knowledge review and behavior verification need different evidence.
 Automatic AI governance and durable approval workflows remain future capabilities.
 
-## Reconcile the native wiki
+## Reconcile the compiled wiki
 
-Use [llm-wiki](../llm-wiki/SKILL.md) to refresh derived navigation after authorized record or lifecycle changes.
-Reconcile affected `knowledge/wiki/` summaries, export native pages, and run native structural health before reporting current wiki coverage.
-Rebuild its original graph when the requested operation includes graph maintenance.
-Keep native data under `knowledge/llm-wiki/` separate from canonical records and their audit history.
-Semantic lint, native healing, saved syntheses, connectivity scores, and inferred edges can inform investigation.
+Use the [llm-wiki bridge](../llm-wiki/SKILL.md) after authorized record or lifecycle changes.
+Select [OpenKB](../openkb/SKILL.md) with both private `OPENAI_API_BASE` and `LLM_API_KEY`; otherwise use llm-wiki-agent in the current ADE context.
+Read changed canonical sources and related compiled pages, then revise affected summaries, concepts, entities, source qualifications, and index entries.
+In fallback mode, read llm-wiki-agent's original `AGENTS.md` and apply the bridge's current-layout and source-link constraints.
+Preserve OpenKB metadata, treat summaries as derived source pages, and use explorations for saved synthesis.
+Keep source symlinks immutable; do not invoke upstream scripted ingest or refresh against this layout.
+Retain one active wiki and its existing rich pages; engine selection does not create duplicate content.
+Run the bridge's local verification before reporting current wiki coverage.
+Use local OpenKB verification and original visualization in either semantic mode when graph maintenance is requested.
+Keep derived data under `knowledge/llm-wiki/` separate from canonical records and their audit history, with both raw and full-text source entries linked relatively to the canonical records.
+Use the bridge's `compile` route with source links and hashes preserved. OpenKB uses explicit provider URL and token; no automatic OAuth.
+Semantic lint, saved explorations, and graph relationships can inform investigation.
 They cannot supply a reviewer, approve a rule, resolve source authority, or automatically transition a governed record.
-Preserve candidate, contested, stale, and superseded qualifications in exported pages and graph explanations.
+Preserve candidate, contested, stale, and superseded qualifications in compiled pages and graph explanations.
 
 ## Apply completed clarifications
 

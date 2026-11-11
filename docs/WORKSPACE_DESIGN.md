@@ -202,8 +202,19 @@ Initialization copies all canonical skills with their executable helpers and sup
 Initialization creates Claude skill links, empty catalogs, empty evidence provenance, and fresh workspace configuration.
 It ships `repos/README.md` for checkout placement and registration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
-The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) compiles `knowledge/candidates/` into the native derived workspace under `knowledge/llm-wiki/`; confirmed source records can be selected later.
-Directory `index.md` pages hold source summaries, entities, concepts, and a living overview without creating another publication path.
+The [llm-wiki bridge](../.agents/skills/llm-wiki/SKILL.md) selects the knowledge compiler and applies Workbench source and lifecycle boundaries.
+The [OpenKB skill](../.agents/skills/openkb/SKILL.md) is primary when both an LLM URL and token are configured.
+Use private `OPENAI_API_BASE` and `LLM_API_KEY` in the project KB `.env` or process environment.
+If either setting is absent, use the unchanged llm-wiki-agent skill in the current ADE agent context.
+The stable derived workspace remains `knowledge/llm-wiki/`; relative source links under both `raw/` and `wiki/sources/` feed source summaries, focused concepts, entities, and explorations indexed by `wiki/index.md`.
+Both engines maintain that single workspace and retain the existing rich pages; engine changes do not create another wiki.
+With both settings, the bridge invokes OpenKB's original compiler with provider setup and locks, preserving canonical links and registering hashes.
+Without both settings, the current agent follows llm-wiki-agent for semantic compilation and maintenance without another model client.
+It reads original llm-wiki-agent instructions, preserves OpenKB fields, treats summaries as derived source pages, and retains immutable source symlinks.
+Upstream scripted ingest and refresh do not run against this linked layout; saved synthesis stays in explorations.
+Local OpenKB verification and original visualization work in either mode without model credentials. Device OAuth is not selected automatically.
+These derived pages and their graph provide navigation without creating another publication path.
+Canonical record validation, ingestion discovery, and service-graph knowledge projection exclude the reserved `knowledge/llm-wiki/` directory. The bridge verifies its native schema, state bindings and source links separately; canonical source records remain subject to Workbench governance.
 Generated wiki content stays project-specific and is excluded from shipped workspace defaults.
 
 `registry/examples/` contains catalog examples checked against the supported registry contracts.

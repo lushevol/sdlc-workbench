@@ -18,7 +18,7 @@ import yaml
 from ..artifact_lint import _FRONTMATTER
 from ..context.catalogs import UniqueKeyLoader
 from ..governance.schemas import DOCUMENT_SCHEMAS
-from ..governance.validation import _FORBIDDEN_KNOWLEDGE_PARTS, _NAVIGATION, _timestamp
+from ..governance.validation import _FORBIDDEN_KNOWLEDGE_PARTS, _NAVIGATION, _timestamp, is_derived_knowledge_path
 from ..models import WorkbenchError
 from ..validation import validate_workspace
 
@@ -122,6 +122,8 @@ def _governed(root):
     for directory in ("knowledge", "evidence/knowledge/findings"):
         base = _local(root, directory, required=False)
         for path in sorted(base.rglob("*")):
+            if is_derived_knowledge_path(path, root):
+                continue
             if path.suffix.lower() != ".md" or path.name in _NAVIGATION or path.name.casefold() == "log.md":
                 continue
             relative = path.relative_to(base)

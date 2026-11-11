@@ -1,0 +1,59 @@
+{
+  "collection": "candidates",
+  "queries": [
+    {
+      "id": "session-renewal",
+      "query": "intent: Find the candidate requirement for preserving an active Portal session during eligible activity and manual recovery.\nlex: active session renewal refresh token expiry idle prompt rejected renewal\nvec: activity should keep the portal session alive across the initial refresh-token expiry and allow another attempt after a rejected renewal",
+      "expected_files": [
+        "requirements/REQ-active-session-renewal.md",
+        "security/KT-authentication-and-sessions.md"
+      ],
+      "expected_in_top_k": 3
+    },
+    {
+      "id": "ces-permission-mapping",
+      "query": "intent: Find the candidate CES migration mapping and its permission-equivalence limits.\nlex: CES EMS2 entitlement role subject action permission parity RATAN_ENTITLEMENT_RULE\nvec: preserve upper-application permission meaning while comparing mapped grants and avoiding invented role equivalence",
+      "expected_files": [
+        "security/KT-ces-migration-parity.md",
+        "security/KT-sdk-and-entitlements.md"
+      ],
+      "expected_in_top_k": 3
+    },
+    {
+      "id": "frontend-layers",
+      "query": "intent: Find the candidate description of Portal frontend layers and their ownership boundaries.\nlex: Root Config Base shell application container feature tile Single-SPA SystemJS React Router\nvec: shared portal shell loads independently owned containers and tiles with distinct route stages",
+      "expected_files": [
+        "architecture/KT-frontend-composition.md",
+        "architecture/ARC-portal-service-relationships.md"
+      ],
+      "expected_in_top_k": 3
+    },
+    {
+      "id": "release-responsibilities",
+      "query": "intent: Find candidate responsibilities for Portal and tenant teams during routing, validation, and release.\nlex: Portal teams execute Portal releases routing rollback tenant teams validate applications perform UVT\nvec: portal teams operate routing and releases while tenant teams validate and support their applications",
+      "expected_files": [
+        "operations/KT-release-operations.md",
+        "operations/KT-admin-and-onboarding.md"
+      ],
+      "expected_in_top_k": 3
+    },
+    {
+      "id": "interoperability-contract",
+      "query": "intent: Find candidate evidence about application interoperability contracts and OpenFin context readiness.\nlex: OpenFin FDC3 context intent caller provider readiness routing\nvec: applications need agreed context and intent contracts plus coordinated provider and caller delivery",
+      "expected_files": [
+        "interoperability/KT-application-interoperability.md",
+        "architecture/ARC-portal-service-relationships.md"
+      ],
+      "expected_in_top_k": 3
+    },
+    {
+      "id": "portal-observability",
+      "query": "intent: Find candidate observability and performance claims for portal interactions, cache behavior, and capacity evidence.\nlex: analytics interaction events tiles modals cache response time capacity retention\nvec: interaction telemetry describes adoption while performance and capacity require separate execution evidence",
+      "expected_files": [
+        "observability/KT-observability-and-performance.md",
+        "evolution/KT-architecture-evolution.md"
+      ],
+      "expected_in_top_k": 3
+    }
+  ]
+}
