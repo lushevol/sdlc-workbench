@@ -7,8 +7,33 @@ A missing snapshot limits validation to the recorded reference.
 Keep new task-generated evidence under its owning task.
 
 The source pipeline is complete raw export → filtered source view → canonical knowledge → derived wiki.
-Keep replaceable imports separate from registered snapshots.
 The [source preparation commands](../../.agents/skills/ingest-knowledge/references/source-preparation.md) append revisions and reuse existing retained payloads.
+
+## Complete source imports
+
+Place the complete current Markdown export under `evidence/knowledge/incoming/COLLECTION/`.
+Replace `COLLECTION` with the source's registered ID. Keep that ID for later exports from the same collection.
+The incoming directory stays outside Workbench Git. Replace its contents with the next complete export.
+Do not remove irrelevant documents or edit mixed documents before importing them.
+
+Retained originals stay under `evidence/knowledge/sources/`. Never overwrite registered snapshot bytes with a new export.
+Incoming files and retained snapshots have different lifecycles. Both belong in this evidence area.
+No separate top-level raw directory is required.
+
+Register new collections as `type: filesystem` in `registry/sources.yaml`.
+Keep an existing collection's registered identity and location when importing another export. The input option selects its inbox.
+
+```sh
+ai-sdlc --workspace . sources refresh --source COLLECTION --input evidence/knowledge/incoming/COLLECTION
+ai-sdlc --workspace . sources verify --source COLLECTION
+```
+
+Refresh retains new source revisions and updates the selection index.
+New or changed pages require classification, including pages excluded before.
+An absent page stays recorded without deleting its evidence or knowledge.
+Follow the source preparation procedure to apply decisions and generate views.
+
+## Source selections and retained history
 
 `selections/COLLECTION.json` records source-page hashes, exact ranges, decisions, policy hashes, and governing context bindings.
 Generate filtered excerpts or links in ignored working storage. Bind each generated entry to its original source and output hashes.

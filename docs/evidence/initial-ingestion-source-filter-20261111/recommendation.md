@@ -5,6 +5,7 @@ Scope: source selection for intended business-system behavior.
 Reference: [exact user input](user-input.md#exact-user-input).
 Pipeline reference: [full-export pipeline clarification](user-pipeline-followup.md#exact-user-input).
 Latest reference: [implementation request](user-implementation.md#exact-user-input).
+Layout correction: [cleanup authorization](user-layout-cleanup.md#exact-user-input) and [current checks](layout-cleanup.md).
 
 **Select source sections that explain intended behavior, its meaning, or necessary system responsibilities.**
 Keep exceptions, conditions, and conflicting intent with each selected rule.
@@ -35,8 +36,8 @@ flowchart LR
 
 ### Replaceable input and retained evidence
 
-Use a writable import location, such as `raw/incoming/`, for the user's complete exports.
-The [raw import guide](../../../raw/README.md) describes this replaceable, ignored input location.
+Use `evidence/knowledge/incoming/COLLECTION/` for the user's replaceable complete exports.
+The [knowledge evidence guide](../../../evidence/knowledge/README.md) describes this ignored input location.
 
 Retain changed source bytes before deriving knowledge. Reuse unchanged retained payloads.
 Keep registered snapshots under the existing `evidence/knowledge/sources/` structure and retain previous manifest entries.

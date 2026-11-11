@@ -3,6 +3,8 @@
 Date: 11 November 2026, Asia/Singapore.
 Reference: [implementation request](user-implementation.md#exact-user-input).
 Follow-up: [source and knowledge folder question](user-layout-question.md#exact-user-input).
+Layout correction: [cleanup authorization](user-layout-cleanup.md#exact-user-input).
+Current layout and checks: [source folder correction](layout-cleanup.md).
 Design: [pipeline and storage design](recommendation.md#full-export-pipeline).
 
 **The local source preparation pipeline is implemented. MOM remains held for missing attachment context.**
@@ -171,12 +173,12 @@ Scenario: SP-7 Ship the supported workspace interface
 
 | Check | Direct assertion definition | Execution |
 | --- | --- | --- |
-| SP-1 | [test_equal_new_payloads_share_storage_but_keep_distinct_provenance](../../../tests/test_source_preparation.py#L63) | Passed in the complete suite. |
-| SP-2 | [test_policy_and_context_changes_invalidate_reviewed_exclusions](../../../tests/test_source_preparation.py#L157) | Passed in the complete suite. |
-| SP-3 | [test_views_bind_links_and_excerpts_to_original_and_output_hashes](../../../tests/test_source_preparation.py#L120) | Passed in the complete suite. |
-| SP-4 | [test_missing_export_page_keeps_evidence_and_flags_affected_knowledge](../../../tests/test_source_preparation.py#L94) | Passed in the complete suite. |
-| SP-5 | [test_failed_decision_batch_does_not_commit_an_earlier_valid_decision](../../../tests/test_source_preparation.py#L146) | Passed in the complete suite. |
-| SP-6 | [test_missing_export_page_keeps_evidence_and_flags_affected_knowledge](../../../tests/test_source_preparation.py#L94) | Passed in the complete suite. |
+| SP-1 | [test_equal_new_payloads_share_storage_but_keep_distinct_provenance](../../../tests/test_source_preparation.py#L64) | Passed in the complete suite. |
+| SP-2 | [test_policy_and_context_changes_invalidate_reviewed_exclusions](../../../tests/test_source_preparation.py#L220) | Passed in the complete suite. |
+| SP-3 | [test_views_bind_links_and_excerpts_to_original_and_output_hashes](../../../tests/test_source_preparation.py#L183) | Passed in the complete suite. |
+| SP-4 | [test_missing_export_page_keeps_evidence_and_flags_affected_knowledge](../../../tests/test_source_preparation.py#L157) | Passed in the complete suite. |
+| SP-5 | [test_failed_decision_batch_does_not_commit_an_earlier_valid_decision](../../../tests/test_source_preparation.py#L209) | Passed in the complete suite. |
+| SP-6 | [test_missing_export_page_keeps_evidence_and_flags_affected_knowledge](../../../tests/test_source_preparation.py#L157) | Passed in the complete suite. |
 | SP-7 | [test_generated_workspace_review_lifecycle_and_idempotent_refresh](../../../tests/test_source_preparation_cli.py#L70) | Passed in the complete suite. |
 
 SP-7 also passed the installed-wheel exercise described above.
@@ -187,10 +189,10 @@ All seven declared checks have direct assertion evidence. This denominator exclu
 | Checks | Changed implementation | Trace limit |
 | --- | --- | --- |
 | SP-1 | [refresh_sources](../../../core/ingestion/sources.py#L351) | Local Markdown source preparation. |
-| SP-2 | [_freshness](../../../core/ingestion/sources.py#L443) | Local Markdown source preparation. |
-| SP-3 | [render_sources](../../../core/ingestion/sources.py#L534) | Local Markdown source preparation. |
+| SP-2 | [_freshness](../../../core/ingestion/sources.py#L444) | Local Markdown source preparation. |
+| SP-3 | [render_sources](../../../core/ingestion/sources.py#L535) | Local Markdown source preparation. |
 | SP-4 | [_summary](../../../core/ingestion/sources.py#L307) | Local Markdown source preparation. |
-| SP-5 | [apply_selections](../../../core/ingestion/sources.py#L471) | Local Markdown source preparation. |
+| SP-5 | [apply_selections](../../../core/ingestion/sources.py#L472) | Local Markdown source preparation. |
 | SP-6 | [_affected_knowledge](../../../core/ingestion/sources.py#L323) | Local Markdown source preparation. |
 | SP-7 | [CLI dispatch](../../../core/cli.py), [scaffold](../../../scaffold.json), and [package inclusion](../../../MANIFEST.in). | Installed wheel and generated workspace. |
 
@@ -216,7 +218,7 @@ It does not fetch attachments, classify meaning automatically, synthesize knowle
 Native Windows and external source-system export execution were not tested.
 The complete suite includes concurrent, unrelated repository work. That work is excluded from this implementation commit.
 
-Replace the complete export under `raw/incoming/`, then run refresh with the same collection ID.
+Replace the complete export under `evidence/knowledge/incoming/COLLECTION/`, then run refresh with the same collection ID.
 Review changed pages and apply their hash-bound decisions. Generate a new filtered view before canonical ingestion.
 Resolve MOM's missing attachment context before claiming complete source readiness. Owner: unknown.
 
@@ -243,13 +245,13 @@ Final focused output SHA-256: `9f677223e1da15812c73ded8e4d2b95af9c1a4cd7b670c320
 
 Reference: [the user's folder question](user-layout-question.md#exact-user-input).
 
-Inspection found one README under top-level `raw/`, with no source payloads.
+Inspection at `7a4a9d3019a76e9794e49baa6830799429efb903` found one README under top-level `raw/`, with no source payloads.
 All 85 Confluence Markdown sources remain under `evidence/knowledge/sources/confluence/`.
 Both wiki source folders contain 12 symbolic links and no regular source copies.
 
 | Claim | Class and confidence | Supporting source |
 | --- | --- | --- |
-| The added raw directory describes a replaceable import inbox. | Inspected documentation; high. | [Raw guide](../../../raw/README.md). |
+| The added raw directory described a replaceable import inbox. | Inspected documentation; high. | Historical `raw/README.md` at `b659ad65875eb76c10f8590fe23f43e77780b37b`; removal recorded in [the layout correction](layout-cleanup.md#authorized-removal). |
 | Evidence and canonical knowledge have different responsibilities. | Documented contract; high. | [Evidence guide](../../../evidence/knowledge/README.md) and [knowledge guide](../../../knowledge/README.md). |
 | Core knowledge contains authoring resources. | Documented contract; high. | [Core resource guide](../../../core/knowledge/README.md). |
 

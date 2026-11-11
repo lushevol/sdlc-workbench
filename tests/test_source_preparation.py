@@ -23,10 +23,11 @@ class SourcePreparationTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.root = (Path(temporary.name) / "workspace").resolve()
         initialize_workspace(self.root)
-        self.raw = self.root / "raw/incoming"
+        self.raw = self.root / "evidence/knowledge/incoming/docs"
         self.raw.mkdir(parents=True)
         (self.root / "registry/sources.yaml").write_text(yaml.safe_dump({"schema_version": 1, "sources": [
-            {"id": "docs", "type": "filesystem", "purpose": "context", "location": "raw/incoming"}]}))
+            {"id": "docs", "type": "filesystem", "purpose": "context",
+             "location": "evidence/knowledge/sources/docs"}]}))
         self.manifest = self.root / "evidence/knowledge/manifest.yaml"
         self.index_path = self.root / "evidence/knowledge/selections/docs.json"
         self.policy = self.root / ".agents/skills/ingest-knowledge/assets/source-filter.yaml"
@@ -40,7 +41,7 @@ class SourcePreparationTests(unittest.TestCase):
         return path
 
     def refresh(self):
-        return refresh_sources(self.root, "docs", "raw/incoming")
+        return refresh_sources(self.root, "docs", self.raw.relative_to(self.root).as_posix())
 
     def index(self):
         return json.loads(self.index_path.read_text())
@@ -72,6 +73,68 @@ class SourcePreparationTests(unittest.TestCase):
         before = self.manifest.read_bytes()
         self.assertEqual(self.refresh()["new_snapshot_payloads"], 0)
         self.assertEqual(self.manifest.read_bytes(), before)
+
+    def test_new_inbox_preserves_legacy_source_binding_and_changed_page_history(self):
+        """Given retained sources, when imports switch inboxes, then identity and old bytes remain intact."""
+        retained = self.root / "evidence/knowledge/sources/docs/page.md"
+        retained.parent.mkdir(parents=True)
+        original = b"# Rule\nThe system must deny invalid requests.\n"
+        retained.write_bytes(original)
+        record = {"id": "SRC-legacy-page", "resource": "local:prior-export/page.md",
+                  "revision": "export-2026-11-11", "sha256": hashlib.sha256(original).hexdigest(),
+                  "snapshot": retained.relative_to(self.root).as_posix(),
+                  "ingested_at": "2026-11-11T00:00:00Z", "classification": "business", "source_id": "docs"}
+        self.manifest.write_text(yaml.safe_dump({"schema_version": 1, "sources": [record]}, sort_keys=False))
+        manifest_bytes = self.manifest.read_bytes()
+        refresh_sources(self.root, "docs", "evidence/knowledge/sources/docs")
+        self.apply([self.decide()])
+        binding = self.index()["sources"][0]["source"]
+
+        page = self.page(content=original.decode())
+        result = self.refresh()
+        row = self.index()["sources"][0]
+        self.assertEqual(row["source"], binding)
+        self.assertEqual(row["decision"], "KEEP")
+        self.assertEqual(result["new_source_revisions"], 0)
+        self.assertEqual(result["new_snapshot_payloads"], 0)
+        self.assertEqual(self.manifest.read_bytes(), manifest_bytes)
+        self.assertEqual(self.index()["input_root"], "evidence/knowledge/incoming/docs")
+
+        page.write_text("The revised system must require a second approval.\n")
+        result = self.refresh()
+        updated = self.index()["sources"][0]
+        self.assertEqual(updated["source"]["id"], binding["id"])
+        self.assertEqual(updated["source"]["resource"], binding["resource"])
+        self.assertNotEqual(updated["source"]["revision"], binding["revision"])
+        self.assertNotEqual(updated["source"]["sha256"], binding["sha256"])
+        self.assertEqual(updated["decision"], "NEEDS_REVIEW")
+        self.assertEqual(retained.read_bytes(), original)
+        self.assertEqual(yaml.safe_load(self.manifest.read_text())["sources"][0], record)
+        self.assertEqual(result["new_source_revisions"], 1)
+        self.assertEqual(result["new_snapshot_payloads"], 1)
+
+    def test_generic_workspace_input_remains_supported(self):
+        """Given a workspace import folder, when refreshed, then the explicit input remains supported."""
+        self.raw = self.root / "imports/docs"
+        self.page()
+        result = self.refresh()
+        self.assertEqual(result["counts"]["documents"], 1)
+        self.assertEqual(self.index()["input_root"], "imports/docs")
+        self.assertTrue((self.root / self.index()["sources"][0]["source"]["snapshot"]).is_file())
+
+    def test_other_evidence_folders_remain_protected(self):
+        """Given unrelated evidence, when selected as input, then refresh rejects it without manifest changes."""
+        manifest_bytes = self.manifest.read_bytes()
+        for relative in ("evidence/knowledge/audit/unrelated", "evidence/knowledge/sources/unregistered",
+                         "evidence/knowledge/incoming-other/docs"):
+            with self.subTest(input=relative):
+                directory = self.root / relative
+                directory.mkdir(parents=True)
+                (directory / "page.md").write_text("Unrelated evidence.\n")
+                with self.assertRaises(WorkbenchError):
+                    refresh_sources(self.root, "docs", relative)
+                self.assertEqual(self.manifest.read_bytes(), manifest_bytes)
+                self.assertFalse(self.index_path.exists())
 
     def test_changed_exclusion_gets_new_revision_and_requires_review(self):
         path = self.page()

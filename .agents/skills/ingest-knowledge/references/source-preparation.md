@@ -5,12 +5,13 @@ They preserve sources and apply inspected selections. They do not classify meani
 
 ## Processing stages
 
-1. **Complete raw export:** accept the whole collection in a writable input directory, such as `raw/incoming/`.
+1. **Complete raw export:** accept the whole collection in ignored `evidence/knowledge/incoming/COLLECTION/`.
 2. **Filtered source view:** retain source revisions, record selections, and generate exact excerpts or source links when needed.
 3. **Canonical knowledge:** reconcile intent across selected sources through the ingestion and governance procedures.
 4. **Derived wiki:** compile canonical records through the [wiki bridge](../../llm-wiki/SKILL.md).
 
 The input directory is replaceable. Registered snapshots under `evidence/knowledge/sources/` remain protected.
+Keep these lifecycles separate within the existing evidence area. No top-level raw directory is required.
 Keep generated views outside `knowledge/`. A view does not create another source of authority.
 The commands do not refresh wiki pages, publish knowledge, or delete missing source material.
 
@@ -21,9 +22,10 @@ Use a workspace-relative directory containing Markdown source files.
 Use regular UTF-8 Markdown files, each no larger than 16 MiB.
 Keep source preparation paths workspace-relative and free of symbolic links.
 Use the source's actual registered ID in place of `COLLECTION`.
+Keep existing registered source identities and locations. The input option selects the replaceable inbox for the current export.
 
 ```sh
-ai-sdlc --workspace PATH sources refresh --source COLLECTION --input raw/incoming
+ai-sdlc --workspace PATH sources refresh --source COLLECTION --input evidence/knowledge/incoming/COLLECTION
 ```
 
 Refresh records source identity, revision, snapshot location, and SHA-256 before interpretation.

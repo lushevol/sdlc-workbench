@@ -69,11 +69,14 @@ Store source provenance, governance findings, and immutable audit events under `
 Keep business investigation evidence under its task and reusable record resources under `core/knowledge/`.
 
 Prepare complete local exports through raw import → filtered source view → canonical knowledge → derived wiki.
+Keep replaceable exports in ignored `evidence/knowledge/incoming/COLLECTION/` and retained originals in `evidence/knowledge/sources/`.
+Use the existing evidence area for both lifecycles. Do not introduce another top-level raw archive.
 Preserve raw revisions. Store source-page hashes with every source link and selection.
 Keep filtered views generated and reusable through source references, selected ranges, and recorded filter decisions.
 Reassess changed pages, filter rules, and governing context before reusing decisions, including previous exclusions.
 Source preparation does not grant knowledge publication or establish business behavior.
 Source: [pipeline implementation request, 11 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
+Layout source: [cleanup authorization, 12 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-layout-cleanup.md#exact-user-input).
 
 Check source reliability, freshness, consistency, and completeness before treating information as authoritative.
 Identify missing, outdated, conflicting, and ambiguous information.

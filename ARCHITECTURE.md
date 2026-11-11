@@ -84,7 +84,9 @@ workbench/
 │   └── repository-profiles/
 ├── evidence/
 │   └── knowledge/
+│       ├── incoming/                # Ignored replaceable complete exports, grouped by collection.
 │       ├── sources/                 # Retained original source snapshots.
+│       ├── selections/              # Hash-bound source filtering decisions.
 │       ├── manifest.yaml            # Source identities, revisions, and hashes.
 │       ├── findings/                # Investigation and governance records.
 │       └── audit/                   # Immutable governance events.
@@ -192,7 +194,9 @@ Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, executi
 Its candidates retain draft domain claims before review.
 Its published directories hold reviewed domain knowledge with evidence references.
 
+`evidence/knowledge/incoming/COLLECTION/` holds replaceable complete exports and remains ignored.
 `evidence/knowledge/sources/` retains original snapshots outside the knowledge base.
+Keep these lifecycles separate within the evidence area. New exports must not overwrite retained snapshot bytes.
 `evidence/knowledge/manifest.yaml` records their identities, revisions, locators, retrieval times, and hashes.
 Task-generated logs, execution captures, investigation reports, and incident excerpts belong under the owning task.
 The source manifest can reference those task paths while retaining stable source identities and hashes.

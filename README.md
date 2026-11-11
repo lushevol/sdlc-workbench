@@ -165,11 +165,13 @@ Restart CLI or MCP processes after configuration changes.
 ## Preserve and govern knowledge
 
 Use full raw export → filtered source view → canonical knowledge → derived wiki.
-Place complete local Markdown exports in [raw/incoming](raw/README.md). Do not remove unrelated documents manually.
+Place complete local Markdown exports in `evidence/knowledge/incoming/YOUR_SOURCE_ID/`.
+Follow [the source import guide](evidence/knowledge/README.md#complete-source-imports). Do not remove unrelated documents manually.
+Keep retained originals under `evidence/knowledge/sources/`. Replace incoming exports without overwriting those snapshots.
 Refresh retains original revisions and records source-page hashes before the agent selects relevant passages.
 
 ```sh
-ai-sdlc --workspace . sources refresh --source YOUR_SOURCE_ID --input raw/incoming
+ai-sdlc --workspace . sources refresh --source YOUR_SOURCE_ID --input evidence/knowledge/incoming/YOUR_SOURCE_ID
 ai-sdlc --workspace . sources select --source YOUR_SOURCE_ID --decisions .workbench/ingestion/decisions.json
 ai-sdlc --workspace . sources view --source YOUR_SOURCE_ID --output .workbench/ingestion/filtered/run-1
 ai-sdlc --workspace . sources verify --source YOUR_SOURCE_ID

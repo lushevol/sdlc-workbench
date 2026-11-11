@@ -357,8 +357,9 @@ def refresh_sources(root: Path, source_id: str, input_dir: str, policy_path: str
         if (directory == root or directory.is_relative_to(root / "knowledge")
                 or directory.is_relative_to(root / ".workbench")
                 or directory.is_relative_to(root / ".git")
-                or directory.is_relative_to(root / "evidence") and directory != collection):
-            raise WorkbenchError("Use a writable raw import folder or this collection's existing retained snapshot directory.")
+                or (directory.is_relative_to(root / "evidence") and directory != collection
+                    and not directory.is_relative_to(root / "evidence/knowledge/incoming"))):
+            raise WorkbenchError("Use a writable import folder, the knowledge inbox, or this collection's retained snapshots.")
         manifest, manifest_raw = _manifest(root)
         previous = _index(root, source_id, manifest)
         policy = _policy(root, policy_path or (previous["policy"]["path"] if previous else _POLICY))

@@ -21,14 +21,14 @@ class SourcePreparationCLITests(unittest.TestCase):
         self.root = (Path(temporary.name) / "workspace").resolve()
         initialize_workspace(self.root)
         self.collection = "source-export"
-        self.incoming = self.root / "raw/incoming"
+        self.incoming = self.root / "evidence/knowledge/incoming/source-export"
         self.incoming.mkdir(parents=True)
         self.page = self.incoming / "page.md"
         self.page.write_text("# Access\nUsers require an entitlement.\nDenied users see a message.\n", encoding="utf-8")
         (self.root / "registry/sources.yaml").write_text(yaml.safe_dump({
             "schema_version": 1,
             "sources": [{"id": self.collection, "type": "filesystem", "purpose": "context",
-                         "location": "raw/incoming", "read_only": True}],
+                         "location": "evidence/knowledge/sources/source-export", "read_only": True}],
         }, sort_keys=False), encoding="utf-8")
         self.index_path = self.root / f"evidence/knowledge/selections/{self.collection}.json"
         self.manifest_path = self.root / "evidence/knowledge/manifest.yaml"
@@ -46,7 +46,7 @@ class SourcePreparationCLITests(unittest.TestCase):
         return code, json.loads(output.getvalue())
 
     def refresh(self):
-        code, result = self.invoke("refresh", "--input", "raw/incoming")
+        code, result = self.invoke("refresh", "--input", "evidence/knowledge/incoming/source-export")
         self.assertEqual(code, 0, result)
         return result
 
@@ -71,6 +71,7 @@ class SourcePreparationCLITests(unittest.TestCase):
         """Given a complete export, when reviewed, then verification passes without runtime copies."""
         self.assertTrue(self.policy.is_file(), "The default filter policy must ship in generated workspaces.")
         self.assertFalse((self.root / "core/cli.py").exists())
+        self.assertFalse((self.root / "raw").exists(), "Workspace initialization must not create another raw root.")
         self.refresh()
         code, result = self.invoke("verify")
         self.assertEqual(code, 1, result)

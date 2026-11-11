@@ -145,7 +145,9 @@ workbench/
 │   └── llm-wiki/                    # Reserved derived pages, canonical aliases, native state and wiki graph.
 ├── evidence/
 │   └── knowledge/
+│       ├── incoming/                # Ignored replaceable exports, grouped by collection.
 │       ├── sources/                 # Unchanged original source snapshots.
+│       ├── selections/              # Source hashes, exact ranges, and reviewed filter decisions.
 │       ├── manifest.yaml            # Stable identities, revisions, locators, and hashes.
 │       ├── findings/                # Gaps, conflicts, ambiguity, and stale evidence.
 │       └── audit/                   # One immutable YAML file per governance event.
@@ -229,7 +231,9 @@ Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, executi
 Business-system technical explanations qualify when they describe domain behavior or responsibilities.
 `core/knowledge/` holds reusable schemas and templates outside the domain knowledge base.
 
+`evidence/knowledge/incoming/COLLECTION/` accepts complete replaceable exports and remains ignored.
 `evidence/knowledge/sources/` preserves domain source snapshots before interpretation.
+Incoming files and retained originals use separate lifecycles within the same evidence area.
 Task-owned investigation captures and source excerpts stay in `tasks/<task-id>/evidence/`.
 `evidence/knowledge/manifest.yaml` records source IDs, locators, revisions, hashes, retrieval times, classifications, and optional snapshot paths.
 `knowledge/candidates/` retains draft domain explanations. `evidence/knowledge/findings/` retains investigation findings.
@@ -248,6 +252,7 @@ The local source preparation pipeline accepts complete Markdown exports before c
 Its stages are complete raw export → filtered source view → canonical knowledge → derived wiki.
 Use [the installed source commands](../.agents/skills/ingest-knowledge/references/source-preparation.md) for registered filesystem collections.
 Keep writable imports separate from retained snapshots. Reuse original payloads and preserve prior manifest records.
+Use the existing evidence area. Do not create a second top-level raw archive.
 
 Store selections under `evidence/knowledge/selections/`. Generate exact excerpts or source links only in ignored working storage.
 Each selection records the original page SHA-256, ranges, policy hash, and governing context hashes.
@@ -360,8 +365,8 @@ flowchart TD
   External[Existing documents and engineering assets] --> Sources[registry/sources.yaml]
   External --> Collection
   Sources --> Access[Registered tools or supported source access]
-  Access --> Incoming[Complete replaceable raw export]
-  Incoming --> Raw[evidence/knowledge/ snapshots and manifest]
+  Access --> Incoming[evidence/knowledge/incoming/COLLECTION/ complete export]
+  Incoming --> Raw[evidence/knowledge/sources/ retained snapshots]
   Raw --> Selections[Hash-bound source selections]
   Selections --> PreparedSources[On-demand source excerpts or links]
   PreparedSources --> Candidates[knowledge/candidates/]

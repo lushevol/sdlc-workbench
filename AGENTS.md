@@ -202,9 +202,11 @@ Follow the [coverage output rules](#coverage-output) for requirement, defect, im
 ## Source preparation before knowledge ingestion
 
 High-priority source: [implementation request, 11 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
+Layout correction: [cleanup authorization, 12 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-layout-cleanup.md#exact-user-input).
 
 Use these processing stages: complete raw export → filtered source view → canonical knowledge → derived wiki.
-Accept complete exports in a replaceable import directory. Preserve registered source snapshots and previous manifest records.
+Accept complete exports in ignored `evidence/knowledge/incoming/COLLECTION/`. Do not create a separate top-level raw directory.
+Keep retained originals under `evidence/knowledge/sources/`. Preserve registered source snapshots and previous manifest records.
 Use [the source preparation procedure](.agents/skills/ingest-knowledge/references/source-preparation.md) and installed `ai-sdlc sources` commands.
 Keep selection metadata under `evidence/knowledge/selections/`. Generate filtered views only in ignored working storage.
 
