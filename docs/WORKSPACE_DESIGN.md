@@ -136,12 +136,13 @@ workbench/
 │   ├── sources.yaml
 │   ├── tools.yaml
 │   └── examples/                    # Catalog examples checked against registry contracts.
-├── knowledge/                      # Business-domain Markdown and navigation only.
+├── knowledge/                      # Canonical domain records plus the reserved derived wiki.
 │   ├── candidates/                  # Draft domain records awaiting review.
 │   ├── requirements/                # Published business requirements.
 │   ├── architecture/                # Published business-system architecture.
 │   ├── decisions/                   # Published domain decisions.
-│   └── repository-profiles/          # Business repository responsibilities and contracts.
+│   ├── repository-profiles/          # Business repository responsibilities and contracts.
+│   └── llm-wiki/                    # Reserved derived pages, canonical aliases, native state and wiki graph.
 ├── evidence/
 │   └── knowledge/
 │       ├── sources/                 # Unchanged original source snapshots.

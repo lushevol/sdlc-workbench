@@ -111,7 +111,8 @@ The project structure separates these responsibilities:
 | `repos/` | Independent Git checkouts and their setup guide. |
 | `tasks/` | Requirement and issue intake, questions, investigation results, reports, and evidence. |
 | `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
-| `knowledge/` | Business-domain Markdown records and navigation only. |
+| `knowledge/` | Canonical business-domain Markdown records and navigation, plus the reserved derived wiki below. |
+| `knowledge/llm-wiki/` | One derived wiki, relative canonical source aliases, native state and wiki visualization; checked through the wiki bridge. |
 | `knowledge/candidates/` | Draft domain knowledge awaiting review. |
 | `knowledge/requirements/`, `architecture/`, `decisions/` | Reviewed business-domain requirements, architecture, and decisions. |
 | `evidence/knowledge/` | Source snapshots, provenance manifest, governance findings, and immutable audit events. |
@@ -163,7 +164,7 @@ Restart CLI or MCP processes after configuration changes.
 
 ## Preserve and govern knowledge
 
-Keep `knowledge/` limited to business-domain Markdown records and navigation.
+Keep canonical records in `knowledge/` limited to business-domain Markdown and navigation. The reserved `knowledge/llm-wiki/` subtree holds the derived wiki and its native artifacts; the [knowledge standards](knowledge/README.md) define separate validation responsibilities.
 Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
 Exclude Workbench maintenance, raw sources, logs, code copies, fixtures, execution results, reports, and intermediate files.
 Keep investigation evidence under its task. Keep source provenance and governance records under `evidence/knowledge/`.

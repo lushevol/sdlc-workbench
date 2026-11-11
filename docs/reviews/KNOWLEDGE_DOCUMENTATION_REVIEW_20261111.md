@@ -25,7 +25,7 @@ Review scope: current knowledge management guides, shared skill instructions and
 | F1 | RESOLVED | Root, bridge and nested instructions translate upstream commands through the project-scoped launcher. Independent forward check from `/private/tmp` selected this wiki, returned 12 indexed documents, and found no launch ambiguity. Skill validation and both upstream source locks pass. |
 | F2 | RESOLVED | Corrected BFF/SDK responsibilities, conditional SDK adoption, and unsupported interceptor mappings. Independent source comparison confirmed the revised scope and all six initial canonical anchors; local wiki verification passes and all 12 canonical hashes remain unchanged. |
 | F3 | RESOLVED | Added the direct ADE authoring/provenance contract and resolved compiler-prompt precedence. Independent temporary-KB exercise passed all 18 checks, including real semantic edits/new metadata, stale-before/current-after bindings, unchanged canonical and unrelated bytes, failure stops and zero provider attempts. [Exercise results](../evidence/knowledge-documentation-review-20261111/fallback-exercise.json). |
-| F4 | PENDING | Reserved storage exception. |
+| F4 | RESOLVED | Primary standards, README ownership table and workspace tree now state the exact derived-wiki exception and separate validation duties. All four canonical-boundary tests pass; Workbench remains VALID with 14 documents and zero findings. |
 | F5 | PENDING | Standalone claim traceability. |
 | F6 | PENDING | Historical navigation and policy. |
 | F7 | PENDING | Focused content and detail preservation. |

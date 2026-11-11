@@ -7,12 +7,14 @@ Domain knowledge tracking serves business behavior and context in existing busin
 Harness configuration, upgrades, tooling, and Workbench maintenance require no business knowledge record or task.
 Maintain harness procedures in project guides and source configuration. Follow [the task scope rules](../tasks/README.md#scope).
 
-Store only reusable business-system domain knowledge and navigation in `knowledge/`.
+Store canonical business-system domain knowledge and navigation in `knowledge/`, with the reserved derived-wiki exception below.
 Knowledge describes requirements, intent, and ideal target system behavior.
 Keep business terms, intended rules, workflows, requirements, contracts, and target architecture decisions here.
 Technical content qualifies when it explains intended system responsibilities and has a current consumer.
 Workbench procedures, schemas, templates, logs, code copies, scripts, fixtures, reports, and run status belong outside this directory.
 Keep domain candidates in `candidates/`. Keep accepted documents in their relevant domain directory.
+
+The sole reserved exception is `knowledge/llm-wiki/`: the single derived wiki, relative canonical source aliases, native metadata, local state and visualization. Its generated pages use the native wiki schema rather than the canonical document contract below. Keep private configuration and disposable state ignored. Workbench validation, canonical ingestion and the service-graph knowledge projection exclude this exact subtree; the [wiki bridge](../.agents/skills/llm-wiki/SKILL.md) verifies its format, source links and bindings separately. Original canonical records remain subject to all governance gates.
 
 ## Intended behavior and independent gaps
 
@@ -42,7 +44,7 @@ The [ingestion skill](../.agents/skills/ingest-knowledge/SKILL.md) supports revi
 
 ## Document contract
 
-Each instantiated Markdown document starts with YAML frontmatter.
+Each instantiated canonical domain Markdown document starts with YAML frontmatter.
 Required fields are `type`, `id`, `version`, `owner`, `governance_state`, `status`,
 `sources`, `generated`, and `verified`. Use a positive integer for `version`.
 Use a stable ID with letters, digits, dots, underscores, or hyphens.
@@ -178,7 +180,7 @@ Publication must follow verification and human approval in timestamp order.
 
 `ai-sdlc --workspace PATH validate` checks structure, source declarations, available
 snapshot hashes, storage boundaries, and recorded gates. It reads files and returns findings.
-Validation rejects non-Markdown artifacts and forbidden working directories inside `knowledge/`.
+Outside the reserved `knowledge/llm-wiki/` subtree, validation rejects non-Markdown artifacts and forbidden working directories inside `knowledge/`.
 Local knowledge retrieval includes structured domain records. Navigation guides remain available through normal file access.
 Ingestion requires a supported domain record with complete metadata and body sections.
 These checks cannot determine whether prose is relevant to the business domain. Agents must review its meaning.
