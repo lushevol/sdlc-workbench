@@ -3,7 +3,8 @@
 Date: 11 November 2026, Asia/Singapore.
 Scope: proposed source selection for intended business-system behavior.
 Reference: [exact user input](user-input.md#exact-user-input).
-Latest reference: [full-export pipeline clarification](user-pipeline-followup.md#exact-user-input).
+Pipeline reference: [full-export pipeline clarification](user-pipeline-followup.md#exact-user-input).
+Latest reference: [source duplication question](user-duplication-followup.md#exact-user-input).
 
 **Select source sections that explain intended behavior, its meaning, or necessary system responsibilities.**
 Keep exceptions, conditions, and conflicting intent with each selected rule.
@@ -44,6 +45,41 @@ Generate the filtered view outside `knowledge/`, in configurable working storage
 It can be rebuilt from retained sources and recorded selection decisions.
 Knowledge citations must still reach the original retained source revision and exact source ranges.
 Keep selection decisions when needed for reproduction. Retain cleaned bytes only when required to interpret a result.
+
+### Storage and duplication
+
+Treat the pipeline as logical stages. It does not require four complete copies of every source document.
+Keep each retained source revision once. Reuse equal payloads while preserving their separate provenance identities.
+
+Make the filtered layer primarily a selection index.
+It records source references, hashes, selected ranges, decisions, and cleaning rules.
+Generate cleaned excerpts when ingestion or inspection requires them. Keep rebuildable excerpts in disposable working storage.
+Avoid copying complete raw documents into the filtered layer when source references already provide the required content.
+
+The current wiki has the following source and derived entries.
+These measurements concern the local files inspected on 11 November 2026.
+
+| Location | Observed entries | Content storage |
+| --- | ---: | --- |
+| `knowledge/llm-wiki/raw/` | 12 symbolic links | Links to 12 canonical knowledge records. No regular source files. |
+| `knowledge/llm-wiki/wiki/sources/` | 12 symbolic links | Links to the same 12 canonical records. No regular source files. |
+| Wiki summaries, concepts, entities, and explorations | 91 regular Markdown files | 618,534 bytes of generated content. |
+
+All 24 source aliases resolve to existing canonical records. Corresponding aliases resolve to the same target.
+The [bridge implementation](../../../.agents/skills/llm-wiki/scripts/wiki.py#L148-L158) creates relative symbolic links.
+Its [compilation path](../../../.agents/skills/llm-wiki/scripts/wiki.py#L213-L224) binds both source folders to canonical records.
+Keep those aliases for the existing wiki integration. They add directory entries and link metadata without copying document content.
+
+The exact-hash scan covered 85 original documents, 12 canonical records, and 91 generated wiki pages.
+It found no identical regular-file pairs within those 188 Markdown files.
+This scan does not measure repeated paragraphs or semantic overlap.
+Generated summaries and concepts can repeat facts while serving different retrieval purposes.
+
+The replaceable import export can overlap with retained snapshots while both remain stored.
+Archive deduplication prevents repeated retained payloads. It does not remove the separately stored incoming export.
+Never make writable incoming files links to protected snapshots. Overwriting those links could modify retained evidence.
+
+The filtered selection index and excerpt generation above remain proposals. No storage layout or payload was changed.
 
 ### Refresh behavior
 
@@ -180,7 +216,7 @@ Authority and applicability remain source-specific review questions.
 
 ## Validation
 
-Documentation checks: PASSED for 11 local links and anchors. Both recorded guide hashes match.
+Documentation checks: PASSED for 14 local links, anchors, and source ranges. Both recorded guide hashes match.
 Diff checks found no whitespace errors. The prose sentence-length check found no sentences over 20 words.
 ASD-STE100 review: PENDING. No complete dictionary or grammar certification was performed.
 Runtime tests: NOT_RUN. This stage changes only this recommendation and its user-input reference.
