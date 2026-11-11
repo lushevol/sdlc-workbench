@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-11-11T16:18:36.741381+00:00",
+  "baseline_revision": "01750558bbce9413921568917bd0cc4f2694a403",
+  "verified_head": "b659ad65875eb76c10f8590fe23f43e77780b37b",
+  "scope": "F1-F8 knowledge documentation remediation; working contents verified before final report and native graph refresh commit",
+  "checks": {
+    "original_upstream_locks": {
+      ".agents/skills/openkb/source-lock.json": {
+        "revision": "ff54396e575ee6feb0113b631a34caa082b441cc",
+        "files": 4,
+        "mismatches": []
+      },
+      ".agents/skills/llm-wiki/upstream-lock.json": {
+        "revision": "f03eff653886672ee8a92bb6a28faae9190d90d2",
+        "files": 33,
+        "mismatches": []
+      }
+    },
+    "canonical_records": {
+      "count": 12,
+      "hashes_unchanged": true
+    },
+    "relative_source_aliases": {
+      "count": 24,
+      "all_resolve_to_canonical": true
+    },
+    "page_frontmatter": {
+      "count": 91,
+      "unchanged": true
+    },
+    "generated_markdown_links": {
+      "documents": 91,
+      "targets": 137,
+      "broken": []
+    },
+    "management_file_targets": {
+      "documents": 20,
+      "targets": 472,
+      "missing": [],
+      "limits": "Historical anchors and external URLs excluded."
+    },
+    "living_report_links": {
+      "targets": 42,
+      "broken": []
+    },
+    "native_graph": {
+      "nodes": 85,
+      "directed_edges": 1467,
+      "node_ids_unchanged": true,
+      "invalid_endpoints": 0,
+      "removed_edges": [
+        [
+          "entities/mfe-base",
+          "entities/single-ui-sdk"
+        ]
+      ],
+      "added_edges": [],
+      "reason": "F2 replaced unsupported direct SDK/interceptor attribution with conditional downstream scope and canonical citations. The SDK remains reachable through its focused concept.",
+      "browser": {
+        "canvas_visible": true,
+        "native_search_and_inspector": "PASSED",
+        "mindmap_nodes": 86,
+        "javascript_errors": [],
+        "remote_requests": []
+      },
+      "html_sha256": "08b41811d0aea8ae247385a7037c757e8b166e0e0356ef8f8fdadb02b098d8dc"
+    },
+    "isolated_fallback_exercise": {
+      "checks": 18,
+      "all_passed": true,
+      "evidence": "fallback-exercise.json"
+    },
+    "stage_test_suites": [
+      {
+        "suite": "tests/test_openkb_workflow.py",
+        "tests": 28,
+        "result": "PASSED"
+      },
+      {
+        "suite": "tests/test_workspace_layout.py",
+        "tests": 23,
+        "result": "PASSED"
+      },
+      {
+        "suite": "tests/test_derived_knowledge_boundary.py",
+        "tests": 4,
+        "result": "PASSED"
+      }
+    ],
+    "native_verification": {
+      "structural_categories": 6,
+      "findings": 0,
+      "canonical_bindings": 12
+    },
+    "workbench_validation": {
+      "status": "VALID",
+      "documents": 14,
+      "findings": 0
+    },
+    "skill_validators": {
+      "skills": [
+        "llm-wiki",
+        "ingest-knowledge",
+        "query-knowledge",
+        "govern-knowledge",
+        "sync-release-knowledge",
+        "service-dependencies-graph"
+      ],
+      "all_passed": true
+    },
+    "independent_f8_review": {
+      "result": "PASSED",
+      "scoped_links": 9,
+      "words_before": 795,
+      "words_after": 305,
+      "regressions_found": 0
+    }
+  },
+  "limits": [
+    "F7 improves navigation while retaining detailed pages; aggressive text trimming was not proven safe.",
+    "Semantic review covered identified claims and changed navigation, not every sentence or every original raw export.",
+    "No provider-backed recompilation or live business verification was performed.",
+    "Canonical review and publication remain separate. Concurrent source-preparation changes were excluded from remediation commits."
+  ]
+}

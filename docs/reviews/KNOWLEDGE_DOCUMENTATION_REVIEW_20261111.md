@@ -10,9 +10,12 @@ limitations:
 
 # Knowledge documentation structure and content review
 
-**The overall structure makes sense. Keep one canonical knowledge layer, one compiled wiki, and the existing engine-selection rule. Correct the project-selection instructions and unsupported generated architecture claims before the next maintenance run. Then complete the fallback procedure and reduce documentation drift.**
+**All eight findings are addressed and verified within the safe scope below. Project selection, generated responsibility claims, fallback completion and source traceability are corrected. Detailed knowledge remains available. F7 improves navigation; unproven bulk trimming was not applied.**
 
-Status: remediation in progress under the [follow-up authorization](../evidence/knowledge-documentation-review-20261111/user-input.md#remediation-authorization). Findings below describe the review baseline; the remediation ledger records each later fix and verification. Baseline: `01750558bbce9413921568917bd0cc4f2694a403` on `codex/ces-gap-clarification-20261109`. A concurrent documentation commit, `edafad4dc`, added an independent initial-ingestion review; it did not change the reviewed knowledge guides or wiki.
+Status: remediation completed on 12 November 2026 under the [follow-up authorization](../evidence/knowledge-documentation-review-20261111/user-input.md#remediation-authorization).
+Findings below describe the review baseline. The ledger records each later fix and verification.
+Baseline: `01750558bbce9413921568917bd0cc4f2694a403` on `codex/ces-gap-clarification-20261109`.
+Concurrent source-preparation work remains outside these remediation commits.
 
 Authorizing input: [exact user request](../evidence/knowledge-documentation-review-20261111/user-input.md), 11 November 2026.
 
@@ -46,7 +49,7 @@ The current layers have useful, separate responsibilities:
 
 Source files are linked instead of duplicated. The wiki index clearly states candidate/draft limits. Current top-level setup, dependency and workspace-design guides agree on the engine rule. Neither a new wiki nor another knowledge product is needed to address these findings.
 
-## Inventory and content shape
+## Baseline inventory and content shape
 
 The [review inventory](../evidence/knowledge-documentation-review-20261111/review-metrics.json) binds all 91 derived pages and 12 canonical input files to their SHA-256 values.
 
@@ -61,9 +64,13 @@ The [review inventory](../evidence/knowledge-documentation-review-20261111/revie
 
 The derived text is about 3.36 times the canonical corpus by this measure. This is an indicator of reading and maintenance cost, not proof of waste or better quality. A comparison of concept/entity paragraphs of at least 35 words found no exact duplicates after whitespace normalization; the repetition identified below concerns overlapping narratives. Sixteen of 34 concepts declare just one summary source. Single-source concepts can still be useful, but their creation should depend on a recurring question or a distinct reusable topic.
 
-The retained native graph contains 85 nodes and 1,468 directed links: 12 summaries, 34 concepts and 39 entities. It excludes the six explorations and canonical/raw source aliases. Preserve this scope statement next to the graph link. Graph density does not measure factual correctness or domain completeness.
+The baseline native graph contained 85 nodes and 1,468 directed links: 12 summaries, 34 concepts and 39 entities.
+The refreshed graph has 1,467 links after the unsupported MFE Base-to-SDK claim was corrected. All 85 nodes remain.
+It excludes the six explorations and canonical/raw source aliases. Graph density does not measure factual correctness or domain completeness.
 
-## Findings and recommended adjustments
+## Baseline findings and recommended adjustments
+
+These findings retain the original observations and proposed fixes. Use the remediation ledger for their current disposition.
 
 ### F1 — Make project-scoped launch instructions explicit
 
@@ -161,7 +168,7 @@ Also correct two examples: [wiki procedures](../../.agents/skills/llm-wiki/refer
 | SETUP / DEPENDENCIES / WORKSPACE_DESIGN | Installation / package and access needs / architecture and ownership. |
 | Current review plus historical archive | Decisions, evidence, measured limits and supersession links. Avoid using historical reports as the operator manual. |
 
-## Order of work and completion criteria
+## Original remediation sequence and completion criteria
 
 1. Correct F1–F2: all operator examples select this KB; sampled BFF/SDK and permission claims match cited canonical scope.
 2. Complete F3–F5: an authorized no-credential maintenance run can create/update a page and finish with truthful current bindings; contracts and critical citations are unambiguous.
@@ -170,7 +177,7 @@ Also correct two examples: [wiki procedures](../../.agents/skills/llm-wiki/refer
 
 Reuse the [six benchmark questions](KNOWLEDGE_BENCHMARK_QUESTIONS_20261111.json) for a future semantic acceptance review. Score claim correctness, intent-versus-implementation separation, candidate qualifiers, exact citation support, conflict handling and answer usefulness. Record retrieval and synthesis time separately. Document volume, source coverage, passing schema checks and graph link counts cannot substitute for that review.
 
-## Checks and limits
+## Baseline checks and limits
 
 - Bridge `verify`: all 12 canonical source bindings remain current; all six native structural categories have zero findings.
 - Workbench validation: `VALID`, 14 canonical/governance documents, zero findings.
@@ -180,4 +187,31 @@ Reuse the [six benchmark questions](KNOWLEDGE_BENCHMARK_QUESTIONS_20261111.json)
 - Inventory: 91 derived pages and their hashes recorded; native embedded graph JSON parsed without regeneration.
 - Semantic review: all 12 summaries compared with canonical records; selected material concept/entity assertions inspected. This is not a sentence-by-sentence audit of the approximately 79,000-word derived corpus, a reread of all original raw exports, or live business verification.
 
-No model-provider calls were needed. Original upstream packages, canonical records and generated wiki pages were not edited. These checks establish the present structural state and support the cited findings; they do not certify every generated claim. Writing review remains `PENDING`.
+No model-provider calls were needed during the baseline review. That review did not edit upstream packages, canonical records or generated pages.
+These baseline checks support the cited findings; they do not certify every generated claim. Writing review remains `PENDING`.
+
+## Final remediation verification
+
+The [verification receipt](../evidence/knowledge-documentation-review-20261111/remediation-verification.json) records final integrity, link and graph checks.
+
+| Check | Result |
+| --- | --- |
+| Native wiki verification | All six structural categories pass; all 12 canonical bindings remain current. |
+| Workbench validation | VALID; 14 documents; zero findings. |
+| Source and upstream integrity | All 12 canonical hashes, 24 relative aliases and both original upstream source locks pass. |
+| Native page metadata | All 91 original frontmatters remain unchanged. |
+| Local documentation links | 137 generated-page targets, 472 management-document targets and 42 report targets resolve. Report and generated-page anchors also pass. |
+| Fallback maintenance exercise | All 18 isolated checks pass, including semantic work, truthful completion, failure stops and zero provider attempts. |
+| Targeted runtime and packaging suites | 28 OpenKB workflow tests, 23 workspace-layout tests and four derived-boundary tests pass. These suites were run during their affected stages. |
+| Skill instructions | Six validators pass. Independent F8 scenario review found no regression and confirmed all nine scoped links. |
+| Native graph generation and browser | 85 nodes, 1,467 edges; canvas, search, inspector and mind map pass. Zero JavaScript errors or remote requests. |
+
+F1–F8 were committed as separate stages after their checks passed. Concurrent source-preparation edits were preserved outside those stages.
+The graph refresh follows the corrected page links. It retains the original OpenKB generator and remains separate from the service graph.
+
+F7 retains every detailed page and useful single-source topic. It improves reading routes without claiming text compression.
+F8 removes 490 repeated words from caller sections, while linked bridge procedures retain the operational safeguards.
+The original inventory and link-audit files remain frozen baseline evidence.
+
+Semantic review checked the identified claims and changed navigation. It did not audit every sentence or reread every raw export.
+No provider-backed recompilation or live business verification was performed. Canonical review and publication gates remain unchanged.
