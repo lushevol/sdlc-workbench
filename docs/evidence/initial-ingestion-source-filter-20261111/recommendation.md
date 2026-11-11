@@ -3,10 +3,90 @@
 Date: 11 November 2026, Asia/Singapore.
 Scope: proposed source selection for intended business-system behavior.
 Reference: [exact user input](user-input.md#exact-user-input).
+Latest reference: [full-export pipeline clarification](user-pipeline-followup.md#exact-user-input).
 
 **Select source sections that explain intended behavior, its meaning, or necessary system responsibilities.**
 Keep exceptions, conditions, and conflicting intent with each selected rule.
-This document proposes a manual review method. It does not establish an implemented automatic filter.
+Use a generated filtered source layer between complete exports and canonical knowledge.
+The selection review is complete. The refresh pipeline below remains a proposal.
+
+## Proposed full-export pipeline
+
+The user can replace a complete export without manually removing excluded documents or editing mixed documents.
+The Workbench should derive its filtered source view from that export.
+
+```mermaid
+flowchart LR
+    A[Complete raw export] --> B[Filtered and cleaned sources]
+    B --> C[Canonical knowledge]
+    C --> D[Derived wiki]
+    A --> E[Retained source revisions]
+    E -. Original citations .-> C
+```
+
+| Layer | Responsibility | Update rule |
+| --- | --- | --- |
+| Raw import | Accept the complete exported collection, including irrelevant documents. | The user can replace this input collection. |
+| Filtered and cleaned sources | Select relevant passages and remove export noise. Preserve original meaning and source mappings. | Generate this view. Do not maintain it manually. |
+| Canonical knowledge | Connect intended rules, definitions, responsibilities, and decisions across sources. Retain lifecycle and authority limits. | Reconcile affected records through ingestion and review. |
+| Wiki | Explain and connect canonical knowledge for retrieval. | Refresh affected pages from canonical records. |
+
+### Replaceable input and retained evidence
+
+Use a writable import location, such as `raw/incoming/`, for the user's complete exports.
+This is a proposed location. No directory or importer was created during this discussion.
+
+Retain changed source bytes before deriving knowledge. Reuse unchanged retained payloads.
+Keep registered snapshots under the existing `evidence/knowledge/sources/` structure and retain previous manifest entries.
+Existing registered originals remain at their current locations. They do not become the replaceable import folder.
+
+Generate the filtered view outside `knowledge/`, in configurable working storage.
+It can be rebuilt from retained sources and recorded selection decisions.
+Knowledge citations must still reach the original retained source revision and exact source ranges.
+Keep selection decisions when needed for reproduction. Retain cleaned bytes only when required to interpret a result.
+
+### Refresh behavior
+
+1. Inventory the new export and compare source identities and content hashes.
+2. Retain new source revisions without replacing previously registered bytes.
+3. Reassess new and changed documents, including documents excluded in the previous review.
+4. Reuse decisions only when source bytes, filter rules, and governing context remain unchanged.
+5. Regenerate the filtered view and report new exclusions, selected sections, held content, and unresolved conflicts.
+6. Identify affected knowledge records. Reconcile their meaning through the existing candidate and review procedures.
+7. Refresh affected wiki pages from the resulting canonical records.
+
+Each selection binds the source ID, revision/hash, selected ranges, filter version, and governing clarification references.
+Changed source bytes invalidate old line selections. Locate the intended passages again before reusing a decision.
+Changed filter rules or relevant clarifications can require reassessment even when source bytes remain unchanged.
+
+An absent document means missing input for this export. It does not automatically revoke a rule or delete knowledge.
+An incomplete export must not trigger automatic removal of prior evidence, knowledge, or wiki pages.
+A source update can mark affected content for review. It cannot silently approve new intent or replace reviewed meaning.
+
+### Cleaning boundary
+
+Remove export navigation, empty layout blocks, and unrelated sections when their removal preserves meaning.
+Normalize formatting only when the source structure remains clear.
+Preserve conditions, exceptions, units, defaults, field types, proposal status, and conflicting rules.
+Keep missing diagrams and attachments explicit when they limit understanding.
+
+Do not turn cleaning into unsupported correction or synthesis.
+Record original-to-cleaned range mappings when formatting changes source layout.
+Semantic reconciliation belongs in canonical knowledge ingestion.
+
+### Fit with the current Workbench
+
+The [existing-file review](filter-review.md#current-conclusion) supplies the first selection baseline for 85 documents.
+Its exclusions concern the intent input. Original files remain unchanged.
+The review is not an executable refresh service.
+
+The [source retention contract](../../../knowledge/README.md#source-provenance-outside-knowledge) already requires retained revisions and exact source bindings.
+The [ingestion procedure](../../../.agents/skills/ingest-knowledge/references/workflow.md#2-protect-the-originals) preserves source bytes before interpretation.
+The [wiki bridge](../../../.agents/skills/llm-wiki/SKILL.md#maintain-the-shared-documents) already uses canonical records as its source.
+Its existing `knowledge/llm-wiki/raw/` links remain canonical-record aliases. They are not the proposed import folder.
+
+Confidence is high that these boundaries fit the current architecture.
+The folder examples, refresh procedure, filter versioning, and range mappings above require implementation before use.
 
 ## Topics to keep
 
@@ -94,13 +174,13 @@ The following hashes identify the inspected guide bytes.
 | `knowledge/README.md` | `abf81e780245f54d6e026c0e96e2b47a83004d3039539af05dd5d093ae423329` |
 | `.agents/skills/ingest-knowledge/references/workflow.md` | `0340e6d98af51e6b486eedf9567256d9d97336e5f4db53e96074ac5c0916629f` |
 
-No raw-document collection was supplied for full classification in this request.
-No source registration, knowledge publication, semantic ingestion, or automatic filtering ran.
+The [follow-up review](filter-review.md#current-conclusion) classifies the existing 85-document export.
+No source registration, knowledge publication, semantic ingestion, or automatic refresh pipeline ran during this proposal.
 Authority and applicability remain source-specific review questions.
 
 ## Validation
 
-Documentation checks: PASSED. Five local links and anchors resolve. Both source hashes match.
-Diff checks found no whitespace errors.
+Documentation checks: PASSED for 11 local links and anchors. Both recorded guide hashes match.
+Diff checks found no whitespace errors. The prose sentence-length check found no sentences over 20 words.
 ASD-STE100 review: PENDING. No complete dictionary or grammar certification was performed.
 Runtime tests: NOT_RUN. This stage changes only this recommendation and its user-input reference.
