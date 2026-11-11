@@ -3,7 +3,7 @@
 Decision date: 14 October 2026.
 Authority: The owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf) and [PRINCIPLE.md](PRINCIPLE.md).
 Status: Accepted target architecture with deterministic workspace and knowledge validation.
-Automatic ingestion, AI governance, and complete behavior verification remain planned.
+Local Markdown source preparation is implemented. Remote synchronization, AI governance, and complete behavior verification remain planned.
 
 ## Architectural boundary
 
@@ -209,6 +209,16 @@ Classification does not establish approved intent or source authority.
 The installed ingestion harness checks retained history, locators, execution source hashes, and prepared content.
 Semantic classification and source review remain agent responsibilities.
 
+The source pipeline is complete raw export → filtered source view → canonical knowledge → derived wiki.
+`ai-sdlc sources` imports registered local Markdown collections and records selections under `evidence/knowledge/selections/`.
+It preserves prior snapshots and manifest records, then generates exact excerpts or links in ignored working storage.
+Each selection binds source-page SHA-256, original ranges, policy hash, and governing context hashes.
+Every generated link also records the source identity and output hash.
+
+Changed pages require review, including prior exclusions. Missing input does not trigger downstream deletion.
+Knowledge synthesis and review follow source preparation. The wiki continues consuming canonical records.
+See [source preparation](.agents/skills/ingest-knowledge/references/source-preparation.md) for the supported commands and limits.
+
 Use [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) and the shipped Workbench schemas and templates.
 Record source ownership, revision, and approval state when available.
 Assess missing, conflicting, ambiguous, and outdated information before using it as intent.
@@ -272,7 +282,7 @@ It does not copy live project configuration or knowledge records.
 | Ownership area | Current implementation | Target extension |
 | --- | --- | --- |
 | `core/context/` | Catalog loading, supported by shared workspace loading, models, and provider registration. | Governed discovery and source context. |
-| `core/ingestion/` | Source contracts, the ingestion procedure, and deterministic ingestion checkpoints. | External source adapters and automatic snapshot collection. |
+| `core/ingestion/` | Local Markdown source import, hash-bound selection views, source contracts, and deterministic ingestion checkpoints. | Remote source adapters and synchronization. |
 | `core/understanding/` | Candidate templates and agent interpretation procedures. | Automatic extraction and evidence-backed synthesis. |
 | `core/governance/` | Deterministic knowledge validation and audit contracts. | AI governance and durable review workflows. |
 | `core/relationships/` | Relationship ownership, stored references, and thin graph skill loading. | Evidence-backed mapping and relationship validation. |

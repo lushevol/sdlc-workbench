@@ -23,6 +23,14 @@ For direct file authoring, read the [fallback metadata and provenance procedure]
 
 ## Maintain the shared documents
 
+The processing stages are complete raw export → filtered source view → canonical knowledge → derived wiki.
+Use [source preparation](../ingest-knowledge/references/source-preparation.md) for raw imports and hash-bound source selections.
+Compile canonical knowledge records only. Keep filtered excerpts and original raw exports outside the wiki's source aliases.
+Save the canonical source page's SHA-256 when linking it in `raw/` and `wiki/sources/`.
+
+Keep that hash in `source-manifest.json` and verify it before reuse. Both aliases must resolve to the same canonical record.
+Changed source hashes require reconciliation before advancing wiki bindings. Missing sources do not authorize automatic knowledge deletion.
+
 Read the complete canonical source, the index and relevant existing pages before writing. In fallback mode, apply the original agent's ingest/query/contradiction workflows with these external layout constraints: derived source summaries live in `wiki/summaries/`; `wiki/sources/` and `raw/` are immutable relative links to canonical records; saved synthesis lives in `wiki/explorations/`. Preserve the existing page metadata and wiki-relative links. Use the current index as the synthesis map; a second overview or duplicate source-summary tree is unnecessary.
 
 Never run upstream scripted `ingest` or `refresh` against those source aliases: they assume owned source-summary files and could write through canonical symlinks. The [Workbench procedures](references/workflows.md) explain source bindings, supported commands and validation. Both original upstream code and the official OpenKB skill remain unchanged.

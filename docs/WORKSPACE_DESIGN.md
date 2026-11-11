@@ -2,7 +2,7 @@
 
 Decision date: 14 October 2026.
 Authority: The project owner's [approved plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf).
-Scope: Standalone workspace construction, portable knowledge contracts, and deterministic validation.
+Scope: Standalone workspace construction, portable knowledge contracts, local source preparation, and deterministic validation.
 External source adapters and automatic AI governance remain future capabilities.
 
 ## Brownfield adoption boundary
@@ -244,6 +244,18 @@ The reusable knowledge guide remains separate from live project indexes.
 The ingestion skill handles review and ingestion through agent reasoning.
 Its review mode leaves original materials and provenance records unchanged.
 Its ingestion mode preserves originals and produces cited candidates before any publication.
+The local source preparation pipeline accepts complete Markdown exports before canonical ingestion.
+Its stages are complete raw export → filtered source view → canonical knowledge → derived wiki.
+Use [the installed source commands](../.agents/skills/ingest-knowledge/references/source-preparation.md) for registered filesystem collections.
+Keep writable imports separate from retained snapshots. Reuse original payloads and preserve prior manifest records.
+
+Store selections under `evidence/knowledge/selections/`. Generate exact excerpts or source links only in ignored working storage.
+Each selection records the original page SHA-256, ranges, policy hash, and governing context hashes.
+Generated entries also bind output hashes and original-to-output mappings.
+
+Changed pages and stale decision context require review. Missing input does not authorize downstream deletion.
+Semantic source classification and knowledge reconciliation remain agent responsibilities.
+
 The installed ingestion harness checks retained bytes, locators, execution hashes, and prepared content.
 It keeps semantic review, business execution, and human approval separate.
 
@@ -348,13 +360,18 @@ flowchart TD
   External[Existing documents and engineering assets] --> Sources[registry/sources.yaml]
   External --> Collection
   Sources --> Access[Registered tools or supported source access]
-  Access --> Raw[evidence/knowledge/ snapshots and manifest]
-  Raw --> Candidates[knowledge/candidates/]
+  Access --> Incoming[Complete replaceable raw export]
+  Incoming --> Raw[evidence/knowledge/ snapshots and manifest]
+  Raw --> Selections[Hash-bound source selections]
+  Selections --> PreparedSources[On-demand source excerpts or links]
+  PreparedSources --> Candidates[knowledge/candidates/]
   Candidates --> Findings[evidence/knowledge/findings/]
   Findings --> Investigation[Agent investigation and owner decisions]
   Investigation --> Candidates
   Candidates --> Review[Evidence checks and required human review]
   Review --> Published[Published knowledge directories]
+  Candidates --> Wiki[Derived wiki with canonical source hashes]
+  Published --> Wiki
   Published --> Relationships[relationships/]
   Relationships --> Execution[Registered analysis and test tools]
   Execution --> Evidence[.workbench/ retained action evidence]

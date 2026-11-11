@@ -199,6 +199,34 @@ A passing command alone does not establish verified behavior.
 
 Follow the [coverage output rules](#coverage-output) for requirement, defect, implementation, and verification reviews.
 
+## Source preparation before knowledge ingestion
+
+High-priority source: [implementation request, 11 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
+
+Use these processing stages: complete raw export → filtered source view → canonical knowledge → derived wiki.
+Accept complete exports in a replaceable import directory. Preserve registered source snapshots and previous manifest records.
+Use [the source preparation procedure](.agents/skills/ingest-knowledge/references/source-preparation.md) and installed `ai-sdlc sources` commands.
+Keep selection metadata under `evidence/knowledge/selections/`. Generate filtered views only in ignored working storage.
+
+Apply [the source filter policy](.agents/skills/ingest-knowledge/assets/source-filter.yaml) through semantic source review.
+Select intended behavior, domain definitions, contracts, responsibilities, and behavior-relevant constraints.
+Route actual implementation, deployment observations, and execution results to evidence.
+Exclude generic tutorials, unrelated operational logistics, unfilled templates, and navigation-only content from the intent input.
+
+Read mixed documents by section. Preserve conditions, exceptions, draft status, conflicts, and missing-content limits.
+Do not decide meaning from filenames, keywords, or implementation alone.
+
+Save the source page's SHA-256 with every selection and generated link.
+Bind each decision to its source revision, selected ranges, policy hash, and governing context hashes.
+Bind generated views to original source identity and output hashes. Verify bindings before reuse.
+
+Reassess changed pages, including previously excluded pages. Changed rules or context also require reassessment.
+Missing pages do not authorize deletion of evidence or knowledge.
+
+Generate exact excerpts or links instead of copying full source trees.
+Keep canonical citations bound to original retained revisions. Source preparation does not publish knowledge or refresh the wiki.
+The wiki consumes canonical records through hash-bound aliases. Never write through those source links.
+
 ## Primary knowledge wiki
 
 Use the [Workbench llm-wiki bridge](.agents/skills/llm-wiki/SKILL.md) to select the wiki engine.

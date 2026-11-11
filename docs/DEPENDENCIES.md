@@ -33,6 +33,8 @@ Release reporting reused the declared Node HTTP dependencies on `2026-10-24`.
 Read-only Kibana and PostgreSQL connectors extend that dependency inventory on `2026-11-01`.
 Fresh-checkout setup diagnostics and JSON output were added on `2026-11-03` without new package dependencies.
 Download deadlines and manual recovery guidance were added on `2026-11-03` without new package dependencies.
+Local Markdown source preparation was added on `2026-11-11` using the standard library and existing PyYAML dependency.
+Its import, selection, hash verification, and view commands require no downloads or runtime network calls.
 The tables describe inspected implementation and declared dependencies.
 They do not establish company approval, token validity, endpoint access, or passing business behavior.
 

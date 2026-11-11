@@ -42,6 +42,19 @@ Keep source classification separate from derived topic classification.
 Classification alone does not establish source authority or current applicability.
 The [ingestion skill](../.agents/skills/ingest-knowledge/SKILL.md) supports review and ingestion modes.
 
+## Source preparation boundary
+
+Use complete raw export → filtered source view → canonical knowledge → derived wiki.
+The [source preparation procedure](../.agents/skills/ingest-knowledge/references/source-preparation.md) preserves originals and records inspected selections.
+Filtered views remain outside `knowledge/`. Their inclusion decisions do not approve the selected rules.
+
+Each selection and generated link binds the original source page's SHA-256, revision, location, and exact ranges.
+Record policy and governing context hashes with the decision. Generated excerpts also bind output bytes and source range mappings.
+
+Reassess changed sources, including prior exclusions. Missing export pages do not authorize deleting retained sources or knowledge.
+Canonical records continue citing the original retained revision through the existing source manifest contract.
+The wiki consumes canonical records through source links with saved page hashes.
+
 ## Document contract
 
 Each instantiated canonical domain Markdown document starts with YAML frontmatter.

@@ -29,9 +29,16 @@ Input: selected source locations and the current workspace.
 3. Identify empty pages, duplicate content, missing attachments, and unread files.
 4. For ingestion, reuse originals under `evidence/knowledge/sources/`. Append new records to `evidence/knowledge/manifest.yaml`.
 5. Register an actual source collection through the supported catalog contract when needed.
+6. For complete Markdown exports, follow [source preparation](source-preparation.md) before drafting knowledge.
+7. Record semantic selections through the source CLI. Verify source-page, policy, and governing context hashes.
+8. Generate exact excerpts or links only when needed. Preserve source range mappings and output hashes.
 
 Output: the baseline checkpoint, inventory, and source manifest additions for ingestion.
 Completion: every source used for a derived record has an exact manifest reference and permitted retention.
+Selected source views also require current page hashes, policy bindings, context hashes, and valid original ranges.
+The logical stages are complete raw export → filtered source view → canonical knowledge → derived wiki.
+New or changed sources need review. Prior exclusion does not exempt a changed page.
+Missing input remains visible without deleting retained evidence or downstream knowledge.
 
 Original Markdown needs no Workbench frontmatter.
 For an export without original revision metadata, use `sha256:<digest>` and state that limitation.
@@ -65,7 +72,10 @@ A branch name, class name, or comment cannot replace its actual predicate.
 
 ## 4. Draft the connected knowledge
 
-Input: supported claims and recorded unknowns.
+Input: supported claims, current source selections, and recorded unknowns.
+
+Read selected passages with their original context before deriving meaning.
+A generated view is convenient input. Canonical citations still bind to original retained source revisions and page hashes.
 
 | Type | Choose when |
 | --- | --- |

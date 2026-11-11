@@ -24,6 +24,18 @@ def _parser() -> argparse.ArgumentParser:
     doctor = commands.add_parser("doctor", help="Report local readiness and missing setup without external access")
     doctor.add_argument("--profile", choices=("core", "all"), default="all")
     commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
+    sources = commands.add_parser("sources", help="Prepare local source exports with hash-bound selections")
+    source_commands = sources.add_subparsers(dest="source_command", required=True)
+    for name in ("refresh", "select", "view", "verify"):
+        operation = source_commands.add_parser(name)
+        operation.add_argument("--source", required=True, help="Registered filesystem source collection ID")
+        if name == "refresh":
+            operation.add_argument("--input", required=True, help="Complete Markdown export inside the workspace")
+            operation.add_argument("--policy", help="Workspace-relative filter policy; defaults to the ingestion skill policy")
+        elif name == "select":
+            operation.add_argument("--decisions", required=True, help="Hash-bound source decisions JSON inside the workspace")
+        elif name == "view":
+            operation.add_argument("--output", required=True, help="New generated view directory inside .workbench/")
     lint = commands.add_parser("lint", help="Check authored SDLC artifacts without loading a workspace")
     lint.add_argument("paths", nargs="*", help="Markdown artifacts or artifact-only directories")
     lint.add_argument("--strict", action="store_true", help="Fail on warnings as well as errors")
@@ -127,6 +139,19 @@ def main(argv: list[str] | None = None) -> int:
     parser = _parser()
     arguments = parser.parse_args(argv)
     try:
+        if arguments.command == "sources":
+            from .ingestion.sources import apply_selections, refresh_sources, render_sources, verify_sources
+            root = Path(arguments.workspace).expanduser().resolve()
+            if arguments.source_command == "refresh":
+                result = refresh_sources(root, arguments.source, arguments.input, arguments.policy)
+            elif arguments.source_command == "select":
+                result = apply_selections(root, arguments.source, arguments.decisions)
+            elif arguments.source_command == "view":
+                result = render_sources(root, arguments.source, arguments.output)
+            else:
+                result = verify_sources(root, arguments.source)
+            _print_json(result)
+            return 1 if arguments.source_command == "verify" and result["status"] != "READY" else 0
         if arguments.command == "test":
             from .test_preflight import plan_test_execution, preflight_test_execution
             root = Path(arguments.workspace).expanduser().resolve()

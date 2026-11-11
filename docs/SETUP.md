@@ -56,6 +56,8 @@ Core-only setup omits Release Clinic, desktop Python extras, and Node package in
 
 [Release reporting](RELEASE_REPORT.md) uses the existing Node connector dependencies for collection.
 Offline rendering requires only the Python core and a complete saved report bundle.
+Local [source preparation](../.agents/skills/ingest-knowledge/references/source-preparation.md) uses the installed Python core and existing PyYAML dependency.
+It requires no additional packages, downloads, external services, or model credentials.
 Generated workspaces require explicit connector resources that point to a separately installed source checkout.
 
 Use `--check` for diagnostics without package installation.

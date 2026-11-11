@@ -68,6 +68,13 @@ The reserved `knowledge/llm-wiki/` directory holds one derived wiki, canonical s
 Store source provenance, governance findings, and immutable audit events under `evidence/knowledge/`.
 Keep business investigation evidence under its task and reusable record resources under `core/knowledge/`.
 
+Prepare complete local exports through raw import → filtered source view → canonical knowledge → derived wiki.
+Preserve raw revisions. Store source-page hashes with every source link and selection.
+Keep filtered views generated and reusable through source references, selected ranges, and recorded filter decisions.
+Reassess changed pages, filter rules, and governing context before reusing decisions, including previous exclusions.
+Source preparation does not grant knowledge publication or establish business behavior.
+Source: [pipeline implementation request, 11 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
+
 Check source reliability, freshness, consistency, and completeness before treating information as authoritative.
 Identify missing, outdated, conflicting, and ambiguous information.
 Record the owner decision needed when available evidence cannot establish the rule.

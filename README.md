@@ -9,7 +9,7 @@ These documents supersede the earlier MVP construction proposal.
 [The workspace design](docs/WORKSPACE_DESIGN.md) applies the owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf).
 
 Status: Phase 1 foundation with workspace catalogs, portable knowledge contracts, and deterministic validation.
-Automatic source ingestion, AI governance, complete relationship validation, and behavior verification remain planned.
+Remote source synchronization, AI governance, complete relationship validation, and behavior verification remain planned.
 Each retained item needs a current consumer, observable benefit, and supporting evidence.
 
 The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundation gaps.
@@ -163,6 +163,20 @@ The runtime merges tool registry records with inline `resources` and rejects dup
 Restart CLI or MCP processes after configuration changes.
 
 ## Preserve and govern knowledge
+
+Use full raw export → filtered source view → canonical knowledge → derived wiki.
+Place complete local Markdown exports in [raw/incoming](raw/README.md). Do not remove unrelated documents manually.
+Refresh retains original revisions and records source-page hashes before the agent selects relevant passages.
+
+```sh
+ai-sdlc --workspace . sources refresh --source YOUR_SOURCE_ID --input raw/incoming
+ai-sdlc --workspace . sources select --source YOUR_SOURCE_ID --decisions .workbench/ingestion/decisions.json
+ai-sdlc --workspace . sources view --source YOUR_SOURCE_ID --output .workbench/ingestion/filtered/run-1
+ai-sdlc --workspace . sources verify --source YOUR_SOURCE_ID
+```
+
+Follow the [source preparation procedure](.agents/skills/ingest-knowledge/references/source-preparation.md) for registration, decisions, and freshness rules.
+Filtered views use hash-bound source links or exact excerpts. They do not create another authoritative knowledge collection.
 
 Keep canonical records in `knowledge/` limited to business-domain Markdown and navigation. The reserved `knowledge/llm-wiki/` subtree holds the derived wiki and its native artifacts; the [knowledge standards](knowledge/README.md) define separate validation responsibilities.
 Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.

@@ -27,7 +27,10 @@ Use this skill for read-only questions about project knowledge. Answer from insp
    Compiled pages are derived; their frontmatter and graph relationships do not establish Workbench publication or authority.
 4. Use `knowledge.local` `search` or `list` to locate material. Read the exact document with `read` before using it as evidence. Search results locate evidence; they do not replace source review.
 5. Inspect the raw manifest and cited source bytes when available. Record the source ID, path, revision, SHA-256, locator, and retrieval limit. Disclose truncation, stale snapshots, unavailable resources, and bounded search scope.
-6. Read surrounding context, linked records, callers, providers, tests, and retained action results when they affect the claim. Do not infer a runtime relationship from a catalog declaration.
+6. When using a filtered source view, inspect its original source reference, page SHA-256, selected ranges, and output hash.
+   Check policy and governing context bindings. Reopen the retained original before relying on the selected meaning.
+   Treat a pending or stale decision as an evidence limit. A filtered selection does not establish authority or publication.
+7. Read surrounding context, linked records, callers, providers, tests, and retained action results when they affect the claim. Do not infer a runtime relationship from a catalog declaration.
 
 Use the bridge's [query procedure](../llm-wiki/references/workflows.md#query-and-saved-synthesis) for project selection and engine routing. Prefer direct index/page/source reads in the ADE context.
 Native queries can make an independent provider call and write operation state; the bridge documents those limits. Compilation and saved explorations require the corresponding requested work.

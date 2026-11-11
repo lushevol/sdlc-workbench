@@ -1,20 +1,21 @@
 # Source selection before first knowledge ingestion
 
 Date: 11 November 2026, Asia/Singapore.
-Scope: proposed source selection for intended business-system behavior.
+Scope: source selection for intended business-system behavior.
 Reference: [exact user input](user-input.md#exact-user-input).
 Pipeline reference: [full-export pipeline clarification](user-pipeline-followup.md#exact-user-input).
-Latest reference: [source duplication question](user-duplication-followup.md#exact-user-input).
+Latest reference: [implementation request](user-implementation.md#exact-user-input).
 
 **Select source sections that explain intended behavior, its meaning, or necessary system responsibilities.**
 Keep exceptions, conditions, and conflicting intent with each selected rule.
 Use a generated filtered source layer between complete exports and canonical knowledge.
-The selection review is complete. The refresh pipeline below remains a proposal.
+The selection review is complete. The local pipeline is implemented through the installed `sources` commands.
+See [implementation and validation](implementation.md) for execution results and remaining limits.
 
-## Proposed full-export pipeline
+## Full-export pipeline
 
 The user can replace a complete export without manually removing excluded documents or editing mixed documents.
-The Workbench should derive its filtered source view from that export.
+The Workbench derives its filtered source view from that export.
 
 ```mermaid
 flowchart LR
@@ -28,21 +29,21 @@ flowchart LR
 | Layer | Responsibility | Update rule |
 | --- | --- | --- |
 | Raw import | Accept the complete exported collection, including irrelevant documents. | The user can replace this input collection. |
-| Filtered and cleaned sources | Select relevant passages and remove export noise. Preserve original meaning and source mappings. | Generate this view. Do not maintain it manually. |
+| Filtered and cleaned sources | Select exact passages or link complete pages. Preserve original meaning and source mappings. | Generate this view. Do not maintain it manually. |
 | Canonical knowledge | Connect intended rules, definitions, responsibilities, and decisions across sources. Retain lifecycle and authority limits. | Reconcile affected records through ingestion and review. |
 | Wiki | Explain and connect canonical knowledge for retrieval. | Refresh affected pages from canonical records. |
 
 ### Replaceable input and retained evidence
 
 Use a writable import location, such as `raw/incoming/`, for the user's complete exports.
-This is a proposed location. No directory or importer was created during this discussion.
+The [raw import guide](../../../raw/README.md) describes this replaceable, ignored input location.
 
 Retain changed source bytes before deriving knowledge. Reuse unchanged retained payloads.
 Keep registered snapshots under the existing `evidence/knowledge/sources/` structure and retain previous manifest entries.
 Existing registered originals remain at their current locations. They do not become the replaceable import folder.
 
-Generate the filtered view outside `knowledge/`, in configurable working storage.
-It can be rebuilt from retained sources and recorded selection decisions.
+Generate the filtered view outside `knowledge/`, in a new directory under ignored `.workbench/` storage.
+Rebuild it from the current import, retained snapshots, and recorded selection decisions.
 Knowledge citations must still reach the original retained source revision and exact source ranges.
 Keep selection decisions when needed for reproduction. Retain cleaned bytes only when required to interpret a result.
 
@@ -52,7 +53,7 @@ Treat the pipeline as logical stages. It does not require four complete copies o
 Keep each retained source revision once. Reuse equal payloads while preserving their separate provenance identities.
 
 Make the filtered layer primarily a selection index.
-It records source references, hashes, selected ranges, decisions, and cleaning rules.
+It records source references, hashes, selected ranges, decisions, reasons, intent status, and governing policy and context bindings.
 Generate cleaned excerpts when ingestion or inspection requires them. Keep rebuildable excerpts in disposable working storage.
 Avoid copying complete raw documents into the filtered layer when source references already provide the required content.
 
@@ -79,7 +80,9 @@ The replaceable import export can overlap with retained snapshots while both rem
 Archive deduplication prevents repeated retained payloads. It does not remove the separately stored incoming export.
 Never make writable incoming files links to protected snapshots. Overwriting those links could modify retained evidence.
 
-The filtered selection index and excerpt generation above remain proposals. No storage layout or payload was changed.
+The selection index stores reviewed decisions. The view generator emits exact excerpts and complete pages only when requested.
+Complete pages use symbolic links when supported. Otherwise, the generator writes byte-identical copies.
+Every view entry retains the source-page SHA-256 and an emitted output SHA-256.
 
 ### Refresh behavior
 
@@ -91,7 +94,7 @@ The filtered selection index and excerpt generation above remain proposals. No s
 6. Identify affected knowledge records. Reconcile their meaning through the existing candidate and review procedures.
 7. Refresh affected wiki pages from the resulting canonical records.
 
-Each selection binds the source ID, revision/hash, selected ranges, filter version, and governing clarification references.
+Each selection binds the source ID, revision/hash, selected ranges, policy hash, and governing context hashes.
 Changed source bytes invalidate old line selections. Locate the intended passages again before reusing a decision.
 Changed filter rules or relevant clarifications can require reassessment even when source bytes remain unchanged.
 
@@ -101,28 +104,29 @@ A source update can mark affected content for review. It cannot silently approve
 
 ### Cleaning boundary
 
-Remove export navigation, empty layout blocks, and unrelated sections when their removal preserves meaning.
-Normalize formatting only when the source structure remains clear.
+Select exact source lines to omit navigation, empty layout blocks, and unrelated sections when meaning remains intact.
+The current runtime preserves selected text. It does not normalize formatting.
 Preserve conditions, exceptions, units, defaults, field types, proposal status, and conflicting rules.
 Keep missing diagrams and attachments explicit when they limit understanding.
 
 Do not turn cleaning into unsupported correction or synthesis.
-Record original-to-cleaned range mappings when formatting changes source layout.
+Record original-to-output range mappings for every excerpt.
 Semantic reconciliation belongs in canonical knowledge ingestion.
 
 ### Fit with the current Workbench
 
 The [existing-file review](filter-review.md#current-conclusion) supplies the first selection baseline for 85 documents.
 Its exclusions concern the intent input. Original files remain unchanged.
-The review is not an executable refresh service.
+The review supplies semantic decisions. The local `sources` commands apply those decisions and detect stale bindings.
 
 The [source retention contract](../../../knowledge/README.md#source-provenance-outside-knowledge) already requires retained revisions and exact source bindings.
 The [ingestion procedure](../../../.agents/skills/ingest-knowledge/references/workflow.md#2-protect-the-originals) preserves source bytes before interpretation.
 The [wiki bridge](../../../.agents/skills/llm-wiki/SKILL.md#maintain-the-shared-documents) already uses canonical records as its source.
-Its existing `knowledge/llm-wiki/raw/` links remain canonical-record aliases. They are not the proposed import folder.
+Its existing `knowledge/llm-wiki/raw/` links remain canonical-record aliases.
 
 Confidence is high that these boundaries fit the current architecture.
-The folder examples, refresh procedure, filter versioning, and range mappings above require implementation before use.
+The [source preparation procedure](../../../.agents/skills/ingest-knowledge/references/source-preparation.md) documents supported commands and hash bindings.
+Knowledge reconciliation and wiki synthesis remain separate agent procedures. Local source commands do not perform those stages.
 
 ## Topics to keep
 
@@ -162,11 +166,12 @@ Keep system rules found inside operational procedures. Defer unrelated staffing,
 
 ## Selection decisions
 
-These are proposed review labels. They are not new runtime fields or publication states.
+These review labels now have corresponding runtime decisions. They remain separate from knowledge publication states.
+Runtime names use `KEEP_SECTIONS`, `EVIDENCE_ONLY`, and `EXCLUDE` for their corresponding table labels.
 
 | Decision | Use |
 | --- | --- |
-| KEEP | The relevant content describes intended behavior or necessary context. Preserve its actual intent status. |
+| KEEP | The complete page describes intended behavior or necessary context. Preserve its actual intent status. |
 | KEEP SECTIONS | The document mixes qualifying content with unrelated material. Select exact sections with necessary context. |
 | EVIDENCE ONLY | The content describes implementation, deployment, incidents, measurements, or execution outcomes. |
 | HOLD | Missing context, conflicting rules, or unclear applicability prevents a reliable interpretation. Record the reason and next evidence. |
@@ -176,9 +181,12 @@ Exclusion from this batch does not authorize deleting original documents or prot
 Unknown authority does not erase relevant content. Preserve it as uncertain candidate material when its meaning remains clear.
 Source selection does not approve the rule or publish knowledge.
 
-Keep one selection index with these columns:
+Keep one durable selection index per source collection.
+Each source row records these fields:
 
-`source ID | revision/hash | section/locator | topic/question | decision | reason | intent status | applicability | authority | unresolved context`
+`path | source identity and snapshot | present | decision | reason | ranges | topic | intent_status | policy_sha256 | context`
+
+Record applicability, authority, and unresolved context in the review rationale and resulting knowledge.
 
 Reference each retained payload once. Reuse its identity across all supported topics.
 
@@ -202,8 +210,9 @@ These examples illustrate selection. They are not claims about the project's act
 | Actual implementation and observations remain separate from intent. | [Intent boundary](../../../knowledge/README.md#intended-behavior-and-independent-gaps) | Documented rule; high. The source states the separation. | Actual behavior needs its own evidence. |
 | Selection must answer project questions and preserve source context. | [Scope](../../../.agents/skills/ingest-knowledge/references/workflow.md#1-define-the-scope) and [evidence reading](../../../.agents/skills/ingest-knowledge/references/workflow.md#3-read-and-trace-the-evidence) | Documented procedure; high. The workflow requires both checks. | Topic groups and decision labels above are recommendations. |
 
-Inspected workspace HEAD: `86f686b9d01f8faedf805ee67df28dfb631ddbea`.
-The following hashes identify the inspected guide bytes.
+Initial proposal inspected workspace HEAD: `86f686b9d01f8faedf805ee67df28dfb631ddbea`.
+The following hashes identify historical guide bytes inspected for that proposal.
+The implementation updates those guides. Current validation appears in [the implementation report](implementation.md).
 
 | Source | SHA-256 |
 | --- | --- |
@@ -211,12 +220,12 @@ The following hashes identify the inspected guide bytes.
 | `.agents/skills/ingest-knowledge/references/workflow.md` | `0340e6d98af51e6b486eedf9567256d9d97336e5f4db53e96074ac5c0916629f` |
 
 The [follow-up review](filter-review.md#current-conclusion) classifies the existing 85-document export.
-No source registration, knowledge publication, semantic ingestion, or automatic refresh pipeline ran during this proposal.
+No knowledge publication or semantic ingestion ran during this source preparation implementation.
 Authority and applicability remain source-specific review questions.
 
 ## Validation
 
-Documentation checks: PASSED for 14 local links, anchors, and source ranges. Both recorded guide hashes match.
+Initial proposal checks: PASSED for 14 local links, anchors, source ranges, and the then-current guide hashes.
 Diff checks found no whitespace errors. The prose sentence-length check found no sentences over 20 words.
 ASD-STE100 review: PENDING. No complete dictionary or grammar certification was performed.
-Runtime tests: NOT_RUN. This stage changes only this recommendation and its user-input reference.
+Runtime and installed-workspace checks are recorded in [the implementation report](implementation.md).
