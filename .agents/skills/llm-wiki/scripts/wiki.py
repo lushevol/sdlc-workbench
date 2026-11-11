@@ -20,6 +20,13 @@ LOCK = SKILL / "upstream-lock.json"
 TOOLS = ("ingest", "query", "lint", "health", "heal", "refresh", "build_graph",
          "file_to_md", "pdf2md")
 LINK = re.compile(r"(?<!!)\[([^\]\n]+)\]\(([^)\s]+)\)")
+LOCAL_TOPIC_PAGES = (
+    "portal-composition-and-interoperability",
+    "session-lifecycle",
+    "entitlements-and-ces-migration",
+    "admin-onboarding-and-release",
+    "portal-service-responsibilities",
+)
 
 
 def digest(path):
@@ -247,6 +254,8 @@ def export(project, source_path=None):
             "", "## Candidate records", "",
         ]
         overview_lines.extend(f"- [[{target.stem}]]" for target in sorted(mapping.values()))
+        overview_lines.extend(["", "## Processed topics", ""])
+        overview_lines.extend(f"- [[{stem}]]" for stem in LOCAL_TOPIC_PAGES)
         write(overview, "\n".join(overview_lines) + "\n")
 
     index = runtime / "wiki/index.md"

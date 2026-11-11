@@ -83,3 +83,11 @@ Generated from `knowledge/candidates`; candidate records remain unconfirmed.
 ## [2026-11-11] report | Graph health report generated
 
 13 nodes analyzed.
+
+## [2026-11-11] graph | Knowledge graph rebuilt
+
+18 nodes, 63 edges (63 extracted, 0 inferred).
+
+## [2026-11-11] report | Graph health report generated
+
+18 nodes analyzed.

@@ -26,3 +26,11 @@ Every source page remains candidate or draft knowledge pending confirmation.
 - [[wb-candidate-security-kt-authentication-and-sessions]]
 - [[wb-candidate-security-kt-ces-migration-parity]]
 - [[wb-candidate-security-kt-sdk-and-entitlements]]
+
+## Processed topics
+
+- [[portal-composition-and-interoperability]]
+- [[session-lifecycle]]
+- [[entitlements-and-ces-migration]]
+- [[admin-onboarding-and-release]]
+- [[portal-service-responsibilities]]

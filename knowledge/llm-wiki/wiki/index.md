@@ -2,6 +2,11 @@
 
 Derived knowledge; lifecycle and canonical authority remain with the cited records.
 
+- [admin-onboarding-and-release](concepts/admin-onboarding-and-release.md)
+- [entitlements-and-ces-migration](concepts/entitlements-and-ces-migration.md)
+- [portal-composition-and-interoperability](concepts/portal-composition-and-interoperability.md)
+- [session-lifecycle](concepts/session-lifecycle.md)
+- [portal-service-responsibilities](entities/portal-service-responsibilities.md)
 - [overview](overview.md)
 - [wb-candidate-architecture-arc-portal-service-relationships](sources/wb-candidate-architecture-arc-portal-service-relationships.md)
 - [wb-candidate-architecture-kt-frontend-composition](sources/wb-candidate-architecture-kt-frontend-composition.md)
