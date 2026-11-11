@@ -19,6 +19,8 @@ When **both** `OPENAI_API_BASE` and `LLM_API_KEY` are configured in `knowledge/l
 
 Otherwise use the original [llm-wiki-agent instructions](upstream/AGENTS.md) in the **current ADE session**, without another model URL or token. Do not automatically substitute OAuth or infer a URL from a provider-specific key. The launcher's `compile` and semantic `run` commands return an explicit agent handoff in this mode; that output does not mean compilation ran. Carry out the requested semantic work using the current agent's tools.
 
+For direct file authoring, read the [fallback metadata and provenance procedure](references/fallback.md). It defines native-format new pages and how reviewed source changes finish with consistent bindings. Its Workbench layout rules take precedence over the original agent's page format and native compiler body-only prompts.
+
 ## Maintain the shared documents
 
 Read the complete canonical source, the index and relevant existing pages before writing. In fallback mode, apply the original agent's ingest/query/contradiction workflows with these external layout constraints: derived source summaries live in `wiki/summaries/`; `wiki/sources/` and `raw/` are immutable relative links to canonical records; saved synthesis lives in `wiki/explorations/`. Preserve the existing page metadata and wiki-relative links. Use the current index as the synthesis map; a second overview or duplicate source-summary tree is unnecessary.

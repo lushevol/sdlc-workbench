@@ -1,5 +1,9 @@
 # Wiki Schema
 
+## Workbench authoring context
+
+Use the [Workbench bridge](../../../.agents/skills/llm-wiki/SKILL.md) and its [direct ADE maintenance contract](../../../.agents/skills/llm-wiki/references/fallback.md) for this shared wiki. The native compiler's body-only instruction below applies when OpenKB code wraps a model response. When the ADE agent edits files directly, it must create/preserve complete native frontmatter and complete the reviewed source bindings. These project rules resolve differences from the original llm-wiki-agent layout; original upstream packages remain unchanged.
+
 ## Directory Structure
 - sources/ — Document content. Short docs as .md, long docs as .json (per-page). Do not modify directly.
 - sources/images/ — Extracted images from documents, referenced by sources.
@@ -37,6 +41,8 @@ Operations: ingest, query, lint
 - Keep each page focused on a single topic
 
 ## Frontmatter (managed by code — do NOT emit it in generated content)
+
+This section governs responses to the native compiler. For direct ADE file authoring, use the complete metadata examples in the Workbench contract above.
 - Every summary/concept/entity page carries a non-empty `type:` — `Summary`,
   `Concept`, or a capitalized entity subtype (e.g. `Organization`). This is the
   one field OKF requires; consumers use it for routing/filtering/presentation.
