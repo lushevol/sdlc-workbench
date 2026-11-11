@@ -1,29 +1,49 @@
-# Upstream origin and adoption boundary
+# Upstream installation and boundaries
 
-This skill adapts the Markdown authoring workflows from SamurAIGPT/llm-wiki-agent.
-Upstream revision: `37145b8ba04d0acc6f3b6b0c02606768d1862c9a`.
-Source: [pinned agent instructions](https://github.com/SamurAIGPT/llm-wiki-agent/blob/37145b8ba04d0acc6f3b6b0c02606768d1862c9a/AGENTS.md).
-License: [MIT notice](../LICENSE.md).
+Repository: [SamurAIGPT/llm-wiki-agent](https://github.com/SamurAIGPT/llm-wiki-agent).
+Installed revision: [`f03eff653886672ee8a92bb6a28faae9190d90d2`](https://github.com/SamurAIGPT/llm-wiki-agent/tree/f03eff653886672ee8a92bb6a28faae9190d90d2).
+The complete original tree is retained under [upstream/](../upstream/), including [its MIT license](../upstream/LICENSE).
+The [source lock](../upstream-lock.json) records exact upstream file hashes.
 
-| Upstream workflow | Adopted behavior |
+The earlier instruction-only adaptation used revision `37145b8ba04d0acc6f3b6b0c02606768d1862c9a`.
+The current installation includes the original implementation and native graph instead of replacing those capabilities.
+
+## Original and integration files
+
+| Layer | Responsibility |
 | --- | --- |
-| Read sources and compile pages | Read selected canonical domain records and write one linked summary per record. |
-| Living overview, entities, concepts | Generate supported cross-source explanations with exact citations and visible source states. |
-| Query with inline citations | Navigate the wiki, reopen canonical records, and answer with evidence and explicit unknowns. |
-| Health before lint | Check structure and coverage first, then review meaning and contradictions. |
-| Changed-source refresh | Use full input hashes to identify affected navigation and preserve unchanged sources. |
-| Graph navigation | Reuse the existing evidence graph and its relationship meanings. |
+| `upstream/` | Complete pinned source, preserved unchanged. |
+| `scripts/wiki.py` | External installation, export, isolation, and invocation wrapper. |
+| `.venv-llm-wiki/` | Dedicated Python environment for upstream dependencies. |
+| Runtime implementation under `knowledge/llm-wiki/` | Ignored unchanged code copies beside the persistent native data. |
+| `knowledge/llm-wiki/{raw,wiki,graph}/` | Native inputs, editable derived pages, operation logs, and original graph outputs. |
+| Canonical Workbench records and evidence | Intended rules, exact provenance, lifecycle, review, publication, and immutable audit history. |
 
-The upstream project provides root agent instructions and optional Python tools, rather than a packaged project skill.
-This adaptation packages the instruction-based route as a canonical Workbench skill.
-It retains the upstream source-summary and connected-synthesis pattern.
-It changes page metadata, paths, links, and update boundaries to fit existing Workbench contracts.
+All upstream workflows remain available: ingest, query, health, semantic lint, refresh, heal, graph, and document conversion.
+The original agent instructions and `.claude/commands/` are retained in the vendored tree.
+Use the original [AGENTS.md](../upstream/AGENTS.md) or [CLAUDE.md](../upstream/CLAUDE.md) for native workflow details.
+Apply their wiki operations within the isolated native data workspace.
 
-The upstream Python tools, provider defaults, converters, automatic healer, scheduler recipe, and graph format are not installed.
-Their capabilities remain separate from this adopted skill.
-No upstream root instructions replace the workspace's `AGENTS.md`.
+The wrapper does not modify upstream source, replace its graph algorithm, or turn native pages into published Workbench records.
+It exports Workbench candidate records into native source-page metadata, unique filename stems, and `[[wikilinks]]`.
+Confirmed source records can be selected later with the launcher's `--source` option.
+Source-bound provenance remains available beside those derived pages.
+Keep canonical changes within Workbench ingestion and governance procedures.
 
-Ordinary Markdown links replace stem-based wikilinks.
-Navigation pages use directory `index.md` files, rather than unsupported record types.
-Exact canonical record identities replace filename-only authority.
-Wiki generation preserves candidate states and cannot supply human publication approval.
+## Execution requirements
+
+The upstream project declares Python `>=3.10,<3.14`.
+The complete dependency installation requires Python 3.11–3.13 because the declared NetworkX version requires Python 3.11 or later.
+Its project dependencies include `markitdown[all]>=0.1.5,<0.2.0` and `tqdm>=4.67.3,<5.0.0`.
+Its separate requirements declare `litellm~=1.83.10` and `networkx~=3.6.1`.
+Use the launcher installation path to prepare the dedicated environment and inspect actual readiness output.
+
+Agent-authored wiki work can use the current coding agent without a second model API.
+Original scripted ingest, query, semantic lint, heal, refresh, and inferred graph operations use LiteLLM and configured model access.
+Upstream model selection uses `LLM_MODEL` and, where applicable, `LLM_MODEL_FAST`.
+Keep provider credentials in the process environment, outside pages, manifests, command arguments, and reports.
+
+The original HTML renderer requests an unpinned vis-network script from `https://unpkg.com/vis-network/standalone/umd/vis-network.min.js`.
+Its source describes the HTML as self-contained, but browser rendering depends on that external asset.
+Preserving upstream unchanged retains this dependency.
+The scheduler recipe remains available as documentation; installation does not request a recurring job.

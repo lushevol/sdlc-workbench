@@ -108,6 +108,11 @@ Use an independent reader when available to distinguish target rules from actual
 Disclose self-review when independent review is unavailable. Automated checks cannot establish semantic accuracy alone.
 
 Update domain navigation, related references, the independent gap document, the task knowledge-update log, and Markdown/HTML release-report views.
+When canonical knowledge or its navigation changes, use [llm-wiki](../llm-wiki/SKILL.md) to reconcile affected summaries and export the native wiki.
+Run native health checks and rebuild the original wiki graph when graph maintenance is part of the selected scope.
+Keep the native workspace at `knowledge/llm-wiki/` derived from exact source bindings and declared lifecycle states.
+Wiki updates and model-inferred connections cannot establish rollout, publication, synchronization completion, or passing behavior.
+An inspected knowledge no-change disposition does not require rewriting unchanged wiki content.
 Keep one canonical row inventory and synchronization summary. Link report views to it and compare displayed counts and dispositions.
 Preserve frozen assessments. Record later synchronization in the maintained current view or a linked successor.
 An unavailable report renderer leaves report synchronization pending. Do not claim parity from editing one format.

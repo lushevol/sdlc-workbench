@@ -202,7 +202,7 @@ Initialization copies all canonical skills with their executable helpers and sup
 Initialization creates Claude skill links, empty catalogs, empty evidence provenance, and fresh workspace configuration.
 It ships `repos/README.md` for checkout placement and registration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
-The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) can compile those project records into derived navigation under `knowledge/wiki/`.
+The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) compiles `knowledge/candidates/` into the native derived workspace under `knowledge/llm-wiki/`; confirmed source records can be selected later.
 Directory `index.md` pages hold source summaries, entities, concepts, and a living overview without creating another publication path.
 Generated wiki content stays project-specific and is excluded from shipped workspace defaults.
 

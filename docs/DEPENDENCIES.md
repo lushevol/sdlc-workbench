@@ -357,6 +357,48 @@ It does not run during ordinary local report generation.
 The package already contains raw wiki snapshots, their manifest, and the derived control registry.
 Preserve those bytes and add new snapshots when sources change.
 
+## Complete llm-wiki-agent
+
+The complete upstream source is vendored unchanged at revision `f03eff653886672ee8a92bb6a28faae9190d90d2`.
+The [file lock](../.agents/skills/llm-wiki/upstream-lock.json) binds every retained file.
+The [workflow wrapper](../.agents/skills/llm-wiki/scripts/wiki.py) supplies installation, export, graph execution, direct tool execution, and integrity checks.
+Its environment is `.venv-llm-wiki`; its operational workspace is `knowledge/llm-wiki/`.
+Neither location changes the original files under `.agents/skills/llm-wiki/upstream/`.
+
+| Declared prerequisite | Version constraint | Consumer |
+| --- | --- | --- |
+| Python | 3.11–3.13 for the wrapper and NetworkX; upstream metadata declares `>=3.10,<3.14`. | All upstream scripts; install separately from Workbench's Python 3.14 environment. |
+| `markitdown[all]` | `>=0.1.5,<0.2.0` | Multi-format conversion and ingestion helpers. |
+| `tqdm` | `>=4.67.3,<5.0.0` | Batch conversion progress. |
+| `litellm` | `~=1.83.10` | Provider calls from ingestion, query, semantic lint, healing, and graph inference. |
+| `networkx` | `~=3.6.1` | Native graph community detection and reports. |
+
+The constraints come from the untouched upstream [project metadata](../.agents/skills/llm-wiki/upstream/pyproject.toml) and [requirements file](../.agents/skills/llm-wiki/upstream/requirements.txt).
+The installer consumes both declarations.
+The upstream [optional conversion backends](../.agents/skills/llm-wiki/upstream/README.md#optional-dependencies) have separate package and platform requirements.
+Supplying their scripts does not establish that every optional backend or document format has been verified.
+
+Installation downloads Python packages through the configured package index and its artifact hosts.
+Public defaults commonly use `pypi.org` and `files.pythonhosted.org`; company mirrors can replace them.
+An absent interpreter can require separate installation through the selected Python distribution mechanism.
+The source itself ships in the Workbench wheel and needs no startup GitHub download.
+The standard Workbench offline bundle includes these source files but does not provision `.venv-llm-wiki` dependencies.
+Prepare matching packages separately for that interpreter and platform when direct package access is unavailable.
+
+The `graph --no-infer` workflow executes upstream `tools/build_graph.py` without model calls.
+It produces native graph JSON, HTML, and optional reports under `knowledge/llm-wiki/graph/`.
+It does not invoke Workbench's service-dependencies graph as a substitute.
+Native HTML loads vis-network from `https://unpkg.com/vis-network/standalone/umd/vis-network.min.js`.
+The viewer therefore has a browser network dependency even when graph extraction runs locally.
+
+Inference and other scripted model features send selected input to the provider configured through LiteLLM.
+Model selection uses `LLM_MODEL` and `LLM_MODEL_FAST`; credentials follow the selected provider's environment configuration.
+Provider endpoints, access, and usage costs remain specific to that configuration.
+The upstream converter can also fetch selected arXiv sources when explicitly invoked.
+No automatic scheduler or update check is enabled merely by retaining the complete upstream source.
+
+See [the installation procedure](SETUP.md#install-the-complete-llm-wiki-agent) for native graph commands and runtime separation.
+
 ## Browser assets and documentation
 
 The [Ponytail skill](../.agents/skills/ponytail/SKILL.md) supplies coding instructions to the existing agent.
@@ -366,14 +408,12 @@ It adds no runtime package, service, download domain, startup updater, or runtim
 Agent access and costs follow the existing agent configuration.
 Connected setup and offline preparation include the skill through the existing wheel; regenerate bundles after source changes.
 
-The graph viewer embeds its CSS, JavaScript, and graph data.
+The Workbench service graph viewer embeds its CSS, JavaScript, and graph data.
 The [knowledge graph](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) uses existing Python, PyYAML, and jsonschema dependencies.
 It adds no database, service, package prerequisite, download domain, or runtime network call.
 Connected and prepared-bundle installation use the same existing package paths.
-The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) uses the existing coding agent and Markdown files.
-Its source-summary, synthesis, and health procedures add no Python package, server, converter, CDN, or provider dependency.
-Existing agent access and model costs remain subject to that agent's configuration.
-The generic skill and MIT attribution ship in the Workbench package; project wiki content does not.
+The [complete llm-wiki-agent](#complete-llm-wiki-agent) has its own Python dependencies, provider calls, and native viewer CDN dependency.
+Its entire upstream tree ships in the Workbench package; generated project wiki content does not.
 The initial TDA HTML report also uses local generated content.
 Their inspected renderers contain no external script or stylesheet dependency.
 Following report hyperlinks still requires the linked business service.

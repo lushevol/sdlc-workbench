@@ -5,12 +5,17 @@ description: Build and query evidence-linked knowledge and static dependency gra
 
 # Service Dependencies Graph
 
-This imported skill owns graph generation, queries, validation, and visualization.
-Keep every graph enhancement in its `scripts/`, `tools/`, `assets/`, `references/`, or `tests/` directories.
+This imported skill owns static dependency and governed-evidence graph generation, queries, validation, and visualization.
+Keep enhancements to this graph in its `scripts/`, `tools/`, `assets/`, `references/`, or `tests/` directories.
 Workbench CLI and MCP integrations remain thin adapters to this skill.
 The graph records static source declarations and supported identity joins.
 It does not establish deployment, runtime execution, or approved business intent.
 Its [knowledge projection](references/architecture/knowledge-graph.md) connects declared knowledge, provenance, catalogs, and behavior-review evidence.
+
+Use [llm-wiki](../llm-wiki/SKILL.md) for the original upstream wiki graph from native `[[wikilinks]]`.
+Its launcher invokes unchanged `llm-wiki-agent` graph code and writes `knowledge/llm-wiki/graph/graph.json` and `graph.html`.
+Keep that `{nodes, edges, built}` output separate from this skill's evidence graph and snapshot contracts.
+Do not substitute this graph's Knowledge tab for a requested upstream llm-wiki graph.
 
 The `.claude/skills/service-dependencies-graph/` alias points to this canonical directory.
 Initialization creates the directory link where the platform permits it.
@@ -29,6 +34,7 @@ Use direct source inspection and existing project tools for unsupported scope, a
 | --- | --- | --- |
 | Build or audit the repository census | Run the skill build command, then inspect coverage. | Snapshot, census, diagnostics, and fingerprints. |
 | Explore knowledge and provenance | Read the [knowledge graph guide](references/architecture/knowledge-graph.md), then query records, references, or bounded paths. | Exact identities, lifecycle states, grades, evidence, and freshness. |
+| Build the native llm-wiki graph | Use the [llm-wiki graph workflow](../llm-wiki/references/workflows.md#original-upstream-graph). | Original upstream nodes, edges, HTML, and optional connectivity report. |
 | Explain the architecture | Check coverage, services, and repository relationships. | Analysis roots, confirmed links, and unresolved boundaries. |
 | Discover relationships from initial instructions | Follow [instruction investigation](references/architecture/initial-instruction-investigation.md), then [the context contract](references/architecture/user-architecture-context.md). | Investigated relationships integrated into the graph, with source support, inference, conflicts, and limits. |
 | Trace one repository or boundary | Search concrete names or paths, then inspect neighborhoods and cited source. | Consumer/provider evidence and identity limits. |

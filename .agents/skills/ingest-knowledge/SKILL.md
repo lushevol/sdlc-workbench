@@ -97,3 +97,13 @@ Use [govern-knowledge](../govern-knowledge/SKILL.md) for lifecycle review and pu
 Use [detect-gaps](../detect-gaps/SKILL.md) for independent intent-to-implementation gap records.
 Use [verify-implementation](../verify-implementation/SKILL.md) when the task also requests executed behavior verification.
 Do not force either workflow onto a simple document review.
+
+## Connect the native wiki
+
+Use [llm-wiki](../llm-wiki/SKILL.md) for native source summaries, connected concepts, queries, and its original graph.
+After authorized canonical changes, reconcile affected `knowledge/wiki/` navigation, then run the wiki export and native health checks.
+Build the original wiki graph when the requested handoff includes graph output.
+Native ingest and conversion also remain available through the upstream tools for the selected source scope.
+Their output stays in the separate `knowledge/llm-wiki/` workspace, including native raw inputs, logs, and graph files.
+Treat native pages as derived proposals until canonical ingestion and governance requirements are met.
+Review mode does not trigger export, native ingestion, healing, or canonical writes.

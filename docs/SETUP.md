@@ -313,6 +313,54 @@ This installation excludes upstream hooks, dashboards, global plugins, and auxil
 Static discovery does not prove that a model follows the instructions.
 Native Windows runtime remains untested; existing tests cover forwarding when directory links are denied.
 
+## Install the complete llm-wiki-agent
+
+The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) includes the complete upstream project at revision `f03eff653886672ee8a92bb6a28faae9190d90d2`.
+The original files remain under [`.agents/skills/llm-wiki/upstream/`](../.agents/skills/llm-wiki/upstream/README.md), without upstream Git metadata.
+The [file inventory](../.agents/skills/llm-wiki/upstream-lock.json) binds their original bytes.
+The Workbench wrapper and its configuration remain separate from those files.
+
+Run the wrapper from the selected workspace root:
+
+| Action | Windows 11 | macOS |
+| --- | --- | --- |
+| Install declared dependencies | `py -3 .agents/skills/llm-wiki/scripts/wiki.py install` | `python3 .agents/skills/llm-wiki/scripts/wiki.py install` |
+| Export candidate knowledge | `py -3 .agents/skills/llm-wiki/scripts/wiki.py export` | `python3 .agents/skills/llm-wiki/scripts/wiki.py export` |
+| Build the upstream graph | `py -3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save` | `python3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save` |
+| Verify source integrity | `py -3 .agents/skills/llm-wiki/scripts/wiki.py verify` | `python3 .agents/skills/llm-wiki/scripts/wiki.py verify` |
+
+Installation creates `.venv-llm-wiki` independently of Workbench's `.venv`.
+The installer selects compatible Python, preferring Python 3.13 when available.
+Use `install --python /absolute/path/to/python3.13` to select an interpreter explicitly.
+The wrapper requires Python 3.11–3.13 because NetworkX requires Python 3.11 or newer.
+The upstream project metadata independently declares Python `>=3.10,<3.14`.
+Workbench's Python 3.14 environment cannot supply this separate runtime.
+
+The installer consumes both upstream `pyproject.toml` and `requirements.txt` dependency declarations.
+These include MarkItDown with its declared extras, tqdm, LiteLLM, and NetworkX.
+The dependency installation command has a 600-second deadline.
+The root Workbench setup and its standard offline bundle do not install this separate environment.
+Use approved package access or prepare matching packages for the selected interpreter and platform.
+See [the dependency inventory](DEPENDENCIES.md#complete-llm-wiki-agent) for download and runtime boundaries.
+
+The operational workspace is `knowledge/llm-wiki/`.
+Its native `wiki/`, `raw/`, and `graph/` directories remain separate from the immutable vendored source.
+Export prepares upstream-compatible pages from `knowledge/candidates/` and retains source mappings. Use `export --source knowledge/confirmed` when confirmed source records become available.
+The graph command executes upstream `tools/build_graph.py`.
+It writes `knowledge/llm-wiki/graph/graph.json`, `graph.html`, and the requested graph report.
+Open `graph.html` in a browser to inspect the native result.
+This command is separate from `ai-sdlc graph build`.
+
+`--no-infer` builds explicit wikilink relationships without calling a model provider.
+Omitting that option enables upstream semantic inference through LiteLLM.
+Scripted ingestion, query, semantic lint, and healing can also call the configured model provider.
+Configure provider credentials privately through its supported environment variables.
+The native HTML viewer loads vis-network from `unpkg.com`; opening it can require network access.
+Optional PDF backends follow their separate [upstream installation instructions](../.agents/skills/llm-wiki/upstream/README.md#optional-dependencies).
+
+Generated workspaces receive the complete upstream source and wrapper, without this project's wiki data or installed environment.
+Run installation and export in each selected workspace.
+
 ## Runtime dependencies
 
 The package manifests define the installed versions.
@@ -340,9 +388,8 @@ The [knowledge graph](../.agents/skills/service-dependencies-graph/references/ar
 Run `ai-sdlc --workspace PATH graph build` to generate its snapshot and viewer.
 It needs no graph database, LLM service, API key, or additional installation step.
 Connected setup and prepared offline bundles already contain its dependencies.
-The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) ships with the shared skills and uses your existing coding agent.
-It generates Markdown navigation without installing the upstream Python tools or adding a separate model API.
-Project wiki content is generated locally and is excluded from initialized workspace defaults.
+The [complete llm-wiki-agent installation](#install-the-complete-llm-wiki-agent) uses its own Python environment and native graph generator.
+Its project wiki content and installed environment are excluded from initialized workspace defaults.
 Nexus target scanning can install or resolve target dependencies.
 Nexus fixes can change target manifests and lockfiles.
 Obtain authorization for those changes and follow the owning repository's instructions.

@@ -269,9 +269,23 @@ Use [connectors](.agents/skills/connectors/SKILL.md) for external tool setup, ro
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
 Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
-Use [llm-wiki](.agents/skills/llm-wiki/SKILL.md) to generate or refresh connected source summaries, concepts, entities, and an overview.
-Its derived wiki preserves canonical record identities, review states, citations, and unresolved questions.
-The skill uses the current coding agent without a separate model API or runtime installation.
+Use [llm-wiki](.agents/skills/llm-wiki/SKILL.md) to generate a native wiki from `knowledge/candidates/`; confirmed source records can be selected later.
+The complete [upstream project](.agents/skills/llm-wiki/upstream/README.md) ships unchanged, with a separate Workbench workflow wrapper.
+Install its dependencies, export candidate knowledge, and build its native graph:
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py install
+python3 .agents/skills/llm-wiki/scripts/wiki.py export
+python3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save
+python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+```
+
+The separate `.venv-llm-wiki` environment uses compatible Python; the operational workspace is `knowledge/llm-wiki/`.
+Its graph appears at [knowledge/llm-wiki/graph/graph.html](knowledge/llm-wiki/graph/graph.html) after generation.
+`--no-infer` builds explicit wiki relationships without model calls.
+Ingestion, scripted queries, semantic analysis, and inferred relationships use the configured model provider.
+See [installation and network requirements](docs/SETUP.md#install-the-complete-llm-wiki-agent).
+
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
 It separates automated checks from content review and unresolved evidence.
 Use [gherkin-quality](.agents/skills/gherkin-quality/SKILL.md) for evidence-backed UI scenarios and automation readiness.

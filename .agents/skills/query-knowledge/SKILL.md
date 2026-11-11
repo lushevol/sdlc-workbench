@@ -22,9 +22,16 @@ Use this skill for read-only questions about project knowledge. Answer from insp
    Read implementation, deployment, and observed behavior from engineering sources and separate task gap Markdown.
    Read provenance, retained sources, and governance findings from `evidence/knowledge/` when claims require them.
    Read task logs and executions from the owning task. Do not treat those artifacts as domain knowledge.
+   Use the [native llm-wiki index](../../../knowledge/llm-wiki/wiki/index.md) and its [original graph workflow](../llm-wiki/references/workflows.md#original-upstream-graph) for connected discovery when available.
+   Read the relevant native pages, then reopen their canonical records and inspect current source bindings.
+   Native wiki records are derived; their frontmatter and graph confidence do not establish Workbench publication or authority.
 4. Use `knowledge.local` `search` or `list` to locate material. Read the exact document with `read` before using it as evidence. Search results locate evidence; they do not replace source review.
 5. Inspect the raw manifest and cited source bytes when available. Record the source ID, path, revision, SHA-256, locator, and retrieval limit. Disclose truncation, stale snapshots, unavailable resources, and bounded search scope.
 6. Read surrounding context, linked records, callers, providers, tests, and retained action results when they affect the claim. Do not infer a runtime relationship from a catalog declaration.
+
+The [llm-wiki tool route](../llm-wiki/references/workflows.md#query-and-saved-synthesis) is available for requested native scripted queries.
+That upstream query calls a model and appends the native log, even without saving an answer.
+Use direct page reads for ordinary read-only investigation; export, refresh, heal, and saved synthesis require the corresponding requested work.
 
 For a behavior ID or story rule, use the shared [behavior trace](../verify-implementation/references/behavior-review.md#trace-one-behavior).
 Follow intent, criteria, exact implementation, assertions, and retained execution with grades and limits on each relationship.

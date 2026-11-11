@@ -9,9 +9,12 @@ from pathlib import Path
 import runpy
 import shutil
 import subprocess
+import sys
+import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
+import zipfile
 
 import yaml
 
@@ -158,8 +161,17 @@ class WorkspacePackagingTests(unittest.TestCase):
             canonical = scaffold / ".agents/skills/service-dependencies-graph"
             for relative in ("SKILL.md", "scripts/graph.py", "tools/viewer.html", "tests/test_portability.py"):
                 self.assertTrue((canonical / relative).is_file(), relative)
-            engines = [path.relative_to(package).as_posix() for path in package.rglob("build_graph.py")]
-            self.assertEqual(engines, ["scaffold/.agents/skills/service-dependencies-graph/tools/build_graph.py"])
+            engines = sorted(path.relative_to(package).as_posix() for path in package.rglob("build_graph.py"))
+            self.assertEqual(engines, [
+                "scaffold/.agents/skills/llm-wiki/upstream/tools/build_graph.py",
+                "scaffold/.agents/skills/service-dependencies-graph/tools/build_graph.py",
+            ])
+            vendor = Path(".agents/skills/llm-wiki/upstream")
+            expected_vendor = {path.relative_to(source / vendor).as_posix(): path.read_bytes()
+                               for path in (source / vendor).rglob("*") if path.is_file()}
+            actual_vendor = {path.relative_to(scaffold / vendor).as_posix(): path.read_bytes()
+                             for path in (scaffold / vendor).rglob("*") if path.is_file()}
+            self.assertEqual(actual_vendor, expected_vendor)
             canonical_onboarding = scaffold / ".agents/skills/repository-onboarding"
             for relative in ("SKILL.md", "scripts/scan_repo.py", "scripts/validate_evidence.py",
                              "references/registry-contracts.md", "references/external-dependencies.md",
@@ -184,6 +196,101 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertEqual(list(scaffold.rglob(".DS_Store")), [])
             self.assertEqual(list(scaffold.rglob("*.pyc")), [])
             self.assertEqual(list(scaffold.rglob("__pycache__")), [])
+
+    def test_complete_llm_wiki_source_survives_sdist_wheel_and_initialization(self):
+        source_root = Path(__file__).resolve().parents[1]
+        vendor = Path(".agents/skills/llm-wiki/upstream")
+
+        def inventory(directory):
+            return {path.relative_to(directory).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+                    for path in directory.rglob("*") if path.is_file()}
+
+        expected = inventory(source_root / vendor)
+        locked = json.loads((source_root / vendor.parent / "upstream-lock.json").read_text(encoding="utf-8"))
+        self.assertEqual(expected, locked["files"])
+        required = {"LICENSE", "pyproject.toml", "requirements.txt", ".gitignore", "raw/.gitkeep",
+                    "graph/.gitkeep", "assets/star-history.svg", ".github/workflows/star-history.yml",
+                    ".claude/commands/wiki-graph.md", "tools/build_graph.py", "tools/ingest.py",
+                    "tools/refresh.py", "tools/heal.py", "tools/query.py", "tools/file_to_md.py",
+                    "tools/pdf2md.py", "AGENTS.md", "CLAUDE.md", "GEMINI.md"}
+        self.assertTrue(required <= expected.keys(), sorted(required - expected.keys()))
+        self.assertFalse((source_root / vendor / ".git").exists())
+        manifest = json.loads((source_root / "scaffold.json").read_text(encoding="utf-8"))
+        environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+        environment.pop("PYTHONPATH", None)
+        with tempfile.TemporaryDirectory(prefix="ai-sdlc-upstream-package-") as temporary:
+            base = Path(temporary)
+            source = base / "source"
+            source.mkdir()
+            inputs = (*manifest["paths"], "pyproject.toml", "setup.py", "MANIFEST.in", "scaffold.json", "core")
+            ignore = shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store", "node_modules",
+                                            ".git", ".venv", ".env", ".env.*")
+            for relative in inputs:
+                original, destination = source_root / relative, source / relative
+                if original.is_dir():
+                    shutil.copytree(original, destination, dirs_exist_ok=True, ignore=ignore)
+                else:
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(original, destination)
+
+            def build(kind, location, output):
+                result = subprocess.run([
+                    sys.executable, "-c",
+                    f"import sys; from setuptools.build_meta import build_{kind}; build_{kind}(sys.argv[1])",
+                    str(output),
+                ], cwd=location, env=environment, capture_output=True, text=True, timeout=120)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+            distributions = base / "distributions"
+            distributions.mkdir()
+            build("sdist", source, distributions)
+            archives = list(distributions.glob("*.tar.gz"))
+            self.assertEqual(len(archives), 1)
+            unpacked = base / "unpacked"
+            unpacked.mkdir()
+            with tarfile.open(archives[0], "r:gz") as archive:
+                roots = {Path(member.name).parts[0] for member in archive.getmembers()}
+                self.assertEqual(len(roots), 1)
+                prefix = next(iter(roots)) + "/" + vendor.as_posix() + "/"
+                actual = {}
+                for member in archive.getmembers():
+                    if not member.isfile():
+                        continue
+                    parts = Path(member.name).parts
+                    self.assertNotIn("..", parts)
+                    self.assertFalse(Path(member.name).is_absolute())
+                    payload = archive.extractfile(member).read()
+                    if member.name.startswith(prefix):
+                        actual[member.name[len(prefix):]] = hashlib.sha256(payload).hexdigest()
+                    destination = unpacked.joinpath(*parts[1:])
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    destination.write_bytes(payload)
+                self.assertEqual(actual, expected)
+
+            build("wheel", unpacked, distributions)
+            wheels = list(distributions.glob("*.whl"))
+            self.assertEqual(len(wheels), 1)
+            installed = base / "installed"
+            with zipfile.ZipFile(wheels[0]) as archive:
+                prefix = "ai_sdlc_workbench/scaffold/" + vendor.as_posix() + "/"
+                actual = {name[len(prefix):]: hashlib.sha256(archive.read(name)).hexdigest()
+                          for name in archive.namelist() if name.startswith(prefix) and not name.endswith("/")}
+                self.assertEqual(actual, expected)
+                archive.extractall(installed)
+
+            workspace = base / "workspace"
+            result = subprocess.run([
+                sys.executable, "-c",
+                "import pathlib, sys; import ai_sdlc_workbench.workspace as workspace; "
+                "assert pathlib.Path(workspace.__file__).resolve().is_relative_to(pathlib.Path(sys.argv[1]).resolve()); "
+                "workspace.initialize_workspace(sys.argv[2])",
+                str(installed), str(workspace),
+            ], cwd=base, env={**environment, "PYTHONPATH": str(installed)}, capture_output=True,
+                text=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(inventory(workspace / vendor), expected)
+            self.assertFalse((workspace / "knowledge/llm-wiki").exists())
+            self.assertFalse((workspace / ".venv-llm-wiki").exists())
 
 
 class WorkspaceLayoutTests(unittest.TestCase):

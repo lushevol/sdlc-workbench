@@ -1,95 +1,129 @@
-# Wiki mode procedures
+# Native wiki workflows
 
-## Generate or refresh
+Commands below run from the selected workspace root.
+For a different workspace, place `--project PATH` before `install`, `export`, `graph`, `run`, or `verify`.
+The launcher isolates data without changing upstream implementation files.
+Read the original [agent instructions](../upstream/AGENTS.md) for detailed native authoring procedures.
 
-1. Read the owning workspace instructions and preserve unrelated edits.
-2. Declare the selected record set, output directory, evidence directory, and requested questions.
-3. Capture the source inventory before editing derived navigation.
-4. Read the existing wiki index and overview, when present.
-5. Read each selected canonical record in full and inspect its source locators and unresolved questions.
-6. Write one source-summary page per selected record.
-7. Create or update supported entity and concept explanations across those records.
-8. Reconcile the living overview and page catalog.
-9. Run health checks, review claim support, and retain compact generation evidence.
+## Install and inspect integrity
 
-Record each canonical path, ID, version, lifecycle, status, and full-file SHA-256 in the external inventory.
-Record the upstream skill revision and actual generated page hashes in the same run binding.
-Reuse source files at their canonical locations.
-Raw snapshots remain evidence behind the selected records; counting them does not establish that they were read.
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py install
+python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+```
 
-For refresh, compare complete hashes without truncation.
-Follow inbound wiki references to identify affected overviews, entities, concepts, and saved syntheses.
-For a deleted or superseded source, preserve its historical identity and label affected navigation before proposing removal.
-Do not silently substitute a candidate successor for an applicable published predecessor.
-An unchanged input set needs no content rewrite.
+`install --python PATH` selects Python 3.11–3.13 for `.venv-llm-wiki/` and the complete dependency set.
+Inspect installation results before reporting availability of converters or model-backed tools.
+Keep the complete [upstream tree](../upstream/) unchanged and use its [source lock](../upstream-lock.json) for integrity checks.
+Do not patch original scripts to relocate their data; their paths derive from their implementation location.
+The launcher prepares unchanged runtime implementation copies beside the persistent data under `knowledge/llm-wiki/`.
+Runtime code copies remain ignored and are separate from the pristine vendored tree.
 
-Use the supported layout in [the skill entrypoint](../SKILL.md#use-the-supported-wiki-layout).
-Navigation pages need no new governance events when canonical records remain unchanged.
-If synthesis requires a new rule or changed meaning, stop that change and use the normal knowledge procedure.
-Continue other supported pages without filling the unknown.
+## Export existing Workbench knowledge
 
-## Page content
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py export
+python3 .agents/skills/llm-wiki/scripts/wiki.py run health --json
+python3 .agents/skills/llm-wiki/scripts/wiki.py run ingest --validate-only
+```
 
-| Page | Useful content |
-| --- | --- |
-| Source summary | Canonical ID, version, lifecycle, concise summary, key rules, exceptions, open questions, and connected records. |
-| Entity | Intended responsibilities, boundaries, collaborators, and unresolved authority or interface questions. |
-| Concept | A supported cross-source explanation, relevant conditions, conflicting statements, and links to related concepts. |
-| Overview | How the topics fit together, where to start, and which uncertainties limit engineering use. |
-| Saved synthesis | The exact question, supported answer, evidence classes, citations, source states, and material limits. |
-| Index | Every generated page, its purpose, declared record coverage, and navigation to canonical evidence. |
+The default export reads `knowledge/candidates/` raw records and produces native `knowledge/llm-wiki/wiki/` source pages.
+It supplies unique lowercase filename stems, candidate IDs and versions, native frontmatter, resolvable `[[wikilinks]]`, and source-bound provenance.
+Use `export --source knowledge/confirmed` after confirmed source records are introduced.
+Inspect the export inventory and actual coverage before claiming all canonical records or original sources were read.
+Canonical IDs, versions, lifecycle states, full hashes, and unresolved questions remain relevant after export.
+Native page types describe wiki roles; they are not Workbench governance states.
 
-Label pages as derived navigation.
-State actual source lifecycle and status near the top.
-Use target-language domain terms where helpful while retaining stable record IDs.
-Every consequential claim needs an exact canonical citation.
-Read any original evidence used to extend a claim beyond the canonical record.
-Do not fabricate quotations or duplicate entire source documents.
+Refresh exports after authorized canonical or navigation changes, then rebuild the native graph when that output is requested.
+Preserve human-authored changes and native ingest outputs when reconciling an export; inspect conflicts rather than overwriting unrelated work.
+Keep changed-source provenance, predecessor identity, and publication history outside the derived export's authority.
+A candidate successor cannot silently become applicable published policy.
 
-## Query
+## Native ingest and conversion
 
-Read the index, relevant wiki pages, and their canonical records.
-Inspect cited original sources when the answer requires source authority or details omitted from the record.
-Explain intended behavior separately from implementation or observed execution.
-Use independent task gaps and exact engineering evidence for actual behavior.
+The original tools accept Markdown and supported non-Markdown formats through the installed converters.
+Use `run ingest <source-path> [other-paths...]` with original upstream arguments; inspect tool help and supported formats first.
+Use `run file_to_md` or `run pdf2md` for the original conversion workflows.
+Resolve source arguments for the selected runtime and keep retained original snapshots immutable.
 
-Answer with claim-level citations, source states, confidence, and meaningful unknowns.
-Do not treat wiki link density or an inferred relationship as proof.
-Save an answer only when the user's request includes reusable synthesis or saving.
+Native ingest can create source, entity, and concept pages, update the index and overview, and append the native log.
+Model-backed ingestion sends selected source context to the configured provider.
+Use the current coding agent's original upstream workflow when no second model API is desired.
+Keep unsupported claims and contradictions explicit in either route.
 
-## Structural health
+For reusable canonical intended knowledge, continue through [ingest-knowledge](../../ingest-knowledge/SKILL.md) and its provenance and candidate checks.
+Native wiki outputs supply proposals and navigation; they do not replace source review or canonical publication requirements.
 
-Check the following without making model API calls:
+## Query and saved synthesis
 
-- Every generated page has meaningful content and a catalog entry.
-- Every selected canonical record has a source summary and an exact identity binding.
-- Local links and heading or physical line locators resolve within the selected workspace.
-- Every page is reachable from the wiki index; missing references remain explicit.
-- Source hashes match the captured inventory; changed inputs invalidate current freshness claims.
-- Existing raw snapshots, manifest records, governed records, and audit files retain their protected bytes.
-- The wiki contains Markdown navigation only, without unsupported frontmatter or working artifacts.
+For an ordinary knowledge answer, read the native index, relevant pages, canonical records, and material original sources.
+Use [query-knowledge](../../query-knowledge/SKILL.md) for claim-level citations, applicability, confidence, and evidence distinctions.
+Read-only questions do not require running a model tool or modifying the wiki.
 
-Keep the health report outside `knowledge/`.
-Report missing evidence and unsupported checks explicitly.
-Structural health does not establish semantic support or publication approval.
+The original scripted route is available when requested:
 
-## Semantic lint
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py run query "What does the wiki say about session renewal?"
+```
 
-After structural health, review representative claims and connections against their exact canonical sources.
-Check contradictions, stale synthesis, unresolved applicability, missing exceptions, and unsupported additional behavior.
-For complete semantic review, inspect all consequential wiki claims and disclose omitted original-source scope.
-Preserve confirmed user clarifications and existing unanswered questions.
-Add links to the existing living question document instead of creating competing policy answers.
+This script calls the model and appends `wiki/log.md` even without `--save`.
+Its page selection is bounded and does not resolve applicable published Workbench versions automatically.
+Use the original `--save syntheses/<unique-stem>.md` only for requested reusable synthesis.
+Saved answers remain derived and need inspected citations; upstream synthesis metadata does not supply canonical provenance or approval.
 
-Use an independent reader for representative retrieval questions when available.
-Include a question that has no supported answer and a realistic proposed requirement.
-Retain the reader's answers and limits without treating them as business verification.
-Only adopt recurring changes into existing skills after their evidence and workflow ownership are clear.
+## Health, semantic lint, refresh, and heal
 
-## Graph navigation
+Run original structural health before semantic review:
 
-Use the existing graph skill's knowledge, references, and bounded paths operations after inspecting resource grants.
-Read graph freshness, record lifecycle, endpoint identities, evidence grades, and truncation limits.
-An unrebuilt graph may omit new navigation while preserving its prior canonical-record snapshot.
-Do not overwrite graph artifacts with the upstream `{nodes, edges, built}` format.
-Community and hub suggestions can guide review, but cannot define policy or authorize page creation.
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py run health --json
+python3 .agents/skills/llm-wiki/scripts/wiki.py run ingest --validate-only
+```
+
+Health checks empty pages, index synchronization, and source-log coverage without model calls.
+Ingest validation reports native broken links and index omissions; inspect reported issues as well as the process exit code.
+Check export bindings and full canonical hashes separately: structural health does not establish freshness or semantic support.
+Use `health --save` for the original `wiki/health-report.md` output when requested.
+
+`run lint` performs original structural and model-based semantic analysis.
+Review contradictions, missing exceptions, unsupported additional behavior, stale summaries, and applicability against exact canonical sources.
+Keep unresolved business decisions in the existing living question document.
+Use independent retrieval questions where useful, including an unsupported question and a proposed requirement.
+
+`run refresh --dry-run` lists upstream refresh candidates; `run refresh` can call ingest and rewrite native pages.
+Inspect actual raw inputs and full hashes before relying on a stale-source decision.
+`run heal` remains available and can generate native entity pages through the model.
+Review those pages as derived proposals. Missing links and dense graphs cannot establish a missing domain rule.
+No tool result automatically creates canonical knowledge, approves an intended rule, or closes a governance finding.
+
+## Original upstream graph
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save
+```
+
+This command invokes the unchanged upstream `tools/build_graph.py` against the populated native wiki.
+Use that implementation for llm-wiki graphs. The service-dependencies graph is a separate output with different semantics.
+
+The original graph writes `{nodes, edges, built}` to `knowledge/llm-wiki/graph/graph.json` and renders `graph.html` beside it.
+Nodes retain page IDs, labels, types, paths, complete Markdown, preview, community group, and degree-based value.
+Explicit edges retain `from`, `to`, `type: EXTRACTED`, and confidence `1.0` for an existing textual link.
+That confidence does not grade the truth of the relationship.
+
+`--no-infer` skips model inference and inference-cache writes; existing cache files may still be read.
+The graph operation appends the native wiki log.
+`--report` needs NetworkX. `--save` writes `graph/graph-report.md` only when a report is generated.
+Report generation appends a second log event. `--save` alone does not generate a report.
+`--clean` deletes an existing inference checkpoint, including alongside `--no-infer`.
+Omitting `--no-infer` enables the original configured model inference and its cache/checkpoint behavior.
+
+Upstream excludes `index.md`, `log.md`, and `lint-report.md` from graph nodes.
+Wikilinks resolve by filename stem; keep stems unique across the wiki and use simple `[[stem]]` targets.
+Missing targets are omitted from extracted edges. Reciprocal edges can collapse through original unordered-pair deduplication.
+Graph reports describe connectivity, orphan pages, hubs, communities, bridges, and missing referenced pages.
+These metrics do not establish domain completeness, dependency direction, source authority, or business acceptance.
+
+Open `knowledge/llm-wiki/graph/graph.html` to inspect native filters and page details.
+The unchanged renderer loads vis-network from an external unpkg URL; opening the HTML requires asset access unless already cached.
+Check the actual browser result before claiming a working visualization.
+Retain source-integrity results, nonempty node/edge counts, expected edge types, resolved links, and actual model-use limits in the completion report.

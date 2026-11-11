@@ -1,66 +1,75 @@
 ---
 name: llm-wiki
-description: Generate, refresh, query, and review a source-linked wiki over existing business-domain knowledge, with connected source summaries, entities, concepts, and synthesis.
+description: Use the fully installed llm-wiki-agent to ingest, refresh, query, and review a source-linked native wiki and build its original wikilink graph over Workbench knowledge.
 ---
 
 # Build and maintain the knowledge wiki
 
-Use the llm-wiki authoring pattern to make existing project knowledge easier to understand and navigate.
-Maintain connected source summaries, entity pages, concept pages, and a living overview.
-Use the current coding agent. This skill requires no separate model API, package installation, or server.
-
-This skill adapts [SamurAIGPT/llm-wiki-agent](references/upstream.md) at the recorded revision.
-Read [the mode procedures](references/workflows.md) for generation, refresh, queries, health, semantic lint, or graph navigation.
+Use the complete, unchanged [SamurAIGPT/llm-wiki-agent](references/upstream.md) installed under [upstream/](upstream/).
+Its original tools, agent instructions, converters, workflows, and native graph implementation remain available.
+Read [the mode procedures](references/workflows.md) for the requested operation and its model or write requirements.
+The external [launcher](scripts/wiki.py) manages installation, source integrity, export, and isolated execution.
+Do not edit vendored files or replace upstream algorithms with Workbench implementations.
 
 ## Select the source and output boundary
 
-Default output: `knowledge/wiki/` in the selected workspace.
-Start with the workspace's structured domain records and their existing review states.
-Read every selected record, including its sources, rules, exceptions, and unresolved questions.
-For raw document ingestion, use [ingest-knowledge](../ingest-knowledge/SKILL.md) first, then compile its resulting records.
-Do not reinterpret implementation observations as intended business behavior.
+The persistent native workspace is `knowledge/llm-wiki/`, with `wiki/`, `raw/`, and `graph/` data directories.
+The runtime uses unchanged upstream implementation copies beside those data directories under `knowledge/llm-wiki/`.
+Those runtime code copies remain ignored; the complete vendored source stays pristine.
+Dependencies live in `.venv-llm-wiki/`, separate from the Workbench runtime.
+Changing the shell directory alone cannot redirect upstream data paths. Use the launcher.
 
-The wiki is derived navigation over canonical knowledge, not a separate publication path.
-Use Markdown links to exact canonical records, headings, and supporting sources.
-Retain record IDs, versions, candidate states, conflicts, and applicability limits beside the summaries.
-Reopen canonical records before using a wiki claim for engineering decisions.
-Changes to intended meaning still follow normal ingestion, review, and audit requirements.
+The native wiki is derived knowledge, separate from canonical Workbench records and publication.
+Retain canonical IDs, versions, hashes, lifecycle states, source citations, conflicts, and applicability limits in exported pages.
+Reopen canonical records and relevant sources before using a wiki claim for engineering decisions.
+Use [ingest-knowledge](../ingest-knowledge/SKILL.md) and [govern-knowledge](../govern-knowledge/SKILL.md) for changes to canonical intended meaning.
+Native ingestion, saved answers, semantic lint, healing, graph edges, and successful commands cannot promote canonical knowledge.
 
 ## Use the supported wiki layout
 
 ```text
-knowledge/wiki/
-  index.md                          # Catalog and coverage scope.
-  overview/index.md                 # Living cross-source synthesis.
-  sources/<record-id>/index.md       # One summary per selected record.
-  entities/<slug>/index.md           # Supported component or domain-entity explanation.
-  concepts/<slug>/index.md           # Supported cross-source concept.
-  syntheses/<slug>/index.md          # Reusable answer when saving is authorized.
+knowledge/llm-wiki/
+  raw/                              # Native source inputs.
+  wiki/
+    index.md                        # Native catalog.
+    log.md                          # Upstream operation log.
+    overview.md                     # Living synthesis.
+    sources/<unique-stem>.md
+    entities/<unique-stem>.md
+    concepts/<unique-stem>.md
+    syntheses/<unique-stem>.md
+  graph/
+    graph.json                      # Original {nodes, edges, built} output.
+    graph.html                      # Original upstream renderer.
+    graph-report.md                  # Optional upstream graph report.
 ```
 
-Create only pages with useful supported content.
-Each navigation page uses `index.md` without a governed-record frontmatter block.
-This layout follows the existing Workbench navigation contract.
-
-Do not add raw sources, logs, JSON, reports, or generated runtime graphs under `knowledge/`.
-Keep original evidence at its existing location.
-Keep wiki inventories, generation logs, and health reports in the owning report's evidence directory or ignored working storage.
-Use record IDs for source-page directories and readable ASCII slugs for other page directories.
+Use upstream page frontmatter and native `[[filename-stem]]` links.
+Export uses unique lowercase filename stems, including across directories, and retains provenance.
+Directory `index.md` navigation pages cannot be used directly as graph nodes: upstream excludes that filename everywhere.
+Keep canonical records and registered original evidence at their existing locations.
 
 ## Complete the requested mode
 
-Generate a complete wiki for the declared record scope when the user requests generation.
-Include the overview, source summaries, useful connections, and consequential unknowns.
-For refresh, compare exact input hashes and update only affected derived navigation.
-Preserve predecessor records, raw snapshots, and immutable audit events.
+Run from the selected workspace root:
 
-Run cheap structural health checks before semantic lint.
-Health checks cover missing or empty pages, index coverage, links, source bindings, and input/output hashes.
-Semantic lint reviews support, contradictions, missing topics, and applicability.
-Broken links create findings or proposed pages; they do not authorize invented content or automatic healing.
-Use the existing [graph skill](../service-dependencies-graph/SKILL.md) for graph operations.
-Wiki connections cannot establish dependencies, source authority, approval, or business execution.
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py install
+python3 .agents/skills/llm-wiki/scripts/wiki.py export
+python3 .agents/skills/llm-wiki/scripts/wiki.py graph --no-infer --report --save
+python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+```
 
-Report record coverage with its denominator, actual health results, retained evidence, and material limits.
-Distinguish complete record navigation from complete source ingestion, semantic truth, and verified business behavior.
-Do not rebuild graphs or change other skill workflows unless that work belongs to the user's requested stage.
+`export` defaults to the raw `knowledge/candidates/` records and converts them to native source pages and wikilinks.
+Use `export --source knowledge/confirmed` when confirmed source records become available.
+`graph` invokes the original upstream `tools/build_graph.py`, with arguments passed through unchanged.
+Use `run <tool> [args...]` for original tools such as `health`, `ingest`, `query`, `lint`, `refresh`, and `heal`.
+For another workspace, put `--project PATH` before the command. Inspect launcher and tool help for options.
+
+Use `--no-infer` for an explicit-link graph without model calls.
+The original renderer loads vis-network from an external CDN; graph generation itself does not need that asset.
+Use the [service graph skill](../service-dependencies-graph/SKILL.md) for its separate architecture and governed-evidence projection.
+It must not substitute for the upstream wiki graph when the user requests llm-wiki graph generation.
+
+Report exported record coverage, actual tool results, source integrity, model use, and material limits.
+Structural health and connected pages do not establish semantic truth, publication, deployment, or verified business behavior.

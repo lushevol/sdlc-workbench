@@ -63,6 +63,16 @@ It does not authenticate humans, decide business correctness, or prove passing e
 Knowledge review and behavior verification need different evidence.
 Automatic AI governance and durable approval workflows remain future capabilities.
 
+## Reconcile the native wiki
+
+Use [llm-wiki](../llm-wiki/SKILL.md) to refresh derived navigation after authorized record or lifecycle changes.
+Reconcile affected `knowledge/wiki/` summaries, export native pages, and run native structural health before reporting current wiki coverage.
+Rebuild its original graph when the requested operation includes graph maintenance.
+Keep native data under `knowledge/llm-wiki/` separate from canonical records and their audit history.
+Semantic lint, native healing, saved syntheses, connectivity scores, and inferred edges can inform investigation.
+They cannot supply a reviewer, approve a rule, resolve source authority, or automatically transition a governed record.
+Preserve candidate, contested, stale, and superseded qualifications in exported pages and graph explanations.
+
 ## Apply completed clarifications
 
 When material clarification resolves a knowledge gap, update the affected record or create a candidate successor.
