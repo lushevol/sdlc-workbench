@@ -8,7 +8,7 @@ Use the [Workbench bridge](../../../.agents/skills/llm-wiki/SKILL.md) and its [d
 - sources/ — Document content. Short docs as .md, long docs as .json (per-page). Do not modify directly.
 - sources/images/ — Extracted images from documents, referenced by sources.
 - summaries/ — One per source document. Summary of key content.
-- concepts/ — Cross-document topic synthesis. Created when a theme spans multiple documents.
+- concepts/ — Focused reusable topics and cross-document synthesis. Create a page for a recurring question or current consumer; a useful single-source topic can remain, with its source count explicit.
 - entities/ — Specific named things: people, organizations, places, products, named works, events. One page per entity, accumulated across documents.
 - explorations/ — Saved query results, analyses, and comparisons worth keeping.
 - reports/ — Lint health check reports. Auto-generated.
@@ -19,7 +19,7 @@ Use the [Workbench bridge](../../../.agents/skills/llm-wiki/SKILL.md) and its [d
 
 ## Page Types
 - **Summary Page** (summaries/): Key content of a single source document.
-- **Concept Page** (concepts/): Cross-document topic synthesis with [[wikilinks]].
+- **Concept Page** (concepts/): A focused reusable topic with [[wikilinks]], often synthesized across documents. Keep its actual source count explicit.
 - **Entity Page** (entities/): A specific named thing (proper noun) — e.g. a person, organization, place, product, named work, or event. Each page has a `type:` frontmatter field; the exact allowed type set is configurable (default: person, organization, place, product, work, event, other) and the authoritative set for this run is given in the compilation prompt. An entity differs from a concept: a concept is an abstract recurring idea; an entity is a specific named thing. Create an entity page only when the entity is central to a document or recurs across sources — do not page passing mentions.
 - **Exploration Page** (explorations/): Saved query results — analyses, comparisons, syntheses.
 - **Index Page** (index.md): One-liner summary of every page in the wiki. Auto-maintained.
@@ -39,6 +39,7 @@ Operations: ingest, query, lint
 - Use [[wikilink]] to link other wiki pages (e.g., [[concepts/attention]])
 - Standard Markdown heading hierarchy
 - Keep each page focused on a single topic
+- Keep entity introductions focused on identity, responsibility and interfaces. Link to the focused concepts for detailed rules; retain unique source context, conflicts and evidence limits when reorganizing existing pages.
 
 ## Frontmatter (managed by code — do NOT emit it in generated content)
 

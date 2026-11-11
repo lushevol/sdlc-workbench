@@ -8,6 +8,23 @@ description: "SCB post-trade portal product: entry, tile authorization, microfro
 
 # FMO Post Trade Portal
 
+## Reading routes
+
+Use this entity page for product identity, scope and the retained context below. Start with the focused topic for a specific rule or question.
+
+| Question | Focused page |
+| --- | --- |
+| Portal entry and tile admission | [[concepts/portal-entry-and-tile-authorization]] |
+| Login tokens and downstream validation | [[concepts/single-ui-sdk-authentication]] |
+| Active-session renewal and prompt recovery | [[concepts/session-activity-renewal]] and [[concepts/session-expiry-prompt-recovery]] |
+| Frontend layers and shared modules | [[concepts/microfrontend-layering]] |
+| Team responsibilities | [[concepts/application-ownership]] |
+| Onboarding and catalog setup | [[concepts/frontend-onboarding]] and [[concepts/admin-catalog-configuration]] |
+| Release readiness and promotion | [[concepts/tenant-production-readiness]] and [[concepts/configuration-promotion]] |
+| Performance and cache evidence | [[concepts/frontend-performance]] and [[concepts/mfe-cache-strategy]] |
+
+The detailed source context, unresolved questions and evidence limits remain below.
+
 ## What it is
 
 The FMO Post Trade Portal is the SCB web portal that provides a common entry point and workspace for post-trade applications. It presents tenant application tiles to authenticated users. It is the product documented under the FM TPT UI Guild / Microfrontend knowledge space, and it governs who may enter the portal and which tiles each user sees and can launch.

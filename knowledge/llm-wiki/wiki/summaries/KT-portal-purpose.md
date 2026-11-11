@@ -55,7 +55,7 @@ The described flow is one entry, authentication, tile selection, and multiple wo
 - The deployment proposal has no approval record in these materials.
 - Open questions: who can confirm the current portal name, scope, and capability inventory; which draft principles became accepted rules and when; which 2026 and 2027 proposals have approved scope or deployed implementations.
 
-## Related concepts
+## Related Concepts
 - [[concepts/microfrontend-layering]]
 - [[concepts/portal-tile-workspace-model]]
 - [[concepts/portal-entry-and-tile-authorization]]
@@ -68,7 +68,8 @@ The described flow is one entry, authentication, tile selection, and multiple wo
 - Application interoperability (with [[entities/fdc3|FDC3]])
 - Observability and performance
 
-## Related Concepts
+<a id="related-concepts-1"></a>
+
 - [[concepts/identity-provider-delegation]]
 
 ## Entities

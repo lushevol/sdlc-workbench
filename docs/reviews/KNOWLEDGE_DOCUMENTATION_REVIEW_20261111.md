@@ -28,7 +28,7 @@ Review scope: current knowledge management guides, shared skill instructions and
 | F4 | RESOLVED | Primary standards, README ownership table and workspace tree now state the exact derived-wiki exception and separate validation duties. All four canonical-boundary tests pass; Workbench remains VALID with 14 documents and zero findings. |
 | F5 | RESOLVED | All 91 derived pages show source-status notes; 12 summaries link exact canonical IDs/versions and seven key concepts link canonical sections. Repaired the damaged criterion locator, 14 evidence paths and eight malformed wikilink wrappers. All 137 plain Markdown targets/anchors resolve; native metadata and all canonical hashes remain unchanged, and native verification passes. |
 | F6 | RESOLVED | Four historical reports now identify their baseline and current conditional policy. Replaced three dead wiki links with frozen Git locators verified against repository objects. Current structure is distinguished from historical lint failures; management-document file-target audit has zero missing files. |
-| F7 | PENDING | Focused content and detail preservation. |
+| F7 | RESOLVED within safe scope | Added focused reading routes, merged duplicate navigation with its old anchor preserved, added the missing title and aligned page-scope guidance. Independent review found no lost facts, limits, page targets or heading anchors; all native checks pass. All 91 pages and useful single-source topics remain. This improves navigation rather than claiming text compression; unproven bulk trimming was not applied. |
 | F8 | PENDING | Procedure ownership and examples. |
 
 ## What makes sense

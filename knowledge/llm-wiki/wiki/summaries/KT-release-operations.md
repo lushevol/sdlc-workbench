@@ -7,6 +7,8 @@ full_text: "sources/KT-release-operations.md"
 
 > Derived from [KT-release-operations, version 2](../../../candidates/operations/KT-release-operations.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
+# Portal release operations — Summary
+
 ## Overview
 This topic links release planning with [[concepts/configuration-promotion]] and [[concepts/tenant-production-readiness]]. The supplied materials mix procedures, an unfinished checklist, historical deployment guidance, and a release proposal whose current authority is unconfirmed.
 

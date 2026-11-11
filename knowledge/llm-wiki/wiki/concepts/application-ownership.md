@@ -10,6 +10,21 @@ Canonical basis: [composition ownership](../../../candidates/architecture/KT-fro
 
 # Application ownership and team responsibilities
 
+## Reading routes
+
+This page explains responsibility boundaries and unresolved owners. Use the focused process page for its detailed operating steps.
+
+| Responsibility area | Focused process page |
+| --- | --- |
+| Application onboarding | [[concepts/frontend-onboarding]] |
+| Catalog records and verification | [[concepts/admin-catalog-configuration]] and [[concepts/maker-checker-verification-workflow]] |
+| Configuration promotion | [[concepts/configuration-promotion]] |
+| Caller/provider interoperability | [[concepts/interoperability-contract-governance]] |
+| Release scheduling and readiness | [[concepts/release-window-governance]] and [[concepts/tenant-production-readiness]] |
+| Shared code and compatibility | [[concepts/shared-dependency-governance]] |
+
+Retain the cross-process ownership analysis and open decisions below when assigning accountability.
+
 ## Definition
 
 Application ownership is the division of responsibility between the platform team that maintains shared portal infrastructure and the tenant teams that build and operate application-specific modules. In the documented microfrontend model, ownership follows the composition boundary: shared foundations are centrally governed, while domain containers and feature tiles belong to individual application teams. Two further axes qualify that simple split. Interoperability separates a requesting tenant team that owns the caller side, a provider team that owns the receiving handler, and the portal platform that owns intent routing and dispatch. Catalog administration separates the application team that supplies module, tile, and deployment inputs from the portal-side administrators who verify and activate the resulting catalog records. Release operations add a temporal axis: one party executes Portal-side release steps while the other validates the tenant application and confirms business activation. See [[summaries/KT-frontend-composition]] for the source summary, [[summaries/KT-portal-purpose]] for the portal-level statement of purpose, [[summaries/KT-application-interoperability]] for the interoperability evidence, [[summaries/KT-admin-and-onboarding]] for the administration and onboarding evidence, and [[summaries/KT-release-operations]] for the release and production-readiness evidence.

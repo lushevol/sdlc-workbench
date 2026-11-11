@@ -71,3 +71,7 @@ Corrected BFF/SDK responsibility statements in the portal entity and SDK concept
 ## [2026-11-11 16:00:56] lint | ADE source navigation and status notes (F5)
 
 Added source-status notes to all 91 derived pages, direct canonical record/version links to all 12 summaries, and exact canonical sections for seven key concepts. Repaired the empty-subject criterion locator. Native metadata, canonical bytes, source bindings and original compilation identity remain unchanged. This was current-agent maintenance without a provider call.
+
+## [2026-11-11 16:06:47] lint | ADE focused reading routes (F7)
+
+Added focused reading routes to the broad portal entity and ownership concept, merged duplicate related-concept navigation and added the missing release-summary title. All existing content lines and wiki target sets were retained in the four edited pages; all 91 pages and useful single-source topics remain. This improves entry navigation without claiming a smaller semantic corpus. Native structure and source bindings verify.
