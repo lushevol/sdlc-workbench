@@ -1,16 +1,18 @@
 # Knowledge Tools Benchmark and Compilation Reassessment
 
+**Historical benchmark.** Comparisons below describe archived runs, rather than current installation or lint results. The [current rule](LLM_WIKI_ROUTING_AND_CLEANUP_20261111.md#engine-rule) selects OpenKB only with both an explicit URL and token; otherwise the current ADE uses llm-wiki-agent on the same retained wiki. QMD remains removed. Use the [bridge](../../.agents/skills/llm-wiki/SKILL.md) for current commands.
+
 - Date: 11 November 2026
 - Repository: Workbench
 - Corpus: 12 candidate/draft knowledge records in `knowledge/candidates/`
 
-Subsequent adoption: OpenKB is now the active engine at `knowledge/llm-wiki/`. The llm-wiki output and exporter assessed below, together with the original OpenKB benchmark snapshot, are preserved byte-for-byte in the [comparison archive](benchmark-evidence/README.md). Historical links below name the exact archive member recorded in the manifest.
+Subsequent adoption retained the richer OpenKB-generated documents at `knowledge/llm-wiki/`; maintenance follows the conditional engine rule above. The llm-wiki output and exporter assessed below, together with the original OpenKB benchmark snapshot, are preserved byte-for-byte in the [comparison archive](benchmark-evidence/README.md). Historical links below name the exact archive member recorded in the manifest.
 
 ## Result
 
-The retained OpenKB compilation is more detailed and better organized for topic navigation than the current llm-wiki output. For the user's priority of a rich compiled knowledge base, OpenKB is the stronger demonstrated option. The earlier blanket recommendation that llm-wiki-agent was "enough" was not established by this benchmark and is withdrawn.
+The retained OpenKB compilation is more detailed and better organized for topic navigation than the archived llm-wiki output. For the user's priority of a rich compiled knowledge base, OpenKB is the stronger demonstrated option. The earlier blanket recommendation that llm-wiki-agent was "enough" was not established by this benchmark and is withdrawn.
 
-The current llm-wiki run is principally a source export with a small synthesis layer. It was not an equivalent semantic-compilation trial against OpenKB. A working graph, complete source-record coverage, and lower installation overhead do not establish equivalent compilation quality.
+The archived llm-wiki run was principally a source export with a small synthesis layer. It was not an equivalent semantic-compilation trial against OpenKB. A working graph, complete source-record coverage, and lower installation overhead do not establish equivalent compilation quality.
 
 QMD is the local source retriever in this setup. With embeddings enabled, hybrid retrieval improved F1 from `0.667` to `0.778` at a reported mean of `15 ms`; full reranking reached `0.806` at about `5.4 s`. OpenKB is the slower answer synthesizer and returned source-linked answers with candidate and evidence limits. These measure different jobs, so their latency figures are not an apples-to-apples ranking.
 
@@ -43,9 +45,9 @@ Concrete differences:
 
 Page counts show granularity, not accuracy. OpenKB still has the structural and semantic findings recorded below, including repeated links to a missing release-governance concept and ambiguous CES field descriptions. These need source-backed correction; they do not invalidate its observed organizational advantage. This reassessment inspected representative content and the complete input/page inventory; it is not a claim-level correctness audit of every generated page.
 
-The [original llm-wiki ingestion workflow](../../.agents/skills/llm-wiki/upstream/AGENTS.md) also requires summaries, concept/entity extraction, and contradiction review. The current result shows that our executed llm-wiki workflow fell short of the desired compilation depth; it does not prove that the upstream framework cannot achieve it. That capability would require a comparable semantic compilation using the same inputs, stated model and budget, and a common quality rubric.
+The [original llm-wiki ingestion workflow](../../.agents/skills/llm-wiki/upstream/AGENTS.md) also requires summaries, concept/entity extraction, and contradiction review. The archived result shows that our executed llm-wiki workflow fell short of the desired compilation depth; it does not prove that the upstream framework cannot achieve it. That capability would require a comparable semantic compilation using the same inputs, stated model and budget, and a common quality rubric.
 
-**Revised recommendation:** use the saved OpenKB output as the quality baseline for detailed compilation. Current llm-wiki is a lightweight source-navigation layer whose adequacy for that richer goal remains unproven. Evaluate factual fidelity, meaningful topic coverage, organization, contradiction handling, and link validity separately from setup cost and retrieval latency.
+**Revised recommendation:** use the saved OpenKB output as the quality baseline for detailed compilation. The archived llm-wiki result was a lightweight source-navigation layer whose adequacy for that richer goal remains unproven. Evaluate factual fidelity, meaningful topic coverage, organization, contradiction handling, and link validity separately from setup cost and retrieval latency.
 
 ## Setup
 
@@ -91,5 +93,5 @@ This was a source and governance review, not a blinded answer-accuracy study: no
 
 - The six-question sample is small and covers candidate knowledge only. It does not establish completeness, approved policy, production behavior, or business acceptance.
 - The same-day OpenKB lint report found 14 broken links to the missing `concepts/release-window-governance` page and semantic consistency issues, including the CES field-count conflict and session-timeout contradictions. See [the lint report](benchmark-evidence/wiki-comparison-snapshots-20261111.manifest.json) (`openkb/wiki/reports/lint_20261111_144834.md`).
-- QMD and OpenKB were initially uninstalled after comparison. OpenKB was subsequently reinstalled as the primary wiki engine; QMD and its index/model cache remain removed. The original benchmark snapshot remains historical evidence.
-- Fix the broken and contradictory OpenKB pages, then repeat the six questions with an explicit answer rubric and a shared timing protocol.
+- QMD and OpenKB were initially uninstalled after comparison. OpenKB was subsequently reinstalled and remains primary only with the explicit URL/token pair; QMD and its index/model cache remain removed. The original benchmark snapshot remains historical evidence.
+- Current structural follow-up: the active wiki now passes all six native categories, including the missing release-window page links. [Source-fidelity corrections](KNOWLEDGE_DOCUMENTATION_REVIEW_20261111.md#f2--correct-generated-responsibility-claims-and-unsupported-coupling) address specific generated claims; this is not a claim that every archived semantic lint issue is resolved. Repeat the six questions with an explicit answer rubric before claiming overall semantic accuracy.

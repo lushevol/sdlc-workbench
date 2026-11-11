@@ -1,5 +1,7 @@
 # Knowledge wiki refresh
 
+**Historical stage report.** This refresh describes revision `4c97d0d5f35bcb4f4b51c5bc7dc5f1c176f07a60` and its earlier 19-page wiki. Use the [current wiki workflow](../../.agents/skills/llm-wiki/SKILL.md) and [engine-selection report](LLM_WIKI_ROUTING_AND_CLEANUP_20261111.md) for present operation. Retain the results below as evidence of that refresh.
+
 The wiki now follows CES migration knowledge version 6.
 Its prior summaries used version 1.
 The refresh updates the CES source summary, entitlement concept, living overview, and catalog.
@@ -14,7 +16,7 @@ The [llm-wiki skill](../../.agents/skills/llm-wiki/SKILL.md) controls this workf
 
 The selected scope contains all 12 canonical structured domain records under `knowledge/`.
 All records remain `candidate` and `draft`.
-The [wiki index](../../knowledge/wiki/index.md) links all 19 navigation pages.
+The [historical wiki index](https://github.com/lushevol/sdlc-workbench/blob/4c97d0d5f35bcb4f4b51c5bc7dc5f1c176f07a60/knowledge/wiki/index.md) links all 19 navigation pages.
 
 Full SHA-256 comparisons found one changed record: [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md), version 6.
 The other 11 record hashes match the [prior generation binding](../evidence/knowledge-mechanism-review-20261103/wiki-adoption/generation.json).

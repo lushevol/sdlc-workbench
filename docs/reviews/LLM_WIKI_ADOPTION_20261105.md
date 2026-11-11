@@ -1,8 +1,10 @@
 # LLM wiki adoption
 
+**Historical stage report.** The installation and 19-page wiki below belong to revision `c10336b65e2c033e8b6d8c287cc511db1f3bcc39`. Use the [current wiki workflow](../../.agents/skills/llm-wiki/SKILL.md) and [engine-selection report](LLM_WIKI_ROUTING_AND_CLEANUP_20261111.md) for present operation. The frozen output links below preserve that stage; its installation statements do not describe the active tools today.
+
 **Adopted: the project wiki skill now produces a source-linked wiki over all 12 current domain records.**
 
-The [wiki index](../../knowledge/wiki/index.md) opens 19 pages, including summaries, concepts, responsibilities, and a living overview.
+The [historical wiki index](https://github.com/lushevol/sdlc-workbench/blob/c10336b65e2c033e8b6d8c287cc511db1f3bcc39/knowledge/wiki/index.md) opens 19 pages, including summaries, concepts, responsibilities, and a living overview.
 All source records remain candidate/draft.
 Wiki generation supplies no publication approval or business verification.
 
@@ -41,7 +43,7 @@ Exact input bindings, visible source states, canonical citations, and independen
 
 ## Generated wiki
 
-The [living overview](../../knowledge/wiki/overview/index.md) connects entry, composition, permissions, session continuity, onboarding, release, and observation.
+The [historical living overview](https://github.com/lushevol/sdlc-workbench/blob/c10336b65e2c033e8b6d8c287cc511db1f3bcc39/knowledge/wiki/overview/index.md) connects entry, composition, permissions, session continuity, onboarding, release, and observation.
 Four concept pages explain cross-source behavior.
 One entity page explains intended service responsibilities.
 Twelve source pages summarize every current structured domain record.

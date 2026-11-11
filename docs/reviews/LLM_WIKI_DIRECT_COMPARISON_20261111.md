@@ -1,10 +1,12 @@
 # Direct llm-wiki comparison
 
+**Historical comparison.** The separate comparison workspace and redundant root source copy have been removed. The results below remain retained evidence. Use the [current wiki workflow](../../.agents/skills/llm-wiki/SKILL.md) and [conditional engine rule](LLM_WIKI_ROUTING_AND_CLEANUP_20261111.md#engine-rule) for the single active wiki.
+
 ## Inputs
 
 The temporary standalone source copy at `llm-wiki-agent/`, revision `f03eff653886672ee8a92bb6a28faae9190d90d2`, was used for this comparison. Its 33 upstream files matched the skill's pinned source byte-for-byte, so the redundant root copy was removed after comparison. The skill-owned upstream copy remains unchanged.
 
-Candidate compilation uses the separate `knowledge/llm-wiki-direct-compare/` workspace. Its 12 raw inputs are symlinks to `knowledge/candidates/`, so the candidate records have one content copy.
+The comparison compiled candidates in the separate `knowledge/llm-wiki-direct-compare/` workspace. Its 12 raw inputs were symlinks to `knowledge/candidates/`, so the candidate records have one content copy.
 
 ## Results
 
@@ -27,10 +29,10 @@ Both outputs retain candidate or draft status. Neither establishes confirmed sou
 
 ## Direct workspace commands
 
-The standalone upstream source remains separate from Workbench skill discovery and wrappers. The comparison graph was generated with the original upstream command:
+The temporary standalone source was separate from Workbench skill discovery and wrappers. The comparison graph was generated with the original upstream command:
 
 ```sh
 python tools/build_graph.py --no-infer --report --save
 ```
 
-The comparison workspace under `knowledge/llm-wiki-direct-compare/` was removed after the comparison; the measurements above are retained here. The former Workbench llm-wiki output is preserved in [the comparison snapshot](benchmark-evidence/wiki-comparison-snapshots-20261111.manifest.json) (`llm-wiki/README.md`). OpenKB now supplies the active wiki under `knowledge/llm-wiki/`.
+The comparison workspace under `knowledge/llm-wiki-direct-compare/` was removed after the comparison; the measurements above are retained here. The former Workbench llm-wiki output is preserved in [the comparison snapshot](benchmark-evidence/wiki-comparison-snapshots-20261111.manifest.json) (`llm-wiki/README.md`). The richer OpenKB-generated documents remain active under `knowledge/llm-wiki/`; later maintenance follows the conditional rule above.
