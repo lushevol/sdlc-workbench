@@ -4,6 +4,8 @@ type: "Product"
 description: "Web server and reverse proxy at the portal ingress edge and tenant connectivity boundary."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Nginx
 
 Nginx is the web server and reverse proxy that acts as the portal's first ingress endpoint in the reported architecture. It receives requests for the common public domain after DNS forwarding and passes them on toward the [[entities/api-gateway]]. The portal materials also treat it as the boundary through which tenant UI and API routing pass, as a configuration dependency for each application that onboards, and as the tenant-side connection point recommended for production release readiness.

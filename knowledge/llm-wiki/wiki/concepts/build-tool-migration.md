@@ -4,6 +4,8 @@ sources: ["summaries/KT-architecture-evolution.md"]
 description: "Proposed migration of portal React builds from Webpack to Rspack or Vite, constrained by SystemJS loading."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Build-Tool Migration
 
 ## Definition

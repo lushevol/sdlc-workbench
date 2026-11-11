@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/KT-application-interoperability.md"
 ---
 
+> Derived from [KT-application-interoperability, version 2](../../../candidates/interoperability/KT-application-interoperability.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Portal application interoperability and OpenFin context
 
 This topic summarizes Portal-mediated application interoperability: how a source tile requests an action from a target tile, how context moves between applications, and what the caller and provider must each deliver. The supplied materials combine design guidance, a proof of concept (POC), an example FDC3 contract, technical-issue notes, and a later business briefing.

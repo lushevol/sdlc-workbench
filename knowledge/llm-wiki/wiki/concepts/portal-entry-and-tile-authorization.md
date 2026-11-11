@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-a
 description: "Two-layer portal access model: portal entry plus per-tile admission by EMS2 or CES provider."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Portal Entry and Tile Authorization
 
 This concept covers the two-layer access decision for the [[entities/fmo-post-trade-portal]]: whether an authenticated user may enter the portal at all, and whether a given tile is visible and launchable. The portal is documented as a common entry point and workspace for integrated tenant applications, while application teams retain their domain business functions. Its entry and identity capability includes SSO, MFA, and session renewal; its access capability includes [[entities/ems2]] roles and configured tile eligibility. These documented capabilities align with the rules below but do not establish deployed or tested enforcement.

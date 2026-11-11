@@ -4,6 +4,10 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-admin-and-onboardi
 description: "The portal's four-tier frontend composition model and how tiers load and share code."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
+Canonical basis: [four-layer clarification](../../../candidates/architecture/KT-frontend-composition.md#current-four-layer-clarification).
+
 # Microfrontend Layering
 
 Microfrontend layering is the portal's four-tier frontend composition model. Each tier owns a distinct responsibility and is composed at runtime rather than at build time. The layering separates static entry delivery, shell concerns, application routing, and feature rendering so that each tier can evolve independently. In the portal capability map, this layering is the composition mechanism that lets tenant applications share a common entry point and workspace while retaining their own domain functions, as summarized in [[summaries/KT-portal-purpose]].

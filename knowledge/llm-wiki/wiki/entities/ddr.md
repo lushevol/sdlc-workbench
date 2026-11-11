@@ -4,11 +4,13 @@ type: "Product"
 description: "FSSDS Data Distribution and Reporting product requested for Portal integration to show downstream report distribution."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # FSSDS Data Distribution and Reporting (DDR)
 
 ## What it is
 
-DDR is a reporting product in the [[entities/fss]] family. Its documented purpose is to show reports received from upstream systems and forwarded downstream ([DDR request, lines 4–5](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L4>)).
+DDR is a reporting product in the [[entities/fss]] family. Its documented purpose is to show reports received from upstream systems and forwarded downstream ([DDR request, lines 4–5](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L4>)).
 
 It appears in the supplied materials as one of the tenant applications proposed for integration into the [[entities/fmo-post-trade-portal]] under [[entities/markets-operations-one-release]]. The purpose statement explains why the tenant tile needs Portal integration; it does not establish approved detailed rules, release completion, or present availability.
 
@@ -16,13 +18,13 @@ It appears in the supplied materials as one of the tenant applications proposed 
 
 ### Separate technical and business milestones
 
-The DDR request lists distinct technical and business target dates. It states that business UAT sign-off follows technical go-live ([DDR request, lines 9–17](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L9>)).
+The DDR request lists distinct technical and business target dates. It states that business UAT sign-off follows technical go-live ([DDR request, lines 9–17](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L9>)).
 
 This matches the wider pattern of [[concepts/tenant-production-readiness]], where technical deployment and business activation need separate evidence. A listed date is planning context; it does not prove deployment, approval, or successful adoption.
 
 ### Pending connectivity
 
-The request records connectivity as pending and keeps technical sign-off separate from business validation ([DDR request, lines 9–13](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L9>)). Under the flow described in [[concepts/configuration-promotion]], Portal-side configuration upload and routing preparation can proceed independently, but neither establishes tenant-side connectivity or business acceptance.
+The request records connectivity as pending and keeps technical sign-off separate from business validation ([DDR request, lines 9–13](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L9>)). Under the flow described in [[concepts/configuration-promotion]], Portal-side configuration upload and routing preparation can proceed independently, but neither establishes tenant-side connectivity or business acceptance.
 
 ### Scheduling context
 

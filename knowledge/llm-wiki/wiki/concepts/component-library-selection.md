@@ -4,6 +4,8 @@ sources: ["summaries/KT-architecture-evolution.md"]
 description: "Evaluating and choosing a shared UI component library for the portal's microfrontends."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Component Library Selection
 
 ## Definition

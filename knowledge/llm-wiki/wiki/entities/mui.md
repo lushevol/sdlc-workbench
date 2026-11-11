@@ -4,6 +4,8 @@ type: "Product"
 description: "React component library evaluated for shared theming in the portal."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## What it is
 
 MUI is a React component library. It appears in two roles in the documented material: the development guideline prescribes shared MUI themes for applications in the FMO Post Trade Portal, and a separate component-library comparison evaluated MUI alongside [[entities/ant-design]] and [[entities/ag-grid]]. The comparison is an evaluation record, not proof that MUI was adopted as the standard.

@@ -2,6 +2,8 @@
 query: "What are the Portal frontend composition layers and ownership boundaries among root config, base, container, feature, module, and tile?"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## Short answer
 
 The wiki does **not** describe six layers — it records a **four-layer** composition. "Feature" and "module" are *routing-stage and vocabulary terms*, not separate tiers.

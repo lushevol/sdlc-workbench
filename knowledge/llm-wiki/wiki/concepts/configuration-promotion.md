@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md"]
 description: "Moving Portal catalog and tile configuration from Development to UAT and Production."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Configuration Promotion
 
 ## Definition

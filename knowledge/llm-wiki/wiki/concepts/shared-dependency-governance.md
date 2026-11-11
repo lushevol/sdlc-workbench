@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-release-operatio
 description: "Rules and practices controlling shared code, library versions, and module interfaces across teams."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Shared dependency and compatibility governance
 
 ## Definition

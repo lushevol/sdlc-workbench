@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-admin-and-onboardi
 description: "The reported DNS-to-Nginx-to-API-gateway-to-BFF route serving the post-trade portal."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Portal Ingress Path
 
 The **portal ingress path** is the reported route that an external request follows to reach the portal backends: a common public domain resolves through DNS to [[entities/nginx]], which forwards to [[entities/api-gateway]], which forwards to application services such as [[entities/single-ui-bff]]. This concept captures the *transport* path, which is logically separate from the *contract* between the frontend microfrontends and the BFF.

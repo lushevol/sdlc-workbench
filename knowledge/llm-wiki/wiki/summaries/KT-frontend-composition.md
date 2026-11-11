@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/KT-frontend-composition.md"
 ---
 
+> Derived from [KT-frontend-composition, version 3](../../../candidates/architecture/KT-frontend-composition.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Frontend composition and application ownership
 
 ## Overview

@@ -4,6 +4,10 @@ sources: ["summaries/REQ-active-session-renewal.md"]
 description: "Session lifetime extended by mouse, keyboard, and scroll activity instead of a fixed elapsed-time reauthentication maximum."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
+Canonical criteria: [active session renewal](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+
 # Activity-Driven Session Renewal
 
 Activity-driven session renewal is a session-management policy in which a user's continued interaction with an application — pointer movement, keystrokes, and scrolling — is treated as evidence of an active session, and that evidence is used to keep renewing the session's credentials. The defining contrast is with **elapsed-time session caps**: fixed maximum lifetimes after which a user must re-authenticate no matter how actively they are working. Under an activity-driven policy, time alone is not a reason to force a fresh login; only genuine inactivity or credential failure is.

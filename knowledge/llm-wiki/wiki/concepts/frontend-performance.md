@@ -4,6 +4,10 @@ sources: ["summaries/KT-observability-and-performance.md"]
 description: "How frontend performance targets, throughput results, and cache behavior are evidenced before capacity claims."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
+Canonical basis: [frontend measurement intent](../../../candidates/observability/KT-observability-and-performance.md#frontend-measurement-intent) and [capacity evidence limits](../../../candidates/observability/KT-observability-and-performance.md#service-throughput-and-capacity-boundaries).
+
 # Frontend performance measurement and capacity evidence
 
 ## Definition

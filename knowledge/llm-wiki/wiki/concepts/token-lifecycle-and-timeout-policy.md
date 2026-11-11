@@ -4,6 +4,8 @@ sources: ["summaries/KT-authentication-and-sessions.md"]
 description: "Access, refresh, and idle/absolute token timeout concepts plus the unresolved portal timing rules."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Token Lifecycle and Timeout Policy
 
 ## Definition

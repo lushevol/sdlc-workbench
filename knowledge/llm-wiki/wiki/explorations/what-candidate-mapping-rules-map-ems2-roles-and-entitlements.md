@@ -2,6 +2,8 @@
 query: "What candidate mapping rules map EMS2 roles and entitlements to CES permissions, and what parity limits remain unresolved?"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## Candidate EMS2 → CES mapping rules
 
 Per [[summaries/KT-ces-migration-parity]] (a `candidate` draft recording user-stated intent, not verified execution) and [[concepts/ems2-to-ces-permission-mapping]], the concept mapping is:

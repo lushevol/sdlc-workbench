@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-admin-and-onboardi
 description: "Portal admin functions that maintain module mappings, drawer categories, and tiles as versioned configuration"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Admin catalog configuration
 
 ## Definition

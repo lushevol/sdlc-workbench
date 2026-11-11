@@ -4,6 +4,8 @@ type: "Product"
 description: "Feature tile microfrontend in the RATAN portal that renders cashflow blotter views."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Cashflow Blotter
 
 Cashflow Blotter is a **tile-level** microfrontend in the RATAN portal composition. The architecture record cites its repository, `mfe-cashflow-blotter`, as the example of the fourth and lowest MFE layer: the layer that renders feature views and application functionality.

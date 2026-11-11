@@ -4,6 +4,8 @@ type: "Product"
 description: "MFE Base is the Single-SPA shell layer supplying themes, routing, sessions, and the shared permission and request APIs."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # MFE Base
 
 MFE Base (`mfe-base`) is the **shell layer** — layer 2 of the four-layer microfrontend stack described in [[summaries/ARC-portal-service-relationships]] and [[concepts/microfrontend-layering]]. It sits between the [[entities/mfe-root-config]] bootstrap and the [[entities/mfe-ratan-container]] container layer, and is the only remote module registered by the root config (the root layout declares only `@fm/base`).

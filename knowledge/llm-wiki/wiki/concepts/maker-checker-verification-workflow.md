@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-admin-and-onboardi
 description: "Two-person review that verifies an un-verified admin record before activation."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Maker-checker verification workflow
 
 ## Definition

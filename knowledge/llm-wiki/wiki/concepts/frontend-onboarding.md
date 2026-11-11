@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-admin-and-onboardi
 description: "How an application team registers containers and tiles and proves release readiness."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Frontend onboarding and app registration
 
 ## Definition

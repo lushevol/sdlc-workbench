@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-a
 description: "How EMS2 creates and assigns entity, action, role, and subject records, and how they map to CES."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # EMS2 entitlement provisioning
 
 ## Definition

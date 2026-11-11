@@ -4,6 +4,8 @@ type: "Product"
 description: "Authentication component issuing client-credential tokens for portal admin uploads and machine-to-machine callers."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # FMAA
 
 ## What it is

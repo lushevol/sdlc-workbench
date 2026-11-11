@@ -4,6 +4,8 @@ type: "Product"
 description: "Rust-based JavaScript bundler recommended for incremental migration from Webpack in the portal."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Rspack
 
 ## What it is

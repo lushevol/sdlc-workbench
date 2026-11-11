@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-a
 description: "How downstream services obtain a user's entitlements from EMS2 or CES, including provider-union checks and entity fields."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## Definition
 
 Entitlement retrieval is the process by which a downstream service obtains a user's entitlement data — the application entities, roles, subjects, and actions that define what the user may access. It is distinct from [[concepts/single-ui-sdk-authentication]], which establishes *who* the caller is; entitlement retrieval establishes *what* the caller may reach.

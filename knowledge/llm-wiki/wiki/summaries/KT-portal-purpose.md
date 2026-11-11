@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/KT-portal-purpose.md"
 ---
 
+> Derived from [KT-portal-purpose, version 2](../../../candidates/background/KT-portal-purpose.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Portal Purpose and Capability Map — Summary
 
 This topic synthesizes supplied UI-platform materials about a [[entities/fmo-post-trade-portal|post-trade portal]]. It describes the portal as a shared entry point and workspace for tenant applications, while application teams keep domain-specific business functions. The platform provides shared design, authentication, composition, administration, integration, observability, and interoperability capabilities.

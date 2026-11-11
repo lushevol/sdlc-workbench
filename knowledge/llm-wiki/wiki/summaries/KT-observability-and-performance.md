@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/KT-observability-and-performance.md"
 ---
 
+> Derived from [KT-observability-and-performance, version 2](../../../candidates/observability/KT-observability-and-performance.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Portal observability, performance, and cache behavior
 
 ## Scope and main contribution

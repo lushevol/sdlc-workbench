@@ -4,6 +4,8 @@ type: "Product"
 description: "JavaScript module bundler named as the incumbent tool in the portal's build-tool migration research."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Webpack
 
 Webpack is a JavaScript module bundler. In the source materials it appears as the incumbent build tool that the portal's microfrontend applications use, and as the baseline that migration research measures alternatives against.

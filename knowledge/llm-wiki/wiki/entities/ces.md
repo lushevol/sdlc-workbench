@@ -4,6 +4,8 @@ type: "Product"
 description: "Successor entitlement service to EMS2, supplying CES roles and application identity to consumers."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # CES (Central Entitlement Service)
 
 ## What it is

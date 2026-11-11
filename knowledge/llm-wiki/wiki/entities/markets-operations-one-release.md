@@ -4,6 +4,8 @@ type: "Event"
 description: "Release program governing Portal and tenant release windows, scope, and readiness gating."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Markets Operations One Release
 
 ## What it is

@@ -4,6 +4,8 @@ type: "Product"
 description: "SCB post-trade portal product: entry, tile authorization, microfrontend composition, admin, release, and session policy."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # FMO Post Trade Portal
 
 ## What it is

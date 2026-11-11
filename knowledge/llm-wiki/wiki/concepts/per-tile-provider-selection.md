@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md"]
 description: "Each portal tile selects EMS2 or CES entitlement admission independently, without forcing other tiles to migrate."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Per-tile entitlement provider selection
 
 ## Definition

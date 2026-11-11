@@ -4,6 +4,8 @@ type: "Product"
 description: "A query language used in portal notification experiments over SSE and WebSocket."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # GraphQL
 
 GraphQL is a query language and runtime for APIs. In [[summaries/KT-architecture-evolution]], it appears only as the API layer in two notification transport experiments. The materials do not describe GraphQL itself in detail, and they do not record an accepted decision to use it.

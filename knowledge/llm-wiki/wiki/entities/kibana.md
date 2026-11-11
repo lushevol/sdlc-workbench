@@ -4,6 +4,8 @@ type: "Product"
 description: "Kibana is the dashboard tool documented for Portal interaction analytics and usage monitoring."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Kibana
 
 ## What it is

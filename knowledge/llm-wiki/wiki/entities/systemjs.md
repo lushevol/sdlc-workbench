@@ -4,6 +4,8 @@ type: "Product"
 description: "Module loader in the portal microfrontend design and a constraint on build-tool migration."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # SystemJS
 
 SystemJS is the module loader named in the documented microfrontend composition model. It resolves registered module names to deployed JavaScript files and loads those modules into the page. The UI stack explanation separates this module-resolution role from the lifecycle management performed by [[entities/single-spa]].

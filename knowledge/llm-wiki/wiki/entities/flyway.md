@@ -4,6 +4,8 @@ type: "Product"
 description: "Database migration tool whose retained SQL defines the portal admin catalog schema draft."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Flyway
 
 Flyway is a database migration tool. In the [[summaries/KT-admin-and-onboarding]] material, Flyway holds the retained SQL definitions for the admin catalog of the [[entities/fmo-post-trade-portal]].

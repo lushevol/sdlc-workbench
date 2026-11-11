@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/KT-authentication-and-sessions.md"
 ---
 
+> Derived from [KT-authentication-and-sessions, version 9](../../../candidates/security/KT-authentication-and-sessions.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Authentication and sessions
 
 ## Overview

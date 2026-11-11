@@ -67,3 +67,7 @@ Native OpenKB structural functions after these repairs found zero broken wikilin
 ## [2026-11-11 15:50:35] lint | ADE source-fidelity corrections (F2)
 
 Corrected BFF/SDK responsibility statements in the portal entity and SDK concept, and removed an unsupported HTTP-interceptor dependency from the MFE Base entity. Read the cited canonical responsibility and permission-criterion sections. This was current-agent maintenance, with no external model call or new compilation. All 12 canonical input hashes and source bindings remain unchanged.
+
+## [2026-11-11 16:00:56] lint | ADE source navigation and status notes (F5)
+
+Added source-status notes to all 91 derived pages, direct canonical record/version links to all 12 summaries, and exact canonical sections for seven key concepts. Repaired the empty-subject criterion locator. Native metadata, canonical bytes, source bindings and original compilation identity remain unchanged. This was current-agent maintenance without a provider call.

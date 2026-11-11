@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/ARC-portal-service-relationships.md"
 ---
 
+> Derived from [ARC-portal-service-relationships, version 1](../../../candidates/architecture/ARC-portal-service-relationships.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Portal composition and service relationships — Summary
 
 Candidate architecture record of the portal's layers, ingress, backend, SDK, and RATAN authentication responsibilities.

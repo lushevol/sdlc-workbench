@@ -4,6 +4,8 @@ type: "Organization"
 description: "Legacy team and shared container whose EMS2 entity X_RATANONE maps to CES application RATAN_ENTITLEMENT_RULE (itam_id 51358)."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # RATAN
 
 **Type:** Organization

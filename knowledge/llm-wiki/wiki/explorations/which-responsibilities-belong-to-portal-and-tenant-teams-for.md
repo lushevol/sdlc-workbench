@@ -2,6 +2,8 @@
 query: "Which responsibilities belong to Portal and tenant teams for routing, release, validation, and rollback?"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## Portal vs. tenant responsibilities (routing, release, validation, rollback)
 
 The split comes from a **draft, unapproved release proposal**, so these are intended responsibility statements rather than confirmed authority (see [[summaries/KT-release-operations]], [[entities/portal-team]], [[concepts/application-ownership]]).

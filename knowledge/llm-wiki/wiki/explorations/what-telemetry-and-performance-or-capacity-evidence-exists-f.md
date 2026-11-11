@@ -2,6 +2,8 @@
 query: "What telemetry and performance or capacity evidence exists for portal interactions, cache behavior, and response time, and what remains proposed or missing?"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## What evidence exists
 
 **Telemetry / interaction analytics (design-level, not verified operating system)**

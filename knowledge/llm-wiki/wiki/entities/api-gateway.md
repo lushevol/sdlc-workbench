@@ -4,6 +4,8 @@ type: "Product"
 description: "Ingress product said to forward portal requests from Nginx to application services."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # API Gateway
 
 ## What it is

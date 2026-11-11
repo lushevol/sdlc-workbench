@@ -4,6 +4,8 @@ type: "Product"
 description: "Portal product where tenant catalog configuration (module map, drawer, tile) is uploaded and promoted across environments."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Admin Module
 
 The Admin Module is the [[entities/fmo-post-trade-portal]] product area where tenant catalog configuration is maintained and promoted from Development to UAT and Production. It is documented in the release-flow and checklist material summarized in [[summaries/KT-release-operations]].

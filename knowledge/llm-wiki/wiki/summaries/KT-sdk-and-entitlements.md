@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/KT-sdk-and-entitlements.md"
 ---
 
+> Derived from [KT-sdk-and-entitlements, version 8](../../../candidates/security/KT-sdk-and-entitlements.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # SDK and Entitlements
 
 ## Overview

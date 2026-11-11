@@ -4,6 +4,8 @@ type: "Product"
 description: "Entitlement provider reported in the portal and used as the CES wire value in the migration contract."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # EMS3
 
 EMS3 is an entitlement and authorization provider named in the reported portal architecture. It appears as a delegated authorization target — not as a component inspected in its own right — and, in the CES migration contract, it is also the wire value that denotes the CES authorization path.

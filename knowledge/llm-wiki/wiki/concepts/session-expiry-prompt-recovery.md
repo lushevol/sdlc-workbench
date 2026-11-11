@@ -4,6 +4,10 @@ sources: ["summaries/KT-authentication-and-sessions.md", "summaries/REQ-active-s
 description: "How the expiry prompt behaves across pending, success, and rejection renewal states."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
+Canonical criteria: [pending, successful and rejected renewal outcomes](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+
 # Session Expiry Prompt and Recovery
 
 When a portal session reaches idle expiry, the user is shown a prompt offering renewal. This concept covers how that prompt should behave across the three states of a renewal attempt: pending, succeeded, and rejected. It is the recovery-facing half of session handling, complementing the activity-facing behavior described in [[concepts/session-activity-renewal]].

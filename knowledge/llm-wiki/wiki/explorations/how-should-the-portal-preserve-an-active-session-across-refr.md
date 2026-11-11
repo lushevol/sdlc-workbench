@@ -2,6 +2,8 @@
 query: "How should the Portal preserve an active session across refresh-token expiry, and what manual recovery is required after a rejected renewal?"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## Preserving an active session across refresh-token expiry
 
 The candidate requirement `REQ-active-session-renewal` defines the intended target: an active session should be sustained by **activity-driven renewal** rather than a fixed elapsed-time reauthentication cap.

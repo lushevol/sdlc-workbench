@@ -2,6 +2,8 @@
 query: "What candidate interoperability contract and OpenFin/FDC3 context readiness are required between caller and provider applications?"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 ## Short answer
 
 The wiki records a **candidate** contract and a **set of stated readiness gates** — but no approved one. The materials declare the governance in principle and never demonstrate it in practice ([[concepts/interoperability-contract-governance]], [[summaries/KT-application-interoperability]]).

@@ -4,6 +4,8 @@ sources: ["summaries/KT-architecture-evolution.md"]
 description: "Proposed single-connection-per-user delivery of notifications across portal tiles, still experimental."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Realtime Notification Delivery
 
 ## Definition

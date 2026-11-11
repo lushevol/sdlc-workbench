@@ -4,6 +4,8 @@ type: "Product"
 description: "EMS2 is the legacy entitlement system defining portal application entities, roles, subjects, and actions."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # EMS2
 
 ## What it is

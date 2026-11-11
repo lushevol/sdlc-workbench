@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md"]
 description: "CES assignments can hold multiple roles, which cannot be collapsed into one scalar role for legacy callers."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # CES role multiplicity and scalar role contracts
 
 ## Definition

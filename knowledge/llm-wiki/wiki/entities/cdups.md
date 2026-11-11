@@ -4,6 +4,8 @@ type: "Product"
 description: "Confirmation-management product whose Portal tile was requested via a Markets Operations One change request."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # CDUPS
 
 CDUPS is a post-trade confirmation-management product that was proposed for Portal integration through the [[entities/markets-operations-one-release]] change-request process. Its Portal tile request sits alongside requests from [[entities/fss]], [[entities/vpa]], and [[entities/ddr]].

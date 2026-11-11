@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-application-intero
 description: "Portal tile/workspace model with intent-mediated navigation and context handoff."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Portal Tile and Workspace Model
 
 The portal tile and workspace model is the user-facing composition pattern described in [[summaries/KT-portal-purpose]]. A user enters the [[entities/fmo-post-trade-portal]] once, authenticates, and opens application views called tiles inside one or more workspaces. The portal supplies the shared shell and composition context; tenant applications keep their domain functions. Tiles can also request actions from one another through portal-mediated intents, with context passed as the target tile's initial data.

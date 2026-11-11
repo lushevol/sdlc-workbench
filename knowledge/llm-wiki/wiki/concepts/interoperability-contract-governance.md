@@ -4,6 +4,10 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-application-intero
 description: "How intent names, context schemas, versions, and readiness gates are agreed and verified across caller and provider teams."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
+Canonical basis: [contexts, intents and actions](../../../candidates/interoperability/KT-application-interoperability.md#contexts-intents-and-actions) and [adoption phases](../../../candidates/interoperability/KT-application-interoperability.md#adoption-and-release-phases).
+
 # Interoperability Contract Governance
 
 Interoperability Contract Governance is the set of agreements and evidence that let one application reliably request an action from another. It covers the named intents, the shape of the shared context, the version of the contract in force, and the readiness gates each side must pass before a feature is considered delivered. In the supplied materials the governance is declared in principle but not yet demonstrated in practice.

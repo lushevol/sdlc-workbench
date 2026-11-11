@@ -4,6 +4,8 @@ sources: ["summaries/KT-application-interoperability.md"]
 description: "Portal-mediated sharing of context and intent requests between applications via FDC3 on OpenFin."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Intent-Based Application Interoperability
 
 Intent-based application interoperability lets one application ask another to perform an action, and pass the context that the action needs. In the Portal material, a source tile sends an intent to the Portal, and a target tile receives the context as initial data. [[entities/fdc3]] supplies the abstraction for context and intents, and [[entities/openfin]] supplies the desktop environment.

@@ -4,6 +4,8 @@ type: "Product"
 description: "JavaScript UI library used across the portal's microfrontend layers and standalone templates."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # React
 
 ## What it is

@@ -4,6 +4,8 @@ type: "Product"
 description: "Data-grid product evaluated in a 2023 UI library comparison against MUI and Ant Design."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # AG Grid
 
 AG Grid is a data-grid product. In the source material it appears as one of three candidates in a historical user-interface library comparison, together with [[entities/mui]] and [[entities/ant-design]].

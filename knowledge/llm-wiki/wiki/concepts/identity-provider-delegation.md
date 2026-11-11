@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-a
 description: "How the portal defers authentication to external identity providers and authorization to EMS2/EMS3, and what remains unproven."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Identity Provider Delegation
 
 Identity provider delegation is the arrangement in which the portal does not authenticate or authorize users itself, but instead hands those responsibilities to external identity and entitlement providers. The portal's own services — chiefly the [[entities/ratan-auth-server]] and the [[entities/single-ui-bff]] — act as intermediaries: they accept credentials or tokens, call out to a provider, and translate the answer into portal-local sessions, attributes, and entitlements.

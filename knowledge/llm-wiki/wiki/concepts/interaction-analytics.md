@@ -4,6 +4,8 @@ sources: ["summaries/KT-observability-and-performance.md"]
 description: "Event taxonomy and identity model for capturing Portal user interactions in analytics."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Interaction analytics and event vocabulary
 
 ## Definition

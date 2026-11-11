@@ -4,6 +4,8 @@ type: "Organization"
 description: "User-reported owner of portal entry, tile, and release rules for the Post Trade Portal"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Portal Team
 
 ## What it is

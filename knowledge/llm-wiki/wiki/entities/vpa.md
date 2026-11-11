@@ -4,6 +4,8 @@ type: "Product"
 description: "Post-trade product whose Fix Link and Trade Monitor tiles were requested for Portal release."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # VPA
 
 VPA is a post-trade application that requested Portal integration for two tiles through the [[entities/markets-operations-one-release]] change-request process on the [[entities/fmo-post-trade-portal]].

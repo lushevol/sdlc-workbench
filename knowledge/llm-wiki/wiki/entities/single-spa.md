@@ -4,6 +4,8 @@ type: "Product"
 description: "Single-SPA is the microfrontend orchestration framework that mounts the portal's registered shell."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Single-SPA
 
 Single-SPA is the microfrontend orchestration framework used by the [[entities/fmo-post-trade-portal]] to register, load, and mount its frontend layers. It is a product dependency of the four-layer composition rather than a portal service: it defines the lifecycle contract that the registered shell implements and coordinates application mounting.

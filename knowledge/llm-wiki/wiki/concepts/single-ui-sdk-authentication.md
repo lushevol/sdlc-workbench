@@ -4,6 +4,8 @@ sources: ["summaries/KT-authentication-and-sessions.md", "summaries/REQ-active-s
 description: "How the Single UI SDK validates portal JWTs and exposes authenticated user context to downstream services."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Single UI SDK Authentication
 
 ## Definition

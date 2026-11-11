@@ -4,6 +4,8 @@ sources: ["summaries/KT-authentication-and-sessions.md"]
 description: "How non-human callers authenticate via client credentials, service accounts, and bank IDs, distinct from UI SSO."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Machine-to-Machine Authentication
 
 ## Definition

@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/REQ-active-session-renewal.md"
 ---
 
+> Derived from [REQ-active-session-renewal, version 7](../../../candidates/requirements/REQ-active-session-renewal.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Active Session Renewal (REQ-active-session-renewal)
 
 **Source type:** Requirement (version 7) · **Governance state:** candidate · **Status:** draft · **Owner:** unknown

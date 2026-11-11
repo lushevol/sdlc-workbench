@@ -4,6 +4,8 @@ type: "Product"
 description: "Frontend build tool recommended in the portal's build-tool research for new or simpler applications."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Vite
 
 Vite is a frontend build and development tool. In the portal's build-tool research, it is one of the two recommended options for React application builds.

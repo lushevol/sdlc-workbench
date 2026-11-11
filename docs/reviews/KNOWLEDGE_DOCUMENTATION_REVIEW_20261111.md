@@ -26,7 +26,7 @@ Review scope: current knowledge management guides, shared skill instructions and
 | F2 | RESOLVED | Corrected BFF/SDK responsibilities, conditional SDK adoption, and unsupported interceptor mappings. Independent source comparison confirmed the revised scope and all six initial canonical anchors; local wiki verification passes and all 12 canonical hashes remain unchanged. |
 | F3 | RESOLVED | Added the direct ADE authoring/provenance contract and resolved compiler-prompt precedence. Independent temporary-KB exercise passed all 18 checks, including real semantic edits/new metadata, stale-before/current-after bindings, unchanged canonical and unrelated bytes, failure stops and zero provider attempts. [Exercise results](../evidence/knowledge-documentation-review-20261111/fallback-exercise.json). |
 | F4 | RESOLVED | Primary standards, README ownership table and workspace tree now state the exact derived-wiki exception and separate validation duties. All four canonical-boundary tests pass; Workbench remains VALID with 14 documents and zero findings. |
-| F5 | PENDING | Standalone claim traceability. |
+| F5 | RESOLVED | All 91 derived pages show source-status notes; 12 summaries link exact canonical IDs/versions and seven key concepts link canonical sections. Repaired the damaged criterion locator, 14 evidence paths and eight malformed wikilink wrappers. All 137 plain Markdown targets/anchors resolve; native metadata and all canonical hashes remain unchanged, and native verification passes. |
 | F6 | PENDING | Historical navigation and policy. |
 | F7 | PENDING | Focused content and detail preservation. |
 | F8 | PENDING | Procedure ownership and examples. |

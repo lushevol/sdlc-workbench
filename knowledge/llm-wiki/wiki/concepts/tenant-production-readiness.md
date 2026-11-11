@@ -4,6 +4,8 @@ sources: ["summaries/KT-authentication-and-sessions.md", "summaries/KT-release-o
 description: "Separating technical deployment evidence from business activation before a tenant goes live."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Tenant Production Readiness
 
 Tenant production readiness is the evidence-backed state in which a tenant's applications are both technically deployed through the [[entities/fmo-post-trade-portal]] and accepted by the business that depends on them. In the supplied [[summaries/KT-release-operations]] materials, readiness is defined by two separate questions: has the technical path been proven, and has the business confirmed that the delivered capability works?

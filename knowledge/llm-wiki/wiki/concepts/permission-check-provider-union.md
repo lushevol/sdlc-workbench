@@ -4,6 +4,8 @@ sources: ["summaries/KT-ces-migration-parity.md"]
 description: "Existing hasPermission(code) calls accept a mapped grant from either EMS2 or CES, with the provider logged."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Provider-union hasPermission check
 
 ## Definition

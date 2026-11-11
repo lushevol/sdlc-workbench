@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md"]
 description: "Candidate release-window scheduling and ownership proposal, with unresolved duration and urgent-release confirmation rules."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Release Window Governance
 
 Release window governance describes how the supplied release proposal schedules Portal changes, freezes their scope, and coordinates Portal and tenant responsibilities. The governing source is [[summaries/KT-release-operations]], a version 2 candidate/draft topic. Its historical and proposed procedures have unconfirmed current authority; this page does not establish an approved operating policy.

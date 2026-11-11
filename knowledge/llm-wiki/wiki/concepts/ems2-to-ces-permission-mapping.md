@@ -4,6 +4,10 @@ sources: ["summaries/KT-ces-migration-parity.md"]
 description: "How EMS2 roles, entities, subjects, and actions map to CES entitlements, applications, features, and actions with parity rules."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
+Canonical basis: [authorization mapping](../../../candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts) and [frontend compatibility criteria](../../../candidates/security/KT-ces-migration-parity.md#intended-frontend-acceptance-criteria).
+
 # EMS2 to CES Permission Mapping and Parity
 
 ## Definition

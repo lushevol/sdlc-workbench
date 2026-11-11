@@ -4,6 +4,8 @@ type: "Product"
 description: "Open-source load testing tool referenced as the execution vehicle for Portal throughput tests."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Apache JMeter
 
 Apache JMeter is a load testing tool. In the supplied materials it appears only as the named execution vehicle for Portal throughput testing, not as a subject of design discussion.

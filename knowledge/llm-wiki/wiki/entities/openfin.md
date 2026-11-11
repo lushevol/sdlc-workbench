@@ -4,6 +4,8 @@ type: "Product"
 description: "Desktop runtime and platform product referenced in Portal materials for application hosting and onboarding phases."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # OpenFin
 
 ## What it is

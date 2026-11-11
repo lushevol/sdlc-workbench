@@ -4,6 +4,8 @@ type: "Product"
 description: "Cross-application interoperability standard used with OpenFin in the FMO Post Trade Portal."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # FDC3
 
 ## What it is

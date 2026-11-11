@@ -4,6 +4,8 @@ type: "Product"
 description: "First microfrontend layer: portal HTML entry, import map, and Single-SPA bootstrap."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # MFE Root Config
 
 **MFE Root Config** is the first layer of the portal's four-layer microfrontend composition. It is implemented in the `mfe-root-config` repository and supplies the HTML document, static entry resources, and the import-map configuration that locates shared modules. It initializes [[entities/single-spa]] and registers only [[entities/mfe-base]]; it does not register containers or tiles directly.

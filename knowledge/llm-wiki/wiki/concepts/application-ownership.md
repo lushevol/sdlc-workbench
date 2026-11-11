@@ -4,6 +4,10 @@ sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-a
 description: "How platform and tenant teams divide delivery, catalog, and release accountability."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
+Canonical basis: [composition ownership](../../../candidates/architecture/KT-frontend-composition.md#ownership-and-availability) and [release ownership](../../../candidates/operations/KT-release-operations.md#ownership-and-release-scope).
+
 # Application ownership and team responsibilities
 
 ## Definition

@@ -4,6 +4,8 @@ sources: ["summaries/KT-authentication-and-sessions.md", "summaries/REQ-active-s
 description: "Passing an authenticated identity from one application to another so users avoid repeated logins."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Cross-Application Authentication Handoff
 
 Cross-application authentication handoff is the transfer of an authenticated identity — usually a token or a session assertion — from one application to another so the second application does not prompt the user to log in again. In a Portal-mediated desktop, the handoff links an authentication provider to the applications that Portal opens.

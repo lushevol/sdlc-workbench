@@ -4,6 +4,8 @@ type: "Product"
 description: "Portal backend-for-frontend for auth, sessions, admin, entitlements, analytics, and CES metadata."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Single UI BFF
 
 ## What it is

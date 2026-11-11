@@ -4,6 +4,8 @@ type: "Organization"
 description: "Tenant organization requesting multiple Portal tiles, including gating, SSI, custody, and collateral capabilities."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # FSS
 
 FSS is a tenant organization whose release requests drive several tiles on the [[entities/fmo-post-trade-portal]]. Its requests describe intended business functions that require Portal integration. Those descriptions explain planned capability, not approved rules, completed releases, or present availability.

@@ -5,6 +5,8 @@ doc_type: short
 full_text: "sources/KT-admin-and-onboarding.md"
 ---
 
+> Derived from [KT-admin-and-onboarding, version 3](../../../candidates/operations/KT-admin-and-onboarding.md), candidate/draft. [Source bindings](../../source-manifest.json).
+
 # Admin and onboarding — Summary
 
 **Source:** `KT-admin-and-onboarding` (KnowledgeTopic v3, draft/candidate, owner unknown). This page summarizes the topic; it does not confirm that any described procedure is currently deployed or approved.
@@ -37,7 +39,7 @@ The NGINX draft collects upstream name, host, port, route path, rewrite rule, pr
 
 ### Empty-subject tile clarification
 
-The explicit user clarification permits tile visibility and launch through one configured EMS2 entity when the tile's subject setting is empty. The user must still satisfy portal-entry requirements and hold entitlement for that entity. The owner and scope answer identifies [[entities/portal-team]] across local, test, UAT, and production. This decision has approval pending. It resolves only the single-entity, empty-subject scope; it does not select a multiple-entity matching rule or an SSDR delegation option. The measurable result is defined in KT sdk and entitlements#ui empty subject ac 001. See [[concepts/portal-entry-and-tile-authorization]].
+The explicit user clarification permits tile visibility and launch through one configured EMS2 entity when the tile's subject setting is empty. The user must still satisfy portal-entry requirements and hold entitlement for that entity. The owner and scope answer identifies [[entities/portal-team]] across local, test, UAT, and production. This decision has approval pending. It resolves only the single-entity, empty-subject scope; it does not select a multiple-entity matching rule or an SSDR delegation option. The measurable result is defined in [UI-EMPTY-SUBJECT-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). See [[concepts/portal-entry-and-tile-authorization]].
 
 ### SSDR alternatives
 

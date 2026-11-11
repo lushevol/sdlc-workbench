@@ -4,6 +4,8 @@ type: "Product"
 description: "Portal authentication and authorization service delegating identity checks to OUD, Entra and FMAA."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # RATAN Auth Server
 
 RATAN Auth Server is the portal's authentication and authorization service, as reported in the user architecture clarification captured in [[summaries/ARC-portal-service-relationships]]. It handles two distinct jobs: **internal service authentication** and **authorization of external API callers**.

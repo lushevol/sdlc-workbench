@@ -4,6 +4,8 @@ type: "Product"
 description: "Java backend framework used in portal notification experiments and a proposed version upgrade."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Spring Boot
 
 Spring Boot is a Java application framework used as the backend runtime in portal-side experiments and proposals. This page records only what [[summaries/KT-architecture-evolution]] reports; it does not document the framework itself.

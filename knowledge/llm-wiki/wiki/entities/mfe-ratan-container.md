@@ -4,6 +4,8 @@ type: "Product"
 description: "RATAN container microfrontend (mfe-ratan-container): the third portal layer, its routing, and migration duties"
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # RATAN Container
 
 ## What it is

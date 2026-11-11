@@ -4,6 +4,8 @@ sources: ["summaries/KT-release-operations.md", "summaries/KT-observability-and-
 description: "Revalidate layer entry files and long-cache hashed assets to speed loads, but updates still need a refresh."
 ---
 
+> Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
+
 # Microfrontend cache strategy and update detection
 
 ## Definition
