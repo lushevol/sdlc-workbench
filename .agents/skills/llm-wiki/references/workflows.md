@@ -2,6 +2,21 @@
 
 Keep one active document set at `knowledge/llm-wiki/`. It retains OpenKB's detailed page format regardless of which engine maintains it. Use `--project PATH` before a launcher command to select a different workspace.
 
+## Project-scoped commands
+
+Workbench owns project selection. Apply this table when the unchanged OpenKB skill shows native commands. Run relative commands from the Workbench root. From another directory, use the absolute launcher path and put `--project /absolute/workspace` before the command.
+
+| Upstream example | Workbench operation |
+| --- | --- |
+| `openkb status` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run status` |
+| `openkb list` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run list` |
+| `openkb query "question"` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run query "question"` |
+| `openkb lint` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run lint` |
+| `openkb visualize` | `python3 .agents/skills/llm-wiki/scripts/wiki.py graph` |
+| `openkb add`, `remove`, `watch`, `recompile`, `init`, `use` or interactive `chat` | Use authorized Workbench canonical ingestion/governance and the compile procedure below; these native transactions do not own the linked source files. |
+
+The bridge supplies an explicit KB directory to native operations, independent of a global default. Keep the reported root at the selected workspace's `knowledge/llm-wiki/`. Use the source paths there for file reads. Do not run bare discovery or register a global KB to work around project selection. The original upstream skill remains unchanged reference material; these project-scoped commands take precedence in Workbench.
+
 ## Engine selection and installation
 
 ```sh

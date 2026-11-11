@@ -12,11 +12,24 @@ limitations:
 
 **The overall structure makes sense. Keep one canonical knowledge layer, one compiled wiki, and the existing engine-selection rule. Correct the project-selection instructions and unsupported generated architecture claims before the next maintenance run. Then complete the fallback procedure and reduce documentation drift.**
 
-Status: review complete; recommendations are unapplied. Baseline: `01750558bbce9413921568917bd0cc4f2694a403` on `codex/ces-gap-clarification-20261109`. A concurrent documentation commit, `edafad4dc`, added an independent initial-ingestion review; it did not change the reviewed knowledge guides or wiki.
+Status: remediation in progress under the [follow-up authorization](../evidence/knowledge-documentation-review-20261111/user-input.md#remediation-authorization). Findings below describe the review baseline; the remediation ledger records each later fix and verification. Baseline: `01750558bbce9413921568917bd0cc4f2694a403` on `codex/ces-gap-clarification-20261109`. A concurrent documentation commit, `edafad4dc`, added an independent initial-ingestion review; it did not change the reviewed knowledge guides or wiki.
 
 Authorizing input: [exact user request](../evidence/knowledge-documentation-review-20261111/user-input.md), 11 November 2026.
 
-Review scope: current knowledge management guides, shared skill instructions and integration references, generated wiki organization and source traceability, and historical review navigation. This review records proposed adjustments without rewriting knowledge or original upstream packages.
+Review scope: current knowledge management guides, shared skill instructions and integration references, generated wiki organization and source traceability, and historical review navigation. Remediation preserves canonical knowledge and original upstream packages.
+
+## Remediation ledger
+
+| Finding | Status | Change and verification |
+| --- | --- | --- |
+| F1 | RESOLVED | Root, bridge and nested instructions translate upstream commands through the project-scoped launcher. Independent forward check from `/private/tmp` selected this wiki, returned 12 indexed documents, and found no launch ambiguity. Skill validation and both upstream source locks pass. |
+| F2 | PENDING | Generated responsibility claims. |
+| F3 | PENDING | Fallback authoring and provenance completion. |
+| F4 | PENDING | Reserved storage exception. |
+| F5 | PENDING | Standalone claim traceability. |
+| F6 | PENDING | Historical navigation and policy. |
+| F7 | PENDING | Focused content and detail preservation. |
+| F8 | PENDING | Procedure ownership and examples. |
 
 ## What makes sense
 

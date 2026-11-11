@@ -7,6 +7,8 @@ description: Maintain the single Workbench knowledge wiki with OpenKB when an LL
 
 Use one active wiki at `knowledge/llm-wiki/`. Keep its existing detailed summaries, focused concepts, entities, saved explorations and cross-links. Do not create another wiki when the selected engine changes.
 
+For this project, translate native OpenKB skill commands through the [project-scoped launcher](references/workflows.md#project-scoped-commands). Begin with `python3 .agents/skills/llm-wiki/scripts/wiki.py run status`; bare upstream discovery can select another global KB.
+
 ## Select the semantic engine
 
 ```sh

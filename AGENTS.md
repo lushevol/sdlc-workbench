@@ -202,6 +202,8 @@ Follow the [coverage output rules](#coverage-output) for requirement, defect, im
 ## Primary knowledge wiki
 
 Use the [Workbench llm-wiki bridge](.agents/skills/llm-wiki/SKILL.md) to select the wiki engine.
+Start native skill operations through `python3 .agents/skills/llm-wiki/scripts/wiki.py run status` from this workspace, then use the [project command translations](.agents/skills/llm-wiki/references/workflows.md#project-scoped-commands).
+These project instructions override upstream discovery examples: bare `openkb` can select a different global KB. Keep the explicit workspace selection; do not set a global default to repair project discovery.
 Use [OpenKB](.agents/skills/openkb/SKILL.md) as primary only when both an LLM URL and token are configured.
 Use private `OPENAI_API_BASE` and `LLM_API_KEY` in the project KB `.env` or process environment.
 If either value is absent, use the unchanged llm-wiki-agent skill in the current ADE agent context.
