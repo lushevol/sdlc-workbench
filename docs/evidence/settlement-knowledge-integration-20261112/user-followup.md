@@ -15,3 +15,9 @@ Prior scope: [Settlement knowledge integration request](user-input.md#exact-user
 Source: subsequent user message in Codex, 12 November 2026.
 
 > openkb model use gpt-6-luna
+
+## Provider catalog check
+
+Source: subsequent user message in Codex, 12 November 2026.
+
+> check if sub2api has available models

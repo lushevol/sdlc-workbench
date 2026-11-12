@@ -26,4 +26,8 @@ For the retrieval question about two eligible cashflows, the candidate traces th
 
 The Workbench bridge selected OpenKB with the URL and key loaded from the user's shell settings for the operation. The ignored local model configuration selects `openai/gpt-6-luna`. The exact wiki plan queues the auto-netting candidate with recipe `sub2api-gpt-6-luna-v1`.
 
-The provider returned HTTP 403 for short probes against both Chat Completions and Responses. The responses were non-JSON. The cause remains unknown. The probes contained no Settlement content. Compilation awaits successful access to the configured provider. Resume through the Workbench bridge with the exact candidate path and recipe after access is restored.
+The initial provider probes returned non-JSON HTTP 403 responses through both Chat Completions and Responses. The cause remains unknown.
+
+The [follow-up catalog check](user-followup.md#provider-catalog-check) succeeded on 12 November 2026. The configured key listed 27 models, including `gpt-6-luna`. That model returned completions through Chat Completions and Responses using short test prompts. The probes contained no Settlement content.
+
+Automatic approval review rejected the scoped wiki compilation because it would send the auto-netting candidate and relevant existing wiki context to the configured Sub2API endpoint. It requires explicit confirmation for that payload and destination. The candidate remains queued with the same path and recipe.
