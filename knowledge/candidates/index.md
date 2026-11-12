@@ -11,9 +11,9 @@ limitations:
 
 # Portal knowledge map
 
-Start here to understand the supplied portal and UI platform materials.
+Start here to understand the supplied portal, UI platform, and Cash Settlement materials.
 Read each topic's evidence limits before using its claims for new work.
-The [derived knowledge wiki](../wiki/index.md) connects these records through summaries, concepts, entities, and a living overview.
+The [derived knowledge wiki](../llm-wiki/wiki/index.md) provides summaries, concepts, and entities for compiled records.
 
 All listed domain records remain candidates after source locator and content updates.
 All retain `status: draft` and `owner: unknown`.
@@ -39,6 +39,7 @@ Original source authority and current applicability require review.
 | Interoperability | [Application interoperability](interoperability/KT-application-interoperability.md) — `KT-application-interoperability` | Understand OpenFin, contexts, intents, and application handoff. | POC status, contract versions, and compatibility remain unconfirmed. |
 | Observability | [Observability and performance](observability/KT-observability-and-performance.md) — `KT-observability-and-performance` | Connect interaction events, dashboards, performance plans, and cache design. | Attribute limits conflict; historical summaries lack inspected execution evidence. |
 | Evolution | [Architecture evolution](evolution/KT-architecture-evolution.md) — `KT-architecture-evolution` | Understand library research, notification experiments, and platform proposals. | Adoption, supersession, licensing, and decision authority remain unresolved. |
+| Settlement | [Cash Settlement auto-netting](settlement/KT-settlement-auto-netting.md) — `KT-settlement-auto-netting` | Trace rule matching, scheduled execution, grouping, and resultant cashflow handling. | Calendar, late-arrival, and exception variants need domain-owner review. |
 
 Each topic links related topics and cites source sections or line ranges.
 Registry references provide declared context.
@@ -83,8 +84,8 @@ Use [govern-knowledge](../../.agents/skills/govern-knowledge/SKILL.md) to invest
 
 ## Coverage and review limits
 
-The collection mainly covers the portal and UI platform.
-It does not establish complete coverage of the brownfield business domain.
+The collection mainly covers the portal and UI platform, with an initial Cash Settlement auto-netting topic.
+The wider Settlement domain and other Netting workflows need canonical review.
 
 Missing local attachments limit diagrams, scan reports, screenshots, examples, and retained execution evidence.
 External destinations were not fetched.
