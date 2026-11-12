@@ -299,6 +299,9 @@ It does not yet maintain a complete requirement-to-code-to-test verification bas
 ### Skills and adapters
 
 `.agents/skills/` owns all shared engineering procedures.
+The [knowledge lifecycle map](docs/KNOWLEDGE_LIFECYCLE.md) defines six knowledge orchestrators and their reusable operation skills.
+Source preparation, canonical governance, and derived wiki freshness retain separate completion boundaries.
+Existing runtime and wiki engines retain hashing, validation, locks, and source lifecycle mechanics.
 The procedures ingest knowledge, govern knowledge, analyze requirements, assess impact, verify implementation, and detect gaps.
 They also supply repository onboarding, document validation, and dependency graph analysis.
 Their inputs, outputs, evidence requirements, and limits must remain independent of the AI client.

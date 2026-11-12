@@ -1,182 +1,68 @@
 # Ingestion workflow and harness
 
-Use these checkpoints in order.
-Keep batch notes in ignored working storage until a report needs retention.
+The [ingestion orchestrator](../SKILL.md) selects reusable operations.
+These stable checkpoints route to their owners; read only the operations needed for the requested scope.
+Keep working notes and checkpoint reports in ignored storage until retained evidence is required.
 
 ## 1. Define the scope
 
-Input: the user's request, workspace instructions, and available materials.
-
-1. Inspect worktree changes and preserve work from other tasks.
-2. Record the mode, source paths, project questions, and requested outputs.
-3. Record permitted external access and business execution from the actual task.
-4. Name evidence limits, owners, and missing inputs without guessing.
-
-Output: a short scope statement and question list.
-Completion: each planned output answers a requested project question.
-Do not import materials merely because they exist.
-Derive reusable business-domain intent, target rules, and intended business-system responsibilities.
-Keep actual implementation, deployment status, and observations outside `knowledge/`.
-Record intent-to-reality differences in independent gap Markdown under the owning task.
-Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files from `knowledge/`.
+Record the requested mode, project questions, materials, output paths, and actual access limits.
+Review mode produces findings and a topic proposal without source registration or governed changes.
+Only ingest materials within the actual request.
 
 ## 2. Protect the originals
 
-Input: selected source locations and the current workspace.
-
-1. Run the harness `start` command before editing raw sources, knowledge, or audit records.
-2. Inventory source paths, hashes, titles, available dates, revisions, and authority.
-3. Identify empty pages, duplicate content, missing attachments, and unread files.
-4. For ingestion, reuse originals under `evidence/knowledge/sources/`. Append new records to `evidence/knowledge/manifest.yaml`.
-5. Register an actual source collection through the supported catalog contract when needed.
-6. For complete Markdown exports, follow [source preparation](source-preparation.md) before drafting knowledge.
-7. Record semantic selections through the source CLI. Verify source-page, policy, and governing context hashes.
-8. Generate exact excerpts or links only when needed. Preserve source range mappings and output hashes.
-
-Output: the baseline checkpoint, inventory, and source manifest additions for ingestion.
-Completion: every source used for a derived record has an exact manifest reference and permitted retention.
-Selected source views also require current page hashes, policy bindings, context hashes, and valid original ranges.
-The logical stages are complete raw export → filtered source view → canonical knowledge → derived wiki.
-New or changed sources need review. Prior exclusion does not exempt a changed page.
-Missing input remains visible without deleting retained evidence or downstream knowledge.
-
-Original Markdown needs no Workbench frontmatter.
-For an export without original revision metadata, use `sha256:<digest>` and state that limitation.
-Do not initialize Git merely to identify supplied files.
-Pasted documents use filesystem provenance; links do not establish remote retrieval.
-If a retained original changed, recover its predecessor before deriving new claims.
-Add a separate snapshot for changed source content.
-When full-file retention would expose secrets, retain permitted contiguous excerpts and record the omitted scope.
-Record original source ranges and hashes without rewriting the original file.
-Keep credentials, tokens, and unnecessary personal examples out of synthesized knowledge.
+Use [capture-knowledge-sources](../../capture-knowledge-sources/SKILL.md) for baseline capture, retained revisions, and provenance.
+For complete exports, [prepare-knowledge-sources](../../prepare-knowledge-sources/SKILL.md) coordinates capture and selection.
+The [source command reference](source-preparation.md) retains CLI and selection contracts.
 
 ## 3. Read and trace the evidence
 
-Input: protected sources and the project questions.
-
-1. Read source contents, including cited ranges and relevant surrounding conditions.
-2. Fill the claim worksheet in [the evidence guide](evidence.md).
-3. For implementation questions, trace callers, providers, configuration, state, and failure paths at exact revisions.
-4. Inspect assertion setup, invocation, expected predicates, mocks, and imported test keywords.
-5. Resolve source-backed questions with confidence and limits. Apply the [question gate](../../../../tasks/README.md#investigate-before-asking) before requesting remaining intent or policy.
-
-Output: supported claims, conditional inferences, and consequential unresolved findings.
-Completion: each important claim has inspected support and an explicit evidence class.
-Route intent claims to target knowledge. Route implementation and observed-behavior claims to the independent gap document.
-A source can establish actual behavior without supplying authority for the intended rule.
-
-Missing environments limit execution; they do not block a static baseline.
-Missing attachments remain missing; filenames cannot establish their contents.
-Keep excluded secrets and unavailable dependencies beside the affected claim.
-A branch name, class name, or comment cannot replace its actual predicate.
+Use [retrieve-knowledge-evidence](../../retrieve-knowledge-evidence/SKILL.md), then [extract-knowledge-claims](../../extract-knowledge-claims/SKILL.md).
+The [evidence worksheets](evidence.md) define claim, feature, assertion, and retrieval evidence.
+Use [resolve-knowledge-questions](../../resolve-knowledge-questions/SKILL.md) for remaining material uncertainty after investigation.
 
 ## 4. Draft the connected knowledge
 
-Input: supported claims, current source selections, and recorded unknowns.
-
-Read selected passages with their original context before deriving meaning.
-A generated view is convenient input. Canonical citations still bind to original retained source revisions and page hashes.
-
-| Type | Choose when |
-| --- | --- |
-| `KnowledgeTopic` | Explaining business terms, intended workflows, and target-rule context. |
-| `Architecture` | Recording intended components, responsibilities, interfaces, and dependencies. |
-| `Requirement` | Recording confirmed intended behavior with measurable acceptance criteria. |
-| `Decision` | Recording an actual choice, alternatives, rationale, and consequences. |
-| `RepositoryProfile` | Recording intended repository responsibilities and contracts. Keep inspection findings outside knowledge. |
-| `GovernanceFinding` | Retaining a consequential unresolved issue for investigation. |
-
-Copy the selected shipped knowledge template and follow its schema.
-Group by project question; one source can support several topics.
-Several sources can support one topic.
-Preserve each intent source's revision, intended applicability, purpose, authority, and uncertainty.
-If only realization evidence changes, keep the intended rule unchanged and update its independent gap record.
-
-Save new concept drafts under `knowledge/candidates/<classification>/` with stable IDs.
-Save `GovernanceFinding` records under `evidence/knowledge/findings/`, outside the domain knowledge base.
-Keep logs, assertions, execution captures, and investigation reports under the owning task.
-Keep intended-versus-old-versus-new comparisons in separate task gap Markdown.
-Link its stable gap IDs from relevant reports and knowledge navigation when useful.
-Implementation facts, delivery status, and conformance results must not replace intended knowledge.
-Keep harness checkpoints in ignored working storage or retained task evidence.
-Use `governance_state: candidate`, `status: draft`, and `verified: []`.
-Mark an unavailable owner `unknown`.
-Reuse unchanged records; increment a version when its content or scope changes.
-Preserve unresolved predecessor knowledge and findings.
-
-Create `knowledge/candidates/index.md` with topic purpose, state, links, and evidence limits.
-Keep the reusable `knowledge/index.md` free from live project records.
-Use declared registry IDs only where the inspected relationship supports them.
-Declarations do not prove runtime integration or execution permission.
-
-Requirements need matching structured criteria and readable Gherkin scenarios.
-Separate business thresholds from controlled test fixtures.
-If a required business limit is unknown, retain the question instead of inventing a number.
-Keep unsupported criteria outside the confirmed acceptance list and state incomplete scope.
-
-Review mode produces the requested findings and proposed topic map here.
-It creates no source registrations or governed records automatically.
+Use [compose-knowledge-records](../../compose-knowledge-records/SKILL.md) for domain candidates and connected navigation.
+Keep actual implementation, deployment, observations, and intent-to-reality gaps outside canonical intent.
+Review-only scope ends with the requested findings and proposed topic map.
 
 ## 5. Prepare the final content
 
-Input: drafted outputs and a harness plan.
-
-1. Reconcile descriptions, tables, metadata, scenarios, finding status, and review summaries.
-2. Finish writing and formatting, including trailing whitespace and file endings.
-3. Perform applicable writing checks and set their actual result.
-4. Keep `asd_review: PENDING`, `reviewer: null`, and `reviewed_at: null` without a complete ASD review.
-5. Run the harness with `--phase prepare` and fix its failed checks.
-6. Perform semantic review using the claim worksheet and cited contents.
-
-Output: final proposed bytes and a `PREPARED` checkpoint.
-Completion: structural and evidence checks pass within the preparation scope, and remaining decisions are explicit.
-
-Preparation can defer a selected record's missing transition event.
-The report keeps the actual workspace validation result and names deferred findings.
-Preparation cannot supply verification or human approval.
-After a content correction, create a new prepared checkpoint and repeat the affected review.
+Use [prepare-knowledge-transition](../../prepare-knowledge-transition/SKILL.md) for final bytes and a `PREPARED` checkpoint.
+Use [review-knowledge-claims](../../review-knowledge-claims/SKILL.md) for semantic review before appending final-byte events.
+A content correction requires new preparation and affected review.
+Preparation does not supply human approval or passing business execution.
 
 ## 6. Append the audit events
 
-Input: final proposed bytes and actual review evidence.
-
-1. Compute hashes after all content, metadata, and formatting changes.
-2. Create new files under `evidence/knowledge/audit/` using the shipped contract and permitted lifecycle transitions.
-3. Bind each event to its final item path, ID, version, hash, and exact evidence sources.
-4. Record only actual actors, times, reviews, and approvals.
-5. Preserve existing events, including events that need correction.
-
-Output: new immutable event files and unchanged prepared document bytes.
-Completion: each changed governed record has a current event, as required by this project's instructions.
-The base validator permits unaudited candidates; the harness checks this stricter project rule.
-
-Use `previous_event_id` when a new event corrects an earlier event.
-An explicit correction chain can preserve an earlier hash and bind its replacement to current bytes.
-Do not change document text or writing metadata after creating its event.
-If that occurs, prepare a new version and event without rewriting the earlier event.
-Use [the governance skill](../../govern-knowledge/SKILL.md) for a requested state change or publication.
+Use [record-knowledge-audit](../../record-knowledge-audit/SKILL.md) for new immutable events bound to final bytes.
+Each changed governed record needs its required current event.
+The base validator permits unaudited candidates; the ingestion harness checks the stricter project rule.
+Do not edit prepared document bytes after recording their event.
+Use new preparation and correction events for later corrections.
 
 ## 7. Check usefulness and hand off
 
-Input: prepared documents, new events, and retained evidence.
-
-1. Run the final harness check with `--seal` pointing to the prepared checkpoint.
-2. Ask an independent reader to answer representative project questions from the classified index.
-3. Ask the reader to locate context for one realistic new requirement.
-4. Repair unsupported answers and record unresolved gaps.
-5. Report actual checks, scope, generated paths, findings, and owner decisions.
-
-After a document repair, repeat preparation, append required correction events, and run final validation again.
-
-Output: a final check report and a retrieval result with explicit limits.
-Completion: selected questions have supported answers or clearly identified gaps.
-Publication and business execution remain separate outcomes.
-
-If delegation is unavailable, perform the retrieval exercise yourself and disclose that limitation.
-Do not claim that an independent reader or a smaller model ran when it did not.
+Use [check-knowledge-integrity](../../check-knowledge-integrity/SKILL.md) for the final sealed harness check.
+Use [evaluate-knowledge-retrieval](../../evaluate-knowledge-retrieval/SKILL.md) for representative questions and one realistic new requirement.
+Repeat affected preparation, semantic review, audit correction, and final checks after content repairs.
+Report outputs, exact source scope, actual checks, findings, owners, and unresolved decisions.
+Keep canonical publication, wiki freshness, and business execution as separate outcomes.
 Follow the owning project's validation and commit instructions.
 
 ## Harness commands
+
+```sh
+python -m ai_sdlc_workbench.ingestion.harness start --workspace . --output .workbench/ingestion/batch/baseline.json
+python -m ai_sdlc_workbench.ingestion.harness check --workspace . --baseline .workbench/ingestion/batch/baseline.json --plan .workbench/ingestion/batch/plan.yaml --phase prepare --output .workbench/ingestion/batch/prepared.json
+python -m ai_sdlc_workbench.ingestion.harness check --workspace . --baseline .workbench/ingestion/batch/baseline.json --plan .workbench/ingestion/batch/plan.yaml --seal .workbench/ingestion/batch/prepared.json --output .workbench/ingestion/batch/final.json
+```
+
+Choose a new batch directory for a new run. Output paths must be unused.
+The harness writes requested checkpoint reports; it does not run business tests or publish knowledge.
+If unavailable, report `NOT_RUN` and the actual manual checks performed.
 
 The installed module owns deterministic checking under the single Workbench runtime.
 It does not perform automatic source ingestion or semantic classification.

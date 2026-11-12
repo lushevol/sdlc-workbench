@@ -1,5 +1,9 @@
 # Prepare source documents before knowledge ingestion
 
+Use [prepare-knowledge-sources](../../prepare-knowledge-sources/SKILL.md) to orchestrate this stage.
+[capture-knowledge-sources](../../capture-knowledge-sources/SKILL.md) owns retention; [select-knowledge-sources](../../select-knowledge-sources/SKILL.md) owns selection and generated views.
+This reference preserves the installed command and selection contracts.
+
 Use the installed local source commands before deriving knowledge from a complete Markdown export.
 They preserve sources and apply inspected selections. They do not classify meaning or approve knowledge.
 

@@ -19,6 +19,9 @@ Add a new snapshot when the source changes.
 Do not rewrite earlier snapshot bytes or manifest history.
 
 Use the [ingestion procedure](../../.agents/skills/ingest-knowledge/SKILL.md).
+Use [source preparation](../../.agents/skills/prepare-knowledge-sources/SKILL.md) before deriving candidates from complete exports.
+Its capture and selection operations reuse the existing commands and retained source identities.
+The [lifecycle map](../../docs/KNOWLEDGE_LIFECYCLE.md) identifies reusable steps and their checkable outputs.
 Use the [source adapter boundary](../../adapters/sources/README.md) when adding a source integration.
 Deterministic validation checks declared records and retained provenance.
 Local source preparation uses `ai-sdlc sources refresh`, `select`, `verify`, and `view`.

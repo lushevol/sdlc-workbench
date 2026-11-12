@@ -397,6 +397,10 @@ It does not perform the whole diagram automatically.
 
 ## Knowledge format and governance
 
+Use [the knowledge lifecycle and skill map](KNOWLEDGE_LIFECYCLE.md) for parent orchestration and reusable operation contracts.
+It separates source-selection freshness, canonical review and publication, and derived wiki maintenance.
+Existing wiki engine controls remain beneath the bridge. They do not replace canonical governance.
+
 Use Markdown with YAML frontmatter for portable concept documents.
 The format follows [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md).
 OKF requires `type` and permits provenance, generation, review, and lifecycle metadata.

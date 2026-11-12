@@ -32,22 +32,48 @@ The bridge rejects OAuth-only model prefixes and LiteLLM credential/endpoint ove
 
 When either value is absent, select **llm-wiki-agent in the current ADE session**. Read [the unchanged original workflow](../upstream/AGENTS.md) and apply the shared source/layout boundaries below. The no-credential workflow does not require launching OpenKB model commands. Existing pages remain available in both modes.
 
+## Source lifecycle ownership
+
+Existing engines own operational document maintenance. Workbench owns canonical authority and the linked-source boundary.
+
+| Layer | Existing control | Shared-workspace adaptation |
+| --- | --- | --- |
+| Canonical knowledge | Workbench source history, review, and publication gates. | Preserve source IDs, versions, hashes, and governance state. |
+| llm-wiki-agent | Full-source ingestion, semantic maintenance, health/lint, and hash-based source refresh. | Reuse semantic reasoning in ADE with OpenKB-format layout mappings. |
+| Native OpenKB | Hash registry, deduplication, changed-source handling, compilation, removal, and journaled ingestion recovery. | Invoke the semantic compiler through the bridge while keeping canonical aliases immutable. |
+
+Native source-owning transactions copy or remove their input artifacts.
+They do not own Workbench's canonical records.
+The bridge calls the compiler directly, so native `add` batch rollback does not cover the whole bridge update.
+Partial derived pages can remain after failure. ADE's two provenance writes are also not crash-atomic.
+Reuse the existing controls without introducing another canonical source approval lifecycle.
+
 ## Compile canonical records
+
+Use these reusable operations in order:
+
+1. [bind-wiki-sources](../../bind-wiki-sources/SKILL.md) selects canonical inputs, validates aliases, captures starting hashes, and prepares ADE recovery material.
+2. [maintain-wiki-content](../../maintain-wiki-content/SKILL.md) applies the selected engine's semantic workflow and records reviewed output.
+3. [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) checks completion, provenance, and verification, with coordinated recovery where applicable.
 
 ```sh
 python3 .agents/skills/llm-wiki/scripts/wiki.py compile
 python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates/security
 ```
 
-With both credentials configured, `compile` invokes OpenKB's original `compile_short_doc` using the selected URL and token explicitly, native configuration and an ingest lock. It reads full canonical records, deduplicates equal IDs, rejects conflicting records and filenames, links raw/full-text sources, and advances provenance bindings only after successful compilation and an unchanged source. Native failures are reported; they do not silently switch engines. Partial derived edits may remain after a failure, so inspect the diff before retrying.
+With both configured settings, the bridge calls OpenKB's original semantic compiler under its ingest lock.
+Without both settings, it returns an agent handoff and changes no pages or bindings.
+Follow the reusable units after a handoff; do not report that output as completed compilation.
 
-Without both credentials, `compile` prints an **agent handoff** and changes no pages or bindings. The current ADE agent then performs the explicitly requested work: read each source fully, maintain meaningful summaries, extract/update concepts and entities, preserve contradictions, reconcile the index, and log source IDs/hashes and the actual execution mode. Do not report the handoff alone as completed compilation. Keep the existing rich page layout and detailed content; do not replace it with metadata exports or a second generated tree.
+`raw/<name>.md` and `wiki/sources/<name>.md` remain relative symlinks to canonical records.
+Derived summaries live in `wiki/summaries/`; saved synthesis lives in `wiki/explorations/`.
+Direct ADE authoring uses the [native-format metadata contract](fallback.md#author-complete-native-format-pages).
 
-Follow the [direct ADE maintenance contract](fallback.md) for new-page metadata, source-before/output receipts, semantic review, and consistent manifest/registry completion. Run local structural checks before binding updates and full verification afterward. Preserve paired provenance before-images until both files verify. A source hash update alone is not semantic compilation.
-
-`raw/<name>.md` and `wiki/sources/<name>.md` remain relative symlinks to canonical records. `wiki/summaries/` holds derived source summaries; `wiki/explorations/` holds saved synthesis. Original llm-wiki-agent instructions call their derived source-summary folder `sources/`; apply that step to `summaries/` here. Preserve the existing OpenKB frontmatter and wiki-relative `[[concepts/...]]`, `[[entities/...]]`, `[[summaries/...]]` links. Use the index and relevant pages as the existing context; do not introduce a redundant overview document.
-
-Never run either engine's source-owning native `add`, `remove`, `watch`, `recompile`, `ingest` or `refresh` on linked canonical inputs. The bridge blocks unsafe OpenKB commands, including interactive `chat`, whose `/add` command bypasses scoped compilation. Use Workbench canonical ingestion/governance for source changes; reconcile source-manifest origins and links explicitly when a record moves to confirmed storage. Symlink creation failure is an error, not permission to duplicate files. Source bindings and lifecycle history must remain truthful.
+Never run either engine's source-owning native `add`, `remove`, `watch`, `recompile`, `ingest`, or `refresh` on these links.
+The bridge also blocks interactive `chat`, whose `/add` bypasses scoped compilation.
+Use canonical ingestion/governance for source changes. Reconcile origins and aliases explicitly after authorized record moves.
+Symlink failure is an error; do not duplicate canonical files as a workaround.
+Missing sources do not authorize automatic deletion.
 
 ## Query and saved synthesis
 
@@ -61,11 +87,13 @@ With both URL and token, this uses native OpenKB query and makes a separate prov
 
 ## Health and semantic review
 
-`verify` checks source links/hashes and all six native OpenKB structural categories without an LLM. This validates the stored format in either semantic mode. `run status` and `run list` are also local. Semantic `run lint` follows the engine-selection rule: native OpenKB with the complete pair, current ADE llm-wiki-agent otherwise.
+Use [check-wiki-health](../../check-wiki-health/SKILL.md) for local hash/link/structure checks and requested semantic review.
+It reports findings without advancing provenance or publication state.
+Use [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) to finish a reviewed update.
 
-The original llm-wiki-agent health/graph scripts expect a different index, source-summary layout and bare-stem wikilinks. Running them directly on these shared OpenKB pages produces false findings or missing edges. Retain them unchanged as original capabilities; use the shared-format native validator and viewer below for this document set.
-
-Review semantic fidelity, completeness, conflicts and applicability separately. Candidate sources remain candidate/draft, and no engine can supply missing publication approval or evidence of implemented behavior.
+Requested engine lint uses `run lint` with OpenKB only when both URL and token are configured.
+Otherwise use original llm-wiki-agent reasoning in the current ADE session.
+Native lint writes a report and log even without `--fix`; it is separate from read-only health inspection.
 
 <a id="openkb-wiki-graph"></a>
 

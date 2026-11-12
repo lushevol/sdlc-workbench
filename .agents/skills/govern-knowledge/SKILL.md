@@ -1,111 +1,47 @@
 ---
 name: govern-knowledge
-description: Investigate business-domain knowledge, record findings and reviews, and control evidence-backed publication for existing business repositories.
+description: Orchestrate evidence investigation, knowledge review, exact-byte transitions, audit, and publication for business-domain records.
 ---
 
-# Govern engineering knowledge
+# Govern business-domain knowledge
 
-Use this procedure with any coding agent.
-Apply it to business-domain knowledge for existing business repositories.
-Changes limited to harness setup, configuration, tooling, dependencies, or Workbench maintenance require no task or business knowledge record.
-Classify work by business impact using [the scope rules](../../../tasks/README.md#scope).
-Maintain their engineering guides and configuration directly, with checks appropriate to the changed interfaces.
-For mixed requests, govern only the affected business knowledge and track only the business scope in its task.
-Preserve existing governed record integrity and audit history when those records actually change.
-Read [the knowledge contract](../../../knowledge/README.md) before editing records.
-Use its [schemas](../../../core/knowledge/schemas/) and [templates](../../../core/knowledge/templates/) for knowledge, findings, manifests, and audit events.
+Use this parent for an end-to-end governance request. Invoke individual operations for narrower authorized work.
+Read [the knowledge contract](../../../knowledge/README.md) before changing records.
+Harness maintenance requires no business knowledge record. Follow [the scope rules](../../../tasks/README.md#scope) for mixed work.
+Keep intended rules in knowledge. Keep actual implementation, deployment, execution, and conformance gaps in independent task gap Markdown and evidence.
 
-Apply the [investigation and confidence rules](../../../tasks/README.md#investigate-before-asking) before sending unresolved questions to the user.
+## Route the work
 
-Keep Workbench lifecycle state separate from OKF `status` and execution outcomes.
-Keep `knowledge/` limited to business-domain Markdown records and navigation.
-Business-system technical knowledge qualifies when it defines intended domain behavior, contracts, or responsibilities.
-Keep knowledge focused on requirements, intent, and ideal target behavior.
-Record actual implementation, deployment, observations, and intent-to-reality differences in independent task gap Markdown.
-A source-backed implementation fact cannot redefine an intended rule.
-Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
-Store snapshots and their manifest under `evidence/knowledge/`.
-Store findings under `evidence/knowledge/findings/` and new immutable events under `evidence/knowledge/audit/`.
+| Step | Reusable operation | Required result |
+| --- | --- | --- |
+| Discover | [Retrieve evidence](../retrieve-knowledge-evidence/SKILL.md) | Exact sources, relevant records, evidence classes, and retrieval limits. |
+| Establish scope | [Assess applicability](../assess-knowledge-applicability/SKILL.md) | Applicable intent versions, conditions, and separate actual-behavior limits. |
+| Investigate and review | [Review claims](../review-knowledge-claims/SKILL.md) | Claim support, conflicts, confidence, actual reviewers, and remaining findings. |
+| Resolve material questions | [Resolve questions](../resolve-knowledge-questions/SKILL.md) | Sourced answers or a living owner-question document. |
+| Prepare | [Prepare a transition](../prepare-knowledge-transition/SKILL.md) | Final proposed bytes, required review evidence, and a prepared checkpoint. |
+| Audit | [Record audit events](../record-knowledge-audit/SKILL.md) | New immutable events bound to the reviewed bytes. |
+| Validate | [Check integrity](../check-knowledge-integrity/SKILL.md) | Final record, provenance, retention, and prepared-hash checks. |
 
-1. **Discover:** Read the candidate, registered sources, retained snapshots, and relevant findings.
-   Define the requirement, decision, capability, service, and contract scope.
-   Inspect exact revisions and source locators.
-2. **Investigate:** Check intent authority, freshness, consistency, completeness, and traceability.
-   Distinguish a supported change of intent from code that restores or contradicts an existing rule.
-   Keep the rule unchanged for implementation-only changes. Update the independent gap record instead.
-   Record evidence for each claim.
-   Preserve uncertainty as a finding with evidence, consequence, owner, and next action.
-   Mark an unknown owner explicitly.
-3. **Clarify:** Make acceptance criteria actionable and measurable.
-   Use Gherkin conditions, actions, and observable results.
-   Record missing business decisions without filling them from implementation intuition.
-   Resolve ambiguous, missing, or stale knowledge through cited sources or the responsible owner.
-   Keep unresolved conflicts open with an owner and next action.
-4. **Review:** Record the actual reviewers, review times, evidence scope, and limits.
-   Important requirements and decisions require human review before publication.
-   Do not fabricate a review or treat generated text as approval.
-5. **Prepare:** Validate the candidate before preparing its next state.
-   Follow the candidate → investigated → verified → published lifecycle.
-   Use contested, stale, or superseded when evidence requires those states.
-   Retain the predecessor identity and supporting evidence during replacement.
-   Prepare the proposed content, state, required approval evidence, and audit event together.
-6. **Audit:** Add a new event YAML file for each proposed state or review change.
-   Preserve earlier events and their Git history.
-   Correct an earlier event through a new event that references it.
-7. **Validate:** Run `ai-sdlc --workspace PATH validate` against the complete proposed records.
-   Treat publication as complete only after required reviews and deterministic checks pass.
-   Keep published knowledge separate from candidate records.
-   Report deterministic check results and unresolved findings separately.
-   Review the diff and preserve exact source evidence.
-
-Validation checks records and provenance.
-It does not authenticate humans, decide business correctness, or prove passing execution.
-Knowledge review and behavior verification need different evidence.
-Automatic AI governance and durable approval workflows remain future capabilities.
-
-## Reconcile the compiled wiki
-
-After authorized record or lifecycle changes, use the [llm-wiki bridge](../llm-wiki/SKILL.md) and its [compile procedure](../llm-wiki/references/workflows.md#compile-canonical-records) to reconcile affected pages, qualifications and index entries.
-The bridge owns engine selection, source aliases, native metadata and provenance completion. Run its `verify` before reporting current coverage; refresh the native wiki graph when requested.
-Preserve candidate, contested, stale and superseded qualifications. Derived pages, semantic lint and graph relationships cannot supply a reviewer, approve a rule, resolve source authority or transition a canonical record.
+Run only applicable operations. A missing answer blocks its affected meaning or transition; continue independent investigation.
+After a content correction, repeat affected review, preparation, audit correction, and final validation.
+Publication completes only when the required review and deterministic gates pass for the final bytes.
+Keep accepted records separate from candidates. Report unresolved findings and publication state explicitly.
 
 ## Apply completed clarifications
 
-When material clarification resolves a knowledge gap, update the affected record or create a candidate successor.
-Do this before handing off the resolved scope. Do not retain the answer only in chat or task notes.
-Record the answer source, decision authority, applicable scope, environment or version, and remaining limits.
-Add or revise measurable Gherkin criteria when the clarification changes required behavior.
-Link the task question, retained evidence, affected record, and finding resolution.
-Use the existing knowledge template. Preserve predecessor identity, source provenance, and earlier review history.
-Keep incident logs, implementation facts, and execution evidence under their task.
-Reference the independent gap document from knowledge navigation when needed. Keep actual-behavior descriptions and delivery status there.
-A supported clarification changes knowledge only when it changes or resolves intended target meaning.
+Use [question resolution](../resolve-knowledge-questions/SKILL.md) to preserve answers and affected record links before handoff.
+Use [record composition](../compose-knowledge-records/SKILL.md) when an answer requires a changed candidate or successor.
+Then resume review, preparation, audit, and integrity checks above.
+Clarification does not provide publication approval. A fix that restores an existing rule leaves its intended meaning unchanged.
 
-Complete the intake's knowledge-update log with record versions, criterion IDs, finding references, and audit references.
-Record `not applicable` with a reason when an answer changes no domain knowledge.
-Append a new audit event for each governance change. Never alter an earlier event.
-Keep changed content as a candidate until the required review and publication gates pass.
-Important requirements and decisions require recorded human review before publication.
-Do not transfer an earlier approval to changed content or present reported behavior as approved policy.
+## Reconcile the compiled wiki
 
-## Prepare exact bytes before recording events
+After authorized canonical changes, use [llm-wiki](../llm-wiki/SKILL.md) to reconcile affected derived pages and source bindings.
+Preserve candidate, contested, stale, and superseded qualifications. Check wiki freshness separately from canonical publication.
+Derived pages and graph relationships cannot approve a rule or establish implemented behavior.
 
-Use this order when changing governed records:
+## Handoff
 
-1. Finish wording, metadata, source references, scenarios, and file formatting.
-2. Run content checks and perform the required semantic review against those proposed bytes.
-3. Reconcile review summaries, finding resolutions, evidence limits, and the actual reviewed hash.
-4. Keep ASD review fields pending unless a complete writing review occurred.
-5. Compute the final full-file hash and append the required event files.
-6. Recheck the prepared hashes and all governance gates after adding events.
-
-The [ingestion harness](../ingest-knowledge/references/workflow.md#harness-commands) supplies prepared-content and final checkpoints.
-Preparation can defer a selected missing transition event; final validation cannot.
-The harness does not supply semantic review, verification, or human approval.
-Its prepared hash identifies checked bytes, not an authenticated reviewer.
-
-Avoid formatting or metadata changes after creating an event.
-Any later edit changes the hash, including a trailing newline.
-Preserve earlier events and create a corrected version or event under the knowledge contract.
-Reference the predecessor with `previous_event_id` when correcting its event.
-For a new review result, keep actual semantic review time separate from pending ASD review fields.
+Return record IDs, versions, hashes, actual review evidence, new audit paths, validation results, and unresolved owner actions.
+Keep knowledge review, ASD review, human approval, publication, wiki freshness, and behavior verification separate.
+The runtime checks saved evidence. It does not authenticate reviewers, decide business correctness, or run this orchestration automatically.

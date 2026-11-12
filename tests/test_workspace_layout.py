@@ -28,6 +28,12 @@ CANONICAL_SKILL_IDS = (
     "analyze-requirement", "code-review", "connectors", "detect-gaps", "gherkin-quality", "govern-knowledge",
     "impact-analysis", "ingest-knowledge", "llm-wiki", "openkb", "ponytail", "query-knowledge", "release-clinic", "release-confidence", "repository-onboarding",
     "service-dependencies-graph", "sync-release-knowledge", "validate-sdlc-documents", "verify-implementation",
+    "prepare-knowledge-sources", "capture-knowledge-sources", "select-knowledge-sources",
+    "extract-knowledge-claims", "compose-knowledge-records", "retrieve-knowledge-evidence",
+    "assess-knowledge-applicability", "review-knowledge-claims", "resolve-knowledge-questions",
+    "prepare-knowledge-transition", "record-knowledge-audit", "check-knowledge-integrity",
+    "evaluate-knowledge-retrieval", "classify-knowledge-change", "bind-wiki-sources",
+    "maintain-wiki-content", "finalize-wiki-update", "check-wiki-health",
 )
 
 BROWSER_LOCAL_FILES = (
@@ -347,7 +353,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertTrue((self.root / "workspace.yaml").is_file())
         for name in ("workspace.json", "project", "logs", "database"):
             self.assertFalse((self.root / name).exists(), name)
-        for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/BEHAVIOR_REVIEW.md",
+        for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/KNOWLEDGE_LIFECYCLE.md", "docs/BEHAVIOR_REVIEW.md",
                          "docs/GHERKIN_QUALITY.md", "docs/examples/gherkin-session/session.md",
                          "docs/examples/gherkin-session/ambiguous.md", "docs/examples/gherkin-session/manifest.json",
                          "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md",
