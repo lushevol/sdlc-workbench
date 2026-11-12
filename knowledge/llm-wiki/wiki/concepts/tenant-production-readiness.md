@@ -24,6 +24,8 @@ The release proposal asks for solution intent, user profiles, routing details, c
 
 These describe what a complete request should contain. They do not show that any particular tenant satisfied them.
 
+The unfinished checklist calls for tenant review with RATAN before preparing each production release and gives the tenant responsibility for checking its new upstream host for disaster recovery. A separate production checklist includes viewing the sign-in page before authentication. [Canonical release guidance](../../../candidates/operations/KT-release-operations.md#readiness-before-scheduling).
+
 ## Evidence gaps observed
 
 The supplied requests demonstrate how readiness evidence can be missing or withdrawn:
@@ -42,7 +44,7 @@ For the mechanics of that path, see [[concepts/portal-ingress-path]] and the rel
 
 ## Relationship to configuration promotion
 
-Configuration promotion moves tenant metadata, routing, authentication, entitlements, and validation settings into the Portal Admin service. See [[concepts/configuration-promotion]] and [[concepts/admin-catalog-configuration]]. Promotion is a technical prerequisite for tile visibility, but tile visibility is not business acceptance. The planned FMAA decommissioning flagged in the checklist remains an unresolved dependency for that promotion workflow.
+The documented promotion flow uploads Module Map, Drawer Category, and Tile Configuration CSV records to the Portal Admin service. It connects to separate routing, authentication, entitlement, and validation prerequisites; the supplied guide does not establish that all of those settings are uploaded. See [[concepts/configuration-promotion]] and [[concepts/admin-catalog-configuration]]. Promotion is a technical prerequisite for tile visibility, but tile visibility is not business acceptance. The planned FMAA decommissioning flagged in the checklist remains an unresolved dependency for that promotion workflow.
 
 ## Why this separation matters
 

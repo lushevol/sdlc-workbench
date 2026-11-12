@@ -37,6 +37,8 @@ These are user-stated rules owned by the [[entities/portal-team]] across local, 
 
 The historical tile-security proposal permits an empty **role** setting. That example does not define an empty **entity** setting.
 
+The draft portal principles require matching both the configured EMS2 entity and subject when a tile requires a subject. The condition remains documented draft intent. [Historical configured-subject rule](../../../candidates/security/KT-sdk-and-entitlements.md#historical-configured-subject-rule)
+
 ### Independent per-tile provider selection
 Migration does not require one batch move of every tile. Each tile selects its entitlement provider independently, and an EMS2 tile must retain its existing admission logic. A tile that moves to CES must not force unrelated tiles to change provider. The migration contract distinguishes plain `EMS2` from the final `EMS2 (CES)` phrase; the latter denotes the CES path, whose wire value is `EMS3` in the [[entities/ems3]] contract. That interpretation does not merge legacy EMS2 and CES admission choices. See [[concepts/per-tile-provider-selection]].
 
@@ -91,7 +93,9 @@ This shared union check is separate from per-tile admission. The clarification c
 The intended migration has no missing mapped entitlements or permission gaps, but that is a user expectation rather than retained execution proof. Entitlement completeness is assessed separately from account permission completeness: compare each mapped application, entitlement, feature, and action relationship before treating catalog totals as evidence, because different entitlements can yield the same combined effective permissions. Account comparisons must cover every account discovered in the selected entity scope, expand multi-ID cells, and count each distinct account once. Applicable data restrictions must be compared through authoritative definitions and resolved values; a matching data profile name alone does not prove equivalent access.
 
 ## Entitlement lifecycle notes
-The SDK overview recommends caching entitlements and mentions NGINX stickiness for multiple endpoints. It announced removal of EMS2 details from authentication JWTs in DEV on 30 August 2024. That announcement cannot establish the present DEV state or any production state. Cache invalidation, revocation propagation, and cross-instance logout behavior remain unresolved.
+The SDK overview recommends caching entitlements and mentions NGINX stickiness for multiple endpoints. It announced removal of EMS2 details from authentication JWTs in DEV on 30 August 2024. The current DEV and production token shape remains unverified.
+
+The current candidate requires UI permission revocation on next login and API permission revocation after expiry of the applicable Auth Server Redis entry. The entitlement cache and JWT parsing cache have separate one-hour and two-hour expiry settings. Cache interaction by API and revocation within an already-open tab remain open. Logout is governed by its own immediate portal-session target. [Permission revocation timing](../../../candidates/security/KT-sdk-and-entitlements.md#permission-revocation-timing) · [Portal logout criterion](../../../candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## Evidence limits
 - The setup procedure alone does not prove that a backend performs subject-and-action checks.

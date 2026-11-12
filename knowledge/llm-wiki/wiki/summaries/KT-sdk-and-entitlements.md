@@ -1,11 +1,11 @@
 ---
 type: "Summary"
-description: "SDK integration, entitlement retrieval, CES migration, and portal entry rules."
+description: "SDK integration, entitlement retrieval, tile validation, permission revocation, and CES migration."
 doc_type: short
 full_text: "sources/KT-sdk-and-entitlements.md"
 ---
 
-> Derived from [KT-sdk-and-entitlements, version 8](../../../candidates/security/KT-sdk-and-entitlements.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-sdk-and-entitlements, version 10](../../../candidates/security/KT-sdk-and-entitlements.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # SDK and Entitlements
 
@@ -37,20 +37,28 @@ Acceptance criteria record the intent:
 These criteria do not prove that [[entities/ces]] responses contain sufficient role information, and unmapped meaning remains a compatibility gap for explicit review.
 
 ## Portal and tile policy criteria
-- `UI-ENTRY-AC-001`: deny entry when an authenticated SC user has no entitlement for any registered application entity. No HTTP status, denial wording, or timing limit is specified.
-- `UI-EMPTY-ENTITY-AC-001`: hide the tile and deny direct launch when the tile has zero configured EMS2 entities.
-- `UI-EMPTY-SUBJECT-AC-001`: when the tile has one configured EMS2 entity and zero configured subjects, show the tile and authorize launch when the user has entitlement for that entity.
+- Deny entry when an authenticated SC user has no entitlement for any registered application entity. [UI-ENTRY-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001)
+- Hide the tile and deny direct launch when the tile has zero configured EMS2 entities. [UI-EMPTY-ENTITY-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001)
+- Show and authorize launch of a tile with one configured EMS2 entity and zero configured subjects when the user qualifies for portal entry and holds entitlement for that entity. [UI-EMPTY-SUBJECT-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001)
+- Validate tile access on login, page reload, and session extension when idle. Which entitlement source and freshness apply to each event remains open. [UI-TILE-VALIDATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-tile-validation-ac-001)
 
-All three are business criteria recording user-stated intent. They are not approved policy, executable results, or evidence of deployed enforcement. The [[entities/portal-team]] is identified as owner across local, test, UAT, and production, but authority and approval remain unconfirmed.
+The historical draft principles require matching both the configured EMS2 entity and subject when a tile requires a subject. This remains draft design context. [Historical configured-subject rule](../../../candidates/security/KT-sdk-and-entitlements.md#historical-configured-subject-rule)
+
+The earlier owner answers name the [[entities/portal-team]] for the entry and two empty-configuration rules across local, test, UAT, and production. The November answer names the RATAN team for portal policy ownership and review under ICS bank security policy. Publication review and deployed enforcement remain pending. [Portal policy ownership](../../../candidates/security/KT-authentication-and-sessions.md#summary)
 
 ## Entitlement lifecycle and risks
 The SDK overview recommends entitlement caching and mentions NGINX stickiness for multiple endpoints. It also announces removal of EMS2 details from authentication JWTs in DEV on 30 August 2024, but that announcement does not establish the present DEV state or any production token shape.
 
-Caching creates unresolved questions about stale permissions, cache expiry, and cross-instance logout propagation. The guides describe validation and entitlement retrieval, but they do not establish automatic subject-and-action enforcement for every application API.
+Permission revocation takes effect in the UI on the next login. Behavior in an already-open tab before that login remains open. [UI-ENTITLEMENT-REVOCATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-entitlement-revocation-ac-001)
+
+For protected API calls, revocation takes effect when the applicable Auth Server Redis entry expires. The entitlement cache has a one-hour expiry and the JWT parsing cache has a two-hour expiry. Cache interactions and the relevant entries for each API remain open. The two settings apply to cache entries; JWT lifetime and a combined revocation deadline remain unspecified. [API-ENTITLEMENT-REVOCATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#api-entitlement-revocation-ac-001)
+
+Logout has a separate target of immediately revoking all of the user's portal sessions while leaving identity-provider sessions outside that scope. The SDK guides describe validation and entitlement retrieval. Each application owns the enforcement of its protected operations. [PORTAL-LOGOUT-AC-001](../../../candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## Evidence limits and open questions
 - No downstream service execution or SDK compatibility build was inspected. The artifact and configuration for each consumer remain unresolved.
-- Portal-team authority, approval, and deployed enforcement of the entry, empty-entity, and empty-subject rules remain unverified.
+- Approval and deployed enforcement of the entry and tile rules remain unverified.
+- How do the caches for each API interact, and when must revocation be visible in an already-open tab?
 - Which CES data preserves each legacy role-specific grant for SDK 3.0.0 compatibility?
 - Which failure-handling contract should SDK 3.0.0 callers use?
 - What trusted control replaces JWT validation on excluded paths or configured skip headers?

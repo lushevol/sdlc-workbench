@@ -4,6 +4,8 @@ query: "How should the Portal preserve an active session across refresh-token ex
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
+> **Historical exploration.** The answer below reflects requirement v7. The 12 November clarification supersedes its unlimited-renewal and four-hour statements. Requirement v8 sets a 15-minute idle ceiling and a 60-minute absolute ceiling from portal authentication. Renewal across initial refresh expiry and eligible manual recovery apply within that absolute deadline. See the [current candidate criteria](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) and [[summaries/REQ-active-session-renewal]].
+
 ## Preserving an active session across refresh-token expiry
 
 The candidate requirement `REQ-active-session-renewal` defines the intended target: an active session should be sustained by **activity-driven renewal** rather than a fixed elapsed-time reauthentication cap.

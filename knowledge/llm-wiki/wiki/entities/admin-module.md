@@ -1,5 +1,5 @@
 ---
-sources: ["summaries/KT-authentication-and-sessions.md", "summaries/KT-release-operations.md"]
+sources: ["summaries/KT-authentication-and-sessions.md", "summaries/KT-release-operations.md", "summaries/KT-admin-and-onboarding.md"]
 type: "Product"
 description: "Portal product where tenant catalog configuration (module map, drawer, tile) is uploaded and promoted across environments."
 ---
@@ -13,6 +13,8 @@ The Admin Module is the [[entities/fmo-post-trade-portal]] product area where te
 ## What it covers
 
 The module manages Module Map, Drawer Category, and Tile Configuration records — the catalog inputs behind [[concepts/admin-catalog-configuration]] and the tile-level behavior described in [[concepts/portal-tile-workspace-model]].
+
+The current user-stated access rule permits portal administrators to read every tenant's audit history and configuration. A tile must never reference another tile's metadata. [[concepts/maker-checker-verification-workflow]] describes the separate write and verification process. Cross-tenant write permissions and the classification of shared catalog records remain open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
 
 ## Documented release flow
 

@@ -1,6 +1,6 @@
 ---
 type: "Concept"
-sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-and-sessions.md", "summaries/KT-release-operations.md", "summaries/KT-admin-and-onboarding.md"]
+sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-and-sessions.md", "summaries/KT-release-operations.md", "summaries/KT-admin-and-onboarding.md", "summaries/KT-sdk-and-entitlements.md"]
 description: "How EMS2 creates and assigns entity, action, role, and subject records, and how they map to CES."
 ---
 
@@ -26,7 +26,7 @@ The recorded setup sequence has four record types and one assignment step.
 4. Create subjects.
 5. Assign actions to role-and-subject combinations.
 
-A subject represents a user or user group. A role groups permitted actions. An entity represents the protected resource, such as an application or a portal function. The assignment step is what turns separate records into an effective permission.
+The documented procedure creates distinct entities, roles, subjects, and actions, then assigns actions to role-and-subject combinations. Under the reviewed CES migration mapping, an EMS2 subject maps to a CES feature. Keep each subject’s specific meaning bound to its reviewed application mapping. See [[concepts/ems2-to-ces-permission-mapping]].
 
 ## Portal admin entitlements
 
@@ -41,6 +41,8 @@ A tile record can link to one or more EMS2 entities and to role subjects. At lau
 A recorded user clarification handles one narrow case. When a tile's subject setting is empty, the portal permits tile visibility and launch through one configured entity, if the user first satisfies portal-entry requirements and holds entitlement for that entity. The owner of this decision is the [[entities/portal-team]], and it applies to local, test, UAT, and production. The decision is pending approval. It resolves the single-entity, empty-subject scope only. It selects no multiple-entity matching rule and no SSDR delegation option.
 
 The provisional SSDR discussion records other alternatives: multiple tile entities, optional subject checks for selected tenants, adding missing EMS2 assignments, and delegating authorization to SSDR. The temporary guest-access proposal is struck through. The discussion states that the portal does not implement entitlement control outside existing systems such as EMS2. None of these alternatives is an approved or deployed rule.
+
+The draft portal principles require matching both the configured EMS2 entity and subject when a tile requires a subject. This is historical draft context. [Historical configured-subject rule](../../../candidates/security/KT-sdk-and-entitlements.md#historical-configured-subject-rule)
 
 ## Provisioned records in the CES migration comparison
 
@@ -86,7 +88,7 @@ The migration material adds its own limits. It states intent and comparison scop
 
 Known gaps:
 
-- Tenant record boundaries for maker and checker users are unconfirmed. The proposal discusses tenant-specific roles, while the manual lists shared admin subjects and a different-user check.
+- Portal administrators may read audit history and configuration across tenants. Cross-tenant writes and verification remain open, as does the classification of shared tenant records. A tile must never reference metadata from another tile. [Admin access criteria](../../../candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
 - Multiple-entity tile matching is unresolved.
 - SSDR delegation is unresolved.
 - The applicable revision of the setup procedure for the current environment is unconfirmed.
@@ -96,7 +98,7 @@ Known gaps:
 ## Open questions
 
 - Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
-- How are tenant boundaries enforced on EMS2-backed admin permissions?
+- Which cross-tenant writes and verification actions are permitted for makers and checkers?
 - Which missing materials would let a team reconstruct the detailed grants?
 - Which source defines the complete legacy data field and value restrictions per profile?
 - How must multiple CES roles map to the existing upper-application role contracts?

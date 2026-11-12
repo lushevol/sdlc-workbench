@@ -33,7 +33,7 @@ The proposal requests solution intent, user profiles, routing details, connectiv
 
 ## Configuration promotion dependency
 
-Release execution depends on the Admin Module promotion flow. Teams change Module Map, Drawer Category, and Tile Configuration in Development, export CSV files to a tenant-owned repository, and an ADO pipeline uploads to the Portal Admin service at `/api/auth/v1/fmo/admin/config/upload`. The documented flow states that an [[entities/fmaa]] JWT is validated before processing. The first bulk insert into UAT and Production uses a separate BFF release; later uploads depend on tenant connectivity to the Admin service. The checklist flags planned FMAA decommissioning, an unresolved dependency. See [[entities/admin-module]] and [[concepts/configuration-promotion]].
+The documented Admin Module promotion flow supports releases that move catalog configuration. The supplied material does not establish a CSV-upload prerequisite for every Portal or tenant release. Teams change Module Map, Drawer Category, and Tile Configuration in Development, export CSV files to a tenant-owned repository, and an ADO pipeline uploads to the Portal Admin service at `/api/auth/v1/fmo/admin/config/upload`. The documented flow states that an [[entities/fmaa]] JWT is validated before processing. The first bulk insert into UAT and Production uses a separate BFF release; later uploads depend on tenant connectivity to the Admin service. The checklist flags planned FMAA decommissioning, an unresolved dependency. See [[entities/admin-module]] and [[concepts/configuration-promotion]].
 
 ## Change requests in the calendar
 

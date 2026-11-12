@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 8
+version: 10
 owner: unknown
 governance_state: candidate
 status: draft
@@ -84,6 +84,9 @@ sources:
 - resource: conversation:single-ui-sdk-ces-migration-20261101:implementation-clarification
   revision: user-clarification-20261101-1
   sha256: 19aaaecc90ad229dfafacd8313a332f50981c0f01526e7b83f3aa55ba20b3820
+- resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
+  revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+  sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
 sdk_ces_migration_intent:
   target_version: 3.0.0
   compatibility: preserve the old contract where possible and assess complete compatibility
@@ -115,17 +118,19 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 7
-previous_content_sha256: 6a5fa447bcd88333972c576a91599fcf24721f45edff3c1165dc4ed08fe33007
+previous_version: 9
+previous_content_sha256: 4223923f926c5d83314b0a148b7a5eddf1999faf4000a2f8ec004ad0f7a354aa
 generated:
   by: agent:codex
-  at: '2026-11-01T15:35:07Z'
+  at: '2026-11-12T21:53:10+08:00'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented
   application authorization boundaries.
 summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
   The SDK exposes entitlements. Application permission enforcement remains separate.
+  Portal tile validation runs at login, page reload, and idle-session extension.
+  Permission revocation applies on next UI login and after the applicable Auth Server Redis cache expires for API calls.
   The user confirms X_RATANONE became RATAN_ENTITLEMENT_RULE during CES migration.
   SDK 3.0.0 migration must preserve the old contract where possible and use caller-provided FMAA tokens.
 related:
@@ -148,6 +153,8 @@ open_questions:
 - What trusted control replaces JWT validation on excluded paths or configured skip
   headers?
 - Where does each downstream service enforce subject and action permissions?
+- When must an already-open portal tab reflect revocation before the next login?
+- Which Auth Server cache entries apply to each protected API path?
 - Which current environments remove entitlements from authentication tokens?
 writing_review:
   standard: ASD-STE100
@@ -175,6 +182,9 @@ The SDK guides describe a request filter that validates portal authentication to
 They expose user context and separate methods for entitlement retrieval.
 The materials distinguish authentication tokens from entitlement tokens.
 Application-level data permissions remain separate from portal tile visibility.
+
+The current user clarification defines portal tile validation events and entitlement revocation timing for the UI and APIs.
+[Portal ingestion answers, items 4 and 6](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
 
 For all portal environments, the user selected denial when an authenticated SC user lacks any registered application entity entitlement.
 The [entry answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json) and [scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json) establish user-stated intent only.
@@ -244,7 +254,7 @@ The selection defines no HTTP status, denial wording, or additional entity-versu
 The [owner answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json) identifies `portal team` for this policy only.
 User identity and applicable implementation version remain unknown. Portal-team authority and approval remain unconfirmed.
 
-Empty-entity approval and enforcement remain a separate [open question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
+The [empty-entity rule](#current-user-stated-empty-entity-rule) records the user's separate decision. Approval and enforcement evidence remain pending.
 
 The [draft principles, line 14](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>) state the same denial direction.
 The [older tile-security proposal, line 7](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7>) permits entry for SC accounts.
@@ -368,6 +378,88 @@ Feature: Tile access through one entity when its subject setting is empty
 The visible tile count and launch authorization count must each equal one.
 UI and service observation bindings remain unverified. No execution is claimed for this criterion.
 The [task record](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#canonical-case-applicability) preserves historical case limits.
+
+### Historical configured-subject rule
+
+The draft portal principles require matching both the configured EMS2 entity and subject when a tile requires a subject.
+The SSDR discussion records the same subject requirement in its historical principles.
+This is a documented draft rule. It supplies no current approval or deployment evidence and does not broaden the clarified single-entity empty-subject rule.
+[Draft portal principles, lines 14–16](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14-L16>).
+[SSDR discussion, lines 8–11](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L8-L11>).
+
+### Portal tile validation events
+
+The portal must validate tile access on login, page reload, and session extension when idle.
+Validation applies the configured entitlement rules and determines which tiles are available.
+The answer specifies these events. The entitlement source and its freshness at each event remain unconfirmed.
+[Portal ingestion answer, item 6](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
+
+#### UI-TILE-VALIDATION-AC-001
+
+```gherkin
+Feature: Validate tile access at portal session events
+  @UI-TILE-VALIDATION-AC-001
+  Scenario Outline: Apply the tile decision at each specified event
+    Given the user is eligible for portal entry
+    And the entitlement data available for validation grants access to one configured tile
+    And that data denies access to a previously available tile
+    When the portal completes <event>
+    Then the available tile catalog contains 1 entry for the granted tile
+    And the available tile catalog contains 0 entries for the denied tile
+
+    Examples:
+      | event                       |
+      | login                       |
+      | page reload                 |
+      | session extension when idle |
+```
+
+### Permission revocation timing
+
+For the portal UI, revoked permission must take effect on the next login.
+Behavior in an already-open tab before that login remains open.
+Tile validation on page reload or idle-session extension applies the entitlement data available at that event.
+
+For a protected API call, permission revocation takes effect when the applicable Auth Server Redis cache entry expires.
+The user specifies a one-hour expiry for the entitlement cache and a two-hour expiry for the JWT parsing cache.
+These are separate cache settings. The answer supplies neither a combined revocation deadline nor a JWT lifetime.
+[Portal ingestion answer, item 4](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
+
+#### UI-ENTITLEMENT-REVOCATION-AC-001
+
+```gherkin
+Feature: Apply permission revocation on the next portal login
+  @UI-ENTITLEMENT-REVOCATION-AC-001
+  Scenario: Remove access to a tile after its required permission is revoked
+    Given the user remains eligible for portal entry
+    And access to a tile depends solely on the permission being revoked
+    When the user completes the next portal login after the permission is revoked
+    And the user attempts to launch that tile directly
+    Then the portal displays 0 entries for that tile
+    And the portal grants 0 launch authorizations for that tile
+```
+
+#### API-ENTITLEMENT-REVOCATION-AC-001
+
+```gherkin
+Feature: Apply permission revocation after the applicable Auth Server cache expires
+  @API-ENTITLEMENT-REVOCATION-AC-001
+  Scenario Outline: Deny a request after expiry of the cache entry it uses
+    Given a protected API action requires a permission that the user no longer holds
+    And the action uses the applicable Auth Server <cache>
+    And that Redis entry has an expiry of <duration>
+    When the user requests the protected action after that Redis entry expires
+    Then the API denies the protected action
+    And the request completes 0 protected actions
+
+    Examples:
+      | cache             | duration |
+      | entitlement cache | 1 hour   |
+      | JWT parsing cache | 2 hours  |
+```
+
+The criterion applies to a cache after the API path is bound to that cache.
+The answer leaves cache interaction, already-open tab behavior, and service-specific invalidation unconfirmed.
 
 ### Integration purpose and responsibility boundary
 
@@ -498,13 +590,21 @@ Next action: document the trusted caller, replacement control, and bypass reject
 [SDK version 1.0.0, lines 3–8, 14–51, 69–85](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.0.0/page.md>)
 [SDK version 1.1.1, lines 5–17, 39–57, 74–89](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.1/page.md>)
 
-How do applications invalidate cached entitlements and reject logged-out sessions across instances?
-The overview recommends caching; version 1.1.4 describes session rejection without distributed lifecycle guarantees.
-Stale permissions and inconsistent logout remain unresolved possibilities.
+How does each application apply the stated API revocation rule across cache layers and service instances?
+The [current cache rule](#permission-revocation-timing) gives two Auth Server expiry settings.
+Which entries each protected API uses and how they interact remain unconfirmed.
+The [session topic](KT-authentication-and-sessions.md) describes the separate logout requirement.
 Owner: unknown.
-Next action: define cache expiry, revocation propagation, and observable cross-instance acceptance criteria.
+Next action: bind each affected API to its caches and retain cross-instance assertions.
 [SDK overview, lines 1–15](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md>)
 [Java 17 SDK guide, lines 3–21, 25–86, 135–154](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/page.md>)
+
+When must an already-open tab reflect a revoked permission before the user's next login?
+The answer gives a next-login boundary for UI revocation and three events for tile validation.
+It leaves the effect of a page reload or idle-session extension on revoked permissions in that tab unconfirmed.
+Owner: unknown.
+Next action: confirm the current-session behavior if a specific acceptance decision requires it.
+[Portal ingestion answers, items 4 and 6](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
 
 Which environments currently omit entitlements from authentication tokens?
 The overview announces a specific DEV migration in 2024.

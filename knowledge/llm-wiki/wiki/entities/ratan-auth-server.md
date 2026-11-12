@@ -1,5 +1,5 @@
 ---
-sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-and-sessions.md", "summaries/REQ-active-session-renewal.md", "summaries/ARC-portal-service-relationships.md"]
+sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-authentication-and-sessions.md", "summaries/REQ-active-session-renewal.md", "summaries/ARC-portal-service-relationships.md", "summaries/KT-sdk-and-entitlements.md"]
 type: "Product"
 description: "Portal authentication and authorization service delegating identity checks to OUD, Entra and FMAA."
 ---
@@ -36,22 +36,26 @@ So the reported provider list is not fully represented in the Auth Server copy u
 
 The same topic records a separate Phase 2 migration document for the portal and RATAN service accounts. That document describes machine-to-machine authentication migration with unresolved central dependencies; it does not establish an Auth Server implementation change.
 
+## API permission revocation
+
+The user states that permission revocation takes effect after expiry of the applicable Auth Server Redis entry. The entitlement cache expires after one hour and the JWT parsing cache after two hours. The affected cache and deployed behavior still need to be established for each API path. [Canonical permission-revocation criteria](../sources/KT-sdk-and-entitlements.md#permission-revocation-timing)
+
 ## Entra migration context
 
-The Entra migration materials describe a browser redirect followed by an authorization-code exchange through [[entities/single-ui-bff]]. The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens, and its design retains OneMFA fallback plus a separate username/password path. Phase 1 covers UI SSO only and explicitly excludes EMS2 replacement, portal session management, and tenant-onboarding authentication.
+The Entra migration materials describe a browser redirect and BFF code exchange, followed by user information, EMS2 entitlement retrieval, and portal token issuance. The historical pilot design retained OneMFA fallback and a separate username/password path. The November clarification prohibits OneMFA fallback. Phase 1 covers UI SSO and excludes EMS2 replacement, portal session management, and tenant-onboarding authentication. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001)
 
 This places user-facing authentication in the BFF rather than in the Auth Server copy under review. The Entra migration replaces the SSO provider while preserving separate entitlement and portal-session responsibilities; it does not document a change to the Auth Server's internal service authentication role.
 
 Operational onboarding also depends on directory configuration: the non-production verification guide requires a development AD account, Authenticator registration, and RATAN AD-group membership, and the production pilot warns that AD profile values differ from OUD values in surname formatting, country codes, and missing locale values. Those differences can affect downstream audit or application logic and are tracked as [[concepts/identity-profile-attribute-migration]].
 
-All of these statements come from candidate topic and source materials with unconfirmed original page revisions and approval authority. Provider scope, token validity, and session timing remain open questions, with no authoritative owner confirmed.
+These sources remain candidates with human publication review pending. The RATAN team owns portal policy under ICS bank security policy. Effective provider scope and token validity for machine-to-machine flows remain unverified.
 
 ## Boundaries and caveats
 
 - The reported scope does not establish that every portal request invokes the Auth Server. Authentication for portal traffic is also described through [[concepts/single-ui-sdk-authentication]] and the [[entities/single-ui-sdk]] library used by application backends.
 - The upstream ingress chain — [[entities/nginx]] and [[entities/api-gateway]] — is reported but its effective deployment is unconfirmed, so the Auth Server's runtime position in that path is unverified.
 - The copy inspected here has no independent Git history; file hashes identify content, not an upstream commit.
-- Timeout and refresh-duration rules for portal sessions are unresolved across competing session designs; see [[concepts/token-lifecycle-and-timeout-policy]]. Portal-session renewal intent is held separately in [[concepts/session-activity-renewal]] and [[concepts/session-expiry-prompt-recovery]].
+- Portal session intent has ceilings of 15 minutes idle and 60 minutes absolute from portal authentication. Exact timeout settings and individual token lifetimes remain open. The ideal immediate portal logout excludes identity-provider sessions. These criteria do not assign implementation to this Auth Server. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria) · [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## Related pages
 

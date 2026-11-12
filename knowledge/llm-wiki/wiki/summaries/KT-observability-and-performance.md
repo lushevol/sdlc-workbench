@@ -1,19 +1,21 @@
 ---
 type: "Summary"
-description: "Connects analytics, performance tests, throughput, and cache design; flags unverified capacity."
+description: "Documents the Portal API loading limit, PROD analytics retention, and historical performance evidence."
 doc_type: short
 full_text: "sources/KT-observability-and-performance.md"
 ---
 
-> Derived from [KT-observability-and-performance, version 2](../../../candidates/observability/KT-observability-and-performance.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-observability-and-performance, version 3](../../../candidates/observability/KT-observability-and-performance.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal observability, performance, and cache behavior
 
 ## Scope and main contribution
 
-This topic links four evidence streams: interaction analytics, usage dashboards, frontend performance testing, and cache strategy. It separates documented design intent from current operational requirements and capacity. The main contribution is a cautious synthesis: analytics can explain adoption, performance plans describe measurement intent, and historical reports cannot establish present production capacity without execution evidence.
+The 12 November 2026 clarification defines current candidate intent for API loading and analytics. The topic also retains usage dashboard design, historical frontend and throughput measurements, and cache strategy. Current production performance and behavior require execution evidence.
 
 ## Interaction analytics
+
+Portal analytics collect user activity for CPO review of business product usage. The required PROD retention period is three months. Permitted fields, the full set of authorized readers, handling of identifiable values, and the retention clock and expiry treatment remain open. [Analytics purpose](../../../candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary) · [Retention criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-analytics-ac-001)
 
 - The analytics effort aims to understand user interaction, improve adoption, and reduce time to value.
 - Captured UI elements include tiles, modals, workspace tabs, buttons, switches, and dropdowns.
@@ -31,6 +33,8 @@ The [[entities/kibana]] dashboard guide reports nine dashboards for Portal usage
 Related concept: usage dashboards.
 
 ## Frontend performance and non-functional requirements
+
+The current candidate sets a five-second API loading limit. The clarification specifies no mandatory UI performance metric. API scope, timing boundaries, workload, environment, and measurement method remain open. [API loading limit](../../../candidates/observability/KT-observability-and-performance.md#current-api-loading-limit) · [API performance criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-api-perf-ac-001)
 
 The monitoring page proposes weekly review of development performance. It discusses login, post-login, and blotter rendering with cache and compression changes.
 
@@ -56,7 +60,7 @@ Related concept: [[concepts/mfe-cache-strategy]].
 
 ## Evidence limits
 
-The named non-functional requirements page contains no substantive text, so it supplies no accepted service targets or measurable acceptance criteria. Historical test targets therefore cannot be treated as accepted current service limits.
+The named non-functional requirements export contains no substantive text. The five-second API loading limit comes from the later user clarification. The historical frontend targets retain their draft status. [Canonical evidence limits](../../../candidates/observability/KT-observability-and-performance.md#evidence-limits)
 
 Local hashes identify supplied document bytes without establishing original authority or current applicability. The sources mix design examples, draft targets, reported results, and future planning. Missing diagrams, screenshots, JMeter plans, and execution archives limit verification. No browser measurement, telemetry query, load test, or server-header check ran during ingestion.
 
@@ -65,9 +69,9 @@ Local hashes identify supplied document bytes without establishing original auth
 | Issue | Consequence | Next action |
 | --- | --- | --- |
 | Analytics models declare 20 and 10 custom attributes. | Producers could send attributes that downstream systems omit. | Reconcile producer, transport, storage, and dashboard schemas. |
-| Historical results lack referenced execution artifacts. | Current capacity and response time cannot be established. | Retain dated workloads, assertions, environments, results, and approved limits. |
+| The API loading limit has no specified measurement scope or method. Historical results lack referenced execution artifacts. | Current API loading behavior and capacity remain unverified. | Define acceptance conditions and retain dated workloads, assertions, environments, and results. |
 | Production dashboard address remains unresolved. | Production observation coverage remains unknown. | Confirm dashboard access, event completeness, and operational ownership. |
-| Examples collect identity context and search values without retention rules. | Approved collection and retention boundaries remain unclear. | Confirm permitted fields, access, redaction, and retention. |
+| Analytics examples include identity context and search values. The clarification states purpose and three-month PROD retention. | The field, reader, identity treatment, and expiry rules are incomplete. | Confirm permitted fields, authorized readers, the retention clock, and expiry treatment. |
 | Cache implementation section contains no configuration. | The documented strategy cannot prove deployed cache behavior. | Inspect current headers, entry revalidation, and chunk naming against the guide. |
 
 ## Connections

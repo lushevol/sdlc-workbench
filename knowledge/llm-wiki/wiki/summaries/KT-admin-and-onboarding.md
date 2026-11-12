@@ -5,15 +5,13 @@ doc_type: short
 full_text: "sources/KT-admin-and-onboarding.md"
 ---
 
-> Derived from [KT-admin-and-onboarding, version 3](../../../candidates/operations/KT-admin-and-onboarding.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-admin-and-onboarding, version 4](../../../candidates/operations/KT-admin-and-onboarding.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Admin and onboarding — Summary
 
-**Source:** `KT-admin-and-onboarding` (KnowledgeTopic v3, draft/candidate, owner unknown). This page summarizes the topic; it does not confirm that any described procedure is currently deployed or approved.
-
 ## Core idea
 
-Tenant onboarding is a cross-team operation. An application needs frontend assets, backend routing, EMS2 entitlements, and portal catalog records before it can appear and launch for a tenant. The topic centers on the [[entities/fmo-post-trade-portal]] admin module and connects the frontend and backend onboarding procedures, retained schema and routing material, and the SSDR entitlement discussion. It also records one explicit user clarification about tiles with an empty subject.
+Tenant onboarding is a cross-team operation. An application needs frontend assets, backend routing, EMS2 entitlements, and portal catalog records before it can appear and launch for a tenant. The topic connects the [[entities/admin-module]], frontend and backend onboarding, schema and routing material, the SSDR entitlement discussion, and user-stated access rules.
 
 ## Key findings
 
@@ -22,6 +20,8 @@ Tenant onboarding is a cross-team operation. An application needs frontend asset
 The admin manual describes three functions in the application catalog: Module Mapping, Drawer Category, and Tile Configuration. A module mapping links an import-map module name to an asset path; users enter the name without `@fm/` or spaces, and the active import-map API adds `@fm/` automatically. A drawer category groups tiles. A tile configuration record stores display details, container and route information, and entitlement configuration. Module and tile paths must match routing paths and are entered without a leading slash or spaces. Comma-separated role entities are converted into an array by the API. These functions and their relationships are collected in [[concepts/admin-catalog-configuration]] and [[concepts/portal-tile-workspace-model]].
 
 The manual defines a [[concepts/maker-checker-verification-workflow]]: creation or modification produces an `un-verified` record; a different user checks and verifies it before activation. Deactivation returns a verified record to `un-verified`. Each admin function keeps its own audit history. The supplied text does not fully specify rollback, activation propagation, or concurrent edits.
+
+The 12 November clarification allows a portal administrator to read every tenant's audit history and configuration. A tile must never reference metadata from another tile, including when an administrator submits its configuration. Cross-tenant write and verification permissions, the classification of tile metadata, and rules for shared tenant records remain open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
 
 ### Onboarding path
 
@@ -51,7 +51,8 @@ The admin overview and schema are proposals; the user manual is procedural. Thei
 
 ## Open questions
 
-- How are tenant record boundaries enforced for maker and checker users? The proposal discusses tenant-specific roles, while the manual lists shared admin subjects and a different-user check.
+- Which cross-tenant write and verification permissions apply to makers and checkers?
+- Which fields are tile-specific metadata, and which tenant-level records may be shared?
 - Which release, approval, rollback, and emergency-change controls govern self-service configuration changes in production?
 - Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
 - Which source revisions and environment checks establish the deployed catalog schema and current onboarding procedure?

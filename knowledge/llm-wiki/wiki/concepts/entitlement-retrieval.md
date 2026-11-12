@@ -6,6 +6,8 @@ description: "How downstream services obtain a user's entitlements from EMS2 or 
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
+# Entitlement retrieval
+
 ## Definition
 
 Entitlement retrieval is the process by which a downstream service obtains a user's entitlement data — the application entities, roles, subjects, and actions that define what the user may access. It is distinct from [[concepts/single-ui-sdk-authentication]], which establishes *who* the caller is; entitlement retrieval establishes *what* the caller may reach.
@@ -33,15 +35,11 @@ A service may also constrain retrieval by supplying an application entity list, 
 
 ## Caching and lifecycle
 
-The SDK overview recommends entitlement caching and mentions NGINX stickiness for multiple endpoints. Version 1.1.4 documents logout session rejection and configurable public certificates. Neither establishes distributed lifecycle guarantees.
+The SDK overview recommends entitlement caching and mentions NGINX stickiness for multiple endpoints. Version 1.1.4 documents logout session rejection and configurable public certificates.
 
-Open lifecycle problems remain:
+The current candidate requires UI permission revocation at the next login. Protected API calls must reflect revocation after expiry of the applicable Auth Server Redis entry. The entitlement cache expires after one hour and the JWT parsing cache after two hours. Cache selection and interaction for each API, entitlement freshness at UI validation events, and revocation in an already-open tab remain open. [UI-ENTITLEMENT-REVOCATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-entitlement-revocation-ac-001) · [API-ENTITLEMENT-REVOCATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#api-entitlement-revocation-ac-001)
 
-- How do applications invalidate cached entitlements?
-- How is revocation propagated across instances?
-- How are logged-out sessions rejected consistently when requests land on different instances?
-
-Stale permissions and inconsistent logout therefore remain unresolved possibilities, not dismissed risks.
+Logout separately targets immediate revocation of all of the user's portal sessions. Verification across service instances requires deployment and execution evidence. [PORTAL-LOGOUT-AC-001](../../../candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## Migration to CES
 

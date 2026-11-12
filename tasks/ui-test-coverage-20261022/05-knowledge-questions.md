@@ -1,11 +1,12 @@
 ---
 artifact_kind: change-request
 id: KNOWLEDGE-QUESTION-BATCH-20261022
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
 - UI-ENTRY-CLARIFICATION-20261022
+- SRC-portal-clarification-20261112
 - REQ-active-session-renewal
 - ARC-portal-service-relationships
 related_ids:
@@ -36,53 +37,42 @@ writing_review:
 
 # Knowledge questions and answers — investigated refinement
 
-> **Action: Complete eight policy answers and one shared ownership/contact entry.**
-> Consequence: Missing policy blocks its affected acceptance definition. Missing review blocks publication separately.
-> Owner: user or delegated topic owner; unresolved owners remain unknown.
-> Evidence: The [refinement request](evidence/question-refinement-20261026/user-request.json) and [investigated findings](evidence/question-refinement-20261026/reconciliation.json).
+The user supplied answers for all nine entries on 12 November 2026.
+The [exact answers](evidence/portal-ingestion-answers-20261112.md#exact-user-input) govern the clarified scope.
 
 ## Current task state
 
-Revised: 26 October 2026. Investigation baseline: `568b480e0bfe11f9922d8d133fdd4ed22dd81479`.
-All 60 original IDs remain available. Nine entries need your input; eight concern policy, and one consolidates ownership contacts.
+All 60 original IDs remain available. The [knowledge update log](#knowledge-update-log) maps the nine answers to the affected candidates and their evidence.
+The new 60-minute absolute session ceiling supersedes the earlier elapsed-time exception during continuous eligible activity.
+RATAN owns and reviews portal policy under ICS bank security policy. Exact ICS source and final content review remain pending.
+The [completed legacy wiki review](#legacy-wiki-review-checkpoints) confirms all 12 portal wiki inputs are current. The held MOM source and publication gates remain separate.
 
-Seventeen entries have source-backed answers. Two retain their existing answers. Six consolidate related requests.
-Six remain conditional evidence follow-ups. Twenty retain historical findings or limits outside the current decision.
-No new business answer comes from the [continuation request](evidence/question-refinement-20261026/user-continuation.json).
+The 26 October investigation used baseline `568b480e0bfe11f9922d8d133fdd4ed22dd81479`.
+Its [reconciliation](evidence/question-refinement-20261026/reconciliation.json) preserves the original dispositions and evidence.
 
-Readiness: `READY` for asynchronous answer collection only. Assessor: `agent:codex`, 26 October 2026.
-Acceptance for unanswered policy remains `NEEDS_CLARIFICATION`. Publication and deployment verification remain separate decisions.
-Knowledge ingestion will resume after you return answers and request continuation.
-
-Confidence concerns the stated finding and its scope. It does not establish approval, deployment, or business execution.
-`HIGH` means direct applicable evidence; `MEDIUM` means supported findings with material limits.
-`LOW` means weak or conflicting support; `UNKNOWN` means the available evidence cannot determine the answer.
-Each open policy has `UNKNOWN` confidence in the intended rule. Source-finding confidence appears separately.
+Confidence concerns the stated finding and scope. Direct user answers support the stated target rules with high confidence. Residual decisions and field-level limits remain explicit. Human publication review and deployed conformance require separate evidence.
 
 ## How to answer
 
-Edit the fields below. Options are unselected proposals. You can give another answer, write `unknown`, or name a contact.
-For each answer, state environment, effective date, exceptions, and authority when these affect its scope.
-
-Do not repeat recorded answers. A contact assignment does not complete content review or grant publication approval.
-When ready, say: `Continue ingestion using my answers in 05-knowledge-questions.md.`
-I will preserve the returned bytes, investigate remaining gaps, and refine affected candidate knowledge with provenance.
-We will repeat this document loop until no material question remains. Required publication reviews still apply.
+Add a correction or further clarification under the relevant recorded answer. Include the applicable environment, effective date, and exception when they change the scope.
+The original proposed choices and investigation summaries below provide review history.
+The [continuation authorization](evidence/portal-ingestion-question-20261112.md#continuation-authorization) covers the source reconciliation and affected wiki refresh below.
 
 Your [reference-priority instruction](evidence/clarification-20261023/reference-priority-user-input.md#exact-user-input) governs intended behavior.
 The [investigation-first rule](../../AGENTS.md#investigation-first-source) governs question selection and confidence.
 The [document-review instruction](evidence/clarification-20261023/review-format-user-input.md#exact-user-input) governs this editable handover.
+The [12 November portal ingestion question](evidence/portal-ingestion-question-20261112.md#exact-user-input) uses this same answer document.
 
 | Shared answer scope | Your response |
 | --- | --- |
 | Respondent and role | |
-| Answer date | |
+| Answer date | 12 November 2026 |
 | Default environments and effective date | |
-| Answers that remain proposals | |
+| Answers that remain proposals | Immediate logout across all portal sessions is the stated ideal target. |
 
 ## Answer navigation
 
-| Entry | Remaining input |
+| Entry | Answer topic |
 | --- | --- |
 | [KQ-SEC-03](#kq-sec-03) | Shared ownership and review contacts |
 | [KQ-SEC-04](#kq-sec-04) | Token and inactivity limits |
@@ -103,20 +93,22 @@ These answers are carried forward. Correct them only if your intended rule has c
 | Deny portal entry without entitlement for any registered application entity. | Portal team; local, test, UAT, production. | [Recorded answer](05-entry-clarification.md#ui-q-002) |
 | Hide the tile and deny direct launch when no EMS2 entity is configured. | Portal team; local, test, UAT, production. | [Recorded answer](05-entry-clarification.md#empty-entity-configuration) |
 | With one configured entity and an empty subject, allow visibility and launch through the entity check. | Portal team; local, test, UAT, production. | [Recorded answer](05-entry-clarification.md#empty-subject-configuration) |
-| Continuous eligible activity must support ongoing renewal across the initial refresh expiry. | Existing session intent; effective deployment remains unconfirmed. | [Recorded answer](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
-| Mouse, keyboard, and scroll activity count. Refresh-token renewal remains required after inactivity. | Existing session intent; token policy still needs current environment bindings. | [Recorded answer](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
+| Continuous eligible activity must support renewal within the absolute session limit. | The 12 November clarification sets a 60-minute ceiling. | [Recorded answer](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
+| Mouse, keyboard, and scroll activity count. An eligible user can extend during the idle prompt while the session remains eligible. | The idle timeout ceiling is 15 minutes. Token lifetimes and environment bindings remain open. | [Recorded answer](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
 | The reported UAT page was Cashflow Blotter. | The earlier Dashboard description is superseded. | [Recorded answer](../portal-background-session-20261019/10-change-review.md#sources-and-evidence-limits) |
 | The four MFE layers and reported BFF, SDK, and Auth responsibilities are recorded. | Effective deployment and consumer adoption remain qualified. | [Recorded answer](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md#components) |
 | API Gateway implementation analysis remains excluded. | The unavailable boundary remains visible in architecture. | [Recorded answer](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md#decisions) |
 
-## Remaining questions
+## Returned answers
+
+Each entry records the 12 November answer beside its earlier investigation. Prior confidence and options describe the investigation before the answer arrived.
 
 ### KQ-SEC-03
 
 **Who owns the unassigned topics, and which contacts can provide the required content reviews?**
 
 Portal-team ownership already applies to the three clarified entitlement rules across all portal environments.
-Session policy and the complete capability baseline have no recorded accountable owner.
+Before this answer, the investigation had no owner for session policy or the complete capability baseline.
 This entry consolidates [KQ-SEC-02](#kq-sec-02) and [KQ-ARCH-01](#kq-arch-01), with separate responsibility rows.
 
 Confidence: `HIGH` for recorded entitlement ownership; `UNKNOWN` for the missing session and baseline assignments.
@@ -128,7 +120,7 @@ Limit: Naming a reviewer does not record their review, authority, or approval of
 | Scope | Recorded owner | Your team, reviewer, contact, or evidence location |
 | --- | --- | --- |
 | Entry denial, empty-entity denial, and single-entity empty-subject access | Portal team; all environments | |
-| Session policy and current renewal criteria | unknown | |
+| Session policy and current renewal criteria | RATAN team | Named review contact remains open. |
 | Portal capability baseline and corrections, if any | unknown | |
 
 Suggested options, unselected:
@@ -137,13 +129,13 @@ Suggested options, unselected:
 - B. Name a delegate or existing ownership record for the affected rows.
 - C. Give another answer or write `unknown` for unresolved rows.
 
-Answer:
+**Answer received on 12 November 2026.** The RATAN team owns and reviews portal policy under ICS bank security policy. The answer assigns policy ownership. A named reviewer, the ICS source revision, and ownership of the complete capability inventory remain unconfirmed.
 
-Owner: unknown for missing assignments; portal team for the three entitlement rules.
+Owner: RATAN team for portal policy. The earlier rule-specific answers identify the portal team.
 
-Consequence: Unassigned review responsibility blocks the affected publication handoff.
+Consequence: Policy review can be routed to RATAN. A named reviewer and complete capability baseline owner remain open.
 
-Next action: Record contacts once. Request actual content review when candidate bytes are prepared.
+Next action: Obtain the applicable ICS policy revision and record the actual candidate review.
 
 Evidence: [REQ-active-session-renewal.md L1-L25](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L1-L25>); [REQ-active-session-renewal.md acceptance-criteria](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria>); [10-change-review.md unknowns-and-blockers](<../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers>).
 Evidence: [index.ejs L8-L16](<../../repos/ui/mfe-root-config/src/index.ejs#L8-L16>); [KT-portal-purpose.md scope](<../../knowledge/candidates/background/KT-portal-purpose.md#scope>); [user-message.txt L7-L22](<../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L22>).
@@ -155,7 +147,7 @@ Evidence: [empty-subject-owner-scope-source.json](<evidence/clarification-202610
 
 Continuous eligible activity must preserve renewal. BFF YAML defaults declare 15-minute access, 225-minute refresh, and 60-minute absolute values.
 
-The recorded active-renewal requirement remains in force. Do not reinterpret fixed values as a cutoff during continuous eligible activity.
+The prior requirement excluded an elapsed-time cutoff during continuous eligible activity. The 12 November answer supersedes that exception.
 
 Source-finding confidence: `MEDIUM`. Intended-policy confidence: `UNKNOWN`.
 
@@ -170,20 +162,21 @@ Suggested options, unselected:
 - C. Identify an authoritative policy or responsible contact.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** ICS limits idle session timeout to at most 15 minutes and absolute session timeout to at most 60 minutes. Continuous eligible activity can renew within the absolute limit. These are upper bounds. Exact configured cutoffs and separate access-token and refresh-token lifetimes remain unspecified.
 
-Owner: unknown session owner.
+Owner: RATAN team.
 
-Consequence: Unselected limits prevent measurable inactivity and token-expiry acceptance.
+Consequence: Acceptance can specify the two ceilings. Exact environment settings and individual token lifetimes remain open.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Bind the configured values and check the candidate criteria with RATAN.
+
 Evidence: [user-request.txt](<../portal-background-session-20261019/evidence/correction-20261020/user-request.txt>); [application.yml L32-L35](<../../repos/services/single-ui-bff/src/main/resources/application.yml#L32-L35>); [app.conf L2](<../../repos/services/single-ui-bff/app.conf#L2>); [JwtTokenUtil.java L48-L84](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java#L48-L84>).
 
 ### KQ-SEC-06
 
 **Which production fallback policy applies after the planned OneMFA retirement?**
 
-The current shell defaults to Entra in configured environments. URL values true, 1, yes, and y enable Entra; no disables it.
+The shell inspected in October defaulted to Entra in configured environments. URL values true, 1, yes, and y enable Entra; no disables it.
 
 The parser behavior is resolved. The remaining decision concerns permission to use fallback, rather than flag syntax.
 
@@ -200,20 +193,21 @@ Suggested options, unselected:
 - C. Permit ongoing fallback. State its conditions and effective date.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** The user states that OneMFA is decommissioned. Production sign-in must not fall back to OneMFA. The decommissioning statement is user-reported.
 
-Owner: unknown identity-policy owner.
+Owner: RATAN team for portal policy.
 
-Consequence: The permitted fallback determines which production login paths acceptance must allow.
+Consequence: Production acceptance must check that sign-in cannot use OneMFA fallback.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Retain an applicable deployment or execution observation when production conformance is assessed.
+
 Evidence: [featureFlagController.ts L14-L38](<../../repos/ui/mfe-base/src/utils/featureFlagController.ts#L14-L38>); [common.ts L131-L153](<../../repos/ui/mfe-base/src/utils/common.ts#L131-L153>); [UI SSO Entra Design L7-L30](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L7-L30>).
 
 ### KQ-SEC-14
 
 **What maximum permission-revocation delay applies to protected application actions?**
 
-The supplied Auth Server supports Redis caching of EMS2 and EMS3 results, using configured expiryTime. EMS3 exposes eviction methods.
+The October source inspection found Redis caching of EMS2 and EMS3 results using configured expiryTime. EMS3 exposes eviction methods.
 
 This concerns protected application actions. Tile-launch freshness has a separate boundary in [KQ-SEC-19](#kq-sec-19).
 
@@ -230,13 +224,14 @@ Suggested options, unselected:
 - C. Identify a governing policy or application permission owner.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** UI revocation takes effect at next login. API revocation takes effect when the applicable Auth Server Redis entry expires. The user specified one hour for entitlement caching and two hours for JWT parsing. The two values are distinct cache lifetimes.
 
-Owner: application permission owners.
+Owner: Application permission owners for service-specific enforcement.
 
-Consequence: The missing revocation deadline prevents measurable protected-action acceptance.
+Consequence: The API criteria require a cache-to-path binding for each protected action.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Verify the applicable cache entries, expiry settings, and denied action after expiry.
+
 Evidence: [Ems2EntitlementService.java L112-L170](<../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java#L112-L170>); [Ems3EntitlementService.java L49-L84](<../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java#L49-L84>); [Ems3EntitlementService.java L116-L123](<../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java#L116-L123>).
 
 ### KQ-SEC-15
@@ -260,13 +255,14 @@ Suggested options, unselected:
 - C. Define another boundary or identify its governing policy.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** The ideal target revokes all portal sessions for the account immediately. The boundary excludes the identity-provider session, such as Entra. Review and conformance evidence for this target remain pending.
 
-Owner: unknown session-policy owner.
+Owner: RATAN team.
 
-Consequence: The missing logout boundary prevents cross-device and service-instance acceptance.
+Consequence: The answer supplies the ideal scope and timing. Expired-access logout initiation and cross-instance conformance remain open.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Review the ideal criterion and retain an authorized logout and credential-reuse check.
+
 Evidence: [JwtAuthenticationController.java L365-L378](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L365-L378>); [SessionServiceImplementation.java L17-L35](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/SessionServiceImplementation.java#L17-L35>); [JwtTokenUtil.java L82-L103](<../../repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java#L82-L103>).
 
 ### KQ-SEC-19
@@ -290,13 +286,14 @@ Suggested options, unselected:
 - C. Define another launch boundary or identify its governing policy.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** The portal validates tile entitlements on login, page refresh, and session extension during the idle flow. The answer gives three validation triggers. The preceding answer gives the next-login boundary for UI revocation.
 
-Owner: portal authorization owner.
+Owner: Portal authorization owner.
 
-Consequence: Expected launch behavior after entitlement revocation remains undefined.
+Consequence: The three validation events are defined. Entitlement freshness before next login remains open.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Check each validation event and establish its entitlement source when acceptance needs that binding.
+
 Evidence: [index.ts L152-L175](<../../repos/ui/mfe-base/src/hooks/dispathcer/index.ts#L152-L175>); [JwtAuthenticationController.java L97-L121](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L97-L121>); [06-test-cases.md know-014](<06-test-cases.md#know-014>).
 
 ### KQ-OPS-002
@@ -320,13 +317,14 @@ Suggested options, unselected:
 - C. Define another boundary or identify its governing policy.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** Portal administrators can read all tenant audit history and configurations. A tile may never reference metadata belonging to another tile. The answer leaves reference rules for category or import-map records without tile ownership unspecified.
 
-Owner: unknown administration policy owner.
+Owner: Administration policy owner remains unknown.
 
-Consequence: This answer determines cross-tenant audit and foreign-reference acceptance expectations.
+Consequence: The answer defines admin reads and tile-owned references. Permissions for writes, verification, and shared metadata remain open.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Classify category and import-map ownership before applying the reference rule to those fields.
+
 Evidence: [AdminModuleUtil.java L41-L68](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java#L41-L68>); [ImportMapController.java L141-L164](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java#L141-L164>); [ApplicationTileController.java L46-L64](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java#L46-L64>); [User Manual L19-L35](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L19-L35>).
 
 ### KQ-OBS-002
@@ -350,13 +348,14 @@ Suggested options, unselected:
 - C. Confirm that no current budget exists, and identify who must define it.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** The API loading NFR is five seconds. The user set no UI performance metric. The measurement endpoints, percentile, workload, and capacity thresholds remain unspecified.
 
-Owner: unknown performance requirement owner.
+Owner: Performance requirement owner remains unknown.
 
-Consequence: The answer defines measurable performance acceptance instead of treating old draft targets as current requirements.
+Consequence: The five-second threshold needs a measurement scope and method before execution can establish conformance.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Identify the covered APIs, timing boundaries, workload, and environment for acceptance.
+
 Evidence: [FMO Post Trade Portal Frontend Performance Testing May 2023 L5-L36](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L5-L36>); [FMO Post Trade Portal Frontend Performance Testing May 2023 L68-L89](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L68-L89>).
 
 ### KQ-OBS-005
@@ -380,13 +379,14 @@ Suggested options, unselected:
 - C. Identify the applicable data policy or responsible data owner.
 - Other or unknown: Give another answer, a contact, or an evidence location.
 
-Answer:
+**Answer received on 12 November 2026.** Analytics primarily collect user activity for CPO review of business-product usage. Production analytics data is retained for three months. Exact permitted fields, masking rules, other authorized readers, and the retention mechanism remain unspecified.
 
-Owner: unknown analytics data owner.
+Owner: Analytics data policy owner remains unknown. CPO uses the data for business-product usage review.
 
-Consequence: The answer defines the accepted collection, access, and retention boundary for the implemented analytics path.
+Consequence: The answer gives the purpose and PROD retention period. Field and reader rules remain open.
 
-Next action: Review the returned rule and define measurable acceptance criteria within its stated scope.
+Next action: Bind the applicable data rules and retention clock before field-level or expiry verification.
+
 Evidence: [model.ts L12-L69](<../../repos/ui/mfe-base/src/analytics/model.ts#L12-L69>); [AnalyticServiceImplementation.java L24-L32](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/AnalyticServiceImplementation.java#L24-L32>); [Design L43-L47](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L43-L47>).
 
 ## Investigated findings and retained limits
@@ -1380,62 +1380,118 @@ Next action: Retain the stated limit. Reopen only when a concrete decision requi
 
 Evidence: [Analytic Dashboard in Kibana L1-L17](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L1-L17>); [KT-observability-and-performance.md usage-dashboards](<../../knowledge/candidates/observability/KT-observability-and-performance.md#usage-dashboards>).
 
+## Knowledge update log
+
+Source: [Exact user answers](evidence/portal-ingestion-answers-20261112.md#exact-user-input), recorded 12 November 2026 as `SRC-portal-clarification-20261112` in the [manifest](../../evidence/knowledge/manifest.yaml).
+RATAN is the user-identified policy owner and reviewer. The user reported the ICS policy limits. The underlying policy document and a review of these candidate versions remain pending.
+
+| Answer | Record and version | Acceptance criteria and scope | Audit event |
+| --- | --- | --- | --- |
+| 1, 2 | [Session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) v7 → v8 | AC-1 through AC-7 apply within the absolute deadline. AC-8 sets the idle ceiling. AC-9 sets the absolute ceiling. Earlier [execution comparisons](../portal-background-session-20261019/09-intent-reality-gaps.md) address the preceding target. | [Session requirement v8](../../evidence/knowledge/audit/AUD-20261112-REQ-active-session-renewal-v8.yaml) |
+| 1, 2, 3, 5 | [Authentication and sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md) v9 → v10 | RATAN ownership, ICS ceilings, PORTAL-SSO-AC-001, and ideal PORTAL-LOGOUT-AC-001. The [refresh revocation finding](../../evidence/knowledge/findings/GF-refresh-revocation-scope.md) still requires execution evidence. | [Authentication v10](../../evidence/knowledge/audit/AUD-20261112-KT-authentication-and-sessions-v10.yaml) |
+| 4, 6 | [SDK and entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) v8 → v9 | UI-ENTITLEMENT-REVOCATION-AC-001, API-ENTITLEMENT-REVOCATION-AC-001, UI-TILE-VALIDATION-AC-001. Existing tab freshness before next login and cache bindings by API remain open. | [Entitlements v9](../../evidence/knowledge/audit/AUD-20261112-KT-sdk-and-entitlements-v9.yaml) |
+| 7 | [Admin and onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md) v3 → v4 | ADMIN-CROSS-TENANT-READ-AC-001, ADMIN-TILE-METADATA-AC-001. Writes, verification, and shared tenant records require their own rules. | [Admin v4](../../evidence/knowledge/audit/AUD-20261112-KT-admin-and-onboarding-v4.yaml) |
+| 8, 9 | [Observability and performance](../../knowledge/candidates/observability/KT-observability-and-performance.md) v2 → v3 | PORTAL-API-PERF-AC-001 and PORTAL-ANALYTICS-AC-001. API measurement and analytics field, reader, and expiry details remain open. | [Observability v3](../../evidence/knowledge/audit/AUD-20261112-KT-observability-and-performance-v3.yaml) |
+| 1 | [Portal purpose](../../knowledge/candidates/background/KT-portal-purpose.md) v2 | Not applicable. RATAN policy ownership supplies no ownership decision for the complete portal capability inventory. | Not applicable |
+
+## Portal export reconciliation
+
+The 12 November pass reviewed 61 selected sources and recorded 19 queued omissions from the existing source selections. The [processing receipts](../../evidence/knowledge/processing/portal-document-export.json) bind all 80 reviewed outcomes to the selected sources, output hashes, and the passed sealed check.
+The next local plan reports zero pending processing items. The [meeting-minutes page](../../docs/evidence/initial-ingestion-source-filter-20261111/filter-review.md#documents-on-hold) remains the sole source-review hold while its attachments are unavailable.
+
+| Candidate | Reconciliation |
+| --- | --- |
+| [Frontend composition v4](../../knowledge/candidates/architecture/KT-frontend-composition.md) | Retains versioned component error boundaries and preferred lazy tile loading, plus historical direct access to non-sensitive static files before sign-in. [Audit event](../../evidence/knowledge/audit/AUD-20261112-KT-frontend-composition-v4.yaml) |
+| [Release operations v3](../../knowledge/candidates/operations/KT-release-operations.md) | Retains unfinished checklist guidance on RATAN review and tenant upstream disaster recovery, plus the sign-in page reachability check. [Audit event](../../evidence/knowledge/audit/AUD-20261112-KT-release-operations-v3.yaml) |
+| [SDK and entitlements v10](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) | Retains historical configured entity and subject matching and links the recorded empty-entity rule. [Audit event](../../evidence/knowledge/audit/AUD-20261112-KT-sdk-and-entitlements-v10.yaml) |
+
+The sealed source check passed with three new candidate events and zero findings. The [derived wiki](../../knowledge/llm-wiki/wiki/index.md) was refreshed locally with the current-agent fallback. The seven reviewed bindings are current, with 37 edited pages across the 96-page dependency scope. Full wiki verification passed with 13 linked canonical sources and zero structural findings. The [wiki graph](../../knowledge/llm-wiki/output/visualize/graph.html) was rebuilt.
+
+RATAN review, confirmation of the applicable ICS policy for idle recovery, and publication approval remain pending.
+
+The [latest continuation](evidence/portal-ingestion-question-20261112.md#legacy-wiki-review-continuation) authorizes review of the five legacy portal wiki inputs and their affected pages. The scoped review is complete; required policy decisions and publication approval remain pending.
+
+### Legacy wiki review checkpoints
+
+The current local plan selected five `bootstrap_review` inputs. All are existing candidate records with unchanged source bindings.
+The engine selector chose `llm-wiki-agent` in the current session because neither URL nor token is configured.
+Paired provenance before-images and the 96-page dependency inventory are retained in ignored `.workbench/wiki/portal-legacy-20261112/`.
+The starting integrity check is `VALID`, with 15 canonical documents and zero findings.
+
+| Review scope | State and durable evidence |
+| --- | --- |
+| Portal purpose and architecture claims | Reviewed 33 pages; all 13 findings corrected across 14 pages. Both saved answer bodies are preserved. [Case evidence](evidence/portal-wiki-legacy-review-20261112/architecture.json). The [independent cross-review](evidence/portal-wiki-legacy-review-20261112/architecture-cross-review.json) qualified one further shared-change-authority statement and reports no unresolved findings. |
+| Interoperability and evolution claims | Reviewed 24 pages; all ten findings corrected across nine pages. The saved answer body is preserved and 134 local links pass. [Case evidence](evidence/portal-wiki-legacy-review-20261112/interoperability-evolution.json). |
+| CES migration claims | Reviewed 18 pages; all four findings corrected across four pages. The saved answer body is preserved and 98 local links pass. [Case evidence](evidence/portal-wiki-legacy-review-20261112/ces.json). |
+| Shared navigation and unaffected context | Reviewed 21 pages; five corrections across four pages clarify delegation/enforcement, configuration-promotion scope, organizational labels, the Auth Server index description, and historical token validity. [Case evidence](evidence/portal-wiki-legacy-review-20261112/shared-context.json). |
+
+The [integrity case](evidence/portal-wiki-legacy-review-20261112/integrity.json) confirms all 243 protected files are unchanged and canonical validation is `VALID` for 15 documents with zero findings. The canonical source plan has zero processing items and one source-review hold. All 19 attachment targets from the MOM page remain unavailable.
+
+The [completion record](evidence/portal-wiki-legacy-review-20261112/completion.json) binds 96 unique reviewed outputs, 33 corrected findings across 31 pages, and the two independent correction checks. The five legacy inputs now have reviewed completion receipts. The exact 12 portal inputs replan as `unchanged`, with no queued portal work. All 13 linked canonical sources and all six wiki structural categories verify. The rebuilt graph contains 89 nodes and 1,467 edges. This result establishes portal wiki freshness; candidate publication, business verification, and the separate Settlement recipe remain outside this result.
+
 ## Request and source facts
 
-The [refinement request](evidence/question-refinement-20261026/user-request.json) authorizes investigation and revision of this living document.
-The [continuation](evidence/question-refinement-20261026/user-continuation.json) supplies no missing business answer.
-The [input binding](evidence/question-refinement-20261026/input-binding.json) identifies the preserved version 2 bytes and earlier source map.
-The [reconciliation](evidence/question-refinement-20261026/reconciliation.json) accounts for every original question and current disposition.
+The [12 November question](evidence/portal-ingestion-question-20261112.md#exact-user-input) requested the remaining ingestion clarifications.
+The [returned answers](evidence/portal-ingestion-answers-20261112.md#exact-user-input) supply policy within the stated scope.
+The [26 October investigation](evidence/question-refinement-20261026/reconciliation.json) retains the original dispositions and source bindings.
 
 ## Proposed change
 
-Version 3 implements investigation-first question refinement. It reduces 60 answer prompts to nine editable entries.
-It preserves recorded answers and stable IDs. It distinguishes source findings, intended policy, review requirements, and execution limits.
+Apply the supported answers to the existing candidate records. Keep the logout behavior at its stated ideal scope.
+Use the [knowledge update log](#knowledge-update-log) to trace the new versions.
 
 ## Scope and affected artifacts
 
-This change affects the living question document, clarification-stage navigation, evidence index, and retained investigation evidence.
-No application symbol, caller, importer, or runtime interface changes. Runtime risk is low.
-Interpretation risk remains material. Evidence classes, authority limits, and exact sources control that risk.
-The frozen intake and canonical test definitions retain their existing bytes.
+The update covers candidate knowledge, the living review document, and the applicability of historical session evidence.
+It changes no application source or historical test result.
 
 ## Options and consequences
 
-The user selected asynchronous document review. Suggested choices remain unselected and editable.
-Source-backed answers remove repeated source-inspection requests. Missing policy remains visible for its affected decision.
-Historical proposals remain qualified. Conditional evidence gaps remain separate from required business answers.
+The earlier proposed choices remain in the nine question entries for review history.
+The new session ceilings change the applicability of the four-hour continued-renewal case. Its result remains evidence against the earlier criterion.
 
 ## Proposed acceptance and validation
 
-Check all 60 IDs, nine editable entries, original answers, source locators, hashes, revisions, links, and protected-file integrity.
-Run artifact lint, workspace validation, bounded writing checks, and an independent review.
-The [check receipt](evidence/question-refinement-20261026/checks.json) records actual results and evidence limits.
-Automated checks do not establish full ASD-STE100 compliance. Full writing review remains pending.
+Checks confirmed all 60 question IDs, nine answer mappings, and the historical session criterion links.
+Workspace validation and the sealed knowledge check passed with zero findings, 184 checked local links, and five new audit events.
+The 18 revised scenarios had no structural Gherkin failures. Automation evidence and business execution remain unverified.
+Task document lint passed with warnings for unknown owners, pending reviews, and unresolved values. Full ASD writing review remains pending.
 
 ## Implementation and release proposal
 
-This stage refines the review document. Application implementation, new business execution, and release approval are outside this stage.
-No new user clarification changes a business rule. Domain ingestion and publication remain pending the applicable returned answers and reviews.
-Source corrections here identify investigated evidence. They do not silently revise candidate records or immutable audit events.
+Use the revised candidate criteria for a future conformance review. The knowledge changes supply no implementation, deployment, or release disposition.
 
 ## Requested decision and actual disposition
 
-Complete the nine entries in [answer navigation](#answer-navigation), then request review and ingestion continuation.
-Resolved findings require no repeated technical explanation. Returning answers does not itself grant publication approval.
+The user supplied nine answers. The log identifies the resolved policy and the remaining boundaries that matter to acceptance or publication.
+The underlying policy and candidate review are pending.
 
 ## Sources and evidence limits
 
-Original source snapshots, exact registered repository revisions, assertions, and retained execution results were inspected.
-The [repository bindings](evidence/question-refinement-20261026/repository-bindings.json) identify local revisions and filesystem copies.
-Current source cannot establish deployment parity. Earlier execution remains limited to its recorded revisions and fixtures.
-
-The [Confluence read](evidence/question-refinement-20261026/confluence-source-check.json) failed with `CONNECTOR_FAILURE`.
-The [presence check](evidence/question-refinement-20261026/connector-readiness.json) found required connector settings unavailable.
-This failure does not establish absence of external records. No new browser or business test execution occurred.
+The registered user answer is the controlling clarification. It supplies no independent deployment observation.
+The earlier [repository bindings](evidence/question-refinement-20261026/repository-bindings.json) and [Confluence access result](evidence/question-refinement-20261026/confluence-source-check.json) retain their original limits.
 
 ## Unknowns and blockers
 
-Eight missing policies block their affected acceptance definitions. The shared contact entry supports accountable review routing.
-Required human review blocks publication separately. Conditional deployment evidence limits only decisions that require deployed behavior.
+RATAN review and the applicable ICS policy revision remain pending.
+Exact token settings, launch freshness before the next login, API measurement conditions, analytics field and access policy, and metadata classification remain open where they affect acceptance.
 
-Owner: unknown where stated. Next action: Complete the meaningful remaining entries, or identify their responsible contacts.
+
+## Next owner actions
+
+The immediate next action is RATAN review of the current session-policy candidates against the applicable ICS revision. The nine returned answers remain recorded; this review concerns the remaining source and applicability limits.
+
+| Owner | Action and completion evidence |
+| --- | --- |
+| RATAN team | Supply the policy identifier, revision and effective scope. Review [session renewal v8](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), including refresh-based recovery after idle expiry, and [authentication v10](../../knowledge/candidates/security/KT-authentication-and-sessions.md). Record the actual reviewer, final hashes and disposition through [govern-knowledge](../../.agents/skills/govern-knowledge/SKILL.md) before publication. |
+| Source-export owner, unknown | Recover the 19 referenced [MOM attachments](../../evidence/knowledge/sources/confluence/FM%20TPT%20UI%20Guild/MOM/page.md). Use [prepare-knowledge-sources](../../.agents/skills/prepare-knowledge-sources/SKILL.md) to review their content and selection bindings. The source remains held until that evidence is available. |
+
+RATAN review fields are editable. Proposed dispositions are not selected.
+
+| Review item | Suggested response | Recorded response |
+| --- | --- | --- |
+| Applicable ICS source | Policy link or retained copy, revision, effective date and scope; or unknown with a named contact. | Pending |
+| Idle-expiry recovery | Endorse the current candidate with policy support; request a correction; or unknown with a named contact. | Pending |
+| Final candidate review | Reviewer and role, reviewed versions and hashes, date, disposition and limits. | Pending |
+
+Publication approval remains pending and requires its own recorded decision for the final bytes.

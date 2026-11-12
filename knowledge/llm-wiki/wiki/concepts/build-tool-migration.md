@@ -50,7 +50,7 @@ The research report has no publication date and no retained benchmark provenance
 ## Related topics
 
 - [[concepts/component-library-selection]] records the parallel evaluation of frontend libraries.
-- [[concepts/application-ownership]] defines who approves a migration per application.
+- [[concepts/application-ownership]] records documented team responsibilities; the accountable approver and effective migration authority remain to be confirmed for the affected shared and tenant interfaces.
 - [[entities/webpack]], [[entities/rspack]], [[entities/vite]], [[entities/systemjs]], [[entities/single-spa]], [[entities/react]], [[entities/mui]].
 - [[summaries/KT-architecture-evolution]] supplies the source context.
 

@@ -48,7 +48,7 @@ The table draft separates four record groups:
 - **Notification messages** — carry the message payload.
 - **User-notification state** — holds read and display flags for each user and message.
 
-This separation keeps message content apart from per-user state. It also allows a user to mute a topic without deleting message history.
+This separation keeps message content apart from per-user state. User-topic records include enabled and muted preferences; the draft does not define their effect on retained or unread messages.
 
 ## Unresolved retention rules
 

@@ -22,7 +22,7 @@ The guide states that downstream audit or application logic can therefore requir
 [Production pilot guide](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
 
 ## Where the profile is built
-The Entra design describes a browser redirect followed by an authorization-code exchange through the BFF. The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens. The design also retains OneMFA fallback and a separate username/password path. This makes the BFF the likely point where provider attributes become portal user information, although the supplied material does not state a profile mapping contract.
+The Entra design describes a browser redirect and BFF code exchange. The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens. The design places provider-to-portal profile mapping at the BFF and leaves the full downstream contract open. The November clarification prohibits OneMFA fallback for portal SSO. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001)
 [Entra design, lines 7–31, 40–68](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
 
 ## Scope boundaries
@@ -35,7 +35,7 @@ The non-production verification guide requires a development AD account, Authent
 [Non-production verification guide, lines 5–56, 58–126](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md>)
 
 ## Evidence limits
-- The supplied documents have local byte revisions but no confirmed original page revisions or approval authority. This limits their use as current security policy. Owner: unknown.
+- The supplied pilot documents have local byte revisions. Human publication review and the full downstream profile contract remain pending.
 - The open question in the source topic remains: which identity-provider profile contract must downstream services support?
 - The attribute differences are documented warnings, not a verified inventory of affected fields or consumers.
 - The FAQ links missing entitlements to tile access and EMS2 configuration; that is an entitlement concern, not a profile-attribute concern, and the two should not be merged.
@@ -48,7 +48,7 @@ The non-production verification guide requires a development AD account, Authent
 - [[concepts/portal-entry-and-tile-authorization]] covers how user and entitlement data gate portal entry and tile visibility.
 - [[concepts/cross-application-authentication-handoff]] covers how identity context passes between applications.
 - [[concepts/tenant-production-readiness]] covers the broader set of checks required before a tenant or environment goes live.
-- [[entities/entra]] is the incoming identity provider; [[entities/fmo-post-trade-portal]] is the affected portal; [[entities/portal-team]] is named as owner only for entry policy, not for profile contracts.
+- [[entities/entra]] is the intended identity provider. [[entities/fmo-post-trade-portal]] is the affected portal. The RATAN team owns portal policy under ICS, and downstream application owners need to confirm any additional profile fields.
 
 ## Open action
-Establish the intended profile-field mapping and the supported contract for downstream services. Assign an authoritative owner for profile attribute compatibility.
+Confirm any additional profile fields with the owners of affected downstream services.

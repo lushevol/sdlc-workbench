@@ -12,7 +12,7 @@ EMS3 is an entitlement and authorization provider named in the reported portal a
 
 ## Reported role
 
-The user clarification for [[summaries/ARC-portal-service-relationships]] states that portal authorization is delegated to two external systems: [[entities/ems2]] and EMS3. In that model, the portal does not evaluate entitlements itself; it asks a provider which functions a caller may use. This is the same delegation pattern described under [[concepts/identity-provider-delegation]], applied to authorization rather than authentication.
+The user clarification for [[summaries/ARC-portal-service-relationships]] reports RATAN Auth Server authorization delegation to [[entities/ems2]] and EMS3. The inspected Auth Server copy has no identified EMS3 implementation; EMS3 calls are separately identified in [[entities/single-ui-bff]]. Portal-entry, per-tile admission, and application permission decisions retain their distinct responsibilities. The reported delegation establishes no universal Auth Server call path. See [[concepts/portal-entry-and-tile-authorization]].
 
 ## EMS3 as the CES wire value
 

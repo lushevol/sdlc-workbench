@@ -20,7 +20,7 @@ In [[summaries/KT-application-interoperability]], FDC3 supplies the documented c
 - The draft principles emphasize interoperability among their focus areas.
 - The supplied material does not establish deployed or tested FDC3 coverage.
 - The deployment proposal describes future changes without an approval record. FDC3 should not be treated as a current implementation fact from this source alone.
-- The export does not provide specific FDC3 APIs, versions, or integration details.
+- The interoperability sources provide example API and channel details, including `fdc3InteropApi` value `1.2`, without establishing an approved or deployed FDC3 version or production contract.
 
 ## Documented interoperability details
 

@@ -1,0 +1,224 @@
+{
+  "reviewer": "agent:codex",
+  "scope": "Read-only protected file, canonical validation, canonical source plan and held-source integrity checks",
+  "started_at": "2026-11-12T15:25:59.322965+00:00",
+  "updated_at": "2026-11-12T15:28:00.503507+00:00",
+  "protected_before": {
+    "completed_at": "2026-11-12T15:25:59.322965+00:00",
+    "protected_manifest": ".workbench/wiki/portal-legacy-20261112/protected.json",
+    "protected_manifest_sha256": "777cdecc9565b283538e2ba33c2490c1f2c513149d9b8eeefd2bfc111a772e8b",
+    "expected_files": 243,
+    "matched_files": 243,
+    "mismatches": [],
+    "missing": [],
+    "status": "PASS"
+  },
+  "protected_check_command": [
+    "python3",
+    "-"
+  ],
+  "protected_check_algorithm": "Read every path and expected SHA-256 from protected.json; hash complete current file bytes with hashlib.sha256; report mismatches and missing files.",
+  "canonical_validation": {
+    "command": [
+      ".venv/bin/ai-sdlc",
+      "--workspace",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "validate"
+    ],
+    "completed_at": "2026-11-12T15:25:59.810422+00:00",
+    "exit_code": 0,
+    "stdout": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 15,
+      "findings": [],
+      "catalogs": {
+        "repositories": 9,
+        "services": 2,
+        "capabilities": 5,
+        "contracts": 16,
+        "sources": 12,
+        "tools": 15
+      }
+    },
+    "stderr": ""
+  },
+  "source_plan": {
+    "command": [
+      ".venv/bin/ai-sdlc",
+      "--workspace",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "sources",
+      "plan",
+      "--source",
+      "portal-document-export",
+      "--recipe",
+      "canonical-v1"
+    ],
+    "completed_at": "2026-11-12T15:26:01.093185+00:00",
+    "exit_code": 0,
+    "stderr": "",
+    "operation": "source_plan",
+    "source_id": "portal-document-export",
+    "recipe": "canonical-v1",
+    "baseline": {
+      "path": ".workbench/ingestion/source-plans/de890a63debae277a36e387c6257eaf93189f81859347fcc67dd2c6deb620518.json",
+      "sha256": "de890a63debae277a36e387c6257eaf93189f81859347fcc67dd2c6deb620518"
+    },
+    "plan_id": "fc48d20504d5f0e51e5faafc3bf0e5a9fc8bc7631ef4fbd6eeb099deea9096ce",
+    "counts": {
+      "documents": 85,
+      "review": 1,
+      "process": 0,
+      "unchanged": 84
+    },
+    "review_queue": [
+      {
+        "path": "FM TPT UI Guild/MOM/page.md",
+        "source": {
+          "id": "SRC-confluence-3c832f99b39e4459",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/MOM/page.md",
+          "revision": "sha256:d69ae67736e772cf9d43f89995d215c7bc37cf92218bc2969db3abb221deec0a",
+          "sha256": "d69ae67736e772cf9d43f89995d215c7bc37cf92218bc2969db3abb221deec0a",
+          "snapshot": "evidence/knowledge/sources/confluence/FM TPT UI Guild/MOM/page.md"
+        },
+        "reasons": [
+          "selection_hold"
+        ]
+      }
+    ],
+    "process_queue": [],
+    "affected_knowledge": [],
+    "full_output": ".workbench/wiki/portal-legacy-20261112/integrity-canonical-plan.json",
+    "full_output_sha256": "5acd3af798867c0331abf51b7f302017ecafef85f4ba455f54ea3fcf8d1f4f86",
+    "material_limits": [
+      "Affected scope follows declared source citations and canonical Markdown links; missing relationships require bounded topic discovery.",
+      "Source hashes, review declarations, and deterministic checkpoints do not authenticate an actor or grant publication approval.",
+      "File-level planning still requires complete changed-page review; section-level semantic reuse is not implemented."
+    ],
+    "baseline_hash_matches": true
+  },
+  "limits": [
+    "Deterministic structural/hash checks do not establish semantic approval, publication, business behavior or deployment.",
+    "Derived wiki integrity and provenance finalization are handled independently by root.",
+    "No canonical/source/audit/selection/processing files may be changed by these checks; full planning output stays in ignored .workbench storage.",
+    "The protected comparison covers the 243 saved paths; it does not classify unrelated newly added files outside that inventory.",
+    "A zero process queue and 84 unchanged planner items do not resolve the remaining held review or establish source collection completion.",
+    "The held page exposes 19 meeting attachment links, all absent at their relative retained-source targets. No unavailable meeting decisions were inferred."
+  ],
+  "held_source_metadata": {
+    "held_count": 1,
+    "selections_path": "evidence/knowledge/selections/portal-document-export.json",
+    "entries": [
+      {
+        "path": "FM TPT UI Guild/MOM/page.md",
+        "source": {
+          "id": "SRC-confluence-3c832f99b39e4459",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/MOM/page.md",
+          "revision": "sha256:d69ae67736e772cf9d43f89995d215c7bc37cf92218bc2969db3abb221deec0a",
+          "sha256": "d69ae67736e772cf9d43f89995d215c7bc37cf92218bc2969db3abb221deec0a",
+          "snapshot": "evidence/knowledge/sources/confluence/FM TPT UI Guild/MOM/page.md"
+        },
+        "present": true,
+        "decision": "HOLD",
+        "reason": "The page indexes meeting attachments but contains no meeting decisions or behavior rules. Limits: Recover relevant meeting attachments before classifying their actual content.",
+        "ranges": [],
+        "topic": "Meeting decisions",
+        "intent_status": "unavailable",
+        "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+        "context": [
+          {
+            "path": "docs/evidence/initial-ingestion-source-filter-20261111/user-input.md",
+            "sha256": "4c05edbeca8ec5ce709730a0a1a05804bbf0d3632ed8522ab9708493791b735a"
+          },
+          {
+            "path": "docs/evidence/initial-ingestion-source-filter-20261111/user-pipeline-followup.md",
+            "sha256": "b6feccd74eec1f5f64fe123336e81ca8593965a5cb5bd9b6c0a24765e948bd3d"
+          },
+          {
+            "path": "docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md",
+            "sha256": "a951ca341497a1aac66ce5899110f4d65a10cbb2e3de79dfdeed7a9c601626d4"
+          }
+        ]
+      }
+    ],
+    "existing_receipts": 80,
+    "existing_recipe_counts": {
+      "canonical-v1": 80
+    },
+    "content_inspection": "COMPLETE; retained page is a dated meeting-attachment index with no meeting decision bodies.",
+    "inspection_commands": [
+      [
+        "cat",
+        "evidence/knowledge/sources/confluence/FM TPT UI Guild/MOM/page.md"
+      ],
+      [
+        "python3",
+        "-"
+      ]
+    ],
+    "inspection_algorithm": "Read configured input_root from current selections; hash complete snapshot bytes; parse all attachments/ link targets from page.md and test each target relative to the retained page directory.",
+    "configured_input_root": "evidence/knowledge/sources/confluence",
+    "input_root_exists": true,
+    "snapshot_sha256": "d69ae67736e772cf9d43f89995d215c7bc37cf92218bc2969db3abb221deec0a",
+    "snapshot_hash_matches_selection": true,
+    "attachment_links": 19,
+    "missing_relative_attachment_targets": 19,
+    "retained_sibling_files": [
+      "page.md"
+    ],
+    "disposition": "HOLD remains unchanged; recover relevant meeting attachments before classifying their actual content.",
+    "limits": "All 19 relative attachment targets are absent from the configured retained-source collection. No attachment content, external repository or remote system was retrieved; meeting decisions cannot be inferred from attachment names."
+  },
+  "protected_after": {
+    "completed_at": "2026-11-12T15:28:00.502134+00:00",
+    "expected_files": 243,
+    "matched_files": 243,
+    "mismatches": [],
+    "missing": [],
+    "status": "PASS",
+    "saved_manifest_sha256": "777cdecc9565b283538e2ba33c2490c1f2c513149d9b8eeefd2bfc111a772e8b"
+  },
+  "command_discovery": {
+    "installed_cli": ".venv/bin/ai-sdlc",
+    "help_commands": [
+      [
+        ".venv/bin/ai-sdlc",
+        "validate",
+        "--help"
+      ],
+      [
+        ".venv/bin/ai-sdlc",
+        "sources",
+        "plan",
+        "--help"
+      ]
+    ],
+    "source_plan_recipe_evidence": {
+      "path": "evidence/knowledge/processing/portal-document-export.json",
+      "sha256": "5795c1a9c1bf316f8301f4931a014084c45dad5f9dc255458ed11b639956a530",
+      "receipt_count": 80,
+      "recipe": "canonical-v1",
+      "matching_recipe_receipts": 80
+    },
+    "reference": ".agents/skills/ingest-knowledge/references/source-preparation.md#plan-incremental-canonical-work"
+  },
+  "completed_at": "2026-11-12T15:28:00.503507+00:00",
+  "status": "CHECKS_COMPLETE_WITH_HELD_SOURCE",
+  "summary": {
+    "protected_files_matched": 243,
+    "protected_files_expected": 243,
+    "canonical_status": "VALID",
+    "canonical_documents": 15,
+    "canonical_findings": 0,
+    "source_documents": 85,
+    "source_review_queue": 1,
+    "source_process_queue": 0,
+    "source_unchanged": 84,
+    "held_sources": 1,
+    "held_attachment_links": 19,
+    "missing_held_attachment_targets": 19,
+    "protected_files_changed_by_checks": 0
+  }
+}

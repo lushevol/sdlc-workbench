@@ -18,7 +18,7 @@ That JMeter plan and its result archive are absent from the supplied copy. The r
 
 ## Verification considerations
 
-A JMeter result is only interpretable together with its plan, assertions, workload shape, target environment, and date. None of these are available here. Any future sizing decision should be based on retained, dated JMeter artifacts rather than the summary line alone.
+A JMeter result is only interpretable together with its plan, assertions, workload shape, target environment, and date. The summary identifies UAT and a workload of 500 users, a 250-second ramp-up, and five iterations. The executable plan, result archive, direct assertions, and sufficient dated execution provenance are unavailable in the supplied copy. Any future sizing decision should be based on retained, dated JMeter artifacts rather than the summary line alone.
 
 ## Related pages
 

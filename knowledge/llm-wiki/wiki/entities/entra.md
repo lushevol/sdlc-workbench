@@ -1,7 +1,7 @@
 ---
 sources: ["summaries/KT-authentication-and-sessions.md", "summaries/REQ-active-session-renewal.md", "summaries/KT-release-operations.md"]
 type: "Product"
-description: "Microsoft identity platform replacing Portal SSO; migration scope and activation rules remain unapproved."
+description: "Microsoft identity platform selected for Portal SSO without OneMFA fallback."
 ---
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
@@ -10,7 +10,7 @@ description: "Microsoft identity platform replacing Portal SSO; migration scope 
 
 ## What it is
 
-Entra is the identity platform used for Portal user authentication and the target of the documented UI SSO migration. The materials describe its intended integration design, its phase 1 scope, and its pilot activation steps. They do not establish deployed behavior, an approved configuration, or a confirmed operational owner.
+Entra is the identity platform selected for Portal user SSO. The November clarification prohibits OneMFA fallback. The integration documents describe the design, Phase 1 scope, and former pilot activation steps. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001)
 
 Two evidence strands exist. The release calendar records Entra go-live entries as planning milestones. The authentication and sessions topic records the design intent and the unresolved questions around it.
 
@@ -27,7 +27,7 @@ Two evidence strands exist. The release calendar records Entra go-live entries a
 
 - The design uses a browser redirect followed by an authorization-code exchange through the BFF. [Entra design, lines 7–31, 40–68](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
 - The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens.
-- The design retains OneMFA fallback and a separate username/password path.
+- The historical design retained OneMFA fallback during the pilot and described a separate username/password path.
 - The migration replaces the SSO provider. Entitlement retrieval and portal-session management remain separate responsibilities.
 
 ### Phase 1 scope
@@ -49,11 +49,11 @@ Two evidence strands exist. The release calendar records Entra go-live entries a
 - It identifies changed surname formatting, country codes, and missing locale values.
 - Downstream audit or application logic can therefore require profile-field review during migration.
 
-### Unresolved activation rule
+### Former pilot activation
 
 - The design uses `ENABLE_ENTRA_SSO=true/false`.
 - The production guide uses `yes/no` and describes both temporary activation and persistent activation after first use.
-- These differences can produce incorrect pilot or fallback instructions. The intended grammar and persistence rule require owner resolution.
+- These conflicting instructions concern the former pilot.
 
 ## Why the distinction matters
 
@@ -61,7 +61,7 @@ The release topic treats technical readiness and business activation as separate
 
 The same separation appears in other sources. The [[entities/openfin]] briefing splits technical onboarding from business user onboarding. The [[entities/ddr]] request places business UAT sign-off after technical go-live. KT release operations records these cases together.
 
-The authentication materials add a second distinction: provider-session limits and portal-session limits are not the same rule. An Entra session value cannot define the portal timeout policy.
+The portal has separate limits of 15 minutes idle and 60 minutes absolute from portal authentication. The stated logout ideal revokes portal sessions immediately and excludes the Entra session. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria) · [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## Related pages
 
@@ -69,23 +69,22 @@ The authentication materials add a second distinction: provider-session limits a
 - [[concepts/cross-application-authentication-handoff]] — how authentication passes between applications.
 - [[concepts/single-ui-sdk-authentication]] — the SDK path for authentication in the Portal.
 - [[concepts/entitlement-retrieval]] — how the BFF obtains EMS2 entitlements after authentication.
-- [[concepts/token-lifecycle-and-timeout-policy]] — access, refresh, idle, and absolute timeout proposals.
+- [[concepts/token-lifecycle-and-timeout-policy]] — portal timeout ceilings and token lifetime questions.
 - [[concepts/session-activity-renewal]] and [[concepts/session-expiry-prompt-recovery]] — intended portal-session renewal behavior.
 - [[concepts/identity-profile-attribute-migration]] — AD-to-OUD profile value differences.
 - [[concepts/machine-to-machine-authentication]] — the separate service-account migration path.
 - [[concepts/portal-entry-and-tile-authorization]] — the entry rule applied after authentication.
 - [[entities/ratan-auth-server]] and [[entities/fmaa]] — other authentication components named in this document set.
 - [[entities/single-ui-bff]] and [[entities/ems2]] — the components that consume Entra logins and supply entitlements.
-- [[entities/portal-team]] — the user-reported owner of portal entry policy, not of the migration.
+- [[entities/portal-team]] — earlier access-rule responsibility and the later RATAN portal-policy ownership clarification.
 - [[entities/fmo-post-trade-portal]] and [[entities/markets-operations-one-release]] — the Portal and the release programme that schedule the Entra go-live dates.
 - Release window governance — how release windows are scheduled and frozen.
 - [[summaries/KT-release-operations]] and [[summaries/KT-authentication-and-sessions]] — the source summaries for this page.
 
 ## Evidence limits
 
-The supplied copy gives no Entra architecture, tenant mapping, or go-live completion record. The design and guide pages carry local byte revisions, but original page revisions and human approval remain unconfirmed. Owner: unknown. Next action: confirm the intended provider contract, fallback boundaries, and activation grammar with the responsible migration and security owners.
+Effective Entra deployment, tenant mapping, and go-live completion remain unverified. The RATAN team owns and reviews portal policy under ICS. Original pilot page revisions and human publication review remain pending.
 
-This page states what the calendar and the design documents show, not what the platform currently does.
 
 ## Related Documents
 

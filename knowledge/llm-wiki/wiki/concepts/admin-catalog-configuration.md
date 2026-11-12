@@ -10,7 +10,7 @@ description: "Portal admin functions that maintain module mappings, drawer categ
 
 ## Definition
 
-Admin catalog configuration is the set of portal admin functions that let an authorized user maintain the application catalog without a source change or a release. The catalog has three parts: module mappings, drawer categories, and application tiles. Each part is an editable record with its own review and audit history.
+Admin catalog configuration lets an authorized user maintain module mappings, drawer categories, and application tiles without a portal source change for each edit. Each part is an editable record with its own review and audit history.
 
 [[summaries/KT-admin-and-onboarding]] records the procedures for these functions. The [[entities/fmo-post-trade-portal]] provides them. The admin backend uses [[entities/single-ui-bff]].
 
@@ -68,6 +68,8 @@ A successful upload proves neither tile reachability nor business readiness. [[c
 
 A user needs [[entities/ems2]] entitlements to use these functions. The manual identifies `FMO PORTAL ADMIN` entitlements for the import-map, category, and tile functions. [[concepts/ems2-entitlement-provisioning]] explains how to create the entity, actions, roles, and subjects. These are prerequisites only. They do not show that any current operator has a grant.
 
+Portal administrators can read every tenant's audit history and configuration. A tile must never reference metadata from another tile, including when a portal administrator submits its configuration. The classification of particular category or import-map records as tile-specific or shared remains open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
+
 ## Persistence
 
 The retained SQL defines the catalog tables. Import-map records have unique keys. Categories have unique labels. Tile records reference a category and an import-map record through foreign keys. Separate audit tables keep the change history. [[entities/flyway]] configures the schema-history table and baselines the migration from version zero.
@@ -84,7 +86,7 @@ One explicit user clarification permits tile visibility and launch through a sin
 
 ## Open questions
 
-- How does the portal enforce tenant record boundaries for maker and checker users? The proposal describes tenant-specific roles. The manual lists shared admin subjects and a different-user check.
+- Which cross-tenant write and verification permissions apply to makers and checkers?
 - Which release, approval, rollback, and emergency-change rules govern self-service configuration in production? The release proposal contains conflicting duration and urgent-release confirmation rules.
 - Which authentication mechanism replaces the FMAA JWT for the upload interface?
 - Which source revisions and environment checks establish the deployed catalog schema?

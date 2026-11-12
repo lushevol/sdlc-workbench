@@ -1,12 +1,12 @@
 ---
 type: "Concept"
 sources: ["summaries/KT-observability-and-performance.md"]
-description: "How frontend performance targets, throughput results, and cache behavior are evidenced before capacity claims."
+description: "Portal API loading intent, historical frontend measurements, throughput, and cache evidence."
 ---
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical basis: [frontend measurement intent](../../../candidates/observability/KT-observability-and-performance.md#frontend-measurement-intent) and [capacity evidence limits](../../../candidates/observability/KT-observability-and-performance.md#service-throughput-and-capacity-boundaries).
+Canonical basis: [current API loading limit](../../../candidates/observability/KT-observability-and-performance.md#current-api-loading-limit), [historical frontend measurement intent](../../../candidates/observability/KT-observability-and-performance.md#historical-frontend-measurement-intent), and [capacity evidence limits](../../../candidates/observability/KT-observability-and-performance.md#service-throughput-and-capacity-boundaries).
 
 # Frontend performance measurement and capacity evidence
 
@@ -20,9 +20,13 @@ Portal performance discussions mix several kinds of material: design proposals, 
 
 ## Key details from the source
 
-### Draft targets versus approved limits
+### Current API loading limit
 
-The May 2023 frontend performance document is explicitly a draft. It lists five-second response time, 100 users, CPU below 50 percent, and JavaScript heap below 80 percent, but its sign-off table has no attached approval or sign-off date. These are draft targets, not established current approval. The named non-functional requirements page contains no substantive text, so it supplies no accepted service targets or measurable acceptance criteria.
+The 12 November 2026 clarification gives a five-second API loading limit and specifies no mandatory UI performance metric. Covered API requests, timing boundaries, workload, environment, and measurement method remain open. [API performance criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-api-perf-ac-001)
+
+### Historical draft targets
+
+The May 2023 frontend performance document lists draft targets of five-second response time, 100 users, CPU below 50 percent, and JavaScript heap below 80 percent. Its sign-off table has no attached approval or sign-off date. The named non-functional requirements export contains no substantive text. [Historical frontend measurement intent](../../../candidates/observability/KT-observability-and-performance.md#historical-frontend-measurement-intent)
 
 ### Reported browser metrics
 
@@ -40,7 +44,7 @@ The cache guide proposes revalidation of layer entry files and longer caching of
 
 ### Analytics as an adjacent evidence stream
 
-Interaction analytics explain adoption and user behavior, but they do not by themselves establish performance or capacity. Analytics design examples collect identity context and search values without stated retention rules, and the models declare conflicting custom attribute counts of 20 and 10. See [[concepts/interaction-analytics]].
+Interaction analytics support CPO review of product usage. API timing and capacity require separate measurements. The analytics examples contain identity and search values, and the models declare conflicting custom attribute counts of 20 and 10. See [[concepts/interaction-analytics]] for the candidate retention period and open collection and access rules.
 
 ## Evidence standard
 
@@ -48,10 +52,11 @@ A capacity claim should be backed by dated execution records that include worklo
 
 ## Open questions
 
-- Which current execution records establish response time and capacity?
+- Which API requests, timing boundaries, workloads, environments, and measurement methods apply to the five-second limit?
+- Which current execution records establish API loading time and capacity?
 - Which deployed cache settings and asset naming rules implement the documented strategy?
 - Which analytics model defines the supported custom attribute limit?
-- Which data collection and retention rules govern identity and search values?
+- Which analytics fields and readers are permitted, and which retention clock and expiry treatment apply?
 
 ## Related pages
 

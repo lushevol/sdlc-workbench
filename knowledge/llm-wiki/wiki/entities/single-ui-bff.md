@@ -32,9 +32,9 @@ The manual requires a maker-checker sequence: creation or modification produces 
 
 The retained Flyway SQL defines import-map records with unique keys, categories with unique labels, and tile records that reference both through foreign keys, plus separate audit tables — see [[entities/flyway]]. Those are design definitions, not a confirmed deployed schema, and they do not establish that this BFF owns that data store.
 
-Tile authorization records link a tile to EMS2 entities — see [[entities/ems2]], [[concepts/ems2-entitlement-provisioning]], and [[concepts/portal-entry-and-tile-authorization]]. The admin manual identifies `FMO PORTAL ADMIN` entitlements for the three admin functions, so the BFF's admin APIs are gated by that authorization data. The documented procedures are prerequisites; they do not establish grants for any current operator.
+Tile authorization records link a tile to EMS2 entities — see [[entities/ems2]], [[concepts/ems2-entitlement-provisioning]], and [[concepts/portal-entry-and-tile-authorization]]. The admin manual identifies `FMO PORTAL ADMIN` entitlements as prerequisites for the three admin functions. These procedures do not establish the exact backend endpoint mapping, deployed enforcement, or grants for any current operator.
 
-The authentication topic records a separate user-stated portal-entry rule: an authenticated SC user with no registered application entity entitlement must be denied portal entry in local, test, UAT, and production. The user named `portal team` as owner for that policy only; authority and approval remain unconfirmed, and the answer defines no HTTP status or denial wording. See [[entities/portal-team]] and [[concepts/portal-entry-and-tile-authorization]]. Separate user-stated rules cover tiles without a configured EMS2 entity and the empty-subject case with one configured entity and zero configured subjects — see [[summaries/KT-sdk-and-entitlements]].
+The authentication topic records a user-stated entry rule. An authenticated SC user with no registered application entity entitlement must be denied entry in local, test, UAT, and production. The earlier rule-specific answer named the portal team, and the November clarification names the RATAN team for portal policy ownership and review under ICS. See [[entities/portal-team]] and [[concepts/portal-entry-and-tile-authorization]]. Separate rules cover tiles without a configured EMS2 entity and tiles with one entity and no subject.
 
 The proposal to avoid repeated production change requests does not establish an approved exemption from production change controls. Review and audit history in the manual are separate from an approved release, rollback, or emergency-change policy.
 
@@ -56,18 +56,18 @@ Tenant capability requests for [[entities/fss]], [[entities/cdups]], [[entities/
 
 The candidate requirement in [[summaries/REQ-active-session-renewal]] states the intended target behavior for portal session renewal. Because this BFF is recorded as the portal's authentication and session backend, the renewal path is a BFF-facing concern, but the requirement does not name the BFF, an endpoint, or a service owner — the association is an inference, not a confirmed route.
 
-The requested behavior has two mechanisms:
+The current policy has an idle ceiling of 15 minutes and an absolute ceiling of 60 minutes from portal authentication. The absolute ceiling applies during activity and renewal. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria)
 
-- **Activity-driven renewal.** Mouse movement, keyboard input, and scroll activity must each keep a valid session renewable, with no elapsed-time-only maximum that forces fresh authentication. The criteria use controlled fixtures (activity every 100 milliseconds for 15 seconds, at least 30 seconds of access time remaining) and require at least one successful renewal in each case — see [[concepts/session-activity-renewal]].
-- **Refresh-token recovery after inactivity.** When inactivity expires the access token, renewal continues through the existing refresh token, and continued eligible activity must preserve renewal across the initial refresh-token expiry. A four-hour controlled-clock fixture requires zero SSO prompts caused solely by elapsed time.
+- **Activity-driven renewal.** Mouse movement, keyboard input, and scrolling each support renewal within the absolute limit. The activity fixtures require at least 30 seconds before both access and absolute expiry. See [[concepts/session-activity-renewal]].
+- **Refresh-token recovery after inactivity.** A usable refresh token can renew the session after idle expiry and before the absolute deadline. If the initial refresh credential expires first while access remains valid, eligible activity before the deadline must still support renewal in the same session.
 
-Manual recovery from the idle-expiry prompt is specified as a prompt-lifecycle contract: the prompt must not close before renewal succeeds, must close exactly once after success, and must stay open and permit another attempt when the renewal request rejects — see [[concepts/session-expiry-prompt-recovery]]. Cancellation handling and request sharing have no approved criterion in that requirement.
+Manual recovery before the absolute deadline keeps the idle-expiry prompt open while the request is pending and closes it once after success. A rejected request permits retry while the refresh token is usable and time remains. See [[concepts/session-expiry-prompt-recovery]].
 
 The authentication topic records session designs that use an access token for application requests, an idle timeout for inactivity, an absolute timeout since authentication, and a refresh token for another authentication interval without repeating the initial SSO journey. Those are documented concepts, not a confirmed runtime contract. Version 0 states limits below 60 minutes for absolute timeout and below 15 minutes for idle timeout, with examples of a 15-minute access token and a 24-hour refresh token. Version 1 proposes `exp = iat + 15 minutes` for idle timeout, ties absolute timeout to `auth_time` and a 60-minute `max_age`, and contains conflicting 105-minute and 225-minute refresh-token durations. It also proposes changing `auth_time` during continued activity while separately stating that refresh tokens have no absolute timeout because they lack `auth_time` and `max_age`. Those proposals cannot define a single BFF timing rule without authoritative review — see [[concepts/token-lifecycle-and-timeout-policy]].
 
 ### Entra migration and authentication responsibilities
 
-The Entra design assigns the BFF a central role in the browser-based login journey. The browser redirects to the identity provider, and the BFF performs the authorization-code exchange. The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens. The design retains an OneMFA fallback and a separate username/password path — see [[entities/entra]] and [[concepts/identity-provider-delegation]].
+The Entra design assigns the BFF the code exchange after browser redirect, user information, EMS2 entitlement retrieval, and portal token issuance. The historical pilot design retained OneMFA fallback and described a separate username/password path. The current user-stated policy uses Entra and prohibits OneMFA fallback. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001)
 
 The phase 1 migration scope is narrower than this page's full BFF role. Phase 1 covers UI SSO only and explicitly excludes EMS2 replacement, portal session management, and tenant-onboarding authentication. Machine-to-machine authentication has a separate migration document with unresolved central dependencies. Consequently, the BFF's session-renewal responsibility is outside the documented phase-1 migration boundary even though this page records the BFF as the session backend.
 
@@ -75,15 +75,15 @@ The non-production verification guide requires a development AD account, Authent
 
 The production guide also warns that AD profile values differ from OUD values: surname formatting, country codes, and missing locale values can change. Because the BFF builds user information for downstream use, those differences can affect audit or application logic during migration. The identity-provider profile contract for downstream services remains unresolved — see [[concepts/identity-profile-attribute-migration]].
 
-The design and production guide also disagree on activation syntax and persistence. The design uses `ENABLE_ENTRA_SSO=true/false`; the production guide uses `yes/no` and describes both temporary activation and persistent activation after first use. Those differences can produce incorrect pilot or fallback instructions and require an owner decision before they can be treated as BFF configuration rules.
+The design and production guide give conflicting former pilot flag and persistence instructions. The November clarification supersedes that fallback policy.
 
 Boundaries recorded by the requirement, which this page does not resolve:
 
 - Portal-document activity is in scope; activity inside cross-origin embedded applications requires separate integration evidence.
 - Expired or revoked credentials cannot authorize renewal, and recovery with no usable credential and provider failures remain separate boundaries.
-- No finite fixture, including the four-hour horizon, proves indefinite execution.
+- The user described immediate revocation of all portal sessions at logout as the ideal. Identity-provider sessions are outside the scope. The candidate does not prescribe a BFF-specific implementation. [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
-Status caveats apply. The requirement is version 7, governance state `candidate`, status `draft`, and owner `unknown`; human publication review and the human ASD-STE100 review are pending. It describes requested intent and does not establish that the supplied implementation — BFF included — already satisfies any of the seven criteria. Implementation, rollout, backlog, and conformance differences belong to the independent intent-to-reality gap record, which cannot modify the criteria.
+The requirement is a version 8 candidate owned by the RATAN team. Human review and conformance remain pending. Historical observations and implementation gaps remain in the independent gap record.
 
 ## CES migration metadata role
 
@@ -123,7 +123,7 @@ The analytics material in [[summaries/KT-observability-and-performance]] places 
 
 - Serves the portal's HTTP APIs to the frontend layers ([[entities/mfe-base]], [[entities/mfe-ratan-container]], tiles such as [[entities/mfe-cashflow-blotter]]), which call it through the shared request interceptor using the `Single-UI-Authorization` header and `Single-UI-Refresh` for relogin.
 - That header contract is validated on the application-backend side by the [[entities/single-ui-sdk]] conditional servlet filter — see [[concepts/single-ui-sdk-authentication]].
-- Performs the Entra authorization-code exchange and token issuance described in the migration design, including building user information and retrieving EMS2 entitlements. The separate clarification reports direct EMS3 entitlement calls, so the entitlement source remains source-specific and unresolved. The design's OneMFA fallback and username/password path are part of the same BFF responsibility statement.
+- Performs the Entra authorization-code exchange in the documented design. The design names EMS2, while the separate architecture clarification reports direct EMS3 calls. The current user-stated policy prohibits OneMFA fallback. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001)
 - Returns EMS3 entities to upper applications; the CES migration topic requires the additive `roleList` and `applicationId` fields on those entities while keeping `applicationName` as the legacy team label. The assembly location and source calls are not established.
 - Serves the admin module backend: import-map, drawer-category, and tile-configuration records, plus the documented CSV upload endpoint `/api/auth/v1/fmo/admin/config/upload` under the release-operations material. The endpoint-to-BFF mapping remains inferred.
 - Exposes the analytics submission endpoint used by the frontend hook, subject to the path-form discrepancy noted above.
@@ -133,24 +133,23 @@ The analytics material in [[summaries/KT-observability-and-performance]] places 
 ## Open questions
 
 - Effective deployment, DNS, and active upstreams are unconfirmed; the repository copy has no independent Git history, so file hashes identify inspected files without an upstream commit.
-- Whether every application backend adopts the shared SDK in front of the BFF remains unconfirmed.
+- Which downstream application backends adopt and enable the shared SDK, and which requests they protect, remain unconfirmed. The retained architecture does not establish a universal SDK hop in front of the BFF.
 - The health-management responsibility needs clarification before endpoint-level analysis.
 - Which admin endpoints the BFF actually serves, and where the input conversions and the `un-verified` to verified state change occur, is not mapped.
 - Whether `/api/auth/v1/fmo/admin/config/upload` is served by this BFF, and which layer enforces FMAA JWT validation for CSV uploads, is not mapped.
 - Which approval, rollback, and emergency-change records cover the separate BFF release used for first bulk inserts into UAT and Production is unresolved.
-- How tenant record boundaries apply to maker and checker permissions is unresolved; the proposal discusses tenant-specific roles, while the manual lists shared admin subjects and a different-user check.
+- Which cross-tenant write and verification permissions apply to makers and checkers remains open. The user-stated rules allow portal administrators to read every tenant's audit history and configuration and prohibit a tile from referencing another tile's metadata. [Admin access criteria](../../../candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
 - Which release, approval, rollback, and emergency-change rules govern self-service configuration changes through the admin APIs, and which release window applies to BFF releases, is unresolved.
-- Which BFF endpoint or service issues the activity-driven renewals and refresh-token exchanges described in [[summaries/REQ-active-session-renewal]], and whether the current implementation satisfies AC-1 to AC-7, is not established by that requirement.
+- Which BFF endpoint or service issues the activity-driven renewals and refresh-token exchanges, and whether the current implementation satisfies AC-1 through AC-9, remain unverified. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria)
 - Whether renewal eligibility is evaluated in this BFF, in the frontend activity listeners, or in both, and how cross-origin embedded application activity could be observed at all, is unresolved.
-- Which session timing rule — idle timeout, absolute timeout, and refresh-token duration — applies to BFF-issued tokens, given the conflicting version 0 and version 1 proposals summarized in [[concepts/token-lifecycle-and-timeout-policy]].
-- Which Entra migration phase covers BFF session renewal, given that phase 1 explicitly excludes portal session management.
-- Which activation grammar and persistence rule apply to `ENABLE_ENTRA_SSO` for the BFF's Entra exchange: `true/false`, `yes/no`, temporary activation, or persistent activation after first use.
+- Which exact session settings and token lifetimes apply by environment within the current session ceilings? See [[concepts/token-lifecycle-and-timeout-policy]].
+- Which effective environment configuration enforces the current Entra SSO policy?
 - Which identity-provider profile contract the BFF must enforce when it builds user information from AD versus OUD values, and which downstream consumers depend on the changed surname, country, or locale fields.
-- Whether the BFF's Entra token exchange retrieves EMS2 or EMS3 entitlements, how that maps to the user-stated portal-entry denial rule owned by [[entities/portal-team]], and how it relates to the separately reported direct EMS3 entitlement calls.
+- Which entitlement provider the effective BFF Entra path uses, and how that path relates to the separately reported direct EMS3 calls, remain unverified.
 - Whether the BFF already returns `roleList` and `applicationId` on EMS3 entities, which CES calls populate them, and how application-scoped entitlement names are kept from leaking across applications, is unestablished by [[summaries/KT-ces-migration-parity]].
 - How multiple CES roles will map to any caller contract that expects one role, given that `roleList` is a list and no scalar role projection is approved — see [[concepts/ces-role-multiplicity]].
 - Which analytics model defines the supported custom attribute limit, and which fields the BFF is permitted to store or forward, is unresolved.
-- Collection and retention rules for identity context and search values carried in analytics events are undocumented.
+- The candidate policy gives Portal user-activity analytics three months of retention in PROD and identifies CPO use of the data to review business-product usage. The field allowlist, permitted readers, retention clock, and expiry treatment remain open. [Canonical analytics policy](../sources/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary)
 - Which tenant connectivity check proves reachability to the BFF admin service through tenant Nginx or load balancers is unresolved.
 - How the planned FMAA decommissioning will affect admin CSV upload authentication and the BFF's other FMAA-dependent paths is unresolved.
 - No browser measurement, telemetry query, or server-header check was run, so the BFF's production performance and response headers are unverified.

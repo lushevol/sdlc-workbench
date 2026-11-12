@@ -35,7 +35,7 @@ A completed caller alone does not enable the feature. The provider must also hav
 
 ## Verification and evidence
 
-Reported POC observations show why verification belongs in governance, not in release notes. Two FDC3 libraries did not exchange broadcast messages, one library produced intent errors, and the workaround split duties between `fdc3-2.1` for broadcast and `openfin-fdc3` for intents. Behavior that depends on an undocumented workaround is an ungoverned contract.
+Reported POC observations show why verification belongs in governance, not in release notes. Two FDC3 libraries did not exchange broadcast messages, one library produced intent errors, and the workaround split duties between `fdc3-2.1` for broadcast and `openfin-fdc3` for intents. The documented POC workaround does not establish a supported library contract. Confirm the chosen versions, ownership, and retained compatibility execution before relying on it.
 
 Governance should therefore record, per environment, which features are delivered and retain the execution evidence: compatibility tests across libraries and applications, and dated technical milestones separate from business acceptance records. The briefing's month-based phase table omits the year, and its approval claims carry no attachments.
 
@@ -44,7 +44,7 @@ Governance should therefore record, per environment, which features are delivere
 - [[concepts/intent-based-application-interoperability]] describes the interaction model this governance constrains.
 - [[concepts/portal-entry-and-tile-authorization]] covers access control; the contract must state whether the portal enforces it on the caller's behalf or the provider does.
 - [[concepts/cross-application-authentication-handoff]] covers token transport, which the POC left unresolved by placing provider tokens in URL parameters.
-- [[concepts/application-ownership]] determines who signs off on a contract change.
+- [[concepts/application-ownership]] records the stated responsibility split; the accountable owner and sign-off authority for a versioned interoperability contract remain unresolved.
 - [[concepts/shared-dependency-governance]] is the analogous problem for library versions rather than message versions.
 
 ## Open issues

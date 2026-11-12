@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-release-operations
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -68,9 +68,11 @@ sources:
     Markets Operations One Change Request/page.md
   revision: sha256:a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477
   sha256: a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477
+previous_version: 2
+previous_content_sha256: e81bca3a19c3083724b84ef78b5d3b0c47546d380624043019e1d493f471f1cb
 generated:
   by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  at: '2026-11-12T21:53:10+08:00'
 verified: []
 classification: operations
 scope: Portal release planning, tenant capability context, configuration promotion,
@@ -134,6 +136,8 @@ These are documented responsibility statements, without confirmed present approv
 The proposal requests solution intent, user profiles, routing details, connectivity checks, UAT sign-off, and rollback planning.
 New interfaces require 30 days of engagement under the proposal.
 The unfinished checklist adds SDK validation, shared frontend requests, entitlement checks, disaster recovery, and performance inputs.
+It calls for the tenant team to review each production release with RATAN before preparation.
+It assigns the tenant team the disaster-recovery check for its new upstream host. The portal load balancer has no disaster-recovery responsibility under this checklist.
 It also identifies operating agreements and penetration testing as onboarding inputs.
 These statements describe requested readiness, without proving completed checks.
 [Release proposal, sections 4–5, lines 58–98](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L58>)
@@ -235,6 +239,8 @@ Neither document establishes the currently deployed pipeline.
 The production checklist recommends Portal connections through tenant Nginx or load balancers.
 Tenant teams then control internal server and port changes behind that boundary.
 It separately requests browser reachability, Portal-to-tenant connectivity, operating agreements, security testing, and tile release.
+Its browser reachability check asks that the sign-in page be visible before authentication.
+[Production checklist, lines 30–32](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Production Release and Tenant on-boarding Checklist/page.md#L30-L32>).
 These are distinct checks; successful configuration upload alone does not establish business readiness.
 [Production checklist, sections at lines 16, 22, 30, 40, and 71](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Production Release and Tenant on-boarding Checklist/page.md#L16>)
 

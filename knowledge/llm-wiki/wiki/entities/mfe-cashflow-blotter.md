@@ -27,7 +27,7 @@ The layering pattern itself is described in [[concepts/microfrontend-layering]].
 
 Cashflow Blotter is reached through two upstream stages:
 
-1. The shell ([[entities/mfe-base]]) uses [[entities/single-spa]] and SystemJS to load the container module, forwarding `module`, `tile`, `parameters`, `panelId`, and `tabId` props.
+1. [[entities/single-spa]] registers the shell ([[entities/mfe-base]]). The shell selects the container, SystemJS loads named modules, and the shell forwards `module`, `tile`, `parameters`, `panelId`, and `tabId` props.
 2. The container ([[entities/mfe-ratan-container]]) uses `props.module` to select its route; a selected loader imports the tile and forwards the props onward.
 
 Within the tile, `props.tile` selects the tile's own feature route. The document stresses that these are **distinct routing and loading stages** — shell, container, and tile each resolve a different prop at a different level.

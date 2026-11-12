@@ -2,6 +2,9 @@
 query: "What candidate mapping rules map EMS2 roles and entitlements to CES permissions, and what parity limits remain unresolved?"
 ---
 
+> Review qualification, 12 November 2026: Only `roleList` and `applicationId` are new additive fields. `name` and `applicationName` are existing fields retained with the clarified CES authorization name and legacy team/display label. Apply this qualification to the additive-fields sentence in the saved synthesis below. [Current canonical entity-field meanings](../../../candidates/security/KT-ces-migration-parity.md#ces-entity-role-and-application-fields).
+
+
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
 ## Candidate EMS2 → CES mapping rules

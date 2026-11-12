@@ -8,7 +8,7 @@ description: "How the portal defers authentication to external identity provider
 
 # Identity Provider Delegation
 
-Identity provider delegation is the arrangement in which the portal does not authenticate or authorize users itself, but instead hands those responsibilities to external identity and entitlement providers. The portal's own services — chiefly the [[entities/ratan-auth-server]] and the [[entities/single-ui-bff]] — act as intermediaries: they accept credentials or tokens, call out to a provider, and translate the answer into portal-local sessions, attributes, and entitlements.
+Identity provider delegation uses external providers for identity checks and entitlement retrieval. The portal's own services — chiefly the [[entities/ratan-auth-server]] and the [[entities/single-ui-bff]] — accept credentials or tokens, call out to a provider, and translate the answer into portal-local sessions, attributes, and entitlements. Portal and application components still enforce their relevant entry, tile-admission, and protected-operation rules. The reported delegation does not establish a universal Auth Server call path.
 
 This page records the user-reported delegation model from [[summaries/ARC-portal-service-relationships]], separates it from what the inspected source copies actually contain, and adds the operational evidence recorded in [[summaries/KT-release-operations]] and the design-level evidence in [[summaries/KT-authentication-and-sessions]].
 
@@ -40,13 +40,13 @@ Three consequences follow for this concept:
 
 1. **The entitlement delegate is out of scope.** EMS2 stays the authorization delegate during phase 1, so authentication migration must not be read as an entitlement redesign. See [[concepts/ems2-entitlement-provisioning]] and [[concepts/entitlement-retrieval]].
 2. **The portal keeps owning its own session.** Provider authentication establishes identity; the portal session lifecycle — access token, idle timeout, absolute timeout, refresh token — remains a portal concern. See "Provider session versus portal session" below.
-3. **Fallback paths survive the migration.** The design retains a OneMFA fallback and a separate username/password path alongside Entra. Delegation therefore becomes conditional at runtime rather than replaced outright, which is a configuration-governance problem as much as an identity one.
+3. **Entra is the current SSO target.** The November clarification prohibits OneMFA fallback. The pilot design retained fallback and described a separate username/password path. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001)
 
-The activation switch is itself unresolved. The design uses `ENABLE_ENTRA_SSO=true/false`, while the production pilot guide uses `yes/no` and describes both a temporary activation and a persistent activation after first use. Until one grammar and one persistence rule are agreed, no environment can be described unambiguously as delegated to [[entities/entra]] or falling back.
+The former pilot materials used different activation flag values and gave inconsistent persistence instructions. Those details describe the former pilot.
 
 ## Provider session versus portal session
 
-The production pilot describes Windows Hello or Authenticator authentication and a one-hour Entra session. That provider-session statement does not settle the portal refresh-token lifetime, and treating the two as the same clock is a recurring misreading. Provider session expiry drives re-authentication with the identity provider; portal session expiry drives renewal and re-authentication with the portal. The portal-side timing rules remain contested and are tracked in [[concepts/token-lifecycle-and-timeout-policy]], with the renewal behavior in [[concepts/session-activity-renewal]] and the recovery interaction in [[concepts/session-expiry-prompt-recovery]].
+The production pilot describes Windows Hello or Authenticator and a one-hour Entra session. The portal has separate ceilings of 15 minutes idle and 60 minutes absolute from portal authentication. The absolute ceiling applies during eligible activity and renewal. The ideal portal logout revokes all portal sessions immediately and leaves identity-provider sessions intact. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria) · [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## Profile attributes cross the delegation boundary
 
@@ -54,7 +54,7 @@ The production guide warns that AD profile values differ from OUD values: surnam
 
 ## FMAA in a documented operational path
 
-The release-operations material adds one concrete, procedure-level anchor for the FMAA delegate. The Admin Module configuration promotion flow states that the Portal Admin upload interface `/api/auth/v1/fmo/admin/config/upload` validates an **FMAA JWT** before it processes the tenant CSV configuration files. That statement places FMAA not only in a code path but in a named, recurring operational workflow — every configuration promotion run depends on it.
+The release-operations material adds one concrete, procedure-level anchor for the FMAA delegate. The Admin Module configuration promotion flow states that the Portal Admin upload interface `/api/auth/v1/fmo/admin/config/upload` validates an **FMAA JWT** before it processes the tenant CSV configuration files. The recurring tenant-pipeline CSV upload path therefore depends on FMAA validation. The first bulk insert into UAT and Production uses a separate BFF release under the guide. [Canonical promotion procedure](../sources/KT-release-operations.md#configuration-promotion)
 
 The authentication topic adds the historical shape of that delegate. The FMAA reference describes client-credential authentication for machine-to-machine callers, separates service-account onboarding from bank-ID onboarding, and describes OUD-managed accounts authenticated through FMAA, with 17-year validity for service accounts and seven-day validity for bank IDs. Those values are historical examples and do not establish current token policy; see [[concepts/machine-to-machine-authentication]].
 
@@ -70,7 +70,7 @@ Five qualifications bound this concept:
 2. **Not every request.** The reported Auth Server scope does not prove that every portal request invokes that service. Some paths may delegate directly from the BFF.
 3. **Provider list is partial locally.** The absence of Entra SPN and EMS3 in the Auth copy is an evidence limit, not a claim that the reported delegation is wrong.
 4. **Procedures and designs are not proof.** A documented FMAA validation step in a promotion guide, or a documented authorization-code exchange in an Entra design, shows intended dependency and intended flow — not that a given environment enforces it, nor that FMAA will survive decommissioning.
-5. **No approval authority.** The supplied migration and session documents carry local byte revisions but no confirmed original page revisions or approver, and owner identity is unknown. Delegation statements therefore remain candidate knowledge pending security and application-owner review.
+5. **Candidate review remains pending.** The RATAN team owns and reviews portal policy under ICS bank security policy. The applicable ICS revision and deployment configuration still require evidence.
 
 ## Position in the request chain
 
@@ -82,7 +82,7 @@ Once identity is established, the token contract carries it onward: the shared f
 
 - Treat authentication delegation and entitlement delegation as two contracts with different owners and different failure modes.
 - Keep the provider hop explicit in designs; do not infer which portal component calls a provider from the provider's mere presence in the estate.
-- Treat fallback providers (OneMFA, username/password) as first-class delegation paths that need their own activation grammar, not as dead code.
+- Preserve the current Entra SSO rule when reviewing configuration. Use the former fallback paths only as historical design context.
 - Separate provider session lifetime from portal session lifetime in every design and test statement.
 - Treat identity-attribute shape as part of the delegation contract, and review downstream consumers before switching providers.
 - Record provider lists as candidate knowledge until an effective deployment configuration is available.
@@ -95,8 +95,7 @@ Once identity is established, the token contract carries it onward: the shared f
 - Is OUD the sole internal identity store, or one of several for internal service authentication?
 - What replaces FMAA JWT validation on the Admin config upload path after the planned decommissioning?
 - Does the FMAA dependency in the promotion flow sit behind the Auth Server or inside the Portal Admin service itself?
-- Which activation grammar (`true/false` versus `yes/no`) and persistence rule are intended, and who approves them?
-- Which intended migration scope and authentication responsibilities have authoritative approval, and who owns the OneMFA fallback boundary?
+- Which effective configuration enforces the current Entra SSO policy in the applicable environment?
 - Which identity-provider profile contract must downstream services support after the AD/OUD attribute differences are resolved?
 - Which historical FMAA validity settings remain intended requirements for machine-to-machine callers?
 
@@ -110,7 +109,7 @@ Once identity is established, the token contract carries it onward: the shared f
 - [[concepts/tenant-production-readiness]] — how dependency changes affect tenant onboarding
 - [[concepts/portal-ingress-path]] — how requests reach the delegating services
 - [[concepts/single-ui-sdk-authentication]] — token validation downstream of delegation
-- [[concepts/token-lifecycle-and-timeout-policy]] — the portal-side timing rules that delegation does not settle
+- [[concepts/token-lifecycle-and-timeout-policy]] — portal timing ceilings and the unresolved exact timeout settings
 - [[concepts/machine-to-machine-authentication]] — client-credential delegation for non-human callers
 - [[concepts/identity-profile-attribute-migration]] — attribute differences introduced by the new provider
 - [[concepts/ems2-entitlement-provisioning]] — the authorization delegate left out of phase 1

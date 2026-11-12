@@ -23,11 +23,11 @@ This distinction matters operationally: a change to the interactive identity pro
 The historical [[entities/fmaa]] reference describes the documented M2M model:
 
 - **Client-credential authentication.** Callers authenticate with client credentials issued to them, rather than with a user's credentials.
-- **Separate onboarding paths.** Service-account onboarding is treated separately from bank-ID onboarding. They are distinct flows with distinct credential lifecycles, not variants of one flow.
-- **OUD-managed accounts.** Accounts are managed in the directory (OUD) and authenticated through FMAA, so directory state and authentication state are coupled.
-- **Asymmetric validity.** The reference states 17-year validity for service accounts and seven-day validity for bank IDs.
+- **Separate onboarding paths.** The reference gives separate procedures for service-account onboarding and bank-ID onboarding.
+- **OUD-managed accounts.** The historical reference describes accounts managed in OUD and authenticated through FMAA. Current directory ownership remains unconfirmed.
+- **Generated-token validity.** The historical reference states generated-token validity of 17 years for service accounts and seven days for bank IDs.
 
-That asymmetry is the most consequential detail in the source. A 17-year credential implies a deliberately long-lived, rarely rotated trust relationship; a seven-day credential implies frequent rotation. Systems that assume uniform rotation policy across both categories will mis-handle at least one of them.
+These historical generated-token examples define no password or client-secret rotation interval. The applicable provider contract, validity limits, and rotation policy require authoritative confirmation. See the [canonical historical M2M limits](../../../candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-authentication).
 
 ## Evidence limits
 
@@ -42,15 +42,15 @@ The source topic records this as an open question: which documented FMAA flows a
 
 ## Why this is hard to settle
 
-M2M authentication couples several independently owned concerns:
+Confirm the target provider contract through the following linked questions:
 
-1. **Credential issuance** — who mints a client credential and on what authority.
-2. **Directory ownership** — accounts live in OUD today; a provider migration changes who governs them.
-3. **Token contract** — what claims downstream services can rely on, mirroring the user-token questions in [[concepts/token-lifecycle-and-timeout-policy]].
-4. **Entitlement lookup** — service callers still need scoped access to resources, which connects to [[concepts/ems2-entitlement-provisioning]].
-5. **Onboarding sequencing** — a service cannot authenticate before its account exists, tying M2M to [[concepts/admin-catalog-configuration]].
+1. **Credential issuance** — who issues a client credential, and under which authority?
+2. **Directory ownership** — which directory and owner apply to each supported caller, given the historical OUD reference?
+3. **Token contract** — which claims may downstream services rely on? See [[concepts/token-lifecycle-and-timeout-policy]].
+4. **Entitlement lookup** — which scoped access must each service caller receive? See [[concepts/ems2-entitlement-provisioning]].
+5. **Onboarding sequencing** — which account and application configuration prerequisites apply? See [[concepts/admin-catalog-configuration]].
 
-Because each concern has a different owner, M2M migration tends to lag user-facing SSO migration. The source notes unresolved central dependencies for the service-account phase, which is the practical signature of this coupling.
+The source records unresolved central dependencies for the service-account phase. Current ownership for each concern and the migration schedule remain unconfirmed.
 
 ## Relationship to adjacent concepts
 
@@ -65,6 +65,6 @@ Because each concern has a different owner, M2M migration tends to lag user-faci
 - Which documented FMAA flows and validity settings remain intended requirements?
 - Which provider contract must non-human callers support after migration?
 - Which onboarding path applies to each caller category, and who owns credential rotation?
-- What happens to the 17-year service-account model under a provider that assumes shorter-lived credentials?
+- Which generated-token validity limits and credential-rotation policy apply to each supported caller category under the target provider?
 
 Owner: unknown authentication owner. Next action: confirm the intended provider contract and validity limits for each supported flow, with authoritative approval, before any historical value is treated as a target requirement.

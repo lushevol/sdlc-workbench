@@ -15,7 +15,7 @@ Nginx is the web server and reverse proxy that acts as the portal's first ingres
 - **First ingress endpoint.** The user clarification places Nginx at the outer edge of the request path, ahead of the API Gateway, which is the second ingress endpoint and forwards to application services.
 - **Integration boundary.** [[summaries/KT-portal-purpose]] lists tenant UI and API routing as a shared platform capability and names the portal's Nginx boundary as the place where that routing occurs. The portal therefore presents one outer entry for tenant applications rather than exposing each application's routing separately.
 - **Ownership.** The user reports that Nginx rules belong to the RATAN Ansible load-balancer scope rather than to any single application repository.
-- **Logical vs. transport contract.** The frontend-to-backend contract ([[entities/mfe-base]] calling the [[entities/single-ui-bff]]) is logically distinct from this transport path; the ingress chain does not change the API contract.
+- **Logical vs. transport contract.** The frontend-to-backend contract ([[entities/mfe-base]] calling the [[entities/single-ui-bff]]) is logically distinct from this reported transport path; effective routes, rewrites, and the active deployment remain unverified.
 
 ## Configuration intake
 

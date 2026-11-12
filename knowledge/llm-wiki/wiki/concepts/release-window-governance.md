@@ -8,7 +8,7 @@ description: "Candidate release-window scheduling and ownership proposal, with u
 
 # Release Window Governance
 
-Release window governance describes how the supplied release proposal schedules Portal changes, freezes their scope, and coordinates Portal and tenant responsibilities. The governing source is [[summaries/KT-release-operations]], a version 2 candidate/draft topic. Its historical and proposed procedures have unconfirmed current authority; this page does not establish an approved operating policy.
+Release window governance describes how the supplied release proposal schedules Portal changes, freezes their scope, and coordinates Portal and tenant responsibilities. [[summaries/KT-release-operations]] v3 retains the historical proposal and its unresolved applicability.
 
 ## Proposed scheduling rules
 
@@ -38,7 +38,7 @@ Owner and current approval authority are unknown. Neither alternative becomes ap
 
 The proposal assigns Portal routing, route enabling, tenant interfaces, Portal-owned production changes, and routing rollback to Portal teams. Tenant teams retain responsibility for their UI, backend, services, databases, infrastructure, application validation, UVT, and tenant issues. These remain documented responsibility statements with unconfirmed present approval; see [[concepts/application-ownership]].
 
-Requested readiness inputs include solution intent, user profiles, routing details, connectivity checks, UAT sign-off, and rollback planning. The unfinished checklist adds SDK validation, shared frontend requests, entitlements, disaster recovery, performance, operating agreements, and penetration testing. Their presence in a checklist does not establish completion for a specific request. [[concepts/frontend-onboarding]] and [[concepts/tenant-production-readiness]] explain those evidence boundaries.
+Requested readiness inputs include solution intent, user profiles, routing details, connectivity checks, UAT sign-off, and rollback planning. The unfinished checklist adds SDK validation, shared frontend requests, entitlements, disaster recovery, performance, operating agreements, and penetration testing. It calls for tenant review with RATAN before production release preparation and assigns the upstream disaster-recovery check to the tenant. [[concepts/frontend-onboarding]] and [[concepts/tenant-production-readiness]] explain those evidence boundaries.
 
 ## Relationship to configuration and activation
 

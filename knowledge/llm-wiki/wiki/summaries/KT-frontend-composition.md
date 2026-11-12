@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-frontend-composition.md"
 ---
 
-> Derived from [KT-frontend-composition, version 3](../../../candidates/architecture/KT-frontend-composition.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-frontend-composition, version 4](../../../candidates/architecture/KT-frontend-composition.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Frontend composition and application ownership
 
@@ -27,9 +27,11 @@ The architecture clarification is bounded: it records current local declarations
 | Feature tiles | Supply user-facing domain views within workspaces. |
 | [[entities/nginx]] | Route application static files and API requests. |
 
+Historical scan notes describe unauthenticated access to non-sensitive static files. The note concerns direct file retrieval and supplies no rule for directory listing, portal entry, or protected APIs. [Canonical source scope](../../../candidates/architecture/KT-frontend-composition.md#roles-in-composition).
+
 ## Ownership and delivery
 
-The design assigns shared backend availability and shared-repository review to the microfrontend team (the [[entities/portal-team]]). Application teams own domain backend availability, choose their deployment approach, and supply static-file and API URLs. The intended benefits are independent releases, narrower testing, clearer [[concepts/application-ownership]], and reusable components such as those in [[entities/mfe-base]].
+The design assigns shared backend availability and shared-repository review to the microfrontend team. Its organizational relationship with the [[entities/portal-team]] remains unconfirmed. Application teams own domain backend availability, choose their deployment approach, and supply static-file and API URLs. The intended benefits are independent releases, narrower testing, clearer [[concepts/application-ownership]], and reusable components such as those in [[entities/mfe-base]].
 
 Current named owners and effective approvals are unknown. The source records role declarations rather than confirmed organizational authority.
 
@@ -48,7 +50,7 @@ The documented [[concepts/frontend-onboarding]] flow is:
 
 Modules are shared through exports, imports, and registered names. Shared dependencies require coordinated upgrades; a shared interface change can affect several tenant consumers, though this inference needs exact provider and consumer evidence. This is the concern covered by [[concepts/shared-dependency-governance]].
 
-The development guideline prescribes TypeScript, functional components, shared MUI themes, and separation of view, logic, styles, and interfaces. It names React 18.2.0 and prefers Context and Reducer over additional state libraries. These versioned instructions must retain their source context before reuse.
+The development guideline prescribes TypeScript, functional components, shared MUI themes, and separation of view, logic, styles, and interfaces. It names React 18.2.0 and prefers Context and Reducer over additional state libraries. The same versioned guidance calls for component error boundaries and prefers lazy tile loading where possible. Its current applicability requires review. [Canonical development guidance](../../../candidates/architecture/KT-frontend-composition.md#development-guidance-and-performance-boundaries).
 
 Optional loading guidance suggests 500 KB files and six concurrent static-file requests, but does not establish an accepted performance SLA. The external frontend dependency control principle prohibits direct external GUI dependencies without platform review and approval, with tenant teams retaining security, licensing, vulnerability, support, resilience, and rollback responsibilities.
 

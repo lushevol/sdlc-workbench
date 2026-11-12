@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-observability-and-performance
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -43,15 +43,23 @@ sources:
     Requirements/page.md
   revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
   sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: workbench-evidence:domain-knowledge-cleanup-20261020
+  revision: migration-20261020
+  sha256: 4027b8034b07676b7f80e9b4c023f0459a5ed7f594dbcc7da214b56a480f7fa0
+- resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
+  revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+  sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+previous_version: 2
+previous_content_sha256: c23c2cac937ba81bb8187f5514d99a51f34cd632ea1dd129e078e7137ab1850f
 generated:
   by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  at: '2026-11-12T21:27:34+08:00'
 verified: []
 classification: observability
-scope: Portal interaction analytics, historical performance materials, and documented
-  frontend cache strategy in the supplied Markdown export.
-summary: Interaction events explain adoption, performance plans describe measurement
-  intent, and historical summaries require execution evidence before capacity claims.
+scope: Portal interaction analytics, current API performance intent, historical performance
+  materials, and documented frontend cache strategy.
+summary: The API loading limit is five seconds. Portal analytics support CPO review of
+  business product usage. The PROD retention period is three months.
 related:
 - KT-portal-purpose
 - KT-frontend-composition
@@ -61,10 +69,11 @@ related:
 - single-ui-analytics-proxy
 - single-ui-workspace-composition
 open_questions:
-- Which analytics model defines the supported custom attribute limit?
-- Which current execution records establish response time and capacity?
+- What API scope, timing boundaries, and workload apply when measuring the loading limit?
+- Which analytics schema defines the accepted custom attribute contract?
 - Which deployed cache settings and asset naming rules implement the documented strategy?
-- Which data collection and retention rules govern identity and search values?
+- Which analytics fields and readers are permitted, and what rules apply to identifiable values?
+- Which retention clock and expiry treatment apply to PROD user activity data?
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
@@ -83,14 +92,35 @@ It preserves historical observations separately from current operational require
 
 ## Summary
 
-Analytics explain how users interact with Portal features.
-Performance plans define measurements and workloads.
+Portal analytics collect user activity for CPO review of business product usage.
+The PROD retention period for this data is three months.
+The current API loading limit is five seconds. The clarification gives no mandatory UI performance metric.
 Cache strategy trades update detection against repeated asset requests.
-The supplied reports do not establish current production capacity or approved service limits.
+The historical reports supply no current production capacity evidence.
 
 ## Documented knowledge
 
 ### Interaction purpose and event vocabulary
+
+The primary purpose of Portal analytics is to collect user activity.
+The data supports CPO review of how users use business products.
+The retention requirement for this data in PROD is three months.
+The clarification gives no field allowlist, reader-role rules, or rules for identifiable values.
+[User clarification, answer 9](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#L8)
+
+#### PORTAL-ANALYTICS-AC-001
+
+```gherkin
+Feature: Retain Portal user activity analytics in PROD
+  @PORTAL-ANALYTICS-AC-001
+  Scenario: Apply the three-month retention period
+    Given a Portal user activity analytics record stored in PROD
+    When the record is evaluated under its applicable retention clock
+    Then the record is retained for a period of 3 months
+```
+
+The retention clock and the expected expiry treatment require further specification before this criterion can be executed.
+[User clarification, answer 9](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#L8)
 
 The analytics introduction aims to understand interaction, improve adoption, and reduce time to value.
 The design captures tiles, modals, workspace tabs, buttons, switches, and dropdowns.
@@ -128,7 +158,28 @@ Its Production dashboard URL remains a placeholder.
 These statements do not prove present dashboard availability or data completeness.
 [Dashboard guide, lines 11–105](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L11>)
 
-### Frontend measurement intent
+### Current API loading limit
+
+The user defines a five-second NFR for API loading.
+The user gives no mandatory UI performance metric.
+The clarification leaves API scope, measurement start and end, and applicable workload open.
+[User clarification, answer 8](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#L8)
+
+#### PORTAL-API-PERF-AC-001
+
+```gherkin
+Feature: Meet the Portal API loading limit
+  @PORTAL-API-PERF-AC-001
+  Scenario: Meet the threshold for a Portal API loading measurement
+    Given a Portal API request within the applicable scope and workload
+    When the request runs and the loading duration is measured using the applicable timing boundaries
+    Then the measured API loading duration is at most 5 seconds
+```
+
+Acceptance execution needs the applicable measurement scope and method.
+[User clarification, answer 8](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#L8)
+
+### Historical frontend measurement intent
 
 The monitoring page proposes weekly review of development performance.
 It discusses login, post-login, and blotter rendering with cache and compression changes.
@@ -193,7 +244,8 @@ It supplies no accepted service targets or measurable acceptance criteria.
 [Empty NFR page, line 1](<../../../evidence/knowledge/migration-20261020/cleanup.json>)
 
 Local hashes identify supplied document bytes, without establishing original authority or current applicability.
-The sources mix design examples, draft targets, reported results, and future planning.
+The export mixes design examples, draft targets, reported results, and future planning.
+The later clarification supplies current intent for API loading and PROD analytics retention.
 Missing diagrams, screenshots, JMeter plans, and execution archives limit verification.
 No browser measurement, telemetry query, load test, or server-header check ran during ingestion.
 No individual identity, credential, or token value is reproduced here.
@@ -203,12 +255,8 @@ No individual identity, credential, or token value is reproduced here.
 | Issue and evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
 | Analytics models declare 20 and 10 custom attributes. See analytics design, lines 55–114. | Producers could send attributes that downstream systems omit. | unknown | Reconcile producer, transport, storage, and dashboard schemas. |
-| Historical results lack their referenced execution artifacts. See throughput, lines 25–44, and May 2023 results. | Current capacity and response time cannot be established. | unknown | Retain dated workloads, assertions, environments, results, and approved limits. |
+| The current five-second API loading limit has no measurement scope or method. See user answer 8. | Acceptance cannot be executed consistently. | unknown | Confirm the covered API requests, timing boundaries, workload, environment, and measurement method. |
+| Historical results lack their referenced execution artifacts. See throughput, lines 25–44, and May 2023 results. | Current capacity and API loading behavior remain unverified. | unknown | Retain dated workloads, assertions, environments, and results. |
 | Production dashboard address remains unresolved. See dashboard guide, lines 11–13. | Production observation coverage remains unknown. | unknown | Confirm dashboard access, event completeness, and operational ownership. |
-| Examples collect identity context and search values without retention rules. See analytics design, lines 43–47 and 88–114. | Approved collection and retention boundaries remain unclear. | unknown | Confirm permitted fields, access, redaction, and retention. |
+| The design includes identity and search values. User answer 9 supplies a purpose, intended audience, and three-month PROD retention. | Permitted fields, all authorized readers, treatment of identifiable values, and the retention clock remain open. | unknown | Confirm the field and access rules, the retention clock, and expected expiry treatment. |
 | Cache implementation section contains no configuration. See cache guide, line 45. | The documented strategy cannot prove deployed cache behavior. | unknown | Inspect current headers, entry revalidation, and chunk naming against the guide. |
-
-Evidence: The named NFR page is empty.
-Consequence: Historical test targets cannot be treated as accepted current service limits.
-Owner: unknown.
-Next action: obtain applicable NFR intent and reviewed measurable limits.

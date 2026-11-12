@@ -1,7 +1,7 @@
 ---
 type: "Concept"
 sources: ["summaries/KT-observability-and-performance.md"]
-description: "Event taxonomy and identity model for capturing Portal user interactions in analytics."
+description: "Portal activity analytics for CPO usage review, with event design and PROD retention."
 ---
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
@@ -10,7 +10,7 @@ description: "Event taxonomy and identity model for capturing Portal user intera
 
 ## Definition
 
-Interaction analytics is the collection of user interface events so the Portal team can understand how users interact with features, measure adoption, and reduce time to value. The event vocabulary defines which UI elements emit events and which event types apply to each element.
+Interaction analytics collects Portal user activity for CPO review of business product usage. The event vocabulary describes which UI elements emit events and which event types apply to each element. [Current analytics purpose](../../../candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary)
 
 This concept is documented in [[summaries/KT-observability-and-performance]].
 
@@ -66,7 +66,7 @@ The supported producer, transport, and storage limit remains unresolved. A produ
 
 ## Data governance
 
-The design collects identity context and search values without documented retention rules. Permitted fields, access control, redaction, and retention remain unconfirmed. Treat any analytics schema change as a governance question, not only a technical one.
+The candidate requires three months of retention for Portal user activity analytics in PROD. The design examples include identity context and search values. Permitted fields, authorized reader roles, handling of identifiable values, the retention clock, and expiry treatment remain open. [Retention criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-analytics-ac-001) · [Canonical open questions](../../../candidates/observability/KT-observability-and-performance.md#open-questions)
 
 ## Reporting surface
 
@@ -75,7 +75,7 @@ The dashboards described for this data are hosted in [[entities/kibana]]. The do
 ## Related pages
 
 - [[summaries/KT-observability-and-performance]] — source synthesis, including evidence limits.
-- [[concepts/frontend-performance]] — separate measurement stream with draft targets and reported values.
+- [[concepts/frontend-performance]] — API loading intent and historical frontend measurements.
 - [[concepts/mfe-cache-strategy]] — cache rules that affect when updated event code reaches users.
 - [[concepts/portal-tile-workspace-model]] — container, tile, and workspace identities used in event names.
 - [[concepts/portal-entry-and-tile-authorization]] — authorization context for login and session events.
@@ -85,6 +85,7 @@ The dashboards described for this data are hosted in [[entities/kibana]]. The do
 ## Open questions
 
 - Which model defines the supported custom attribute limit?
-- Which data collection and retention rules govern identity and search values?
+- Which fields and reader roles are permitted, and how must identifiable values be handled?
+- Which retention clock and expiry treatment apply to the three-month PROD period?
 - Which analytics model reconciles producer, transport, storage, and dashboard schemas?
 - Which owner confirms production dashboard access and event completeness?

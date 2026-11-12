@@ -7,17 +7,17 @@ Exact canonical paths, record versions, lifecycle states, and SHA-256 source bin
 ## Documents
 - [[summaries/KT-settlement-auto-netting]] (short) — Documents scheduled cash settlement auto-netting rules, grouping, outcomes, and unresolved policy differences.
 - [[summaries/KT-ces-migration-parity]] (short) — Defines intended EMS2-to-CES permission parity, per-tile migration, and frontend compatibility rules.
-- [[summaries/KT-authentication-and-sessions]] (short) — Maps portal authentication, session renewal intent, Entra SSO migration, and open policy gaps.
-- [[summaries/REQ-active-session-renewal]] (short) — Candidate requirement for renewable portal sessions via activity, plus expiry-prompt recovery criteria.
+- [[summaries/KT-authentication-and-sessions]] (short) — RATAN policy ownership, Entra sign-in, portal session ceilings, and the logout target.
+- [[summaries/REQ-active-session-renewal]] (short) — Activity-driven renewal and manual recovery within the idle and absolute session ceilings.
 - [[summaries/KT-release-operations]] (short) — Portal and tenant teams coordinate release planning, configuration promotion, and readiness.
-- [[summaries/KT-admin-and-onboarding]] (short) — Links onboarding, admin catalog setup, EMS2 roles, and maker-checker review.
-- [[summaries/KT-observability-and-performance]] (short) — Connects analytics, performance tests, throughput, and cache design; flags unverified capacity.
+- [[summaries/KT-admin-and-onboarding]] (short) — Tenant onboarding, cross-tenant administrator reads, tile metadata boundaries, and maker-checker review.
+- [[summaries/KT-observability-and-performance]] (short) — Five-second API loading limit, three-month PROD analytics retention, and historical measurements.
 - [[summaries/KT-application-interoperability]] (short) — Portal interoperability via FDC3/OpenFin: caller-provider duties and evidence limits.
 - [[summaries/KT-architecture-evolution]] (short) — Maps historical UI evaluations, experiments, and platform proposals with unresolved decisions.
 - [[summaries/KT-portal-purpose]] (short) — Summarizes the post-trade portal's purpose, shared capabilities, and draft or proposed scope.
 - [[summaries/KT-frontend-composition]] (short) — Documents a four-layer microfrontend model, ownership rules, and onboarding flow.
 - [[summaries/ARC-portal-service-relationships]] (short) — Maps the four-layer portal MFE stack, ingress, BFF, SDK, and RATAN auth responsibilities with evidence limits.
-- [[summaries/KT-sdk-and-entitlements]] (short) — SDK integration, entitlement retrieval, CES migration, and portal entry rules.
+- [[summaries/KT-sdk-and-entitlements]] (short) — SDK integration, CES migration, portal entry, tile validation, and permission-revocation timing.
 
 ## Concepts
 - [[concepts/cashflow-netting-grouping-and-outcomes]] — Auto-netting groups cashflows by rule identity and execution-key values, then handles the resulting cashflow or unmatched items.
@@ -30,17 +30,17 @@ Exact canonical paths, record versions, lifecycle states, and SHA-256 source bin
 - [[concepts/ems2-to-ces-permission-mapping]] — How EMS2 roles, entities, subjects, and actions map to CES entitlements, applications, features, and actions with parity rules.
 - [[concepts/identity-profile-attribute-migration]] — Risk that user profile attribute values change between identity providers during SSO migration, affecting downstream logic.
 - [[concepts/machine-to-machine-authentication]] — How non-human callers authenticate via client credentials, service accounts, and bank IDs, distinct from UI SSO.
-- [[concepts/token-lifecycle-and-timeout-policy]] — Access, refresh, and idle/absolute token timeout concepts plus the unresolved portal timing rules.
+- [[concepts/token-lifecycle-and-timeout-policy]] — Portal idle and absolute session ceilings, individual credential lifetimes, and historical timing proposals.
 - [[concepts/session-expiry-prompt-recovery]] — How the expiry prompt behaves across pending, success, and rejection renewal states.
-- [[concepts/session-activity-renewal]] — Session lifetime extended by mouse, keyboard, and scroll activity instead of a fixed elapsed-time reauthentication maximum.
+- [[concepts/session-activity-renewal]] — Mouse, keyboard, and scroll activity renew the portal session within its absolute deadline.
 - [[concepts/tenant-production-readiness]] — Separating technical deployment evidence from business activation before a tenant goes live.
 - [[concepts/configuration-promotion]] — Moving Portal catalog and tile configuration from Development to UAT and Production.
 - [[concepts/ems2-entitlement-provisioning]] — How EMS2 creates and assigns entity, action, role, and subject records, and how they map to CES.
 - [[concepts/maker-checker-verification-workflow]] — Two-person review that verifies an un-verified admin record before activation.
 - [[concepts/admin-catalog-configuration]] — Portal admin functions that maintain module mappings, drawer categories, and tiles as versioned configuration
 - [[concepts/mfe-cache-strategy]] — Revalidate layer entry files and long-cache hashed assets to speed loads, but updates still need a refresh.
-- [[concepts/frontend-performance]] — How frontend performance targets, throughput results, and cache behavior are evidenced before capacity claims.
-- [[concepts/interaction-analytics]] — Event taxonomy and identity model for capturing Portal user interactions in analytics.
+- [[concepts/frontend-performance]] — API loading intent, historical frontend measurements, and capacity evidence.
+- [[concepts/interaction-analytics]] — Portal activity analytics for CPO review, event design, and three-month PROD retention.
 - [[concepts/cross-application-authentication-handoff]] — Passing an authenticated identity from one application to another so users avoid repeated logins.
 - [[concepts/interoperability-contract-governance]] — How intent names, context schemas, versions, and readiness gates are agreed and verified across caller and provider teams.
 - [[concepts/intent-based-application-interoperability]] — Portal-mediated sharing of context and intent requests between applications via FDC3 on OpenFin.
@@ -65,7 +65,7 @@ Exact canonical paths, record versions, lifecycle states, and SHA-256 source bin
 - [[entities/cdups]] (product) — Confirmation-management product whose Portal tile was requested via a Markets Operations One change request.
 - [[entities/fss]] (organization) — Tenant organization requesting multiple Portal tiles, including gating, SSI, custody, and collateral capabilities.
 - [[entities/fmaa]] (product) — Authentication component issuing client-credential tokens for portal admin uploads and machine-to-machine callers.
-- [[entities/entra]] (product) — Microsoft identity platform replacing Portal SSO; migration scope and activation rules remain unapproved.
+- [[entities/entra]] (product) — Microsoft identity platform selected for Portal SSO without OneMFA fallback.
 - [[entities/admin-module]] (product) — Portal product where tenant catalog configuration (module map, drawer, tile) is uploaded and promoted across environments.
 - [[entities/markets-operations-one-release]] (event) — Release program governing Portal and tenant release windows, scope, and readiness gating.
 - [[entities/flyway]] (product) — Database migration tool whose retained SQL defines the portal admin catalog schema draft.
@@ -87,22 +87,22 @@ Exact canonical paths, record versions, lifecycle states, and SHA-256 source bin
 - [[entities/ems3]] (product) — Entitlement provider reported in the portal and used as the CES wire value in the migration contract.
 - [[entities/api-gateway]] (product) — Ingress product said to forward portal requests from Nginx to application services.
 - [[entities/nginx]] (product) — Web server and reverse proxy at the portal ingress edge and tenant connectivity boundary.
-- [[entities/ratan-auth-server]] (product) — Portal authentication and authorization service delegating identity checks to OUD, Entra and FMAA.
+- [[entities/ratan-auth-server]] (product) — Service reported to delegate authentication and authorization; Entra SPN and EMS3 support remain unconfirmed in the inspected Auth Server copy.
 - [[entities/single-ui-bff]] (product) — Portal backend-for-frontend for auth, sessions, admin, entitlements, analytics, and CES metadata.
 - [[entities/mfe-cashflow-blotter]] (product) — Feature tile microfrontend in the RATAN portal that renders cashflow blotter views.
 - [[entities/mfe-ratan-container]] (product) — RATAN container microfrontend (mfe-ratan-container): the third portal layer, its routing, and migration duties
 - [[entities/mfe-base]] (product) — MFE Base is the Single-SPA shell layer supplying themes, routing, sessions, and the shared permission and request APIs.
 - [[entities/mfe-root-config]] (product) — First microfrontend layer: portal HTML entry, import map, and Single-SPA bootstrap.
-- [[entities/portal-team]] (organization) — User-reported owner of portal entry, tile, and release rules for the Post Trade Portal
+- [[entities/portal-team]] (organization) — Portal entry and tile responsibilities, draft release duties, and their relationship to RATAN policy ownership.
 - [[entities/fmo-post-trade-portal]] (product) — SCB post-trade portal product: entry, tile authorization, microfrontend composition, admin, release, and session policy.
 - [[entities/ces]] (product) — Successor entitlement service to EMS2, supplying CES roles and application identity to consumers.
 - [[entities/ems2]] (product) — EMS2 is the legacy entitlement system defining portal application entities, roles, subjects, and actions.
 - [[entities/single-ui-sdk]] (product) — Java library for validating portal JWTs and retrieving entitlements.
 
 ## Explorations
-- [[explorations/how-should-the-portal-preserve-an-active-session-across-refr]] — Activity-driven renewal and retry behavior after rejected renewal, with candidate-status and timing-policy caveats.
+- [[explorations/how-should-the-portal-preserve-an-active-session-across-refr]] — Historical renewal analysis with a notice pointing to the current session ceilings.
 - [[explorations/what-candidate-mapping-rules-map-ems2-roles-and-entitlements]] — Candidate EMS2-to-CES mapping rules, parity limits, and unresolved role/data-source gaps.
 - [[explorations/what-are-the-portal-frontend-composition-layers-and-ownershi]] — Frontend layers, ownership boundaries, and deployment-evidence limits.
 - [[explorations/which-responsibilities-belong-to-portal-and-tenant-teams-for]] — Draft Portal/tenant responsibilities for routing, release, validation, and rollback.
 - [[explorations/what-candidate-interoperability-contract-and-openfin-fdc3-co]] — Candidate caller/provider contract and OpenFin/FDC3 readiness gaps.
-- [[explorations/what-telemetry-and-performance-or-capacity-evidence-exists-f]] — Telemetry, performance, and capacity evidence versus proposals and missing execution records.
+- [[explorations/what-telemetry-and-performance-or-capacity-evidence-exists-f]] — Historical telemetry and capacity analysis with the current API target and PROD retention noted.

@@ -54,7 +54,7 @@ The SDK validates tokens and retrieves entitlements; it does not enforce tile vi
 ## Known limits and open questions
 
 - No downstream service execution or SDK compatibility build was inspected; the applicable artifact and configuration per consumer are unresolved. The architecture clarification likewise leaves universal adoption unconfirmed and does not treat the SDK repository as a deployed service.
-- Entitlement caching is recommended, but cache expiry, revocation propagation, and cross-instance logout behavior are undefined.
+- The SDK guide recommends entitlement caching. The current API permission rule takes effect after the applicable Auth Server Redis entry expires, with one hour for the entitlement cache and two hours for JWT parsing. The applicable cache for each protected path and cross-instance implementation remain unverified. The separate logout ideal revokes all portal sessions immediately and excludes identity-provider sessions. [Canonical permission-revocation criteria](../sources/KT-sdk-and-entitlements.md#permission-revocation-timing) · [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 - The overview announces removal of EMS2 details from authentication JWTs in DEV on 30 August 2024, but no retained proof shows current environment token shapes.
 - The trusted control for excluded paths or skip headers is undocumented.
 - The architecture record separates user-reported topology from source-extracted declarations and executed no live requests; SDK behavior in an active portal therefore remains unverified.

@@ -16,7 +16,7 @@ The Portal Team is the organizational owner of portal-level access rules for the
 ### Access and tile rules
 The Portal Team is identified as owner of these rules, in local, test, UAT, and production environments:
 
-- **Portal entry restriction** — an authenticated SC user with no entitlement for any registered application entity is denied entry. Ownership was selected for this policy only.
+- **Portal entry restriction** — an authenticated SC user with no entitlement for any registered application entity is denied entry. The October answer named the portal team for this rule.
 - **Empty-entity tile restriction** — a tile with zero configured EMS2 entities is hidden and direct launch is denied.
 - **Empty-subject tile rule** — a tile with zero configured subjects remains visible and launchable when the user holds entitlement for the tile's single configured entity.
 
@@ -25,14 +25,11 @@ The ownership statements come from user answers dated 22 October 2026. The docum
 The entry rule agrees with the draft Portal principles, which state the same denial direction. An older tile-security proposal instead permits entry for SC accounts; that conflicting proposal is retained as historical evidence, not as the selected intent. Neither historical source establishes approved applicability. See [[concepts/portal-entry-and-tile-authorization]].
 
 ### Authentication and session ownership boundary
-The portal team is named as owner of the portal-entry policy only. The authentication and session topic records no portal-team role for these adjacent areas:
+The 22 October answers identify the portal team for the stated access rules. The 12 November answer names the RATAN team as owner and reviewer of portal policy under ICS bank security policy. The applicable ICS revision and human candidate review remain pending. [Canonical ownership and session scope](../sources/REQ-active-session-renewal.md#intended-scope)
 
-- **Session renewal** — the target behavior of continued renewal under eligible activity and recoverable manual extension has no confirmed timing owner. Timeout and refresh-duration rules remain unresolved between two session designs. See [[concepts/session-activity-renewal]], [[concepts/session-expiry-prompt-recovery]], and [[concepts/token-lifecycle-and-timeout-policy]].
-- **SSO migration** — [[entities/entra]] migration scope, the `ENABLE_ENTRA_SSO` activation grammar, and the persistence rule for activation have an unknown owner. See [[concepts/identity-provider-delegation]] and [[concepts/single-ui-sdk-authentication]].
-- **Profile contract** — the identity-provider profile contract that downstream services must support, including changed surname, country-code, and locale values, has an unknown owner. See [[concepts/identity-profile-attribute-migration]].
-- **Machine-to-machine authentication** — the historical [[entities/fmaa]] validity settings for service accounts and bank IDs carry an unknown authentication owner. See [[concepts/machine-to-machine-authentication]].
-
-These boundaries mean the portal-team ownership statement does not extend to session timing, token validity, migration scope, or provider configuration.
+- **Session limits.** The candidate caps idle timeout at 15 minutes and absolute timeout at 60 minutes from portal authentication. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria)
+- **SSO and logout.** The candidate specifies Entra without OneMFA fallback. The user described an ideal of immediately revoking all portal sessions at logout, excluding identity-provider sessions. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001) · [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
+- **Adjacent contracts.** Exact downstream profile fields and the applicability of historical FMAA validity settings remain open. See [[concepts/identity-profile-attribute-migration]] and [[concepts/machine-to-machine-authentication]].
 
 ### Release responsibilities
 The draft release proposal in [[summaries/KT-release-operations]] separates Portal and tenant responsibilities. It covers Portal routing, route enabling, tenant interfaces, and Portal-owned production changes.
@@ -55,7 +52,7 @@ The release calendar distinguishes Portal release dates from tenant release date
 ### Onboarding role
 The frontend onboarding procedure requires each application team to inform the portal team about its static-file and API URLs. The portal team therefore receives the routing information that later feeds [[entities/nginx]] configuration and the portal catalog.
 
-The development principle assigns portal-backend availability to the microfrontend team, not to the Portal Team. It assigns each application's backend availability to that application team. The two responsibilities are separate and must not be merged.
+The development principle assigns portal-backend availability to the microfrontend-team role and each application's backend availability to that application team. The organizational relationship between the microfrontend team and the Portal Team remains unconfirmed.
 
 The [[concepts/frontend-onboarding]] procedure starts from container and tile templates and then links application registration through the admin manual. These steps describe a hand-off to catalog administration, not a named Portal Team task.
 
@@ -72,11 +69,11 @@ The production checklist recommends Portal connections through tenant Nginx or l
 The production checklist separately requests browser reachability, Portal-to-tenant connectivity, operating agreements, security testing, and tile release. These are distinct checks; successful configuration upload alone does not establish business readiness. Older deployment guidance and the Nginx draft propose different mechanisms, and neither establishes the currently deployed pipeline.
 
 ## Limits and unknowns
-- Authority and approval remain unconfirmed for every stated rule; publication approval and deployed enforcement are both pending. The open questions ask what evidence confirms portal-team authority and approval across the stated environments.
+- The user identified policy ownership. Human review and deployed enforcement of the candidate rules remain pending.
 - The owner identity does not establish that the Portal Team operates [[entities/ems2]] or [[entities/ces]], nor that it configures tile onboarding.
 - The documents do not establish that the Portal Team holds tenant-record boundaries for maker and checker users, or that it applies a multiple-entity matching rule for SSDR tenants.
 - No denial message, HTTP status, timing limit, or execution evidence was selected with these rules.
-- No session timing, token validity, activation grammar, or profile contract is owned by the Portal Team in the supplied material; those remain with unknown owners.
+- Exact timeout settings, individual token lifetimes, the applicable ICS policy revision, and downstream profile contracts still require review.
 - No pipeline, deployment, routing rollback, upload, or production access check ran during the supplied release material.
 - The release proposal is a draft with unresolved duration and urgent-confirmation rules. The governing checklist and active deployment process for each environment remain unconfirmed.
 - Further questions ask which release and approval controls govern self-service configuration changes that the owner may authorize, and how technical readiness and business activation are proved separately.
@@ -85,10 +82,10 @@ The production checklist separately requests browser reachability, Portal-to-ten
 [[concepts/portal-entry-and-tile-authorization]] describes the entry and tile rules the Portal Team is reported to own.
 [[concepts/entitlement-retrieval]] explains how entitlement data that feeds those rules is obtained.
 [[concepts/single-ui-sdk-authentication]] covers the authentication layer that precedes the entry decision.
-[[concepts/session-activity-renewal]] covers the renewal behavior that has no confirmed owner.
+[[concepts/session-activity-renewal]] covers renewal within the absolute session ceiling.
 [[concepts/session-expiry-prompt-recovery]] covers the manual recovery behavior for an expired session.
-[[concepts/token-lifecycle-and-timeout-policy]] holds the unresolved timing proposals.
-[[concepts/identity-provider-delegation]] and [[concepts/identity-profile-attribute-migration]] cover the migration and profile boundaries outside portal-team ownership.
+[[concepts/token-lifecycle-and-timeout-policy]] records the session ceilings and remaining exact-settings questions.
+[[concepts/identity-provider-delegation]] and [[concepts/identity-profile-attribute-migration]] cover provider responsibilities and downstream profile contracts.
 [[concepts/machine-to-machine-authentication]] covers the historical service-account flows.
 [[concepts/frontend-onboarding]] describes the hand-off in which application teams supply URLs to the portal team.
 [[concepts/admin-catalog-configuration]] covers the catalog functions that follow onboarding.

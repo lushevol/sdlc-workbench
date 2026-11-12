@@ -20,10 +20,11 @@ The documented POC use cases are: open a new Portal view, open a tile, change th
 
 ## Caller and provider responsibilities
 
-The model splits work between two parties:
+The documented model assigns three sets of responsibilities:
 
 - The requesting tenant team owns business demand and the caller implementation.
-- [[entities/fmo-post-trade-portal]] and the provider team own intent registration, the receiving handler, context consumption, the business action, and an optional result or status.
+- [[entities/fmo-post-trade-portal]] receives standardized intents and provides routing, access control, context passing, and dispatch.
+- The provider team registers the intent, implements the receiving handler, consumes context, performs the business action, and may return a result or status.
 
 A completed caller alone cannot enable the feature. The provider also needs intent registration, a handler, agreed context, authorization readiness, testing, and production deployment. Interoperability is therefore a joint delivery dependency, not a one-sided change. See [[concepts/application-ownership]] for how ownership boundaries are assigned.
 

@@ -28,23 +28,17 @@ The development guideline additionally separates view, logic, styles, and interf
 
 ## Session behavior
 
-Because session handling is a shell responsibility, the target behavior for portal sessions is recorded as candidate requirement [[summaries/REQ-active-session-renewal]] (`REQ-active-session-renewal`, version 7). It is a **draft, candidate** statement of intent with human publication review pending — it does not establish that the deployed shell already behaves this way.
+The shell is responsible for portal session interactions. Version 8 of the [canonical session requirement](../sources/REQ-active-session-renewal.md) is a draft owned by the RATAN team under ICS bank security policy. Idle timeout is at most 15 minutes. Absolute timeout is at most 60 minutes from portal authentication and applies during activity and renewal. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria)
 
-The requirement asks that mouse, keyboard, and scroll activity each support continued renewal ([[concepts/session-activity-renewal]]), that elapsed time alone never force a fresh authentication, and that renewal after inactivity continues through the existing refresh token, including across the initial refresh-token expiry. Manual recovery from an idle-expiry prompt must keep the prompt open until renewal succeeds and must allow retry after rejection ([[concepts/session-expiry-prompt-recovery]]).
+| Criterion | Setup and expected result |
+| --- | --- |
+| AC-1–AC-3 | Mouse movement, keyboard input, or scrolling every 100 ms for 15 seconds each yields at least one successful renewal, with at least 30 seconds left before both access and absolute expiry. |
+| AC-4 | If the initial refresh credential expires first and access remains valid, eligible activity before the absolute deadline yields at least one subsequent renewal in the same portal session. |
+| AC-5–AC-7 | Before absolute expiry, the idle-expiry prompt stays open while renewal is pending, closes once after success, and allows retry after rejection while the refresh token remains usable and time remains. |
+| AC-8 | With more than 15 minutes left before absolute expiry, 15 minutes without eligible activity or manual renewal reaches idle expiry within 15 minutes of the last eligible activity. |
+| AC-9 | Even with successful renewal and eligible activity, the earlier of the configured absolute timeout and 60 minutes ends the session. It can no longer complete protected requests or renewals. |
 
-Seven acceptance scenarios cover the shell's renewal surface:
-
-| ID | Scenario | Expected result |
-| --- | --- | --- |
-| AC-1 | Mouse movement every 100 ms for 15 s, ≥30 s of access time left | ≥1 successful renewal |
-| AC-2 | Keyboard input every 100 ms for 15 s, ≥30 s left | ≥1 successful renewal |
-| AC-3 | Scroll activity every 100 ms for 15 s, ≥30 s left | ≥1 successful renewal |
-| AC-4 | Controlled clock through four hours of continued activity, including initial refresh-token expiry | 0 elapsed-time-only SSO prompts |
-| AC-5 | Renewal selected from idle prompt, request pending | 0 premature prompt closures |
-| AC-6 | Requested renewal succeeds | Exactly 1 closure, after completion |
-| AC-7 | Refresh-based renewal rejects | 0 closures; another attempt permitted |
-
-Boundaries stated in that requirement: the controlled intervals are test fixtures, not production timeout settings; a four-hour horizon does not prove indefinite execution; portal-document activity is in scope while cross-origin embedded application activity needs separate integration evidence; expired or revoked credentials cannot authorize renewal; and cancellation handling plus request-sharing behavior have no approved criterion. Implementation, rollout, and conformance belong to an independent gap record, which cannot modify the criteria. Whether the shell's current session code satisfies any scenario is unconfirmed.
+Cross-origin embedded application activity needs separate integration evidence. The user also described an ideal of immediate revocation of all portal sessions at logout, excluding the identity-provider session. The implementation and independent execution evidence do not establish deployed conformance. [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## CES migration compatibility
 
@@ -110,7 +104,7 @@ The responsibility list comes from a user clarification and the documented desig
 
 The administrative context comes from a proposal and a procedural manual; their source revisions and current applicability are unconfirmed, and the manual depends on screenshots absent from its copy. Whether the self-service catalog replaced source changes for tile updates in production is not established.
 
-The session criteria come from a candidate requirement with governance state `candidate`, version 7, and an unknown owner; it cites recorded user replies as its intent sources and explicitly separates intent from implementation evidence. It adds no verified statement about how the shell currently renews sessions, and its automated language check passing does not imply technical review.
+The session criteria come from version 8 of the candidate requirement owned by the RATAN team under ICS bank security policy. Human review and deployed conformance remain pending.
 
 The CES migration statements come from a candidate knowledge topic (version 6, owner unknown) built on dated user clarifications from 3–9 November 2026. They record intended permission preservation, compatibility, and per-tile migration behavior only; they do not establish implemented shell behavior, complete API compatibility, an approved scalar role mapping, or deployed log collection.
 

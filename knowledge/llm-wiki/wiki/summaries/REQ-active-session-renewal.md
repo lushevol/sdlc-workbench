@@ -1,42 +1,45 @@
 ---
 type: "Summary"
-description: "Candidate requirement for renewable portal sessions via activity, plus expiry-prompt recovery criteria."
+description: "Candidate session renewal and idle recovery within the 15-minute idle and 60-minute absolute ceilings."
 doc_type: short
 full_text: "sources/REQ-active-session-renewal.md"
 ---
 
-> Derived from [REQ-active-session-renewal, version 7](../../../candidates/requirements/REQ-active-session-renewal.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [REQ-active-session-renewal, version 8](../../../candidates/requirements/REQ-active-session-renewal.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Active Session Renewal (REQ-active-session-renewal)
 
-**Source type:** Requirement (version 7) · **Governance state:** candidate · **Status:** draft · **Owner:** unknown
+**Source type:** Requirement (version 8) · **Governance state:** candidate · **Status:** draft · **Owner:** RATAN team
 
 This is a candidate requirement describing *intended target behavior* for portal session renewal. Human publication review is still pending, so the criteria express requested ideals rather than proof that the supplied implementation already conforms.
 
 ## Core intent
 
 - Mouse, keyboard, and scroll activity must each support continued session renewal — see [[concepts/session-activity-renewal]].
-- Elapsed time alone must never force a fresh authentication (no fixed reauthentication maximum).
-- After inactivity expires the access token, renewal remains possible through the existing refresh token.
-- Continued eligible activity must preserve renewal across the initial refresh-token expiry.
+- Idle timeout is at most 15 minutes. Absolute timeout is at most 60 minutes from portal authentication and applies during eligible activity and renewal.
+- Within the absolute deadline, a usable refresh token can support recovery after idle expiry. Continued activity can support renewal across the initial refresh credential expiry while access remains valid.
+- At the absolute deadline, the portal requires a new authenticated session.
 - Manual recovery from an idle-expiry prompt must keep the prompt open until renewal succeeds, and must allow retry after a rejected request — see [[concepts/session-expiry-prompt-recovery]].
 
-## Acceptance criteria (7 scenarios)
+## Acceptance criteria (9 scenarios)
+
+[Canonical acceptance criteria](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 
 | ID | Scenario | Measure |
 |---|---|---|
-| AC-1 | Mouse movement every 100 ms for 15 s, ≥30 s of access time remaining | ≥1 successful renewal |
-| AC-2 | Keyboard input every 100 ms for 15 s, ≥30 s remaining | ≥1 successful renewal |
-| AC-3 | Scroll activity every 100 ms for 15 s, ≥30 s remaining | ≥1 successful renewal |
-| AC-4 | Controlled clock advances through 4 hours of continued activity, including initial refresh-token expiry | 0 elapsed-time-only SSO prompts |
-| AC-5 | Renewal selected from idle prompt, request pending | 0 premature prompt closures |
-| AC-6 | Requested renewal succeeds | Exactly 1 closure, after completion |
-| AC-7 | Refresh-based renewal rejects | 0 closures; another attempt permitted |
+| AC-1 | Mouse movement every 100 ms for 15 s, ≥30 s before both expiry deadlines | ≥1 successful renewal |
+| AC-2 | Keyboard input every 100 ms for 15 s, ≥30 s before both expiry deadlines | ≥1 successful renewal |
+| AC-3 | Scrolling every 100 ms for 15 s, ≥30 s before both expiry deadlines | ≥1 successful renewal |
+| AC-4 | Eligible activity after initial refresh-credential expiry and before the absolute deadline, with valid access | ≥1 subsequent renewal in the current session |
+| AC-5 | Manual renewal pending before the absolute deadline | 0 premature prompt closures |
+| AC-6 | Requested renewal succeeds before the absolute deadline | Exactly 1 closure, after completion |
+| AC-7 | Refresh-based renewal rejects | 0 closures; retry while the token remains usable and the absolute deadline has yet to pass |
+| AC-8 | No eligible activity or manual renewal | Idle expiry within 15 minutes of last eligible activity |
+| AC-9 | The session reaches its absolute deadline during eligible activity | 0 successful protected requests or renewals using that expired session |
 
 ## Key distinctions and boundaries
 
-- The controlled intervals (100 ms activity, 15 s observation, 4 h fixture) are **test fixtures, not production timeout settings**.
-- A finite four-hour test horizon does not prove indefinite execution.
+- The 100 ms activity cadence and 15 s observation window are test fixtures. The 15- and 60-minute ceilings come from the 12 November clarification. The prior four-hour criterion belongs to the earlier requirement.
 - Portal-document activity is in scope; activity inside cross-origin embedded applications requires **separate integration evidence**.
 - Expired or revoked credentials cannot authorize renewal; recovery with no usable credential and provider failures remain separate boundaries.
 - Cancellation handling and request-sharing behavior have **no approved criterion here**; their disposition belongs in the gap record.
@@ -44,7 +47,7 @@ This is a candidate requirement describing *intended target behavior* for portal
 
 ## Open items
 
-- Owner still `unknown`; next action is review with the session owner before publication.
+- RATAN owns and reviews the policy. Review the applicable ICS policy revision, including whether refresh-based recovery after idle expiry satisfies the idle limit. Exact settings and individual token lifetimes remain unspecified.
 - ASD-STE100 automated check passed, but the human ASD review is pending.
 
 ## Related topics for synthesis

@@ -1,11 +1,15 @@
 ---
 type: KnowledgeTopic
 id: KT-frontend-composition
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
 sources:
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md
+  revision: sha256:b2677f993b154c2705c4fe103d5e2bbff1a45b618f0129ae0234fa69c381b692
+  sha256: b2677f993b154c2705c4fe103d5e2bbff1a45b618f0129ae0234fa69c381b692
 - resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md
   revision: sha256:572dffb64891e80af50f57d5cc2e34fe8ffb3d92751b779d25b5b8b84b999cf7
   sha256: 572dffb64891e80af50f57d5cc2e34fe8ffb3d92751b779d25b5b8b84b999cf7
@@ -49,9 +53,11 @@ sources:
 - resource: evidence/knowledge/sources/user-clarifications/architecture-20261022/source-review.json
   revision: sha256:aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
   sha256: aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
+previous_version: 3
+previous_content_sha256: c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718
 generated:
   by: agent:codex
-  at: '2026-10-22T09:28:35.876006+00:00'
+  at: '2026-11-12T21:53:10+08:00'
 verified: []
 classification: architecture
 scope: The documented microfrontend design, shared UI boundaries, and application
@@ -136,6 +142,10 @@ These are design goals; the document does not demonstrate their achievement acro
 The [module design](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L147>), [stack explanation](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/page.md#L35>), and [development principles](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md#L4>) support these roles.
 The table explains the source model; it does not assert the current runtime implementation.
 
+The historical web application scan notes describe direct access to non-sensitive static files before sign-in.
+The note concerns static file retrieval. It supplies no rule permitting directory listing or bypassing portal-entry or API authorization.
+[Historical scan notes, lines 9–12](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md#L9-L12>).
+
 ### Ownership and availability
 
 The principles assign shared backend availability to the microfrontend team.
@@ -171,6 +181,8 @@ This inference requires exact provider and consumer evidence before assessing a 
 
 The guideline prescribes TypeScript, functional components, shared MUI themes, and separation of view, logic, styles, and interfaces.
 It also names React 18.2.0 and prefers Context and Reducer over additional state libraries. [Development guideline](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L1>).
+The same guideline calls for component error boundaries and prefers lazy loading for tiles where possible.
+[Development guideline, lines 5–7](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L5-L7>).
 These versioned instructions must retain their source context before reuse for new development.
 
 The onboarding procedure suggests 500 KB files and six concurrent static-file requests as optional loading guidance.

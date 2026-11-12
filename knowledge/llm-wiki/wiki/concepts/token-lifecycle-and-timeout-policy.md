@@ -1,7 +1,7 @@
 ---
 type: "Concept"
 sources: ["summaries/KT-authentication-and-sessions.md"]
-description: "Access, refresh, and idle/absolute token timeout concepts plus the unresolved portal timing rules."
+description: "Portal idle and absolute ceilings, individual credential lifetimes, and historical timing proposals."
 ---
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
@@ -23,9 +23,13 @@ Each mechanism answers a different question:
 - Refresh token — can the session continue without a full SSO round trip?
 - Access token — is this specific request still authorized?
 
-Conflating them produces policies that either expire active users or silently extend sessions past their intended bound. The [[concepts/session-activity-renewal]] requirement depends on this separation: continued eligible activity should sustain renewal across the initial refresh-token expiry, while elapsed time alone should not force re-authentication.
+Conflating them produces policies that either expire active users or silently extend sessions past their intended bound. The [[concepts/session-activity-renewal]] requirement depends on this separation: eligible activity supports renewal within the absolute deadline, including across initial refresh expiry while access remains valid.
 
-## Documented proposals and their conflicts
+## Current session ceilings
+
+The user attributed two ceilings to ICS bank security policy: at most 15 minutes idle and at most 60 minutes absolute from portal authentication. The absolute limit applies during eligible activity and renewal. RATAN owns and reviews portal policy. The [current requirement](../../../candidates/requirements/REQ-active-session-renewal.md#intended-scope) records the source and the remaining review limits.
+
+## Historical proposals and their conflicts
 
 ### Session version 0
 
@@ -48,17 +52,17 @@ Version 1 contradicts itself:
 2. Its absolute-timeout discussion proposes modifying `auth_time` during continued activity, which would defeat the purpose of an absolute bound.
 3. It separately states that refresh tokens have **no absolute timeout** because they lack `auth_time` and `max_age`.
 
-No single reliable timing rule follows from these statements without authoritative review.
+These historical conflicts leave individual token lifetimes and configuration details open.
 
 ## Renewal and recovery behavior
 
-The intended target, held canonically by [[summaries/REQ-active-session-renewal]], includes continued renewal across the initial refresh-token expiry. During manual recovery:
+The intended target, held canonically by [[summaries/REQ-active-session-renewal]], supports continued renewal across the initial refresh-token expiry while access remains valid and before the absolute deadline. During manual recovery within that deadline:
 
 - The expiry prompt stays open while renewal is pending.
 - Successful renewal closes it exactly once.
 - A rejected renewal preserves it and permits another attempt.
 
-This behavior is described in [[concepts/session-expiry-prompt-recovery]]. The requirement owns the measurable scenarios; token policy supplies no additional scenario or timeout setting.
+This behavior is described in [[concepts/session-expiry-prompt-recovery]]. The requirement defines the measurable idle and absolute expiry criteria.
 
 ## Relationship to authentication and migration
 
@@ -70,7 +74,7 @@ Phase 1 UI SSO scope explicitly excludes portal session management and EMS2 repl
 
 ## Machine-to-machine contrast
 
-[[concepts/machine-to-machine-authentication]] uses client-credential flows with much longer validity. The historical [[entities/fmaa]] reference states 17-year validity for service accounts and seven-day validity for bank IDs. These historical values do **not** establish approved portal-session limits or current token policy, and copying them into target rules requires authoritative approval.
+The historical [[concepts/machine-to-machine-authentication]] reference describes client-credential flows and gives validity examples longer than the portal session ceilings. The [[entities/fmaa]] reference states 17-year validity for service accounts and seven-day validity for bank IDs. These historical values do **not** establish credential-rotation rules, approved portal-session limits or current token policy, and copying them into target rules requires authoritative approval.
 
 ## Downstream consumers
 
@@ -80,13 +84,12 @@ Token lifetime and claims shape what downstream services can validate. [[concept
 
 | Question | Status |
 |---|---|
-| Which timeout and refresh-duration rules apply per environment? | Unresolved — session designs conflict |
-| Does `auth_time` change during continued activity or not? | Contradictory within version 1 |
-| Is refresh-token lifetime bounded at all? | Version 1 states both bounded and unbounded |
+| Which exact timeout settings and token lifetimes apply by environment? | Open within the stated ceilings |
+| Which ICS policy revision governs the limits and idle recovery? | Pending RATAN review |
 | Which token-reuse and single-device rules are intended? | Backlogged, not decided |
 | Does the one-hour Entra session constrain the portal session? | Not established |
 
-Owner: unknown session owner. Next action: reconcile the intended timing table and token-reuse rule before policy publication.
+Owner: RATAN team for portal policy. Review the applicable ICS revision and the environment-specific settings before publication.
 
 ## Evidence limits
 

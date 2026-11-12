@@ -18,7 +18,7 @@ The notification draft describes three separate proof-of-concept implementations
 - **GraphQL over WebSocket with Spring Boot.** This experiment pairs a GraphQL API with WebSocket transport and a [[entities/spring-boot]] backend.
 - **SSE using Spring Boot.** A third experiment uses SSE with a Spring Boot backend and does not use GraphQL.
 
-GraphQL is therefore one of two measured transport patterns in the experiment set, not a platform standard. The two GraphQL experiments differ in both transport and backend runtime, so their results are not directly comparable without the demonstration materials.
+The drafts describe GraphQL over SSE and GraphQL over WebSocket alongside a separate SSE experiment with Spring Boot. These are documented experiments; no retained execution establishes measured performance or an accepted platform standard.
 
 ## Decision status
 

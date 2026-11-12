@@ -72,29 +72,28 @@ The portal's entitlement model derives from [[entities/ems2]], which defines ent
 Services obtain entitlements either by querying EMS2 directly or by validating a separate entitlement token. An entitlement token must not be used as an authentication credential. See [[concepts/entitlement-retrieval]].
 
 ### Authentication context
-Requests to portal-backed applications are validated by a request filter supplied by the [[entities/single-ui-sdk]]. Successful validation exposes `userId`, `entitlements`, `oud`, and `sessionId` through the `userInfo` request attribute. See [[concepts/single-ui-sdk-authentication]].
+The SDK guides describe validation of supported requests in downstream applications that adopt and enable the conditional [[entities/single-ui-sdk]] filter. Universal adoption and deployed configuration remain unconfirmed. Successful validation exposes `userId`, `entitlements`, `oud`, and `sessionId` through the `userInfo` request attribute. See [[concepts/single-ui-sdk-authentication]].
 
 The documented identity capability covers common application entry, SSO, MFA, and session renewal. [[concepts/identity-provider-delegation]] records the identity-provider boundary.
 
 The Admin Module flow states that the Portal Admin service validates an [[entities/fmaa]] JWT before it processes configuration CSV files. The checklist also flags planned FMAA decommissioning. That plan creates an unresolved dependency for configuration promotion and for the authentication boundary that the promotion workflow names. See [[concepts/configuration-promotion]].
 
 ### Session renewal
-A candidate requirement, [[summaries/REQ-active-session-renewal]], states the intended renewal behavior for portal sessions. It remains version 7 in `candidate` governance state with `draft` status and an unknown owner, so it records requested target behavior rather than confirmed deployed behavior. Human publication review is pending.
 
-The requested behavior is:
-- Mouse movement, keyboard input, and scroll activity must each be able to drive continued renewal.
-- Elapsed time alone must not produce a fresh SSO prompt while eligible activity and successful renewal continue; no fixed reauthentication maximum applies.
-- After inactivity expires the access token, renewal continues through the existing refresh token, and must survive the initial refresh-token expiry.
-- An idle-expiry prompt stays open while a requested renewal is pending, closes exactly once after success, and permits another attempt when the request rejects.
+The RATAN team owns and reviews portal policy under ICS bank security policy. The candidate requirement [[summaries/REQ-active-session-renewal]] v8 sets an idle ceiling of 15 minutes and an absolute ceiling of 60 minutes from portal authentication. The absolute deadline applies during eligible mouse, keyboard, and scroll activity and during renewal. Continued use after the deadline requires a new authenticated portal session.
 
-Seven acceptance criteria cover these points. Three criteria count at least one successful renewal during 15 seconds of sustained mouse, keyboard, or scroll activity; one requires zero elapsed-time-only SSO prompts across a four-hour controlled clock that crosses the initial refresh-token expiry; three govern prompt closure for pending, successful, and rejected renewal requests. See [[concepts/session-activity-renewal]] and [[concepts/session-expiry-prompt-recovery]].
+Within the deadline, activity can support renewal across initial refresh expiry while access remains valid. Manual recovery uses a usable refresh token, keeps the prompt open while the request is pending, closes it once on success, and permits an eligible retry after rejection. The applicable ICS revision, including treatment of refresh-based recovery after idle expiry, requires RATAN review. See [[concepts/session-activity-renewal]] and [[concepts/session-expiry-prompt-recovery]].
 
-The 100 millisecond activity cadence, 15 second observation window, and four-hour clock are test fixtures, not production timeout settings, and no finite test proves indefinite execution. Only portal-document activity is in scope; activity inside cross-origin embedded applications requires separate integration evidence. Cancellation, request sharing, recovery without any usable credential, and provider failures have no approved criterion in this requirement. Expired or revoked credentials cannot authorize renewal, though the existing service contract lets a valid access token support replacement refresh credentials. Implementation, execution, rollout, and conformance differences belong to the separate intent-to-reality gap record, which cannot modify the criteria.
+The production sign-in target prohibits OneMFA fallback. The ideal logout target immediately revokes all of the user's portal sessions and excludes identity-provider sessions such as Entra. See [[summaries/KT-authentication-and-sessions]] and the [current criteria](../../../candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001).
+
+The [session criteria](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) cover eligible activity, manual renewal, and idle and absolute expiry. Earlier four-hour comparisons address the predecessor requirement. Cross-origin embedded activity requires separate integration evidence.
 
 ### Responsibility boundary
+
+The portal validates tile entitlements at login, on page refresh, and on idle-session extension. UI permission revocation takes effect at the next login. Protected APIs apply revocation when the applicable Auth Server Redis entry expires. The user specified separate cache lifetimes of one hour for entitlements and two hours for JWT parsing. See [[summaries/KT-sdk-and-entitlements]].
 Portal tile visibility and launch authorization are separate from application data permissions. Each tile application owns its own read and edit permission checks. A visible tile does not by itself establish permission to read or modify business data, and the SDK guides do not prove automatic subject-and-action enforcement for every API.
 
-The same boundary applies to administration. The portal stores tile and import-map configuration; it does not thereby grant the operator rights to the business data behind those tiles.
+Portal administrators can read every tenant’s audit history and configuration. Tiles must never reference metadata belonging to another tile. Write permissions and the ownership of shared category or import-map records remain open. See [[summaries/KT-admin-and-onboarding]].
 
 A third boundary separates Portal release work from tenant deployment work. The Portal team changes routing and Portal-owned production configuration. Tenant teams deploy and validate their own UI, backend, services, databases, and infrastructure. See [[concepts/tenant-production-readiness]].
 
@@ -148,6 +147,8 @@ The unfinished release checklist adds onboarding inputs beyond the six steps: SD
 ### Shared code and standards
 
 Modules are shared through exports, imports, and registered names, so [[concepts/shared-dependency-governance]] applies: shared dependencies require coordinated upgrades, and a shared interface change can affect several tenant consumers. The development guideline prescribes TypeScript, functional components, shared [[entities/mui]] themes, and separation of view, logic, styles, and interfaces. It names React 18.2.0 and prefers Context and Reducer over additional state libraries, without a recorded effective date or supersession notice.
+
+That versioned guideline also calls for component error boundaries and prefers lazy tile loading where possible. See [[summaries/KT-frontend-composition]] for the source scope.
 
 Optional loading guidance suggests 500 KB files and six concurrent static-file requests, but does not establish an accepted performance SLA. Direct external GUI dependencies are prohibited unless platform governance approves an exception, with tenant teams retaining security, licensing, vulnerability, support, resilience, and rollback responsibilities.
 
@@ -241,11 +242,11 @@ The older frontend deployment guide describes static artifacts and a proposed bl
 
 ## Observability, performance, and caching
 
-Full synthesis: [[summaries/KT-observability-and-performance]]. The materials mix design examples, draft targets, historical results, and future planning; none of them establishes current production capacity or approved service limits.
+Full synthesis: [[summaries/KT-observability-and-performance]]. The current candidate sets a five-second API loading limit and gives no mandatory UI metric. Measurement scope, timing boundaries, and workload remain open. The historical measurements establish no current production capacity.
 
 ### Interaction analytics
 
-The analytics effort aims to understand how users interact with portal features, improve adoption, and reduce time to value. The design captures tiles, modals, workspace tabs, buttons, switches, and dropdowns. Tiles and modals expose open and close events, tabs, buttons, and switches expose click events, and dropdowns expose select events. See [[concepts/interaction-analytics]].
+Portal analytics collect user activity for CPO review of business-product usage. Production retention is three months. Field permissions, all authorized readers, and expiry details remain open. The design captures tiles, modals, workspace tabs, buttons, switches, and dropdowns. Tiles and modals expose open and close events, tabs, buttons, and switches expose click events, and dropdowns expose select events. See [[concepts/interaction-analytics]].
 
 Event identity combines container, tile, and component name. Optional values and custom attributes describe interactions such as searches. Those fields connect an event to its UI context, but they do not define an approved vocabulary for every tenant event.
 
@@ -313,12 +314,12 @@ A separate unchecked list proposes central-monitoring foundation work, an upgrad
 - The capabilities page depends on screenshots absent from the supplied export. The textual meaning survives, but illustrated behavior cannot be reconstructed.
 - The deployment proposal describes future changes without an approval record in these materials. Target services and planned features cannot serve as current implementation facts.
 - The portal team's authority and approval for the entry and tile rules remain unverified across all four environments. The empty-subject decision carries approval `pending`. The SDK artifact version deployed by each downstream service is also unresolved, as is the current shape of environment tokens now that EMS2 details are being removed from authentication JWTs.
-- The session-renewal requirement is a candidate version 7 draft with an unknown owner and no recorded verification, and its human publication review is pending. Its acceptance criteria describe requested target behavior: no execution, browser measurement, or provider-side refresh-token lifetime check ran during ingestion. The stated 100 millisecond cadence, 15 second window, and four-hour horizon are fixtures only, and cross-origin embedded application activity is explicitly out of scope. Cancellation and request-sharing behavior has no approved criterion in that requirement.
+- The session-renewal requirement is a RATAN-owned candidate v8 draft. Publication review and execution against the current criteria remain pending.
 - For the frontend composition, the following remain unresolved: which exact repository revisions implement the current container, tile, and routing interfaces; which development guidelines and shared dependency versions are currently accepted; which owner controls compatibility changes across shared modules and tenant applications; which dependency exceptions have platform review, accountable ownership, and effective dates; and which standalone template and shared-component versions remain supported. Runtime rendering, deployment state, and template archives are not established by the supplied documentation.
-- For administration and onboarding, the following remain unresolved: which admin manual and catalog schema revisions are deployed; whether the self-service model replaced or supplements the change-request path; how tenant record boundaries are enforced for maker and checker users; and which production release, approval, rollback, and emergency-change rules govern configuration made through the module. The EMS2 setup page refers to absent entitlement spreadsheets, change attachments, and later setup actions, and the manual depends on screenshots missing from the supplied copy, so detailed grants and visual procedures cannot be reconstructed. The retained Flyway SQL, NGINX draft, and firewall register have no inspected deployment or connectivity execution and cannot establish the current schema, active routes, or network permissions.
+- For administration and onboarding, the following remain unresolved: which admin manual and catalog schema revisions are deployed; whether the self-service model replaced or supplements the change-request path; which cross-tenant write and verification permissions apply to maker and checker users; and which production release, approval, rollback, and emergency-change rules govern configuration made through the module. The EMS2 setup page refers to absent entitlement spreadsheets, change attachments, and later setup actions, and the manual depends on screenshots missing from the supplied copy, so detailed grants and visual procedures cannot be reconstructed. The retained Flyway SQL, NGINX draft, and firewall register have no inspected deployment or connectivity execution and cannot establish the current schema, active routes, or network permissions.
 - For release operations, the following remain unresolved: which release duration applies; whether an urgent release needs explicit confirmation from every stakeholder; which checklist and deployment process govern each environment; which records prove technical readiness and business activation separately; and which tenant request evidence establishes accepted capability scope and completed readiness. No pipeline, deployment, upload, rollback, or production access check ran during ingestion. Diagrams, emails, and example projects that the guides reference are absent. The older deployment guide and the Nginx draft describe historical or proposed mechanisms, not the active pipeline.
 - For the SSDR onboarding record, no approval, selected option, or execution record is retained. The empty-subject clarification resolves only the single-entity scope; multiple-entity matching and SSDR delegation remain open.
-- For observability, the named non-functional requirements page contains no substantive text, so it supplies no accepted service targets or measurable acceptance criteria. Historical test targets cannot be treated as accepted current limits. The analytics models disagree on custom attribute counts, the Production dashboard address is a placeholder, examples collect identity context and search values without recorded retention rules, and the cache implementation section holds no configuration. Missing screenshots, JMeter plans, and execution archives block verification; no browser measurement, telemetry query, load test, or server-header check ran during ingestion.
+- The five-second API limit and three-month PROD analytics retention come from the current user clarification. Historical UI metrics and throughput reports retain their original scope. Measurement, collection, access, and expiry details remain open.
 - The 2023 library statistics, the build-tool benchmark tables, the notification protocols, the performance figures, and the retention alternatives have no accepted decisions attached in these materials. None can supply implementation requirements without review.
 
 ## Open questions
@@ -326,24 +327,24 @@ A separate unchecked list proposes central-monitoring foundation work, an upgrad
 - Which owner can confirm the current portal name, scope, and capability inventory?
 - Which draft principles became accepted rules, and when?
 - Which admin manual, catalog schema, and migration revisions are currently applicable, and which environment checks confirm them?
-- How are tenant record boundaries enforced for maker and checker users? The proposal discusses tenant-specific roles, while the manual lists shared admin subjects and a different-user check.
+- Which cross-tenant write and verification permissions apply to maker and checker users?
 - Which release, approval, rollback, and emergency-change controls govern self-service configuration changes in production?
 - Which release duration applies: 10 hours or 24 hours?
 - Does an urgent release require explicit confirmation from every stakeholder?
 - Which checklist and deployment process currently govern each environment?
 - Which records prove technical readiness and business activation separately?
 - Which FMAA replacement plan governs Admin service authentication after decommissioning?
-- Who will approve the session-renewal requirement, and does the current session-renewal implementation meet its seven criteria?
-- Do provider-side refresh-token lifetimes, and any cross-origin embedded application, support the requested activity-driven renewal beyond the four-hour fixture?
+- Which applicable ICS revision governs idle recovery, and what execution demonstrates conformance with the current session criteria?
+- Which individual token lifetimes and cross-origin activity paths support renewal within the absolute deadline?
 - Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
 - Which component-library and licensing choices have accepted decisions and effective dates?
 - Who authored the build-tool research, and which versions and benchmark runs support it?
 - Which notification experiment, if any, became a supported portal service, and which retention and unread-message rules are accepted?
 - Which 2026 and 2027 proposals have approved scope or deployed implementations?
 - Which analytics model defines the supported custom attribute limit across producer, transport, storage, and dashboards?
-- Which current execution records establish response time and capacity, and which non-functional requirements are accepted?
+- Which API loading measurement conditions and current results support the five-second limit and capacity assessment?
 - Which deployed cache settings and asset naming rules implement the documented strategy?
-- Which data collection and retention rules govern identity context and search values captured by analytics?
+- Which analytics fields and readers are permitted, and how does the three-month PROD period apply to expiry?
 
 ## Related pages
 [[summaries/KT-portal-purpose]] · [[summaries/KT-sdk-and-entitlements]] · [[summaries/KT-architecture-evolution]] · [[summaries/KT-observability-and-performance]] · [[summaries/KT-admin-and-onboarding]] · [[summaries/KT-release-operations]] · [[summaries/REQ-active-session-renewal]] · [[concepts/portal-entry-and-tile-authorization]] · [[concepts/entitlement-retrieval]] · [[concepts/single-ui-sdk-authentication]] · [[concepts/session-activity-renewal]] · [[concepts/session-expiry-prompt-recovery]] · [[entities/portal-team]] · [[entities/single-ui-sdk]] · [[entities/ems2]] · [[entities/ces]] · [[entities/fmaa]]

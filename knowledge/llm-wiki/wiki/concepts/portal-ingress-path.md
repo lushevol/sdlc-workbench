@@ -34,7 +34,7 @@ This ordering comes from the user-supplied architecture clarification recorded i
 
 ## Relationship to composition
 
-The ingress path sits beneath the four-layer frontend stack described in [[concepts/microfrontend-layering]]. Static entry resources and JavaScript bundles are served through this path, while [[entities/single-spa]] lifecycle and SystemJS module loading happen entirely in the browser after delivery. Container and tile routing (React Router paths, container/module/tile props) is likewise client-side and unaffected by which ingress endpoint forwards the initial assets. The portal-purpose materials describe the shared entry and composition capabilities at the same capability level; they do not change the client-side execution model.
+The ingress path sits beneath the four-layer frontend stack described in [[concepts/microfrontend-layering]]. Static entry resources and JavaScript bundles are served through this path, while [[entities/single-spa]] lifecycle and SystemJS module loading happen entirely in the browser after delivery. Container and tile routing (React Router paths, container/module/tile props) is likewise client-side. These are separate logical stages from ingress forwarding; the effects of effective route and rewrite configuration remain unverified. The portal-purpose materials describe the shared entry and composition capabilities at the same capability level; they do not change the client-side execution model.
 
 ## Open questions
 

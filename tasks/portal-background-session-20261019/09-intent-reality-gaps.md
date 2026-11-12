@@ -22,6 +22,9 @@ writing_review:
 
 # Session renewal: intent and reality gaps
 
+The comparisons below use the 1 November target. The [12 November policy answer](../ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input) supersedes the earlier elapsed-time exception with a 60-minute absolute ceiling and a 15-minute idle ceiling.
+Use the [current requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) for new acceptance work. The retained comparisons address the earlier target and require reassessment against the current criteria.
+
 > **Six scoped gaps remain. They limit conformance or assurance claims without changing the intended renewal rules.**
 > Action: retain the target rules and close each affected evidence boundary. Owner: unknown application, security, and observability owners.
 > Consequence: full conformance, delivered stale-response rejection, remote UAT assurance, and current PROD applicability remain unsupported.
@@ -41,7 +44,7 @@ The method uses qualitative impact and the recorded user-priority rule. No numer
 
 | Identity | Exact scope | Evidence boundary |
 | --- | --- | --- |
-| Intended renewal | Requirement v5, SHA-256 `3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359` | [Preserved criteria](evidence/release-knowledge-sync-20261101/predecessors/REQ-active-session-renewal.md#acceptance-criteria); all seven predicates remain the target. |
+| Intended renewal | Requirement v5, SHA-256 `3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359` | [Preserved criteria](evidence/release-knowledge-sync-20261101/predecessors/REQ-active-session-renewal.md#acceptance-criteria) for this comparison. |
 | Canonical cases | Catalog SHA-256 `5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037` | [Single case catalog](06-test-cases.md); historical embedded criterion links retain their original context. |
 | Frontend baseline | `f025513f696476a9cc8162681410cbd21e029bcb` | Exact Git inspection and retained local held-renewal comparison. |
 | Frontend candidate | `66c6411ade58e4d134e381c2baee8ad3f76a8dbf` | Pinned source, controlled activity execution, and the separate 31 October pilot. |

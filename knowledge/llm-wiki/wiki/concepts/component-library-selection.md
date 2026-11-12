@@ -52,7 +52,7 @@ These limits are recorded in [[summaries/KT-architecture-evolution]].
 
 ## Relationship to onboarding and layering
 
-A selected library shapes [[concepts/frontend-onboarding]] because new tiles inherit the approved component set and theme conventions. It also interacts with [[concepts/microfrontend-layering]], since shared UI packages sit at a layer below individual tiles and above the shell.
+A component choice can affect [[concepts/frontend-onboarding]] and shared theme and dependency conventions. The guideline documents shared MUI themes, while the accepted component selection, effective versions, packaging, and affected consumers require confirmation.
 
 ## Open questions
 

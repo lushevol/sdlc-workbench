@@ -57,16 +57,18 @@ Keeping these two token types distinct is a security requirement, not a convenie
 
 Portal tile visibility and launch authorization are decided before application data access. Those rules are recorded in [[concepts/portal-entry-and-tile-authorization]]. A visible tile does not establish permission to read or modify the business data behind it. The tile-security proposal assigns data access and editing permissions to each tile application.
 
-The [[entities/portal-team]] owns the user-stated portal-entry rules. The [documented BFF UI SSO design](../../../candidates/security/KT-authentication-and-sessions.md#authentication-responsibilities) supplies user information and authentication tokens. The [SDK filter](../../../candidates/security/KT-sdk-and-entitlements.md#integration-purpose-and-responsibility-boundary) validates JWTs in downstream Spring applications; its registration and consumer adoption remain conditional, as the [architecture record](../../../candidates/architecture/ARC-portal-service-relationships.md#portal-and-sdk-boundaries) explains.
+The October answer names the [[entities/portal-team]] for portal-entry policy. The November answer names the RATAN team as owner and reviewer of portal policy under ICS. The [BFF SSO design](../sources/KT-authentication-and-sessions.md#authentication-responsibilities) supplies portal user information and authentication tokens. The [SDK filter](../sources/KT-sdk-and-entitlements.md#integration-purpose-and-responsibility-boundary) validates JWTs in downstream Spring applications where adopted.
 
 ## Unresolved questions
 
 - Which control authenticates requests when exclusions or skip headers bypass JWT validation?
-- How do applications invalidate cached entitlements and reject logged-out sessions across instances?
+- Which cache applies to each protected API path, and how do service instances enforce permission revocation and reject logged-out portal sessions?
 - Which environments currently omit entitlements from authentication tokens?
 - Which SDK artifact and configuration apply to each downstream service?
 
-The SDK overview recommends entitlement caching and mentions NGINX stickiness for multiple endpoints. It also announces removal of EMS2 details from authentication JWTs in DEV on 30 August 2024. That announcement establishes neither the present DEV state nor any production token shape.
+The SDK overview recommends entitlement caching and mentions NGINX stickiness for multiple endpoints. The user states that API permission revocation takes effect after the applicable Auth Server Redis cache expires. The entitlement cache expires after one hour and the JWT parsing cache after two hours. The two settings do not define JWT lifetime or a combined deadline. The separate logout ideal is immediate for all portal sessions and excludes identity-provider sessions. [Canonical permission-revocation criteria](../sources/KT-sdk-and-entitlements.md#permission-revocation-timing) · [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
+
+The SDK overview historically announced removal of EMS2 details from authentication JWTs in DEV on 30 August 2024. Current token shape remains unverified.
 
 ## Related pages
 

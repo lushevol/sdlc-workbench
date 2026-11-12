@@ -16,9 +16,9 @@ The administrative material in [[summaries/KT-admin-and-onboarding]] supplies th
 
 ## Layer 1: portal entry
 
-The user-stated rule denies portal entry to an authenticated SC user who holds no entitlement for any application entity registered in the portal. The policy was selected for local, test, UAT, and production environments. The [[entities/portal-team]] is named as owner.
+The user-stated rule denies portal entry to an authenticated SC user who holds no entitlement for any application entity registered in the portal. It applies to local, test, UAT, and production. The earlier answer names the [[entities/portal-team]] for this rule. The 12 November clarification identifies the RATAN team as portal policy owner and reviewer under ICS bank security policy. [UI-ENTRY-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001) · [Portal policy ownership](../../../candidates/security/KT-authentication-and-sessions.md#summary)
 
-The clarification defines a direction only. It specifies no HTTP status, denial wording, timing limit, or entity-versus-role precedence. The authentication topic states that the owner name is user-reported, so portal-team authority and approval remain unconfirmed across all four environments. A conflicting historical tile-security proposal permitted SC accounts to enter; that proposal is retained as historical evidence, not selected intent. The draft-principles material also lists SSO and tile authorization as priorities, but its login and tile-eligibility statements remain draft intent rather than accepted rules.
+The entry answer specifies no HTTP status, denial wording, timing limit, or entity-versus-role precedence. Content approval remains pending. A conflicting historical tile-security proposal permitted SC accounts to enter. The later user-stated rule controls the candidate for its stated scope.
 
 Portal entry depends on entitlement data that is created outside the portal admin module. The [[concepts/ems2-entitlement-provisioning]] procedure creates an entity, actions, roles, and subjects, and then assigns actions to role-and-subject combinations. The admin user manual identifies `FMO PORTAL ADMIN` entitlements for the import-map, category, and tile functions. These are prerequisites. They do not show that any current operator holds a grant.
 
@@ -28,13 +28,19 @@ The CES migration records do not restate or replace this entry rule. They focus 
 
 The portal model treats a tile as an application view that a user opens in a workspace; a workspace holds opened tiles. See [[concepts/portal-tile-workspace-model]]. For a tile that selects [[entities/ems2]], eligibility is configured through EMS2 entities and subjects rather than inferred from general portal access. Two configuration edge cases were clarified.
 
-**Empty entity configuration.** When a tile has zero configured [[entities/ems2]] entities, the portal hides the tile and denies direct launch until an entity is configured. The tile count and launch count must each equal zero. The authentication topic records this as a separate user-stated rule, owned by the [[entities/portal-team]] in local, test, UAT, and production.
+**Empty entity configuration.** When a tile has zero configured [[entities/ems2]] entities, the portal hides the tile and denies direct launch until an entity is configured. The tile count and launch count must each equal zero. The earlier owner answer names the [[entities/portal-team]] in local, test, UAT, and production. [UI-EMPTY-ENTITY-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001)
 
-**Empty subject configuration.** When a tile has one configured EMS2 entity and zero configured subjects, the portal shows the tile and authorizes launch provided the user satisfies the portal-entry rule and holds entitlement for that single entity. The visible tile count and launch authorization count must each equal one. No multiple-entity matching rule was defined. The authentication topic records one configured entity and zero configured subjects for this rule, with the same environments and owner.
+**Empty subject configuration.** When a tile has one configured EMS2 entity and zero configured subjects, the portal shows the tile and authorizes launch provided the user satisfies the portal-entry rule and holds entitlement for that single entity. The visible tile count and launch authorization count must each equal one. Multiple-entity matching remains outside this clarification. [UI-EMPTY-SUBJECT-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001)
 
 The admin material records the same counts for this case: one configured entity, zero configured subjects. It adds that the tile subject setting must be empty, and that the user must still satisfy portal-entry requirements and hold entitlement for that entity. It records the decision as pending approval.
 
-All three rules apply in local, test, UAT, and production and remain owned by the [[entities/portal-team]]. User-stated intent is their only basis. None of them is approved policy.
+**Configured subject.** The historical draft principles require matching both the configured EMS2 entity and subject when a tile requires a subject. The SSDR discussion records the same draft condition. [Historical configured-subject rule](../../../candidates/security/KT-sdk-and-entitlements.md#historical-configured-subject-rule)
+
+### Validation and revocation
+
+Validate tile access on login, page reload, and session extension when idle, using the entitlement data available at each event. Which source supplies that data and how fresh it must be remain open. [UI-TILE-VALIDATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-tile-validation-ac-001)
+
+Revoked UI permissions must take effect on the next login. The behavior of an already-open tab before that login remains open. The protected API revocation rule follows the applicable Auth Server Redis entry and is covered in [[concepts/entitlement-retrieval]]. [UI-ENTITLEMENT-REVOCATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-entitlement-revocation-ac-001)
 
 ### Per-tile provider selection
 
@@ -76,9 +82,9 @@ The supplied text does not fully specify rollback, activation propagation, or co
 
 Portal entry presumes an authenticated session. Login, session renewal, and timeout handling decide whether a valid session exists; they do not decide entitlement. The authentication topic keeps these responsibilities separate. The BFF completes an authorization-code exchange, builds user information, retrieves [[entities/ems2]] entitlements, and issues authentication and entitlement tokens. Entity and subject checks therefore consume the retrieval step recorded in [[concepts/entitlement-retrieval]]; they do not create entitlements.
 
-Session renewal supports continued activity without fresh authentication. See [[concepts/session-activity-renewal]], [[concepts/session-expiry-prompt-recovery]], [[concepts/token-lifecycle-and-timeout-policy]], and [[summaries/REQ-active-session-renewal]]. These materials define when a session stays valid. They do not change the result of an entry or tile decision. An expired session forces a new authentication before any entry check runs again. The session documents also contain unresolved timing proposals, so no timeout value of theirs can serve as an authorization input.
+Eligible activity can renew the session within the 15-minute idle and 60-minute absolute ceilings. Manual recovery after idle expiry can renew a session with a usable refresh token before the absolute deadline. Continued access after the absolute deadline requires a new authenticated portal session. Session validity and tile authorization remain separate decisions. See [[concepts/session-activity-renewal]], [[concepts/session-expiry-prompt-recovery]], [[concepts/token-lifecycle-and-timeout-policy]], and [[summaries/REQ-active-session-renewal]]. [Intended session scope](../../../candidates/requirements/REQ-active-session-renewal.md#intended-scope)
 
-The Entra phase 1 scope covers UI SSO only. It excludes EMS2 replacement and portal session management. Provider migration therefore keeps existing entry and tile authorization ownership. It does not move entitlement decisions into the identity provider. The production guide notes that AD profile values differ from OUD values for surname formatting, country codes, and locale. Those differences can affect downstream audit or application logic. The supplied material does not show that they change entity or subject matching. See [[concepts/identity-profile-attribute-migration]] and [[concepts/identity-provider-delegation]].
+The Entra phase 1 scope covers UI SSO. Portal entitlement decisions and session management remain separate. The current user-stated SSO rule prohibits OneMFA fallback. The former pilot activation settings are historical. The production pilot guide notes differences between AD and OUD surname formatting, country codes, and locale that can affect downstream audit or application logic. Entity and subject matching effects remain unconfirmed. See [[concepts/identity-profile-attribute-migration]] and [[concepts/identity-provider-delegation]]. [PORTAL-SSO-AC-001](../../../candidates/security/KT-authentication-and-sessions.md#portal-sso-ac-001)
 
 The CES provider-union rule changes functional permission checks after entry. It does not change the SSO boundary or the session boundary.
 
@@ -98,11 +104,11 @@ The same material defers CES saved-view and filter writes that require one owner
 
 ## Tenant and record boundaries
 
-The admin proposal discusses tenant-specific roles, while the manual lists shared admin subjects and a different-user check. The supplied text does not establish record-level tenant isolation for maker and checker users. A tenant that shares the `FMO PORTAL ADMIN` subject with other tenants therefore has no documented record boundary.
+Portal administrators may read every tenant's audit history and configuration. A tile must never reference metadata from another tile. Cross-tenant write and verification permissions and the scope of shared records remain open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
 
 ## Status and evidence limits
 
-Every rule above records user-stated intent. None is approved policy, an executable result, or evidence of deployed enforcement. Owner authority, publication approval, and runtime behavior remain unconfirmed, and no UI or service observation binding was verified. The associated business criteria (`UI-ENTRY-AC-001`, `UI-EMPTY-ENTITY-AC-001`, `UI-EMPTY-SUBJECT-AC-001`) preserve the historical test-case versions without byte changes. The authentication topic records their definition in [[summaries/KT-sdk-and-entitlements]] and states that approval for intended applicability remains pending.
+The canonical candidates distinguish user-stated intent, draft design, and execution evidence. Publication approval, runtime behavior, and UI and service observation bindings remain unverified. The criteria in [[summaries/KT-sdk-and-entitlements]] define the current candidate intent. Historical test results retain their original version scope.
 
 The wider portal material adds further limits. The portal introduction remains under edit, the principles remain draft, and the capabilities page mixes present-tense descriptions with an unfinished FDC3 item and depends on screenshots absent from the supplied export. A separate deployment proposal describes onboarding changes, workflow AI, telemetry, infrastructure migration, notification, dashboards, and OpenFin for 2026 and early 2027, but it has no approval record in these materials. Proposed services and roadmap items therefore cannot serve as current implementation facts for entry or tile authorization.
 
@@ -143,8 +149,9 @@ The CES migration parity source is a `candidate` draft based on user clarificati
 
 - Does any listed entity suffice when a tile has multiple configured EMS2 entities?
 - Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
-- How are tenant record boundaries enforced for maker and checker users?
-- What evidence confirms portal-team authority and approval across the four environments?
+- Which cross-tenant write and verification permissions apply to makers and checkers?
+- Which catalog fields count as tile-specific metadata, and which tenant-level records may be shared?
+- What evidence confirms policy approval across the four environments?
 - What evidence confirms deployed enforcement of the empty-entity and empty-subject rules?
 - Where does each downstream service enforce subject and action permissions?
 - Which release, approval, rollback, and emergency-change controls govern configuration changes made through the admin module?
@@ -152,7 +159,7 @@ The CES migration parity source is a `candidate` draft based on user clarificati
 - Which draft principles, including SSO and tile eligibility, became accepted rules, and when?
 - Which 2026 and 2027 proposals have approved scope or deployed implementations?
 - Which identity-provider profile contract downstream services must support after the SSO migration?
-- Which intended session timeout and refresh-duration rules apply, and do they change when entry checks are repeated?
+- What entitlement freshness applies on page reload and idle-session extension, and when must an already-open tab show revocation before next login?
 - Which reviewed application, feature, action, and caller contract mappings define CES tile admission for each migrated tile?
 - How must multiple CES roles map to existing upper-application role contracts and role-dependent business rules?
 - Which CES-only management permissions fall outside the migrated business permission scope?

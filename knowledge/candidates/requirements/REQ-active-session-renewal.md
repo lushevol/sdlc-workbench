@@ -1,8 +1,8 @@
 ---
 type: Requirement
 id: REQ-active-session-renewal
-version: 7
-owner: unknown
+version: 8
+owner: RATAN team
 governance_state: candidate
 status: draft
 sources:
@@ -18,20 +18,24 @@ sources:
 - resource: conversation:workbench:knowledge-intent-boundary-20261101
   revision: user-clarification-20261101-1
   sha256: e720c3f1d5b817526a5d3f7e984d59234241b69e3c8ade22ce3f8b13ea7fe22b
-previous_version: 6
-previous_content_sha256: 8df3874875f2d2352d09f3c5c91da0c12c9041ac5d6f50a992570b021076a767
+- resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
+  revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+  sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+previous_version: 7
+previous_content_sha256: 773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3
 generated:
   by: agent:codex
-  at: '2026-11-01T15:27:12.559701+00:00'
+  at: '2026-11-12T21:27:34+08:00'
 verified: []
 description: Keep active portal sessions renewable through mouse, keyboard, and scroll
-  activity without a fixed reauthentication maximum.
-rationale: The user requested continued renewal during active use and retained refresh-token
-  renewal after inactivity.
+  activity within the absolute session timeout. Limit idle timeout to 15 minutes and
+  absolute timeout to 60 minutes.
+rationale: Support renewal during active use and recovery from idle expiry within
+  the session limits that the user attributed to ICS bank security policy.
 acceptance_criteria:
 - id: AC-1
-  given: Given a valid portal session with at least 30 seconds remaining before access
-    expiry
+  given: Given a valid portal session with at least 30 seconds remaining before both
+    access expiry and absolute session expiry
   when: When mouse movement occurs every 100 milliseconds for 15 seconds
   then: Then at least one successful renewal occurs before the controlled interval
     ends
@@ -41,8 +45,8 @@ acceptance_criteria:
     value: 1
     unit: count
 - id: AC-2
-  given: Given a valid portal session with at least 30 seconds remaining before access
-    expiry
+  given: Given a valid portal session with at least 30 seconds remaining before both
+    access expiry and absolute session expiry
   when: When keyboard input occurs every 100 milliseconds for 15 seconds
   then: Then at least one successful renewal occurs before the controlled interval
     ends
@@ -52,9 +56,9 @@ acceptance_criteria:
     value: 1
     unit: count
 - id: AC-3
-  given: Given a valid portal session with at least 30 seconds remaining before access
-    expiry
-  when: When scroll activity occurs every 100 milliseconds for 15 seconds
+  given: Given a valid portal session with at least 30 seconds remaining before both
+    access expiry and absolute session expiry
+  when: When scrolling occurs every 100 milliseconds for 15 seconds
   then: Then at least one successful renewal occurs before the controlled interval
     ends
   measure:
@@ -63,19 +67,19 @@ acceptance_criteria:
     value: 1
     unit: count
 - id: AC-4
-  given: Given successful renewal responses and accepted user activity before each
-    access deadline, including the initial refresh-token expiry
-  when: When a controlled clock advances through four hours of continued activity
-  then: Then zero fresh SSO prompts occur solely because elapsed session time crosses
-    an earlier maximum
+  given: Given the initial refresh credential expires before the absolute session deadline
+    while access remains valid through eligible activity
+  when: When the user supplies eligible activity after the initial refresh credential expires
+    and before the absolute session deadline
+  then: Then at least one subsequent renewal succeeds within the current portal session
   measure:
-    metric: elapsed-time-only SSO prompt count
-    operator: equals
-    value: 0
+    metric: successful renewal count after initial refresh credential expiry
+    operator: at_least
+    value: 1
     unit: count
 - id: AC-5
-  given: Given an idle-expiry prompt and a usable refresh token
-  when: When the user selects renewal and its request remains pending
+  given: Given an idle-expiry prompt and a usable refresh token before the absolute session deadline
+  when: When manual renewal begins and its request remains pending
   then: Then the prompt has zero successful closure transitions before renewal succeeds
   measure:
     metric: premature prompt closure count
@@ -83,8 +87,8 @@ acceptance_criteria:
     value: 0
     unit: count
 - id: AC-6
-  given: Given an idle-expiry prompt and a usable refresh token
-  when: When the requested renewal succeeds
+  given: Given an idle-expiry prompt and a usable refresh token before the absolute session deadline
+  when: When the requested renewal succeeds before the absolute session deadline
   then: Then the prompt closes exactly once after completion
   measure:
     metric: successful prompt closure count
@@ -92,17 +96,39 @@ acceptance_criteria:
     value: 1
     unit: count
 - id: AC-7
-  given: Given an idle-expiry prompt and an unsuccessful refresh-based renewal request
+  given: Given an idle-expiry prompt and a refresh-based renewal request before the absolute session deadline
   when: When the request rejects
   then: Then the prompt has zero successful closure transitions and permits another
-    renewal attempt
+    renewal attempt while the refresh token is usable and the absolute deadline has not passed
   measure:
     metric: failed-renewal prompt closure count
     operator: equals
     value: 0
     unit: count
+- id: AC-8
+  given: Given eligible activity in an active portal session with more than 15 minutes
+    before its absolute deadline
+  when: When 15 minutes elapse without eligible activity or manual renewal
+  then: Then the portal session reaches idle expiry within 15 minutes of its last eligible activity
+  measure:
+    metric: inactivity duration before idle expiry
+    operator: at_most
+    value: 15
+    unit: minutes
+- id: AC-9
+  given: Given a portal session kept active by eligible activity and successful renewal
+  when: When the session reaches its configured absolute timeout or 60 minutes after
+    portal authentication, whichever occurs first
+  then: Then the expired portal session permits zero successful protected requests or renewals
+  measure:
+    metric: successful protected requests or renewals using the expired portal session
+    operator: equals
+    value: 0
+    unit: count
 review_limits:
-- The four-hour fixture horizon does not prove infinite execution.
+- Exact timeout settings and access-token and refresh-token lifetimes remain unspecified.
+- Review the applicable ICS policy revision, including whether the earlier
+  refresh-based recovery after idle expiry satisfies the idle timeout rule.
 - Portal-document activity is in scope. Cross-origin embedded application activity
   requires separate integration evidence.
 - Human publication review remains pending.
@@ -121,91 +147,89 @@ writing_review:
 
 ## Intended scope
 
-These criteria define the requested ideal session behavior.
-Mouse, keyboard, and scroll activity must support continued renewal without an elapsed-time-only authentication maximum.
-Manual recovery must keep the expiry prompt open until renewal succeeds and permit retry after rejection.
-The recorded user replies supply intent. Their exact source identities are listed above.
+The [12 November clarification](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input) sets the idle and absolute timeout ceilings.
+The RATAN team owns and reviews the portal policy under ICS bank security policy.
+The absolute ceiling supersedes the earlier request for renewal without a fixed elapsed-time limit.
+Eligible activity and manual renewal remain in scope within the absolute limit.
 
 Implementation, execution, rollout, backlog, and conformance belong in the independent [intent-to-reality gap record](../../../tasks/portal-background-session-20261019/09-intent-reality-gaps.md).
-Those records do not change these seven criteria or approve a substitute behavior.
-Supporting cancellation and request-sharing boundaries have no separate approved criterion in this requirement.
-Their operational disposition belongs in the gap record.
+The gap record contains comparisons against the earlier requirement version.
+Supporting cancellation and request-sharing boundaries have no separate criterion in this requirement.
 
 ## Description
 
 Mouse, keyboard, and scroll activity must support continued portal-session renewal.
-Elapsed time alone must not require fresh authentication while eligible activity and successful renewal continue.
-After inactivity expires the access token, retain renewal through the existing refresh token.
-Continued eligible activity must preserve renewal across the initial refresh-token expiry.
-The user confirmed this requested target on 20 October 2026.
-The requested policy comes from the user's recorded replies.
-It does not establish that the supplied implementation already satisfies every scenario.
+Idle timeout must be at most 15 minutes. Absolute timeout must be at most 60 minutes from portal authentication.
+Activity and renewal cannot extend the portal session beyond its absolute deadline. Continued access then requires a new authenticated portal session.
+Before the absolute deadline, a usable refresh token can renew a session after idle expiry.
+Within that deadline, eligible activity must support renewal across the initial refresh credential expiry while access remains valid.
+Manual recovery must keep the expiry prompt open until renewal succeeds and permit retry after rejection within the applicable limits.
 
 ## Rationale
 
-The user requested continued renewal during eligible activity and refresh-token renewal after inactivity.
-The requested behavior reduces repeated authentication during portal use.
-Expired or revoked credentials cannot authorize renewal.
-A valid access token can support replacement refresh credentials under the existing service contract.
-Recovery without any usable credential and provider failures remain separate boundaries.
-The controlled intervals below define measurable scenarios. They introduce no production timeout setting.
+Renewal reduces repeated authentication during portal use within the session limits the user attributed to ICS bank security policy.
+The ceilings bound the portal session. The exact timeout settings and individual token lifetimes remain unspecified.
 
 ## Acceptance criteria
 
 ```gherkin
-Scenario: AC-1
-  Given a valid portal session with at least 30 seconds remaining before access expiry
-  When mouse movement occurs every 100 milliseconds for 15 seconds
-  Then at least one successful renewal occurs before the controlled interval ends
+Feature: Renew portal sessions within the idle and absolute timeouts
+
+  @AC-1
+  Scenario: AC-1
+    Given a valid portal session with at least 30 seconds remaining before both access expiry and absolute session expiry
+    When mouse movement occurs every 100 milliseconds for 15 seconds
+    Then at least one successful renewal occurs before the controlled interval ends
+
+  @AC-2
+  Scenario: AC-2
+    Given a valid portal session with at least 30 seconds remaining before both access expiry and absolute session expiry
+    When keyboard input occurs every 100 milliseconds for 15 seconds
+    Then at least one successful renewal occurs before the controlled interval ends
+
+  @AC-3
+  Scenario: AC-3
+    Given a valid portal session with at least 30 seconds remaining before both access expiry and absolute session expiry
+    When scrolling occurs every 100 milliseconds for 15 seconds
+    Then at least one successful renewal occurs before the controlled interval ends
+
+  @AC-4
+  Scenario: AC-4
+    Given the initial refresh credential expires before the absolute session deadline while access remains valid through eligible activity
+    When the user supplies eligible activity after the initial refresh credential expires and before the absolute session deadline
+    Then at least one subsequent renewal succeeds within the current portal session
+
+  @AC-5
+  Scenario: AC-5
+    Given an idle-expiry prompt and a usable refresh token before the absolute session deadline
+    When manual renewal begins and its request remains pending
+    Then the prompt has zero successful closure transitions before renewal succeeds
+
+  @AC-6
+  Scenario: AC-6
+    Given an idle-expiry prompt and a usable refresh token before the absolute session deadline
+    When the requested renewal succeeds before the absolute session deadline
+    Then the prompt closes exactly once after completion
+
+  @AC-7
+  Scenario: AC-7
+    Given an idle-expiry prompt and a refresh-based renewal request before the absolute session deadline
+    When the request rejects
+    Then the prompt has zero successful closure transitions and permits another renewal attempt while the refresh token is usable and the absolute deadline has not passed
+
+  @AC-8
+  Scenario: AC-8
+    Given eligible activity in an active portal session with more than 15 minutes before its absolute deadline
+    When 15 minutes elapse without eligible activity or manual renewal
+    Then the portal session reaches idle expiry within 15 minutes of its last eligible activity
+
+  @AC-9
+  Scenario: AC-9
+    Given a portal session kept active by eligible activity and successful renewal
+    When the session reaches its configured absolute timeout or 60 minutes after portal authentication, whichever occurs first
+    Then the expired portal session permits zero successful protected requests or renewals
 ```
 
-```gherkin
-Scenario: AC-2
-  Given a valid portal session with at least 30 seconds remaining before access expiry
-  When keyboard input occurs every 100 milliseconds for 15 seconds
-  Then at least one successful renewal occurs before the controlled interval ends
-```
-
-```gherkin
-Scenario: AC-3
-  Given a valid portal session with at least 30 seconds remaining before access expiry
-  When scroll activity occurs every 100 milliseconds for 15 seconds
-  Then at least one successful renewal occurs before the controlled interval ends
-```
-
-```gherkin
-Scenario: AC-4
-  Given successful renewal responses and accepted user activity before each access deadline
-  And the initial refresh token expires within the controlled interval
-  When a controlled clock advances through four hours of continued activity
-  Then zero fresh SSO prompts occur solely because elapsed session time crosses an earlier maximum
-```
-
-```gherkin
-Scenario: AC-5
-  Given an idle-expiry prompt and a usable refresh token
-  When the user selects renewal and its request remains pending
-  Then the prompt has zero successful closure transitions before renewal succeeds
-```
-
-```gherkin
-Scenario: AC-6
-  Given an idle-expiry prompt and a usable refresh token
-  When the requested renewal succeeds
-  Then the prompt closes exactly once after completion
-```
-
-```gherkin
-Scenario: AC-7
-  Given an idle-expiry prompt and an unsuccessful refresh-based renewal request
-  When the request rejects
-  Then the prompt has zero successful closure transitions and permits another renewal attempt
-```
-
-The controlled intervals are test fixtures, not new business timeout limits.
-No finite test proves indefinite execution.
-Review the renewal path for fixed elapsed-time cutoffs and use bounded execution to test representative cycles.
-
-Owner: unknown.
-Next action: review the candidate criteria with the session owner before publication.
+Owner: RATAN team.
+Next action: review the candidate criteria and the applicable ICS policy revision before publication.
 Implementation plans, execution results, and conformance differences belong to the independent task gap record.

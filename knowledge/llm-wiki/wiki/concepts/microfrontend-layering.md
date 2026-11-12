@@ -23,7 +23,7 @@ Source basis: the candidate architecture record [[summaries/ARC-portal-service-r
 | 3 | Container | [[entities/mfe-ratan-container]] | Supply application routing, shared components, utilities, and related services. |
 | 4 | Tile | [[entities/mfe-cashflow-blotter]] (example) | Render feature views and application functionality. |
 
-The root layout declares only `@fm/base`, so the base tier deliberately knows nothing about containers or tiles. Registering a single child keeps the composition boundary narrow.
+The root layout declares only `@fm/base`; containers and tiles enter through the later shell and container loading stages. This single-child registration does not establish which module names appear in every root import-map entry.
 
 Terminology differs between the sources. [[summaries/KT-frontend-composition]] names the layers Root Config, Base shell, application container, and feature tile, and its role table assigns common routing, global state, and theme context to a "base container". The reconciled reading is that the root configuration registers only the shell, and the shell carries shared presentation context. The exact split of routing responsibility between the shell and the application container is not confirmed by inspected declarations. The portal-purpose topic uses container for both the shared base and application-owned modules; the role must therefore be stated explicitly whenever an interface is described.
 
@@ -67,7 +67,7 @@ The documented onboarding sequence condenses the [[concepts/frontend-onboarding]
 5. Configure the tile through the Admin Module procedure.
 6. Build and deploy the application files, then supply static-file and API URLs to the platform team.
 
-Step 3 is where a layering decision becomes a per-application task. A bundler change, an import-map change, or a shared-library upgrade propagates through the module-name and build-configuration items for every application that follows the sequence, which is why those changes are governed at the platform level rather than per repository.
+Step 3 is where a layering decision becomes a per-application task. Inference: A bundler change, an import-map change, or a shared-library upgrade can affect applications that consume the changed interface. Confirm the affected providers and consumers and the effective change authority before deciding the coordination required for a particular change.
 
 ## Development conventions and standalone use
 

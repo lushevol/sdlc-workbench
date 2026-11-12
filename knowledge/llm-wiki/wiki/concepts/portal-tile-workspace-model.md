@@ -1,6 +1,6 @@
 ---
 type: "Concept"
-sources: ["summaries/KT-release-operations.md", "summaries/KT-application-interoperability.md", "summaries/KT-architecture-evolution.md", "summaries/KT-portal-purpose.md"]
+sources: ["summaries/KT-ces-migration-parity.md", "summaries/KT-release-operations.md", "summaries/KT-application-interoperability.md", "summaries/KT-architecture-evolution.md", "summaries/KT-portal-purpose.md"]
 description: "Portal tile/workspace model with intent-mediated navigation and context handoff."
 ---
 
@@ -45,7 +45,7 @@ A completed caller alone cannot enable the full feature. The provider also needs
 
 ## Access and integration
 
-Tile eligibility is configured from [[entities/ems2]] roles, so authorization is not only a UI concern. See [[concepts/portal-entry-and-tile-authorization]] and [[concepts/entitlement-retrieval]]. The cooperation guide says portal routing provides access control, but the supplied copy does not establish that access-control enforcement is in place.
+The supplied capability map describes tile eligibility in [[entities/ems2]] role terms. The current candidate migration intent requires each tile to select EMS2 or CES admission independently, while the shared `hasPermission(code)` provider-union check remains separate from tile admission. See the [canonical provider boundary](../../../candidates/security/KT-ces-migration-parity.md#independent-tile-provider-selection), [[concepts/portal-entry-and-tile-authorization]], and [[concepts/entitlement-retrieval]]. The cooperation guide says portal routing provides access control, but the supplied copy does not establish that access-control enforcement is in place.
 
 Tenant UI and API traffic are described as routed through the portal's [[entities/nginx]] boundary, which relates to [[concepts/portal-ingress-path]]. Frontend onboarding of a tenant application is a separate concern described in [[concepts/frontend-onboarding]].
 

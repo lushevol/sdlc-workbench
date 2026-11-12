@@ -1,8 +1,8 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 9
-owner: unknown
+version: 10
+owner: RATAN team
 governance_state: candidate
 status: draft
 sources:
@@ -82,6 +82,9 @@ sources:
 - resource: conversation:workbench:knowledge-intent-boundary-20261101
   revision: user-clarification-20261101-1
   sha256: e720c3f1d5b817526a5d3f7e984d59234241b69e3c8ade22ce3f8b13ea7fe22b
+- resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
+  revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+  sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
 tile_empty_subject_policy:
   owner: portal team
   environments: [local, test, UAT, production]
@@ -99,18 +102,20 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 8
-previous_content_sha256: 430036f1b9452bb598a4f2fdc9674fd3c2a26e52b9a2cffe72e36bedd3167c30
+previous_version: 9
+previous_content_sha256: f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb
 generated:
   by: agent:codex
-  at: '2026-11-01T15:27:12.559701+00:00'
+  at: '2026-11-12T21:27:34+08:00'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
   boundaries.
-summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
-  Policy-owner authority remains unknown. Intended session renewal supports continued activity and recoverable manual extension.
-  Session and migration limits remain unresolved.
+summary: The RATAN team owns and reviews portal policy under ICS bank security policy.
+  Portal entry requires entitlement for a registered application entity. The user
+  set idle and absolute session ceilings of 15 and 60 minutes and prohibited OneMFA
+  fallback. The stated logout ideal revokes all portal sessions for the user
+  immediately and leaves identity-provider sessions intact.
 related:
 - KT-sdk-and-entitlements
 - KT-admin-and-onboarding
@@ -121,12 +126,10 @@ related:
 - mfe-base
 - REQ-active-session-renewal
 open_questions:
-- What evidence confirms portal-team authority and approval across the user-stated environments?
-- What evidence confirms portal-team approval of the intended empty-entity tile rule?
-- Which intended timeout and refresh-duration rules apply to each supported environment?
-- Which activation grammar and persistence rule have target-design approval?
+- Which ICS policy revision governs the stated session limits?
+- Which exact timeout settings and token lifetimes apply by environment?
+- Which authorized conditions initiate portal logout when the access token has expired?
 - Which identity-provider profile contract must downstream services support?
-- Which intended migration scope and authentication responsibilities have authoritative approval?
 - Which documented FMAA flows and validity settings remain intended requirements?
 writing_review:
   standard: ASD-STE100
@@ -148,9 +151,9 @@ It does not establish deployed behavior or approved security policy.
 ## Summary
 
 The target portal authenticates users, obtains entitlements, and issues tokens for application requests.
-Its session materials distinguish idle timeout, absolute timeout, refresh tokens, and repeated login.
-Entra migration replaces the SSO provider while preserving separate entitlement and portal-session responsibilities.
-Several intended timing and activation rules require reconciliation.
+The RATAN team owns and reviews portal policy under ICS bank security policy.
+The user set session timeout ceilings and specified Entra SSO without OneMFA fallback.
+[12 November clarification](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
 
 For all portal environments, the user selected denial when an authenticated SC user lacks any registered application entity entitlement.
 This is user-stated intent, not approved policy or verified enforcement.
@@ -162,25 +165,50 @@ The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarific
 
 The [active-session requirement](../requirements/REQ-active-session-renewal.md#intended-scope) defines the ideal target behavior.
 Eligible mouse, keyboard, and scroll activity must support continued portal-session renewal.
-Elapsed time alone must not require fresh authentication while eligible activity and successful renewal continue.
-The target includes continued renewal across the initial refresh-token expiry.
+Idle timeout must be at most 15 minutes.
+Absolute session timeout must be at most 60 minutes from portal authentication.
+The absolute limit applies during activity and renewal.
+Within the absolute limit, renewal can continue across the initial refresh-token expiry while access remains valid.
 
 During manual recovery, the expiry prompt must remain open while renewal is pending.
 Successful renewal must close the prompt exactly once after completion.
 A rejected renewal must preserve the prompt and permit another renewal attempt under the canonical criterion conditions.
-The requirement holds the canonical measurable scenarios. This topic creates no additional scenario or timeout setting.
+The requirement holds the canonical measurable scenarios.
 
 The independent [intent-to-reality gap record](../../../tasks/portal-background-session-20261019/09-intent-reality-gaps.md) holds actual implementation and observation comparisons.
 Defects, passing observations, backlog, and deployment state do not redefine this intended behavior.
 Human publication review remains pending for this candidate topic and its linked requirement.
 
+### Intended logout scope
+
+The user described the ideal logout behavior as immediate revocation of all portal sessions for the user.
+The target covers the current portal session and the user's other portal sessions.
+Identity-provider sessions, including Entra sessions, are outside the revocation scope.
+The candidate target requires RATAN review under the applicable ICS policy.
+[12 November clarification](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
+
+#### PORTAL-LOGOUT-AC-001
+
+```gherkin
+Feature: Immediate portal logout
+  @PORTAL-LOGOUT-AC-001
+  Scenario: Revoke the user's portal sessions at logout
+    Given a user has 2 valid portal sessions, each with a usable refresh token
+    And the user has a valid Entra session
+    When the user completes logout from one portal session
+    And a protected action and a renewal are attempted immediately with each prior portal session
+    Then 0 of the 2 protected actions succeed with those sessions
+    And 0 of the 2 renewal attempts succeed with those refresh tokens
+    And the Entra session remains valid
+```
+
 ### Current user-stated portal-entry rule
 
 An authenticated SC user with no entitlement for any registered application entity must be denied portal entry.
 The user selected this rule for local, test, UAT, and production environments.
-The [owner answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json) identifies `portal team` for this policy only.
-User identity remains unknown. Portal-team authority and approval remain unconfirmed.
-Approval for the intended applicability remains pending.
+The [earlier owner answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json) names the portal team for entry.
+The [12 November clarification](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input) names the RATAN team for portal policy ownership and review.
+Candidate content approval remains pending.
 
 The answer defines no HTTP status, denial wording, or additional entity-versus-role semantics.
 
@@ -198,14 +226,29 @@ The [SDK topic](KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule
 
 The [empty-subject rule](KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule) permits tile visibility and launch through one configured EMS2 entity.
 The explicit user answer is the first-priority reference for this intended behavior.
-The portal team owns this rule across local, test, UAT, and production.
+The earlier rule-specific answer assigns the portal team responsibility across local, test, UAT, and production.
 
 ### Authentication responsibilities
 
 The Entra design describes a browser redirect followed by an authorization-code exchange through the BFF.
 The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens.
-Its design retains OneMFA fallback and a separate username/password path.
+The historical design retained OneMFA fallback and described a separate username/password path.
 [Entra design, lines 7–31, 40–68](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
+
+The current user-stated portal SSO policy uses Entra and prohibits OneMFA fallback.
+The November clarification supersedes the pilot fallback rule.
+[12 November clarification](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
+
+#### PORTAL-SSO-AC-001
+
+```gherkin
+Feature: Production portal single sign-on
+  @PORTAL-SSO-AC-001
+  Scenario: Prohibit OneMFA fallback when Entra is unavailable
+    Given Entra SSO is unavailable for a production portal sign-in
+    When a user attempts portal sign-in with SSO
+    Then the portal makes 0 OneMFA fallback attempts for that sign-in
+```
 
 The phase 1 scope separates authentication from authorization.
 It includes UI SSO migration.
@@ -289,38 +332,35 @@ This limits their use as current security policy.
 Owner: unknown.
 Next action: establish the applicable versions with the responsible security and application owners.
 
-Historical session designs contain unresolved timing proposals.
-They cannot establish one intended timing policy without an authoritative decision.
-Owner: unknown session owner. Next action: reconcile the intended timing rules before policy publication.
+Historical session designs contain competing timeout and token-duration proposals.
+The November answer establishes session ceilings. Exact settings and token lifetimes still require a governing policy source.
+Owner: RATAN team. Next action: verify the applicable ICS policy revision.
 Implementation and execution comparisons remain in the independent task gap record.
 
-The design uses `ENABLE_ENTRA_SSO=true/false`; the production guide uses `yes/no`.
-The production guide describes both temporary activation and persistent activation after first use.
-These differences can produce incorrect pilot or fallback instructions.
-Owner: unknown.
-Next action: resolve the intended activation grammar and persistence rule with the responsible owner.
+The historical production guide describes both temporary and persistent activation.
+Those statements apply to the former Entra pilot. The November answer prohibits OneMFA fallback for the current SSO policy.
 [Entra design, lines 7–31, 40–68](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
 [Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
 
 ## Open questions
 
-What evidence confirms portal-team authority and approval across the user-stated environments?
-The [retained answers](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#ui-q-002) establish user-stated intent and owner identity only.
-Consequence: policy publication requires applicable review and authority evidence.
-Owner: `portal team`, user-reported for entry policy only.
-Next action: obtain applicable authority and approval evidence.
+Which ICS policy revision governs the stated session limits?
+The clarification attributes the two maximum session timeouts to ICS bank security policy.
+Owner: RATAN team. Next action: obtain the applicable policy text and revision.
 
-Which intended timeout and refresh-duration rules apply to each supported environment?
-The two session designs contain incompatible timing proposals.
-Consequence: those proposals cannot define one authoritative target timing policy.
-Owner: unknown session owner. Next action: review the intended timing table and token-reuse rule.
+Which exact timeout settings and token lifetimes apply by environment?
+The earlier designs propose different token lifetimes.
+Owner: RATAN team. Next action: confirm any approved environment-specific settings.
 [Session version 0](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md>)
 [Session version 1](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>)
 
-Which intended migration scope and authentication responsibilities have authoritative approval?
-The supplied plans and guides require an applicable design decision.
-Consequence: historical schedules cannot select the target provider and fallback policy.
-Owner: unknown migration owner. Next action: confirm the intended provider contract and supported fallback boundaries.
+Which authorized conditions initiate portal logout when the access token has expired?
+The user supplied the ideal revocation scope and timing. The answer leaves initiation with an expired access token unresolved.
+Owner: RATAN team. Next action: review the intended security criterion with the applicable ICS policy.
+
+Which identity-provider profile contract must downstream services support?
+The production pilot guide records profile changes. The field requirements of uninspected downstream applications remain open.
+Owner: downstream application owners. Next action: confirm additional fields when an affected consumer is in scope.
 
 Which documented FMAA flows and validity settings remain intended requirements?
 The historical reference supplies exceptional validity examples.

@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-admin-and-onboarding
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -64,8 +64,11 @@ sources:
 - resource: conversation:ui-test-coverage-20261022:empty-subject-owner-scope
   revision: user-answer-20261022-1
   sha256: a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee
-previous_version: 2
-previous_content_sha256: 2ce166fbcf18daa56784a71ca63f519ca84872c780edfc0a540fe20a1fe589a3
+- resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
+  revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+  sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+previous_version: 3
+previous_content_sha256: 9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869
 tile_empty_subject_policy:
   owner: portal team
   environments: [local, test, UAT, production]
@@ -76,13 +79,14 @@ tile_empty_subject_policy:
   approval: pending
 generated:
   by: agent:codex
-  at: '2026-10-22T12:36:31Z'
+  at: '2026-11-12T21:27:34+08:00'
 verified: []
 classification: operations
 scope: Portal tenant onboarding, application catalog administration, and documented
   team responsibilities.
 summary: Onboarding joins frontend deployment, backend routing, EMS2 roles, and reviewed
-  application catalog changes.
+  application catalog changes. Portal administrators can read all tenant audit history
+  and configuration. A tile cannot reference metadata from another tile.
 related:
 - KT-sdk-and-entitlements
 - KT-authentication-and-sessions
@@ -94,7 +98,8 @@ related:
 - single-ui-category-tile-admin
 open_questions:
 - Which onboarding and admin procedures apply to the current environment?
-- How are tenant record boundaries enforced for maker and checker users?
+- Which write and verification permissions apply across tenants for maker and checker users?
+- Which catalog fields are tile-specific metadata, and which tenant-level records may be shared?
 - Which release controls apply to configuration changes made through self-service?
 - Which source revisions and environment checks establish the deployed catalog schema?
 - Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
@@ -120,7 +125,8 @@ It records documented responsibilities without assigning current owners or claim
 An onboarded application needs frontend assets, backend routing, entitlements, and portal catalog records.
 The admin proposal seeks self-service configuration in place of source changes for every tile update.
 The manual describes separate maker and checker users, activation, deactivation, and per-record audit history.
-The documents do not establish current production authorization or release controls.
+The current user clarification defines portal administrator reads across tenants and the tile metadata boundary.
+Current production enforcement and release controls require separate evidence.
 
 ## Documented knowledge
 
@@ -222,6 +228,50 @@ Its addresses and contact details remain in the original material.
 Current network approvals and reachability were not verified.
 [Firewall operational register, lines 1–8](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Firewall Configurations/page.md>)
 
+### Portal administrator reads and tile metadata references
+
+Portal administrators can read audit history and configuration for every tenant.
+This read rule applies across tenant boundaries. Write and verification permissions are a separate decision.
+A tile must never reference metadata from another tile, including when a portal administrator submits the configuration.
+The classification of specific metadata fields and rules for shared tenant records remain open.
+[Portal ingestion answer, item 7](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
+
+#### ADMIN-CROSS-TENANT-READ-AC-001
+
+```gherkin
+Feature: Read tenant audit history and configuration as a portal administrator
+  @ADMIN-CROSS-TENANT-READ-AC-001
+  Scenario Outline: Read a record across tenant boundaries
+    Given the requester has the portal administrator role
+    And each tenant in the test has a distinct known <record> record
+    When the administrator requests the <record> record from each tenant
+    Then each request returns the requested record
+    And the number of requests denied because of tenant ownership is 0
+
+    Examples:
+      | record        |
+      | audit history |
+      | configuration |
+```
+
+#### ADMIN-TILE-METADATA-AC-001
+
+```gherkin
+Feature: Keep metadata references within a tile
+  @ADMIN-TILE-METADATA-AC-001
+  Scenario Outline: Reject a reference to metadata belonging to another tile
+    Given the requester has permission to <operation> the target tile
+    And the submitted configuration references metadata belonging to another tile
+    When the requester submits that configuration
+    Then the portal rejects the submitted configuration
+    And the number of references to the other tile's metadata created by the request is 0
+
+    Examples:
+      | operation |
+      | create    |
+      | update    |
+```
+
 ### Current empty-subject clarification
 
 The [explicit user answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json) permits tile visibility and launch through one configured EMS2 entity.
@@ -287,12 +337,21 @@ Next action: connect applicable migrations, operating procedures, and environmen
 
 ## Open questions
 
-How do tenant boundaries apply to maker and checker permissions?
+Which tenant boundaries apply to maker and checker writes and verification?
 The proposal discusses tenant-specific roles; the manual lists shared admin subjects and a different-user check.
-The supplied text does not establish record-level tenant isolation.
+The current [read rule and metadata boundary](#portal-administrator-reads-and-tile-metadata-references) leave cross-tenant write and verification permissions open.
 Owner: unknown.
-Next action: map role checks to record ownership and retain denied-cross-tenant assertions.
+Next action: confirm the write and verification policy before defining permitted and denied cases.
 [Admin overview, lines 1–37](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md>)
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+Which catalog fields are tile-specific metadata, and which tenant-level records may be shared?
+The user defines the boundary for metadata belonging to another tile.
+The admin manual identifies drawer categories and module mappings as separate catalog functions.
+The shared status of any particular category or import-map record remains unconfirmed.
+Owner: unknown.
+Next action: classify the referenced records before applying the metadata rule to specific fields.
+[Portal ingestion answer, item 7](../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
 [Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
 
 Which production controls govern self-service configuration changes?

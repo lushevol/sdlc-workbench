@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-release-operations.md"
 ---
 
-> Derived from [KT-release-operations, version 2](../../../candidates/operations/KT-release-operations.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-release-operations, version 3](../../../candidates/operations/KT-release-operations.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal release operations — Summary
 
@@ -16,7 +16,7 @@ This topic links release planning with [[concepts/configuration-promotion]] and 
 The release proposal assigns Portal routing, route enabling, tenant interfaces, and Portal-owned production changes to Portal teams. Tenant teams retain responsibility for their UI, backend, services, databases, and infrastructure. Portal teams run Portal releases and routing rollback; tenant teams validate applications, perform UVT, and support tenant issues.
 
 ## Readiness and scheduling
-Requested inputs include solution intent, user profiles, routing details, connectivity checks, UAT sign-off, and rollback planning; new interfaces require 30 days of engagement under the proposal. The unfinished checklist adds SDK validation, shared frontend requests, entitlement checks, disaster recovery, performance inputs, operating agreements, and penetration testing. These are requested readiness items, not proof of completed checks.
+Requested inputs include solution intent, user profiles, routing details, connectivity checks, UAT sign-off, and rollback planning; new interfaces require 30 days of engagement under the proposal. The unfinished checklist adds SDK validation, shared frontend requests, entitlement checks, disaster recovery, performance inputs, operating agreements, and penetration testing. The unfinished checklist also calls for tenant review with RATAN before preparing each production release and assigns the tenant the upstream disaster-recovery check. The portal load balancer has no DR responsibility in that checklist. This guidance requires applicability review. [Canonical readiness section](../../../candidates/operations/KT-release-operations.md#readiness-before-scheduling).
 
 ## Configuration promotion
 The documented flow starts with Module Map, Drawer Category, and Tile Configuration changes in Development. Teams export CSV files to a tenant-owned repository, then an ADO pipeline uploads configuration to the Portal Admin service at `/api/auth/v1/fmo/admin/config/upload`. The flow says the service validates an FMAA JWT before processing CSV files. The first bulk insert into UAT and Production uses a separate BFF release; later uploads depend on tenant connectivity. The checklist also flags planned FMAA decommissioning, creating an unresolved dependency.
@@ -34,7 +34,7 @@ Tenant onboarding requires separate evidence for technical deployment and busine
 The CDUPS request leaves UAT sign-off, user profiles, user counts, and UVT details unprovided. The DDR request records pending connectivity and separates technical sign-off from business validation. Several VPA evidence references are struck through. Missing or withdrawn references cannot establish the corresponding release gate. The blank request template asks for DNS resolution, user totals, routing changes, connectivity evidence, sign-off, and UVT contacts, but does not show any specific request satisfying them.
 
 ## Deployment evolution
-Deployment strategy is unresolved in the supplied materials. The older frontend deployment guide describes static artifacts, a proposed blue-green model, shared Pilot and Production backend, feature checks, artifact publication, and manual production deployment after approval. The Nginx draft proposes versioned configuration, syntax checks, restart checks, and rollback. Neither document establishes the currently deployed pipeline. The production checklist recommends Portal connections through tenant Nginx or load balancers, with tenant teams controlling internal server and port changes behind that boundary. It separately requests browser reachability, Portal-to-tenant connectivity, operating agreements, security testing, and tile release.
+Deployment strategy is unresolved in the supplied materials. The older frontend deployment guide describes static artifacts, a proposed blue-green model, shared Pilot and Production backend, feature checks, artifact publication, and manual production deployment after approval. The Nginx draft proposes versioned configuration, syntax checks, restart checks, and rollback. Neither document establishes the currently deployed pipeline. The production checklist recommends Portal connections through tenant Nginx or load balancers, with tenant teams controlling internal server and port changes behind that boundary. It separately requests browser reachability, including viewing the sign-in page before authentication, plus Portal-to-tenant connectivity, operating agreements, security testing, and tile release. [Canonical deployment section](../../../candidates/operations/KT-release-operations.md#deployment-evolution).
 
 ## Connections
 - [[summaries/KT-admin-and-onboarding]] covers configuration and entitlement inputs.

@@ -16,6 +16,8 @@ Kibana is a data visualization and dashboard product, commonly used to explore a
 
 The analytics design describes how user interaction events are produced by Portal UI components. The dashboard guide then describes how those events are examined in Kibana. Kibana therefore sits at the observation end of the analytics flow: events are captured in the browser, submitted to the analytics API, and reviewed through dashboards.
 
+The current analytics candidate identifies CPO review of business product usage as the purpose and sets three months of PROD retention. The authorized Kibana readers, field handling, and expiry details remain open. [Analytics purpose](../../../candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary) · [Retention criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-analytics-ac-001)
+
 See [[concepts/interaction-analytics]] for the event vocabulary (tiles, modals, tabs, buttons, switches, dropdowns) that feeds these dashboards, and [[summaries/KT-observability-and-performance]] for the broader evidence assessment.
 
 ## Documented dashboards
@@ -37,8 +39,7 @@ The error dashboard exposes `traceId` for investigation. The guide also describe
 
 - The Production dashboard URL remains a placeholder in the supplied copy.
 - The statements do not prove present dashboard availability or data completeness.
-- Event identity, custom attribute limits, and retention rules for collected values remain unresolved.
-- Opening an analytics model declares 20 custom attribute fields while another declares 10, so dashboard coverage of those attributes is unconfirmed.
+- Supported custom attribute limits and dashboard field coverage remain unresolved. One documented model declares 20 custom attribute fields and another declares 10.
 
 No dashboard was opened, queried, or verified during ingestion. The documentation establishes intended dashboard scope, not observed production coverage.
 

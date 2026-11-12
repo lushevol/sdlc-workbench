@@ -4,6 +4,8 @@ query: "What are the Portal frontend composition layers and ownership boundaries
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
+> Review qualification — 12 November 2026: This saved answer reflects frontend-composition v3; [the current canonical record is v4](../../../candidates/architecture/KT-frontend-composition.md). The four-layer model remains candidate architecture. The source roles do not establish that the microfrontend team and Portal Team are the same organization, or identify every root/interface approver. The inspected root registers only MFE Base; that declaration does not establish absent container/tile import-map entries. The notification materials assign no tier owner in the supplied model; they do not prove that cross-tile event delivery has no actual owner. Read the original synthesis below with these limits and the [current architecture record](../../../candidates/architecture/ARC-portal-service-relationships.md).
+
 ## Short answer
 
 The wiki does **not** describe six layers — it records a **four-layer** composition. "Feature" and "module" are *routing-stage and vocabulary terms*, not separate tiers.

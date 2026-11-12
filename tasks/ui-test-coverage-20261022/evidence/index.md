@@ -25,9 +25,9 @@ writing_review:
 > Action: Obtain approval evidence from the user-identified `portal team`. Consequence: Policy acceptance and publication remain blocked.
 > Owner: `portal team`, user-reported for the three rules. Evidence: The [clarification stage](../05-entry-clarification.md#current-task-state).
 >
-> **Eight policy answers and one shared ownership/contact entry remain.**
-> Action: Complete the [remaining entries](../05-knowledge-questions.md#answer-navigation). Consequence: Missing policy blocks its affected acceptance definition.
-> Owner: user or delegated topic owner. Evidence: The [investigation reconciliation](question-refinement-20261026/reconciliation.json).
+> **The user answered nine portal policy and ownership entries on 12 November 2026.**
+> Action: Use the [candidate update log](../05-knowledge-questions.md#knowledge-update-log) for review and the remaining scope limits.
+> Owner: RATAN team for portal policy. Evidence: The [exact returned answers](portal-ingestion-answers-20261112.md#exact-user-input).
 
 > **UI trace archives remain local and are absent from fresh Git checkouts.**
 > Action: Restore required traces before full artifact audits. Consequence: Missing traces block complete artifact verification.
@@ -61,7 +61,8 @@ For current questions and answers, use the [single knowledge question document](
 Answer only that document. The entry clarification file retains decisions and sources; it requires no answers.
 The [document-selection question](question-refinement-20261026/answer-document-question.json) records the user's request for this distinction.
 
-Version 3 retains all 60 IDs. Investigation reduces the editable entries to eight policy answers and one shared contact entry.
+Version 4 retains all 60 IDs and records the nine returned answers. The version 3 investigation reduced the editable entries to eight policy answers and one shared contact entry.
+The [legacy wiki review checkpoints](../05-knowledge-questions.md#legacy-wiki-review-checkpoints) and [completion evidence](portal-wiki-legacy-review-20261112/completion.json) record the finished five-input review: 96 pages reviewed, 31 corrected, and all 12 portal inputs current. The [next owner actions](../05-knowledge-questions.md#next-owner-actions) retain RATAN policy review and the held MOM source.
 Source-backed findings include multiple-entity matching, current EMS3 support, profile fields, login flags, and twenty analytics attributes.
 
 The [refinement request](question-refinement-20261026/user-request.json) and [continuation](question-refinement-20261026/user-continuation.json) retain the user's exact input.
