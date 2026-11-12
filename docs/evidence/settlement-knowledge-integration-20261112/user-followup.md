@@ -45,3 +45,9 @@ Source: follow-up in Codex, 12 November 2026.
 Source: follow-up in Codex, 12 November 2026.
 
 > I mean first it need filters and clean then ingest into candidate then to llm wiki right
+
+## Next-step request
+
+Source: follow-up in Codex, 12 November 2026.
+
+> what’s next for settlement knowledge?
