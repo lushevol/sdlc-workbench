@@ -26,7 +26,7 @@ writing_review:
 > Owner: `portal team`, user-reported for the three rules. Evidence: The [clarification stage](../05-entry-clarification.md#current-task-state).
 >
 > **The user answered nine portal policy and ownership entries on 12 November 2026.**
-> Action: Use the [candidate update log](../05-knowledge-questions.md#knowledge-update-log) for review and the remaining scope limits.
+> Action: Review the [completed 12-record candidate pack](../05-knowledge-questions.md#final-candidate-review-pack). Agent review, supported correction, source reconciliation and wiki maintenance are complete. Human publication review remains separate; ICS source questions are deferred.
 > Owner: RATAN team for portal policy. Evidence: The [exact returned answers](portal-ingestion-answers-20261112.md#exact-user-input).
 
 > **UI trace archives remain local and are absent from fresh Git checkouts.**
@@ -60,6 +60,8 @@ Existing raw manifests and case results remain unchanged. Fresh checkouts requir
 For current questions and answers, use the [single knowledge question document](../05-knowledge-questions.md).
 Answer only that document. The entry clarification file retains decisions and sources; it requires no answers.
 The [document-selection question](question-refinement-20261026/answer-document-question.json) records the user's request for this distinction.
+
+The [current candidate-review completion](../05-knowledge-questions.md#candidate-review-completion) carries the authorization to finish all remaining agent work. It links durable record-level checkpoints and the final review handoff.
 
 The [latest review-scope direction](portal-ingestion-question-20261112.md#defer-ics-source-questions-without-blocking-review) defers ICS source-related questions without blocking review. The [current stage](../05-knowledge-questions.md#stage-boundary-and-readiness) is `READY` for continued review against the recorded rules. Source and revision questions, including policy-dependent idle-recovery assessment, require no response for this review.
 

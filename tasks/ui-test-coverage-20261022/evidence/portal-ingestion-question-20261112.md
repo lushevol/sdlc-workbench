@@ -59,3 +59,12 @@ Priority: Latest explicit direction for the portal knowledge review scope.
 > please leave ICS policy source related questions alone, don't block the review process.
 
 Scope: Defer ICS source-document, identifier, revision and source-dependent applicability questions. Keep their evidence limits recorded without asking them again or using them as prerequisites for review. Continue the review using the user's recorded portal rules. This changes review procedure; it supplies no new timeout rule, human reviewer identity or publication approval.
+
+## Complete the remaining agent work
+
+Source: Subsequent Codex user message, 12 November 2026, Asia/Singapore.
+Priority: Latest authorization to complete the remaining agent-led portal knowledge work.
+
+> I mean what required from me ? If nothing please go ahead till all completed.
+
+Scope: Complete the candidate-content review, apply corrections supported by retained sources and recorded answers, run the required checks, and prepare the final review handoff. Reuse completed source and wiki work. Keep ICS source-related questions deferred. Ask only for a concrete decision the agent cannot complete; do not infer new business answers or human publication approval.

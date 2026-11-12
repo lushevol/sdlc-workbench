@@ -1,0 +1,37 @@
+id: AUD-20261113-REQ-active-session-renewal-v9
+item_id: REQ-active-session-renewal
+item_version: 9
+actor: agent:codex
+at: '2026-11-12T16:10:14.014042+00:00'
+action: transition
+from_state: untracked
+to_state: candidate
+content_sha256: 13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1
+reason: Correct inherited unsupported timing fixtures in AC-1 through AC-3. Require renewal when due and
+  success before access expiry and the absolute session deadline; retain activity categories and timeout
+  ceilings. Independent agent review of the prepared final bytes resolved SEC-REQ-001.
+evidence:
+- resource: conversation:current/user-reply/session-renewal-intent
+  revision: request-2026-10-15
+  sha256: d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9
+- resource: conversation:current/user-reply/session-activity-and-idle-intent
+  revision: reply-2026-10-15
+  sha256: a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3
+- resource: conversation:portal-session-renewal-clarification-20261020
+  revision: user-reply-20261020
+  sha256: cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba
+- resource: conversation:workbench:knowledge-intent-boundary-20261101
+  revision: user-clarification-20261101-1
+  sha256: e720c3f1d5b817526a5d3f7e984d59234241b69e3c8ade22ce3f8b13ea7fe22b
+- resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
+  revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+  sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+item_path: knowledge/candidates/requirements/REQ-active-session-renewal.md
+previous_version: 8
+previous_content_sha256: 7d90d20b35c205940107951497b2b3a48e01d2a8f41bbf573e2ad18250f15779
+previous_git_revision: c3fa8c7005aa3b2cb975ef0eaf7d65a68f8eb4ab
+review_evidence: tasks/ui-test-coverage-20261022/evidence/portal-candidate-review-20261112/security.json
+limits:
+- Candidate content only. No human review or publication approval is inferred.
+- Historical executions retain their prior criteria and hashes. No runtime conformance was established.
+- ICS source-related questions remain deferred and nonblocking.

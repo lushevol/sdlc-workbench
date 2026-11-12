@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "scope": "Reconcile dependency-only invalidation for portal-document-export",
+  "reviewer": "agent:codex",
+  "reviewed_at": "2026-11-12T16:12:12.078816+00:00",
+  "plan_id": "4ab0253a82e7e06f467c99ca56122a03eb66c22b2c9843a6be25f58b67b10a09",
+  "prior_receipt_git_revision": "c3fa8c7005aa3b2cb975ef0eaf7d65a68f8eb4ab",
+  "prior_receipt_sha256": "5795c1a9c1bf316f8301f4931a014084c45dad5f9dc255458ed11b639956a530",
+  "checked_source_outcomes": 80,
+  "dispositions": {
+    "no_change": 61,
+    "excluded": 19
+  },
+  "checks": [
+    "All 80 original source hashes, selected ranges/bytes, selection decisions, policy and context hashes match prior receipts.",
+    "All 12 declared export-output hashes match prior receipts and current plan starting hashes.",
+    "The sole dependency hash change is REQ-active-session-renewal v8 to v9; five conversation sources support the correction, not an exported page.",
+    "Settlement remains byte-identical and has no session-cadence claim to change. Its semantic review is reused, not repeated."
+  ],
+  "changed_dependency": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+  "final_dependency_sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+  "semantic_reviews": [
+    "architecture.json",
+    "operations.json",
+    "security.json",
+    "corrections.json"
+  ],
+  "sealed_checkpoint": {
+    "path": ".workbench/ingestion/portal-candidate-review-20261112/final.json",
+    "sha256": "31b12ab82f77b9c7ea9eb9494e2b5a4b45a2bf826100a505215dd3b4e0a96659",
+    "status": "PASSED"
+  },
+  "limits": [
+    "Reuses prior semantic source selection/extraction for unchanged bytes; not a new full export extraction.",
+    "One MOM source remains held for 19 missing attachments; ICS scope remains deferred.",
+    "No publication or business execution is established."
+  ],
+  "completion": {
+    "written": 80,
+    "remaining_process": 0,
+    "remaining_review": 1,
+    "status": "PARTIAL only because MOM remains HOLD; current available portal processing is complete",
+    "receipt_path": "evidence/knowledge/processing/portal-document-export.json",
+    "receipt_sha256": "426b864e710219490b854ebc716398ff217060a589337ec740685a207b1a199c"
+  }
+}

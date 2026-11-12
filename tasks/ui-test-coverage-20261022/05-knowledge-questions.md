@@ -1398,6 +1398,7 @@ RATAN is the user-identified policy owner and reviewer. The user reported the IC
 | Answer | Record and version | Acceptance criteria and scope | Audit event |
 | --- | --- | --- | --- |
 | 1, 2 | [Session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) v7 → v8 | AC-1 through AC-7 apply within the absolute deadline. AC-8 sets the idle ceiling. AC-9 sets the absolute ceiling. Earlier [execution comparisons](../portal-background-session-20261019/09-intent-reality-gaps.md) address the preceding target. | [Session requirement v8](../../evidence/knowledge/audit/AUD-20261112-REQ-active-session-renewal-v8.yaml) |
+| Source-support correction, 13 November | [Session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) v8 → v9 | Remove unsupported fixed timing from AC-1 through AC-3. Eligible activity when renewal is due must produce success before access expiry and the absolute deadline. AC-4 through AC-9 and historical execution results are unchanged. | [Session requirement v9](../../evidence/knowledge/audit/AUD-20261113-REQ-active-session-renewal-v9.yaml) |
 | 1, 2, 3, 5 | [Authentication and sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md) v9 → v10 | RATAN ownership, ICS ceilings, PORTAL-SSO-AC-001, and ideal PORTAL-LOGOUT-AC-001. The [refresh revocation finding](../../evidence/knowledge/findings/GF-refresh-revocation-scope.md) still requires execution evidence. | [Authentication v10](../../evidence/knowledge/audit/AUD-20261112-KT-authentication-and-sessions-v10.yaml) |
 | 4, 6 | [SDK and entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) v8 → v9 | UI-ENTITLEMENT-REVOCATION-AC-001, API-ENTITLEMENT-REVOCATION-AC-001, UI-TILE-VALIDATION-AC-001. Existing tab freshness before next login and cache bindings by API remain open. | [Entitlements v9](../../evidence/knowledge/audit/AUD-20261112-KT-sdk-and-entitlements-v9.yaml) |
 | 7 | [Admin and onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md) v3 → v4 | ADMIN-CROSS-TENANT-READ-AC-001, ADMIN-TILE-METADATA-AC-001. Writes, verification, and shared tenant records require their own rules. | [Admin v4](../../evidence/knowledge/audit/AUD-20261112-KT-admin-and-onboarding-v4.yaml) |
@@ -1496,20 +1497,69 @@ The existing unanswered source facts remain recorded. Do not investigate, ask fo
 This direction supersedes earlier workflow recommendations to obtain an ICS revision in candidate review notes, derived pages and dated completion evidence. Preserve those artifacts and their historical results; do not treat their earlier next-action text as a current prerequisite.
 Reopen this source-related scope only if the user requests it.
 
+### Candidate review completion
+
+**Agent review is complete for all 12 portal canonical records. No further business answer is needed for this review.** The [latest continuation](evidence/portal-ingestion-question-20261112.md#complete-the-remaining-agent-work) authorizes the completed work. ICS source-related questions remain `DEFERRED_NONBLOCKING`.
+
+| Review scope | Result and evidence |
+| --- | --- |
+| Session, authentication, entitlements and CES | Four records reviewed against exact retained sources. One inherited unsupported timing finding was corrected in REQ v9 and independently rechecked against prepared bytes. Zero remaining content findings. [Security case](evidence/portal-candidate-review-20261112/security.json). |
+| Portal purpose, service relationships, frontend composition and evolution | Four records and 23 material claim groups reviewed. No correction required. Historical, proposal, adoption and deployment limits remain qualified. [Architecture case](evidence/portal-candidate-review-20261112/architecture.json). |
+| Administration, release operations, interoperability and observability | Four records and 51 material claim groups reviewed. No correction required. [Operations case](evidence/portal-candidate-review-20261112/operations.json). |
+| Retrieval and usefulness | All nine owner answers map to inspected canonical sections. A combined active-session, revocation, tile and audit requirement is partly answered; existing-tab freshness, cache interactions and audit-event schema remain future feature decisions, without blocking this review. [Retrieval case](evidence/portal-candidate-review-20261112/retrieval.json). |
+
+The [correction case](evidence/portal-candidate-review-20261112/corrections.json) binds the old and new session criteria to their sources. The 100 ms activity cadence, 15-second observation window and 30-second starting horizon were inherited from earlier wording; no registered source establishes them. AC-1 through AC-3 now use the renewal-due condition and access/absolute deadlines. They retain at least one successful renewal as the observable assertion. No new configured interval is selected.
+
+The sealed harness passed with zero findings: 13 selected documents (12 records and their index), 372 local links, 151 line fragments and one new immutable candidate event. All 518 retained raw files, 556 manifest records and 79 prior audit events remain preserved. [Final check evidence](evidence/portal-candidate-review-20261112/completion.json).
+
+The [processing reconciliation](evidence/portal-candidate-review-20261112/processing.json) checked all 80 prior source outcomes. Original source, selection, policy, context and output bytes were unchanged; only the shared session-requirement dependency changed. It recorded 61 supported no-change outcomes and retained 19 exclusions. The current plan has **zero processing items**. The MOM page remains the sole source hold for 19 unavailable attachments, independent of this portal review.
+
+The [independent wiki check](evidence/portal-candidate-review-20261112/wiki-review.json) reviewed seven changed outputs and reused prior semantic review for 89 byte-identical pages. The saved exploration answer body and shared output owners are preserved. Reviewed completion and wiki verification passed; all 13 aliases and six structural categories are current. The exact 12 portal inputs replan `unchanged`. The separate Settlement recipe was not advanced. No links changed, so no graph rebuild was needed.
+
+Canonical validation is `VALID` for all 15 workspace records, with zero findings. Lint passed for the two affected typed task documents with eight warnings for retained unknown owners, pending reviews, unresolved values and pending ASD review. All 30 newly added local task links resolve, and the whitespace check passed. An initial lint invocation included the navigation-only evidence index, which has no authoring-artifact schema; its failure is retained, and that index was checked through its local links instead.
+
+#### Final candidate review pack
+
+These are the exact candidate bytes reviewed by the agents. All remain `candidate` / `draft`; no human approval or deployed conformance is inferred. Source/claim worksheets and evidence limits are linked above. The [machine-readable bindings](evidence/portal-candidate-review-20261112/record-bindings.json) retain the same scope.
+
+<details>
+<summary>Exact versions and full-file SHA-256 values for 12 records</summary>
+
+| Candidate | Version | SHA-256 |
+| --- | --- | --- |
+| [ARC-portal-service-relationships](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md) | 1 | `08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5` |
+| [KT-frontend-composition](../../knowledge/candidates/architecture/KT-frontend-composition.md) | 4 | `700d44d622d5c2cdb8655f1bd096574fee6dd95f5b6909d383efee22ab304668` |
+| [KT-portal-purpose](../../knowledge/candidates/background/KT-portal-purpose.md) | 2 | `29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620` |
+| [KT-architecture-evolution](../../knowledge/candidates/evolution/KT-architecture-evolution.md) | 2 | `e89f82a3803eb61b562c419e82df1ed29f44c1510d6499aa731821ae08114552` |
+| [KT-admin-and-onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md) | 4 | `ccdbb0e15f134a8d97981d1fc8b88955b9bd826a7dcef4c3e423ae17b48fa8f9` |
+| [KT-release-operations](../../knowledge/candidates/operations/KT-release-operations.md) | 3 | `6abb62a2b36ae98527801d1d81b22b89a353b883de7a52706311573defd33600` |
+| [KT-application-interoperability](../../knowledge/candidates/interoperability/KT-application-interoperability.md) | 2 | `6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72` |
+| [KT-observability-and-performance](../../knowledge/candidates/observability/KT-observability-and-performance.md) | 3 | `edd20330c29cfddf534f0836ad529c115cb61e39d9f1d53435f106eb2fc3510d` |
+| [REQ-active-session-renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | 9 | `13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1` |
+| [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md) | 10 | `4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06` |
+| [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) | 10 | `dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe` |
+| [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md) | 6 | `9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0` |
+
+</details>
+
+Document validation supplies structural assurance. Complete human ASD-STE100 review is pending. No business scenario was executed in this review, and historical cases/results were not rewritten. The [session gap record](../portal-background-session-20261019/09-intent-reality-gaps.md) now explains the applicability of v9 to future conformance work.
+
 ## Next owner actions
 
-Continue review of the current session-policy candidates against the nine recorded user answers. The review can assess claim support, consistency, scope and acceptance-criterion wording while ICS source-related questions remain deferred.
+**The agent work is complete. Human review is the only next step if publication is requested.** The review pack above is ready for asynchronous review; the missing MOM attachments and deferred ICS questions do not prevent that review.
 
 | Owner | Action and completion evidence |
 | --- | --- |
-| RATAN team | Review [session renewal v8](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) and [authentication v10](../../knowledge/candidates/security/KT-authentication-and-sessions.md) using the recorded portal rules. ICS source acquisition and policy-dependent idle-recovery assessment are deferred. Record the actual reviewer, final hashes and disposition through [govern-knowledge](../../.agents/skills/govern-knowledge/SKILL.md) for a later publication decision. |
-| Source-export owner, unknown | Recover the 19 referenced [MOM attachments](../../evidence/knowledge/sources/confluence/FM%20TPT%20UI%20Guild/MOM/page.md). Use [prepare-knowledge-sources](../../.agents/skills/prepare-knowledge-sources/SKILL.md) to review their content and selection bindings. The source remains held; review of available portal knowledge can continue independently. |
+| RATAN policy reviewer and applicable domain reviewer | Review the exact candidate versions above, their source support and limits. Record reviewer identity/role, date and disposition below. Return any requested changes. A continuation supplies no missing human review or publication approval. |
+| Source-export owner, unknown | Recover the 19 MOM attachments when available. This remains a local source hold and is not a prerequisite to reviewing available portal knowledge. |
 
-RATAN review fields are editable. Proposed dispositions are not selected.
+The need for human review comes from [AGENTS.md — Evidence and knowledge](../../AGENTS.md#evidence-and-knowledge): “Important requirements and decisions require recorded human review before publication.” [Knowledge review gates](../../knowledge/README.md#review-gates) also require human approval bound to final publication bytes. This agent review does not supply that approval; later publication preparation must preserve the final-byte gate.
 
 | Review item | Suggested response | Recorded response |
 | --- | --- | --- |
-| ICS source, revision and source-dependent idle-recovery assessment | No response requested for this review. Revisit only if the user reopens this scope. | DEFERRED_NONBLOCKING by user direction |
-| Final candidate review | Reviewer and role, reviewed versions and hashes, date, disposition and limits. | Pending |
+| Reviewer | Name/identifier and role for the reviewed scope. | Pending |
+| Candidate review disposition | Accepted for publication preparation; changes requested with record IDs; or retain as candidates. No option is selected. | Pending |
+| Review limits | State any additional limits, or confirm the recorded limits were reviewed. | Pending |
+| ICS source questions | No response requested. Reopen only at explicit user request. | DEFERRED_NONBLOCKING |
 
-Publication approval remains pending and requires its own recorded decision for the final bytes.
+Publication approval remains a separate recorded decision for the final prepared publication bytes.

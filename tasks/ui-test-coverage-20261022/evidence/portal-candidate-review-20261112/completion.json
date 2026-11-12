@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "scope": "Completed agent-led review of 12 portal canonical candidates",
+  "reviewer": "agent:codex",
+  "completed_at": "2026-11-12T16:17:03.110894+00:00",
+  "status": "COMPLETE_WITH_RECORDED_LIMITS",
+  "records": "record-bindings.json",
+  "record_count": 12,
+  "initial_content_findings": 1,
+  "resolved_content_findings": 1,
+  "remaining_content_findings": 0,
+  "retrieval": {
+    "owner_answers_supported": 9,
+    "combined_new_requirement": "partly answered with future-feature boundaries retained",
+    "evidence": "retrieval.json"
+  },
+  "canonical_checks": {
+    "baseline": {
+      "path": ".workbench/ingestion/portal-candidate-review-20261112/baseline.json",
+      "sha256": "b8991f7455b3ddd4a5931eca99674d25a1676b808433a8ed748b7b7692da8acb",
+      "status": "PASSED",
+      "counts": {
+        "raw_files": 518,
+        "audit_files": 79,
+        "governed_documents": 15,
+        "manifest_records": 556
+      },
+      "finding_count": 0
+    },
+    "prepared": {
+      "path": ".workbench/ingestion/portal-candidate-review-20261112/prepared.json",
+      "sha256": "560dd1d0df8eb3caaf45fedffef5f7fee3d32b700c0496ce76991962d90abcd7",
+      "status": "PREPARED",
+      "counts": {
+        "local_links": 372,
+        "line_fragments": 151,
+        "new_audit_events": 0,
+        "raw_files": 518,
+        "manifest_records": 556,
+        "audit_files": 79,
+        "selected_documents": 13,
+        "changed_governed_documents": 1,
+        "git_blobs": 0
+      },
+      "finding_count": 0
+    },
+    "final": {
+      "path": ".workbench/ingestion/portal-candidate-review-20261112/final.json",
+      "sha256": "31b12ab82f77b9c7ea9eb9494e2b5a4b45a2bf826100a505215dd3b4e0a96659",
+      "status": "PASSED",
+      "counts": {
+        "local_links": 372,
+        "line_fragments": 151,
+        "new_audit_events": 1,
+        "raw_files": 518,
+        "manifest_records": 556,
+        "audit_files": 80,
+        "selected_documents": 13,
+        "changed_governed_documents": 1,
+        "git_blobs": 0
+      },
+      "finding_count": 0
+    }
+  },
+  "source_processing": {
+    "counts": {
+      "documents": 85,
+      "review": 1,
+      "process": 0,
+      "unchanged": 84
+    },
+    "evidence": "processing.json",
+    "limit": "MOM source HOLD for 19 unavailable attachments; available portal review complete"
+  },
+  "wiki": {
+    "engine": "llm-wiki-agent",
+    "changed_outputs": 7,
+    "unchanged_review_reused": 89,
+    "expected_outputs": 96,
+    "verify": "PASSED; 13 canonical aliases and six structural categories",
+    "exact_portal_plan": {
+      "unchanged": 12
+    },
+    "semantic_review": "wiki-review.json",
+    "graph": "Not rebuilt; no link changes"
+  },
+  "publication": "PENDING actual human final-byte review and approval; all canonical records remain candidate/draft",
+  "runtime_execution": "NOT_RUN; document-only scope",
+  "ics_source_questions": "DEFERRED_NONBLOCKING by user direction",
+  "limits": [
+    "Candidate source support is not deployed behavior or business acceptance.",
+    "Historical execution payloads and case definitions retain earlier applicability.",
+    "Formal human ASD-STE100 review remains pending."
+  ],
+  "checks": {
+    "canonical_validation": {
+      "status": "VALID",
+      "documents": 15,
+      "findings": 0
+    },
+    "document_lint": {
+      "status": "PASSED",
+      "artifacts": 2,
+      "errors": 0,
+      "warnings": 8,
+      "warning_scope": "Unknown owners, pending human reviews, preserved unresolved values, pending full ASD review.",
+      "report_sha256": "580e63c1e08aeec0f04b36856b11ef1195eab6bfdc2b2afd9afbb18b5f75d1b0"
+    },
+    "new_task_links": {
+      "checked": 30,
+      "missing": 0
+    },
+    "diff_check": "PASSED",
+    "not_run": "No business/runtime tests; document-only changes.",
+    "question_answer_retention": "Original content before knowledge-update log byte-identical to c3fa8c700 HEAD"
+  },
+  "initial_check_scope_correction": {
+    "command": "ai-sdlc lint included evidence/index.md",
+    "result": "FAILED: navigation index lacks authoring artifact schema; not an authoring artifact",
+    "disposition": "Retained failed output in ignored document-lint.txt; reran supported lint scope on the two typed task documents. Navigation changes checked for local destinations separately. No rule or assertion weakened."
+  },
+  "independent_integration": {
+    "path": "integration.json",
+    "sha256": "37fa03601e4acfa72a24af58a863da3c4fe8846dce87a2564b981260d1a2be42",
+    "status": "PASSED_WITH_RECORDED_LIMITS",
+    "finding_count": 0
+  }
+}

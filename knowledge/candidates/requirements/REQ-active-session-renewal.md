@@ -1,7 +1,7 @@
 ---
 type: Requirement
 id: REQ-active-session-renewal
-version: 8
+version: 9
 owner: RATAN team
 governance_state: candidate
 status: draft
@@ -21,11 +21,11 @@ sources:
 - resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
   revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
   sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
-previous_version: 7
-previous_content_sha256: 773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3
+previous_version: 8
+previous_content_sha256: 7d90d20b35c205940107951497b2b3a48e01d2a8f41bbf573e2ad18250f15779
 generated:
   by: agent:codex
-  at: '2026-11-12T21:27:34+08:00'
+  at: '2026-11-12T16:04:45.153234+00:00'
 verified: []
 description: Keep active portal sessions renewable through mouse, keyboard, and scroll
   activity within the absolute session timeout. Limit idle timeout to 15 minutes and
@@ -34,33 +34,33 @@ rationale: Support renewal during active use and recovery from idle expiry withi
   the session limits that the user attributed to ICS bank security policy.
 acceptance_criteria:
 - id: AC-1
-  given: Given a valid portal session with at least 30 seconds remaining before both
-    access expiry and absolute session expiry
-  when: When mouse movement occurs every 100 milliseconds for 15 seconds
-  then: Then at least one successful renewal occurs before the controlled interval
-    ends
+  given: Given a valid portal session when renewal is due before access expiry and
+    the absolute session deadline
+  when: When eligible mouse movement continues
+  then: Then at least one renewal succeeds before access expiry and the absolute
+    session deadline
   measure:
     metric: successful renewal count
     operator: at_least
     value: 1
     unit: count
 - id: AC-2
-  given: Given a valid portal session with at least 30 seconds remaining before both
-    access expiry and absolute session expiry
-  when: When keyboard input occurs every 100 milliseconds for 15 seconds
-  then: Then at least one successful renewal occurs before the controlled interval
-    ends
+  given: Given a valid portal session when renewal is due before access expiry and
+    the absolute session deadline
+  when: When eligible keyboard input continues
+  then: Then at least one renewal succeeds before access expiry and the absolute
+    session deadline
   measure:
     metric: successful renewal count
     operator: at_least
     value: 1
     unit: count
 - id: AC-3
-  given: Given a valid portal session with at least 30 seconds remaining before both
-    access expiry and absolute session expiry
-  when: When scrolling occurs every 100 milliseconds for 15 seconds
-  then: Then at least one successful renewal occurs before the controlled interval
-    ends
+  given: Given a valid portal session when renewal is due before access expiry and
+    the absolute session deadline
+  when: When eligible scrolling continues
+  then: Then at least one renewal succeeds before access expiry and the absolute
+    session deadline
   measure:
     metric: successful renewal count
     operator: at_least
@@ -170,6 +170,8 @@ Manual recovery must keep the expiry prompt open until renewal succeeds and perm
 Renewal reduces repeated authentication during portal use within the session limits the user attributed to ICS bank security policy.
 The ceilings bound the portal session. The exact timeout settings and individual token lifetimes remain unspecified.
 
+The activity criteria use the session's renewal condition and credential deadlines. They define no fixed event cadence or renewal interval.
+
 ## Acceptance criteria
 
 ```gherkin
@@ -177,21 +179,21 @@ Feature: Renew portal sessions within the idle and absolute timeouts
 
   @AC-1
   Scenario: AC-1
-    Given a valid portal session with at least 30 seconds remaining before both access expiry and absolute session expiry
-    When mouse movement occurs every 100 milliseconds for 15 seconds
-    Then at least one successful renewal occurs before the controlled interval ends
+    Given a valid portal session when renewal is due before access expiry and the absolute session deadline
+    When eligible mouse movement continues
+    Then at least one renewal succeeds before access expiry and the absolute session deadline
 
   @AC-2
   Scenario: AC-2
-    Given a valid portal session with at least 30 seconds remaining before both access expiry and absolute session expiry
-    When keyboard input occurs every 100 milliseconds for 15 seconds
-    Then at least one successful renewal occurs before the controlled interval ends
+    Given a valid portal session when renewal is due before access expiry and the absolute session deadline
+    When eligible keyboard input continues
+    Then at least one renewal succeeds before access expiry and the absolute session deadline
 
   @AC-3
   Scenario: AC-3
-    Given a valid portal session with at least 30 seconds remaining before both access expiry and absolute session expiry
-    When scrolling occurs every 100 milliseconds for 15 seconds
-    Then at least one successful renewal occurs before the controlled interval ends
+    Given a valid portal session when renewal is due before access expiry and the absolute session deadline
+    When eligible scrolling continues
+    Then at least one renewal succeeds before access expiry and the absolute session deadline
 
   @AC-4
   Scenario: AC-4

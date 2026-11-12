@@ -5,11 +5,11 @@ doc_type: short
 full_text: "sources/REQ-active-session-renewal.md"
 ---
 
-> Derived from [REQ-active-session-renewal, version 8](../../../candidates/requirements/REQ-active-session-renewal.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [REQ-active-session-renewal, version 9](../../../candidates/requirements/REQ-active-session-renewal.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Active Session Renewal (REQ-active-session-renewal)
 
-**Source type:** Requirement (version 8) · **Governance state:** candidate · **Status:** draft · **Owner:** RATAN team
+**Source type:** Requirement (version 9) · **Governance state:** candidate · **Status:** draft · **Owner:** RATAN team
 
 This is a candidate requirement describing *intended target behavior* for portal session renewal. Human publication review is still pending, so the criteria express requested ideals rather than proof that the supplied implementation already conforms.
 
@@ -27,9 +27,9 @@ This is a candidate requirement describing *intended target behavior* for portal
 
 | ID | Scenario | Measure |
 |---|---|---|
-| AC-1 | Mouse movement every 100 ms for 15 s, ≥30 s before both expiry deadlines | ≥1 successful renewal |
-| AC-2 | Keyboard input every 100 ms for 15 s, ≥30 s before both expiry deadlines | ≥1 successful renewal |
-| AC-3 | Scrolling every 100 ms for 15 s, ≥30 s before both expiry deadlines | ≥1 successful renewal |
+| AC-1 | Eligible mouse movement continues when renewal is due | ≥1 successful renewal before access expiry and the absolute deadline |
+| AC-2 | Eligible keyboard input continues when renewal is due | ≥1 successful renewal before access expiry and the absolute deadline |
+| AC-3 | Eligible scrolling continues when renewal is due | ≥1 successful renewal before access expiry and the absolute deadline |
 | AC-4 | Eligible activity after initial refresh-credential expiry and before the absolute deadline, with valid access | ≥1 subsequent renewal in the current session |
 | AC-5 | Manual renewal pending before the absolute deadline | 0 premature prompt closures |
 | AC-6 | Requested renewal succeeds before the absolute deadline | Exactly 1 closure, after completion |
@@ -39,7 +39,7 @@ This is a candidate requirement describing *intended target behavior* for portal
 
 ## Key distinctions and boundaries
 
-- The 100 ms activity cadence and 15 s observation window are test fixtures. The 15- and 60-minute ceilings come from the 12 November clarification. The prior four-hour criterion belongs to the earlier requirement.
+- AC-1 through AC-3 prescribe no fixed event cadence or renewal interval. Version 9 removes unsupported timing fixtures. The 15- and 60-minute ceilings come from the 12 November clarification. The prior four-hour criterion belongs to the earlier requirement.
 - Portal-document activity is in scope; activity inside cross-origin embedded applications requires **separate integration evidence**.
 - Expired or revoked credentials cannot authorize renewal; recovery with no usable credential and provider failures remain separate boundaries.
 - Cancellation handling and request-sharing behavior have **no approved criterion here**; their disposition belongs in the gap record.

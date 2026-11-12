@@ -28,11 +28,11 @@ The development guideline additionally separates view, logic, styles, and interf
 
 ## Session behavior
 
-The shell is responsible for portal session interactions. Version 8 of the [canonical session requirement](../sources/REQ-active-session-renewal.md) is a draft owned by the RATAN team under ICS bank security policy. Idle timeout is at most 15 minutes. Absolute timeout is at most 60 minutes from portal authentication and applies during activity and renewal. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria)
+The shell is responsible for portal session interactions. Version 9 of the [canonical session requirement](../sources/REQ-active-session-renewal.md) is a draft owned by the RATAN team under ICS bank security policy. Idle timeout is at most 15 minutes. Absolute timeout is at most 60 minutes from portal authentication and applies during activity and renewal. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria)
 
 | Criterion | Setup and expected result |
 | --- | --- |
-| AC-1–AC-3 | Mouse movement, keyboard input, or scrolling every 100 ms for 15 seconds each yields at least one successful renewal, with at least 30 seconds left before both access and absolute expiry. |
+| AC-1–AC-3 | Continuing eligible mouse movement, keyboard input, or scrolling when renewal is due each yields at least one successful renewal before access expiry and the absolute deadline. No fixed event cadence or renewal interval is prescribed. |
 | AC-4 | If the initial refresh credential expires first and access remains valid, eligible activity before the absolute deadline yields at least one subsequent renewal in the same portal session. |
 | AC-5–AC-7 | Before absolute expiry, the idle-expiry prompt stays open while renewal is pending, closes once after success, and allows retry after rejection while the refresh token remains usable and time remains. |
 | AC-8 | With more than 15 minutes left before absolute expiry, 15 minutes without eligible activity or manual renewal reaches idle expiry within 15 minutes of the last eligible activity. |
@@ -104,7 +104,7 @@ The responsibility list comes from a user clarification and the documented desig
 
 The administrative context comes from a proposal and a procedural manual; their source revisions and current applicability are unconfirmed, and the manual depends on screenshots absent from its copy. Whether the self-service catalog replaced source changes for tile updates in production is not established.
 
-The session criteria come from version 8 of the candidate requirement owned by the RATAN team under ICS bank security policy. Human review and deployed conformance remain pending.
+The session criteria come from version 9 of the candidate requirement owned by the RATAN team under ICS bank security policy. Human review and deployed conformance remain pending.
 
 The CES migration statements come from a candidate knowledge topic (version 6, owner unknown) built on dated user clarifications from 3–9 November 2026. They record intended permission preservation, compatibility, and per-tile migration behavior only; they do not establish implemented shell behavior, complete API compatibility, an approved scalar role mapping, or deployed log collection.
 

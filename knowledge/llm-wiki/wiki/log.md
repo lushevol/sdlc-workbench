@@ -111,3 +111,11 @@ Reviewed canonical source SHA-256 values:
 - `KT-ces-migration-parity` `9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0`
 
 [Review evidence](../../../tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/completion.json) records the cases and coordinated provenance checks. All 243 protected canonical and evidence files remain unchanged. Source processing has zero queued items; the MOM attachment source remains held. RATAN policy review and publication remain pending. Separate Settlement recipe freshness is outside this portal scope.
+
+## [2026-11-13] ingest | Reviewed session requirement v9 cadence correction
+
+Current-session `llm-wiki-agent` maintenance reviewed `REQ-active-session-renewal` v9, SHA-256 `13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1`. Seven derived pages remove unsupported AC-1 through AC-3 timing fixtures or update the current-version qualification: the requirement summary, activity-renewal concept, MFE Base, BFF, Portal, session exploration qualification, and index. The original saved exploration answer body is unchanged.
+
+The independent scoped review checked all seven changes and reused prior semantic review for 89 byte-identical outputs. All 96 expected outputs retain their existing shared owners. The bridge recorded reviewed completion, all six structural categories and 13 canonical aliases verified, and the exact 12 portal inputs replan unchanged. No links changed, so the existing graph remains applicable. Evidence: `tasks/ui-test-coverage-20261022/evidence/portal-candidate-review-20261112/wiki-review.json`.
+
+This records derived freshness only. Candidates remain drafts; human publication review and runtime conformance remain separate. ICS source questions stay deferred and nonblocking. Imported OpenKB engine and compilation identities are preserved.

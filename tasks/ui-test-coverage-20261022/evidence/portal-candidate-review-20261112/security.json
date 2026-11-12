@@ -1,0 +1,971 @@
+{
+  "schema_version": 1,
+  "group": "security",
+  "reviewer": "agent:codex",
+  "review_kind": "source-backed candidate semantic review; no human approval or runtime verification",
+  "assignment": {
+    "path": ".workbench/ingestion/portal-candidate-review-20261112/security-assignment.json",
+    "sha256": "9790c094f3e4e84aa3131166ae4b0064831a471bd10dcbc498c90c3ad6e08acf"
+  },
+  "authorization": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-question-20261112.md#complete-the-remaining-agent-work",
+  "active_review": "tasks/ui-test-coverage-20261022/05-knowledge-questions.md#candidate-review-completion",
+  "nonblocking_deferrals": [
+    "ICS source/revision and source-dependent idle-expiry recovery questions are DEFERRED_NONBLOCKING per user; no re-investigation or owner question."
+  ],
+  "records": [
+    {
+      "id": "REQ-active-session-renewal",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "version": 8,
+      "reviewed_sha256": "7d90d20b35c205940107951497b2b3a48e01d2a8f41bbf573e2ad18250f15779",
+      "reviewed_at": "2026-11-13T00:03:44.082098+08:00",
+      "record_read": "full file, lines 1-235",
+      "sources": [
+        {
+          "id": "SRC-session-renewal-intent-2026-10-15",
+          "resource": "conversation:current/user-reply/session-renewal-intent",
+          "revision": "request-2026-10-15",
+          "sha256": "d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9",
+          "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-renewal-intent-2026-10-15.txt",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-session-activity-and-idle-intent",
+          "resource": "conversation:current/user-reply/session-activity-and-idle-intent",
+          "revision": "reply-2026-10-15",
+          "sha256": "a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3",
+          "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-session-renewal-clarification-20261020",
+          "resource": "conversation:portal-session-renewal-clarification-20261020",
+          "revision": "user-reply-20261020",
+          "sha256": "cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba",
+          "path": "tasks/portal-background-session-20261019/evidence/correction-20261020/user-request.txt",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-knowledge-intent-boundary-20261101",
+          "resource": "conversation:workbench:knowledge-intent-boundary-20261101",
+          "revision": "user-clarification-20261101-1",
+          "sha256": "e720c3f1d5b817526a5d3f7e984d59234241b69e3c8ade22ce3f8b13ea7fe22b",
+          "path": "tasks/portal-background-session-20261019/evidence/knowledge-intent-boundary-20261101/user-input.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-portal-clarification-20261112",
+          "resource": "conversation:codex/portal-knowledge-ingestion/2026-11-12/answers",
+          "revision": "sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303",
+          "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303",
+          "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        }
+      ],
+      "claim_checks": [
+        {
+          "claim": "Activity-based continued renewal, now bounded by idle <=15 min and absolute <=60 min; manual recovery and initial refresh-credential boundary remain within absolute deadline",
+          "record_ranges": [
+            "30-34",
+            "69-127",
+            "148-171",
+            "196-230"
+          ],
+          "support": [
+            "SRC-session-activity-and-idle-intent:1-2",
+            "SRC-session-renewal-clarification-20261020:3-4",
+            "SRC-portal-clarification-20261112:8 items 1-2"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high for activity categories and timeout ceilings; medium for inherited detailed prompt transitions",
+          "rationale": "Exact user input supplies activity categories, continuing renewal, ownership and ceilings. Earlier unbounded elapsed-time intent is explicitly superseded. Detailed prompt criteria are inherited from the accepted correction, whose retained source is terse; no contradictory current answer was found.",
+          "limits": [
+            "Exact token lifetimes and configured renewal interval remain unspecified.",
+            "No current runtime conformance or publication approval is established."
+          ]
+        },
+        {
+          "claim": "AC YAML and body Gherkin agree",
+          "record_ranges": [
+            "35-127",
+            "175-230"
+          ],
+          "assessment": "CONSISTENT_BUT_REQUIRES_CORRECTION",
+          "confidence": "high",
+          "rationale": "All nine structured criteria match their Gherkin counterparts; the same unsupported timing condition is repeated in AC-1 to AC-3."
+        }
+      ],
+      "findings": [
+        {
+          "id": "SEC-REQ-001",
+          "kind": "unsupported normative cadence",
+          "record_ranges": [
+            "37-41",
+            "48-52",
+            "59-63",
+            "180-194"
+          ],
+          "confidence": "high",
+          "evidence": "All five registered sources were read in full. They specify eligible activity and continued renewal but no 100 ms event cadence, 15 s completion window, or 30 s starting horizon. Predecessor v7 at git 79395ced1 contains the same timing values, which proves inheritance only.",
+          "consequence": "A conforming implementation whose configured renewal point falls outside the arbitrary 15 s window can fail the canonical requirement. The Given does not establish that renewal is due.",
+          "owner": "RATAN team",
+          "next_action": "Root to correct only AC-1 to AC-3 in structured fields and body; leave historical executions unchanged.",
+          "proposed_correction": {
+            "given": "Given a valid portal session at its configured renewal-due point before both access expiry and absolute session expiry",
+            "when": "When eligible mouse movement, keyboard input, or scrolling continues (one activity type per criterion)",
+            "then": "Then at least one renewal succeeds before the current access deadline and before the absolute session deadline",
+            "measure": "successful renewal count at_least 1 count"
+          },
+          "decision": "CORRECTION_REQUIRED_BEFORE_FINAL_BYTE_REVIEW",
+          "resolution": "Resolved by root v9 correction and independent final-byte recheck; original v8 finding retained."
+        }
+      ],
+      "outcome": "CHANGES_REQUIRED",
+      "canonical_edits": false,
+      "audit_edits": false,
+      "execution_performed": false,
+      "final_byte_recheck": {
+        "reviewer": "agent:codex",
+        "reviewed_at": "2026-11-13T00:08:29.252000+08:00",
+        "version": 9,
+        "reviewed_sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+        "record_read": "full file, lines 1-237",
+        "prepared_checkpoint": {
+          "path": ".workbench/ingestion/portal-candidate-review-20261112/prepared.json",
+          "sha256": "560dd1d0df8eb3caaf45fedffef5f7fee3d32b700c0496ce76991962d90abcd7",
+          "status": "PREPARED",
+          "content_hash_matches": true
+        },
+        "source_bindings": "Same five registered sources as the v8 review; unchanged source tuples and verified snapshot hashes.",
+        "checks": [
+          "AC-1 to AC-3 now require eligible activity when renewal is due and success before existing access and absolute deadlines.",
+          "No arbitrary event frequency, 15-second completion window, 30-second starting horizon or new token lifetime remains.",
+          "All nine structured criteria match their body Gherkin steps.",
+          "AC-4 to AC-9 remain byte-equivalent as structured values to the assigned v8 baseline.",
+          "Predecessor fields bind v9 to the reviewed v8 hash."
+        ],
+        "resolved_findings": [
+          "SEC-REQ-001"
+        ],
+        "new_findings": [],
+        "outcome": "SUPPORTED_WITH_LIMITS",
+        "limits": [
+          "No formal human ASD-STE100/content/publication approval is inferred.",
+          "No runtime behavior or deployment conformance was verified.",
+          "ICS source and source-dependent idle-recovery review remain deferred nonblocking."
+        ]
+      }
+    },
+    {
+      "id": "KT-authentication-and-sessions",
+      "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+      "version": 10,
+      "reviewed_sha256": "4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06",
+      "reviewed_at": "2026-11-13T00:05:31.003871+08:00",
+      "record_read": "full file, lines 1-372",
+      "sources": [
+        {
+          "id": "SRC-confluence-9d7082836f5b7097",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md",
+          "revision": "sha256:ea697bdb2fc3ee5adf8bcfe67a38ac4df756efc189a729e664c194dff4ce91ed",
+          "sha256": "ea697bdb2fc3ee5adf8bcfe67a38ac4df756efc189a729e664c194dff4ce91ed",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md",
+          "inspected_ranges": "1-73 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-aa082f0221001faa",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md",
+          "revision": "sha256:66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7",
+          "sha256": "66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md",
+          "inspected_ranges": "95-193; cited 102-193 with surrounding definitions",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-da70843b431b10aa",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md",
+          "revision": "sha256:d035c6cb7803bb6b1011befc428e125bf4e1c466dcf845e0a359a5a7e947dd5d",
+          "sha256": "d035c6cb7803bb6b1011befc428e125bf4e1c466dcf845e0a359a5a7e947dd5d",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md",
+          "inspected_ranges": "1-59",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-e33c72473f01c65d",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md",
+          "revision": "sha256:e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee",
+          "sha256": "e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md",
+          "inspected_ranges": "1-68 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-96093bfd320dfc80",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md",
+          "revision": "sha256:0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957",
+          "sha256": "0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md",
+          "inspected_ranges": "1-105; all cited ranges",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-e1df32b125d53b00",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md",
+          "revision": "sha256:37b2b6ced13197b54ee429535d8716cc63bb3fff87212f5d3418781c6d9687b0",
+          "sha256": "37b2b6ced13197b54ee429535d8716cc63bb3fff87212f5d3418781c6d9687b0",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md",
+          "inspected_ranges": "1-126 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-0eff33df483d623a",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md",
+          "revision": "sha256:1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd",
+          "sha256": "1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md",
+          "inspected_ranges": "1-15",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-18a7c3158f515b93",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md",
+          "revision": "sha256:2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9",
+          "sha256": "2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md",
+          "inspected_ranges": "1-54; all cited ranges",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-entry-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:UI-Q-002",
+          "revision": "user-answer-20261022-1",
+          "sha256": "37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-entry-scope-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:UI-Q-002-scope",
+          "revision": "user-answer-20261022-1",
+          "sha256": "9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-f5f0ae3ea47acb2b",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md",
+          "revision": "sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012",
+          "sha256": "7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-50f47e97fb28ed59",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md",
+          "revision": "sha256:c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613",
+          "sha256": "c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-entry-owner-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:UI-Q-002-owner",
+          "revision": "user-answer-20261022-1",
+          "sha256": "05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-entity-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-entity",
+          "revision": "user-answer-20261022-1",
+          "sha256": "5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-claude-recovery-20261022",
+          "resource": "conversation:claude-code:0510afda-d247-4c87-8516-843a84480db3:clarifications",
+          "revision": "session-excerpt-20261022-1",
+          "sha256": "8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/recovered-session-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-entity-owner-scope-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-entity-owner-scope",
+          "revision": "user-answer-20261022-1",
+          "sha256": "6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-owner-scope-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-subject-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-subject",
+          "revision": "user-answer-20261022-1",
+          "sha256": "4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-subject-owner-scope-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-subject-owner-scope",
+          "revision": "user-answer-20261022-1",
+          "sha256": "a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-session-renewal-intent-2026-10-15",
+          "resource": "conversation:current/user-reply/session-renewal-intent",
+          "revision": "request-2026-10-15",
+          "sha256": "d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9",
+          "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-renewal-intent-2026-10-15.txt",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-session-activity-and-idle-intent",
+          "resource": "conversation:current/user-reply/session-activity-and-idle-intent",
+          "revision": "reply-2026-10-15",
+          "sha256": "a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3",
+          "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-session-renewal-clarification-20261020",
+          "resource": "conversation:portal-session-renewal-clarification-20261020",
+          "revision": "user-reply-20261020",
+          "sha256": "cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba",
+          "path": "tasks/portal-background-session-20261019/evidence/correction-20261020/user-request.txt",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-knowledge-intent-boundary-20261101",
+          "resource": "conversation:workbench:knowledge-intent-boundary-20261101",
+          "revision": "user-clarification-20261101-1",
+          "sha256": "e720c3f1d5b817526a5d3f7e984d59234241b69e3c8ade22ce3f8b13ea7fe22b",
+          "path": "tasks/portal-background-session-20261019/evidence/knowledge-intent-boundary-20261101/user-input.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-portal-clarification-20261112",
+          "resource": "conversation:codex/portal-knowledge-ingestion/2026-11-12/answers",
+          "revision": "sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303",
+          "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303",
+          "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        }
+      ],
+      "claim_checks": [
+        {
+          "claim": "Current ownership, activity-based renewal, 15/60-minute ceilings and absolute boundary",
+          "record_ranges": "114-118;153-180",
+          "support": [
+            "SRC-portal-clarification-20261112:8 items 1-2",
+            "SRC-session-activity-and-idle-intent:1-2",
+            "REQ-active-session-renewal:148-171"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high",
+          "rationale": "Current owner answers supersede earlier unbounded intent. Auth delegates measurable renewal criteria to canonical REQ. Its body adds no unsupported cadence. Exact configuration and runtime conformance remain separate."
+        },
+        {
+          "claim": "Immediate all-portal-session logout, excluding IdP/Entra",
+          "record_ranges": "182-203",
+          "support": [
+            "SRC-portal-clarification-20261112:8 item 5"
+          ],
+          "assessment": "SUPPORTED",
+          "confidence": "high",
+          "rationale": "Two portal sessions are a measurable case population rather than an asserted maximum. Protected action and renewal assertions test immediate invalidation; Entra preservation matches the explicit exclusion."
+        },
+        {
+          "claim": "Entry denial, empty entity denial, single-entity empty subject allowance and all-environment scope",
+          "record_ranges": "205-229",
+          "support": [
+            "SRC-ui-entry-clarification-20261022:14-45",
+            "SRC-ui-entry-scope-clarification-20261022:14-44",
+            "SRC-ui-empty-entity-clarification-20261022:13-42",
+            "SRC-ui-empty-entity-owner-scope-20261022:9-23",
+            "SRC-ui-empty-subject-clarification-20261022:9-19",
+            "SRC-ui-empty-subject-owner-scope-20261022:9-22"
+          ],
+          "assessment": "SUPPORTED",
+          "confidence": "high",
+          "rationale": "Current exact user selections control; conflicting allow-SC historical proposal is preserved as historical. No HTTP status, multi-entity matching or data entitlement rule is invented."
+        },
+        {
+          "claim": "Entra SSO and no OneMFA fallback for production sign-in",
+          "record_ranges": "231-258",
+          "support": [
+            "SRC-portal-clarification-20261112:8 item 3",
+            "living review KQ-SEC-06:185-214",
+            "SRC-confluence-da70843b431b10aa:15-21,48-57",
+            "SRC-confluence-e33c72473f01c65d:7-31,40-68"
+          ],
+          "assessment": "SUPPORTED",
+          "confidence": "high",
+          "rationale": "The answered question is specifically production fallback. New no-fallback criterion supersedes historical pilot fallback; phase-1 exclusions and separate unresolved M2M migration are accurately retained."
+        },
+        {
+          "claim": "Historical session token concepts, durations, backlog and internal contradictions",
+          "record_ranges": "260-290",
+          "support": [
+            "SRC-confluence-9d7082836f5b7097:1-9,19-24,38-65",
+            "SRC-confluence-aa082f0221001faa:102-193"
+          ],
+          "assessment": "SUPPORTED_AS_HISTORICAL",
+          "confidence": "high",
+          "rationale": "15-minute access/24-hour refresh examples, <60/<15 strict wording, 105 versus225 refresh contradiction, auth_time changes and no-absolute claim are attributed and qualified rather than accepted as current policy."
+        },
+        {
+          "claim": "Historical Entra onboarding/profile differences and FMAA account validity",
+          "record_ranges": "292-316",
+          "support": [
+            "SRC-confluence-96093bfd320dfc80:1-2,12-46,48-86,95-101",
+            "SRC-confluence-e1df32b125d53b00:5-56,58-126",
+            "SRC-confluence-18a7c3158f515b93:11-13,24-30,36-50"
+          ],
+          "assessment": "SUPPORTED_AS_HISTORICAL",
+          "confidence": "high",
+          "rationale": "Pilot scope, profile differences, one-hour provider session and exceptional FMAA durations remain source statements. None establishes current portal token policy or deployed conformance."
+        }
+      ],
+      "findings": [],
+      "outcome": "SUPPORTED_WITH_LIMITS",
+      "limits": [
+        "No human content approval, formal ASD-STE100 review, publication approval or runtime verification is supplied by this semantic review.",
+        "Inherited manual prompt criteria have terse original accepted-correction context; reviewed here as inherited bounded intent.",
+        "SEC-REQ-001 requires correction in the linked canonical requirement but is not duplicated in this topic.",
+        "Existing ICS-related source questions are deferred nonblocking under the latest user instruction."
+      ],
+      "canonical_edits": false,
+      "audit_edits": false,
+      "execution_performed": false
+    },
+    {
+      "id": "KT-sdk-and-entitlements",
+      "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+      "version": 10,
+      "reviewed_sha256": "dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe",
+      "reviewed_at": "2026-11-13T00:07:21.765744+08:00",
+      "record_read": "full file, lines 1-617",
+      "sources": [
+        {
+          "id": "SRC-confluence-8149095ebbc4b59c",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.0.0/page.md",
+          "revision": "sha256:e5163aac85b0e1bbc346bb0405ed639e71bb7806850c20202352b7ab065c2a7d",
+          "sha256": "e5163aac85b0e1bbc346bb0405ed639e71bb7806850c20202352b7ab065c2a7d",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.0.0/page.md",
+          "inspected_ranges": "1-85 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-03b28c3944f9d007",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.1/page.md",
+          "revision": "sha256:4156b1d5319151e5a642d942f9777c675a40726ce82fdb1e29fade0a69b30302",
+          "sha256": "4156b1d5319151e5a642d942f9777c675a40726ce82fdb1e29fade0a69b30302",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.1/page.md",
+          "inspected_ranges": "1-89 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-a544f218d4ae936f",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.2/page.md",
+          "revision": "sha256:11beac7892fec3e0f706059917d6c38a966880c4e31820348018afeceef58767",
+          "sha256": "11beac7892fec3e0f706059917d6c38a966880c4e31820348018afeceef58767",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.2/page.md",
+          "inspected_ranges": "1-50; cited 5-15,27-45",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-efbb5749066ee2a3",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md",
+          "revision": "sha256:7feb80396e60776c59b08cf322f87622f1b8484a4867d0caaaa9b0404fc873de",
+          "sha256": "7feb80396e60776c59b08cf322f87622f1b8484a4867d0caaaa9b0404fc873de",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md",
+          "inspected_ranges": "1-50 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-70a0e38be607a8f5",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/page.md",
+          "revision": "sha256:2f03fd4633f811b5157b63cd29c00b7164b812cb6d655bfb922e86551fcafe1b",
+          "sha256": "2f03fd4633f811b5157b63cd29c00b7164b812cb6d655bfb922e86551fcafe1b",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/page.md",
+          "inspected_ranges": "1-160; cited 3-21,25-86,135-154",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-8a6e20dfee8803c6",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 8/page.md",
+          "revision": "sha256:3bb48be50df05fad5eccd6dad33a8d83aa96bf94390e020d42aac3451690fe72",
+          "sha256": "3bb48be50df05fad5eccd6dad33a8d83aa96bf94390e020d42aac3451690fe72",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 8/page.md",
+          "inspected_ranges": "1-60,75-95; cited 3-21,25-59 plus userInfo context",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-42d3b5d3262172da",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/Migration to Boot 4.0.6/page.md",
+          "revision": "sha256:c593670a77fc1c64beda9d952190c9f15d206ebc0087f36192dde77cfc3be982",
+          "sha256": "c593670a77fc1c64beda9d952190c9f15d206ebc0087f36192dde77cfc3be982",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/Migration to Boot 4.0.6/page.md",
+          "inspected_ranges": "1-28 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-2a322655d17bc02d",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md",
+          "revision": "sha256:d02c07de868b566d9b2f48e011e25b1782ab63423a1bf7759c7a37278cabc3bf",
+          "sha256": "d02c07de868b566d9b2f48e011e25b1782ab63423a1bf7759c7a37278cabc3bf",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md",
+          "inspected_ranges": "1-20; cited 1-15",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-50f47e97fb28ed59",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md",
+          "revision": "sha256:c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613",
+          "sha256": "c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-28cdb4d019a0804d",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Creating EMS2 Entity Role Subject Action/page.md",
+          "revision": "sha256:e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7",
+          "sha256": "e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Creating EMS2 Entity Role Subject Action/page.md",
+          "inspected_ranges": "1-12 (full)",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-entry-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:UI-Q-002",
+          "revision": "user-answer-20261022-1",
+          "sha256": "37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-entry-scope-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:UI-Q-002-scope",
+          "revision": "user-answer-20261022-1",
+          "sha256": "9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-f5f0ae3ea47acb2b",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md",
+          "revision": "sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012",
+          "sha256": "7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-entry-owner-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:UI-Q-002-owner",
+          "revision": "user-answer-20261022-1",
+          "sha256": "05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-entity-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-entity",
+          "revision": "user-answer-20261022-1",
+          "sha256": "5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-claude-recovery-20261022",
+          "resource": "conversation:claude-code:0510afda-d247-4c87-8516-843a84480db3:clarifications",
+          "revision": "session-excerpt-20261022-1",
+          "sha256": "8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/recovered-session-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-entity-owner-scope-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-entity-owner-scope",
+          "revision": "user-answer-20261022-1",
+          "sha256": "6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-owner-scope-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-subject-clarification-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-subject",
+          "revision": "user-answer-20261022-1",
+          "sha256": "4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ui-empty-subject-owner-scope-20261022",
+          "resource": "conversation:ui-test-coverage-20261022:empty-subject-owner-scope",
+          "revision": "user-answer-20261022-1",
+          "sha256": "a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee",
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-confluence-da6235912b334d58",
+          "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md",
+          "revision": "sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef",
+          "sha256": "3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef",
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md",
+          "inspected_ranges": "1-30; cited 8-11,17-20",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ces-entity-rename-20261030",
+          "resource": "conversation:ces-entitlement-migration-20261102:field-equivalence-20261030",
+          "revision": "user-clarification-20261030-1",
+          "sha256": "09923058a9a5f37ffceb0010a8584e1f1e515582aa34773b1d3d5503d29af767",
+          "path": "tasks/ces-entitlement-migration-20261102/evidence/user-input-20261030-field-equivalence.txt",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-sdk-ces-implementation-clarification-20261101",
+          "resource": "conversation:single-ui-sdk-ces-migration-20261101:implementation-clarification",
+          "revision": "user-clarification-20261101-1",
+          "sha256": "19aaaecc90ad229dfafacd8313a332f50981c0f01526e7b83f3aa55ba20b3820",
+          "path": "evidence/knowledge/sources/user-clarifications/single-ui-sdk-ces-migration-20261101/user-clarification-implementation.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-portal-clarification-20261112",
+          "resource": "conversation:codex/portal-knowledge-ingestion/2026-11-12/answers",
+          "revision": "sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303",
+          "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303",
+          "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        }
+      ],
+      "claim_checks": [
+        {
+          "claim": "EMS2 X_RATANONE to CES RATAN_ENTITLEMENT_RULE is name correspondence only",
+          "record_ranges": "90-103;195-203",
+          "support": [
+            "SRC-ces-entity-rename-20261030:1-14"
+          ],
+          "assessment": "SUPPORTED",
+          "confidence": "high",
+          "rationale": "Exact rename is retained without inventing numeric identifier or role equivalence."
+        },
+        {
+          "claim": "SDK 3.0.0 preserves old contract where possible, caller supplies FMAA token, tests required, failure policy unresolved",
+          "record_ranges": "90-96;205-247",
+          "support": [
+            "SRC-sdk-ces-implementation-clarification-20261101:7-12"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high",
+          "rationale": "Measurable criteria preserve supported role/subject/action meaning and caller credential use. Sufficiency of role data and failure handling remain explicit gaps; no complete compatibility or runtime result is claimed."
+        },
+        {
+          "claim": "Portal entry/empty entity denial and single-entity empty subject allowance across all environments",
+          "record_ranges": "104-120;249-388",
+          "support": [
+            "SRC-ui-entry-clarification-20261022:14-45",
+            "SRC-ui-entry-scope-clarification-20261022:14-44",
+            "SRC-ui-entry-owner-clarification-20261022:10-19",
+            "SRC-ui-empty-entity-clarification-20261022:13-42",
+            "SRC-ui-empty-entity-owner-scope-20261022:9-23",
+            "SRC-ui-empty-subject-clarification-20261022:9-19",
+            "SRC-ui-empty-subject-owner-scope-20261022:9-22",
+            "SRC-confluence-f5f0ae3ea47acb2b:14-16",
+            "SRC-confluence-da6235912b334d58:8-20"
+          ],
+          "assessment": "SUPPORTED",
+          "confidence": "high",
+          "rationale": "All Gherkin counts reflect the explicit decision. Multiple-entity matching and data permissions are not inferred. Conflicting historical allow-SC/empty-role examples remain qualified and distinct from empty entity."
+        },
+        {
+          "claim": "Tile validation on login, reload, idle extension and next-login UI revocation",
+          "record_ranges": "390-440",
+          "support": [
+            "SRC-portal-clarification-20261112:8 items 4,6"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high",
+          "rationale": "Validation criterion applies available entitlement data and does not invent its freshness. UI revocation is tested at next login, with pre-login tab behavior left unresolved."
+        },
+        {
+          "claim": "API revocation at applicable Redis expiry; entitlement 1h and JWT parsing2h remain separate",
+          "record_ranges": "417-462",
+          "support": [
+            "SRC-portal-clarification-20261112:8 item 4"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high",
+          "rationale": "Scenario is explicitly conditional on the API using the cache being tested. No combined deadline, JWT lifetime or cache-interaction order is invented."
+        },
+        {
+          "claim": "SDK authentication, request context, EMS2 permissions and application enforcement boundary",
+          "record_ranges": "464-481;512-544",
+          "support": [
+            "SRC-confluence-70a0e38be607a8f5:3-21,25-86,135-154",
+            "SRC-confluence-50f47e97fb28ed59:1-23",
+            "SRC-confluence-28cdb4d019a0804d:1-12",
+            "SRC-confluence-efbb5749066ee2a3:7-46",
+            "SRC-confluence-2a322655d17bc02d:1-15"
+          ],
+          "assessment": "SUPPORTED_AS_DOCUMENTED",
+          "confidence": "high",
+          "rationale": "Filter authentication, exclusion ordering, skip-header uncertainty, two entitlement retrieval modes and token separation match the guides. Visible tile and entitlement retrieval are not equated with data/action enforcement."
+        },
+        {
+          "claim": "Version/configuration and Boot4 history",
+          "record_ranges": "483-510",
+          "support": [
+            "SRC-confluence-8149095ebbc4b59c:3-8,14-51,69-85",
+            "SRC-confluence-03b28c3944f9d007:5-17,39-57,74-89",
+            "SRC-confluence-a544f218d4ae936f:5-15,27-45",
+            "SRC-confluence-70a0e38be607a8f5:3-21,25-86,135-154",
+            "SRC-confluence-8a6e20dfee8803c6:3-21,25-59,87-92",
+            "SRC-confluence-42d3b5d3262172da:1-28"
+          ],
+          "assessment": "SUPPORTED_AS_HISTORICAL",
+          "confidence": "high",
+          "rationale": "Artifacts, platforms, renamed fields, max_age/oud, logout blacklist notes and Boot4 snapshot condition match exact source. Present deployments and compatibility remain unverified."
+        }
+      ],
+      "findings": [],
+      "outcome": "SUPPORTED_WITH_LIMITS",
+      "limits": [
+        "No content approval, publication approval, formal ASD-STE100 review or runtime conformance is established.",
+        "Open implementation/compatibility and cache-interaction questions remain scoped to future affected decisions. They do not require new owner input to complete candidate semantic review."
+      ],
+      "canonical_edits": false,
+      "audit_edits": false,
+      "execution_performed": false
+    },
+    {
+      "id": "KT-ces-migration-parity",
+      "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+      "version": 6,
+      "reviewed_sha256": "9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0",
+      "reviewed_at": "2026-11-13T00:09:55.723823+08:00",
+      "record_read": "full file, lines 1-409",
+      "sources": [
+        {
+          "id": "SRC-ces-migration-coverage-clarification-20261103",
+          "resource": "conversation:ces-entitlement-migration-20261102:coverage-automation-20261103",
+          "revision": "user-clarification-20261103-1",
+          "sha256": "10c503fba499b7dfbcad08481293fcfd9cf0b108f692052bb9f5537a3d89ff57",
+          "path": "evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ces-frontend-compatibility-clarification-20261106",
+          "resource": "conversation:ces-entitlement-migration-20261102:frontend-compatibility-20261106",
+          "revision": "user-clarification-20261106-1",
+          "sha256": "02c662aa4bec9100be1778de01ae67771f30550da86061619bf490f670c99ba2",
+          "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ces-bff-entity-fields-request-20261106",
+          "resource": "conversation:ces-entitlement-migration-20261102:bff-entity-fields-20261106",
+          "revision": "user-request-20261106-1",
+          "sha256": "99f96926ace55ca7a89a6cf74ff2213ff097e76f2d760bc3f1c81c63bce2831c",
+          "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ces-application-identity-clarification-20261106",
+          "resource": "conversation:ces-entitlement-migration-20261102:application-identity-20261106",
+          "revision": "user-clarification-20261106-1",
+          "sha256": "f90fafa768952c94b2bf3f4ef11c27b1d40828d9efab9b07b55b35fc86f472eb",
+          "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ces-role-owned-writes-clarification-20261106",
+          "resource": "conversation:ces-entitlement-migration-20261102:role-owned-writes-20261106",
+          "revision": "user-clarification-20261106-1",
+          "sha256": "1daa1ada473bca8f7cc99fdbad2bb19d0ab0621883c3c660e0be1b9e334048d8",
+          "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        },
+        {
+          "id": "SRC-ces-provider-union-clarification-20261109",
+          "resource": "conversation:ces-entitlement-migration-20261102:provider-union-20261109",
+          "revision": "user-clarification-20261109-1",
+          "sha256": "8c72705ccf11915baf40f2de503343c09ca7681c79f7780f23a75c019e01b57d",
+          "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json",
+          "inspected_ranges": "full file",
+          "hash_verified": true
+        }
+      ],
+      "supplemental_evidence": [
+        {
+          "path": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by app and user (1481696).yml",
+          "sha256": "5b184ecf59ae310086a1b6054d8eea3043e2e585fa0341a1a9079246e9ab1a3c",
+          "inspected_ranges": "61-75 with relevant key context",
+          "purpose": "Confirms referenced CES example user_data.app_name, string itam_id and entitlement_name array; not runtime evidence."
+        }
+      ],
+      "claim_checks": [
+        {
+          "claim": "Mapping and entitlement/account completeness with scoped FMO exception",
+          "record_ranges": "56-130",
+          "support": [
+            "SRC-ces-migration-coverage-clarification-20261103:7-18"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high",
+          "rationale": "Role/entity/subject/action mapping, all discovered account scope, migrated-content filtering and lower-priority nonprod FMO comparison follow exact user intent. Definition/assignment/effective permission/data-scope distinctions prevent unsupported equality claims. No executed parity is claimed."
+        },
+        {
+          "claim": "Existing frontend caller API compatibility and independent per-tile admission",
+          "record_ranges": "133-145;187-199;208-270",
+          "support": [
+            "SRC-ces-frontend-compatibility-clarification-20261106:7-19"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high",
+          "rationale": "Cases preserve existing calls within reviewed mappings and separate role multiplicity. Two tiles define a case population only. EMS3 is explicitly recorded interpretation of the source wording; not a silent change to quotation."
+        },
+        {
+          "claim": "CES saved-view/filter role-owned writes remain pending; EMS2 behavior preserved",
+          "record_ranges": "147-185",
+          "support": [
+            "SRC-ces-role-owned-writes-clarification-20261106:7-20"
+          ],
+          "assessment": "SUPPORTED",
+          "confidence": "high",
+          "rationale": "Zero writes/fabricated scalar owners implements the explicit pending decision. Query visibility and role-exclusion policy remain unresolved, avoiding invented follow-on rules."
+        },
+        {
+          "claim": "hasPermission can accept mapped EMS2 or CES grants with provider logs",
+          "record_ranges": "201-206;272-297",
+          "support": [
+            "SRC-ces-provider-union-clarification-20261109:6"
+          ],
+          "assessment": "SUPPORTED_WITH_LIMITS",
+          "confidence": "high",
+          "rationale": "Boolean union cases match either-provider acceptance; no new caller scope required. Logging accepted grant source matches user request; per-tile admission and scalar role issues remain separate."
+        },
+        {
+          "claim": "Additive roleList/applicationId and clarified RATAN identity fields",
+          "record_ranges": "299-379",
+          "support": [
+            "SRC-ces-bff-entity-fields-request-20261106:7-17",
+            "SRC-ces-application-identity-clarification-20261106:7-27"
+          ],
+          "assessment": "SUPPORTED",
+          "confidence": "high",
+          "rationale": "Entitlement names remain application scoped. name RATAN_ENTITLEMENT_RULE, team label RATAN and applicationId 51358 are distinct; no arbitrary scalar role or cross-application label is invented. Existing fields and EMS2 behavior remain within the compatibility objective."
+        },
+        {
+          "claim": "Evidence limits and unresolved data restrictions, CES-only scope, scalar role and complete API mappings",
+          "record_ranges": "388-409",
+          "support": [
+            "SRC-ces-migration-coverage-clarification-20261103:14-17",
+            "SRC-ces-frontend-compatibility-clarification-20261106:9",
+            "SRC-ces-provider-union-clarification-20261109:6"
+          ],
+          "assessment": "ACCURATE_LIMITS",
+          "confidence": "high",
+          "rationale": "The record explicitly separates expectations from execution, target metadata from deployed contracts, and unresolved role semantics from known mapped permissions. Open decisions do not block completing the bounded candidate semantic review."
+        }
+      ],
+      "findings": [],
+      "outcome": "SUPPORTED_WITH_LIMITS",
+      "limits": [
+        "No human content/publication approval, formal ASD-STE100 review, migration acceptance or runtime execution is established.",
+        "Role-specific business mappings, full data-restriction equality and complete caller compatibility remain scope-dependent future decisions."
+      ],
+      "canonical_edits": false,
+      "audit_edits": false,
+      "execution_performed": false
+    }
+  ],
+  "completed_at": "2026-11-13T00:09:55.724325+08:00",
+  "status": "COMPLETE_WITH_LIMITS",
+  "summary": {
+    "assigned_records": 4,
+    "completed_records": 4,
+    "initial_findings": 1,
+    "resolved_findings": 1,
+    "remaining_content_findings": 0,
+    "canonical_edits_by_reviewer": false,
+    "audit_edits_by_reviewer": false,
+    "runtime_execution": false,
+    "current_reviewed_records": [
+      {
+        "id": "REQ-active-session-renewal",
+        "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+        "version": 9,
+        "sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+        "outcome": "SUPPORTED_WITH_LIMITS"
+      },
+      {
+        "id": "KT-authentication-and-sessions",
+        "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+        "version": 10,
+        "sha256": "4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06",
+        "outcome": "SUPPORTED_WITH_LIMITS"
+      },
+      {
+        "id": "KT-sdk-and-entitlements",
+        "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+        "version": 10,
+        "sha256": "dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe",
+        "outcome": "SUPPORTED_WITH_LIMITS"
+      },
+      {
+        "id": "KT-ces-migration-parity",
+        "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+        "version": 6,
+        "sha256": "9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0",
+        "outcome": "SUPPORTED_WITH_LIMITS"
+      }
+    ]
+  }
+}

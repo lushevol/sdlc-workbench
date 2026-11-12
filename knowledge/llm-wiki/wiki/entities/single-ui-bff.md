@@ -58,7 +58,7 @@ The candidate requirement in [[summaries/REQ-active-session-renewal]] states the
 
 The current policy has an idle ceiling of 15 minutes and an absolute ceiling of 60 minutes from portal authentication. The absolute ceiling applies during activity and renewal. [Canonical renewal criteria](../sources/REQ-active-session-renewal.md#acceptance-criteria)
 
-- **Activity-driven renewal.** Mouse movement, keyboard input, and scrolling each support renewal within the absolute limit. The activity fixtures require at least 30 seconds before both access and absolute expiry. See [[concepts/session-activity-renewal]].
+- **Activity-driven renewal.** Continuing eligible mouse movement, keyboard input, and scrolling each support at least one successful renewal when renewal is due, before access expiry and the absolute deadline. The criteria prescribe no fixed event cadence or renewal interval. See [[concepts/session-activity-renewal]].
 - **Refresh-token recovery after inactivity.** A usable refresh token can renew the session after idle expiry and before the absolute deadline. If the initial refresh credential expires first while access remains valid, eligible activity before the deadline must still support renewal in the same session.
 
 Manual recovery before the absolute deadline keeps the idle-expiry prompt open while the request is pending and closes it once after success. A rejected request permits retry while the refresh token is usable and time remains. See [[concepts/session-expiry-prompt-recovery]].
@@ -83,7 +83,7 @@ Boundaries recorded by the requirement, which this page does not resolve:
 - Expired or revoked credentials cannot authorize renewal, and recovery with no usable credential and provider failures remain separate boundaries.
 - The user described immediate revocation of all portal sessions at logout as the ideal. Identity-provider sessions are outside the scope. The candidate does not prescribe a BFF-specific implementation. [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
-The requirement is a version 8 candidate owned by the RATAN team. Human review and conformance remain pending. Historical observations and implementation gaps remain in the independent gap record.
+The requirement is a version 9 candidate owned by the RATAN team. Human review and conformance remain pending. Historical observations and implementation gaps remain in the independent gap record.
 
 ## CES migration metadata role
 

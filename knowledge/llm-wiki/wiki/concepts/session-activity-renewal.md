@@ -28,14 +28,14 @@ Eligible activity reduces repeated sign-in within the permitted session window. 
 
 The candidate requirement [[summaries/REQ-active-session-renewal]] defines nine measurable scenarios:
 
-- Three parallel criteria assert that mouse (AC-1), keyboard (AC-2), and scroll (AC-3) activity each independently produce at least one successful renewal within a controlled 15-second observation window with 100 ms event spacing.
+- Three parallel criteria assert that continuing eligible mouse (AC-1), keyboard (AC-2), and scroll (AC-3) activity each independently produce at least one successful renewal when renewal is due, before access expiry and the absolute session deadline.
 - AC-4 requires at least one subsequent renewal when eligible activity continues after initial refresh expiry and before the absolute deadline, with access still valid.
 - AC-5 through AC-7 govern the prompt shown after idle expiry: it must not close while a renewal request is pending, must close exactly once on success, and must remain open and retryable on rejection (see [[concepts/session-expiry-prompt-recovery]]).
 - AC-8 measures the 15-minute idle ceiling. AC-9 requires zero successful protected requests or renewals using the expired session once it reaches its absolute deadline.
 
 ## Boundaries and cautions
 
-- The 100 ms and 15 s activity measurements are test fixtures. The earlier four-hour criterion is historical. Exact configured deadlines and individual token lifetimes remain open.
+- Version 9 prescribes no fixed activity cadence or renewal interval. The earlier timing fixtures and four-hour criterion are historical. Exact configured deadlines and individual token lifetimes remain open.
 - Activity inside cross-origin embedded applications is out of scope; that requires separate integration evidence, which matters for composed portals built from independently deployed frontends.
 - Expired or revoked credentials cannot authorize renewal. Recovery without a usable credential and provider outages remain outside these criteria.
 - Cancellation handling and request coalescing have no approved criterion in the source requirement; their disposition belongs to an implementation gap record, not to the behavioral intent.

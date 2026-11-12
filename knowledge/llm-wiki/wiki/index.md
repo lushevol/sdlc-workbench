@@ -8,7 +8,7 @@ Exact canonical paths, record versions, lifecycle states, and SHA-256 source bin
 - [[summaries/KT-settlement-auto-netting]] (short) — Documents scheduled cash settlement auto-netting rules, grouping, outcomes, and unresolved policy differences.
 - [[summaries/KT-ces-migration-parity]] (short) — Defines intended EMS2-to-CES permission parity, per-tile migration, and frontend compatibility rules.
 - [[summaries/KT-authentication-and-sessions]] (short) — RATAN policy ownership, Entra sign-in, portal session ceilings, and the logout target.
-- [[summaries/REQ-active-session-renewal]] (short) — Activity-driven renewal and manual recovery within the idle and absolute session ceilings.
+- [[summaries/REQ-active-session-renewal]] (short) — Candidate v9: activity-driven renewal within credential deadlines and manual recovery within the session ceilings; no fixed activity cadence.
 - [[summaries/KT-release-operations]] (short) — Portal and tenant teams coordinate release planning, configuration promotion, and readiness.
 - [[summaries/KT-admin-and-onboarding]] (short) — Tenant onboarding, cross-tenant administrator reads, tile metadata boundaries, and maker-checker review.
 - [[summaries/KT-observability-and-performance]] (short) — Five-second API loading limit, three-month PROD analytics retention, and historical measurements.

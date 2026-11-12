@@ -1,0 +1,43 @@
+{
+  "scope": "Supported correction of unsupported fixed cadence in session activity criteria",
+  "reviewed_by": "agent:codex",
+  "applied_at": "2026-11-12T16:04:45.153234+00:00",
+  "record": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+  "finding": "SEC-REQ-001",
+  "previous_version": 8,
+  "previous_sha256": "7d90d20b35c205940107951497b2b3a48e01d2a8f41bbf573e2ad18250f15779",
+  "previous_git_revision": "c3fa8c7005aa3b2cb975ef0eaf7d65a68f8eb4ab",
+  "final_version": 9,
+  "final_sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+  "affected_criteria": [
+    "AC-1",
+    "AC-2",
+    "AC-3"
+  ],
+  "correction": "Replace unsupported 30-second remaining-time / 100-millisecond activity / 15-second renewal fixtures with the session renewal-due condition and access/absolute deadlines, retaining at least one successful renewal for each eligible activity.",
+  "source_support": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt",
+      "lines": "1-2",
+      "sha256": "a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/correction-20261020/user-request.txt",
+      "lines": "1-4",
+      "sha256": "cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+      "lines": "8",
+      "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+    }
+  ],
+  "classification": "Correct unsupported acceptance wording; retain continuous-activity intent and user-stated 15/60-minute ceilings. No new configured renewal interval is selected.",
+  "limits": [
+    "Historical executions and canonical test definitions retain their prior hashes and applicability.",
+    "ICS sourcing remains deferred; human publication review is separate."
+  ],
+  "review_status": "independent final-byte recheck passed against PREPARED checkpoint; matching immutable candidate event appended",
+  "final_byte_review": "security.json#records[0].final_byte_recheck",
+  "audit_event": "evidence/knowledge/audit/AUD-20261113-REQ-active-session-renewal-v9.yaml"
+}

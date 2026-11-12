@@ -25,6 +25,8 @@ writing_review:
 The comparisons below use the 1 November target. The [12 November policy answer](../ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input) supersedes the earlier elapsed-time exception with a 60-minute absolute ceiling and a 15-minute idle ceiling.
 Use the [current requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) for new acceptance work. The retained comparisons address the earlier target and require reassessment against the current criteria.
 
+The [13 November candidate review](../ui-test-coverage-20261022/05-knowledge-questions.md#candidate-review-completion) corrected inherited timing fixtures in requirement v9, AC-1 through AC-3. Those criteria now require eligible activity when renewal is due and success before access expiry and the absolute deadline; they prescribe no fixed activity cadence or renewal interval. Historical case definitions and execution results remain unchanged. Their earlier 100 ms, 15-second and 30-second setups do not establish current conformance. No new execution was performed in this knowledge review.
+
 > **Six scoped gaps remain. They limit conformance or assurance claims without changing the intended renewal rules.**
 > Action: retain the target rules and close each affected evidence boundary. Owner: unknown application, security, and observability owners.
 > Consequence: full conformance, delivered stale-response rejection, remote UAT assurance, and current PROD applicability remain unsupported.
