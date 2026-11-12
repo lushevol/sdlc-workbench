@@ -49,6 +49,8 @@ Use [check-knowledge-integrity](../../check-knowledge-integrity/SKILL.md) for th
 Use [evaluate-knowledge-retrieval](../../evaluate-knowledge-retrieval/SKILL.md) for representative questions and one realistic new requirement.
 Repeat affected preparation, semantic review, audit correction, and final checks after content repairs.
 Report outputs, exact source scope, actual checks, findings, owners, and unresolved decisions.
+For registered collection plans, record successful results with [sources complete](source-preparation.md#record-canonical-processing-completion).
+This receipt records processing completion; it supplies no publication approval.
 Keep canonical publication, wiki freshness, and business execution as separate outcomes.
 Follow the owning project's validation and commit instructions.
 
@@ -91,6 +93,7 @@ Keep failed and stale results as history without selecting them as passing suppo
 
 `start` captures existing raw files, manifest history, audit bytes, and governed document hashes.
 `check` reuses Workbench validation and adds retention, locator, execution-hash, and prepared-content checks.
+When `--seal` is supplied, the report records that checkpoint's exact SHA-256 for downstream completion checks.
 The first source addition can replace an empty manifest list with a populated list.
 Existing source records and nonempty manifest prefixes must remain unchanged.
 Physical `#L1-L5` fragments refer to lines inside the linked snapshot.

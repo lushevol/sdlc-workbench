@@ -87,13 +87,19 @@ class OpenKBWorkflowTests(unittest.TestCase):
         path.write_text(f"---\nid: {identifier}\nstatus: candidate\n---\n\n{body}", encoding="utf-8")
         return path
 
-    def compile(self):
+    def compile(self, **kwargs):
         with patch.object(WIKI, "configured_credentials", return_value=(self.fixture_url, self.fixture_token)), \
                 redirect_stdout(io.StringIO()):
-            WIKI.compile_sources(self.project, "knowledge/candidates")
+            return WIKI.compile_sources(self.project, "knowledge/candidates", **kwargs)
 
     def state_bytes(self):
         return self.registry_path.read_bytes(), self.manifest_path.read_bytes()
+
+    def assert_bindings_unchanged_with_failed_attempt(self, state):
+        self.assertEqual(self.registry_path.read_bytes(), state[0])
+        manifest = json.loads(self.manifest_path.read_text())
+        self.assertEqual(manifest["sources"], json.loads(state[1])["sources"])
+        self.assertEqual(manifest["incremental"]["attempts"]["topic"]["status"], "failed")
 
     def old_binding(self, source):
         sha = hashlib.sha256(f"previous-{source.stem}".encode()).hexdigest()
@@ -169,7 +175,7 @@ class OpenKBWorkflowTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "provider unavailable"):
             self.compile()
 
-        self.assertEqual(self.state_bytes(), state)
+        self.assert_bindings_unchanged_with_failed_attempt(state)
         self.assertEqual(source.read_bytes(), original)
         self.append_log.assert_not_called()
 
@@ -186,7 +192,7 @@ class OpenKBWorkflowTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Source changed during compilation; binding not advanced"):
             self.compile()
 
-        self.assertEqual(self.state_bytes(), state)
+        self.assert_bindings_unchanged_with_failed_attempt(state)
         self.assertEqual(source.read_bytes(), newer)
         self.append_log.assert_not_called()
 
@@ -385,6 +391,7 @@ class OpenKBWorkflowTests(unittest.TestCase):
             self.assertEqual(WIKI.selected_engine(self.project), "openkb")
 
     def test_incomplete_local_credentials_select_ade_without_dotenv_dependency(self):
+        self.record()
         (self.kb / ".env").write_text(f"OPENAI_API_BASE={self.fixture_url}\n", encoding="utf-8")
         missing_runtime = self.project / ".venv-openkb/bin/python"
         output = io.StringIO()
@@ -509,6 +516,371 @@ class OpenKBWorkflowTests(unittest.TestCase):
             args=["--kb-dir", str(self.kb), "status"], standalone_mode=False
         )
         self.setup_key.assert_not_called()
+
+    def derived(self, relative, text):
+        path = self.kb / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+        return path
+
+    async def synthetic_compiler(self, doc_name, *args, **kwargs):
+        self.derived(f"wiki/summaries/{doc_name}.md", f"Synthetic summary for {doc_name}.\n")
+        summaries = sorted(path.stem for path in (self.kb / "wiki/summaries").glob("*.md"))
+        self.derived("wiki/index.md", "\n".join(f"[[summaries/{name}]]" for name in summaries))
+
+    def receipt(self, sources, recipe="default"):
+        selected = [source.relative_to(self.project).as_posix() for source in sources]
+        plan = WIKI.update_plan(self.project, selected=selected, recipe=recipe)
+        state = WIKI.wiki_state(self.kb)[0]["incremental"]
+        reviewed = {"recipe": recipe, "engine": "openkb", "reviewed_by": "Synthetic test reviewer",
+                    "reviewed_at": "2026-11-12T12:00:00+00:00", "review_note": "Synthetic fixture review only.",
+                    "sources": [], "outputs": []}
+        owners = {}
+        for completion in state["completed"].values():
+            for relative in completion["outputs"]:
+                owners.setdefault(relative, set()).add(completion["id"])
+        for item in plan["records"]:
+            reviewed["sources"].append({"path": item["path"], "sha256": item["sha256"], "outputs": item["expected_outputs"],
+                                        "unchanged_reason": "Synthetic fixture summary intentionally does not synthesize changed requirements."})
+            for relative in item["expected_outputs"]:
+                owners.setdefault(relative, set()).add(item["id"])
+        for relative in sorted({relative for item in plan["records"] for relative in item["expected_outputs"]}):
+            path = self.kb / relative
+            reviewed["outputs"].append({"path": relative, "sha256": WIKI.digest(path) if path.is_file() else None,
+                                        "sources": sorted(owners[relative]), "note": "Reviewed synthetic fixture bytes."})
+        return reviewed
+
+    def review(self, receipt):
+        with patch("importlib.metadata.version", return_value=WIKI.VERSION), redirect_stdout(io.StringIO()):
+            return WIKI.review_sources(self.project, receipt)
+
+    def complete(self, *sources):
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile(selected=[source.relative_to(self.project).as_posix() for source in sources])
+        self.review(self.receipt(sources))
+
+    def test_reviewed_unchanged_rerun_makes_zero_additional_compiler_calls(self):
+        source = self.record()
+        self.complete(source)
+        state = self.state_bytes()
+        self.compiler.reset_mock()
+        self.setup_key.reset_mock()
+        self.effective_config.reset_mock()
+
+        plan = self.compile()
+
+        self.assertEqual(plan["counts"], {"unchanged": 1})
+        self.assertEqual(self.state_bytes(), state)
+        self.compiler.assert_not_awaited()
+        self.setup_key.assert_not_called()
+        self.effective_config.assert_not_called()
+
+    def test_compiler_return_is_pending_until_explicit_review(self):
+        self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        self.compiler.reset_mock()
+
+        plan = self.compile()
+
+        self.assertEqual(plan["counts"], {"pending_review": 1})
+        self.assertFalse(WIKI.wiki_state(self.kb)[0]["incremental"]["completed"])
+        self.compiler.assert_not_awaited()
+
+    def test_legacy_binding_bootstraps_review_without_automatic_recompile(self):
+        source = self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        manifest = json.loads(self.manifest_path.read_text())
+        manifest.pop("incremental")
+        self.manifest_path.write_text(json.dumps(manifest))
+        self.compiler.reset_mock()
+
+        self.assertEqual(self.compile()["counts"], {"bootstrap_review": 1})
+        self.compiler.assert_not_awaited()
+        self.review(self.receipt([source]))
+        self.assertEqual(self.compile()["counts"], {"unchanged": 1})
+        self.compile(force=True)
+        self.compiler.assert_awaited_once()
+
+    def test_exact_changed_record_preserves_other_source_and_shared_output_receipts(self):
+        first, second = self.record("a.md", "A"), self.record("b.md", "B")
+        self.complete(first, second)
+        other_summary = (self.kb / "wiki/summaries/b.md").read_bytes()
+        first.write_text(first.read_text() + "Changed requirement.\n")
+        self.compiler.reset_mock()
+
+        self.compile(selected=[first.relative_to(self.project).as_posix()])
+        self.review(self.receipt([first]))
+
+        self.compiler.assert_awaited_once()
+        self.assertEqual(self.compiler.await_args.args[0], "a")
+        self.assertEqual((self.kb / "wiki/summaries/b.md").read_bytes(), other_summary)
+        self.assertEqual(WIKI.update_plan(self.project)["counts"], {"unchanged": 2})
+
+    def test_changed_or_deleted_reviewed_outputs_require_scoped_repair(self):
+        source = self.record()
+        self.complete(source)
+        summary = self.kb / "wiki/summaries/topic.md"
+        self.compiler.reset_mock()
+        for mutation in (lambda: summary.write_text("Unreviewed output edit."), summary.unlink):
+            mutation()
+            self.assertEqual(self.compile()["counts"], {"repair_review": 1})
+        self.compiler.assert_not_awaited()
+
+    def test_new_and_missing_requested_records_cannot_be_skipped(self):
+        source = self.record()
+        relative = source.relative_to(self.project).as_posix()
+        self.assertEqual(WIKI.update_plan(self.project, selected=[relative])["counts"], {"new": 1})
+        self.complete(source)
+        source.unlink()
+        with self.assertRaisesRegex(ValueError, "Requested canonical record is missing"):
+            WIKI.update_plan(self.project, selected=[relative])
+        self.assertEqual(WIKI.update_plan(self.project)["counts"], {"missing": 1})
+        self.assertEqual(len(json.loads(self.manifest_path.read_text())["sources"]), 1)
+
+    def test_exact_selection_rejects_escape_derived_navigation_and_out_of_scope(self):
+        self.record()
+        outside = self.project / "outside.md"
+        outside.write_text("---\nid: OUTSIDE\n---\n")
+        for relative in ("outside.md", "../outside.md", str(outside), "knowledge/llm-wiki/wiki/index.md"):
+            with self.subTest(path=relative), self.assertRaises(ValueError):
+                WIKI.update_plan(self.project, selected=[relative])
+
+    def test_partial_generation_missing_output_cannot_receive_completion(self):
+        source = self.record()
+        self.compile()
+        self.derived("wiki/index.md", "Index only; summary generation was partial.")
+        with self.assertRaisesRegex(ValueError, "missing or changed"):
+            self.review(self.receipt([source]))
+        state = WIKI.wiki_state(self.kb)[0]["incremental"]
+        self.assertFalse(state["completed"])
+        self.assertEqual(state["attempts"]["topic"]["status"], "pending_review")
+
+    def test_recipe_and_schema_changes_invalidate_completed_sources(self):
+        source = self.record()
+        self.complete(source)
+        self.assertEqual(WIKI.update_plan(self.project, recipe="different-settings")["counts"], {"recipe_changed": 1})
+        self.derived("wiki/AGENTS.md", "A changed semantic output contract.")
+        self.assertEqual(WIKI.update_plan(self.project)["counts"], {"recipe_changed": 1})
+
+    def test_failed_attempt_stays_visible_and_retryable(self):
+        self.record()
+        self.compiler.side_effect = RuntimeError("Synthetic provider failure")
+        with self.assertRaises(RuntimeError):
+            self.compile()
+        self.assertEqual(WIKI.update_plan(self.project)["counts"], {"retry": 1})
+        manifest = WIKI.wiki_state(self.kb)[0]
+        self.assertEqual(manifest["incremental"]["attempts"]["topic"]["status"], "failed")
+        self.compiler.side_effect = self.synthetic_compiler
+        self.assertEqual(self.compile()["counts"], {"pending_review": 1})
+
+    def test_plan_needs_no_engine_runtime_credentials_or_native_calls(self):
+        self.record()
+        with patch.object(WIKI, "configured_credentials", side_effect=AssertionError("private config")), \
+                patch.object(WIKI, "runtime_python", side_effect=AssertionError("engine runtime")), \
+                patch.object(sys, "argv", [str(SCRIPT), "--project", str(self.project), "plan"]), \
+                redirect_stdout(io.StringIO()) as output:
+            WIKI.main()
+        self.assertEqual(json.loads(output.getvalue())["counts"], {"new": 1})
+        self.compiler.assert_not_awaited()
+        self.native_main.assert_not_called()
+
+    def test_review_requires_former_dependents_and_affected_explorations(self):
+        source = self.record()
+        self.derived("wiki/concepts/prior.md", '---\nsources: ["summaries/topic.md"]\n---\nPrior claim.\n')
+        self.derived("wiki/explorations/synthesis.md", "A saved synthesis uses [[concepts/prior]].\n")
+        self.complete(source)
+        source.write_text(source.read_text() + "The prior claim is withdrawn.\n")
+        self.compile()
+        receipt = self.receipt([source])
+        self.assertIn("wiki/explorations/synthesis.md", receipt["sources"][0]["outputs"])
+        receipt["sources"][0]["outputs"].remove("wiki/concepts/prior.md")
+        with self.assertRaisesRegex(ValueError, "omitted former"):
+            self.review(receipt)
+        self.derived("wiki/concepts/prior.md", "The prior unsupported claim was removed after review.\n")
+        self.derived("wiki/explorations/synthesis.md", "Stale: source withdrew the prior claim; regenerate only when authorized.\n")
+        receipt = self.receipt([source])
+        receipt["sources"][0]["outputs"].remove("wiki/concepts/prior.md")
+        receipt["sources"][0]["withdrawn_outputs"] = [{"path": "wiki/concepts/prior.md", "reason": "Removed withdrawn claim and source citation."}]
+        receipt["sources"][0]["withdrawal_review_note"] = "Reviewed former concept and qualified saved synthesis."
+        next(output for output in receipt["outputs"] if output["path"] == "wiki/concepts/prior.md")["sources"] = []
+        self.review(receipt)
+        self.assertEqual(WIKI.update_plan(self.project)["counts"], {"unchanged": 1})
+
+    def test_shared_output_review_must_explicitly_preserve_other_source_claims(self):
+        first, second = self.record("a.md", "A"), self.record("b.md", "B")
+        self.complete(first, second)
+        receipt = self.receipt([first])
+        index = next(output for output in receipt["outputs"] if output["path"] == "wiki/index.md")
+        index["sources"].remove("B")
+        state = self.state_bytes()
+        with self.assertRaisesRegex(ValueError, "omitted preserved source claims"):
+            self.review(receipt)
+        self.assertEqual(self.state_bytes(), state)
+
+    def test_review_source_race_restores_both_binding_files_and_keeps_semantic_edits(self):
+        source = self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        receipt = self.receipt([source])
+        state = self.state_bytes()
+        original_save = WIKI.save_json
+
+        def racing_save(path, value):
+            original_save(path, value)
+            if path == self.registry_path:
+                source.write_text(source.read_text() + "Concurrent canonical change.\n")
+
+        with patch.object(WIKI, "save_json", side_effect=racing_save), self.assertRaisesRegex(ValueError, "Source changed during review"):
+            self.review(receipt)
+        self.assertEqual(self.state_bytes(), state)
+        self.assertIn("Concurrent", source.read_text())
+        self.assertTrue((self.kb / "wiki/summaries/topic.md").is_file())
+
+    def test_review_pair_write_failure_restores_both_provenance_before_images(self):
+        source = self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        receipt = self.receipt([source])
+        state = self.state_bytes()
+        original_save = WIKI.save_json
+
+        def failing_save(path, value):
+            if path == self.registry_path:
+                raise OSError("Synthetic second binding write failure")
+            original_save(path, value)
+
+        with patch.object(WIKI, "save_json", side_effect=failing_save), self.assertRaises(OSError):
+            self.review(receipt)
+        self.assertEqual(self.state_bytes(), state)
+
+    def test_source_race_before_compilation_stops_without_model_calls(self):
+        source = self.record()
+
+        def changed_config(*args):
+            source.write_text(source.read_text() + "Concurrent source edit.\n")
+            return {"model": "test/model"}, {}
+
+        self.effective_config.side_effect = changed_config
+        with self.assertRaisesRegex(ValueError, "Source changed before compilation"):
+            self.compile()
+        self.compiler.assert_not_awaited()
+
+    def test_compile_noop_avoids_credentials_and_engine_runtime_even_in_public_api(self):
+        source = self.record()
+        self.complete(source)
+        with patch.object(WIKI, "configured_credentials", side_effect=AssertionError("private config")), \
+                patch.object(WIKI, "runtime_python", side_effect=AssertionError("engine runtime")), \
+                patch.object(sys, "argv", [str(SCRIPT), "--project", str(self.project), "compile"]), \
+                redirect_stdout(io.StringIO()):
+            WIKI.main()
+            WIKI.compile_sources(self.project, "knowledge/candidates")
+
+    def test_ade_handoff_carries_exact_queue_recipe_and_force(self):
+        source, other = self.record("a.md", "A"), self.record("b.md", "B")
+        relative = source.relative_to(self.project).as_posix()
+        with patch.dict(os.environ, {}, clear=True), patch.object(WIKI, "agent_handoff") as handoff:
+            self.run_main("compile", "--record", relative, "--recipe", "test-policy", "--force")
+        arguments = handoff.call_args.args[3]
+        self.assertEqual(arguments, ["--recipe", "test-policy", "--record", relative, "--force"])
+        self.assertNotIn(other.relative_to(self.project).as_posix(), arguments)
+
+    def test_unchanged_summary_after_changed_source_requires_explicit_reason(self):
+        source = self.record()
+        self.complete(source)
+        source.write_text(source.read_text() + "Metadata-only fixture change.\n")
+        self.compile()
+        receipt = self.receipt([source])
+        receipt["sources"][0].pop("unchanged_reason")
+        with self.assertRaisesRegex(ValueError, "unchanged_reason"):
+            self.review(receipt)
+
+    def test_transitive_concepts_entities_and_explorations_remain_in_review_scope(self):
+        self.record()
+        self.derived("wiki/concepts/a.md", '---\nsources: ["summaries/topic.md"]\n---\nDirect claim.\n')
+        self.derived("wiki/concepts/b.md", "An indirect claim from [[concepts/a]].\n")
+        self.derived("wiki/entities/c.md", "A dependent entity from [[concepts/b]].\n")
+        self.derived("wiki/explorations/d.md", "Saved synthesis from [[entities/c]].\n")
+        expected = WIKI.update_plan(self.project)["records"][0]["expected_outputs"]
+        self.assertTrue({"wiki/concepts/a.md", "wiki/concepts/b.md", "wiki/entities/c.md", "wiki/explorations/d.md"}.issubset(expected))
+
+    def test_force_cannot_replace_existing_canonical_id_for_same_filename(self):
+        source = self.record()
+        self.complete(source)
+        state = self.state_bytes()
+        source.write_text(source.read_text().replace("id: TOPIC", "id: DIFFERENT"))
+        self.compiler.reset_mock()
+        with self.assertRaisesRegex(ValueError, "filename/ID collision"):
+            self.compile(force=True)
+        self.assertEqual(self.state_bytes(), state)
+        self.compiler.assert_not_awaited()
+
+    def test_new_filename_cannot_duplicate_existing_canonical_id(self):
+        source = self.record()
+        self.complete(source)
+        renamed = self.record("other.md", "TOPIC")
+        with self.assertRaisesRegex(ValueError, "another filename binding"):
+            WIKI.update_plan(self.project, selected=[renamed.relative_to(self.project).as_posix()])
+
+    def test_plan_source_directory_must_stay_within_canonical_knowledge(self):
+        outside = self.project / "other"
+        outside.mkdir()
+        (outside / "topic.md").write_text("---\nid: OUTSIDE\n---\n")
+        with self.assertRaises(ValueError):
+            WIKI.update_plan(self.project, source="other")
+
+    def test_review_does_not_overwrite_external_provenance_edit_during_checks(self):
+        source = self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        receipt = self.receipt([source])
+        for target in (self.manifest_path, self.registry_path):
+            state = self.state_bytes()
+            marker = json.loads(target.read_text())
+            marker["external_edit"] = "Preserve this unrelated writer"
+            external = json.dumps(marker).encode()
+            def external_writer(*args):
+                target.write_bytes(external)
+            with patch.object(WIKI, "check_structure", side_effect=external_writer), self.assertRaisesRegex(ValueError, "provenance changed concurrently"):
+                self.review(receipt)
+            self.assertEqual(target.read_bytes(), external)
+            self.registry_path.write_bytes(state[0])
+            self.manifest_path.write_bytes(state[1])
+
+    def test_plan_output_cannot_overwrite_canonical_or_existing_unrelated_file(self):
+        source = self.record()
+        canonical = source.read_bytes()
+        with self.assertRaisesRegex(ValueError, "ignored .workbench"):
+            WIKI.save_plan(self.project, source, {"records": []})
+        self.assertEqual(source.read_bytes(), canonical)
+        report = self.project / ".workbench/wiki/plan.json"
+        WIKI.save_plan(self.project, report, {"records": []})
+        prior = report.read_bytes()
+        with self.assertRaises(FileExistsError):
+            WIKI.save_plan(self.project, report, {"records": ["changed"]})
+        self.assertEqual(report.read_bytes(), prior)
+        link = self.project / ".workbench/link"
+        link.symlink_to(self.candidates, target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, "symlinks"):
+            WIKI.save_plan(self.project, link / "report.json", {})
+        self.assertFalse((self.candidates / "report.json").exists())
+
+    def test_local_yaml_launcher_reuses_existing_workbench_runtime_without_installing(self):
+        python = self.project / ".venv/bin/python"
+        python.parent.mkdir(parents=True)
+        python.touch()
+        with patch.object(WIKI.importlib.util, "find_spec", return_value=None), \
+                patch.object(WIKI.subprocess, "run") as run:
+            self.assertTrue(WIKI.local_yaml_runtime(self.project))
+        self.assertEqual(run.call_args.args[0][0], str(python))
+
+    def test_json_writes_preserve_unrelated_fixed_tmp_file(self):
+        path = self.project / "report.json"
+        fixed_tmp = path.with_suffix(".json.tmp")
+        fixed_tmp.write_text("An unrelated recovery marker")
+        WIKI.save_json(path, {"fixture": True})
+        self.assertEqual(fixed_tmp.read_text(), "An unrelated recovery marker")
 
 
 if __name__ == "__main__":

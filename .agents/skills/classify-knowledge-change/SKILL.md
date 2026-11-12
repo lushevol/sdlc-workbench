@@ -27,6 +27,8 @@ Include consequential unchanged consumers. Release order, code changes, or passi
 
 Record each disposition by stable row ID, target rule, old ID/version/hash, intended applicability, evidence, consequence, owner, and action.
 Identify dependent records and still-applicable predecessors. Never globally supersede a rule that remains applicable elsewhere.
+For incremental source plans, inspect prior receipt outputs and former dependents before accepting no change or withdrawn support.
+Unchanged selected meaning can produce a reviewed no-change receipt while canonical bytes remain intact.
 Keep unknown owners and dates explicit. A rollout or rollback changes intent only with a supported intended-rule decision.
 For actual rollback claims, inspect configuration, migrations, persistent state, and external effects alongside code.
 

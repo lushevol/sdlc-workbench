@@ -28,6 +28,8 @@ Business implementation, external access, execution, and publication retain thei
 3. Use [prepare-knowledge-sources](../prepare-knowledge-sources/SKILL.md) for new or changed complete exports.
    Reuse exact retained revisions for other inputs through [capture-knowledge-sources](../capture-knowledge-sources/SKILL.md).
    Review mode inspects sources without importing them.
+   For registered collections, use [the incremental plan](references/source-preparation.md#plan-incremental-canonical-work) before semantic reading.
+   Process queued files and affected records. Reuse completed unchanged inputs without re-extracting their contents.
 4. Use [retrieve-knowledge-evidence](../retrieve-knowledge-evidence/SKILL.md), then [extract-knowledge-claims](../extract-knowledge-claims/SKILL.md).
    Use [assess-knowledge-applicability](../assess-knowledge-applicability/SKILL.md) when source versions or contexts differ.
 5. Use [resolve-knowledge-questions](../resolve-knowledge-questions/SKILL.md) for remaining material ambiguity.
@@ -42,6 +44,9 @@ Business implementation, external access, execution, and publication retain thei
    Content repairs require a new preparation checkpoint, affected review, and required correction events.
 9. After authorized canonical changes, use [llm-wiki](../llm-wiki/SKILL.md) for affected derived pages.
    Report wiki scope and freshness separately from canonical publication.
+10. Record reviewed outcomes through `sources complete` for registered collection plans.
+    Bind updated outputs to the passed sealed final checkpoint. Preserve supported no-change outputs without rewriting them.
+    Incomplete sources remain queued; rerun the local planner before another semantic attempt.
 
 Read each selected operation's inputs and completion conditions before invoking it.
 Reuse current checkable outputs; do not repeat a mutation just to satisfy a step list.

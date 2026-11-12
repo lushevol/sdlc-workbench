@@ -24,11 +24,15 @@ Its capture and selection operations reuse the existing commands and retained so
 The [lifecycle map](../../docs/KNOWLEDGE_LIFECYCLE.md) identifies reusable steps and their checkable outputs.
 Use the [source adapter boundary](../../adapters/sources/README.md) when adding a source integration.
 Deterministic validation checks declared records and retained provenance.
-Local source preparation uses `ai-sdlc sources refresh`, `select`, `verify`, and `view`.
+Local source preparation uses `ai-sdlc sources refresh`, `select`, `verify`, `plan`, `view`, and `complete`.
 It accepts complete Markdown exports from registered filesystem collections.
 It preserves source revisions and creates hash-bound selection indexes without copying full filtered source trees.
 Read [source preparation](../../.agents/skills/ingest-knowledge/references/source-preparation.md) for commands, decisions, and limits.
 Every generated source link records the original page hash and output hash.
+`plan` queues selection review and canonical processing separately, without model calls.
+`view --plan` emits only queued kept pages. `complete` records reviewed, checked canonical outcomes.
+Processing receipts live under `evidence/knowledge/processing/`; full plan baselines remain in ignored `.workbench/` storage.
+Unchanged completed inputs skip semantic work when input, recipe, context, and output hashes still match.
 
 New source bytes, changed policy, and changed governing context invalidate previous selections.
 Missing pages remain visible without downstream deletion.

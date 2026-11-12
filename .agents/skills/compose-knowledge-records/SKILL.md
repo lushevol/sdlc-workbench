@@ -31,6 +31,8 @@ Use the [knowledge contract](../../../knowledge/README.md), [schemas and templat
    Mark an unavailable owner `unknown`.
 4. Reuse unchanged records. Increment the version when content or scope changes.
    Preserve unresolved predecessors and findings; do not overwrite their history to hide conflicts.
+   Reconcile the plan's affected closure, including former dependents of withdrawn claims.
+   Record supported no-change outcomes separately; do not rewrite records only to advance an observed source hash.
 5. Create or update `knowledge/candidates/index.md` with topic purpose, state, links, and evidence limits.
    Keep reusable `knowledge/index.md` free from live project records.
 6. Use declared registry IDs only for inspected relationships.
@@ -57,3 +59,4 @@ Stop affected meaning changes when material ambiguity or missing authority remai
 Use [prepare-knowledge-transition](../prepare-knowledge-transition/SKILL.md), [review-knowledge-claims](../review-knowledge-claims/SKILL.md),
 and [record-knowledge-audit](../record-knowledge-audit/SKILL.md) before declaring changed records complete.
 Writing candidates supplies no human approval or evidence of implemented behavior.
+Return exact output paths for the caller's `sources complete` receipt after final review and integrity checks.

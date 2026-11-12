@@ -212,6 +212,10 @@ If either setting is absent, use the unchanged llm-wiki-agent skill in the curre
 The stable derived workspace remains `knowledge/llm-wiki/`; relative source links under both `raw/` and `wiki/sources/` feed source summaries, focused concepts, entities, and explorations indexed by `wiki/index.md`.
 Both engines maintain that single workspace and retain the existing rich pages; engine changes do not create another wiki.
 With both settings, the bridge invokes OpenKB's original compiler with provider setup and locks, preserving canonical links and registering hashes.
+Local file-level planning precedes semantic dispatch. Reviewed unchanged inputs skip compiler calls.
+Source processing and wiki completion receipts distinguish finished work from observed hashes or partial generation.
+Use the [incremental source contract](../.agents/skills/ingest-knowledge/references/source-preparation.md#plan-incremental-canonical-work)
+and [wiki review contract](../.agents/skills/llm-wiki/references/workflows.md#reviewed-completion-receipts).
 Without both settings, the current agent follows llm-wiki-agent for semantic compilation and maintenance without another model client.
 It reads original llm-wiki-agent instructions, preserves OpenKB fields, treats summaries as derived source pages, and retains immutable source symlinks.
 Upstream scripted ingest and refresh do not run against this linked layout; saved synthesis stays in explorations.

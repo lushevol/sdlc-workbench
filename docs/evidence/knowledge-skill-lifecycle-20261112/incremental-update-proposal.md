@@ -7,6 +7,13 @@ Priority: explicit user goal for knowledge update efficiency.
 
 > I want my knowledge base updates to only detect incremental updates from source files, reducing token consumption and increasing efficiency. how to optimize
 
+Implementation authorization, same conversation, 12 November 2026:
+
+> good, implement them
+
+This authorizes the file-level implementation below. Section-level processing remains deferred as proposed.
+See [the implementation and validation result](incremental-implementation.md) for the completed stage.
+
 ## Review scope
 
 Inspect current incremental detection and propose the smallest complete improvement.

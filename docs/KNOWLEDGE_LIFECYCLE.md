@@ -10,7 +10,9 @@ These skills guide agents. They do not add a workflow runner or an automatic app
 flowchart TB
     subgraph S["Source preparation — prepare-knowledge-sources"]
         A["Complete replaceable export"] --> B["Retain original revision and SHA-256"]
-        B --> C{"Review relevance and context"}
+        B --> P{"Local file-level plan"}
+        P -->|"Selection pending"| C{"Review relevance and context"}
+        P -->|"Completed inputs and outputs match"| N["Skip semantic processing"]
         C -->|"KEEP / KEEP_SECTIONS"| D["Filtered links or exact excerpts"]
         C -->|"EXCLUDE / EVIDENCE_ONLY"| E["Retain originals; omit from intent input"]
         C -->|"HOLD"| H["Investigate missing context"]
@@ -21,16 +23,21 @@ flowchart TB
         K2 --> K3["verified"]
         K3 -->|"Required human approval"| K4["published"]
     end
-    D --> K1
+    D --> Q["Process queued sources and affected prior records"]
+    Q --> K1
+    K1 --> R["Reviewed result and checked output receipt"]
+    R -.-> P
     B -.->|"Changed page, policy, or context requires reassessment"| C
     subgraph W["Derived wiki — llm-wiki and existing engine"]
-        W1["Bind canonical ID, version, and SHA-256"] --> W2["Engine maintains summaries, concepts, entities, and index"]
+        W0{"Local canonical-input plan"} -->|"Changed or unfinished"| W1["Bind canonical ID, version, and SHA-256"]
+        W0 -->|"Completed receipt and outputs match"| W7["Skip semantic compiler"]
+        W1 --> W2["Engine maintains summaries, concepts, entities, and index"]
         W2 --> W3["Review output and complete provenance"]
         W3 --> W4{"Verify hashes, links, and structure"}
         W4 -->|"Pass"| W5["Current for bound source bytes"]
         W4 -->|"Fail"| W6["Incomplete; recover and reconcile"]
         W6 --> W2
-        W5 -->|"Canonical bytes change"| W1
+        W5 -->|"Next update"| W0
     end
     K1 -.->|"Qualified candidate content"| W1
     K4 --> W1
@@ -49,6 +56,8 @@ Release synchronization classifies changes and reuses only the affected operatio
 | Complete export | Ignored `evidence/knowledge/incoming/COLLECTION/` | Replace with the next complete export. |
 | Retained originals | `evidence/knowledge/sources/` and `evidence/knowledge/manifest.yaml` | Preserve bytes and earlier revisions; append changed sources. |
 | Source decisions | `evidence/knowledge/selections/` | Bind page hashes, ranges, policy, and governing context. Reassess changed bindings, including exclusions. |
+| Canonical processing receipts | `evidence/knowledge/processing/` | Bind reviewed outcomes to source selections, recipe, prior outputs, and checked current hashes. |
+| Incremental plans | Ignored `.workbench/ingestion/` | Keep full baselines on disk. Return compact review/process queues; reject stale plans. |
 | Filtered view | Ignored `.workbench/` working storage | Generate exact excerpts or links with source/output hashes. Regenerate after selection changes. |
 | Canonical knowledge | `knowledge/`, excluding the reserved derived subtree | Changes require source support, applicable review, and exact-byte governance evidence. |
 | Wiki source aliases | `knowledge/llm-wiki/raw/` and `knowledge/llm-wiki/wiki/sources/` | Relative symlinks to canonical records. Never write through them. |
@@ -57,6 +66,27 @@ Release synchronization classifies changes and reuses only the affected operatio
 Missing source pages preserve history. They do not authorize downstream deletion.
 Filtered views support ingestion; canonical citations still identify original retained revisions and exact source sections.
 No additional top-level raw archive or copied filtered source tree is required.
+
+## Incremental execution
+
+Run `sources refresh`, then `sources plan` before semantic reading.
+Review queued selections and create a fresh plan after applying decisions.
+Use `sources view --plan` for queued kept pages and retain complete original SHA-256 provenance.
+Process the affected canonical closure, including previous outputs and former dependents of withdrawn claims.
+Record reviewed results with `sources complete`; selection and observed hashes cannot prove canonical completion.
+Updated outputs require the matching passed sealed ingestion checkpoint. No-change outcomes preserve their starting output bytes.
+Partial completion remains retryable. A repeated refresh cannot clear unfinished work.
+
+Run wiki `plan` with the exact canonical scope before semantic engine selection.
+Current reviewed completion and output hashes permit unchanged inputs to skip compilation.
+Legacy bindings without receipts require scoped review. Native compiler return alone leaves review pending.
+Maintain summaries, prior and new concepts/entities, contradictions, backlinks, index entries, and affected saved explorations.
+Global navigation edits do not independently invalidate every unrelated canonical input.
+
+Deterministic planning follows declared relationships and retained output dependencies.
+Broaden semantic discovery when source relationships are incomplete. No planner proves semantic completeness.
+File-level processing is implemented. Section-level normalization and fingerprints remain deferred.
+No token-saving percentage is established without measured provider usage.
 
 ## Major-step orchestrators
 
@@ -98,6 +128,7 @@ Therefore, native ingestion rollback does not make bridge compilation transactio
 
 Keep [finalization](../.agents/skills/finalize-wiki-update/SKILL.md) coordinated with verification and recovery.
 ADE maintenance checks reviewed source/output hashes and retains paired provenance before-images.
+The bridge stores completion receipts alongside existing source bindings, rather than creating a second approval lifecycle.
 The two provenance writes are not crash-atomic. Failed semantic work can leave partial derived edits.
 Never advance hashes to conceal incomplete maintenance. Report the affected scope and preserve edits for reconciliation.
 

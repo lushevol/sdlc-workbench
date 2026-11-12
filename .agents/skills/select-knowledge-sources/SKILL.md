@@ -15,7 +15,8 @@ Review-only scope follows reading and proposed decisions. Skip source, selection
 
 ## Select and check
 
-1. Read complete sources and necessary linked context before deciding.
+1. Run `sources plan` to locate pending selections without loading unchanged completed source contents.
+   Read each queued complete source and necessary linked context before deciding.
    Select intended behavior, domain definitions, contracts, responsibilities, and behavior-relevant constraints.
    Technical material qualifies when it explains intended domain responsibilities or contracts.
 2. Apply `KEEP`, `KEEP_SECTIONS`, `EVIDENCE_ONLY`, `EXCLUDE`, or `HOLD` using [the decision definitions](../ingest-knowledge/references/source-preparation.md#apply-the-filter-pattern).
@@ -24,15 +25,17 @@ Review-only scope follows reading and proposed decisions. Skip source, selection
    Use filenames and keywords to locate passages, then decide from their contents.
    Source age alone does not justify exclusion. Code or passing tests cannot define target intent.
 4. Record decisions through `sources select`; bind them to original page SHA-256, selected ranges, policy, and governing context.
-   Reassess changed pages, previous exclusions, and changed policy/context.
+   Reassess changed pages, including previous exclusions, and decisions affected by changed policy or context.
 5. Run `sources verify` and report its actual collection result and pending scope.
-6. When needed, use `sources view` with a new ignored output directory.
+6. Save a fresh `sources plan` after applying decisions.
+   When needed, use `sources view --plan` with a new ignored output directory.
    Check original-to-output ranges, source identities, revisions, hashes, and emitted output hashes before use.
 
 The contract contains [decision JSON and commands](../ingest-knowledge/references/source-preparation.md#apply-the-filter-pattern)
 and [view generation](../ingest-knowledge/references/source-preparation.md#generate-the-filtered-view).
 Do not manually maintain generated excerpts or silently repair a business policy while cleaning.
 Canonical citations must resolve to retained originals rather than rely on replaceable views.
+Report review and processing queues separately. Source selection alone cannot clear pending canonical processing.
 
 ## Checkable output and stop conditions
 

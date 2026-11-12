@@ -210,6 +210,18 @@ Keep hashing, validators, schemas, locks, and engine lifecycle mechanics in exis
 Do not add a parallel wiki state machine or infer knowledge approval from successful compilation.
 Keep wiki provenance finalization, verification, and required recovery coordinated.
 
+High-priority source: [incremental update request and authorization, 12 November 2026](docs/evidence/knowledge-skill-lifecycle-20261112/incremental-update-proposal.md#exact-user-input).
+Run local file-level change planning before semantic knowledge work.
+Use `sources plan` after refresh and selection; use `sources view --plan` for queued kept pages.
+Load only queued sources, prior affected records, and necessary governing context into semantic review.
+Review former dependents when a source withdraws claims. Broaden discovery when declared relationships are incomplete.
+Record successful canonical processing with `sources complete`; selection or observed hashes alone do not establish completion.
+Keep processing receipts under `evidence/knowledge/processing/`; keep full planning baselines in ignored working storage.
+Plan wiki updates before engine dispatch. Skip unchanged inputs only when reviewed receipts and current outputs agree.
+Use exact canonical record selection for scoped wiki work. Missing completion evidence requires scoped review.
+Keep failed and partial work retryable. Do not advance receipts to conceal incomplete processing.
+Preserve original full-file hashes. Section-level optimization remains outside the current processing contract.
+
 ## Source preparation before knowledge ingestion
 
 High-priority source: [implementation request, 11 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).

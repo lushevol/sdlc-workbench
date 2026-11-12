@@ -13,9 +13,15 @@ This parent selects operations and reconciles their results. The reusable units 
 Start through the [project-scoped launcher](references/workflows.md#project-scoped-commands):
 
 ```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/plan.json
 python3 .agents/skills/llm-wiki/scripts/wiki.py run status
 python3 .agents/skills/llm-wiki/scripts/wiki.py engine
 ```
+
+Run local planning before semantic dispatch. Read its queued scope rather than loading unchanged completed records.
+Use repeated `--record WORKSPACE_RELATIVE_PATH` for exact canonical selection.
+Current completed receipts and output hashes permit semantic skipping; legacy bindings require scoped bootstrap review.
+Keep recipe identities consistent across planning, compilation, and review.
 
 Use OpenKB semantic operations only with both `OPENAI_API_BASE` and `LLM_API_KEY` configured.
 Otherwise use unchanged [llm-wiki-agent workflows](upstream/AGENTS.md) in the current ADE session.

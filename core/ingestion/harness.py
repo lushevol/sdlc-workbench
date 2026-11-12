@@ -533,6 +533,7 @@ def check(root, baseline_path, plan_path, *, phase="final", seal=None):
         _executions(report, root, plan, repositories, before["manifest"]["records"], cache)
         _audit_targets(report, root, baseline, before, projections, changed, phase)
         if seal:
+            seal_hash = _file_hash(_external_file(seal))
             prior = _json(seal)
             hashes = prior.get("prepared_content")
             if (prior.get("operation") != "check" or prior.get("workspace") != str(root)
@@ -543,6 +544,9 @@ def check(root, baseline_path, plan_path, *, phase="final", seal=None):
                 if not isinstance(digest, str) or not _HASH.fullmatch(digest) or report["prepared_content"][name] != digest:
                     _finding(report, "seal_content_changed", name, {"prepared_sha256": digest, "current_sha256": report["prepared_content"][name]},
                              "The checkpoint does not cover these final bytes.", "Review the changed bytes and prepare a new checkpoint.")
+            if _file_hash(_external_file(seal)) != seal_hash:
+                raise ValueError("The checkpoint changed during the check; repeat preparation and review.")
+            report["seal"] = {"sha256": seal_hash}
         after = _capture(root)
         if before != after or any(_file_hash(_local(root, name)) != digest for name, digest in report["prepared_content"].items()):
             _finding(report, "workspace_changed_during_check", "knowledge", "Evidence changed while the check was running.")

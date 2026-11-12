@@ -107,13 +107,47 @@ It checks recorded hashes. It cannot decide whether selected text proves the pro
 Successful refresh and selection commands can still report `NEEDS_REVIEW` for unresolved pages.
 `verify` returns a nonzero exit status unless the collection is `READY`.
 
+## Plan incremental canonical work
+
+Run the deterministic planner before loading source contents into semantic processing:
+
+```sh
+ai-sdlc --workspace PATH sources plan --source COLLECTION --recipe canonical-v1 > .workbench/ingestion/plan.json
+```
+
+Create the ignored output parent first. Run redirection from the selected workspace, or use an absolute destination.
+`--recipe` identifies the canonical processing procedure. Change it when that procedure changes the required semantic work.
+The command reads local hashes and metadata without model calls.
+It returns compact `review_queue`, `process_queue`, `affected_knowledge`, and counts.
+Full planning baselines stay in ignored `.workbench/ingestion/source-plans/` rather than model context.
+
+Review queued selections first. Apply decisions and save a new plan before generating a scoped view.
+Pending selections cannot establish canonical completion.
+Repeated refreshes preserve pending processing when no successful receipt covers those inputs.
+Source bytes, selection, policy, context, recipe, and output changes invalidate affected reuse.
+New and missing sources remain visible. Missing input authorizes no deletion.
+Excluded sources without dependent knowledge require no downstream intent processing.
+
+Process complete queued source pages and their affected canonical records.
+Use unchanged sources only as necessary context rather than independently re-extracting them.
+The closure follows declared relationships, retained citations, and prior receipt outputs.
+Inspect former dependents when claims lose support. Broaden discovery when declared relationships are incomplete.
+Do not claim semantic completeness from the deterministic closure alone.
+
+Saved plans bind starting outputs and input metadata. Source or receipt changes require a fresh plan.
+Keep a pending plan and its baseline for interrupted recovery; do not edit either to bypass stale-plan findings.
+
 ## Generate the filtered view
 
 ```sh
 ai-sdlc --workspace PATH sources view --source COLLECTION --output .workbench/ingestion/filtered/RUN
+ai-sdlc --workspace PATH sources view --source COLLECTION --plan .workbench/ingestion/plan.json --output .workbench/ingestion/filtered/INCREMENT
 ```
 
 Choose a new output directory for each view.
+With `--plan`, emit only kept present pages from its current processing queue.
+Other pages remain explicit omissions, including completed unchanged pages marked `outside_plan`.
+The manifest records the plan identity. Without `--plan`, the existing full reviewed-view behavior remains available.
 Views use exact selected excerpts or relative source links, with original-to-output line mappings where applicable.
 Whole-page selections use links when supported. Otherwise, the runtime creates a byte-identical copy.
 Each view entry records the original source ID, revision, SHA-256, snapshot, and emitted output hash.
@@ -126,6 +160,57 @@ Stale selected bindings must not render as current source content.
 Do not manually maintain generated excerpts. Record corrected selections and generate another view.
 Do not silently repair policies, invent missing values, or remove exceptions during cleaning.
 The first cleanup operation selects exact text. Semantic synthesis belongs in canonical knowledge ingestion.
+
+## Record canonical processing completion
+
+After actual review and integrity checks, prepare a results JSON for the saved plan:
+
+```json
+{
+  "schema_version": 1,
+  "source_id": "COLLECTION",
+  "plan_id": "COPY_FROM_THE_SAVED_PLAN",
+  "results": [
+    {
+      "path": "design/page.md",
+      "disposition": "updated",
+      "outputs": ["knowledge/candidates/security/access.md"],
+      "review": {
+        "actor": "ACTUAL_REVIEWER",
+        "reviewed_at": "2026-11-12T00:00:00Z",
+        "note": "REPLACE_WITH_THE_ACTUAL_REVIEW_SCOPE_AND_RESULT"
+      },
+      "checkpoint": {
+        "prepared": ".workbench/ingestion/batch/prepared.json",
+        "final": ".workbench/ingestion/batch/final.json"
+      }
+    }
+  ]
+}
+```
+
+Replace all illustrative values with actual evidence. Never invent a reviewer or a passed checkpoint.
+`updated` requires current valid outputs and a passed final ingestion checkpoint bound to the matching prepared report.
+Run [the final sealed harness check](workflow.md#harness-commands) after applicable review and audit steps.
+List all affected outputs, including preserved dependents required by the plan.
+Include dependents discovered after creating or linking new records. Completion rejects unreviewed expansion of the affected scope.
+`no_change` preserves starting output bytes and records why the new selected evidence leaves canonical knowledge unchanged.
+Use `excluded` for reviewed omissions and `missing_reviewed` for reviewed missing-source consequences when queued.
+Missing sources do not revoke requirements automatically.
+
+```sh
+ai-sdlc --workspace PATH sources complete --source COLLECTION --plan .workbench/ingestion/plan.json --results .workbench/ingestion/results.json
+ai-sdlc --workspace PATH sources plan --source COLLECTION --recipe canonical-v1
+```
+
+Completion stores compact receipts at `evidence/knowledge/processing/COLLECTION.json`.
+Partial results clear only their successfully checked items. Other work remains pending.
+Completion reports `remaining_process` and `remaining_review`; either nonzero count keeps the result `PARTIAL`.
+The compatibility field `remaining` counts processing work only.
+Safe retries preserve earlier receipts; stale input or concurrent changes stop affected completion.
+A current completed plan returns empty semantic queues. Local integrity checks can still run without model calls.
+Receipts establish declared processing completion, not authenticated review, publication approval, or business behavior verification.
+Keep original full-file source hashes authoritative. Section-level processing remains deferred.
 
 Canonical knowledge cites original retained source revisions and exact source ranges.
 The filtered view supplies convenient input. It does not replace the raw source manifest.

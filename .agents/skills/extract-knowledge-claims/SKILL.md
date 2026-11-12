@@ -10,6 +10,10 @@ description: Extract traceable claims, proposed topics, and consequential unknow
 Use project questions, inspected evidence, current source selections, retained original revisions, and governing context.
 For generated views, verify source-page hashes, policy/context bindings, ranges, and output mappings before use.
 Reopen original passages with surrounding conditions when deriving meaning.
+For incremental work, start with the saved plan's process queue and affected records.
+Read complete changed pages and necessary context. Unchanged sources can supply bounded context without independent re-extraction.
+Inspect prior claims and former dependents when a changed source removes support.
+Declared relationships bound deterministic planning; broaden topic discovery when those declarations are incomplete.
 
 ## Extract and classify
 

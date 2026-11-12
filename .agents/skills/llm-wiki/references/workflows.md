@@ -57,9 +57,35 @@ Use these reusable operations in order:
 3. [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) checks completion, provenance, and verification, with coordinated recovery where applicable.
 
 ```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/plan.json
 python3 .agents/skills/llm-wiki/scripts/wiki.py compile
 python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates/security
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates --record knowledge/candidates/security/access.md --recipe default
 ```
+
+Run `plan` before semantic dispatch. It uses local hashes and metadata without credentials, runtime installation, or model calls.
+With `--output`, keep the full inventory on disk and return compact counts and queued paths.
+Choose an unused output path below the selected workspace's ignored `.workbench/` directory.
+Use repeated `--record` for exact workspace-relative canonical inputs inside `--source`.
+Directory planning discovers new records and reports missing bound records without deleting their history.
+Keep the same nonsecret `--recipe` across planning, compilation, and review.
+Change its identity when semantic settings or governing policy change, including the selected model.
+The planner also binds the incremental contract, pinned compiler revision, and wiki authoring policy hash.
+It does not read private model configuration to infer recipe changes.
+
+| Planned result | Next operation |
+| --- | --- |
+| `unchanged` | Skip semantic compilation; reviewed source, bindings, dependencies, and outputs still match. |
+| `new`, `changed`, `recipe_changed`, or `retry` | Maintain the selected source and its affected outputs. |
+| `bootstrap_review` | Review existing legacy pages and record completion; automatic recompilation is unnecessary. |
+| `pending_review` | Inspect generated output and finish actual semantic review before completion. |
+| `repair_review` | Reconcile bindings or changed/missing outputs, then review the affected scope. |
+| `missing` | Investigate missing canonical input; preserve history and unsupported-claim qualifications. |
+
+`--force` explicitly requests recompilation of selected present inputs, including legacy bindings.
+Use it only when regeneration is intended. Missing completion evidence alone calls for review.
+Native compiler return records a pending attempt, not successful semantic completion.
+Unchanged completed inputs make zero additional compiler calls.
 
 With both configured settings, the bridge calls OpenKB's original semantic compiler under its ingest lock.
 Without both settings, it returns an agent handoff and changes no pages or bindings.
@@ -74,6 +100,62 @@ The bridge also blocks interactive `chat`, whose `/add` bypasses scoped compilat
 Use canonical ingestion/governance for source changes. Reconcile origins and aliases explicitly after authorized record moves.
 Symlink failure is an error; do not duplicate canonical files as a workaround.
 Missing sources do not authorize automatic deletion.
+
+## Reviewed completion receipts
+
+After actual semantic review, finalize either engine's work through the same command:
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py review --receipt .workbench/wiki/RUN/review.json
+```
+
+This local operation requires the installed OpenKB schema and lock helpers, but performs no provider call or credential read.
+Prepare a JSON receipt using actual reviewed hashes and scope:
+
+```json
+{
+  "recipe": "default",
+  "engine": "llm-wiki-agent",
+  "reviewed_by": "ACTUAL_REVIEWER",
+  "reviewed_at": "2026-11-12T00:00:00Z",
+  "review_note": "REPLACE_WITH_ACTUAL_SEMANTIC_REVIEW",
+  "sources": [{
+    "path": "knowledge/candidates/security/access.md",
+    "sha256": "SOURCE_BEFORE_SHA256",
+    "outputs": ["wiki/summaries/access.md", "wiki/index.md"],
+    "withdrawn_outputs": []
+  }],
+  "outputs": [
+    {"path": "wiki/summaries/access.md", "sha256": "REVIEWED_OUTPUT_SHA256", "sources": ["CANONICAL_ID"], "note": "ACTUAL_REVIEW"},
+    {"path": "wiki/index.md", "sha256": "REVIEWED_INDEX_SHA256", "sources": ["ALL_PRESERVED_SOURCE_IDS"], "note": "ACTUAL_REVIEW"}
+  ]
+}
+```
+
+Replace placeholders. Copy the full expected output scope from the plan, including concepts, entities, contradictions, and affected explorations.
+Inspect prior dependents as well as newly selected pages when sources withdraw claims.
+Each output lists the canonical IDs whose claims its complete reviewed bytes preserve.
+Shared-page review must preserve every existing owner or explicitly withdraw that source's support.
+Updated global navigation hashes do not independently force unrelated canonical inputs through compilation.
+
+Use source-level `unchanged_reason` when review supports unchanged summary bytes after a source change.
+Use `relocation_reason` when an authorized canonical move changes the binding path.
+For former dependencies, add `withdrawn_outputs: [{"path": "wiki/concepts/FORMER.md", "reason": "ACTUAL_DISPOSITION"}]`.
+Also supply `withdrawal_review_note` and review the former output's current bytes after removing or qualifying unsupported claims.
+For an authorized removed derived page, its output entry uses `sha256: null` and `disposition: "removed"`.
+Missing raw or canonical sources alone authorize no deletion.
+Affected saved explorations require reviewed qualification or authorized regeneration before completion.
+
+The bridge stores compact completion, output ownership, and pending attempts under existing `source-manifest.json` metadata.
+It checks native structure, source/output bytes, relative aliases, and paired registry consistency under the native lock.
+It retains both provenance before-images and intended hashes under ignored `.workbench/wiki/` before replacing either binding file.
+Failed writes or verification restore both before-images only when current bytes belong to that attempt.
+Crash interruption still requires coordinated recovery; inspect its recovery record and preserve unrelated writes.
+Semantic edits remain available for review after failures.
+Finalization still requires full wiki binding and structural verification.
+Another stale source or shared-output owner can block completion; retain successful compilation and pending attempts for reconciliation.
+Use [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) for completion and interrupted recovery.
+Hash receipts record declared review; they do not authenticate actors, establish semantic truth, or grant canonical publication.
 
 ## Query and saved synthesis
 

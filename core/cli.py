@@ -26,7 +26,7 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
     sources = commands.add_parser("sources", help="Prepare local source exports with hash-bound selections")
     source_commands = sources.add_subparsers(dest="source_command", required=True)
-    for name in ("refresh", "select", "view", "verify"):
+    for name in ("refresh", "select", "plan", "complete", "view", "verify"):
         operation = source_commands.add_parser(name)
         operation.add_argument("--source", required=True, help="Registered filesystem source collection ID")
         if name == "refresh":
@@ -36,6 +36,12 @@ def _parser() -> argparse.ArgumentParser:
             operation.add_argument("--decisions", required=True, help="Hash-bound source decisions JSON inside the workspace")
         elif name == "view":
             operation.add_argument("--output", required=True, help="New generated view directory inside .workbench/")
+            operation.add_argument("--plan", help="Saved incremental source plan; emit only queued kept pages")
+        elif name == "plan":
+            operation.add_argument("--recipe", default="canonical-v1", help="Canonical processing recipe identity")
+        elif name == "complete":
+            operation.add_argument("--plan", required=True, help="Saved incremental source plan inside the workspace")
+            operation.add_argument("--results", required=True, help="Reviewed processing results JSON inside the workspace")
     lint = commands.add_parser("lint", help="Check authored SDLC artifacts without loading a workspace")
     lint.add_argument("paths", nargs="*", help="Markdown artifacts or artifact-only directories")
     lint.add_argument("--strict", action="store_true", help="Fail on warnings as well as errors")
@@ -140,6 +146,7 @@ def main(argv: list[str] | None = None) -> int:
     arguments = parser.parse_args(argv)
     try:
         if arguments.command == "sources":
+            from .ingestion.incremental import complete_sources, plan_sources
             from .ingestion.sources import apply_selections, refresh_sources, render_sources, verify_sources
             root = Path(arguments.workspace).expanduser().resolve()
             if arguments.source_command == "refresh":
@@ -147,7 +154,11 @@ def main(argv: list[str] | None = None) -> int:
             elif arguments.source_command == "select":
                 result = apply_selections(root, arguments.source, arguments.decisions)
             elif arguments.source_command == "view":
-                result = render_sources(root, arguments.source, arguments.output)
+                result = render_sources(root, arguments.source, arguments.output, plan_path=arguments.plan)
+            elif arguments.source_command == "plan":
+                result = plan_sources(root, arguments.source, arguments.recipe)
+            elif arguments.source_command == "complete":
+                result = complete_sources(root, arguments.source, arguments.plan, arguments.results)
             else:
                 result = verify_sources(root, arguments.source)
             _print_json(result)

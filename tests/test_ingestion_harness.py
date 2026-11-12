@@ -334,6 +334,7 @@ class IngestionHarnessTests(unittest.TestCase):
         self.assertEqual(code, 0, final)
         self.assertEqual(final["status"], "PASSED")
         self.assertEqual(final["prepared_content"], prepared["prepared_content"])
+        self.assertEqual(final["seal"], {"sha256": hashlib.sha256(seal.read_bytes()).hexdigest()})
 
     def test_prepare_does_not_defer_an_unselected_document_gate(self):
         baseline = self.start()

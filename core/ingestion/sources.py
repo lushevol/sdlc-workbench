@@ -532,7 +532,7 @@ def verify_sources(root: Path, source_id: str) -> dict:
                 "findings": [{"path": _index_path(source_id), "code": "source_binding_invalid", "message": str(error)}]}
 
 
-def render_sources(root: Path, source_id: str, output_dir: str) -> dict:
+def render_sources(root: Path, source_id: str, output_dir: str, *, plan_path: str | None = None) -> dict:
     """Materialize current reviewed intent passages, with original and output hashes."""
     root = Path(root).expanduser().resolve()
     with _lock(root):
@@ -545,13 +545,20 @@ def render_sources(root: Path, source_id: str, output_dir: str) -> dict:
         freshness = [finding for finding in _freshness(root, index) if finding["code"] != "input_missing"]
         if freshness:
             raise WorkbenchError("Source preparation is stale; refresh and review before creating a view.")
+        plan = None
+        if plan_path is not None:
+            from .incremental import load_plan
+            plan = load_plan(root, source_id, plan_path)
+        planned = {row["path"] for row in plan["process_queue"]} if plan else None
         output = _local(root, output_dir)
         if not output.is_relative_to(root / ".workbench") or output == root / ".workbench" or output.exists():
             raise WorkbenchError("Create a source view in a new directory below .workbench/.")
         selected, omitted = [], []
         for row in index["sources"]:
-            if not row["present"] or row["decision"] not in {"KEEP", "KEEP_SECTIONS"}:
-                omitted.append({"path": row["path"], "decision": row["decision"], "present": row["present"]})
+            if (not row["present"] or row["decision"] not in {"KEEP", "KEEP_SECTIONS"}
+                    or (planned is not None and row["path"] not in planned)):
+                omitted.append({"path": row["path"], "decision": row["decision"], "present": row["present"],
+                                **({"reason": "outside_plan"} if planned is not None and row["path"] not in planned else {})})
                 continue
             raw = _snapshot(root, row["source"])
             selected.append((row, raw))
@@ -595,6 +602,9 @@ def render_sources(root: Path, source_id: str, output_dir: str) -> dict:
                 "selection": {"path": _index_path(source_id),
                               "sha256": _digest(_read(_local(root, _index_path(source_id))))},
                 "policy": index["policy"], "sources": entries, "omitted": omitted}
+        if plan is not None:
+            load_plan(root, source_id, plan_path)
+            view["plan"] = {"path": plan_path, "plan_id": plan["plan_id"]}
         _atomic(output / "manifest.json", (json.dumps(view, indent=2, ensure_ascii=False) + "\n").encode("utf-8"))
         return {"schema_version": 1, "status": "VIEW_CREATED", "source_id": source_id,
                 "output": output_dir, "manifest": output_dir + "/manifest.json",

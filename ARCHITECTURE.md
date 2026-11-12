@@ -87,6 +87,7 @@ workbench/
 │       ├── incoming/                # Ignored replaceable complete exports, grouped by collection.
 │       ├── sources/                 # Retained original source snapshots.
 │       ├── selections/              # Hash-bound source filtering decisions.
+│       ├── processing/              # Reviewed canonical processing receipts.
 │       ├── manifest.yaml            # Source identities, revisions, and hashes.
 │       ├── findings/                # Investigation and governance records.
 │       └── audit/                   # Immutable governance events.
@@ -218,6 +219,11 @@ The source pipeline is complete raw export → filtered source view → canonica
 It preserves prior snapshots and manifest records, then generates exact excerpts or links in ignored working storage.
 Each selection binds source-page SHA-256, original ranges, policy hash, and governing context hashes.
 Every generated link also records the source identity and output hash.
+Local file-level plans separate selection review from pending canonical processing.
+Compact receipts bind completed processing to source, policy, context, recipe, and checked output hashes.
+Full planning baselines remain in ignored working storage. Planned views emit only queued kept pages.
+Affected records include declared dependents and prior outputs when sources withdraw claims.
+These checks support scoped review; incomplete relationship declarations require broader semantic discovery.
 
 Changed pages require review, including prior exclusions. Missing input does not trigger downstream deletion.
 Knowledge synthesis and review follow source preparation. The wiki continues consuming canonical records.

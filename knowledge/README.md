@@ -54,6 +54,10 @@ Record policy and governing context hashes with the decision. Generated excerpts
 Reassess changed sources, including prior exclusions. Missing export pages do not authorize deleting retained sources or knowledge.
 Canonical records continue citing the original retained revision through the existing source manifest contract.
 The wiki consumes canonical records through source links with saved page hashes.
+Run local `sources plan` before semantic work. Generate queued inputs with `sources view --plan`.
+Keep successful-processing receipts under `evidence/knowledge/processing/`, separate from selection decisions and canonical governance.
+Use [the incremental contract](../.agents/skills/ingest-knowledge/references/source-preparation.md#plan-incremental-canonical-work) for completion and invalidation.
+Wiki planning skips unchanged records only after reviewed source/output completion matches current bytes.
 
 ## Document contract
 

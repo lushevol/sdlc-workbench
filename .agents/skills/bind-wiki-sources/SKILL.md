@@ -13,9 +13,14 @@ Use this unit before semantic maintenance or after an authorized canonical reloc
 1. Select canonical records outside `knowledge/llm-wiki/` and run [canonical integrity checks](../check-knowledge-integrity/SKILL.md).
    Reject conflicting IDs, duplicate filenames, paths outside the workspace, and derived wiki inputs.
    Raw exports and filtered excerpts enter through [source preparation](../prepare-knowledge-sources/SKILL.md), not wiki aliases.
+   Run local wiki `plan --source DIR --record PATH` before semantic dispatch. Repeat `--record` for each exact input.
+   Save full inventory with `--output` and read compact queued scope.
+   Matching reviewed completion and output hashes permit skipping. A source hash alone cannot establish completion.
 2. Record each source's path, full-file SHA-256, ID, version, status, and governance state before semantic work.
    Read existing manifest entries to identify new, changed, relocated, or unchanged inputs.
    Do not promote candidate knowledge or select a business answer from a newer timestamp alone.
+   Legacy bindings without receipts require scoped review of existing pages, not automatic global recompilation.
+   Preserve `expected_outputs`, including former dependents and affected explorations, for maintenance and review.
 3. Check `raw/<name>.md` and `wiki/sources/<name>.md` inside the wiki.
    Both must be relative symlinks to the same selected canonical record.
    The native bridge creates/checks aliases during compilation. ADE authoring creates only these validated relative aliases when absent.

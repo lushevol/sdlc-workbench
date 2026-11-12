@@ -20,9 +20,12 @@ Review-only requests inspect these inputs without importing or changing selectio
 
 1. Use [capture-knowledge-sources](../capture-knowledge-sources/SKILL.md) to protect prior bytes and retain new revisions.
 2. Use [select-knowledge-sources](../select-knowledge-sources/SKILL.md) to review meaning, verify bindings, and generate needed views.
-3. Return source identities, hashes, selected ranges, policy/context bindings, view mappings, and explicit omissions to the caller.
+3. Run `sources plan` and return its compact queues before loading source contents into semantic work.
+   After selection changes, save a fresh plan. Use `sources view --plan` for queued kept pages.
+4. Return source identities, hashes, selected ranges, policy/context bindings, view mappings, and explicit omissions to the caller.
 
 Reuse completed operations when their input hashes still match.
+Selection completion does not establish canonical processing completion. Preserve pending processing across repeated refreshes.
 New or changed pages require review, including previous exclusions.
 Changed policy or governing context requires reassessment.
 Missing pages preserve history and trigger no downstream deletion.

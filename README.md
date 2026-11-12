@@ -297,6 +297,7 @@ Check the shared wiki and generate its original OpenKB graph through the bridge:
 
 ```sh
 python3 .agents/skills/llm-wiki/scripts/wiki.py install
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/plan.json
 python3 .agents/skills/llm-wiki/scripts/wiki.py verify
 python3 .agents/skills/llm-wiki/scripts/wiki.py run status
 python3 .agents/skills/llm-wiki/scripts/wiki.py graph
@@ -307,6 +308,9 @@ Configure `OPENAI_API_BASE` and `LLM_API_KEY` privately to select OpenKB.
 The bridge reads the project KB `.env` and process environment; unrelated global authentication does not select OpenKB.
 The bridge's `compile` command selects native OpenKB compilation with both settings; otherwise follow its llm-wiki-agent procedure.
 Both routes preserve canonical source links and hashes. No route creates a second active wiki.
+Run local source and wiki plans before semantic work. Reviewed unchanged inputs skip repeated processing.
+Use [incremental source processing](.agents/skills/ingest-knowledge/references/source-preparation.md#plan-incremental-canonical-work)
+and [wiki completion receipts](.agents/skills/llm-wiki/references/workflows.md#reviewed-completion-receipts) for commands and reuse limits.
 See [installation and engine selection](docs/SETUP.md#openkb-primary-wiki) for authentication, graph output, and offline installation.
 Engine selection controls semantic work. Local OpenKB verification and visualization work in either mode without provider credentials.
 

@@ -14,12 +14,15 @@ Run commands through the [project-scoped launcher](../llm-wiki/references/workfl
 
 ```sh
 python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/health-plan.json
 ```
 
 The bridge checks canonical source hashes, both relative aliases, registry consistency, and all six native structural categories.
 These local checks use no model call in either semantic mode.
-Verification covers recorded bindings; compare the requested source scope with the manifest to detect new or omitted records.
-Compare current source/output hashes with a supplied review receipt separately; bridge verification does not validate that receipt.
+Verification covers recorded bindings and native structure.
+Local planning compares requested canonical inventory, completion receipts, and current output dependencies without model calls.
+Report bootstrap review, pending attempts, missing outputs, changed recipes, and omitted sources separately from structural findings.
+Inspect receipt notes and claims for semantic fidelity; matching hashes cannot establish meaning by themselves.
 Report stale sources, missing paths, broken bindings, and structural findings with their affected scope.
 `run status` and `run list` can supply local discovery. They do not replace full verification.
 

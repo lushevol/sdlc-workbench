@@ -174,6 +174,54 @@ class SourcePreparationCLITests(unittest.TestCase):
                                              "output_start": 1, "output_end": 1}])
         self.assertEqual(self.digest(self.root / source["snapshot"]), source["sha256"])
 
+    def test_incremental_plan_completion_and_view_preserve_pending_scope(self):
+        """Completed unchanged input is omitted; new input and unfinished processing remain visible."""
+        self.refresh()
+        code, pending = self.invoke("plan")
+        self.assertEqual(code, 0, pending)
+        self.assertEqual([item["path"] for item in pending["review_queue"]], ["page.md"])
+        self.assertEqual(pending["process_queue"], [])
+        self.select()
+        code, plan = self.invoke("plan")
+        self.assertEqual(code, 0, plan)
+        plan_path = self.root / ".workbench/plan.json"
+        plan_path.write_text(json.dumps(plan))
+        results_path = self.root / ".workbench/results.json"
+        results_path.write_text(json.dumps({"schema_version": 1, "source_id": self.collection,
+            "plan_id": plan["plan_id"], "results": [{"path": "page.md", "disposition": "no_change",
+                "outputs": [], "review": {"actor": "fixture-reviewer", "reviewed_at": "2026-11-12T00:00:00Z",
+                    "note": "Fixture review found no supported candidate beyond existing context."}}]}))
+        code, completed = self.invoke("complete", "--plan", ".workbench/plan.json", "--results", ".workbench/results.json")
+        self.assertEqual(code, 0, completed)
+        self.refresh()
+        code, unchanged = self.invoke("plan")
+        self.assertEqual(code, 0, unchanged)
+        self.assertEqual(unchanged["process_queue"], [])
+        self.assertEqual(unchanged["review_queue"], [])
+
+        added = self.incoming / "new.md"
+        added.write_text("# New rule\nReject expired requests.\n")
+        self.refresh()
+        selection = {"path": "new.md", "sha256": self.digest(added), "decision": "KEEP",
+                     "reason": "Fixture intent review.", "topic": "Access", "intent_status": "proposed", "context": []}
+        (self.root / ".workbench/decisions.json").write_text(json.dumps({"schema_version": 1,
+            "source_id": self.collection, "decisions": [selection]}))
+        self.invoke("select", "--decisions", ".workbench/decisions.json")
+        code, increment = self.invoke("plan")
+        self.assertEqual(code, 0, increment)
+        self.assertEqual([item["path"] for item in increment["process_queue"]], ["new.md"])
+        plan_path.write_text(json.dumps(increment))
+        code, view = self.invoke("view", "--plan", ".workbench/plan.json", "--output", ".workbench/filtered/increment")
+        self.assertEqual(code, 0, view)
+        manifest = json.loads((self.root / view["manifest"]).read_text())
+        self.assertEqual([item["path"] for item in manifest["sources"]], ["new.md"])
+        self.assertEqual(manifest["plan"]["plan_id"], increment["plan_id"])
+        self.assertEqual(next(item for item in manifest["omitted"] if item["path"] == "page.md")["reason"], "outside_plan")
+        added.write_text("# Changed again\nDifferent rule.\n")
+        code, failed = self.invoke("view", "--plan", ".workbench/plan.json", "--output", ".workbench/filtered/stale")
+        self.assertEqual(code, 1, failed)
+        self.assertFalse((self.root / ".workbench/filtered/stale").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
