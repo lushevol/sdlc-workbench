@@ -61,6 +61,8 @@ For current questions and answers, use the [single knowledge question document](
 Answer only that document. The entry clarification file retains decisions and sources; it requires no answers.
 The [document-selection question](question-refinement-20261026/answer-document-question.json) records the user's request for this distinction.
 
+The [latest review-scope direction](portal-ingestion-question-20261112.md#defer-ics-source-questions-without-blocking-review) defers ICS source-related questions without blocking review. The [current stage](../05-knowledge-questions.md#stage-boundary-and-readiness) is `READY` for continued review against the recorded rules. Source and revision questions, including policy-dependent idle-recovery assessment, require no response for this review.
+
 Version 4 retains all 60 IDs and records the nine returned answers. The version 3 investigation reduced the editable entries to eight policy answers and one shared contact entry.
 The [legacy wiki review checkpoints](../05-knowledge-questions.md#legacy-wiki-review-checkpoints) and [completion evidence](portal-wiki-legacy-review-20261112/completion.json) record the finished five-input review: 96 pages reviewed, 31 corrected, and all 12 portal inputs current. The [next owner actions](../05-knowledge-questions.md#next-owner-actions) retain RATAN policy review and the held MOM source.
 Source-backed findings include multiple-entity matching, current EMS3 support, profile fields, login flags, and twenty analytics attributes.

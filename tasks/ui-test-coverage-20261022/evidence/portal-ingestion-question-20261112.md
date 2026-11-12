@@ -50,3 +50,12 @@ Priority: Latest authorization to commit and push the completed knowledge lifecy
 > commit and push
 
 Scope: Commit the completed task changes and push the current branch. Preserve unrelated working changes. This Git action supplies no business-policy review or knowledge-publication approval.
+
+## Defer ICS source questions without blocking review
+
+Source: Subsequent Codex user message, 12 November 2026, Asia/Singapore.
+Priority: Latest explicit direction for the portal knowledge review scope.
+
+> please leave ICS policy source related questions alone, don't block the review process.
+
+Scope: Defer ICS source-document, identifier, revision and source-dependent applicability questions. Keep their evidence limits recorded without asking them again or using them as prerequisites for review. Continue the review using the user's recorded portal rules. This changes review procedure; it supplies no new timeout rule, human reviewer identity or publication approval.

@@ -44,13 +44,23 @@ The [exact answers](evidence/portal-ingestion-answers-20261112.md#exact-user-inp
 
 All 60 original IDs remain available. The [knowledge update log](#knowledge-update-log) maps the nine answers to the affected candidates and their evidence.
 The new 60-minute absolute session ceiling supersedes the earlier elapsed-time exception during continuous eligible activity.
-RATAN owns and reviews portal policy under ICS bank security policy. Exact ICS source and final content review remain pending.
+RATAN owns and reviews portal policy under ICS bank security policy. The [latest user direction](evidence/portal-ingestion-question-20261112.md#defer-ics-source-questions-without-blocking-review) defers ICS source-related questions without blocking review. Continue using the recorded portal rules. Final candidate review remains separate.
 The [completed legacy wiki review](#legacy-wiki-review-checkpoints) confirms all 12 portal wiki inputs are current. The held MOM source and publication gates remain separate.
 
 The 26 October investigation used baseline `568b480e0bfe11f9922d8d133fdd4ed22dd81479`.
 Its [reconciliation](evidence/question-refinement-20261026/reconciliation.json) preserves the original dispositions and evidence.
 
 Confidence concerns the stated finding and scope. Direct user answers support the stated target rules with high confidence. Residual decisions and field-level limits remain explicit. Human publication review and deployed conformance require separate evidence.
+
+## Stage boundary and readiness
+
+- Stage: Continued review of current portal knowledge against recorded user intent.
+- Readiness: `READY` for this bounded review.
+- Basis: [User-directed ICS source deferral](evidence/portal-ingestion-question-20261112.md#defer-ics-source-questions-without-blocking-review), 12 November 2026.
+- Review inputs: The nine recorded answers, current candidate records and retained claim-review evidence. Reuse completed reviews where source and output bytes remain current.
+- Deferred scope: ICS source-document recovery, policy identifier and revision, and source-dependent applicability questions, including idle-expiry recovery. Do not request those inputs or use them as review prerequisites.
+- Evidence limit: Deferral leaves the underlying ICS source unverified. It supplies no different business rule. Required human review and publication remain separate from agent review readiness.
+- Scope check: Independent agent review found no blocking issue. Normal document lint passes with four existing warnings for unknown ownership, pending business review, unresolved content and pending writing review. All 12 added local links resolve; the diff has no whitespace findings. Canonical records and all source, audit, processing and wiki bytes are unchanged.
 
 ## How to answer
 
@@ -135,7 +145,7 @@ Owner: RATAN team for portal policy. The earlier rule-specific answers identify 
 
 Consequence: Policy review can be routed to RATAN. A named reviewer and complete capability baseline owner remain open.
 
-Next action: Obtain the applicable ICS policy revision and record the actual candidate review.
+Next action: Continue the candidate review using the recorded portal rules. ICS source and revision follow-up is deferred and requires no response for this review.
 
 Evidence: [REQ-active-session-renewal.md L1-L25](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L1-L25>); [REQ-active-session-renewal.md acceptance-criteria](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria>); [10-change-review.md unknowns-and-blockers](<../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers>).
 Evidence: [index.ejs L8-L16](<../../repos/ui/mfe-root-config/src/index.ejs#L8-L16>); [KT-portal-purpose.md scope](<../../knowledge/candidates/background/KT-portal-purpose.md#scope>); [user-message.txt L7-L22](<../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L22>).
@@ -1383,7 +1393,7 @@ Evidence: [Analytic Dashboard in Kibana L1-L17](<../../evidence/knowledge/source
 ## Knowledge update log
 
 Source: [Exact user answers](evidence/portal-ingestion-answers-20261112.md#exact-user-input), recorded 12 November 2026 as `SRC-portal-clarification-20261112` in the [manifest](../../evidence/knowledge/manifest.yaml).
-RATAN is the user-identified policy owner and reviewer. The user reported the ICS policy limits. The underlying policy document and a review of these candidate versions remain pending.
+RATAN is the user-identified policy owner and reviewer. The user reported the ICS policy limits. The underlying policy source remains unverified; the latest user direction defers its source-related questions without blocking review of these candidate versions.
 
 | Answer | Record and version | Acceptance criteria and scope | Audit event |
 | --- | --- | --- | --- |
@@ -1393,6 +1403,8 @@ RATAN is the user-identified policy owner and reviewer. The user reported the IC
 | 7 | [Admin and onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md) v3 → v4 | ADMIN-CROSS-TENANT-READ-AC-001, ADMIN-TILE-METADATA-AC-001. Writes, verification, and shared tenant records require their own rules. | [Admin v4](../../evidence/knowledge/audit/AUD-20261112-KT-admin-and-onboarding-v4.yaml) |
 | 8, 9 | [Observability and performance](../../knowledge/candidates/observability/KT-observability-and-performance.md) v2 → v3 | PORTAL-API-PERF-AC-001 and PORTAL-ANALYTICS-AC-001. API measurement and analytics field, reader, and expiry details remain open. | [Observability v3](../../evidence/knowledge/audit/AUD-20261112-KT-observability-and-performance-v3.yaml) |
 | 1 | [Portal purpose](../../knowledge/candidates/background/KT-portal-purpose.md) v2 | Not applicable. RATAN policy ownership supplies no ownership decision for the complete portal capability inventory. | Not applicable |
+
+The [review-scope clarification](evidence/portal-ingestion-question-20261112.md#defer-ics-source-questions-without-blocking-review) changes procedure only. Knowledge record versions, acceptance criteria, provenance, immutable audit events, processing receipts and wiki completion remain unchanged. A new canonical knowledge transition is not applicable because the user supplied no changed target behavior.
 
 ## Portal export reconciliation
 
@@ -1407,9 +1419,9 @@ The next local plan reports zero pending processing items. The [meeting-minutes 
 
 The sealed source check passed with three new candidate events and zero findings. The [derived wiki](../../knowledge/llm-wiki/wiki/index.md) was refreshed locally with the current-agent fallback. The seven reviewed bindings are current, with 37 edited pages across the 96-page dependency scope. Full wiki verification passed with 13 linked canonical sources and zero structural findings. The [wiki graph](../../knowledge/llm-wiki/output/visualize/graph.html) was rebuilt.
 
-RATAN review, confirmation of the applicable ICS policy for idle recovery, and publication approval remain pending.
+RATAN candidate review and publication approval remain pending. ICS source questions, including source-dependent assessment of idle-expiry recovery, are deferred and do not block the review.
 
-The [latest continuation](evidence/portal-ingestion-question-20261112.md#legacy-wiki-review-continuation) authorizes review of the five legacy portal wiki inputs and their affected pages. The scoped review is complete; required policy decisions and publication approval remain pending.
+The [latest continuation](evidence/portal-ingestion-question-20261112.md#legacy-wiki-review-continuation) authorizes review of the five legacy portal wiki inputs and their affected pages. The scoped review is complete. The later ICS-source deferral permits continued candidate review using the recorded rules; publication approval remains separate.
 
 ### Legacy wiki review checkpoints
 
@@ -1464,7 +1476,7 @@ Use the revised candidate criteria for a future conformance review. The knowledg
 ## Requested decision and actual disposition
 
 The user supplied nine answers. The log identifies the resolved policy and the remaining boundaries that matter to acceptance or publication.
-The underlying policy and candidate review are pending.
+ICS source-related questions are deferred and nonblocking under the latest user direction. Candidate review proceeds using the recorded answers.
 
 ## Sources and evidence limits
 
@@ -1473,25 +1485,31 @@ The earlier [repository bindings](evidence/question-refinement-20261026/reposito
 
 ## Unknowns and blockers
 
-RATAN review and the applicable ICS policy revision remain pending.
+No ICS source-related question blocks the current knowledge review. The source document and revision remain unknown, with follow-up deferred. Candidate review can continue using the nine recorded answers.
 Exact token settings, launch freshness before the next login, API measurement conditions, analytics field and access policy, and metadata classification remain open where they affect acceptance.
 
 
+### Deferred ICS source questions
+
+Disposition: `DEFERRED_NONBLOCKING`, by [explicit user direction](evidence/portal-ingestion-question-20261112.md#defer-ics-source-questions-without-blocking-review).
+The existing unanswered source facts remain recorded. Do not investigate, ask for, or await the ICS document, its revision, or a source-dependent idle-recovery decision for the current review.
+This direction supersedes earlier workflow recommendations to obtain an ICS revision in candidate review notes, derived pages and dated completion evidence. Preserve those artifacts and their historical results; do not treat their earlier next-action text as a current prerequisite.
+Reopen this source-related scope only if the user requests it.
+
 ## Next owner actions
 
-The immediate next action is RATAN review of the current session-policy candidates against the applicable ICS revision. The nine returned answers remain recorded; this review concerns the remaining source and applicability limits.
+Continue review of the current session-policy candidates against the nine recorded user answers. The review can assess claim support, consistency, scope and acceptance-criterion wording while ICS source-related questions remain deferred.
 
 | Owner | Action and completion evidence |
 | --- | --- |
-| RATAN team | Supply the policy identifier, revision and effective scope. Review [session renewal v8](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), including refresh-based recovery after idle expiry, and [authentication v10](../../knowledge/candidates/security/KT-authentication-and-sessions.md). Record the actual reviewer, final hashes and disposition through [govern-knowledge](../../.agents/skills/govern-knowledge/SKILL.md) before publication. |
-| Source-export owner, unknown | Recover the 19 referenced [MOM attachments](../../evidence/knowledge/sources/confluence/FM%20TPT%20UI%20Guild/MOM/page.md). Use [prepare-knowledge-sources](../../.agents/skills/prepare-knowledge-sources/SKILL.md) to review their content and selection bindings. The source remains held until that evidence is available. |
+| RATAN team | Review [session renewal v8](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) and [authentication v10](../../knowledge/candidates/security/KT-authentication-and-sessions.md) using the recorded portal rules. ICS source acquisition and policy-dependent idle-recovery assessment are deferred. Record the actual reviewer, final hashes and disposition through [govern-knowledge](../../.agents/skills/govern-knowledge/SKILL.md) for a later publication decision. |
+| Source-export owner, unknown | Recover the 19 referenced [MOM attachments](../../evidence/knowledge/sources/confluence/FM%20TPT%20UI%20Guild/MOM/page.md). Use [prepare-knowledge-sources](../../.agents/skills/prepare-knowledge-sources/SKILL.md) to review their content and selection bindings. The source remains held; review of available portal knowledge can continue independently. |
 
 RATAN review fields are editable. Proposed dispositions are not selected.
 
 | Review item | Suggested response | Recorded response |
 | --- | --- | --- |
-| Applicable ICS source | Policy link or retained copy, revision, effective date and scope; or unknown with a named contact. | Pending |
-| Idle-expiry recovery | Endorse the current candidate with policy support; request a correction; or unknown with a named contact. | Pending |
+| ICS source, revision and source-dependent idle-recovery assessment | No response requested for this review. Revisit only if the user reopens this scope. | DEFERRED_NONBLOCKING by user direction |
 | Final candidate review | Reviewer and role, reviewed versions and hashes, date, disposition and limits. | Pending |
 
 Publication approval remains pending and requires its own recorded decision for the final bytes.
