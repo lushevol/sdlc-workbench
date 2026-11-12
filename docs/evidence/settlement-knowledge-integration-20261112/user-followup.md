@@ -39,3 +39,9 @@ Exact user answer:
 Source: follow-up in Codex, 12 November 2026.
 
 > check if settlement knowledge follows workbench knowledge process?
+
+## Ingestion order clarification
+
+Source: follow-up in Codex, 12 November 2026.
+
+> I mean first it need filters and clean then ingest into candidate then to llm wiki right
