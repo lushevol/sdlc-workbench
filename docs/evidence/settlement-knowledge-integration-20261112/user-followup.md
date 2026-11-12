@@ -33,3 +33,9 @@ Assistant question:
 Exact user answer:
 
 > yes
+
+## Process audit request
+
+Source: follow-up in Codex, 12 November 2026.
+
+> check if settlement knowledge follows workbench knowledge process?
