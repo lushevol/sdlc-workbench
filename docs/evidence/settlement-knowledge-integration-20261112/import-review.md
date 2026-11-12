@@ -30,4 +30,8 @@ The initial provider probes returned non-JSON HTTP 403 responses through both Ch
 
 The [follow-up catalog check](user-followup.md#provider-catalog-check) succeeded on 12 November 2026. The configured key listed 27 models, including `gpt-6-luna`. That model returned completions through Chat Completions and Responses using short test prompts. The probes contained no Settlement content.
 
-Automatic approval review rejected the scoped wiki compilation because it would send the auto-netting candidate and relevant existing wiki context to the configured Sub2API endpoint. It requires explicit confirmation for that payload and destination. The candidate remains queued with the same path and recipe.
+Automatic approval review initially rejected the scoped wiki compilation because it would send the auto-netting candidate and relevant existing wiki context to the configured Sub2API endpoint. The user then [explicitly approved that payload and destination](user-followup.md#compilation-approval).
+
+OpenKB compiled the approved candidate with `gpt-6-luna`. The review checked the [summary](../../../knowledge/llm-wiki/wiki/summaries/KT-settlement-auto-netting.md), the concepts for [rule selection](../../../knowledge/llm-wiki/wiki/concepts/auto-netting-rule-selection.md), [scheduling](../../../knowledge/llm-wiki/wiki/concepts/auto-netting-scheduling.md), and [grouping and outcomes](../../../knowledge/llm-wiki/wiki/concepts/cashflow-netting-grouping-and-outcomes.md), and the [wiki index](../../../knowledge/llm-wiki/wiki/index.md). The final wording keeps the execution key scoped to netting type and preserves the unresolved outcomes for unmatched cashflows by type and rule configuration.
+
+The wiki bridge recorded reviewed completion for the candidate. It verified 13 linked canonical records with zero structural findings. The candidate retains its draft status and unresolved policy questions.

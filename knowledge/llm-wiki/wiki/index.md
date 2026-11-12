@@ -5,6 +5,7 @@ This wiki and its saved explorations are derived from candidate/draft Workbench 
 Exact canonical paths, record versions, lifecycle states, and SHA-256 source bindings are recorded in [source-manifest.json](../source-manifest.json). The `sources/` entries link to those canonical records; changes to compiled pages do not promote the records.
 
 ## Documents
+- [[summaries/KT-settlement-auto-netting]] (short) — Documents scheduled cash settlement auto-netting rules, grouping, outcomes, and unresolved policy differences.
 - [[summaries/KT-ces-migration-parity]] (short) — Defines intended EMS2-to-CES permission parity, per-tile migration, and frontend compatibility rules.
 - [[summaries/KT-authentication-and-sessions]] (short) — Maps portal authentication, session renewal intent, Entra SSO migration, and open policy gaps.
 - [[summaries/REQ-active-session-renewal]] (short) — Candidate requirement for renewable portal sessions via activity, plus expiry-prompt recovery criteria.
@@ -19,6 +20,9 @@ Exact canonical paths, record versions, lifecycle states, and SHA-256 source bin
 - [[summaries/KT-sdk-and-entitlements]] (short) — SDK integration, entitlement retrieval, CES migration, and portal entry rules.
 
 ## Concepts
+- [[concepts/cashflow-netting-grouping-and-outcomes]] — Auto-netting groups cashflows by rule identity and execution-key values, then handles the resulting cashflow or unmatched items.
+- [[concepts/auto-netting-scheduling]] — How eligible cashflows are queued and processed by scheduled auto-netting jobs.
+- [[concepts/auto-netting-rule-selection]] — How matching cashflows are assigned to a rule for scheduled auto-netting.
 - [[concepts/release-window-governance]] — Candidate release-window scheduling and responsibilities, preserving unresolved duration and urgent-release confirmation rules.
 - [[concepts/ces-role-multiplicity]] — CES assignments can hold multiple roles, which cannot be collapsed into one scalar role for legacy callers.
 - [[concepts/permission-check-provider-union]] — Existing hasPermission(code) calls accept a mapped grant from either EMS2 or CES, with the provider logged.

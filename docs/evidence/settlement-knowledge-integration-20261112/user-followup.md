@@ -21,3 +21,15 @@ Source: subsequent user message in Codex, 12 November 2026.
 Source: subsequent user message in Codex, 12 November 2026.
 
 > check if sub2api has available models
+
+## Compilation approval
+
+Source: follow-up in Codex, 12 November 2026.
+
+Assistant question:
+
+> May I send the auto-netting candidate and the relevant existing wiki context to your configured Sub2API endpoint to complete the compilation?
+
+Exact user answer:
+
+> yes
