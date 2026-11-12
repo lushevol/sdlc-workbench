@@ -284,6 +284,8 @@ ai-sdlc --workspace PATH skills release-confidence
 
 Use [connectors](.agents/skills/connectors/SKILL.md) for external tool setup, root variables, discovery, calls, and access diagnostics.
 Use [the knowledge lifecycle map](docs/KNOWLEDGE_LIFECYCLE.md) to select a major-step parent or a reusable operation.
+Use [manage-knowledge-lifecycle](.agents/skills/manage-knowledge-lifecycle/SKILL.md) to assess progress, resume authorized work, and identify the next action with its owner and completion condition.
+Invoke `$manage-knowledge-lifecycle` with a collection, record or task scope, or read it with `ai-sdlc --workspace PATH skills manage-knowledge-lifecycle`.
 The six knowledge parents orchestrate source preparation, ingestion, governance, querying, wiki maintenance, and release synchronization.
 Use [prepare-knowledge-sources](.agents/skills/prepare-knowledge-sources/SKILL.md) before ingesting complete raw exports.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.

@@ -34,6 +34,7 @@ CANONICAL_SKILL_IDS = (
     "prepare-knowledge-transition", "record-knowledge-audit", "check-knowledge-integrity",
     "evaluate-knowledge-retrieval", "classify-knowledge-change", "bind-wiki-sources",
     "maintain-wiki-content", "finalize-wiki-update", "check-wiki-health",
+    "manage-knowledge-lifecycle",
 )
 
 BROWSER_LOCAL_FILES = (

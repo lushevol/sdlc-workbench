@@ -4,6 +4,17 @@ Use major-step skills to coordinate complete work. Invoke an operation skill dir
 Each operation declares its inputs, observable output, and conditions that prevent completion.
 These skills guide agents. They do not add a workflow runner or an automatic approval mechanism.
 
+## Lifecycle coordination and next actions
+
+Use [manage-knowledge-lifecycle](../.agents/skills/manage-knowledge-lifecycle/SKILL.md) at workflow entry, resumption, status review and handoff.
+It inspects current source queues, processing receipts, canonical reviews/audit, and wiki bindings before selecting existing major-step skills.
+It reports source coverage, canonical processing, governance, publication, wiki freshness and requested business verification separately.
+Each material next action names its evidence, owner, required input, selected skill and completion condition.
+Status requests inspect without changing lifecycle artifacts. Continuation performs authorized work and preserves outstanding policy and approval gates.
+Completed unchanged work is reused. Partial or interrupted work stays visible and resumes from its unmet prerequisite.
+Required human review can remain pending while independent candidate ingestion or qualified wiki maintenance proceeds.
+The coordinator uses existing living task documents and ignored plans; it creates no additional lifecycle store or background monitor.
+
 ## Three connected lifecycles
 
 ```mermaid

@@ -204,6 +204,10 @@ Follow the [coverage output rules](#coverage-output) for requirement, defect, im
 High-priority source: [skill decomposition and implementation request, 12 November 2026](docs/evidence/knowledge-skill-lifecycle-20261112/user-input.md#exact-user-input).
 
 Follow [the knowledge lifecycle and skill map](docs/KNOWLEDGE_LIFECYCLE.md).
+Use [manage-knowledge-lifecycle](.agents/skills/manage-knowledge-lifecycle/SKILL.md) for lifecycle status, next-action guidance, and workflow resumption.
+At knowledge workflow entry and handoff, identify the current evidence-backed stage and concrete next action through this coordinator.
+Reuse completed operations, continue authorized independent work, and keep required owner decisions separate.
+Source: [lifecycle manager request, 12 November 2026](docs/evidence/knowledge-skill-lifecycle-20261112/lifecycle-manager-request.md#exact-user-input).
 Keep source preparation, canonical governance, and derived wiki freshness as separate lifecycles.
 Use major-step parents as orchestrators. Reuse their operation skills for scoped work and check each operation's output.
 Keep hashing, validators, schemas, locks, and engine lifecycle mechanics in existing tools.

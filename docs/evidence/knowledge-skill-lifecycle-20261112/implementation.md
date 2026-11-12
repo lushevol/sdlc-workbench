@@ -1,6 +1,7 @@
 # Knowledge skill decomposition verification
 
 Source: [exact user request and implementation authorization](user-input.md#exact-user-input), 12 November 2026.
+Follow-up: [lifecycle manager request](lifecycle-manager-request.md#exact-user-input), 12 November 2026; handled in its linked implementation review.
 Branch: `codex/knowledge-skill-lifecycle-20261112`.
 Starting revision: `0d1c539ea8cf74f6072904f428302bc932c44e1c`.
 
