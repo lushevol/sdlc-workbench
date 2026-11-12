@@ -299,6 +299,34 @@ Check both catalog locations and executable tool paths when checkout locations d
 It does not update `registry/tools.yaml`, interpreter paths, or connector bridge paths.
 Run doctor, workspace validation, and selected local tool checks after restoration.
 
+## Workbench hooks
+
+The [hook guide](HOOKS.md) covers shared context and completion checks for Codex, GitHub Copilot, and Claude Code.
+Hooks reuse the installed Python runtime and existing validators. They add no package or model-service dependency.
+Install the selected agent client through its approved process and verify its native hook support.
+
+```sh
+ai-sdlc --workspace PATH hooks install
+ai-sdlc --workspace PATH hooks status
+```
+
+Use the installed environment's executable when `ai-sdlc` is absent from `PATH`.
+Examples are `.venv/bin/ai-sdlc` on macOS and `.venv\Scripts\ai-sdlc.exe` on Windows.
+The installer records the selected Python executable and preserves unrelated client configuration.
+Reinstall hook registrations after moving or replacing that Python environment.
+Review Codex non-managed hooks through its hook settings. Each client retains its own trust and enablement rules.
+Claude installation returns `launch_argv` with `--settings` for isolated `.claude/workbench-hooks.json`.
+Use that launch command. Bare `claude` does not load Workbench's isolated hooks.
+Ordinary Claude settings stay unchanged, preventing Copilot from inheriting a duplicate Workbench registration.
+Bind an explicit active scope before expecting task-specific checks.
+
+Workspace initialization ships this guide and adapter instructions. It does not silently enable hooks or copy runtime source.
+Connected setup and offline bundles already ship the hook runtime through the Workbench package.
+No extra download, daemon, package registry, or credential is required by the hook commands.
+On Windows, the Codex registration requires the standard `powershell.exe` executable for safe command invocation.
+Regenerate offline bundles when their source fingerprint changes.
+See [hook dependencies and limits](DEPENDENCIES.md#workbench-hooks) before selecting client and platform combinations.
+
 ## Ponytail coding skill
 
 The [Ponytail skill](../.agents/skills/ponytail/SKILL.md) ships as project-local instructions for your existing coding agent.

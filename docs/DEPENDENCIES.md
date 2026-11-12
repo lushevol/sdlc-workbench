@@ -161,6 +161,31 @@ The supported collector uses `rapidfuzz` and does not require those legacy addit
 Standard-library report generation, audit extraction, and portfolio aggregation have separate local execution paths.
 See [E8](#evidence-locators) and [Release Clinic](RELEASE_CLINIC.md).
 
+## Workbench hooks
+
+The [shared hook runtime](HOOKS.md) uses the existing Python package and deterministic validation dependencies.
+It adds no Python distribution, npm package, browser, background service, model credential, or runtime network call.
+Generated workspaces receive instructions and native registration through the installed package, without copied runtime source.
+
+| Prerequisite | Purpose | Acquisition and verification |
+| --- | --- | --- |
+| Installed Workbench Python environment | Execute shared context and scoped completion checks. | Existing connected setup or matching offline bundle; inspect `hooks status` and run local verification. |
+| Codex with native hook support | Dispatch `SessionStart` and `Stop`. | Approved Codex installation; review non-managed hooks and retain the actual client version. |
+| GitHub Copilot CLI or VS Code Copilot harness | Dispatch `sessionStart` and `agentStop`. | Approved client installation; confirm the harness and native event execution. VS Code hooks are preview. |
+| Claude Code with native hook support | Dispatch `SessionStart` and `Stop`. | Approved Claude Code installation; confirm workspace trust and native event execution. |
+| Windows PowerShell, on Windows only | Safely invoke the Codex hook command with the installed Python executable. | Standard `powershell.exe`; diagnose locally without downloading or running client hooks. |
+
+Workbench does not download, update, or authenticate these optional agent clients.
+The agents' own model access remains outside the local hook execution path.
+No new package host or runtime endpoint is introduced by the hooks.
+Offline preparation uses the normal Workbench wheel; regenerate bundles after source changes.
+
+The native clients have separate configuration, payload, output, and trust rules.
+Configuration validation and payload tests do not establish live client compatibility.
+Record client versions and platform details for actual execution.
+Native Windows and cloud environments need their own results before claiming verified support.
+Use [hook setup](SETUP.md#workbench-hooks) for explicit installation and active-scope binding.
+
 ## Installation downloads
 
 These hosts supply software packages.

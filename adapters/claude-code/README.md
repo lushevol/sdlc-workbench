@@ -29,3 +29,22 @@ Use `.claude/skills/` for native discovery, or read canonical skills through CLI
 This directory supplies integration guidance.
 It does not install or configure a Claude Code connection.
 Preserve the user's task scope and existing authorization when invoking operations.
+
+## Optional Workbench hooks
+
+The [shared hook runtime](../../docs/HOOKS.md) supplies bounded session context and scoped completion checks.
+Install its Claude Code registration explicitly:
+
+```text
+ai-sdlc --workspace PATH hooks install --client claude
+ai-sdlc --workspace PATH hooks status
+```
+
+The adapter maps native `SessionStart` and `Stop` events through isolated `.claude/workbench-hooks.json`.
+**Launch Claude Code with the installer's returned `launch_argv`, including `--settings ABSOLUTE_FILE`.**
+Bare `claude` does not activate this isolated registration.
+Ordinary `.claude/settings.json` and `.claude/settings.local.json` remain untouched.
+The isolated file prevents Copilot from inheriting the installed Claude Workbench handlers.
+Native workspace trust remains a client responsibility.
+Bind the active living record to the exact client session before expecting task-specific checks.
+The hooks provide advisory evidence checks; they do not replace semantic workflows or grant publication approval.

@@ -23,6 +23,7 @@ They do not establish business behavior coverage.
 | Provider maintainers | [Providers](test_providers.py) | Source reads, Git operations, retained command output, timeouts, log matches, bounded queries, and registry responses. |
 | Robot test callers | [Robot provider](test_robot_provider.py) | Execution grants, suite confinement, separate statuses, native evidence, source identity, dry runs, failures, and timeouts. |
 | Agent clients | [Interfaces](test_interfaces.py) | CLI outcomes, MCP protocol handling and shared operation results. |
+| Native hook users | [Hook runtime](test_hooks.py), [hook installation](test_hook_install.py) | Three native payload contracts, scoped validation, session isolation, advisory failures, safe merges, rollback, and installed-runtime dispatch. |
 
 The fixtures in [support.py](support.py) supply isolated resources for runtime tests.
 They belong to the test suite and do not create product demonstrations.

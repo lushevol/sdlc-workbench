@@ -24,6 +24,27 @@ def _parser() -> argparse.ArgumentParser:
     doctor = commands.add_parser("doctor", help="Report local readiness and missing setup without external access")
     doctor.add_argument("--profile", choices=("core", "all"), default="all")
     commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
+    hooks = commands.add_parser("hooks", help="Install native client adapters and check explicitly bound session scopes")
+    hook_commands = hooks.add_subparsers(dest="hook_command", required=True)
+    for name in ("install", "uninstall"):
+        operation = hook_commands.add_parser(name)
+        operation.add_argument("--client", action="append", choices=("codex", "copilot", "claude"))
+        if name == "install":
+            operation.add_argument("--python", help="Installed Python executable; defaults to this interpreter")
+    hook_commands.add_parser("status", help="Inspect installed configuration without launching clients")
+    for name in ("bind", "clear", "run"):
+        operation = hook_commands.add_parser(name)
+        operation.add_argument("--client", required=True, choices=("codex", "copilot", "claude"))
+        if name == "run":
+            operation.add_argument("--event", required=True, choices=("start", "stop"))
+        else:
+            operation.add_argument("--session", required=True, help="Native session ID shown by the start hook")
+        if name == "bind":
+            operation.add_argument("--record", required=True, help="Workspace-relative existing living Markdown record")
+            operation.add_argument("--index", help="Workspace-relative shared review index")
+            operation.add_argument("--baseline", help="Workspace-relative behavior evidence baseline")
+            for flag in ("artifact", "case", "watch"):
+                operation.add_argument("--" + flag, action="append", default=[], help="Workspace-relative input file; repeat as needed")
     sources = commands.add_parser("sources", help="Prepare local source exports with hash-bound selections")
     source_commands = sources.add_subparsers(dest="source_command", required=True)
     for name in ("refresh", "select", "plan", "complete", "view", "verify"):
@@ -145,6 +166,39 @@ def main(argv: list[str] | None = None) -> int:
     parser = _parser()
     arguments = parser.parse_args(argv)
     try:
+        if arguments.command == "hooks":
+            from .hook_install import hook_status, install_hooks, remove_hooks
+            from .hooks import MAX_INPUT, advisory, bind_scope, clear_scope, run_hook
+            root = Path(arguments.workspace).expanduser().resolve()
+            if arguments.hook_command == "run":
+                try:
+                    from .assurance import _json
+                    raw = sys.stdin.buffer.read(MAX_INPUT + 1)
+                    if len(raw) > MAX_INPUT:
+                        raise WorkbenchError("The native hook payload exceeds its one-megabyte limit.")
+                    output, diagnostic, code = run_hook(root, arguments.client, arguments.event, _json(raw))
+                except WorkbenchError as error:
+                    output, diagnostic, code = advisory(arguments.client, str(error))
+                except (OSError, ValueError, UnicodeError, RecursionError):
+                    output, diagnostic, code = advisory(arguments.client, "The native payload or local hook state is unavailable or invalid. Check hooks status and bind the scope again.")
+                print(json.dumps(output, ensure_ascii=False))
+                if diagnostic:
+                    print(diagnostic, file=sys.stderr)
+                return code
+            if arguments.hook_command == "install":
+                result = install_hooks(root, arguments.client, python=arguments.python)
+            elif arguments.hook_command == "uninstall":
+                result = remove_hooks(root, arguments.client)
+            elif arguments.hook_command == "status":
+                result = hook_status(root)
+            elif arguments.hook_command == "clear":
+                result = clear_scope(root, arguments.client, arguments.session)
+            else:
+                result = bind_scope(root, arguments.client, arguments.session, arguments.record,
+                                    index=arguments.index, baseline=arguments.baseline,
+                                    artifacts=arguments.artifact, cases=arguments.case, watch=arguments.watch)
+            _print_json(result)
+            return 1 if result["status"] == "INCOMPLETE" else 0
         if arguments.command == "sources":
             from .ingestion.incremental import complete_sources, plan_sources
             from .ingestion.sources import apply_selections, refresh_sources, render_sources, verify_sources

@@ -10,6 +10,12 @@ limitations:
 
 # Workbench workflows, skills, and hook recommendations
 
+**Implementation follow-up:** the user [authorized implementation](../evidence/workflow-hooks-assessment-20261112/implementation-request.md#exact-user-input)
+after this assessment. The current [hook guide](../HOOKS.md) describes the shared runtime, installation, native adapters, and execution limits.
+The implemented Claude adapter uses isolated `.claude/workbench-hooks.json` with an explicit `--settings` launch command,
+so Copilot does not inherit a duplicate registration from ordinary Claude settings.
+The assessment below preserves the preimplementation baseline. Its source hashes, inspection counts, candidate mappings, and validation outcomes are historical evidence.
+
 **Recommendation: share one Workbench hook implementation across Codex, GitHub Copilot, and Claude Code through thin client adapters.**
 
 Hooks can reduce missed checks and repeated context discovery. They are not required for Workbench operation.

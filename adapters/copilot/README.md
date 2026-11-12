@@ -28,3 +28,22 @@ Expose canonical files through the supported client mechanism, or read them thro
 This directory supplies integration guidance.
 It does not install or configure a Copilot connection.
 Preserve the user's task scope and existing authorization when invoking operations.
+
+## Optional Workbench hooks
+
+The [shared hook runtime](../../docs/HOOKS.md) supplies bounded session context and scoped completion checks.
+Install its Copilot registration explicitly:
+
+```text
+ai-sdlc --workspace PATH hooks install --client copilot
+ai-sdlc --workspace PATH hooks status
+```
+
+The adapter uses `.github/hooks/workbench.json` with `sessionStart` and `agentStop` events.
+Copilot CLI and the VS Code Copilot harness share this format.
+The VS Code hooks experience is preview; the deprecated Local harness has a separate schema.
+`sessionEnd` means session termination and does not replace turn completion.
+Workbench keeps Claude hooks in a separate settings file selected explicitly by the Claude launcher.
+That file avoids duplicate Workbench handlers from Copilot's ordinary Claude-settings discovery.
+Bind the active living record to the exact client session before expecting task-specific checks.
+Configuration validity does not establish successful hook execution in the installed client or cloud environment.

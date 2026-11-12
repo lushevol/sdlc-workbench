@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "created_at": "2026-11-12T19:42:06.108058+00:00",
+  "environment": {
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "wheel": {
+    "file": "ai_sdlc_workbench-0.1.0-py3-none-any.whl",
+    "sha256": "ae892ebae0fb50822de46f81581221a21fedcd3210da8b03103378c6f74693c8"
+  },
+  "package_source": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-hooks-installed-smoke-atverdgf/installed/ai_sdlc_workbench/__init__.py",
+  "method": "Extract wheel exactly as tests/test_workspace_layout.py; target-only PYTHONPATH; subprocess public CLI and exact registered POSIX command/argv; no client launched.",
+  "commands": {
+    "initialize": "PYTHON -m ai_sdlc_workbench init FRESH_WORKSPACE",
+    "install_status_uninstall": "PYTHON -m ai_sdlc_workbench --workspace FRESH_WORKSPACE hooks install|status|uninstall",
+    "bind": "PYTHON -m ai_sdlc_workbench --workspace FRESH_WORKSPACE hooks bind --client CLIENT --session same-native-session-id --record DISTINCT_RECORD [--artifact SELECTED_FILE]",
+    "codex_events": "/bin/sh -c CONFIG.hooks.SessionStart|Stop[owned].hooks[0].command",
+    "copilot_events": "[CONFIG.hooks.sessionStart|agentStop[owned].exec, *args]",
+    "claude_events": "[CONFIG.hooks.SessionStart|Stop[owned].hooks[0].command, *args]"
+  },
+  "assertions": 206,
+  "subprocess_invocations": 33,
+  "clients": [
+    {
+      "client": "codex",
+      "status": "PASSED",
+      "start_context": "PASSED",
+      "distinct_same_session_binding": "PASSED",
+      "unchanged_stop_no_validation": "PASSED",
+      "changed_record_validation": "PASSED",
+      "invalid_selected_artifact_advisory": "PASSED",
+      "identical_stop_warning_suppressed": "PASSED",
+      "warning_exit_code": 0
+    },
+    {
+      "client": "copilot",
+      "status": "PASSED",
+      "start_context": "PASSED",
+      "distinct_same_session_binding": "PASSED",
+      "unchanged_stop_no_validation": "PASSED",
+      "changed_record_validation": "PASSED",
+      "invalid_selected_artifact_advisory": "PASSED",
+      "identical_stop_warning_suppressed": "PASSED",
+      "warning_exit_code": 2
+    },
+    {
+      "client": "claude",
+      "status": "PASSED",
+      "start_context": "PASSED",
+      "distinct_same_session_binding": "PASSED",
+      "unchanged_stop_no_validation": "PASSED",
+      "changed_record_validation": "PASSED",
+      "invalid_selected_artifact_advisory": "PASSED",
+      "identical_stop_warning_suppressed": "PASSED",
+      "warning_exit_code": 0
+    }
+  ],
+  "preservation_checks": [
+    "No runtime .py files copied into generated core/",
+    "Ordinary .claude/settings.json absent initially and exact bytes preserved after user creation",
+    "Domain, catalog, evidence, guide and skill file hashes unchanged around every native hook invocation",
+    "Reinstall is byte-identical and preserves unrelated Codex hooks/settings",
+    "Uninstall removes only owned registrations, preserving unrelated settings/hooks"
+  ],
+  "live_native_client_dispatch": "NOT_RUN",
+  "windows_execution": "NOT_RUN",
+  "limits": "Local POSIX registered-handler execution with synthetic native payloads; no client trust, actual event dispatch, business acceptance, or publication approval established."
+}

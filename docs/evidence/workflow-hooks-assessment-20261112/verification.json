@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-12T19:44:10.066825+00:00",
+  "source_revision_before_commit": "a84f49f7aed04e36a305ca840bafa5801067801d",
+  "source_sha256": {
+    "core/hooks.py": "9d65d791b97771b8bf6ba25237d871df47955950765e99dfe9890a5febf62b45",
+    "core/hook_install.py": "c581914d527ce0ac70cb13c91d476ce4d7aca7b815bac908f634e9057d4f45a9",
+    "core/cli.py": "2f7b9afbae734e37ca00b4eee46441c746e4bfcd4e61e16c054f19d4f754dcba",
+    "core/doctor.py": "49062fc58fc4663464645492dbc5b1a4a7597c4eee3270d6a2240cbf688846ff",
+    "tests/test_hooks.py": "18b66ea56439b25260934cb0d6fa16f2d2aedb0c0ef3a38e70e29c09c24e21f6",
+    "tests/test_hook_install.py": "78bc003a02ccc7e747fddcb72c0de48305cf12bf730c5401700596706370a2de",
+    "tests/test_hook_doctor.py": "f26bc5d037ea28544a114c716dca7934481f94a41ed1b53a1ef3d1e308817717",
+    "MANIFEST.in": "263880c352c7eaba2275932d488b23095dacb0c1c2fb3e9ee4563933f62b9494",
+    "scaffold.json": "2ae6a6d918084aad144c130ab686f19e6f45c7fc4c152f0e7c4232d71f3b78b3",
+    "docs/HOOKS.md": "af813b50d888d68c7c4a749ad90d3e6a8503287bd06020bafe19ceb754b5467b"
+  },
+  "full_suite": {
+    "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+    "tests": 1027,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 86.957,
+    "status": "PASSED",
+    "localhost_access": "sandbox escalation approved",
+    "log_sha256": "eb2d82d004644c2a56af5e84c0d2fe29f0aec025b2ab0858c34e116befed9376"
+  },
+  "focused_suite": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p 'test_hook*.py' -v",
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "status": "PASSED",
+    "log_sha256": "064ccb36a8839cee6b8dcd006f6ac72f1c1f88b4e3329601724762a9bd484f1d"
+  },
+  "packaging": {
+    "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir /tmp/workbench-hooks-wheel",
+    "status": "PASSED",
+    "wheel_sha256": "ae892ebae0fb50822de46f81581221a21fedcd3210da8b03103378c6f74693c8",
+    "sdist_wheel_initialization_test": "test_complete_llm_wiki_source_survives_sdist_wheel_and_initialization",
+    "external_handler_receipt": "installed-smoke.json"
+  },
+  "workspace_validation": {
+    "command": ".venv/bin/python -m ai_sdlc_workbench --workspace . validate",
+    "result": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 15,
+      "findings": [],
+      "catalogs": {
+        "repositories": 9,
+        "services": 2,
+        "capabilities": 5,
+        "contracts": 16,
+        "sources": 12,
+        "tools": 15
+      }
+    }
+  },
+  "gherkin": {
+    "command": ".venv/bin/python -m ai_sdlc_workbench --workspace . gherkin docs/HOOKS.md",
+    "status": "UNVERIFIED",
+    "exit_code": 2,
+    "scenarios": 7,
+    "finding_counts": {
+      "UNVERIFIED": 69
+    },
+    "limit": "No evidence manifest or semantic review; this is not a native execution result."
+  },
+  "documentation": {
+    "local_links_and_anchors": 301,
+    "scaffold_paths": 64,
+    "cli_help": "PASSED",
+    "diff_check": "PASSED",
+    "asd_review": "PENDING",
+    "implementation_links": 57
+  },
+  "local_installation": {
+    "status": "READY",
+    "clients": [
+      {
+        "client": "codex",
+        "path": ".codex/hooks.json",
+        "status": "CONFIGURED",
+        "detail": null
+      },
+      {
+        "client": "copilot",
+        "path": ".github/hooks/workbench.json",
+        "status": "CONFIGURED",
+        "detail": null
+      },
+      {
+        "client": "claude",
+        "path": ".claude/workbench-hooks.json",
+        "status": "CONFIGURED",
+        "detail": null,
+        "launch_argv": [
+          "claude",
+          "--settings",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.claude/workbench-hooks.json"
+        ]
+      }
+    ],
+    "native_dispatch": "NOT_RUN",
+    "hook_doctor": {
+      "id": "hooks",
+      "status": "INCOMPLETE",
+      "checks": [
+        {
+          "id": "hook-configurations",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "hooks:codex",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "executable:codex",
+          "status": "READY",
+          "executable": "codex",
+          "found": true,
+          "version": null,
+          "next_action": null
+        },
+        {
+          "id": "hooks:copilot",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "executable:copilot",
+          "status": "INCOMPLETE",
+          "executable": "copilot",
+          "found": false,
+          "version": null,
+          "next_action": "Install copilot and add its executable directory to PATH."
+        },
+        {
+          "id": "hooks:claude",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "executable:claude",
+          "status": "READY",
+          "executable": "claude",
+          "found": true,
+          "version": null,
+          "next_action": null
+        }
+      ],
+      "integration_access": "UNTESTED",
+      "limitations": [
+        "Client executables are checked on PATH; desktop-only client installations may need separate verification.",
+        "Claude requires the isolated settings file through --settings. Codex hook trust remains a client decision.",
+        "Configuration and executable discovery do not establish live event delivery or passing business behavior."
+      ],
+      "next_actions": [
+        "Install copilot and add its executable directory to PATH."
+      ]
+    },
+    "ignored_paths": [
+      ".codex/hooks.json",
+      ".github/hooks/workbench.json",
+      ".claude/workbench-hooks.json",
+      ".workbench/hooks/installation.json"
+    ]
+  },
+  "earlier_results": [
+    {
+      "run": "first full suite",
+      "tests": 1012,
+      "failures": 1,
+      "errors": 36,
+      "skips": 2,
+      "log_sha256": "3ac12fba2637eb8d6f5cae9a4a7bb1afb480680bd681d6233e059184157f0098",
+      "causes": [
+        "Sandbox denied binding localhost sockets for existing fixtures.",
+        "sdist omitted docs/HOOKS.md and adapters/codex/README.md; manifest corrected."
+      ]
+    },
+    {
+      "run": "full suite before final byte-input hardening",
+      "tests": 1027,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "seconds": 93.049,
+      "status": "PASSED"
+    },
+    {
+      "run": "general-guide artifact lint",
+      "status": "INAPPLICABLE",
+      "outcome": "FAILED artifact schema requirements; general guides are outside the SDLC artifact contract."
+    },
+    {
+      "run": "local installation in sandbox",
+      "status": "ROLLED_BACK",
+      "outcome": "Native configuration writes denied; previous bytes restored. Escalated retry succeeded."
+    }
+  ],
+  "native_client_inventory": {
+    "codex": "0.167.1",
+    "claude": "2.1.310",
+    "copilot": "not found on PATH",
+    "vscode_cli": "not found on PATH"
+  },
+  "limits": [
+    "Live native event delivery, resume handling, trust and warning presentation not exercised.",
+    "Native Windows and cloud execution not exercised.",
+    "Contract tests and linked assertions do not prove complete business conformance or publication approval."
+  ]
+}

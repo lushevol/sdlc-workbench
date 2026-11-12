@@ -348,6 +348,17 @@ Preserve the owning repository's architecture and instructions.
 Keep required intake, coverage, evidence, tests, security, accessibility, and authorization checks.
 A smaller change must still implement the complete authorized behavior.
 
+### Shared native hooks
+
+Source: [three-client requirement](docs/evidence/workflow-hooks-assessment-20261112/cross-client-requirement.md#exact-user-input) and [implementation authorization](docs/evidence/workflow-hooks-assessment-20261112/implementation-request.md#exact-user-input).
+Follow [the hook guide](docs/HOOKS.md) for Codex, Copilot, and Claude Code adapters.
+Keep hook behavior in the installed Python runtime and native payload/configuration translation in thin adapters.
+Bind the native client and session to explicit living records and dependent files before edits.
+Do not infer a task from dirty files or reuse another client's session binding.
+Claude hooks use the isolated settings file selected by `--settings`; ordinary Claude settings remain available to Copilot.
+Treat completion checks as advisory evidence. They do not grant readiness, publication, deployment, or verified behavior.
+Preserve unrelated settings and hooks during installation or removal. Keep generated native paths local and ignored.
+
 ## Release confidence assessments
 
 ### User-impact priority

@@ -396,6 +396,30 @@ def _clinic_service(root: Path) -> dict:
                      "Use development credentials only within the documented local service mode."))
 
 
+def _hook_feature(root: Path) -> dict:
+    if not (root / ".workbench/hooks/installation.json").exists():
+        return _feature("hooks", [], configured=False)
+    try:
+        from .hook_install import hook_status
+    except ImportError:
+        return _feature("hooks", [_check("hook-runtime", False,
+            "Install the core Workbench dependencies in the selected environment before diagnosing hooks.")])
+    status = hook_status(root)
+    selected = [item for item in status["clients"] if item["status"] != "NOT_CONFIGURED"]
+    checks = [_check("hook-configurations", status["status"] in {"READY", "PARTIAL"},
+                     "Run ai-sdlc --workspace PATH hooks status, then reconcile or install the selected adapters.")]
+    for client in selected:
+        checks.append(_check("hooks:" + client["client"], client["status"] == "CONFIGURED",
+                             "Reconcile the Workbench-owned native hook entries before updating them."))
+        checks.append(_executable(client["client"]))
+    if sys.platform == "win32" and any(item["client"] == "codex" for item in selected):
+        checks.append(_executable("powershell.exe"))
+    return _feature("hooks", checks, configured=True, limitations=(
+        "Client executables are checked on PATH; desktop-only client installations may need separate verification.",
+        "Claude requires the isolated settings file through --settings. Codex hook trust remains a client decision.",
+        "Configuration and executable discovery do not establish live event delivery or passing business behavior."))
+
+
 def doctor(root: str | Path, *, profile: str = "all") -> dict:
     """Return local readiness evidence for the selected workspace and installed runtime."""
     if profile not in {"core", "all"}:
@@ -407,6 +431,7 @@ def doctor(root: str | Path, *, profile: str = "all") -> dict:
     resources, workspace = _workspace(root)
     features = [core, workspace, _feature("git", [_executable("git")])]
     if profile == "all":
+        features.append(_hook_feature(root))
         environment, env_check = _environment(root)
         source = _connector_source(root, resources)
         checks = [_executable("node", minimum=(22, 12, 0)),
