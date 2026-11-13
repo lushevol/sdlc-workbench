@@ -14,9 +14,65 @@ Its service links identify an expired local fixture.
 
 The [UI redesign request](evidence/release-report-implementation-20261024/ui-redesign-user-input.md#exact-input) defines the completed presentation change.
 
+## Recover the supplied source
+
+Recovery guidance restored on 13 November 2026 under the [migration correction request](../workbench-documentation-migration-20261113/evidence/user-correction-request-20261113.md).
+The [source archive](evidence/release-report-intake-20261024/supplied-source.tar.gz) and [inventory](evidence/release-report-intake-20261024/source-inventory.json) retain the 44 supplied files and their original paths.
+Their SHA-256 values are `099d01e984a428780a61370469acf02387f9545aa60a15df3d8b81f26388044f` and `7e6fe4e7a8326a1826b47eacde13945fc5253f9be99a78784003e91422ee2a58`, respectively.
+Use this recovery procedure when a fresh checkout has no local `core/release-report/` directory.
+
+Set the checkout's absolute path. Run the following block from any working directory with Python 3.
+It verifies the retained inputs and every member, then writes into a new system temporary directory.
+It leaves any existing supplied-source directory in place.
+
+```sh
+workbench_root="/absolute/path/to/workbench"
+python3 - "$workbench_root" <<'PY'
+import hashlib
+import json
+from pathlib import Path, PurePosixPath
+import sys
+import tarfile
+import tempfile
+
+root = Path(sys.argv[1]).expanduser().resolve(strict=True)
+evidence = root / "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024"
+archive = evidence / "supplied-source.tar.gz"
+inventory_bytes = (evidence / "source-inventory.json").read_bytes()
+archive_sha256 = "099d01e984a428780a61370469acf02387f9545aa60a15df3d8b81f26388044f"
+assert hashlib.sha256(archive.read_bytes()).hexdigest() == archive_sha256
+assert hashlib.sha256(inventory_bytes).hexdigest() == "7e6fe4e7a8326a1826b47eacde13945fc5253f9be99a78784003e91422ee2a58"
+inventory = json.loads(inventory_bytes)
+expected = {item["path"]: item for item in inventory["files"]}
+assert len(expected) == len(inventory["files"]) == inventory["file_count"] == 44
+recovery_root = Path(tempfile.mkdtemp(prefix="workbench-release-source-"))
+with tarfile.open(archive, "r:gz") as retained:
+    members = retained.getmembers()
+    assert len(members) == len(expected) and {item.name for item in members} == set(expected)
+    for member in members:
+        relative = PurePosixPath(member.name)
+        assert member.isfile() and not relative.is_absolute() and ".." not in relative.parts
+        data = retained.extractfile(member).read()
+        item = expected[member.name]
+        assert len(data) == item["bytes"] and hashlib.sha256(data).hexdigest() == item["sha256"]
+        target = recovery_root.joinpath(*relative.parts)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open("xb") as output:
+            output.write(data)
+assert hashlib.sha256(archive.read_bytes()).hexdigest() == archive_sha256
+print(json.dumps({"recovery_root": str(recovery_root), "verified_files": len(expected)}, indent=2))
+PY
+```
+
+Each inventory path is relative to the printed recovery root and is also its exact archive member name.
+For example, inspect `<recovery_root>/core/release-report/release/details.tsx`, lines 95–205, for the supplied release details page.
+Retained analyses may contain original relative or machine paths. Resolve their `core/release-report/...` suffix beneath this recovery root and keep their line numbers.
+The original repository, commit, package versions, and execution environment remain unknown.
+Recovered files are reference evidence; extracting them does not install the source or establish passing TypeScript execution, endpoint compatibility, or production behavior.
+
 ## Report presentation
 
-The redesign follows the supplied [release details page](../../core/release-report/release/details.tsx#L95-L205).
+The redesign follows the supplied [release details page](#recover-the-supplied-source), at `core/release-report/release/details.tsx`, lines 95–205, beneath the recovered root.
 The header shows essential release fields. Optional empty metadata stays hidden.
 A compact attention panel highlights failed checks and their recorded reasons.
 Build cards show execution outcomes, branch alignment, coverage, and production deltas.
@@ -62,7 +118,7 @@ This change maintains Workbench tooling. It requires no business task or domain 
 Affected interfaces include the report provider, CLI, connector readers, session transport, snapshot contract, renderer, catalogs, and installed guides.
 Qualitative risk is medium because collection crosses permission, process, concurrency, and evidence boundaries.
 The [review](evidence/release-report-implementation-20261024/final-review.json) records inspected consumers and exact source hashes.
-The original supplied source remains unchanged and untracked under `core/release-report/`.
+The original supplied source was left unchanged and untracked under `core/release-report/` during implementation. Use [source recovery](#recover-the-supplied-source) when that local directory is absent.
 Release Clinic implementation files remain unchanged.
 
 ## Implemented behavior

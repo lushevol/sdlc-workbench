@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "scope": "R3 historical replay recovery; no historical script bytes changed",
+  "base_revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+  "method": "Detached temporary Git worktree at the original layout; matching installed Python runtime; execution started from /private/tmp",
+  "roots": [
+    {
+      "path": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-improvements-implementation-20261030/stage-3/verify-real-coverage.py",
+      "replay_path": "docs/evidence/conversation-improvements-implementation-20261030/stage-3/verify-real-coverage.py",
+      "sha256": "3c84dd0e609e37e2ede96658b03dec5cfbc4b1f95e0e83d40abc19ba86b6ee31",
+      "root_is_isolated_workspace": true,
+      "retained_script_unchanged": true
+    },
+    {
+      "path": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-improvements-implementation-20261030/stage-3/verify-real-ledger.py",
+      "replay_path": "docs/evidence/conversation-improvements-implementation-20261030/stage-3/verify-real-ledger.py",
+      "sha256": "bcd04ab0096052b8f57435ff4ec87c1202d65b22ce6977f1c8ba758fb64629d1",
+      "root_is_isolated_workspace": true,
+      "retained_script_unchanged": true
+    },
+    {
+      "path": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-improvements-implementation-20261030/stage-4/verify_real_cases.py",
+      "replay_path": "docs/evidence/conversation-improvements-implementation-20261030/stage-4/verify_real_cases.py",
+      "sha256": "97aa6387e705bc735b52914ec7130ee7cdac3cbd416c3129deccf3219c3e101a",
+      "root_is_isolated_workspace": true,
+      "retained_script_unchanged": true
+    },
+    {
+      "path": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-improvements-implementation-20261030/stage-6-graph/verify_snapshot_delta.py",
+      "replay_path": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/verify_snapshot_delta.py",
+      "sha256": "fff46c47f51cb86fa632ce350be513d53be23fe3059c4783bf3172cb8f45439f",
+      "root_is_isolated_workspace": true,
+      "retained_script_unchanged": true
+    },
+    {
+      "path": "tasks/workbench-dependency-download-timeouts-20261103/evidence/dependency-download-timeouts-20261103/probe-timeouts.py",
+      "replay_path": "docs/evidence/dependency-download-timeouts-20261103/probe-timeouts.py",
+      "sha256": "f90a75cf81d0872c410d00499c80cb06f68f3a6931fe56a4bcf7d1cf8ea08300",
+      "root_is_isolated_workspace": true,
+      "retained_script_unchanged": true
+    }
+  ],
+  "executions": {
+    "ledger": {
+      "exit_code": 0,
+      "case_1": {
+        "case": "REAL-LEDGER-01",
+        "recorded_at": "2026-11-13T08:05:46.633982+00:00",
+        "result": "PASSED",
+        "given": "Original 467-instance browser inventory and 471-test Jest result with exact retained hashes.",
+        "when": "Import both original formats through build_case_ledger.",
+        "then": {
+          "counts": {
+            "imported_records": 938,
+            "unique_attempts": 938,
+            "duplicate_import_records": 0,
+            "unique_case_instances": 938,
+            "distinct_case_names": 812,
+            "outcomes": {
+              "FAILED": 15,
+              "PASSED": 653,
+              "PARTIAL": 199,
+              "BLOCKED": 71
+            },
+            "characterization_passes": 25,
+            "interrupted_records": 0,
+            "retried_case_records": 0,
+            "freshness": {
+              "CURRENT": 938
+            }
+          },
+          "source_definition_mismatches": 26,
+          "unit_suites": 123,
+          "security_raw_status": null,
+          "security_aggregate_outcome": "FAILED"
+        },
+        "source_sha256": "4e070ba9f5660f97d2205863555cc540268336ca1c0994367812534c0fed5adc",
+        "limits": [
+          "This verifies the importer against real retained executions. It starts no business test runner.",
+          "The 471 unit outcomes and 467 business instances have separate namespaces and are not combined as business coverage."
+        ]
+      },
+      "case_2": {
+        "case": "REAL-LEDGER-02",
+        "recorded_at": "2026-11-13T08:05:46.817579+00:00",
+        "result": "PASSED",
+        "given": "The same retained browser inventory is supplied twice under distinct import IDs.",
+        "when": "Import both browser copies with the original Jest result.",
+        "then": {
+          "imported_records": 1405,
+          "unique_attempts": 938,
+          "duplicate_import_records": 467,
+          "unique_case_instances": 938,
+          "distinct_case_names": 812,
+          "outcomes": {
+            "FAILED": 15,
+            "PASSED": 653,
+            "PARTIAL": 199,
+            "BLOCKED": 71
+          },
+          "characterization_passes": 25,
+          "interrupted_records": 0,
+          "retried_case_records": 0,
+          "freshness": {
+            "CURRENT": 938
+          }
+        },
+        "source_sha256": "4e070ba9f5660f97d2205863555cc540268336ca1c0994367812534c0fed5adc",
+        "limits": [
+          "The repeated input is a controlled importer probe using unchanged real source bytes.",
+          "All duplicate provenance remains visible; unique outcome counts remain unchanged."
+        ]
+      },
+      "derived_output_sha256": "f120864656d59851db25b3604346f681ecdd53dddffc74a6d9597b471723d4b2"
+    },
+    "timeout": {
+      "command": "<matching-python> <isolated-original-layout>/docs/evidence/dependency-download-timeouts-20261103/probe-timeouts.py",
+      "cwd": "/private/tmp",
+      "exit_code": 0,
+      "results": {
+        "baseline": {
+          "case": "baseline",
+          "baseline_revision": "b98215fdbb6053e9e5d7c42ea2fb00051cf9102a",
+          "source_sha256": "56ce19ae09cff0b75841a9dbef5b89ecdee3cfd90c0f56c69b8d29ac8261abfc",
+          "selected_timeout_seconds": 1,
+          "elapsed_seconds": 1.008,
+          "message": "A setup command could not finish. Check installed runtimes and company package access.",
+          "child_started": true,
+          "child_continued_after_timeout": true,
+          "manual_recovery_guidance": false,
+          "limits": [
+            "Controlled local process; no public download or company endpoint was contacted.",
+            "Execution proves cancellation on this host only."
+          ]
+        },
+        "candidate": {
+          "case": "candidate",
+          "baseline_revision": "b98215fdbb6053e9e5d7c42ea2fb00051cf9102a",
+          "source_sha256": "da4d82346f445e91135a998e8c97b05aab75485defafd8372e1930e06ea50e98",
+          "selected_timeout_seconds": 1,
+          "elapsed_seconds": 1.013,
+          "message": "Download timed out after 1 seconds. Warning: Python wheels could not be downloaded. Company network access may block the request. Use an approved package mirror, or prepare an offline bundle on an approved connected computer. Match the source checkout, OS, CPU, and Python version. Transfer the complete bundle, then run setup with --offline-bundle PATH. See docs/SETUP.md#blocked-downloads-and-manual-recovery.",
+          "child_started": true,
+          "child_continued_after_timeout": false,
+          "manual_recovery_guidance": true,
+          "limits": [
+            "Controlled local process; no public download or company endpoint was contacted.",
+            "Execution proves cancellation on this host only."
+          ]
+        }
+      },
+      "assertions": "Both runs start a controlled child; baseline child continues, candidate child is cancelled and supplies manual recovery guidance.",
+      "limits": [
+        "Local controlled processes only; no external dependency download or company endpoint."
+      ]
+    }
+  },
+  "limits": [
+    "Ledger execution imports retained browser/Jest results. It starts no business test runner.",
+    "Coverage/preflight/graph replay requires their separately recorded source checkouts, assets and graph bundles; they are not run by root preparation.",
+    "The isolated historical checkout provides the original path layout. Future runtime changes require matching installation/receipt hashes; version number alone is insufficient."
+  ]
+}

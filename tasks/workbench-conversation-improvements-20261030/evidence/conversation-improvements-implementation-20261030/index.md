@@ -27,6 +27,12 @@ The suites have separate scopes and overlapping tests. Their counts are not a co
 Original failed checks and contradictory evidence remain retained.
 Execution status, business acceptance, review, and deployment authorization remain separate.
 
+## Replay after documentation relocation
+
+The coverage, ledger, preflight and graph verification scripts below retain their original recorded bytes and position-dependent root calculations.
+Use the [isolated historical replay procedure](../../../workbench-documentation-migration-20261113/01-maintenance.md#replay-historical-verification) to restore their original directory layout and protect retained outputs.
+Check each script's original repository, ignored-asset and graph prerequisites before replay; relocation recovery does not supply missing inputs or establish a new passing execution.
+
 ```yaml
 standard: ASD-STE100
 automated_check: PASSED

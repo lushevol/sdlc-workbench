@@ -1410,7 +1410,7 @@ The [review-scope clarification](evidence/portal-ingestion-question-20261112.md#
 ## Portal export reconciliation
 
 The 12 November pass reviewed 61 selected sources and recorded 19 queued omissions from the existing source selections. The [processing receipts](../../knowledge/evidence/processing/portal-document-export.json) bind all 80 reviewed outcomes to the selected sources, output hashes, and the passed sealed check.
-The next local plan reports zero pending processing items. The [meeting-minutes page](../../docs/evidence/initial-ingestion-source-filter-20261111/filter-review.md#documents-on-hold) remains the sole source-review hold while its attachments are unavailable.
+The next local plan reports zero pending processing items. The [meeting-minutes page](../workbench-initial-ingestion-source-filter-20261111/evidence/initial-ingestion-source-filter-20261111/filter-review.md#documents-on-hold) remains the sole source-review hold while its attachments are unavailable.
 
 | Candidate | Reconciliation |
 | --- | --- |

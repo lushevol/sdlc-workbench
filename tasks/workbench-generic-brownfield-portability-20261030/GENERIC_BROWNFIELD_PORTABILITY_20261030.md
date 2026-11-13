@@ -160,7 +160,7 @@ The complete rerun resolved those conditions without narrowing the suite or weak
 The default isolated build could not download setuptools through the restricted proxy.
 The successful build used installed setuptools through `--no-build-isolation`.
 The first wheel smoke lacked prepared dependencies. The successful run used an isolated package with prepared dependency paths.
-These original failures remain in the [evidence directory](../../docs/evidence/generic-brownfield-portability-20261030).
+These original failures remain in the [evidence directory](evidence/generic-brownfield-portability-20261030).
 SDLC artifact lint requires template frontmatter and does not apply to these maintenance documents.
 Its failed attempt remains in [authoring evidence](evidence/generic-brownfield-portability-20261030/authoring-check.json).
 

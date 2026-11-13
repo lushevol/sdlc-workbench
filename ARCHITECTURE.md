@@ -50,6 +50,62 @@ They do not prove an execution path, deployed service, or complete discovery cov
 An action record establishes the retained operation result within its stated limits.
 It does not establish requirement coverage or approved business intent.
 
+## Workbench concept
+
+The three layers connect intended behavior, implementation, and observations through shared evidence.
+The six capability areas retain the implementation limits in the table above.
+Arrows describe relationships and agent procedures; they do not imply an automatic workflow runner.
+
+```mermaid
+flowchart TB
+    subgraph Interface["1. AI interface"]
+        Agents["Existing AI agents"] --> Access["Shared skills and native adapters<br/>CLI and MCP"]
+    end
+    subgraph Core["2. SDLC Workbench core"]
+        Context["Context Registry<br/>Asset identities and source locations"]
+        Governance["Knowledge Governance<br/>Provenance, review and audit checks"]
+        Relationships["Relationship Engine<br/>Source-backed links and extraction limits"]
+        Verification["Verification Engine<br/>Compare intended and evidenced behavior"]
+        Workflow["Workflow Engine<br/>Agent procedures; durable runner planned"]
+        Tools["Tool Registry<br/>Providers and explicit operation grants"]
+    end
+    Access --> Workflow
+    Workflow --> Context
+    Workflow --> Governance
+    Workflow --> Relationships
+    Workflow --> Verification
+    Workflow --> Tools
+    Owners["Human owners<br/>Clarify intent and record required review or decisions"]
+    Owners -.-> Governance
+    subgraph Assets["3. Existing SDLC assets retain their owners and locations"]
+        Intent["INTENT<br/>Domain rules, requirements, ACs and target design"]
+        Reality["REALITY<br/>Repositories, implementation and test definitions"]
+        Observed["OBSERVED<br/>Test results, CI/CD and runtime observations"]
+        Intent -->|"Design and implement"| Reality
+        Reality -->|"Execute and observe"| Observed
+        Observed --> Compare["Compare intent, code, assertions and observations"]
+        Compare -->|"Implementation defect"| Reality
+        Compare -->|"Assertion or execution gap"| Observed
+        Compare -->|"Sourced intent change and required review"| Intent
+    end
+    Context -.-> Intent
+    Governance -.-> Intent
+    Relationships -.-> Reality
+    Verification -.-> Compare
+    Tools -->|"Granted operations in existing tools"| Reality
+    Tools -->|"Retained operation results"| Observed
+    Evidence["Shared evidence foundation<br/>Exact source revisions, inspected assertions, environment identities,<br/>retained results, provenance and unresolved limits"]
+    Intent -.-> Evidence
+    Reality -.-> Evidence
+    Observed -.-> Evidence
+```
+
+The feedback loops refine intent, implementation, and verification separately.
+An implementation defect changes conformance evidence; it does not change the intended rule.
+A change to intent needs its own source, version, provenance, and required human review.
+Knowledge review, wiki freshness, passing execution, business acceptance, and deployment authorization remain different facts.
+See the [full SDLC lifecycle](#full-sdlc-lifecycle), [knowledge lifecycles](docs/KNOWLEDGE_LIFECYCLE.md#three-connected-lifecycles), and [evidence traceability](docs/WORKSPACE_DESIGN.md#traceability).
+
 ## Project construction
 
 The standalone project root is the current `workbench/` directory.
@@ -390,6 +446,61 @@ Read the cited source before treating retrieved text as authoritative evidence.
 Inspect assertions before claiming test coverage.
 Retain execution identities before claiming observed behavior.
 Keep facts, inferences, and unresolved questions separate throughout the workflow.
+
+### Full SDLC lifecycle
+
+Business work can enter with a requirement, existing implementation, or a bounded exploration question.
+The [task entry routes](tasks/README.md#lifecycle-entry-routes) select the next phase from actual evidence, without inventing a completed history.
+The diagram includes design, implementation, review, test execution, release assessment, and their separate feedback routes.
+For mixed requests, apply the business controls to the business scope and the maintenance route to its supporting tooling.
+
+```mermaid
+flowchart TB
+    Requirement["Requirement or business issue"] --> Intake
+    Existing["Existing code, PR or tests<br/>Exact revisions and actual dates"] --> Intake
+    Question["Bounded exploration question"] --> Intake
+    Maintenance["Harness maintenance only"] --> MaintenanceRecord["Lightweight maintenance record<br/>Scoped changes and current documentation"]
+    MaintenanceRecord --> MaintenanceCheck["Review affected consumers<br/>Run applicable checks and retain results"]
+    subgraph Business["Business behavior scope"]
+        Intake["Preserve user input and evidence index"] --> Investigate["Discover sources and consumers<br/>Relate intent, old behavior and current evidence"]
+        Investigate --> Refine["Resolve material intent questions<br/>Refine requirements, target design and Gherkin ACs"]
+        Refine --> Ready{"READY for the named phase<br/>within existing authorization?"}
+        Ready -->|"Material uncertainty or missing authority"| Investigate
+        Ready -->|"Defined experiment only"| Explore["Run the bounded experiment<br/>Retain assertions, observations and limits"]
+        Explore --> Investigate
+        Ready -->|"Design and implementation scope"| Design["Assess design, impact and exposed contracts"]
+        Ready -->|"Review supplied implementation"| Review
+        Design --> Implement["Implement the scoped change<br/>or reconcile supplied implementation"]
+        Implement --> Review["Review code and affected callers<br/>Compare baseline and candidate"]
+        Review --> Prepare["Map ACs, code changes and test assertions<br/>Check case and environment readiness"]
+        Prepare --> Run["Run existing authorized test tools<br/>Save each completed case immediately"]
+        Run --> Compare{"Compare intended, implemented<br/>and observed behavior"}
+        Compare -->|"Implementation defect"| Implement
+        Compare -->|"Assertion or execution gap"| Prepare
+        Compare -->|"Intent gap or missing evidence"| Investigate
+        Compare -->|"Supported conformance within stated limits"| Release["Assess release confidence<br/>Business and system impact, tests and operational evidence"]
+        Release --> Decision{"Required acceptance and human<br/>deployment authorization recorded?"}
+        Decision -->|"Authorized delivery scope"| Deploy["Use the owning delivery process"]
+        Deploy --> Observe["Retain deployment and representative usage evidence"]
+        Observe --> Feedback{"Classify the resulting change or gap"}
+        Feedback -->|"Defect or missing evidence"| Investigate
+        Feedback -->|"Sourced intent change"| Knowledge["Version affected canonical intent<br/>Apply required review, publication and audit procedure"]
+        Refine -.->|"When intent changes"| Knowledge
+        Knowledge --> Investigate
+    end
+    Handoff["Scoped handoff<br/>Outcomes, open gaps, owner and next action"]
+    MaintenanceCheck --> Handoff
+    Decision -->|"Pending decision or limited scope"| Handoff
+    Observe --> Handoff
+```
+
+`READY_WITH_LIMITS` permits further intake evidence collection only; `NEEDS_CLARIFICATION` blocks the named next phase.
+`READY` does not grant new edit, execution, publication, or deployment authority.
+Independent phases can reuse suitable existing evidence; supplied code need not be written again to follow this view.
+The maintenance route has no business intake or knowledge publication gate.
+Release recommendations, actual business acceptance, knowledge publication, and human deployment authorization remain separate recorded decisions.
+Remote UAT logs and production observations require their own build, environment, configuration, time-window, and correlation bindings.
+This is a procedure for agents and owners. The current runtime does not enforce these gates, run the complete lifecycle, or authenticate approvals.
 
 ## Seven concerns within the architecture
 

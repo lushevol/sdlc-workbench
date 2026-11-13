@@ -20,7 +20,8 @@ Source: [implementation authorization](../user-input.md).
 | PF-REAL-007 | A readiness response exceeds one MiB. Preflight rejects it without retaining the body. | [Case receipt](PF-REAL-007.json) |
 
 Each case saved its result before the next case started.
-The [reproduction script](verify_real_cases.py) records assertions and source identities.
+The [historical reproduction script](verify_real_cases.py) records assertions and source identities.
+Use the [isolated replay procedure](../../../../workbench-documentation-migration-20261113/01-maintenance.md#replay-historical-verification) after relocation; do not run the preserved source directly against its retained result directory.
 The [verification receipt](verification-receipt.json) records its command and request paths.
 The [source manifest](retained-root-asset-source-manifest.json) binds the actual retained frontend artifact.
 Its source map contains `src/root.ts` bytes identical to the inspected checkout.

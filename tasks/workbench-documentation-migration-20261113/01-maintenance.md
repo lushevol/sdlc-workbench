@@ -1,6 +1,6 @@
 # Workbench living-documentation migration
 
-**The migration is committed. The follow-up review found five open corrections: a stale graph input, missing overview diagrams, broken replay roots, task links and source-recovery guidance.**
+**All five review findings are corrected within the recorded checks. Historical evidence remains preserved. No further deletion requires user action.**
 
 - Work type: Workbench maintenance.
 - Date: 13 November 2026.
@@ -9,6 +9,7 @@
 - Governing model: [latest living-documentation clarification](evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
 - Design: [current reviewed proposal](design.md#stable-document-series-and-incremental-task-history).
 - Follow-up: [user review request](evidence/user-review-request-20261113.md) and [migration review](review.md).
+- Current authority: [continuation of the correction actions](evidence/user-correction-request-20261113.md).
 - Baseline: `79a410403`; unrelated `core/release-report/`, the concurrent `core/connectors/yarn.lock` deletion, and the separate ADO skills assessment task are excluded.
 
 ## Scope and current decision
@@ -60,7 +61,63 @@ The [requested review](review.md) supersedes any inference that the earlier stru
 It found two P2 issues and three P3 issues. The graph loader fails on a moved active source; overall diagram coverage was lost; five replay roots and seven task/report links regress; the release-report source recovery section was removed without an adequate replacement.
 All 65 deletions and 49 edited relocations received an independent retention/content assessment. Protected sources, prior audits and the 14 canonical report cases remain exact. Both compacted outputs recover byte-for-byte.
 The 76 affected tests passed again and workspace validation remains valid; these checks do not cover the reported defects.
-The review applied no fixes or further deletion. Correction should preserve useful material, restore affected consumers and verify replacement meaning before additional cleanup.
+The review applied no fixes or further deletion. The authorized corrections below restore affected consumers and retain useful material.
+
+## Correction outcome
+
+The [continuation request](evidence/user-correction-request-20261113.md) authorized these corrections to the reviewed migration.
+The [correction ledger](evidence/correction-changes.json) records changed paths, before/after hashes, and recovered source identities.
+The original [review](review.md) remains the assessment of `516857d64`; these corrections do not rewrite that historical result.
+
+| Finding | Correction and focused result | Remaining verification limit |
+| --- | --- | --- |
+| [R1](review.md#r1--p2-repair-the-active-graph-context-before-relocating-its-source) | Rebound the active graph source. The actual default context entry loads all 46 exact retained snapshots. [Consumer checks](evidence/correction-consumers.json), [entry-boundary check](evidence/final-correction-review.json). | Generation stops before repository fingerprints, build subprocesses, and publication. No graph or index was rebuilt. |
+| [R2](review.md#r2--p2-retain-useful-diagram-sources-until-an-adequate-replacement-exists) | Restored current [concept](../../ARCHITECTURE.md#workbench-concept) and [SDLC lifecycle](../../ARCHITECTURE.md#full-sdlc-lifecycle) diagrams. Both original editable Draw.io sources recover byte-for-byte. [Coverage and recovery checks](evidence/correction-diagrams.json). | Mermaid received structural and content checks; visual rendering remains unverified. |
+| [R3](review.md#r3--p3-preserve-a-usable-replay-procedure-for-relocated-verification-scripts) | Added the [isolated replay procedure](#replay-historical-verification). All five roots resolve correctly there. Timeout and ledger probes pass. [Replay checks](evidence/correction-replay.json). | Coverage, preflight, and graph scripts require their original repositories, assets, and bundles. They were not fully replayed. |
+| [R4](review.md#r4--p3-repair-surviving-living-task-and-report-links) | Repaired all seven identified links and 27 timeout-report root links found during final validation. [Link checks](evidence/correction-consumers.json). | Five other missing task links predate the original migration baseline. External URLs and arbitrary historical locators remain outside this result. |
+| [R5](review.md#r5--p3-preserve-the-supplied-source-recovery-guidance-before-deleting-the-preparation-guide) | Restored [source recovery instructions](../workbench-release-report-20261024/implementation.md#recover-the-supplied-source). The documented procedure recovers all 44 files with exact inventory hashes. [Recovery check](evidence/correction-source-recovery.json). | Recovery does not establish executable TypeScript, known original package versions, or production behavior. |
+
+The [final correction validation](evidence/correction-validation.json) records 76 affected tests passing and workspace validation with zero findings.
+Independent review found no additional actionable defect within the inspected correction scope.
+Protected source, audit, canonical-record, historical-script, generated-graph, and sealed migration bytes remain unchanged.
+The correction stage deletes no files. Unrelated local changes remain excluded.
+No critical conclusions require user attention or action.
+
+## Replay historical verification
+
+Use an isolated checkout at the pre-relocation revision to replay the five historical scripts below.
+Their exact bytes and recorded root calculations remain preserved at their task locations. Running them directly there selects the wrong root and can overwrite retained results.
+An isolated checkout restores the original directory depth and sends writes to temporary copies of the evidence.
+This procedure needs the existing local Git history and an installed Python/Workbench environment; it does not install dependencies or clone business repositories.
+
+Choose a new absolute replay directory outside the current workspace. Replace both placeholders before running:
+
+```sh
+git -C /absolute/path/to/current-workbench worktree add --detach /absolute/path/to/new-replay-workspace 79a4104035785b7d8c37e6d424d5d4c888104eee
+```
+
+Select an installed Python environment whose runtime source matches the retained verification receipts.
+The Python runtime files used by the timeout and ledger probes match this pre-relocation revision during the 13 November correction check. A distribution version alone does not establish that match after later changes.
+Use the environment's absolute interpreter path: `.venv/bin/python` on macOS/Linux or `.venv/Scripts/python.exe` on Windows.
+
+| Historical script inside the replay workspace | Required original inputs and result location |
+| --- | --- |
+| `docs/evidence/dependency-download-timeouts-20261103/probe-timeouts.py` | Local Git revision `b98215fdbb6053e9e5d7c42ea2fb00051cf9102a`; controlled child processes. Writes baseline/candidate JSON beside the temporary script. |
+| `docs/evidence/conversation-improvements-implementation-20261030/stage-3/verify-real-ledger.py` | Retained portal browser inventory, Jest results and bindings from the same checkout. Writes derived ledger and case JSON in temporary `stage-3/`. |
+| `docs/evidence/conversation-improvements-implementation-20261030/stage-3/verify-real-coverage.py` | Retained assertion map, adjacent `stage-2/` payload and the two business repositories with the exact cited Git objects. Reads repository source; writes temporary coverage and copied source evidence. |
+| `docs/evidence/conversation-improvements-implementation-20261030/stage-4/verify_real_cases.py` | The recorded `.workbench/` stack, asset, source map, build result and source checkouts at their original bindings. Uses controlled loopback fixtures and writes temporary case results. |
+| `docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/verify_snapshot_delta.py` | Complete original baseline and candidate graph bundles at their recorded paths. Writes temporary comparisons and a receipt. |
+
+For example, run the original ledger import against the isolated checkout:
+
+```sh
+/absolute/path/to/matching-python /absolute/path/to/new-replay-workspace/docs/evidence/conversation-improvements-implementation-20261030/stage-3/verify-real-ledger.py
+```
+
+The supplied path determines the historical workspace root, so the command can start from another directory.
+Business checkouts and ignored assets are not copied by `git worktree add`. Check the named prerequisites and their hashes before each replay; a missing historical prerequisite remains unavailable and does not justify substituting current data.
+Keep resulting case summaries, source identities and consequential failures under the active task before removing the temporary checkout. Do not replace original retained results with replay output.
+The five root calculations and the complete timeout and ledger probes are checked in [the correction evidence](evidence/correction-replay.json). Coverage, preflight and graph execution still depend on their separately recorded prerequisites.
 
 ```yaml
 standard: ASD-STE100

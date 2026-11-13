@@ -188,7 +188,7 @@ Potential impact severity and production likelihood remain separate from action 
 The historical release assessment retains its recorded source versions. Newer server code has not received a complete release reassessment.
 The [source-scope note](evidence/report-readable-issues-20261030/source-scope-note.json) records the changed server checkout.
 The 31 October runtime supplement uses [separately bound local fixture classes](evidence/runtime-log-pilot-20261031/local-source-binding.json).
-The [synchronization request](../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input) requires matching Markdown and HTML claims.
+The [synchronization request](../workbench-release-report-sync-20261031/evidence/release-report-sync-20261031/user-input.md#exact-user-input) requires matching Markdown and HTML claims.
 
 The [latest layout and priority instruction](evidence/user-input-20261029-impact-priority-layout.txt) controls this update.
 
@@ -443,7 +443,7 @@ The [earlier execution validation](evidence/release-report-execution-20261029/va
 | Independent intent-to-reality gaps | [Gap document](09-intent-reality-gaps.md) | Intended, baseline, candidate, and observed behavior remain separately bound |
 | Knowledge synchronization request | [Exact user instruction](evidence/release-knowledge-sync-20261101/user-input.md#exact-user-input) | User message, 1 November 2026; authorizes candidate updates and independent accuracy review |
 | Knowledge synchronization | [Canonical stage](10-knowledge-sync.md), [report validation](evidence/knowledge-intent-boundary-20261101/report-validation.json) | Target candidate versions, unchanged rows, review status, and report parity; deployment and publication remain separate |
-| SRC-release-report-sync-20261031 | [Exact user instruction](../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires shared skill updates and synchronized Markdown reporting |
+| SRC-release-report-sync-20261031 | [Exact user instruction](../workbench-release-report-sync-20261031/evidence/release-report-sync-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires shared skill updates and synchronized Markdown reporting |
 | 31 October report synchronization | [Semantic comparison and source hashes](evidence/runtime-report-sync-20261031/validation.json) | Earlier Markdown and HTML hashes, source scope, retained evidence, and known limits |
 | SRC-session-runtime-log-20261031 | [Exact user instruction](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires remote UAT log evidence and a local session-renewal pilot |
 | 31 October HTML integrity | [HTML update checks](evidence/runtime-log-html-20261031/validation.json) | Earlier HTML hashes and retained browser checks; [update request](evidence/runtime-log-html-20261031/user-input.md#exact-user-input) |

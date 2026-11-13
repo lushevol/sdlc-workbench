@@ -19,7 +19,8 @@ It does not change business source, existing graph bytes, investigated context, 
 | GRAPH-REAL-003 | Comparing retained and fresh source graphs identifies exact source changes and direct static consumers. | [Current source comparison](GRAPH-REAL-003-current-source-delta.json) |
 
 Each completed case saved its evidence before the next case started.
-The [verification script](verify_snapshot_delta.py) checks real bundles without synthetic graph changes.
+The [historical verification script](verify_snapshot_delta.py) checks real bundles without synthetic graph changes.
+Use the [isolated replay procedure](../../../../workbench-documentation-migration-20261113/01-maintenance.md#replay-historical-verification) to restore its original directory depth and keep new comparisons outside retained evidence.
 The [verification receipt](verification-receipt.json) binds that script and implementation through SHA-256 values.
 
 Both canonical graphs passed the existing semantic validation and relationship projection checks.

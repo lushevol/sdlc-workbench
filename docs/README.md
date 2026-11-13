@@ -3,6 +3,7 @@
 This series gives the integrated current view of Workbench across its lifecycle and capability areas.
 Maintain these pages as the system changes. Extend an existing subject before adding a new document.
 Use [principles](../PRINCIPLE.md), [architecture](../ARCHITECTURE.md), and [workspace design](WORKSPACE_DESIGN.md) for the governing boundaries.
+Open the [Workbench concept diagram](../ARCHITECTURE.md#workbench-concept) for the three layers and feedback loops, or the [full SDLC lifecycle diagram](../ARCHITECTURE.md#full-sdlc-lifecycle) for entry routes, phase controls, delivery, and learning.
 
 ## Read by lifecycle
 

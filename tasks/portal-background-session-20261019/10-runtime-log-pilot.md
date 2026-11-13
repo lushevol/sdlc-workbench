@@ -95,7 +95,7 @@ Only the final run above supplies the current counts.
 | Goal | Check whether essential-path logs explain local renewal outcomes and expose overlooked behavior. |
 | Requested metric | Runtime log evidence is a key release-confidence metric during UAT. |
 | UAT source rule | Collect UAT logs from remote log systems. Local logs support local development only. |
-| Authority | [Exact task input](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input); [harness reference](../../docs/evidence/runtime-log-verification-20261031/user-followup.md#exact-user-input). |
+| Authority | [Exact task input](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input); [harness reference](../workbench-runtime-log-verification-20261031/evidence/runtime-log-verification-20261031/user-followup.md#exact-user-input). |
 | Prior results | [Historical assessment](10-release-confidence.md); original failures and holds remain unchanged. |
 | Implementation disposition | Isolated archived source with disclosed instrumentation; business checkouts remain unchanged by this pilot. |
 | Intent disposition | [Renewal requirement](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) remains candidate version 5, with human review pending. |
@@ -289,7 +289,7 @@ Hashes below identify current retained bytes. Each result also includes individu
 
 The [source binding](evidence/runtime-log-pilot-20261031/local-source-binding.json) retains original/instrumented source hashes and fixture class hashes.
 The [historical source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json) retains candidate source snapshots without copying them here.
-The [initial discussion](../../docs/evidence/runtime-log-verification-20261031/discussion.md) and [selected observation modes](../../docs/evidence/runtime-log-verification-20261031/user-clarification.md#exact-user-answer) preserve earlier context.
+The [initial discussion](../workbench-runtime-log-verification-20261031/evidence/runtime-log-verification-20261031/discussion.md) and [selected observation modes](../workbench-runtime-log-verification-20261031/evidence/runtime-log-verification-20261031/user-clarification.md#exact-user-answer) preserve earlier context.
 
 ## Browser evidence bindings
 

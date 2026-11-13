@@ -45,9 +45,9 @@ Timeout cleanup stops downloader descendants.
 Browser interruption also stops descendants and removes the incomplete bundle.
 
 Warnings exclude subprocess diagnostics and private registry settings.
-They identify approved mirrors, matching-platform bundles, transfer steps, and the [manual recovery guide](../../../docs/SETUP.md#blocked-downloads-and-manual-recovery).
+They identify approved mirrors, matching-platform bundles, transfer steps, and the [manual recovery guide](../../../../docs/SETUP.md#blocked-downloads-and-manual-recovery).
 Missing Python and Node messages identify manual runtime download sources.
-The [maintenance rule](../../../AGENTS.md#dependency-maintenance) requires these controls for future scripted dependency acquisitions.
+The [maintenance rule](../../../../AGENTS.md#dependency-maintenance) requires these controls for future scripted dependency acquisitions.
 
 ## Controlled baseline comparison
 
@@ -73,7 +73,8 @@ Evidence: [baseline result](baseline-timeout.json), bound to commit `b98215fdbb6
 
 The descendant stopped and did not write its completion marker.
 The warning identified matching-platform preparation and `--offline-bundle PATH`.
-Evidence: [candidate result](candidate-timeout.json) and the [repeatable probe](probe-timeouts.py).
+Evidence: [candidate result](candidate-timeout.json) and the [historical probe source](probe-timeouts.py).
+Use the [isolated replay procedure](../../../workbench-documentation-migration-20261113/01-maintenance.md#replay-historical-verification) after the documentation relocation. It restores the original script depth and keeps new results outside retained evidence.
 This controlled process proves local cancellation only; it does not prove company download access.
 
 ## Acceptance criteria and test cases
@@ -88,7 +89,7 @@ Scenario: Stop a stalled dependency download
   And the operation does not report success
 ```
 
-Assertions: [Python process tests](../../../tests/test_download_timeouts.py) and [browser transfer tests](../../../adapters/browser/bundle.test.mjs).
+Assertions: [Python process tests](../../../../tests/test_download_timeouts.py) and [browser transfer tests](../../../../adapters/browser/bundle.test.mjs).
 Execution: [Python suite](unit-tests.log), [browser suite](browser-tests.log), and [candidate probe](candidate-timeout.json).
 
 ### AC2 and TC2: Guide manual recovery
@@ -101,7 +102,7 @@ Scenario: Explain a failed dependency acquisition
   And it excludes private subprocess diagnostics
 ```
 
-Assertions: [bootstrap redaction test](../../../tests/test_bootstrap.py) and [warning tests](../../../tests/test_download_timeouts.py).
+Assertions: [bootstrap redaction test](../../../../tests/test_bootstrap.py) and [warning tests](../../../../tests/test_download_timeouts.py).
 Browser assertions include private proxy response redaction and sanitized command failures.
 Execution: [Python suite](unit-tests.log) and [browser suite](browser-tests.log).
 
@@ -115,16 +116,16 @@ Scenario: Retain a usable offline installation path
   And diagnostics remain available without downloading packages
 ```
 
-Assertions: [offline regressions](../../../tests/test_offline.py), [bootstrap regressions](../../../tests/test_bootstrap.py), and [browser bundle tests](../../../adapters/browser/bundle.test.mjs).
+Assertions: [offline regressions](../../../../tests/test_offline.py), [bootstrap regressions](../../../../tests/test_bootstrap.py), and [browser bundle tests](../../../../adapters/browser/bundle.test.mjs).
 Execution: [Python suite](unit-tests.log), [browser suite](browser-tests.log), and [local diagnosis](core-check.json).
 
 ## Traceability
 
 | Criterion | Test assertions | Changed implementation | Retained execution |
 | --- | --- | --- | --- |
-| [AC1](#ac1-and-tc1-bound-stalled-downloads) | [Python timeout tests](../../../tests/test_download_timeouts.py), [browser tests](../../../adapters/browser/bundle.test.mjs) | [bootstrap command](../../../core/bootstrap.py), [offline preparation](../../../core/offline.py), [browser preparation](../../../adapters/browser/bundle.mjs) | [Python](unit-tests.log), [browser](browser-tests.log), [probe](candidate-timeout.json) |
-| [AC2](#ac2-and-tc2-guide-manual-recovery) | [bootstrap tests](../../../tests/test_bootstrap.py), [warning tests](../../../tests/test_download_timeouts.py), [browser tests](../../../adapters/browser/bundle.test.mjs) | [bootstrap warnings](../../../core/bootstrap.py), [macOS launcher](../../../setup.command), [Windows launcher](../../../setup.cmd), [browser warnings](../../../adapters/browser/bundle.mjs) | [Python](unit-tests.log), [browser](browser-tests.log) |
-| [AC3](#ac3-and-tc3-preserve-diagnosis-and-offline-boundaries) | [offline tests](../../../tests/test_offline.py), [bootstrap tests](../../../tests/test_bootstrap.py), [browser tests](../../../adapters/browser/bundle.test.mjs) | [online/offline routing](../../../core/bootstrap.py), [bundle preparation](../../../core/offline.py), [browser routing](../../../adapters/browser/bundle.mjs) | [Python](unit-tests.log), [browser](browser-tests.log), [diagnosis](core-check.json) |
+| [AC1](#ac1-and-tc1-bound-stalled-downloads) | [Python timeout tests](../../../../tests/test_download_timeouts.py), [browser tests](../../../../adapters/browser/bundle.test.mjs) | [bootstrap command](../../../../core/bootstrap.py), [offline preparation](../../../../core/offline.py), [browser preparation](../../../../adapters/browser/bundle.mjs) | [Python](unit-tests.log), [browser](browser-tests.log), [probe](candidate-timeout.json) |
+| [AC2](#ac2-and-tc2-guide-manual-recovery) | [bootstrap tests](../../../../tests/test_bootstrap.py), [warning tests](../../../../tests/test_download_timeouts.py), [browser tests](../../../../adapters/browser/bundle.test.mjs) | [bootstrap warnings](../../../../core/bootstrap.py), [macOS launcher](../../../../setup.command), [Windows launcher](../../../../setup.cmd), [browser warnings](../../../../adapters/browser/bundle.mjs) | [Python](unit-tests.log), [browser](browser-tests.log) |
+| [AC3](#ac3-and-tc3-preserve-diagnosis-and-offline-boundaries) | [offline tests](../../../../tests/test_offline.py), [bootstrap tests](../../../../tests/test_bootstrap.py), [browser tests](../../../../adapters/browser/bundle.test.mjs) | [online/offline routing](../../../../core/bootstrap.py), [bundle preparation](../../../../core/offline.py), [browser routing](../../../../adapters/browser/bundle.mjs) | [Python](unit-tests.log), [browser](browser-tests.log), [diagnosis](core-check.json) |
 
 The three maintenance criteria have test assertions and changed-code links: 3/3 in each matrix.
 The three changed runtime modules have direct assertion links: 3/3.
