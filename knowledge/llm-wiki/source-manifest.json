@@ -2686,7 +2686,7 @@
       },
       "wiki/entities/mfe-base.md": {
         "path": "wiki/entities/mfe-base.md",
-        "sha256": "d03190cb8bbb1ecdb429ac587f96130aa797b80c5712533e5ee7a9ae3f884cb7",
+        "sha256": "5f0cfb6aba76367fa3091a960e6c7a2c25e1f35523e36656fec52aae31576f8a",
         "sources": [
           "ARC-portal-service-relationships",
           "KT-admin-and-onboarding",
@@ -2702,6 +2702,26 @@
           "REQ-active-session-renewal"
         ],
         "note": "Added retained implementation evidence for the 5-second mouse debounce and 15-second activity-test observation; separated from target policy. Scope reviewed for this user clarification; existing shared owners preserved.",
+        "claim_review": {
+          "changed_outputs": [
+            {
+              "path": "wiki/entities/mfe-base.md",
+              "change_type": "replacement",
+              "removed_claims": [
+                {
+                  "claim": "15-second behavior that was measured",
+                  "claim_type": "implementation",
+                  "disposition": "preserved",
+                  "evidence": [
+                    "tasks/ui-test-coverage-20261022/evidence/portal-candidate-review-20261112/implementation-evidence.json",
+                    "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs:12-38"
+                  ]
+                }
+              ]
+            }
+          ],
+          "review_note": "Clarified the observation-window wording while preserving the implementation/test fact and keeping canonical policy unchanged."
+        },
         "reviewed_by": "agent:codex",
         "reviewed_at": "2026-11-13T02:35:50.511705+00:00"
       },

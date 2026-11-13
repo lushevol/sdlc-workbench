@@ -616,11 +616,59 @@ def review_sources(project, receipt):
                 raise ValueError(f"Expected reviewed output is missing: {doc_name}")
             if removed and not source.get("withdrawal_review_note", "").strip():
                 raise ValueError(f"Withdrawn claims require a semantic disposition: {doc_name}")
-            new_completions[doc_name] = {"id": item["id"], "origin": item["path"], "sha256": item["sha256"],
-                                         "recipe": plan["recipe_sha256"], "outputs": sorted(wanted),
-                                         "withdrawn_outputs": withdrawn, "reviewed_by": receipt["reviewed_by"],
-                                         "reviewed_at": receipt["reviewed_at"], "review_note": receipt["review_note"],
-                                         "engine": receipt["engine"]}
+            # A changed derived page can lose implementation or test facts while
+            # the canonical policy correction remains valid.  Require the
+            # reviewer to account for every changed output explicitly so that
+            # policy editing cannot silently erase system evidence.
+            previous_outputs = attempt.get("output_before", {}) if attempt else {}
+            current_outputs = {relative: reviewed[relative]["sha256"]
+                               for relative in set(wanted) | removed}
+            changed_outputs = {relative for relative, sha in current_outputs.items()
+                               if previous_outputs.get(relative) != sha}
+            if changed_outputs:
+                claim_review = source.get("claim_review")
+                if not isinstance(claim_review, dict):
+                    raise ValueError(f"Changed outputs require an explicit claim review: {doc_name}")
+                declared = claim_review.get("changed_outputs")
+                if not isinstance(declared, list) or any(not isinstance(value, dict) for value in declared):
+                    raise ValueError(f"Claim review must enumerate every changed output: {doc_name}")
+                declared_paths = [value.get("path") for value in declared]
+                if (len(set(declared_paths)) != len(declared_paths) or
+                        set(declared_paths) != changed_outputs or
+                        any(not isinstance(value, str) or not value.strip() for value in declared_paths)):
+                    raise ValueError(f"Claim review must enumerate every changed output: {doc_name}")
+                if not isinstance(claim_review.get("review_note"), str) or not claim_review["review_note"].strip():
+                    raise ValueError(f"Claim review requires a review note: {doc_name}")
+                for changed in declared:
+                    change_type = changed.get("change_type")
+                    if change_type not in {"additive", "replacement", "removal", "mixed"}:
+                        raise ValueError(f"Changed outputs need a reviewed change type: {doc_name}")
+                    removed_claims = changed.get("removed_claims")
+                    if not isinstance(removed_claims, list):
+                        raise ValueError(f"Changed outputs require removed_claims, even when empty: {doc_name}")
+                    if change_type in {"replacement", "removal", "mixed"} and not removed_claims:
+                        raise ValueError(f"Replacement, removal, or mixed changes require removed claims: {doc_name}")
+                    for claim in removed_claims:
+                        if not isinstance(claim, dict):
+                            raise ValueError(f"Each removed claim needs a classification: {doc_name}")
+                        if not isinstance(claim.get("claim"), str) or not claim["claim"].strip():
+                            raise ValueError(f"Removed claims need their prior text or meaning: {doc_name}")
+                        if claim.get("claim_type") not in {"intent", "implementation", "test", "execution", "deployment", "approval", "unknown"}:
+                            raise ValueError(f"Removed claims need a supported classification: {doc_name}")
+                        if claim.get("disposition") not in {"preserved", "superseded", "withdrawn"}:
+                            raise ValueError(f"Removed claims need a reviewed disposition: {doc_name}")
+                        evidence = claim.get("evidence")
+                        if (not isinstance(evidence, list) or not evidence or
+                                any(not isinstance(value, str) or not value.strip() for value in evidence)):
+                            raise ValueError(f"Removed claims need supporting evidence: {doc_name}")
+            completion = {"id": item["id"], "origin": item["path"], "sha256": item["sha256"],
+                          "recipe": plan["recipe_sha256"], "outputs": sorted(wanted),
+                          "withdrawn_outputs": withdrawn, "reviewed_by": receipt["reviewed_by"],
+                          "reviewed_at": receipt["reviewed_at"], "review_note": receipt["review_note"],
+                          "engine": receipt["engine"]}
+            if changed_outputs:
+                completion["claim_review"] = claim_review
+            new_completions[doc_name] = completion
             if source.get("unchanged_reason"):
                 new_completions[doc_name]["unchanged_reason"] = source["unchanged_reason"]
             metadata = canonical_records(project, "knowledge", [item["path"]])[item["id"]]["metadata"]

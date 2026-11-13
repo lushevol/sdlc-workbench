@@ -123,7 +123,14 @@ Prepare a JSON receipt using actual reviewed hashes and scope:
     "path": "knowledge/candidates/security/access.md",
     "sha256": "SOURCE_BEFORE_SHA256",
     "outputs": ["wiki/summaries/access.md", "wiki/index.md"],
-    "withdrawn_outputs": []
+    "withdrawn_outputs": [],
+    "claim_review": {
+      "changed_outputs": [
+        {"path": "wiki/summaries/access.md", "change_type": "replacement", "removed_claims": [{"claim": "Prior access summary claim", "claim_type": "intent", "disposition": "preserved", "evidence": ["prior reviewed output"]}]},
+        {"path": "wiki/index.md", "change_type": "additive", "removed_claims": []}
+      ],
+      "review_note": "Reviewed changed bytes for removed intent, implementation, test, and execution claims."
+    }
   }],
   "outputs": [
     {"path": "wiki/summaries/access.md", "sha256": "REVIEWED_OUTPUT_SHA256", "sources": ["CANONICAL_ID"], "note": "ACTUAL_REVIEW"},
@@ -145,6 +152,8 @@ Also supply `withdrawal_review_note` and review the former output's current byte
 For an authorized removed derived page, its output entry uses `sha256: null` and `disposition: "removed"`.
 Missing raw or canonical sources alone authorize no deletion.
 Affected saved explorations require reviewed qualification or authorized regeneration before completion.
+
+When any derived output bytes change, `claim_review` is required for that source. Its `changed_outputs` entries must match the changed output hashes and declare `additive`, `replacement`, `removal`, or `mixed`; `removed_claims` must be present even when empty. Replacement, removal, and mixed changes need at least one removed claim; use `additive` only when no prior claim is removed. Each removed claim must name its prior meaning, classify it as `intent`, `implementation`, `test`, `execution`, `deployment`, `approval`, or `unknown`, choose `preserved`, `superseded`, or `withdrawn`, and cite supporting evidence. This keeps a valid policy correction from silently deleting implementation or test behavior; preserve that evidence in a task record or qualify the supersession explicitly.
 
 The bridge stores compact completion, output ownership, and pending attempts under existing `source-manifest.json` metadata.
 It checks native structure, source/output bytes, relative aliases, and paired registry consistency under the native lock.

@@ -548,6 +548,18 @@ class OpenKBWorkflowTests(unittest.TestCase):
             path = self.kb / relative
             reviewed["outputs"].append({"path": relative, "sha256": WIKI.digest(path) if path.is_file() else None,
                                         "sources": sorted(owners[relative]), "note": "Reviewed synthetic fixture bytes."})
+        output_hashes = {item["path"]: item["sha256"] for item in reviewed["outputs"]}
+        for source in reviewed["sources"]:
+            attempt = state["attempts"].get(Path(source["path"]).stem, {})
+            before = attempt.get("output_before", {})
+            changed = sorted(relative for relative in source["outputs"]
+                             if before.get(relative) != output_hashes.get(relative))
+            if changed:
+                source["claim_review"] = {
+                    "changed_outputs": [{"path": relative, "change_type": "additive", "removed_claims": []}
+                                         for relative in changed],
+                    "review_note": "Synthetic fixture claim review accounted for every changed output.",
+                }
         return reviewed
 
     def review(self, receipt):
@@ -656,6 +668,44 @@ class OpenKBWorkflowTests(unittest.TestCase):
         state = WIKI.wiki_state(self.kb)[0]["incremental"]
         self.assertFalse(state["completed"])
         self.assertEqual(state["attempts"]["topic"]["status"], "pending_review")
+
+    def test_changed_output_requires_explicit_claim_review(self):
+        source = self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        self.derived("wiki/summaries/topic.md", "A changed derived claim.\n")
+        receipt = self.receipt([source])
+        receipt["sources"][0].pop("claim_review")
+        with self.assertRaisesRegex(ValueError, "explicit claim review"):
+            self.review(receipt)
+
+    def test_removed_claim_review_requires_classification_and_evidence(self):
+        source = self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        self.derived("wiki/summaries/topic.md", "A changed derived claim.\n")
+        receipt = self.receipt([source])
+        changed = receipt["sources"][0]["claim_review"]["changed_outputs"][0]
+        changed["change_type"] = "removal"
+        changed["removed_claims"] = [{
+            "claim": "A prior implementation fact",
+            "claim_type": "implementation",
+            "disposition": "preserved",
+            "evidence": [],
+        }]
+        with self.assertRaisesRegex(ValueError, "supporting evidence"):
+            self.review(receipt)
+
+    def test_replacement_claim_review_requires_removed_claim(self):
+        source = self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        self.compile()
+        self.derived("wiki/summaries/topic.md", "A replacement that drops an old fact.\n")
+        receipt = self.receipt([source])
+        changed = receipt["sources"][0]["claim_review"]["changed_outputs"][0]
+        changed["change_type"] = "replacement"
+        with self.assertRaisesRegex(ValueError, "Replacement, removal, or mixed"):
+            self.review(receipt)
 
     def test_recipe_and_schema_changes_invalidate_completed_sources(self):
         source = self.record()

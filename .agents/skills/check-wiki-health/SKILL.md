@@ -48,6 +48,8 @@ When the user requests engine lint output, route it through [llm-wiki](../llm-wi
 Do not run original upstream health/graph scripts on this shared OpenKB layout; their index/link assumptions differ.
 Candidate sources remain candidates. Structural success cannot supply publication approval or verify business execution.
 
+For a changed source, inspect the retained implementation and test evidence named by the affected task in addition to the derived wiki outputs. Confirm that each removed numeric or behavioural claim has a reviewed disposition and evidence locator. A clean canonical closure search does not prove that implementation or execution facts were safely retained.
+
 ## Result and stop conditions
 
 Return checked source scope, actual commands/mode, findings, receipt mismatches, and evidence limits.

@@ -15,6 +15,8 @@ Unchanged records may supply necessary context without independent compilation.
 Preserve source status, applicability, conditions, conflicts, and evidence limits beside derived claims.
 Do not infer implementation, execution verification, or publication approval from intended rules.
 
+Before changing a derived page, classify each material changed or removed claim as `intent`, `implementation`, `test`, `execution`, `deployment`, `approval`, or `unknown`. A policy correction can retire an unsupported acceptance fixture while retaining the same numbers as implementation or test evidence. For every removed numeric or behavioural fact, record a retention mapping with its disposition (`preserved`, `superseded`, or `withdrawn`) and exact evidence. Inspect retained source snapshots, gap records, case definitions, and execution results named by the affected topic; a closure search over wiki pages alone is insufficient.
+
 With both configured URL and token, use the bridge's native semantic compiler:
 
 ```sh
@@ -48,6 +50,8 @@ Without requested regeneration, review an explicit stale qualification. Unresolv
 Preserve unrelated pages and imported engine/version/revision/archive provenance.
 Use the existing index as the synthesis map. Do not create a second overview or source-summary tree.
 For direct authoring, follow the [native-format metadata contract](../llm-wiki/references/fallback.md#author-complete-native-format-pages).
+
+Record semantic completion through `wiki.py review` and its changed-output `claim_review` guard. Do not edit `source-manifest.json` or `.openkb/hashes.json` directly to advance a review; direct provenance edits bypass the required claim-loss checks.
 
 ## Review and hand off
 
