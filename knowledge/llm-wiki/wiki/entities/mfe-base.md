@@ -40,6 +40,12 @@ The shell is responsible for portal session interactions. Version 9 of the [cano
 
 Cross-origin embedded application activity needs separate integration evidence. The user also described an ideal of immediate revocation of all portal sessions at logout, excluding the identity-provider session. The implementation and independent execution evidence do not establish deployed conformance. [Canonical logout criterion](../sources/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
+### Retained implementation evidence
+
+The dated MFE Base source review records a five-second trailing debounce for mouse activity: `mouseMove` clears and resets a `setTimeout(runExtend, 5000)` before calling `extend` ([source snapshot](../../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79), SHA-256 `cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a`). The retained activity test helper emits activity every 100 milliseconds for a 15-second observation window and checks whether a successful renewal arrives before that window ends ([assertion helper](../../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs#L12-L38), SHA-256 `cff93d755ace0501a37df41d3447a0f9894f03532cae11fd179606c64633e348`).
+
+These are implementation and test-observation facts from the retained dated review. They preserve the 15-second behavior that was measured, without turning the test window into a product-policy timeout. The retained execution reported no successful renewal during continuous mouse movement because the five-second debounce kept resetting; see the [independent gap record](../../../../tasks/portal-background-session-20261019/10-release-confidence.md#failure-e2e-01). This evidence does not establish current deployment behavior or change the candidate requirement's renewal-due condition.
+
 ## CES migration compatibility
 
 MFE Base is explicitly inside the frontend compatibility scope of the EMS2-to-CES entitlement migration, together with the shared Ratan container and their upper applications, from 6 November 2026 ([[summaries/KT-ces-migration-parity]]).

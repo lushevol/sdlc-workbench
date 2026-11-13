@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "scope": "Restore omitted MFE Base implementation/test evidence for the 15-second activity window",
+  "reviewer": "agent:codex",
+  "reviewed_at": "2026-11-13T02:37:14.115967+00:00",
+  "user_question": "yes but 15s window still system behavior which in code logic, I want to make sure that you don't change the knowledge to even worse.",
+  "classification": "SUPPORTED_IMPLEMENTATION_EVIDENCE_WITH_LIMITS",
+  "canonical_policy_change": false,
+  "canonical_requirement": {
+    "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+    "version": 9,
+    "sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+    "disposition": "unchanged"
+  },
+  "implementation_sources": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts",
+      "lines": "60-79",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "fact": "mouseMove clears and resets a 5000 ms timer before runExtend; continuous mouse activity can postpone renewal."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs",
+      "lines": "12-38",
+      "sha256": "cff93d755ace0501a37df41d3447a0f9894f03532cae11fd179606c64633e348",
+      "fact": "the retained activity helper waits for setup, emits events every 100 ms for 15000 ms, and accepts renewal responses before the observation window ends."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/10-release-confidence.md",
+      "lines": "310",
+      "fact": "the retained E2E case recorded zero successful renewal in the 15-second continuous mouse interval and attributes it to the five-second trailing debounce resetting."
+    }
+  ],
+  "decision": "Keep 15 seconds in the MFE Base derived page as dated implementation/test behavior, explicitly separated from the canonical target policy. Keep AC-1 through AC-3 free of an unsupported fixed product interval.",
+  "derived_update": {
+    "path": "knowledge/llm-wiki/wiki/entities/mfe-base.md",
+    "sha256": "d03190cb8bbb1ecdb429ac587f96130aa797b80c5712533e5ee7a9ae3f884cb7",
+    "changed_outputs": 1,
+    "unchanged_outputs": 95,
+    "wiki_verify": "PASSED"
+  },
+  "limits": [
+    "The retained code and execution are dated evidence, not proof of current deployment behavior.",
+    "The 15-second window is a test observation boundary; the implementation timer identified in the retained source is 5 seconds.",
+    "No application source was changed. No runtime execution was performed in this follow-up."
+  ]
+}

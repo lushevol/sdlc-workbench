@@ -1516,6 +1516,8 @@ The [processing reconciliation](evidence/portal-candidate-review-20261112/proces
 
 The [independent wiki check](evidence/portal-candidate-review-20261112/wiki-review.json) reviewed seven changed outputs and reused prior semantic review for 89 byte-identical pages. The saved exploration answer body and shared output owners are preserved. Reviewed completion and wiki verification passed; all 13 aliases and six structural categories are current. The exact 12 portal inputs replan `unchanged`. The separate Settlement recipe was not advanced. No links changed, so no graph rebuild was needed.
 
+A follow-up review identified that the 15-second activity window was also retained system/test behavior. The MFE Base wiki now preserves it as dated implementation evidence alongside the five-second mouse debounce and the observed failed continuous-mouse renewal. This does not restore the unsupported fixed interval to canonical AC-1 through AC-3. [Follow-up evidence](evidence/portal-candidate-review-20261112/implementation-evidence.json).
+
 Canonical validation is `VALID` for all 15 workspace records, with zero findings. Lint passed for the two affected typed task documents with eight warnings for retained unknown owners, pending reviews, unresolved values and pending ASD review. All 30 newly added local task links resolve, and the whitespace check passed. An initial lint invocation included the navigation-only evidence index, which has no authoring-artifact schema; its failure is retained, and that index was checked through its local links instead.
 
 #### Final candidate review pack
