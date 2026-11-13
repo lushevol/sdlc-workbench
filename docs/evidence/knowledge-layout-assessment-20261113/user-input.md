@@ -11,3 +11,10 @@
 ## Assessment boundary
 
 Inspect current ownership, content, consumers, provenance, and retention constraints. Produce a concrete consolidation recommendation. This request does not authorize moving or deleting existing knowledge, source snapshots, or audit history.
+
+## Folder-purpose follow-up
+
+- Source: user follow-up in the same Codex chat
+- Date: 2026-11-13 (Asia/Singapore)
+
+> what the evidence folder for ?

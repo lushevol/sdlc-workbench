@@ -204,3 +204,8 @@ These are harness layout contracts from the approved design. They define no new 
 | Guides/task navigation/wiki page links → destination checks, canonical checkpoint and native wiki lint | Navigation maintenance; no business meaning change. |
 
 Denominators: six scoped layout contracts mapped to implementation and inspected assertions. Five have unit/integration assertions; L5 additionally uses the live exact-byte reconciliation. Execution outcomes are reported separately above. Test-only legacy fixtures preserve old-layout coverage; unchanged business sources and existing governance gates remain required dependencies. No unsupported additional business behavior was found in the path-only canonical comparison.
+
+## Remaining root evidence directory
+
+The [folder-purpose follow-up](../evidence/knowledge-layout-assessment-20261113/user-input.md#folder-purpose-follow-up) prompted a current inventory. Root `evidence/` retains five tracked historical Workbench maintenance/design files: one Gherkin-quality validation JSON and four knowledge-methodology input/discussion/plan Markdown files. The migration moved only its knowledge subtree.
+`knowledge/evidence/` now owns knowledge sources, provenance, selection/processing records, findings and audit history. The remaining root maintenance files overlap the purpose of `docs/evidence/`; a later authorized consolidation can relocate them there with link repair and preserved provenance.
