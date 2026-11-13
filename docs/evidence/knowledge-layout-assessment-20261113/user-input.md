@@ -37,3 +37,22 @@ Scope: explain current documentation ownership, retained contents, consumers and
 > how to optimize, what's your proposal
 
 Scope: propose documentation organization, content ownership, retention and a staged migration. The earlier design-first instruction remains applicable; this request does not authorize implementing the proposed reorganization.
+
+## Documentation and task ownership clarification
+
+- Source: user follow-up in the same Codex chat
+- Date: 2026-11-13 (Asia/Singapore)
+- Priority: high; clarify ownership and refine the proposal
+
+> what's the relationship of docs and tasks ? For a task the agent will create materials both in docs and tasks, but in tasks there is evidence folder, which confused me a ot .
+
+Scope: explain the intended and observed ownership of documentation, task materials and supporting evidence; refine the design to avoid splitting one work scope across directories. This question does not authorize relocation, cleanup or implementation.
+
+### Continuation
+
+- Source: user follow-up in the same Codex chat
+- Date: 2026-11-13 (Asia/Singapore)
+
+> go on
+
+Continue the ownership explanation and proposal refinement. No missing business answer or implementation approval is inferred from this continuation.
