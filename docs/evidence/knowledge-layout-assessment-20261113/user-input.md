@@ -56,3 +56,12 @@ Scope: explain the intended and observed ownership of documentation, task materi
 > go on
 
 Continue the ownership explanation and proposal refinement. No missing business answer or implementation approval is inferred from this continuation.
+
+### Proposal recap
+
+- Source: user follow-up in the same Codex chat
+- Date: 2026-11-13 (Asia/Singapore)
+
+> reconclude your proposal again
+
+Scope: consolidate the existing proposed ownership and migration design for review; no implementation or relocation is requested by this recap.
