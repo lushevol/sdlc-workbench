@@ -12,9 +12,9 @@ Status: Phase 1 foundation with workspace catalogs, portable knowledge contracts
 Remote source synchronization, AI governance, complete relationship validation, and behavior verification remain planned.
 Each retained item needs a current consumer, observable benefit, and supporting evidence.
 
-The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundation gaps.
-Generated workspaces do not include that earlier assessment.
-The approved v2 plan controls the current folder and knowledge contracts.
+Use [the documentation index](docs/README.md) for the maintained current guides across lifecycle and domain responsibilities.
+Tasks retain incremental work history and supporting evidence; current guides summarize the supported result.
+The approved v2 plan and subsequent recorded clarifications control the folder and knowledge contracts.
 
 ## Adopt an existing project
 
@@ -22,20 +22,22 @@ Read [the brownfield adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adop
 Workbench preserves existing layouts and accepts project-defined catalog classifications.
 Shared skills use source evidence and each repository's own commands when specialized extraction is unavailable.
 
-## Start a business requirement or issue
+## Start work
 
-Task intake applies to business behavior requirements and defects in existing repositories.
-Harness configuration, upgrades, tooling, and Workbench maintenance use normal code, documentation, checks, and Git commits.
-They require no task or business knowledge record. Use [the scope rules](tasks/README.md#scope) for mixed requests.
+Create or reuse an owning task for incremental work under [the scope rules](tasks/README.md#scope).
+Business behavior requirements and defects use intake.
+Workbench configuration, upgrades, tooling, and other harness maintenance use one [lightweight maintenance record](tasks/README.md#lightweight-maintenance-records), with proportionate evidence and checks.
+Maintenance requires no business intake, ACs, readiness, or domain knowledge publication.
+Update affected current guides and [reconcile documentation at handoff](tasks/README.md#keep-current-documentation-synchronized).
 
-Create `tasks/<task-id>/01-intake.md` through the applicable requirement or defect template.
+For business work, create `tasks/<task-id>/01-intake.md` through the applicable requirement or defect template.
 Follow [the task guide](tasks/README.md) before moving to the next SDLC phase.
 Select its [lifecycle entry route](tasks/README.md#lifecycle-entry-routes): requirements first, existing implementation, or bounded exploration.
 Register supplied code with its actual history. Derive proposed ACs without treating implementation as approved intent.
 Bounded exploration needs scoped `READY`, authorization, observable outcomes, and stop conditions before coding.
 Complete product intent and verification before claiming business acceptance.
 Use its [document order](tasks/README.md#document-order) for task filenames.
-Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
+Use three primary inputs: canonical intent in `knowledge/records/`, registered repository code and tests, and investigation results.
 Read existing reports before asking users to repeat available information.
 Use applicable authorized browser, Playwright, or service investigations to resolve material questions.
 Keep new questions, investigation results, reports, and evidence under the same task.
@@ -109,7 +111,8 @@ The project structure separates these responsibilities:
 | `workspace.yaml` | Workspace identity, settings, and registry references. |
 | `workspace.local.yaml` | Optional ignored repository path overrides for this machine. |
 | `repos/` | Independent Git checkouts and their setup guide. |
-| `tasks/` | Requirement and issue intake, questions, investigation results, reports, and evidence. |
+| `docs/` | Stable integrated current documentation across lifecycle and domain responsibilities. |
+| `tasks/` | Incremental business and maintenance work history, decisions, investigation results, and evidence. |
 | `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
 | `knowledge/` | One entry point for canonical records, supporting evidence, and the derived wiki. |
 | `knowledge/records/` | Canonical business-domain Markdown records and navigation; the domain validation and retrieval boundary. |

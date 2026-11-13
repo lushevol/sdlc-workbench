@@ -1,0 +1,82 @@
+{
+  "recorded_at": "2026-11-13T15:00:28.614754+08:00",
+  "source_git_revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+  "scope": "Maintained documentation and fixture source bindings; no runtime changes",
+  "checked_file_sha256": {
+    "docs/README.md": "8063575eb2378d67722c45f646972c4a8c2222739380a4713ebac6e44ee97735",
+    "docs/KNOWLEDGE_LIFECYCLE.md": "3cc7418efe1b3a5ae5d84a12248ea278535bb3d16bc9fb35020618ad1f60bfe3",
+    "docs/SETUP.md": "e41cc832e82e9b4699f83c62741f53ecd0fe149d9f770d6f661ef20503b720b0",
+    "docs/DEPENDENCIES.md": "ae8a2d5737c7eb07175620f20ab2acd85b92a56ef1c839aa99e216adbc2153ec",
+    "docs/HOOKS.md": "2ffb0b53058f216931a917e69d59dfa2dcfe71fd1d0f381ab34233afdfbb531b",
+    "docs/BROWSER_INVESTIGATIONS.md": "737c9c7dcefb9968dae3b8da23ba3e02c665106175128cd109ea6e7b58625b93",
+    "docs/ROBOT_TESTING.md": "f46726d679f6ae44b1a6d812ea7e2a6774cb1efb55e4dcca0d0ce56569137620",
+    "docs/BEHAVIOR_REVIEW.md": "6d3e9c9854a605745292edf1b91d35ac0097c589ea3db7057ab93332a375ca3f",
+    "docs/REVIEW_INDEX.md": "61726abf8c4c310799f43045be23f6cf2b36488be97d9fae067cf91fe3cac46b",
+    "docs/TEST_PREFLIGHT.md": "946adc58f8ad8765e9d12aa68a404b293cab9c6b00e17f599ef934be4f58a1ad",
+    "docs/QUESTION_RECONCILIATION.md": "dbfc98b0cbb579395f8c9ad0da9be8b8d1be67563da491caf3ac60fad8710214",
+    "docs/GHERKIN_QUALITY.md": "b5f2c15125405e6d7550bd088a09ab3fe5034871a3407807ee79fc4ed5787b11",
+    "docs/CONNECTORS.md": "f74309c4bdffd9b7f8bbe151ab9a54c0bbaf4c03b97340708667b743cad96bf1",
+    "docs/RELEASE_CLINIC.md": "75b880be8e32424364ba83c7c6a43ef6506896048c3c6fa8a3c12fc8e7c06aa3",
+    "docs/RELEASE_REPORT.md": "2345d70dec16b434f5ce11fe4976569160e074eb5bec7663c94e9448cc28a6a3",
+    "core/context/README.md": "61b3f52bd3dc3af8c6806f8fc0e5c6d48f3bc607e9f4d03133f974063ba2035a",
+    "core/evidence/README.md": "f0e927119bff625b6c4847d1b161555f9511ca7a256e7a03e9b546620cfbdebb",
+    "core/governance/README.md": "0e3d536e46a8a81fbe00a54c3ab6f7656d1efe5978e7bbe92ad3b14f31522032",
+    "core/ingestion/README.md": "656e932815282868a69a68184a5f29deb4e623405034702e74ab402e51458801",
+    "core/understanding/README.md": "398139d8e0c05a5aa79e432f25ac893768bf95afdd8a20f3941cdd876740961d",
+    "docs/examples/gherkin-session/session.md": "c5e11890e24f03abbe1562bca3eddff8f45606a139985f61d86bf0228654055c",
+    "docs/examples/gherkin-session/manifest.json": "ce174c4acca7a68578a4ee98ba0b4a090ce41625772b3052dc70f106c5f346cd",
+    "tasks/workbench-release-report-20261024/06-test-cases.md": "33cc26de863d8777dcf21010c72a14c9ed82b6628cf15bceaf08779af90999fd",
+    "tests/test_release_report_integration.py": "2b63967663a6f762420f739f7bad6a5aefe78389a1ced53ac95b70a345436529"
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p 'test_gherkin*.py' -q",
+      "exit_code": 0,
+      "result": "PASSED",
+      "output": "Ran 48 tests in 0.123s; OK",
+      "scope": "Existing Gherkin checker and CLI regressions"
+    },
+    {
+      "check": "Local Markdown file targets",
+      "result": "PASSED",
+      "count": 333,
+      "document_count": 22,
+      "limit": "Checked existing target paths, not all fragments or external URLs."
+    },
+    {
+      "check": "Canonical case preservation",
+      "result": "PASSED",
+      "count": 14,
+      "assertion": "All full original RR/RR-P Gherkin blocks and stable IDs remain exact in the task catalog."
+    },
+    {
+      "command": ".venv/bin/ai-sdlc gherkin docs/examples/gherkin-session/ambiguous.md --manifest docs/examples/gherkin-session/manifest.json --root .",
+      "exit_code": 1,
+      "state": "FAIL",
+      "automation_ready": false,
+      "limit": "Deliberate ambiguous wording, draft expectation authority and unresolved reviews remain visible."
+    },
+    {
+      "command": ".venv/bin/ai-sdlc gherkin docs/examples/gherkin-session/session.md --manifest docs/examples/gherkin-session/manifest.json --root .",
+      "exit_code": 2,
+      "state": "UNVERIFIED",
+      "automation_ready": false,
+      "finding_rules": {
+        "expectation_authority": 1,
+        "semantic_review": 1,
+        "automation_missing": 1
+      },
+      "limit": "Inspected current candidate version9 and source ranges; no publication, completed semantic review, binding review or business execution supplied."
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASSED"
+    }
+  ],
+  "limits": [
+    "No business browser scenario, live service, native Windows or deployment verification performed.",
+    "Root owns final historical cleanup, global locator repairs, packaging and installed-workspace checks.",
+    "Evidence hashes describe this completed check point; later source locator repair may require fresh fixture bindings."
+  ]
+}

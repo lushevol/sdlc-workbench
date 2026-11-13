@@ -11,10 +11,15 @@ limitations:
 
 # Generate a release report
 
+[Documentation map](README.md)
+
 Collect release information with an ADO **Release work item ID**.
+This identifies a work item, rather than a classic Release Management release.
 Render the saved snapshot into local HTML.
 Collection and rendering use separate interfaces.
 Release Clinic supplies separate compliance documents through direct links.
+Project, build, repository, and baseline identities come from collected relationships and workspace settings.
+They are not additional per-report user inputs.
 
 ## Prepare the workspace
 
@@ -110,6 +115,16 @@ Production selection follows the supplied source's `prod` and `rollback_prod` st
 That selection is source behavior. It does not establish deployment authorization.
 Unknown baselines, absent branches, failed pages, and missing builds remain explicit.
 
+The collector selects runs whose `prod` stage has numeric result `0` and whose `rollback_prod` stage is absent or has result `4`.
+It orders qualifying runs by production-stage finish time and uses the latest qualifying run's source commit.
+The [collector](../core/release_report.py) owns this selection and preserves unavailable evidence.
+Do not replace a missing baseline with an invented production policy.
+
+Test statistics remain separate for each build when a requirement appears in multiple attachments.
+No cross-build aggregation rule is configured.
+Related work item traversal and graph links retain unresolved identities and collection limits.
+Unknown data does not become zero coverage, zero defects, or a passed comparison.
+
 Sonar enrichment requires a project identity in build properties.
 Supported keys include `sonar.projectKey`, `SonarQube.ProjectKey`, and `sonarProjectKey`.
 Branch and pull request selectors remain distinct.
@@ -185,6 +200,20 @@ Stale evidence produces a visible reassessment warning.
 
 Rendering runs offline. It preserves the source artifacts and their recorded assessment state.
 The renderer does not grant business acceptance or deployment authorization.
+
+## Scope and verification
+
+The [canonical report cases](../tasks/workbench-release-report-20261024/06-test-cases.md) retain RR-1 through RR-8 and RR-P1 through RR-P6.
+They define collection, rendering, evidence, and scheduling boundaries.
+The source checkout's [integration checks](../tests/test_release_report_integration.py), [renderer checks](../tests/test_release_report_render.py), and [comparison checks](../tests/test_release_report_checks.py) contain implementation assertions.
+The [retained assertion map](../tasks/workbench-release-report-20261024/evidence/release-report-implementation-20261024/integration-case-map.json) distinguishes exact case coverage from related boundary checks.
+Case definitions, inspected assertions, and retained executions remain separate evidence.
+
+Existing verification uses controlled loopback ADO and Sonar services and synthetic timing.
+It does not establish company endpoint compatibility, native Windows behavior, measured live speedup, or a production recommendation.
+Use [release confidence](../.agents/skills/release-confidence/SKILL.md) for an actual candidate assessment, including business and system impact and required operational evidence.
+The installed report renderer does not supply the proposed weekly board or five-destination application design.
+Keep unimplemented presentation proposals in task history until their implementation is authorized and verified.
 
 ## Python and MCP interfaces
 

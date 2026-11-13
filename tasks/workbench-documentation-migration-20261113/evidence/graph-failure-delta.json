@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "kind": "LOSSLESS_HISTORICAL_OUTPUT_LINE_DELTA",
+  "purpose": "Retain exact failed output through a compact reversible delta from the retained corrected output; this is a storage migration, not a new graph verification run.",
+  "base": {
+    "path": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-improvements-implementation-20261030/stage-6-graph/GRAPH-REAL-003-current-source-delta.json",
+    "sha256": "836224b339044e564676a6e0e044e5d29b581ff816f896de4dfcd7334b79ca3c",
+    "size_bytes": 6105848,
+    "original_path": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/GRAPH-REAL-003-current-source-delta.json"
+  },
+  "original": {
+    "path": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/GRAPH-REAL-003-current-source-delta-attempt01.json",
+    "sha256": "2219d79af2e8f5c95520aea4f55f23c90fa20b375d6478645744df00c5d64f3a",
+    "size_bytes": 6103237
+  },
+  "line_numbering": "zero-based half-open spans in base output; apply edits in reverse order",
+  "line_edits": [
+    {
+      "base_start_line": 133,
+      "base_end_line": 138,
+      "insert_text": ""
+    },
+    {
+      "base_start_line": 121354,
+      "base_end_line": 121437,
+      "insert_text": ""
+    },
+    {
+      "base_start_line": 123049,
+      "base_end_line": 123050,
+      "insert_text": ""
+    },
+    {
+      "base_start_line": 136221,
+      "base_end_line": 136224,
+      "insert_text": "      \"snapshot\": \"baseline\",\n"
+    },
+    {
+      "base_start_line": 136259,
+      "base_end_line": 136262,
+      "insert_text": "      \"snapshot\": \"baseline\",\n"
+    },
+    {
+      "base_start_line": 136288,
+      "base_end_line": 136291,
+      "insert_text": "      \"snapshot\": \"baseline\",\n"
+    },
+    {
+      "base_start_line": 136308,
+      "base_end_line": 136311,
+      "insert_text": "      \"snapshot\": \"baseline\",\n"
+    },
+    {
+      "base_start_line": 136328,
+      "base_end_line": 136331,
+      "insert_text": "      \"snapshot\": \"baseline\",\n"
+    },
+    {
+      "base_start_line": 136402,
+      "base_end_line": 136405,
+      "insert_text": "      \"snapshot\": \"baseline\",\n"
+    },
+    {
+      "base_start_line": 136435,
+      "base_end_line": 136436,
+      "insert_text": "    \"recorded_at\": \"2026-10-30T15:54:38.429283+00:00\",\n"
+    },
+    {
+      "base_start_line": 136440,
+      "base_end_line": 136442,
+      "insert_text": "      \"two_source_repositories_changed\": false,\n"
+    },
+    {
+      "base_start_line": 136447,
+      "base_end_line": 136448,
+      "insert_text": "    \"assertions_passed\": false\n"
+    }
+  ],
+  "historical_failure": {
+    "verification": {
+      "case_id": "GRAPH-REAL-003-current-source-delta",
+      "recorded_at": "2026-10-30T15:54:38.429283+00:00",
+      "assertions": {
+        "real_saved_graphs_differ": true,
+        "candidate_sources_are_current": true,
+        "old_graph_preserved": true,
+        "two_source_repositories_changed": false,
+        "real_edge_additions_exist": true,
+        "direct_static_consumers_exist": true,
+        "context_omission_is_explicit": true,
+        "unsupported_links_remain_unavailable": true
+      },
+      "assertions_passed": false
+    },
+    "count_denominators": {
+      "nodes": {
+        "added": 16,
+        "removed": 15,
+        "changed": 115
+      },
+      "edges": {
+        "added": 63,
+        "removed": 33,
+        "changed": 437
+      },
+      "evidence": {
+        "added": 1150,
+        "removed": 1141,
+        "changed": 0
+      },
+      "repositories": {
+        "added": 0,
+        "removed": 0,
+        "changed": 8
+      },
+      "claims": {
+        "added": 0,
+        "removed": 23,
+        "changed": 0
+      }
+    },
+    "explanation": "The first assertion equated eight repository extraction-coverage differences with two changed source repositories. Corrected output separately reports source_inventory and coverage scope. The complete original failure is exactly recoverable from this delta."
+  },
+  "lossless_proof": {
+    "restored_bytes_equal_original": true,
+    "restored_sha256": "2219d79af2e8f5c95520aea4f55f23c90fa20b375d6478645744df00c5d64f3a"
+  },
+  "restore": {
+    "helper": "restore-line-delta.py",
+    "helper_sha256": "5bec1b0024d27635321311b4a012d04de09623ab3f73479ec2ce01f9880d7ffb",
+    "command": "python3 restore-line-delta.py graph-failure-delta.json BASE_OUTPUT RECOVERED_OUTPUT",
+    "limits": "Use the SHA-bound corrected base output. The helper refuses to overwrite an existing recovered path. This restores historical bytes without executing business or graph tools."
+  }
+}

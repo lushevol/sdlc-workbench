@@ -1,5 +1,7 @@
 # Shared review evidence index
 
+[Documentation map](README.md)
+
 The review index connects existing criteria, changes, cases, assertions, results, and assessments through retained evidence references.
 It creates a derived view. Original evidence remains in its owning task or established source location.
 

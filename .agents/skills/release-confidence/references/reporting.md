@@ -14,7 +14,8 @@ Index existing evidence through exact locators, revisions, and hashes instead of
 For a release spanning tasks, name the assessment owner and link all participating task scopes.
 Keep one assessment rather than divergent copies.
 
-For harness maintenance, use a relevant `docs/` location without creating business knowledge.
+For harness maintenance, retain the assessment and evidence in the owning [maintenance task](../../../../tasks/README.md#lightweight-maintenance-records), without creating business knowledge.
+Keep stable current procedures in existing docs and [reconcile them at handoff](../../../../tasks/README.md#keep-current-documentation-synchronized).
 Apply the [critical evidence policy](../../../../tasks/README.md#critical-evidence-and-reusable-payloads) to raw results and supporting records.
 Update one living assessment while review remains active.
 Preserve frozen assessments. Create a successor with a predecessor link only when a retained decision requires a new baseline.

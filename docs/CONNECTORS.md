@@ -10,6 +10,8 @@ limitations:
 
 # External system connectors
 
+[Documentation map](README.md)
+
 Use the [connectors skill](../.agents/skills/connectors/SKILL.md) for agent setup, usage, and access diagnostics.
 
 AI agents use external systems through the existing Workbench CLI and MCP interface.

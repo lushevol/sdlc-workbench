@@ -12,7 +12,8 @@ Use registry references to inspect existing assets in their current locations.
 Apply the intake gate below only to business behavior requirements and issues in existing business repositories.
 For changes limited to harness maintenance, verify exact source, assertions, and execution evidence directly.
 Classify work by business impact using [the scope rules](../../../tasks/README.md#scope).
-Those changes do not require a business task or business knowledge records.
+Keep the results in the owning [lightweight maintenance record](../../../tasks/README.md#lightweight-maintenance-records), without business intake or domain knowledge records.
+Reconcile affected [current documentation](../../../tasks/README.md#keep-current-documentation-synchronized) at handoff.
 For mixed requests, apply the gate to the business scope and verify supporting harness changes directly.
 
 For the business scope, read `tasks/<task-id>/01-intake.md`, its evidence index, and the current stage record when present.

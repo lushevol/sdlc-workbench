@@ -1,5 +1,7 @@
 # Reconcile question answers and knowledge references
 
+[Documentation map](README.md)
+
 Use one living question document for each clarification scope.
 The checker identifies missing answer propagation and stale source versions.
 It does not answer business questions, change knowledge, or approve publication.
@@ -20,7 +22,7 @@ Supported resolved statuses are `ANSWERED`, `ANSWERED_FROM_EVIDENCE`, and `RESOL
     "id": "KQ-ARCH-16",
     "document": {"path": "tasks/example/05-knowledge-questions.md", "sha256": "DOCUMENT_SHA256"},
     "consumers": [{
-      "path": "knowledge/candidates/architecture/example.md",
+      "path": "knowledge/records/candidates/architecture/example.md",
       "sha256": "CONSUMER_SHA256",
       "version": 2,
       "applied_answer_sha256": "ANSWER_SECTION_SHA256"

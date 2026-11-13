@@ -11,6 +11,8 @@ limitations:
 
 # Workbench hooks across agent clients
 
+[Documentation map](README.md)
+
 Workbench supplies shared session context and scoped completion checks for Codex, GitHub Copilot, and Claude Code.
 The installed Python runtime owns the behavior. Client configuration translates native events into that shared behavior.
 The existing [workflow skills](../.agents/skills/) retain semantic decisions and authorization boundaries.

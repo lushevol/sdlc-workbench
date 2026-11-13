@@ -19,7 +19,7 @@ Read repository instructions and the existing task before changing business case
 Apply the [canonical case rules](../../../tasks/README.md#canonical-gherkin-test-cases).
 Keep task cases in one `06-test-cases.md` catalog with stable headings and criterion links.
 Preserve historical cases and evidence when their bytes support retained results.
-Tooling maintenance requires no new business task or knowledge record.
+Tooling maintenance uses a [lightweight task record](../../../tasks/README.md#lightweight-maintenance-records), without business intake, ACs, or domain knowledge records.
 
 Inspect requirements, acceptance criteria, UI source, existing tests, and retained observations at exact revisions.
 Use existing knowledge and investigation results before asking for unavailable information.

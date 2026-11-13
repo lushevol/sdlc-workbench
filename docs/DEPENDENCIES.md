@@ -12,6 +12,8 @@ limitations:
 
 # Runtime and network dependencies
 
+[Documentation map](README.md)
+
 This document records the dependency analysis for Windows 11 and macOS.
 Use [setup](SETUP.md) for installation commands and local readiness checks.
 Keep this analysis current when manifests, connectors, service clients, or browser assets change.
@@ -25,16 +27,9 @@ The excluded application bridge and upload application remain outside the native
 
 ## Evidence boundary
 
-The inspection date is `2026-10-18`.
-The initial source baseline is commit `746698a836f2336331630b020c86893e04be8741`.
-The accompanying offline setup and optional update-check changes extend that baseline.
-The root Playwright POM dependency addition was inspected on `2026-10-22`.
-Release reporting reused the declared Node HTTP dependencies on `2026-10-24`.
-Read-only Kibana and PostgreSQL connectors extend that dependency inventory on `2026-11-01`.
-Fresh-checkout setup diagnostics and JSON output were added on `2026-11-03` without new package dependencies.
-Download deadlines and manual recovery guidance were added on `2026-11-03` without new package dependencies.
-Local Markdown source preparation was added on `2026-11-11` using the standard library and existing PyYAML dependency.
-Its import, selection, hash verification, and view commands require no downloads or runtime network calls.
+Maintain this inventory against the selected source revision and declared package manifests.
+Local Markdown source preparation uses the standard library and existing PyYAML dependency.
+Its import, selection, hash verification, planning, view, and completion commands need no runtime network calls.
 The tables describe inspected implementation and declared dependencies.
 They do not establish company approval, token validity, endpoint access, or passing business behavior.
 
@@ -394,7 +389,7 @@ It is pinned at revision `ff54396e575ee6feb0113b631a34caa082b441cc` (`0.5.0rc2.d
 Its [official skill](../.agents/skills/openkb/SKILL.md) supplies native procedures; the [Workbench bridge](../.agents/skills/llm-wiki/SKILL.md) preserves canonical source and governance boundaries.
 The [launcher](../.agents/skills/llm-wiki/scripts/wiki.py) installs the optional runtime, compiles selected sources with OpenKB's original semantic compiler and provider setup, verifies source links and pages, forwards supported native commands, and invokes OpenKB visualization.
 Its environment is `.venv-openkb`; the stable operational workspace is `knowledge/llm-wiki/`.
-The `raw/` and `wiki/sources/` entries are relative links to canonical records; the bridge's compile transaction preserves those links and source hashes.
+The `raw/` and `wiki/sources/` entries are relative links to canonical records; the bridge preserves those links and records source hashes. Native compilation leaves semantic output review pending; reviewed completion uses the existing finalization procedure.
 Otherwise use the unchanged llm-wiki-agent instructions under `.agents/skills/llm-wiki/upstream/` in the current ADE context.
 This fallback requires no additional model client. Both routes retain the current rich pages in one shared active wiki.
 
@@ -584,8 +579,8 @@ See [setup](SETUP.md) for the supported offline commands.
 Paths below refer to the complete source checkout.
 Generated workspaces omit the cited runtime and manifest files.
 Use the complete source checkout to inspect those code locators.
-Locators identify inspected functions or line positions in the audit baseline.
-Later edits can change line positions.
+Locators identify the relevant functions and source areas.
+Reinspect their current bytes before making a new dependency or endpoint claim; later edits can change line positions.
 
 | ID | Source and locator | Support and limit |
 | --- | --- | --- |

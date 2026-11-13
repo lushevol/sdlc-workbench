@@ -15,8 +15,9 @@ limitations:
 This maintained tooling fixture demonstrates explicit UI references and separate functional assertions.
 It does not replace the [canonical E2E-04 definition](../../../tasks/portal-background-session-20261019/test-cases.md#e2e-04).
 The behavior intent is continued portal access after refresh-based renewal.
-The [candidate AC-6](../../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173) defines prompt closure after successful renewal.
-Its publication review remains pending.
+The [candidate AC-6](../../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L210) defines one prompt closure after successful renewal before the absolute session deadline.
+Version 9 remains `candidate` and `draft`; human publication review is pending.
+This fixture illustrates a subset of that criterion and does not assert its exact closure count or establish full conformance.
 
 User A means one portal account with permission to access the portal Home page.
 The fixture requires expired access credentials and usable refresh credentials from the actual authentication service.
@@ -28,8 +29,8 @@ These probe actions come from the [existing assertion helper](../../../repos/tes
 ```gherkin
 Feature: Explicit session renewal interaction and authentication observations
   @SESSION-UI-EXAMPLE
-  Scenario: Request renewal with the verified timeout control
-    Given User A has expired portal access credentials and usable refresh credentials
+  Scenario: Request renewal with the timeout control
+    Given User A has expired portal access credentials and usable refresh credentials before the absolute session deadline
     And the dialog named "Your session has been expired" is visible in the portal
     And the text "Do you want to logout or extend the session?" is visible inside the dialog named "Your session has been expired"
     When User A clicks the button labeled "Extend" inside the dialog named "Your session has been expired"
@@ -45,13 +46,13 @@ The `tablist` vocabulary extension follows the inspected MUI `Tabs` component.
 Rendered role, target uniqueness, and deployed revision still require verification.
 
 Dialog closure alone cannot establish successful renewal.
-The [controller](../../../repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L54) closes the dialog after calling `relogin()`.
-The [request helper](../../../repos/ui/mfe-base/src/hooks/service/index.ts#L89) does not return its request promise at the inspected revision.
-The [authentication controller](../../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L252) defines validation responses.
+The [controller](../../../repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L128) awaits `relogin()` and checks the mounted session before closing the dialog.
+The [request helper](../../../repos/ui/mfe-base/src/hooks/service/index.ts#L107) returns its request promise at the inspected revision.
+The [authentication controller](../../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L267) defines validation responses.
 The probe verifies portal authentication validation only.
 It does not establish downstream authorization, session lifetime, or uninterrupted page state.
 
-The [existing Robot case](../../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L31) uses Browser JavaScript keywords.
+The [existing Robot case](../../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L32) uses Browser JavaScript keywords.
 The [existing helper](../../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/browser.cjs#L58) also checks pending-state behavior.
 That implementation is related evidence, not an inspected binding for every revised step above.
 The manifest therefore omits automation bindings and records an `UNVERIFIED` review.

@@ -354,7 +354,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertTrue((self.root / "workspace.yaml").is_file())
         for name in ("workspace.json", "project", "logs", "database"):
             self.assertFalse((self.root / name).exists(), name)
-        for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/KNOWLEDGE_LIFECYCLE.md", "docs/BEHAVIOR_REVIEW.md",
+        for relative in ("README.md", "AGENTS.md", "docs/README.md", "docs/WORKSPACE_DESIGN.md", "docs/KNOWLEDGE_LIFECYCLE.md", "docs/BEHAVIOR_REVIEW.md",
                          "docs/GHERKIN_QUALITY.md", "docs/examples/gherkin-session/session.md",
                          "docs/examples/gherkin-session/ambiguous.md", "docs/examples/gherkin-session/manifest.json",
                          "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md",
@@ -364,7 +364,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertTrue({".workbench/", "workspace.local.yaml"} <= set(ignored))
         self.assertNotIn("repos/", ignored)
         self.assertEqual(sorted(path.name for path in (self.root / "repos").iterdir()), ["README.md"])
-        for relative in ("workspace.local.yaml", "src", "tests", "pyproject.toml",
+        for relative in ("workspace.local.yaml", "src", "tests", "pyproject.toml", "docs/reviews", "docs/evidence",
                          "core/__init__.py", "core/cli.py", "core/runtime.py", "core/gherkin_quality.py",
                          "core/schemas/gherkin-evidence.schema.json"):
             self.assertFalse((self.root / relative).exists(), relative)

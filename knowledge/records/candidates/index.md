@@ -91,7 +91,7 @@ The wider Settlement domain and other Netting workflows need canonical review.
 
 Missing local attachments limit diagrams, scan reports, screenshots, examples, and retained execution evidence.
 External destinations were not fetched.
-The [earlier review](../../../docs/reviews/MARKDOWN_IMPORT_REVIEW.md) covered 118 files before this ingestion.
+The [earlier review](../../../tasks/workbench-knowledge-ingestion/MARKDOWN_IMPORT_REVIEW.md) covered 118 files before this ingestion.
 Its historical inventory includes 16 `Bin` files absent from the current batch.
 This ingestion does not restore or cite those absent files.
 

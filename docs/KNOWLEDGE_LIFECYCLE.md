@@ -1,5 +1,7 @@
 # Knowledge lifecycle and reusable skills
 
+[Documentation map](README.md)
+
 Use major-step skills to coordinate complete work. Invoke an operation skill directly when only that result is required.
 Each operation declares its inputs, observable output, and conditions that prevent completion.
 These skills guide agents. They do not add a workflow runner or an automatic approval mechanism.

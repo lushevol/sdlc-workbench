@@ -10,7 +10,7 @@ Check source identity, revision, snapshot hashes, evidence links, review records
 Important requirements and decisions require recorded human review before publication.
 Never manufacture a human actor, approval, or verification event.
 
-Record each change in a new YAML file under `evidence/knowledge/audit/`.
+Record each change in a new YAML file under `knowledge/evidence/audit/`.
 Preserve earlier events and their Git history.
 A correction requires a new event that references the earlier event.
 Hashes support integrity checks; they do not establish the truth of a source claim.
@@ -21,5 +21,5 @@ ai-sdlc --workspace PATH validate
 
 This command performs deterministic contract and provenance checks.
 It does not reason about business correctness or authenticate a reviewer.
-AI governance, approval workflows, and source adapters remain future capabilities.
+Automatic semantic governance, authenticated approval workflows, and remote source synchronization remain future capabilities.
 This directory implements the deterministic validator within the single `core/` runtime.

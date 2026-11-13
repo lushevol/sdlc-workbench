@@ -1,13 +1,15 @@
-# Business task intake and evidence
+# Task records and evidence
 
-At Workbench entry, register business requirements and defects under `tasks/<task-id>/` before new discovery, diagnosis, or implementation.
-Use one stable folder for the task across SDLC stages.
-Update an existing task when it already covers the request.
+At Workbench entry, register incremental business and maintenance work under `tasks/<task-id>/` before new discovery, diagnosis, or implementation.
+Use one stable folder for the owning scope across SDLC stages. Update an existing task when it already covers the request.
+Tasks retain the work timeline and supporting evidence. [Current documentation](../docs/WORKSPACE_DESIGN.md#documentation-ownership) integrates the resulting supported state across lifecycles and domains.
 
-The current consumers are requirement intake, the portal session investigation, and its change review.
-This structure keeps questions, conclusions, and evidence available outside chat history.
-The [intake skill](../.agents/skills/analyze-requirement/SKILL.md) applies this procedure.
-Agents assess the gate. The core runtime does not enforce workflow transitions.
+This structure keeps requests, decisions, conclusions, and evidence available outside chat history.
+Business work follows the [intake skill](../.agents/skills/analyze-requirement/SKILL.md) and the business lifecycle sections below.
+Maintenance follows the lightweight route and shared documentation and evidence rules; it does not enter the business lifecycle gates.
+Agents assess business readiness. The core runtime does not enforce workflow transitions.
+
+High-priority source: [living-documentation clarification and migration authorization, 13 November 2026](workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
 
 ## Scope
 
@@ -16,15 +18,48 @@ Classify work by its effect on business behavior.
 | Work scope | Required record | Examples |
 | --- | --- | --- |
 | Business behavior in existing repositories | Business task; update domain knowledge when its meaning changes | Portal session rules, feature requirements, service outcomes, and business regressions |
-| Harness maintenance only | Code, applicable guides, checks, and Git commits; no task or business knowledge record | Workbench configuration, dependency upgrades, browser setup, tooling, and template maintenance |
-| Mixed business and harness work | One business task; handle harness support as maintenance | Reproduce a portal defect using locally configured browser tools |
+| Harness maintenance only | One lightweight maintenance record; code, current guides, applicable checks, and evidence | Workbench configuration, dependency upgrades, browser setup, tooling, and template maintenance |
+| Mixed business and harness work | One owning task; business intake for business scope and proportionate maintenance notes for supporting work | Reproduce a portal defect using locally configured browser tools |
 
 A configuration change that alters business behavior follows business intake.
-Harness maintenance does not require business clarification logs, knowledge publication, or governance audit events.
-Keep harness artifacts in a business task only when they support its investigation or verification.
+Harness maintenance does not require business intake, ACs, readiness, business clarification logs, domain records, knowledge publication, or governance audit events.
+Keep supporting harness artifacts in a business task when they serve that task; use a maintenance task for independent maintenance scope.
 Preserve existing source snapshots and governance history. This scope rule does not authorize their removal.
 
-## Create the task
+## Lightweight maintenance records
+
+Create or reuse `tasks/<task-id>/01-maintenance.md` for new maintenance work.
+Use one ordinary Markdown record, without a business template or an invented artifact kind.
+An existing actual maintenance report can remain the owning record; relocation does not require a newly synthesized summary or a fictional intake history.
+Keep the following information proportionate to the work in that record:
+
+- Exact user input or source link, date, authorized scope, and current outcome or next action.
+- Affected source revisions or local changes, consumers, and qualitative risk.
+- Work performed, applicable checks and their actual results, and material limits.
+- Links to necessary supporting evidence and the current documentation sections updated or assessed.
+
+Put task-generated evidence under the same task's `evidence/` directory when retained payloads are needed.
+Link protected sources and existing results at their established locations instead of copying them.
+Use the maintenance record itself as the evidence index for small work; add a separate index only when navigation needs it.
+Do not create empty evidence folders, extra stage documents, business ACs, or readiness fields to satisfy this convention.
+Apply the shared retention and authorized-cleanup rules below. Bind native hooks to this explicit Markdown record when hooks are used.
+
+## Keep current documentation synchronized
+
+At work entry, identify the affected existing sections in `docs/`, root guides, repository documentation, and responsibility guides.
+Use [documentation ownership](../docs/WORKSPACE_DESIGN.md#documentation-ownership) to choose the current authority; do not create competing explanations.
+Update those sections as supported changes and accepted decisions become current, keeping the stable document paths.
+For business intent, update the applicable canonical record only through its existing governance procedure; docs link that record and version.
+Keep proposals, implementation, executed verification, and deployment evidence distinct in the current explanation.
+
+At handoff, record the updated document paths and relevant sections in the owning task.
+If no reader-visible documentation change is needed, state the reason and the current sections assessed.
+Resolve stale or conflicting current instructions within the authorized scope. Preserve historical decisions and claim-bearing evidence under their retention rules.
+Keep detailed runs, captures and task-specific reports with the task; current docs summarize and link the supported result.
+Add a documentation page only for a distinct enduring responsibility with a current reader that the existing set cannot cover clearly.
+This reconciliation adds no business readiness, publication, acceptance, or deployment approval.
+
+## Create a business task
 
 Choose a stable identifier without path separators.
 Create the task folder before reading additional project sources.
@@ -186,7 +221,7 @@ Arrange a new current document in this order:
 6. Record findings with evidence, consequence, owner, and next action. Mark unknown owners and unresolved limits explicitly.
 7. Record automated checks separately from the pending or completed ASD writing review.
 
-Harness maintenance notes can remain ordinary Markdown when no authoring form applies.
+Harness maintenance follows the [lightweight record convention](#lightweight-maintenance-records) in ordinary Markdown.
 Keep their scope, source identities, performed checks, and writing-review metadata explicit.
 Review these notes manually. Do not assign an unrelated artifact kind to make lint pass.
 
@@ -333,7 +368,7 @@ Use three evidence sources:
 
 | Source | Inspect | Record |
 | --- | --- | --- |
-| Domain knowledge and evidence sources | Read `knowledge/` for domain records. Read cited originals through `evidence/knowledge/` or registered sources. | Applicable criteria, authority, conflicts, revisions, and limits. |
+| Domain knowledge and evidence sources | Read `knowledge/records/` for canonical intent. Read cited originals through `knowledge/evidence/` or registered sources. | Applicable criteria, authority, conflicts, revisions, and limits. |
 | Registered repositories, optionally under `repos/` | Exact implementation revisions and actual test-engine assertions. | Repository ID, commit, file, symbol or assertion, and coverage limits. |
 | Investigation results | Existing reports, browser observations, service flows, and retained test executions. | Environment, method, inputs, timestamps, assertions, actual outcomes, and artifacts. |
 
@@ -464,7 +499,7 @@ Keep requirements and ideal target behavior in `knowledge/`.
 Record implementation, observed behavior, and intent-to-reality differences in an independent task gap Markdown document.
 Use a stable purpose name such as `09-intent-reality-gaps.md` for evidence comparison.
 Select the existing authoring form that matches the findings. No new artifact kind is required.
-Source: [user clarification, 1 November 2026](../docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
+Source: [user clarification, 1 November 2026](workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Update the gap when a fix changes conformance. Update knowledge only when sourced intent changes.
 Record supported matches separately from open gaps. Missing execution evidence does not establish an application defect.
 
@@ -624,13 +659,13 @@ Record current progress through the existing stage record, inventory, and eviden
 
 | Priority | Keep | Presentation |
 | --- | --- | --- |
-| Necessary | Initial `01-intake.md`, current stage record when needed, and a short `evidence/index.md` | Main entry points |
+| Necessary | Business intake and current stage record, or the owning maintenance record; a short evidence index when needed | Main entry points |
 | Important | Direct claim-bearing executions, source snapshots, inspected assertions, useful screenshots, and required provenance | Link from the intake or index |
 | Unimportant | Redundant reports, repeated attempts without distinct findings, empty output, and unrelated harness bulk | Delete during authorized cleanup |
 
 Classify by current consumer and evidence value. A failure or unresolved question can make evidence important.
 Use the [critical evidence policy](#critical-evidence-and-reusable-payloads) to select content before creating supporting files.
-Keep only useful harness artifacts in a business task. Maintain general harness guidance outside business tasks.
+Keep only supporting harness artifacts in a business task. Keep independent maintenance history in its maintenance task and current guidance in maintained docs.
 Do not replace clutter with archive folders or another summary report.
 Prevent redundant captures and exports through [the growth controls](#control-evidence-growth-before-execution).
 An identical hash identifies duplicate bytes. It does not establish that a linked or registered payload is safe to delete.

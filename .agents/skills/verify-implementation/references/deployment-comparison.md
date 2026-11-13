@@ -3,7 +3,7 @@
 Use this procedure when verification depends on a named environment, deployed configuration, or environment-specific failure.
 It supplies an agent check, not a core-enforced gate or a deployment tool.
 Keep the comparison in the existing stage record and evidence index.
-For harness maintenance, use the existing maintenance report without creating a business task.
+For harness maintenance, use the owning [lightweight task record](../../../../tasks/README.md#lightweight-maintenance-records), without business intake or acceptance gates.
 
 ## Define the conclusion and inputs
 

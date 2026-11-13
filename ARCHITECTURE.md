@@ -66,8 +66,8 @@ workbench/
 ├── repos/                            # Visible independent Git checkouts.
 │   └── README.md                    # Placement and registration guide.
 ├── tasks/
-│   ├── README.md                    # Portable intake procedure.
-│   └── <task-id>/                   # Intake, questions, investigations, and evidence.
+│   ├── README.md                    # Business intake and lightweight maintenance procedures.
+│   └── <task-id>/                   # Incremental work history and supporting evidence.
 ├── registry/
 │   ├── repositories.yaml
 │   ├── services.yaml
@@ -130,13 +130,17 @@ workbench/
 │   ├── copilot/
 │   └── mcp/
 ├── tests/
-├── docs/
+├── docs/                           # Stable, integrated current lifecycle and domain documentation.
 └── pyproject.toml
 ```
 
 The six responsibility roots are `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
-`tasks/` supplies the working record for business behavior requirements and defects in existing repositories.
-Harness configuration, upgrades, tooling, and Workbench maintenance require no task or business knowledge record.
+`tasks/` retains incremental work history and evidence for business changes and Workbench maintenance.
+Business behavior changes use intake; harness maintenance uses a [lightweight record](tasks/README.md#lightweight-maintenance-records) without business gates or domain knowledge records.
+`docs/` supplies the stable, integrated current view across the adopting system's lifecycles and domains, including Workbench operation.
+Update its existing sections as supported changes become current and reconcile them at task handoff.
+Keep canonical business intent in `knowledge/records/`; link it from documentation without duplicating its authority.
+Read [documentation ownership](docs/WORKSPACE_DESIGN.md#documentation-ownership) for current views, task history, and source responsibilities.
 The tree defines the project construction and ownership boundaries.
 It does not assert that every target engine already exists.
 Local checkouts and generated evidence can use configured paths inside or outside this root.
@@ -343,7 +347,7 @@ They must not create separate business rules, grants, or verification claims.
 ## Core workflow
 
 This workflow applies to business behavior requirements and defects in existing repositories.
-Harness maintenance uses direct code, documentation, applicable validation, and Git review.
+Harness maintenance uses a lightweight task record with code, current documentation, applicable validation, and Git review.
 For mixed requests, apply task intake to the business scope. Follow [the scope rules](tasks/README.md#scope).
 
 **Receive → Discover → Understand → Relate → Analyze → Execute → Verify**

@@ -6,4 +6,5 @@ Keep observations, inferences, and unresolved claims separate.
 The [behavior evidence guide](../../docs/BEHAVIOR_REVIEW.md) describes implemented contract, source freshness, and declared assertion-binding checks.
 The `core/assurance.py` implementation preserves immutable baselines and compares their declared dependencies.
 Its business verification result always remains `NOT_VERIFIED`.
-Approval authentication, native result importing, and complete behavior evidence validation require further implementation.
+The [review index](../../docs/REVIEW_INDEX.md) also reconciles retained browser inventories and original Jest JSON records.
+Those imports do not authenticate execution. Broader native formats, approval authentication, and complete semantic behavior verification remain outside these deterministic checks.

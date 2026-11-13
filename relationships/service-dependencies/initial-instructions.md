@@ -4,7 +4,7 @@ Edit this file when you add repositories or learn more about their relationships
 Write in English or Chinese. Partial information and uncertain guesses are useful starting points.
 These notes guide investigation. They do not establish source facts or runtime behavior.
 
-Entry point source: [user request](../../docs/evidence/graph-instruction-integration-20261028/user-input-instruction-location-20261028.txt), 28 October 2026.
+Entry point source: [user request](../../tasks/workbench-graph-instruction-integration-20261028/evidence/graph-instruction-integration-20261028/user-input-instruction-location-20261028.txt), 28 October 2026.
 
 ## Existing architecture notes
 

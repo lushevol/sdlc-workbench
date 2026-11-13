@@ -2,7 +2,7 @@
 
 Use this procedure for business task status, resume, and handoff requests.
 It summarizes existing records. It creates no new workflow gate or runtime status.
-For harness maintenance, report the engineering scope and checks directly.
+For harness maintenance, use the owning [lightweight record](../../../../tasks/README.md#lightweight-maintenance-records) for scope, checks, evidence, and [documentation reconciliation](../../../../tasks/README.md#keep-current-documentation-synchronized); do not apply the business gates below.
 
 ## Choose the current record
 

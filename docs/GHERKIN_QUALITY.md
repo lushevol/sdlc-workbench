@@ -9,43 +9,15 @@ writing_review:
     - Automated checks do not check the complete approved dictionary or grammar rules.
 ---
 
-# Gherkin quality: proposal review and implementation
+# Gherkin quality and automation readiness
 
-**The session example remains UNVERIFIED. Resolve its intent review and automation mapping before execution handoff. Owner: unknown.**
+[Documentation map](README.md)
 
-The [session fixture](examples/gherkin-session/session.md) records the supporting sources and limits.
-The checker does not establish business approval or passing execution.
-
-## Proposal review
-
-The proposal correctly separates business intent, UI interaction, and observable results.
-Its component identity, evidence, traceability, and missing-information requirements are adopted.
-Three implementation choices keep these requirements within the existing architecture.
-
-| Proposal area | Decision | Reason |
-| --- | --- | --- |
-| Separate generator, validator, and optional discovery skills | Use one [shared skill](../.agents/skills/gherkin-quality/SKILL.md) with generation and review modes. | Shared vocabulary and evidence rules have one maintained definition. Existing source and browser tools support discovery. |
-| Automated quality gate | Separate deterministic checks from recorded semantic reviews. | A valid reference cannot prove a label, expectation, or assertion's meaning. |
-| Existing framework compatibility | Inspect and record native or mapped bindings. | Existing Robot Browser JavaScript tests do not automatically execute natural-language Gherkin. No parallel Cucumber framework is added. |
-
-These choices change the proposed organization, not its quality requirements.
-No new dependency, database, service, or browser installation is required.
-Business-only acceptance criteria retain their existing validation route.
-
-## Implementation plan
-
-| Stage | Implementation | Verification |
-| --- | --- | --- |
-| Inspect | Inspect artifact lint, CLI, skill packaging, session UI, BFF, and Robot assertions. | Retain exact source fingerprints in the [example manifest](examples/gherkin-session/manifest.json). |
-| Standardize | Define one reusable skill, mandatory rules, component vocabulary, and traceability guidance. | Validate the skill and its local links. |
-| Check | Add opt-in UI Gherkin checks and a versioned JSON evidence contract. | Test ambiguous wording, missing evidence, stale sources, and false readiness. |
-| Integrate | Add standalone CLI dispatch, shared workflow links, and generated workspace resources. | Test command isolation, exit policies, packaging, and installed initialization. |
-| Demonstrate | Compare deliberately ambiguous wording with source-backed session wording. | Retain FAIL and UNVERIFIED separately; do not invent passing business execution. |
-| Reconcile | Run the full runtime suite, wheel build, and isolated workspace validation. | Record the results below and commit the completed maintenance stage. |
-
-The affected interfaces are additive CLI dispatch, runtime schemas, shared skills, and scaffold resources.
-The qualitative risk is moderate because an incorrect readiness result could permit an incomplete test handoff.
-Ordinary artifact lint remains unchanged. Historical canonical cases and business source remain unchanged.
+Use the shared Gherkin procedure to generate and review source-backed business and UI E2E cases.
+Keep business intent, UI identity, observable assertions, semantic review, and automation bindings distinct.
+The checker validates declared wording and evidence. It does not establish business approval or passing execution.
+Use existing test frameworks through inspected native or mapped bindings; no parallel Cucumber framework is required.
+Business-only acceptance criteria retain their ordinary artifact validation route.
 
 ## Use the workflow
 
@@ -196,33 +168,10 @@ Generated workspaces receive the guides and fixtures, but not business checkouts
 Their source references remain unavailable until the corresponding assets exist.
 Missing assets produce UNVERIFIED findings. No startup download occurs.
 
-## Verification record
+## Maintenance checks
 
-The [retained validation record](../evidence/maintenance/gherkin-quality-20261022/validation.json) contains results, implementation fingerprints, and independent skill-trial artifacts.
-
-| Check | Result |
-| --- | --- |
-| Full runtime suite | 605 tests completed; 603 passed and two skipped. |
-| Focused checker and CLI suite | 43 tests passed. |
-| Shared skill validation | Passed. |
-| Changed Markdown links | 114 local targets resolved. |
-| Ambiguous session fixture | FAIL, exit 1, automation readiness false. |
-| Source-backed session fixture | UNVERIFIED, exit 2, automation readiness false. |
-| Independent skill trial | Rejected ambiguous input and corrected three cases. Missing review and bindings remained unverified. |
-| Wheel build | Passed with installed build tools and no dependency resolution. |
-| Installed workspace | Validation returned VALID. Skill aliases, schema export, guides, templates, and runtime exclusion passed. |
-
-The default isolated wheel build could not resolve build dependencies through the configured proxy.
-The offline build used `--no-build-isolation` with existing build tools.
-Connected build-dependency installation remains unverified.
-The runtime suite required localhost access for its existing mock-registry test.
-The retained record preserves both initial environmental failures and successful follow-up checks.
-
-The installed smoke test used a fresh temporary environment and reused existing dependency packages.
-Its runtime loaded from the installed wheel, outside this source checkout.
-The generated workspace contained no business checkouts or runtime source.
-Its session fixture remained unverified because business evidence was unavailable.
-
-Source-only validation evidence is not copied into generated workspaces.
-No business browser execution is claimed for this maintenance change.
-Full ASD writing review remains pending.
+The source checkout owns the [quality regressions](../tests/test_gherkin_quality.py) and [CLI regressions](../tests/test_gherkin_cli.py).
+Run their supported unittest checks after changing the checker, schema, or maintained fixtures.
+Check both demonstration states after changing the example definitions or their manifest.
+Tooling checks do not run the business browser scenario or establish target-environment behavior.
+Generated workspaces receive the guide and fixtures without runtime test source or project validation history.

@@ -11,11 +11,13 @@ limitations:
 
 # Isolated browser investigations
 
+[Documentation map](README.md)
+
 Use this optional environment for browser observations that need screenshots, traces, snapshots, or controlled tabs.
 Keep approved business test suites in their independent test repository.
 Generated workspaces include this guide. Run browser commands from a separate source checkout or prepared browser installation.
 
-Keep browser evidence under its business task only when it supports that task's claims or investigation limits.
+Keep retained browser evidence under its owning task when it supports that task's claims or investigation limits.
 Use the [critical evidence policy](../tasks/README.md#critical-evidence-and-reusable-payloads) to select durable content and reuse canonical captures.
 Apply the [task priorities](../tasks/README.md#evidence-priorities-and-cleanup) during authorized historical cleanup.
 Label screenshots as business reproduction, synthetic tooling, or actual test output.

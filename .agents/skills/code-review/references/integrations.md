@@ -16,7 +16,8 @@ Require `READY` with a scope-specific evidence rationale before downstream revie
 `READY_WITH_LIMITS` permits further intake evidence collection only.
 `NEEDS_CLARIFICATION` blocks the named next phase.
 Keep new investigation evidence under its owning task and save completed cases before continuing.
-Harness maintenance requires no business task or domain knowledge record.
+Harness maintenance uses a [lightweight task record](../../../../tasks/README.md#lightweight-maintenance-records), without business intake or domain knowledge records.
+Reconcile affected [current documentation](../../../../tasks/README.md#keep-current-documentation-synchronized) at handoff.
 For mixed requests, keep the business scope in its task and handle harness support as maintenance.
 When this skill is copied independently, use the destination repository's equivalent rules when present.
 

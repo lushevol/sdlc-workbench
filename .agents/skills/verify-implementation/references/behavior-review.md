@@ -181,8 +181,9 @@ Neither a passing failure assertion nor an expected failure establishes requirem
 
 Define test cases under the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases).
 For task-scoped work, keep steps and intended assertions in the canonical task catalog.
-For an ordinary review without a task, keep any needed case definition in the requested review output.
-Link that single definition from each finding. Do not create a business task solely to use this comparison procedure.
+For harness maintenance, keep any needed case definition in the owning [lightweight record](../../../../tasks/README.md#lightweight-maintenance-records); business intake and ACs do not apply.
+For a standalone review outside Workbench, use the destination repository's rules and requested review output.
+Link the single case definition from each finding instead of creating a competing catalog.
 
 Use ASD-STE100 for the setup, numbered steps, results, consequence, and next action.
 Use stable terms. Explain technical terms that the reader needs to follow the case.

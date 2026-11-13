@@ -1,5 +1,7 @@
 # Behavior evidence review
 
+[Documentation map](README.md)
+
 The `assurance` CLI checks a narrow behavior evidence contract.
 It validates saved records, checks source freshness, preserves baselines, and compares declared evidence relationships.
 Every business verification field remains `NOT_VERIFIED`.

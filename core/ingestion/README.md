@@ -1,19 +1,19 @@
 # Ingestion responsibility
 
 Ingestion derives reusable business-domain knowledge from inspected sources.
-Keep `knowledge/` limited to domain Markdown records and navigation.
+Keep `knowledge/records/` limited to domain Markdown records and navigation.
 Exclude Workbench maintenance, raw sources, logs, code copies, fixtures, execution results, reports, and intermediate files.
-Preserve useful source material outside the knowledge base before interpretation.
+Preserve useful source material under `knowledge/evidence/` before interpretation.
 
 The shared skill can first review a batch without importing it.
 Ingestion then classifies sources and creates connected topic candidates when requested.
 Register the source identity, locator, owner, authority, and access method in `registry/sources.yaml`.
 Keep credentials outside tracked declarations.
 
-Retain unchanged source snapshots under `evidence/knowledge/sources/` when source access permits a local copy.
-Record revisions, retrieval times, locators, hashes, and snapshot paths in `evidence/knowledge/manifest.yaml`.
+Retain unchanged source snapshots under `knowledge/evidence/sources/` when source access permits a local copy.
+Record revisions, retrieval times, locators, hashes, and snapshot paths in `knowledge/evidence/manifest.yaml`.
 Keep external source ownership intact.
-Reuse original files already retained under `evidence/knowledge/sources/` without creating redundant copies.
+Reuse original files already retained under `knowledge/evidence/sources/` without creating redundant copies.
 Use a content hash revision when the original revision is unavailable.
 Add a new snapshot when the source changes.
 Do not rewrite earlier snapshot bytes or manifest history.
@@ -31,7 +31,7 @@ Read [source preparation](../../.agents/skills/ingest-knowledge/references/sourc
 Every generated source link records the original page hash and output hash.
 `plan` queues selection review and canonical processing separately, without model calls.
 `view --plan` emits only queued kept pages. `complete` records reviewed, checked canonical outcomes.
-Processing receipts live under `evidence/knowledge/processing/`; full plan baselines remain in ignored `.workbench/` storage.
+Processing receipts live under `knowledge/evidence/processing/`; full plan baselines remain in ignored `.workbench/` storage.
 Unchanged completed inputs skip semantic work when input, recipe, context, and output hashes still match.
 
 New source bytes, changed policy, and changed governing context invalidate previous selections.

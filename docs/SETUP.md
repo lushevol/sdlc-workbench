@@ -11,6 +11,8 @@ limitations:
 
 # Set up Workbench on Windows 11 or macOS
 
+[Documentation map](README.md)
+
 Use this guide with the complete standalone source checkout.
 Python and Node must already be installed through your approved company process.
 Setup installs project packages into the checkout's `.venv` and `node_modules` directories.
@@ -383,10 +385,13 @@ The operational workspace is `knowledge/llm-wiki/`.
 Workbench canonical knowledge scanners exclude this reserved derived workspace; the bridge's `verify` command checks its native page schema and source bindings separately.
 Its `wiki/` contains the index, source summaries, concepts, entities, explorations, and linked full-text source entries.
 Both `raw/` entries and `wiki/sources/` entries are relative symlinks to the selected canonical records, preserving a single source-content copy.
-The bridge's `compile` command defaults to `knowledge/candidates`; use `compile --source PATH` for another authorized source corpus.
-With both private provider settings, it calls original OpenKB `compile_short_doc` with native provider setup and locking.
-It preserves source links and registers hashes after successful compilation.
-Otherwise follow its llm-wiki-agent procedure in the current ADE context against the same pages and canonical sources.
+Run the bridge's local `plan` before semantic wiki work. Its default follows the active layout: `knowledge/records/candidates` in consolidated workspaces, or `knowledge/candidates` in unmigrated legacy workspaces.
+Use repeatable `--record PATH` arguments for exact canonical scope and `--source PATH` for another authorized canonical folder.
+With both private provider settings, `compile` calls original OpenKB `compile_short_doc` with native provider setup and locking.
+Native compiler completion keeps output review pending. It does not establish reviewed completion.
+Otherwise follow the llm-wiki-agent procedure in the current ADE context against the same pages and canonical sources.
+Use [wiki finalization](../.agents/skills/finalize-wiki-update/SKILL.md) to record an actual output review and verify the resulting bindings.
+The [incremental workflow](KNOWLEDGE_LIFECYCLE.md#incremental-execution) defines reuse, retry, and receipt boundaries.
 
 Native `add`, `recompile`, `watch`, and `remove` transactions assume owned regular source files and can reject or replace source links.
 The bridge rejects those commands through `run`, together with `init`, `use`, and `delete-kb`; use `compile` for scripted compilation and canonical ingestion/governance for source changes or removal.
@@ -749,6 +754,25 @@ Set each bridge path to the source checkout's absolute location.
 Use the generated workspace's root `.env` for its private settings.
 Do not run source setup or `pip install .` inside a generated workspace.
 
+### Independent system workspaces
+
+Follow [the independent-system ownership rules](WORKSPACE_DESIGN.md#independent-system-workspaces) when adopting several systems.
+Use the recorded installed Workbench version to initialize a new, empty directory for each system:
+
+```sh
+ai-sdlc init /absolute/path/systems/system-a --name "System A"
+ai-sdlc init /absolute/path/systems/system-b --name "System B"
+ai-sdlc --workspace /absolute/path/systems/system-a validate
+ai-sdlc --workspace /absolute/path/systems/system-b validate
+```
+
+Initialization creates a workspace identity and empty catalogs. It does not create Git repositories or clone business repositories.
+Start CLI and MCP sessions with the selected absolute workspace path.
+Keep machine paths in that workspace's ignored `workspace.local.yaml` and service settings in its ignored `.env`.
+Check inherited process variables before switching systems; process configuration can override workspace settings.
+Review generated instructions for the owning system and use separate environments when systems require different Workbench versions.
+Check populated workspaces and their selected tools before claiming a completed multi-system adoption.
+
 ## Remaining gaps and recovery actions
 
 These findings describe setup limits and known source conditions.
@@ -766,7 +790,7 @@ Source paths below refer to the complete source checkout, including when this gu
 | Browser and desktop checks require real applications and permissions. See the platform table above. | Package presence cannot establish automation compatibility. | unknown | Check approved browser paths, matching test drivers, Outlook COM, Teams login, and macOS permissions. |
 | The wheel excludes Node source. See [connector distribution](CONNECTORS.md#use-a-generated-workspace). | Wheel-only installation cannot supply connector tools. | unknown | Keep this source checkout and point connector resources to its absolute bridge path. |
 | Application bridge and upload entrypoints are outside the native interface. See [connector limits](CONNECTORS.md#limits-and-evidence). | Installing their packages does not enable these applications. | unknown | Use supported native tools or scope a separate integration. |
-| Native Windows and macOS execution need target-PC evidence. See `docs/IMPLEMENTATION_REVIEW.md`. | Static checks and mocked platform tests cannot establish target-PC readiness. | unknown | Run setup, doctor, validation, and selected authorized operations on each target platform. |
+| Native Windows and macOS execution need target-PC evidence. See [dependency evidence limits](DEPENDENCIES.md#evidence-boundary). | Static checks and mocked platform tests cannot establish target-PC readiness. | unknown | Run setup, doctor, validation, and selected authorized operations on each target platform. |
 | Release Clinic clients disable TLS checks. See `core/release-clinic/plugins/test/dtp-tda-service/service/vault_client.py:75` and `core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda/integrations/confluence.py:24`. | Certificate validation does not protect those current paths. | unknown | Review company requirements before use and implement verified certificate handling when required. |
 | Web helpers disable certificate checks. See `core/connectors/packages/web/scripts/search-ddg.py:36` and `core/connectors/packages/web/src/tools/webcrawlbrowser.js:95`. | The affected requests do not validate server certificates; crawling also passes `--no-sandbox`. | unknown | Review these settings before enabling affected tools in the company environment. |
 | Vault ignores environment proxies; ADO changes `HTTPS_PROXY`. See `core/release-clinic/plugins/test/dtp-tda-service/service/vault_client.py:75` and `core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda/http_client.py:178`. | A single root proxy setting cannot establish routing for every integration. | unknown | Check direct Vault access and each collector's effective routing in the company network. |

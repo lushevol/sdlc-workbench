@@ -45,6 +45,35 @@ Keep business policies, endpoint bindings, and tenant identities in the adopting
 Keep reusable procedures and demonstrated extraction rules in shared components.
 Add parser or connector support only for a current consumer with observable benefit and verification evidence.
 
+### Independent system workspaces
+
+Use independent workspace roots when systems need separately managed context, ownership, or access.
+One system can contain several repositories, services, and capabilities; frontend and backend separation alone does not require separate workspaces.
+Initialization creates a fresh identity, empty catalogs, and empty knowledge provenance in a separate empty directory.
+It does not clone repositories, create their Git histories, or copy the framework runtime into the generated workspace.
+
+One installed Workbench runtime can operate several explicitly selected roots.
+Record the installed distribution version and source revision or artifact hash in the system's adoption notes; this is an adoption record, not an automatic workspace version field.
+Use separate installation environments when systems require different runtime versions.
+Keep each system's catalogs, canonical knowledge, knowledge provenance, tasks, derived wiki, relationship inputs, local settings, and action state with its owning workspace.
+Action state uses the selected root's `.workbench/` directory.
+Private connection settings, endpoint bindings, and operation grants remain system-specific.
+Process environment variables can override connector `.env` settings; select the intended environment when switching workspaces.
+
+Keep organization standards, shared libraries, test engines, and original documents with their existing owners.
+Register selected shared sources at exact revisions and record their applicability locally instead of copying another system's records or inheriting its authority.
+Preserve independent repository ownership and use separate working checkouts for concurrent mutable work.
+Reading a shared source grants no execution or publication authority.
+The current workspace configuration defines no foundation inheritance or automatic cross-workspace discovery.
+
+Implementation evidence for these boundaries is in the complete source checkout at `core/workspace.py`, `core/store.py`, and `core/schemas/workspace.schema.json`.
+Generated workspaces use the installed runtime and omit those implementation files.
+
+These folders separate context and data ownership. They do not provide operating-system isolation.
+External asset paths, trusted plugins, configured commands, and process credentials retain their existing access.
+Where confidentiality requires isolation, use appropriately scoped operating-system or execution environments and external account permissions.
+Use [the setup procedure](SETUP.md#independent-system-workspaces) for initialization commands and configuration checks.
+
 ## Asset identities and local locations
 
 Repositories, services, capabilities, contracts, sources, and tools answer different questions.
@@ -126,8 +155,8 @@ workbench/
 ├── repos/                            # Visible independent Git checkouts.
 │   └── README.md                    # Placement and registration guide.
 ├── tasks/
-│   ├── README.md                    # Portable intake procedure.
-│   └── <task-id>/                   # Intake and task evidence.
+│   ├── README.md                    # Business intake and lightweight maintenance procedures.
+│   └── <task-id>/                   # Incremental work history and supporting evidence.
 ├── registry/
 │   ├── repositories.yaml
 │   ├── services.yaml
@@ -189,13 +218,13 @@ workbench/
 │   ├── claude-code/
 │   ├── copilot/
 │   └── mcp/
-├── docs/
+├── docs/                           # Stable, integrated current lifecycle and domain documentation.
 ├── tests/
 └── pyproject.toml
 ```
 
 The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
-`tasks/` connects their evidence for business behavior requirements and defects in existing repositories.
+`tasks/` retains incremental work history and connects supporting evidence for business changes and Workbench maintenance.
 
 `core/` contains the single runtime and its responsibility guides.
 Packaging installs this directory as `ai_sdlc_workbench`.
@@ -308,12 +337,39 @@ Initialization creates forwarding `SKILL.md` files when the platform denies dire
 `adapters/` supplies integration boundaries for clients and sources.
 These folders do not establish complete ingestion, governance, or behavior verification engines.
 
+## Documentation ownership
+
+High-priority source: [living-documentation clarification and migration authorization, 13 November 2026](../tasks/workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
+
+`docs/` provides the stable, integrated current view of the adopting system across its lifecycles and domains.
+It includes system responsibilities, requirements and design context, contracts and dependencies, implementation and migration guidance, verification and release procedures, and operation and recovery where supported.
+Workbench setup and tooling guides form part of this view. They are not its entire scope.
+Keep a stable set of documents organized by enduring responsibility; update existing sections as changes become current.
+One task, date, investigation round, or completed experiment does not justify another documentation page.
+Add a page only when a distinct lasting responsibility has a current reader and cannot fit the existing set clearly.
+
+| Location | Authority and update rule |
+| --- | --- |
+| `docs/` | Integrated current explanations and procedures. Summarize supported state, link authoritative sources, and update affected sections during work. |
+| `tasks/<task-id>/` | Incremental request, decisions, investigation, change and verification history, with supporting evidence. Reuse the owning scope rather than splitting work into `docs/` reports. |
+| `knowledge/records/` | Canonical business intent, applicability and reviewed domain decisions under knowledge governance. Documentation links the applicable record and version. |
+| `knowledge/evidence/` | Retained knowledge source revisions, selections, processing receipts, findings and immutable governance events. |
+| Registered repositories and external sources | Owning implementation, tests and original documentation. Keep them in place and link their exact revisions instead of copying them into Workbench docs. |
+
+State current implementation, proposed design, verified behavior, actual deployment, and canonical intent separately.
+Include the applicable version or environment when it materially limits a current explanation.
+Documentation updates cannot establish business approval, publication, deployed behavior, or passing execution.
+Retain detailed runs, captures, contradictory evidence, retired proposals and historical decisions under the owning task or their protected provenance location.
+Keep one canonical payload and link it from current explanations.
+At work entry, identify affected current sections. Reconcile those sections and their source links at [task handoff](../tasks/README.md#keep-current-documentation-synchronized).
+
 ## Task intake and evidence ownership
 
-Task intake applies to business behavior requirements and defects in existing repositories.
-Harness configuration, upgrades, tooling, and Workbench maintenance require no task or business knowledge record.
-Maintain their code, documentation, applicable checks, and Git commits directly.
-For mixed requests, track the business scope in its task. Follow [the scope rules](../tasks/README.md#scope).
+Tasks retain the timeline of incremental business changes and Workbench maintenance.
+Business intake applies to behavior requirements and defects in existing repositories.
+Harness configuration, upgrades, tooling, and other maintenance use a [lightweight maintenance record](../tasks/README.md#lightweight-maintenance-records), without business intake, ACs, readiness, domain records, or publication gates.
+Maintain its code, current documentation, applicable checks, and supporting evidence within the owning task scope.
+For mixed requests, keep one owning task and apply business gates only to its business scope. Follow [the scope rules](../tasks/README.md#scope).
 
 Create `tasks/<task-id>/01-intake.md` before progressing a business requirement or issue.
 Use the applicable existing requirement or defect template.
@@ -335,7 +391,7 @@ Use three primary inputs: canonical intent in `knowledge/records/`, registered r
 Knowledge supplies requirements and ideal target behavior. Source and execution supply evidence of actual behavior.
 Compare them in an independent [task gap document](../tasks/README.md#compare-behavior-for-gap-analysis).
 Keep actual-behavior narratives and conformance results outside domain knowledge.
-Source: [user clarification, 1 November 2026](evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
+Source: [user clarification, 1 November 2026](../tasks/workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Read existing reports as additional evidence.
 Inspect test assertions and retained executions before inferring behavior.
 Use authorized browser, Playwright, service, and live data-flow investigations when they resolve material intake questions.

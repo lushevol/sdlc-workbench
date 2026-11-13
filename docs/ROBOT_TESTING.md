@@ -10,6 +10,8 @@ limitations:
 
 # Robot testing
 
+[Documentation map](README.md)
+
 The Workbench can execute registered Robot Framework suites through `testing.robot`.
 CLI and MCP use the same provider, grants, and retained action records.
 ADE refers to this Workbench integration in the Ratan setup instructions.

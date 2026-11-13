@@ -4,8 +4,9 @@ Use the Workbench profile of [Open Knowledge Format v0.2](https://github.com/Goo
 Upstream OKF requires `type`. This profile adds mandatory domain fields and governance checks.
 
 Domain knowledge tracking serves business behavior and context in existing business repositories.
-Harness configuration, upgrades, tooling, and Workbench maintenance require no business knowledge record or task.
-Maintain harness procedures in project guides and source configuration. Follow [the task scope rules](../tasks/README.md#scope).
+Harness configuration, upgrades, tooling, and Workbench maintenance use a [lightweight maintenance task](../tasks/README.md#lightweight-maintenance-records) without business knowledge records or business gates.
+Maintain current procedures in project guides and source configuration. Keep incremental work and supporting evidence in the owning task.
+The [documentation ownership contract](../docs/WORKSPACE_DESIGN.md#documentation-ownership) keeps integrated current views separate from canonical intent and task history.
 
 Use `knowledge/` as one parent for canonical `records/`, supporting `evidence/`, and the single derived `llm-wiki/`.
 Store canonical business-system domain knowledge and navigation only in `knowledge/records/`.
@@ -19,7 +20,7 @@ The sibling `knowledge/llm-wiki/` holds the single derived wiki, relative canoni
 
 ## Intended behavior and independent gaps
 
-The [1 November user clarification](../docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input) controls this boundary.
+The [1 November user clarification](../tasks/workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input) controls this boundary.
 Keep actual source behavior, deployment state, observations, and conformance assessments in independent gap Markdown under the owning task.
 Use the [gap comparison rules](../tasks/README.md#compare-behavior-for-gap-analysis) and link canonical intent from each finding.
 Keep intended, old actual, new actual, and observed results separate, with exact versions and evidence limits.

@@ -26,7 +26,7 @@ Keep a provisional evidence report when the intake gate remains unresolved.
 Use [analyze-requirement](../analyze-requirement/SKILL.md) for missing intake and material intent clarification.
 Preserve completed intake bytes and use current stage records for later decisions.
 
-Harness maintenance needs no business task or domain knowledge record.
+Harness maintenance uses a [lightweight task record](../../../tasks/README.md#lightweight-maintenance-records), without business intake or domain knowledge records.
 Assess its actual change contract and checks directly under the [scope rules](../../../tasks/README.md#scope).
 For mixed releases, retain the business scope in its owning task.
 

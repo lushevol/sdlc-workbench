@@ -63,12 +63,12 @@ Knowledge describes requirements, intent, and ideal target behavior.
 Retain domain terms, intended rules, workflows, requirements, decisions, contracts, and target business-system architecture.
 Keep actual implementation and intent-to-reality gaps in independent task gap Markdown, with exact source and execution evidence.
 Implementation evidence cannot redefine intent. A fix that restores intent leaves that rule unchanged.
-Source: [user clarification, 1 November 2026](docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
+Source: [user clarification, 1 November 2026](tasks/workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Exclude Workbench maintenance, raw sources, logs, code copies, execution results, reports, fixtures, and intermediate files.
 The sibling `knowledge/llm-wiki/` directory holds one derived wiki, canonical source links, local engine state, and visualization. Use OpenKB when both an LLM URL and token are configured; otherwise use llm-wiki-agent in the current ADE context. Retain the existing pages when the engine changes. Its own verification checks that format; canonical record scanners select only `knowledge/records/` to prevent duplicate authority and graph feedback. Canonical knowledge retains the domain schema and provenance requirements below.
 Store source provenance, governance findings, and immutable audit events under `knowledge/evidence/`.
 Keep business investigation evidence under its task and reusable record resources under `core/knowledge/`.
-Layout source: [migration authorization, 13 November 2026](docs/evidence/knowledge-layout-assessment-20261113/implementation-request.md#exact-user-input).
+Layout source: [migration authorization, 13 November 2026](tasks/workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/implementation-request.md#exact-user-input).
 
 Prepare complete local exports through raw import → filtered source view → canonical knowledge → derived wiki.
 Keep replaceable exports in ignored `knowledge/evidence/incoming/COLLECTION/` and retained originals in `knowledge/evidence/sources/`.
@@ -77,8 +77,8 @@ Preserve raw revisions. Store source-page hashes with every source link and sele
 Keep filtered views generated and reusable through source references, selected ranges, and recorded filter decisions.
 Reassess changed pages, filter rules, and governing context before reusing decisions, including previous exclusions.
 Source preparation does not grant knowledge publication or establish business behavior.
-Source: [pipeline implementation request, 11 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
-Layout source: [cleanup authorization, 12 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-layout-cleanup.md#exact-user-input).
+Source: [pipeline implementation request, 11 November 2026](tasks/workbench-initial-ingestion-source-filter-20261111/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
+Layout source: [cleanup authorization, 12 November 2026](tasks/workbench-initial-ingestion-source-filter-20261111/evidence/initial-ingestion-source-filter-20261111/user-layout-cleanup.md#exact-user-input).
 
 Check source reliability, freshness, consistency, and completeness before treating information as authoritative.
 Identify missing, outdated, conflicting, and ambiguous information.
@@ -115,7 +115,7 @@ Declare the runtime dependencies that shipped commands require.
 Keep credentials outside tracked workspace configuration.
 External tools can have their own declared dependencies and access requirements.
 
-Source: [user request, 3 November 2026](docs/evidence/dependency-setup-maintenance-20261103/user-input.md#exact-user-input).
+Source: [user request, 3 November 2026](tasks/workbench-dependency-setup-maintenance-20261103/evidence/dependency-setup-maintenance-20261103/user-input.md#exact-user-input).
 Every new component must identify its installation prerequisites and extend the shared setup and diagnosis paths when required.
 Update [dependency analysis](docs/DEPENDENCIES.md) whenever a change adds, removes, or changes a runtime or build dependency.
 Update installation scripts, diagnostics, manifests, and offline bundle preparation in the same change.
@@ -172,10 +172,16 @@ The workbench owns engineering context, relationships, evidence, and executable 
 AI agents consume those capabilities to reason, plan, implement, and verify.
 Existing repositories and engineering tools retain their own implementation and execution responsibilities.
 
-Task intake and domain knowledge updates serve business behavior requirements and defects in those repositories.
-Harness configuration, upgrades, tools, and Workbench maintenance require no task or business knowledge record.
-Maintain harness code, guides, applicable checks, and Git commits directly.
-For mixed requests, retain the business scope in its task and handle harness support as maintenance.
+Tasks retain incremental work and evidence for business changes and Workbench maintenance.
+Business intake and domain knowledge updates serve behavior requirements and defects in existing repositories.
+Harness maintenance uses a [lightweight task record](tasks/README.md#lightweight-maintenance-records), without business intake, ACs, readiness, or knowledge publication gates.
+For mixed requests, retain one owning task and apply business gates only to its business scope.
+
+Keep `docs/` as a stable, integrated current view across the adopting system's lifecycles and domains, including Workbench procedures.
+Update existing sections instead of adding a document for each task or date.
+Keep canonical business intent in `knowledge/records/` and link it from current documentation.
+The [documentation ownership contract](docs/WORKSPACE_DESIGN.md#documentation-ownership) distinguishes that current view from task history and evidence.
+Source: [living-documentation clarification and migration authorization, 13 November 2026](tasks/workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
 
 The standalone distribution must run without its parent analysis harness.
 Ship reusable runtime code, configuration, schemas, and procedures within the workbench or through declared dependencies.

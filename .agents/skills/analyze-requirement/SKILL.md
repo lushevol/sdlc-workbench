@@ -12,11 +12,10 @@ Use registry references to inspect existing assets in their current locations.
 ## Select the business scope
 
 Apply this intake procedure to business behavior requirements and issues in existing business repositories.
-Changes limited to harness setup, configuration, tooling, dependencies, or Workbench maintenance require no task or business knowledge record.
+Changes limited to harness setup, configuration, tooling, dependencies, or Workbench maintenance use a [lightweight maintenance record](../../../tasks/README.md#lightweight-maintenance-records), without business intake or domain knowledge records.
 Classify work by business impact using [the scope rules](../../../tasks/README.md#scope).
-Maintain engineering guides and run checks appropriate to those changes directly.
-Do not create task records merely because code or configuration changes.
-For mixed requests, track the business scope in one task and handle supporting harness work without a separate task.
+Maintain current engineering guides and run checks appropriate to those changes. Reconcile [current documentation](../../../tasks/README.md#keep-current-documentation-synchronized) at handoff.
+For mixed requests, keep one owning task and apply business gates only to its business scope.
 Update business knowledge only when the work changes or clarifies domain behavior, rules, or facts.
 
 ## Select the entry route

@@ -1,5 +1,7 @@
 # Test execution planning and preflight
 
+[Documentation map](README.md)
+
 Planning resolves an existing runner command without executing its suite.
 Preflight checks declared setup before a long run.
 Both operations keep setup status separate from business verification.

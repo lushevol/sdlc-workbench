@@ -30,7 +30,7 @@ High-priority source: user request, 30 October 2026. Exact wording:
 
 > make this project designed generic as possible, I want to ship any brown field projects. check if skills and functional components and constructions are generic enough.
 
-The source checkout preserves this input in `docs/evidence/generic-brownfield-portability-20261030/user-input.md`.
+The source checkout preserves this input in `tasks/workbench-generic-brownfield-portability-20261030/evidence/generic-brownfield-portability-20261030/user-input.md`.
 Read [the adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary) before adding project-specific support.
 
 - Keep shared skills independent of a business domain, source host, language, test engine, and agent client.
@@ -44,7 +44,7 @@ Read [the adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-bounda
 ## User input and reference priority
 
 Record the user's input before further investigation or delegation. Preserve its exact wording and source.
-Keep business-task input under the owning task's evidence directory. Keep harness instructions in the applicable project guide.
+Keep task input under the owning task's evidence directory. Keep current harness instructions in the applicable project guide.
 Always save each user input as a high-priority reference with its source and date.
 Link preserved input from the active review document or applicable guide before using it to change meaning.
 
@@ -76,17 +76,27 @@ High-priority source: user message, 26 October 2026. Exact wording:
 
 > You must try your best to investigate the answers to questions first, answer with confidence level and sources , only ask meaningful questions. Only throw questions to me if you are not confident. update in rules.
 
+## Documentation and task ownership
+
+High-priority source: [living-documentation clarification and migration authorization, 13 November 2026](tasks/workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
+
+Keep `docs/` as the stable, integrated current view across the adopting system's lifecycles and domains, including Workbench operation.
+Keep `tasks/` as the timeline of incremental work, decisions, investigations, and supporting evidence for business changes and harness maintenance.
+Update existing document sections as supported changes become current. Do not add a document for each task, date, or investigation round.
+Keep canonical business intent in `knowledge/records/`; current documentation links it without creating competing authority.
+Follow [documentation ownership](docs/WORKSPACE_DESIGN.md#documentation-ownership) and reconcile affected current documents at [task handoff](tasks/README.md#keep-current-documentation-synchronized).
+
 ## Requirement and issue intake
 
-Use task intake for business behavior requirements and defects in existing business repositories.
-Harness maintenance requires no task or business knowledge record.
-This includes Workbench setup, configuration upgrades, dependencies, and tooling.
-Maintain their code, guides, validation, and Git commits directly.
+Use business intake for behavior requirements and defects in existing business repositories.
+For Workbench setup, configuration upgrades, dependencies, tooling, and other harness maintenance, create or reuse a [lightweight maintenance record](tasks/README.md#lightweight-maintenance-records).
+Maintenance needs no business intake, ACs, readiness decision, domain knowledge record, or publication gate.
+Maintain its code, current guides, applicable checks, and task evidence within the authorized scope.
 
 Classify work by its effect on business behavior. A configuration change that alters session policy follows business intake.
 For mixed requests, track the business scope in its task and handle harness support as maintenance.
 
-At Workbench entry, create or reuse `tasks/<task-id>/` before new analysis or implementation.
+For business work, create or reuse `tasks/<task-id>/` before new analysis or implementation.
 Read [the task guide](tasks/README.md) and create `01-intake.md` from the applicable requirement or defect template.
 Select the [lifecycle entry route](tasks/README.md#lifecycle-entry-routes) before further work.
 Accept supplied implementation as evidence. Record its actual revisions and dates without reconstructing prior intent or approval.
@@ -111,12 +121,12 @@ Apply the [critical evidence policy](tasks/README.md#critical-evidence-and-reusa
 Retain only evidence needed for decisions, reproduction, required assertions, recovery, or protected provenance.
 Keep each payload once. Reuse exact paths and hashes with separate case and run identities.
 Keep optional exports and routine diagnostics in ignored runtime storage. Preserve required evidence before runtime cleanup.
-High-priority source: [critical evidence request, 7 November 2026](docs/evidence/evidence-retention-review-20261107/user-followup.md#exact-user-input).
+High-priority source: [critical evidence request, 7 November 2026](tasks/workbench-evidence-retention-review-20261107/evidence/evidence-retention-review-20261107/user-followup.md#exact-user-input).
 Apply [evidence growth controls](tasks/README.md#control-evidence-growth-before-execution) before each investigation run.
 Retain one canonical capture payload. Reference shared run bindings from compact case records.
 Update living reports during active work. Create frozen successors only when a retained decision requires a new baseline.
 Keep required case durability, consequential failures, registered snapshots, and immutable audit history.
-High-priority source: [evidence growth request, 5 November 2026](docs/evidence/task-evidence-growth-20261105/user-input.md#exact-user-input).
+High-priority source: [evidence growth request, 5 November 2026](tasks/workbench-task-evidence-growth-20261105/evidence/task-evidence-growth-20261105/user-input.md#exact-user-input).
 Keep claim-bearing execution, source, test, and provenance evidence as supporting material.
 Remove redundant reports, repeated outputs, empty artifacts, and unrelated harness bulk when cleanup is authorized.
 Retain meaningful failed and contradictory evidence. Preserve registered snapshots and immutable audit history.
@@ -148,7 +158,7 @@ Generated workspaces receive `tasks/README.md` without project task contents.
 ## Evidence and knowledge
 
 Use one `knowledge/` parent with `records/` for canonical intent, `evidence/` for its supporting sources and governance, and `llm-wiki/` for derived navigation.
-High-priority source: [layout migration authorization, 13 November 2026](docs/evidence/knowledge-layout-assessment-20261113/implementation-request.md#exact-user-input).
+High-priority source: [layout migration authorization, 13 November 2026](tasks/workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/implementation-request.md#exact-user-input).
 Keep `knowledge/records/` limited to business-domain Markdown records and navigation.
 Knowledge describes requirements, intent, and ideal target system behavior.
 Retain business terms, intended rules, workflows, requirements, decisions, contracts, and target business-system architecture.
@@ -157,7 +167,7 @@ Record actual implementation, deployment observations, and intent-to-reality dif
 Link each gap to canonical intent, exact old/new source, assertions, retained observations, consequence, owner, and next action.
 A defect fix changes conformance evidence. It does not change the intended rule.
 Update knowledge meaning only when a sourced requirement, decision, or clarification changes that intent.
-High-priority source: [user clarification, 1 November 2026](docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
+High-priority source: [user clarification, 1 November 2026](tasks/workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
 Keep task investigations under `tasks/<task-id>/evidence/`.
 
@@ -203,20 +213,20 @@ Follow the [coverage output rules](#coverage-output) for requirement, defect, im
 
 ## Reusable knowledge lifecycle skills
 
-High-priority source: [skill decomposition and implementation request, 12 November 2026](docs/evidence/knowledge-skill-lifecycle-20261112/user-input.md#exact-user-input).
+High-priority source: [skill decomposition and implementation request, 12 November 2026](tasks/workbench-knowledge-skill-lifecycle-20261112/evidence/knowledge-skill-lifecycle-20261112/user-input.md#exact-user-input).
 
 Follow [the knowledge lifecycle and skill map](docs/KNOWLEDGE_LIFECYCLE.md).
 Use [manage-knowledge-lifecycle](.agents/skills/manage-knowledge-lifecycle/SKILL.md) for lifecycle status, next-action guidance, and workflow resumption.
 At knowledge workflow entry and handoff, identify the current evidence-backed stage and concrete next action through this coordinator.
 Reuse completed operations, continue authorized independent work, and keep required owner decisions separate.
-Source: [lifecycle manager request, 12 November 2026](docs/evidence/knowledge-skill-lifecycle-20261112/lifecycle-manager-request.md#exact-user-input).
+Source: [lifecycle manager request, 12 November 2026](tasks/workbench-knowledge-skill-lifecycle-20261112/evidence/knowledge-skill-lifecycle-20261112/lifecycle-manager-request.md#exact-user-input).
 Keep source preparation, canonical governance, and derived wiki freshness as separate lifecycles.
 Use major-step parents as orchestrators. Reuse their operation skills for scoped work and check each operation's output.
 Keep hashing, validators, schemas, locks, and engine lifecycle mechanics in existing tools.
 Do not add a parallel wiki state machine or infer knowledge approval from successful compilation.
 Keep wiki provenance finalization, verification, and required recovery coordinated.
 
-High-priority source: [incremental update request and authorization, 12 November 2026](docs/evidence/knowledge-skill-lifecycle-20261112/incremental-update-proposal.md#exact-user-input).
+High-priority source: [incremental update request and authorization, 12 November 2026](tasks/workbench-knowledge-skill-lifecycle-20261112/evidence/knowledge-skill-lifecycle-20261112/incremental-update-proposal.md#exact-user-input).
 Run local file-level change planning before semantic knowledge work.
 Use `sources plan` after refresh and selection; use `sources view --plan` for queued kept pages.
 Load only queued sources, prior affected records, and necessary governing context into semantic review.
@@ -230,8 +240,8 @@ Preserve original full-file hashes. Section-level optimization remains outside t
 
 ## Source preparation before knowledge ingestion
 
-High-priority source: [implementation request, 11 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
-Layout correction: [cleanup authorization, 12 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-layout-cleanup.md#exact-user-input).
+High-priority source: [implementation request, 11 November 2026](tasks/workbench-initial-ingestion-source-filter-20261111/evidence/initial-ingestion-source-filter-20261111/user-implementation.md#exact-user-input).
+Layout correction: [cleanup authorization, 12 November 2026](tasks/workbench-initial-ingestion-source-filter-20261111/evidence/initial-ingestion-source-filter-20261111/user-layout-cleanup.md#exact-user-input).
 
 Use these processing stages: complete raw export → filtered source view → canonical knowledge → derived wiki.
 Accept complete exports in ignored `knowledge/evidence/incoming/COLLECTION/`. Do not create a separate top-level raw directory.
@@ -340,7 +350,7 @@ Follow an owning business repository's instructions when changes extend into tha
 
 ### Coding tasks with Ponytail
 
-High-priority source: [user request, 6 November 2026](docs/evidence/ponytail-integration-20261106/user-input.md#exact-user-input).
+High-priority source: [user request, 6 November 2026](tasks/workbench-ponytail-integration-20261106/evidence/ponytail-integration-20261106/user-input.md#exact-user-input).
 
 Use the canonical [Ponytail skill](.agents/skills/ponytail/SKILL.md) for coding tasks by default.
 Read it before writing, fixing, refactoring, reviewing code, or choosing dependencies.
@@ -352,8 +362,8 @@ A smaller change must still implement the complete authorized behavior.
 
 ### Shared native hooks
 
-Source: [three-client requirement](docs/evidence/workflow-hooks-assessment-20261112/cross-client-requirement.md#exact-user-input) and [implementation authorization](docs/evidence/workflow-hooks-assessment-20261112/implementation-request.md#exact-user-input).
-Latest priority: [portable hook requirement](docs/evidence/workflow-hooks-assessment-20261112/portability-request.md#exact-user-input).
+Source: [three-client requirement](tasks/workbench-workflow-hooks-assessment-20261112/evidence/workflow-hooks-assessment-20261112/cross-client-requirement.md#exact-user-input) and [implementation authorization](tasks/workbench-workflow-hooks-assessment-20261112/evidence/workflow-hooks-assessment-20261112/implementation-request.md#exact-user-input).
+Latest priority: [portable hook requirement](tasks/workbench-workflow-hooks-assessment-20261112/evidence/workflow-hooks-assessment-20261112/portability-request.md#exact-user-input).
 Follow [the hook guide](docs/HOOKS.md) for Codex, Copilot, and Claude Code adapters.
 Keep hook behavior in the installed Python runtime and native payload/configuration translation in thin adapters.
 Use portable native commands that resolve installed `ai-sdlc` through the agent's `PATH` and discover the workspace from the native working directory.
@@ -400,7 +410,7 @@ Bind logs to the tested build, environment, configuration, cases, time window, a
 Report acquisition, binding, analysis, behavior outcomes, and unexplained signals separately.
 Follow the [runtime log evidence procedure](.agents/skills/release-confidence/references/runtime-log-evidence.md).
 Missing required remote evidence limits UAT conclusions. It does not establish an application defect.
-High-priority source: [user instruction, 31 October 2026](docs/evidence/runtime-log-verification-20261031/user-followup.md#exact-user-input).
+High-priority source: [user instruction, 31 October 2026](tasks/workbench-runtime-log-verification-20261031/evidence/runtime-log-verification-20261031/user-followup.md#exact-user-input).
 
 Apply [principle 10](PRINCIPLE.md#10-delivery-requires-passing-unit-tests) before recommending delivery or release.
 Every applicable candidate unit test must pass. Require zero failures and complete execution of the declared suite.
@@ -416,7 +426,7 @@ High-priority source: user message, 27 October 2026. Exact wording:
 
 ## Dependency maintenance
 
-High-priority source: [user request, 3 November 2026](docs/evidence/dependency-setup-maintenance-20261103/user-input.md#exact-user-input).
+High-priority source: [user request, 3 November 2026](tasks/workbench-dependency-setup-maintenance-20261103/evidence/dependency-setup-maintenance-20261103/user-input.md#exact-user-input).
 
 Apply [principle 7](PRINCIPLE.md#7-local-first-minimal-dependencies) to every dependency change.
 Apply this rule whenever a new component introduces a package, runtime, tool, service, or platform prerequisite.
@@ -432,7 +442,7 @@ Check both connected installation and installation from a prepared bundle when t
 State any target platform or external access that remains untested.
 Do not introduce an undeclared startup download or an automatic external update check.
 
-High-priority source: [download timeout request, 3 November 2026](docs/evidence/dependency-download-timeouts-20261103/user-input.md#exact-user-input).
+High-priority source: [download timeout request, 3 November 2026](tasks/workbench-dependency-download-timeouts-20261103/evidence/dependency-download-timeouts-20261103/user-input.md#exact-user-input).
 Every new scripted dependency acquisition path must define a bounded command deadline and bounded request retries.
 Use the shared configurable download deadline for setup and offline preparation where applicable.
 When acquisition fails or times out, warn users and identify the affected component and concrete manual recovery steps.

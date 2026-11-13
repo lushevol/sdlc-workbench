@@ -8,8 +8,8 @@ Apply existing authorization before running installations, applications, browser
 
 ## Keep one current view
 
-Reuse the existing assessment or active task summary.
-For maintenance without a task, use one setup summary in the selected output directory.
+Reuse the existing assessment or active task record.
+For maintenance, use the owning [lightweight record](../../../../tasks/README.md#lightweight-maintenance-records) and keep setup evidence with that task.
 Link detailed logs and earlier reports instead of copying their complete outputs.
 Capture the selected workspace, source checkout, test repository, revisions, checkout changes, platform, and interpreter.
 Record the requested environment, browser, suite, configuration profile, and available execution authorization.

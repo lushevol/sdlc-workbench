@@ -1,5 +1,7 @@
 # Release Clinic
 
+[Documentation map](README.md)
+
 Release Clinic supplies TDA data collection, HTML release reports, audit extraction, portfolio summaries, and an optional service.
 The Workbench installs these tools under `ai_sdlc_workbench`.
 Generated workspaces receive the shared skill and this guide.

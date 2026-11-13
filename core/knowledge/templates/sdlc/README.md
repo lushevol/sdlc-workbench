@@ -8,8 +8,9 @@ Each guide contains instructions, a copyable template, a sample, and completion 
 ## AI authoring contract
 
 Business intake applies to business behavior requirements and defects in existing repositories.
-Harness configuration, upgrades, tooling, and template maintenance require no task or business knowledge record.
-Use ordinary project documentation and applicable checks for harness work. Follow [the scope rules](../../../../tasks/README.md#scope).
+Harness configuration, upgrades, tooling, and template maintenance use a [lightweight maintenance record](../../../../tasks/README.md#lightweight-maintenance-records).
+Use ordinary Markdown, current project guides, and applicable checks; business intake, ACs, readiness, and knowledge publication gates do not apply.
+Follow [the scope rules](../../../../tasks/README.md#scope) for mixed work and [documentation reconciliation](../../../../tasks/README.md#keep-current-documentation-synchronized) at handoff.
 
 1. Create `tasks/<task-id>/` for a new business issue or requirement. Reuse an existing task when applicable.
 2. Select the intake template before discovery. For other artifacts, select the relevant guide. Read its instructions and source revisions.

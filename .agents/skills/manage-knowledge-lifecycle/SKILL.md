@@ -14,7 +14,7 @@ This is agent guidance, not a background monitor, workflow runner, or additional
 Infer the collection, records, task, and goal from the request and existing evidence before asking.
 Keep the user's latest answers and existing authorization when resuming; preserve exact new input before investigation or delegation.
 Use one owning task and living question document for business work under [the task guide](../../../tasks/README.md).
-Harness maintenance needs no business task or domain record.
+Harness maintenance uses a [lightweight task record](../../../tasks/README.md#lightweight-maintenance-records), without business intake or domain records.
 
 For “status”, “what next”, or review-only requests, inspect evidence and return guidance without changing sources, selections, records, audit, receipts, or wiki content.
 Local checks may generate ignored planning output. They do not authorize semantic updates.

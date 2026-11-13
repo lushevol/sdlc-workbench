@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "kind": "REPRODUCIBLE_DERIVED_LEDGER_RECEIPT",
+  "purpose": "Remove repeated derived ledger payload while preserving original inputs, executed importer assertions, distinct status meanings, and exact output reproduction. This receipt is storage migration evidence; it starts no business runner.",
+  "original_output": {
+    "path": "docs/evidence/conversation-improvements-implementation-20261030/stage-3/session-ledger.json",
+    "sha256": "f120864656d59851db25b3604346f681ecdd53dddffc74a6d9597b471723d4b2",
+    "size_bytes": 2952651
+  },
+  "manifest": {
+    "path": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-improvements-implementation-20261030/stage-3/session-ledger-manifest.json",
+    "sha256": "72c90c0d1f9783a22b9c40d258bb0d64e04c54c3bb59bd062adb7bb0eaf6c78c",
+    "size_bytes": 959,
+    "original_path": "docs/evidence/conversation-improvements-implementation-20261030/stage-3/session-ledger-manifest.json"
+  },
+  "source_inputs": [
+    {
+      "id": "session-browser",
+      "format": "BROWSER_INVENTORY",
+      "source": {
+        "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/aggregate/final-inventory.json",
+        "sha256": "14ce1c6ae4002056c195f99751f84576d3d1a3ce9ecb66263bcf36789b9b2d4d",
+        "size_bytes": 1531314
+      }
+    },
+    {
+      "id": "session-unit",
+      "format": "JEST_JSON",
+      "source": {
+        "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/full-unit-results.json",
+        "sha256": "dae6e0b3d7db5ec0f3af6b6b84fdc43f0b437207d2b4a7bb5790652c936e4b2a",
+        "size_bytes": 194815
+      },
+      "binding": {
+        "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/full-unit-execution.json",
+        "sha256": "930693b78047b1f7efaf020d0bf9fa8a191a0c90b7993646a325b360934e87ef",
+        "size_bytes": 1251
+      }
+    }
+  ],
+  "generator_sources": [
+    {
+      "path": "core/review_coverage.py",
+      "sha256": "4e070ba9f5660f97d2205863555cc540268336ca1c0994367812534c0fed5adc",
+      "size_bytes": 23938
+    },
+    {
+      "path": "core/assurance.py",
+      "sha256": "a01ea1a8546346b794f07f9771281dcb424d4bf29264cbec2b34ed76eec0c5f5",
+      "size_bytes": 25399
+    },
+    {
+      "path": "core/models.py",
+      "sha256": "f05b5022896dc26cb67821480cd7c37fd5e3e97c469569c1bff451c2cc08c4b6",
+      "size_bytes": 7024
+    }
+  ],
+  "source_checkout_revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+  "environment": {
+    "python": "3.14.5",
+    "jsonschema": "4.25.1"
+  },
+  "assertion_receipt": {
+    "path": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-improvements-implementation-20261030/stage-3/session-ledger-case.json",
+    "sha256": "8355a3ddc553718eaa3d6e4a03476298909ac26eb446b22f99b107af9f21dade",
+    "size_bytes": 1236,
+    "original_path": "docs/evidence/conversation-improvements-implementation-20261030/stage-3/session-ledger-case.json"
+  },
+  "original_report_counts": {
+    "imported_records": 938,
+    "unique_attempts": 938,
+    "duplicate_import_records": 0,
+    "unique_case_instances": 938,
+    "distinct_case_names": 812,
+    "outcomes": {
+      "FAILED": 15,
+      "PASSED": 653,
+      "PARTIAL": 199,
+      "BLOCKED": 71
+    },
+    "characterization_passes": 25,
+    "interrupted_records": 0,
+    "retried_case_records": 0,
+    "freshness": {
+      "CURRENT": 938
+    }
+  },
+  "separate_import_statuses": [
+    {
+      "id": "session-browser",
+      "format": "BROWSER_INVENTORY",
+      "entry_count": 467,
+      "normalized_outcomes": {
+        "BLOCKED": 71,
+        "FAILED": 15,
+        "PARTIAL": 199,
+        "PASSED": 182
+      },
+      "original_statuses": {
+        "BLOCKED": 258,
+        "FAILED": 15,
+        "PARTIALLY_EXECUTED": 12,
+        "PASSED": 182
+      },
+      "runner_original_statuses": {
+        "401": 11,
+        "BLOCKED": 258,
+        "FAILED": 18,
+        "None": 2,
+        "PARTIALLY_EXECUTED": 8,
+        "PASSED": 170
+      }
+    },
+    {
+      "id": "session-unit",
+      "format": "JEST_JSON",
+      "entry_count": 471,
+      "normalized_outcomes": {
+        "PASSED": 471
+      },
+      "original_statuses": {
+        "passed": 471
+      }
+    }
+  ],
+  "required_status_distinctions": {
+    "verification": "NOT_VERIFIED",
+    "browser_characterization_passes": 25,
+    "browser_source_definition_mismatches": 26,
+    "unit_suites": 123,
+    "business_vs_unit": "467 browser instances and 471 unit results retain separate namespaces; unit passes do not establish business coverage.",
+    "security_case": [
+      {
+        "case_id": "RN-S002",
+        "entry_id": "session-browser:348",
+        "runner_original_status": null,
+        "outcome": "FAILED",
+        "verification": "NOT_VERIFIED"
+      }
+    ]
+  },
+  "reproduction_proof": {
+    "exact_bytes_equal": true,
+    "sha256": "f120864656d59851db25b3604346f681ecdd53dddffc74a6d9597b471723d4b2",
+    "valid": true,
+    "freshness": "CURRENT",
+    "method": "build_case_ledger with retained manifest and current source modules; JSON indent=2 plus final newline."
+  },
+  "restore": {
+    "helper": "restore-ledger-output.py",
+    "helper_sha256": "d3576202b886ad4918ef64d0de2a128ffb35de48e85d2097d8a79d2fb72a3216",
+    "command": "python3 restore-ledger-output.py WORKSPACE_ROOT ledger-reproduction-receipt.json MANIFEST RECOVERED_OUTPUT",
+    "limits": "Use a Python environment with jsonschema and the SHA-bound source checkout. The helper verifies complete output SHA, nested evidence freshness, and refuses to overwrite existing output. Reproduction proves importer/storage equivalence only."
+  }
+}
