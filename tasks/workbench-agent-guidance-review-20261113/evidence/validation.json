@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "status": "COMPLETE_WITH_LIMITS",
+  "checks": {
+    "affected_tests": {
+      "command": "PYTHONPATH=tests .venv/bin/python -m unittest test_workspace_layout test_workspace_v2 -q",
+      "tests": 28,
+      "exit_code": 0,
+      "output": "----------------------------------------------------------------------\nRan 28 tests in 4.742s\n\nOK\n"
+    },
+    "workspace_validation": {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "VALID",
+        "valid": true,
+        "documents": 15,
+        "findings": [],
+        "catalogs": {
+          "repositories": 9,
+          "services": 2,
+          "capabilities": 5,
+          "contracts": 16,
+          "sources": 12,
+          "tools": 15
+        }
+      }
+    },
+    "installed_distribution": {
+      "wheel_sha256": "9e2d473b35f367ea774261e4f1f3e251dd2575c085ea390b83089e84f459e244",
+      "built_without_network_or_dependency_changes": true,
+      "isolated_installed_import": true,
+      "current_root_and_task_guides_exact": true,
+      "generated_tasks_contain_only_guide": true,
+      "runtime_source_and_tests_not_copied": true,
+      "validation": {
+        "schema_version": 1,
+        "status": "VALID",
+        "valid": true,
+        "documents": 0,
+        "findings": [],
+        "catalogs": {
+          "repositories": 0,
+          "services": 0,
+          "capabilities": 0,
+          "contracts": 0,
+          "sources": 0,
+          "tools": 0
+        }
+      },
+      "links": {
+        "checked": 91,
+        "unavailable_source_history": [
+          {
+            "source": "AGENTS.md",
+            "target": "tasks/workbench-generic-brownfield-portability-20261030/evidence/generic-brownfield-portability-20261030/user-input.md"
+          },
+          {
+            "source": "AGENTS.md",
+            "target": "tasks/workbench-conversation-improvements-20261030/evidence/conversation-retrospective-20261030/workflow-chat-evidence.md#u1-investigate-before-asking"
+          },
+          {
+            "source": "AGENTS.md",
+            "target": "tasks/workbench-coverage-output-20261025/evidence/coverage-output-20261025/user-request.txt"
+          },
+          {
+            "source": "AGENTS.md",
+            "target": "tasks/ces-tile-rollout-review-20261109/evidence/user-followup-20261110.md#exact-user-input"
+          },
+          {
+            "source": "AGENTS.md",
+            "target": "tasks/portal-background-session-20261019/evidence/user-input-20261029-impact-priority-layout.txt"
+          },
+          {
+            "source": "AGENTS.md",
+            "target": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input"
+          },
+          {
+            "source": "tasks/README.md",
+            "target": "workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification"
+          },
+          {
+            "source": "tasks/README.md",
+            "target": "workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input"
+          }
+        ],
+        "failures": [],
+        "limits": [
+          "Inline Markdown links only; external URLs, code blocks and non-Markdown fragments are excluded."
+        ]
+      },
+      "limits": [
+        "Uses current installed prerequisite environment with the built distribution imported from an isolated target.",
+        "Historical task inputs are deliberately source-checkout-only and are identified as such in root guidance. No business repositories or records were copied."
+      ]
+    },
+    "source_links": {
+      "checked": 91,
+      "unavailable_source_history": [],
+      "failures": [],
+      "limits": [
+        "Inline Markdown links only; external URLs, code blocks and non-Markdown fragments are excluded."
+      ]
+    },
+    "semantic_review": {
+      "result": "No material requirement loss found in an independent section-by-section comparison against baseline and maintained owners.",
+      "unique_root_policies_preserved": [
+        "migration compatibility and no invented identity/role mappings",
+        "impact-based priority without changing failure status",
+        "Ponytail default full mode",
+        "automatic scoped stage commits",
+        "ASD prose constraints and truthful writing review",
+        "bounded acquisition and manual recovery without startup downloads"
+      ],
+      "limits": [
+        "Semantic review does not establish future agent adherence."
+      ]
+    },
+    "size": {
+      "before_bytes": 42969,
+      "after_bytes": 19234,
+      "before_words": 5167,
+      "after_words": 2111,
+      "before_lines": 539,
+      "after_lines": 221,
+      "byte_reduction_percent": 55.2,
+      "heading_contracts_preserved": 25
+    },
+    "preservation": {
+      "protected_source_audit_canonical_files": 245,
+      "all_match_baseline": true,
+      "connected_guides_and_runtime_files_unchanged": [
+        "knowledge/llm-wiki/AGENTS.md",
+        "knowledge/llm-wiki/wiki/AGENTS.md",
+        ".agents/skills/llm-wiki/upstream/AGENTS.md",
+        ".agents/skills/llm-wiki/upstream/CLAUDE.md",
+        "scaffold.json",
+        "core/workspace.py",
+        "core/ingestion/README.md",
+        "adapters/claude-code/README.md",
+        "adapters/copilot/README.md",
+        "adapters/codex/README.md"
+      ],
+      "skills_and_aliases_without_changes": true,
+      "original_quotation_sources": 9,
+      "prior_authority_links": 33,
+      "current_authority_bindings_match": true,
+      "changed_guide_hashes_match": true,
+      "deleted_files": 0
+    },
+    "maintenance_links": {
+      "checked": 5,
+      "failures": []
+    },
+    "diff_whitespace": {
+      "command": "git diff --check -- AGENTS.md tasks/README.md tasks/workbench-agent-guidance-review-20261113",
+      "exit_code": 0
+    },
+    "staged_whitespace": {
+      "command": "git diff --cached --check",
+      "exit_code": 0
+    }
+  },
+  "limits": [
+    "No live Codex, Copilot, Claude Code or model workflow was executed; future instruction adherence is unmeasured.",
+    "Documentation/distribution checks cover selected workspace tests and an isolated installed target; no full runtime suite, native Windows or live business test was required or performed.",
+    "Eight source-history links are intentionally absent from generated workspaces; the root guide labels their source-checkout boundary.",
+    "Byte and word reduction measure entry-guide text only, not model token usage or end-to-end workflow time."
+  ],
+  "evidence_bindings": [
+    {
+      "path": "authority-bindings.json",
+      "sha256": "615b62d0ed6fc62f0eec78b04de87039d18262d9d39f983fdbf653a6c532a00a"
+    },
+    {
+      "path": "changes.json",
+      "sha256": "1fc62f4ec94b4c556014aacea3ae5ea14a4f510935bf44f80809b837a7590774"
+    }
+  ]
+}

@@ -464,8 +464,8 @@ Complete the intake template's knowledge-update log for each material knowledge 
 Record `not applicable` and its reason when an answer changes no domain knowledge.
 Incident observations and reported symptoms remain task evidence. They do not establish a general business rule.
 Keep logs, execution materials, and investigation reports under the task.
-Keep `knowledge/` limited to reusable business-domain Markdown records and navigation.
-Do not copy task progress, code snapshots, fixtures, or Workbench maintenance into the knowledge base.
+Keep `knowledge/records/` limited to reusable business-domain Markdown records and navigation.
+Do not copy task progress, code snapshots, fixtures, or Workbench maintenance into canonical records.
 Link stable evidence references from domain records when needed.
 
 ## Investigate the current system
@@ -495,7 +495,7 @@ Source inspection and authorized investigations remain part of intake while the 
 
 ## Compare behavior for gap analysis
 
-Keep requirements and ideal target behavior in `knowledge/`.
+Keep requirements and ideal target behavior in `knowledge/records/`.
 Record implementation, observed behavior, and intent-to-reality differences in an independent task gap Markdown document.
 Use a stable purpose name such as `09-intent-reality-gaps.md` for evidence comparison.
 Select the existing authoring form that matches the findings. No new artifact kind is required.
@@ -538,7 +538,7 @@ Retain failures and partial results when they support a claim, unresolved questi
 Preserve contradictory evidence. Add new meaningful runs instead of overwriting retained runs.
 Explain the relationship between source evidence and each conclusion.
 
-Keep authoritative domain snapshots under `evidence/knowledge/sources/` and immutable events under `evidence/knowledge/audit/`.
+Keep authoritative domain snapshots under `knowledge/evidence/sources/` and immutable events under `knowledge/evidence/audit/`.
 Reference them from the task index with their revision and hash. Never rewrite their bytes or history.
 An explicit user request can relocate task evidence, including registered execution snapshots, into its task.
 For each move, record the original locator, destination locator, revision, and matching SHA-256 hashes in a relocation manifest.
