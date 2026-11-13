@@ -15,7 +15,7 @@ from .workspace import initialize_workspace
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ai-sdlc", description=__doc__)
-    parser.add_argument("--workspace", default=str(Path.cwd()), help="Workspace directory")
+    parser.add_argument("--workspace", help="Workspace directory; defaults to the current directory")
     commands = parser.add_subparsers(dest="command", required=True)
     initialize = commands.add_parser("init", help="Create an agent-integrated workspace")
     initialize.add_argument("path", nargs="?")
@@ -30,7 +30,7 @@ def _parser() -> argparse.ArgumentParser:
         operation = hook_commands.add_parser(name)
         operation.add_argument("--client", action="append", choices=("codex", "copilot", "claude"))
         if name == "install":
-            operation.add_argument("--python", help="Installed Python executable; defaults to this interpreter")
+            operation.add_argument("--python", help="Compatibility check for a local interpreter; hooks use ai-sdlc on PATH")
     hook_commands.add_parser("status", help="Inspect installed configuration without launching clients")
     for name in ("bind", "clear", "run"):
         operation = hook_commands.add_parser(name)
@@ -165,10 +165,12 @@ def _print_json(value: object) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = _parser()
     arguments = parser.parse_args(argv)
+    explicit_workspace = arguments.workspace
+    arguments.workspace = arguments.workspace or str(Path.cwd())
     try:
         if arguments.command == "hooks":
             from .hook_install import hook_status, install_hooks, remove_hooks
-            from .hooks import MAX_INPUT, advisory, bind_scope, clear_scope, run_hook
+            from .hooks import MAX_INPUT, advisory, bind_scope, clear_scope, discover_workspace, run_hook
             root = Path(arguments.workspace).expanduser().resolve()
             if arguments.hook_command == "run":
                 try:
@@ -176,7 +178,9 @@ def main(argv: list[str] | None = None) -> int:
                     raw = sys.stdin.buffer.read(MAX_INPUT + 1)
                     if len(raw) > MAX_INPUT:
                         raise WorkbenchError("The native hook payload exceeds its one-megabyte limit.")
-                    output, diagnostic, code = run_hook(root, arguments.client, arguments.event, _json(raw))
+                    payload = _json(raw)
+                    selected_root = root if explicit_workspace is not None else discover_workspace(payload)
+                    output, diagnostic, code = run_hook(selected_root, arguments.client, arguments.event, payload)
                 except WorkbenchError as error:
                     output, diagnostic, code = advisory(arguments.client, str(error))
                 except (OSError, ValueError, UnicodeError, RecursionError):

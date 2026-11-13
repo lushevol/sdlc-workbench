@@ -7,10 +7,9 @@ from contextlib import contextmanager
 import copy
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import shlex
 import stat
-import sys
 import tempfile
 
 from .assurance import _json, _read, local_path
@@ -35,7 +34,23 @@ def _clients(clients):
     return list(dict.fromkeys(selected))
 
 
-def _registrations(client, root, executable):
+def _registrations(client):
+    result = {}
+    for event, native in (("start", "sessionStart" if client == "copilot" else "SessionStart"),
+                          ("stop", "agentStop" if client == "copilot" else "Stop")):
+        arguments = ["hooks", "run", "--client", client, "--event", event]
+        if client == "copilot":
+            handler = {"type": "command", "exec": "ai-sdlc", "args": arguments, "timeoutSec": 15}
+        elif client == "claude":
+            handler = {"type": "command", "command": "ai-sdlc", "args": arguments, "timeout": 15}
+        else:
+            handler = {"type": "command", "command": "ai-sdlc " + " ".join(arguments), "timeout": 15}
+        result[native] = handler if client == "copilot" else {"hooks": [handler]}
+    return result
+
+
+def _legacy_registrations(client, root, executable):
+    """Reconstruct only the exact v1 entries required for safe removal and migration."""
     result = {}
     for event, native in (("start", "sessionStart" if client == "copilot" else "SessionStart"),
                           ("stop", "agentStop" if client == "copilot" else "Stop")):
@@ -70,15 +85,21 @@ def _document(root, relative):
 def _state(root):
     state, raw = _document(root, _STATE)
     if raw is None:
-        return {"schema_version": 1, "clients": {}}, None
-    if (type(state.get("schema_version")) is not int or state["schema_version"] != 1 or not isinstance(state.get("clients"), dict)
+        return {"schema_version": 2, "clients": {}}, None
+    if (type(state.get("schema_version")) is not int or state["schema_version"] not in {1, 2} or not isinstance(state.get("clients"), dict)
             or set(state["clients"]) - CONFIGS.keys()):
         raise WorkbenchError("The Workbench hook installation record is invalid.")
     for client, record in state["clients"].items():
-        if (not isinstance(record, dict) or set(record) != {"python", "workspace", "created", "had_hooks"}
-                or not isinstance(record["python"], str) or not Path(record["python"]).is_absolute()
-                or not isinstance(record["workspace"], str) or not Path(record["workspace"]).is_absolute()
-                or type(record["created"]) is not bool or type(record["had_hooks"]) is not bool):
+        fields = {"created", "had_hooks", "python", "workspace"} if state["schema_version"] == 1 else {
+            "created", "had_hooks", "registrations"}
+        if (not isinstance(record, dict) or set(record) != fields
+                or type(record.get("created")) is not bool or type(record.get("had_hooks")) is not bool):
+            raise WorkbenchError("The Workbench hook installation record is invalid.")
+        if state["schema_version"] == 1:
+            if any(not isinstance(record[field], str) or not (Path(record[field]).is_absolute()
+                   or PureWindowsPath(record[field]).is_absolute()) for field in ("python", "workspace")):
+                raise WorkbenchError("The Workbench hook installation record is invalid.")
+        elif record["registrations"] != _registrations(client):
             raise WorkbenchError("The Workbench hook installation record is invalid.")
     return state, raw
 
@@ -98,7 +119,8 @@ def _remove_owned(document, client, record, *, missing=False):
     hooks = _hook_map(document, client)
     if missing:
         return
-    for event, entry in _registrations(client, record["workspace"], record["python"]).items():
+    registrations = record.get("registrations") or _legacy_registrations(client, record["workspace"], record["python"])
+    for event, entry in registrations.items():
         entries = hooks.get(event, [])
         if entries.count(entry) != 1:
             raise WorkbenchError(f"Workbench {client} hooks changed after installation; preserve and reconcile them before updating or removing.")
@@ -107,6 +129,21 @@ def _remove_owned(document, client, record, *, missing=False):
             hooks.pop(event)
     if not hooks and not record["had_hooks"]:
         document.pop("hooks", None)
+
+
+def _add_owned(document, client, record, raw):
+    registrations = _registrations(client)
+    updated = {"registrations": registrations,
+               "created": raw is None or (record["created"] if record else False),
+               "had_hooks": False if raw is None else record["had_hooks"] if record else "hooks" in document}
+    if client == "copilot":
+        document["version"] = 1
+    hooks = document.setdefault("hooks", {})
+    for event, entry in registrations.items():
+        if entry in hooks.get(event, []):
+            raise WorkbenchError(f"An identical {client} hook is not owned by this installation; reconcile it before installing.")
+        hooks.setdefault(event, []).append(entry)
+    return updated
 
 
 def _bytes(value):
@@ -190,34 +227,30 @@ def install_hooks(root: Path, clients=None, python: str | Path | None = None) ->
     """Merge two project registrations per selected client; preserve all unrelated entries."""
     root = Path(root).expanduser().resolve()
     selected = _clients(clients)
-    executable = Path(python or sys.executable).expanduser().absolute()
-    if not root.is_dir() or not executable.is_file() or not os.access(executable, os.X_OK):
-        raise WorkbenchError("Select an existing workspace and installed Python executable.")
+    if not root.is_dir():
+        raise WorkbenchError("Select an existing workspace.")
+    if python is not None:
+        executable = Path(python).expanduser().absolute()
+        if not executable.is_file() or not os.access(executable, os.X_OK):
+            raise WorkbenchError("Select an installed Python executable when using the compatibility --python option.")
     load_workspace(root)
     with _lock(root):
         state, state_raw = _state(root)
         updated = copy.deepcopy(state)
+        updated["schema_version"] = 2
+        if state["schema_version"] == 1:
+            selected = list(dict.fromkeys([*selected, *state["clients"]]))
         originals, updates = {_STATE: state_raw}, {}
         for client in selected:
             relative = CONFIGS[client]
             document, raw = _document(root, relative)
-            hooks = _hook_map(document, client)
+            _hook_map(document, client)
             record = state["clients"].get(client)
             if record:
                 _remove_owned(document, client, record, missing=raw is None)
             elif client in {"copilot", "claude"} and raw is not None:
                 raise WorkbenchError(f"Preserve the existing {relative}; it is not owned by this installation.")
-            new_record = {"python": str(executable), "workspace": str(root),
-                          "created": raw is None or (record["created"] if record else False),
-                          "had_hooks": False if raw is None else record["had_hooks"] if record else "hooks" in document}
-            if client == "copilot":
-                document["version"] = 1
-            hooks = document.setdefault("hooks", {})
-            for event, entry in _registrations(client, root, str(executable)).items():
-                if entry in hooks.get(event, []):
-                    raise WorkbenchError(f"An identical {client} hook is not owned by this installation; reconcile it before installing.")
-                hooks.setdefault(event, []).append(entry)
-            updated["clients"][client] = new_record
+            updated["clients"][client] = _add_owned(document, client, record, raw)
             originals[relative], updates[relative] = raw, _bytes(document)
         updates[_STATE] = _bytes(updated)
         _transaction(root, originals, updates)
@@ -231,6 +264,7 @@ def remove_hooks(root: Path, clients=None) -> dict:
     with _lock(root):
         state, raw_state = _state(root)
         updated = copy.deepcopy(state)
+        updated["schema_version"] = 2
         originals, updates = {_STATE: raw_state}, {}
         for client in selected:
             record = updated["clients"].pop(client, None)
@@ -242,6 +276,13 @@ def remove_hooks(root: Path, clients=None) -> dict:
             residue = {"version": 1} if client == "copilot" else {}
             value = None if raw is None or (record["created"] and document == residue) else _bytes(document)
             originals[relative], updates[relative] = raw, value
+        if state["schema_version"] == 1:
+            for client, record in updated["clients"].items():
+                relative = CONFIGS[client]
+                document, raw = _document(root, relative)
+                _remove_owned(document, client, record, missing=raw is None)
+                updated["clients"][client] = _add_owned(document, client, record, raw)
+                originals[relative], updates[relative] = raw, _bytes(document)
         updates[_STATE] = _bytes(updated) if updated["clients"] else None
         _transaction(root, originals, updates)
     return hook_status(root)
@@ -262,22 +303,19 @@ def hook_status(root: Path) -> dict:
             try:
                 document, raw = _document(root, relative)
                 _remove_owned(document, client, record, missing=False)
-                configured = (raw is not None and record["workspace"] == str(root)
-                              and Path(record["python"]).is_file() and os.access(record["python"], os.X_OK))
-                if record["workspace"] != str(root):
-                    detail = "The installation points to another workspace location. Reinstall for this workspace."
-                elif not configured:
-                    detail = "The installed Python executable is unavailable. Reinstall with the active environment."
+                configured = raw is not None and state["schema_version"] == 2
+                if state["schema_version"] == 1:
+                    detail = "Legacy hook registrations need a portable reinstall. Run hooks install."
             except WorkbenchError as error:
                 detail = str(error)
         row = {"client": client, "path": relative, "status": "CONFIGURED" if configured else
                "INCOMPLETE" if record else "NOT_CONFIGURED", "detail": detail}
         if client == "claude":
-            row["launch_argv"] = ["claude", "--settings", str(root / relative)]
+            row["launch_argv"] = ["claude", "--settings", relative]
         rows.append(row)
     count = sum(row["status"] == "CONFIGURED" for row in rows)
     return {"status": "INCOMPLETE" if any(row["status"] == "INCOMPLETE" for row in rows) else
             "READY" if count == len(CONFIGS) else "PARTIAL" if count else "NOT_CONFIGURED",
             "clients": rows, "client_execution": "NOT_RUN",
             "limitations": ["Client trust, executable availability, and native hook dispatch require separate checks.",
-                            "Launch Claude Code with the returned --settings file to avoid Copilot importing its hooks."]}
+                            "Run the returned Claude Code --settings command from the workspace root to avoid Copilot importing its hooks."]}

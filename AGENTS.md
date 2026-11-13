@@ -351,11 +351,14 @@ A smaller change must still implement the complete authorized behavior.
 ### Shared native hooks
 
 Source: [three-client requirement](docs/evidence/workflow-hooks-assessment-20261112/cross-client-requirement.md#exact-user-input) and [implementation authorization](docs/evidence/workflow-hooks-assessment-20261112/implementation-request.md#exact-user-input).
+Latest priority: [portable hook requirement](docs/evidence/workflow-hooks-assessment-20261112/portability-request.md#exact-user-input).
 Follow [the hook guide](docs/HOOKS.md) for Codex, Copilot, and Claude Code adapters.
 Keep hook behavior in the installed Python runtime and native payload/configuration translation in thin adapters.
+Use portable native commands that resolve installed `ai-sdlc` through the agent's `PATH` and discover the workspace from the native working directory.
+Keep machine-specific interpreter and workspace locations out of registrations, session pointers, and reusable context cues.
 Bind the native client and session to explicit living records and dependent files before edits.
 Do not infer a task from dirty files or reuse another client's session binding.
-Claude hooks use the isolated settings file selected by `--settings`; ordinary Claude settings remain available to Copilot.
+From the workspace root, launch Claude with `claude --settings .claude/workbench-hooks.json`; ordinary Claude settings remain available to Copilot.
 Treat completion checks as advisory evidence. They do not grant readiness, publication, deployment, or verified behavior.
 Preserve unrelated settings and hooks during installation or removal. Keep generated native paths local and ignored.
 

@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-13T02:50:03.822175+00:00",
+  "source_revision_before_commit": "c43fe92eaa816640c29c04564c750143282efe21",
+  "governing_source": "portability-request.md#exact-user-input",
+  "source_sha256": {
+    "core/hooks.py": "b4e19aa3b461584f80b7b56d5199855cc855d17c34a9be2160a4ca993c694a2b",
+    "core/hook_install.py": "9437bd44dded741b32693b7957c62696d0194506d00b65daf0fbb9a22a3d536c",
+    "core/cli.py": "72acf79248ece63bdbe29d17f78cc6f24a69087d36e98433861f6052b912d14e",
+    "core/doctor.py": "04fb3a01e086097ade38d278e9425115b6d5df88fc8a68a5c6ca8d4e69ac92cb",
+    "tests/test_hooks.py": "4ac96d8458bbce65cb1950fc83718e3137fa49f963d45431f80e734b6ea3436f",
+    "tests/test_hook_install.py": "ee428ac3216e8289c29b0fc0e5d5a36458550b2c61a14cf3be9b276a9406efe1",
+    "tests/test_hook_doctor.py": "54aeeaa7cb55c125e1c7f2bb7306cc9b0ce9b0a9a3a5b2d373d424abc76d6d59",
+    "docs/HOOKS.md": "0146c82205bd4a420b61887690fea53377d9c4ffb61196f5a2d6077bf55e3cba",
+    "docs/SETUP.md": "385dc6918a3bd4785009db11a631613b281a2669c6cbf53c4367d695727d66e0",
+    "docs/DEPENDENCIES.md": "4df2fcae688a8f1ba71760e16a98c3a81f1b2980010b5e65592dced419461c8b",
+    "AGENTS.md": "fcff4ccae81d78a582cf58043a227b8dc1387b3c2cc61ee2ab54adb8614d19cd"
+  },
+  "full_suite": {
+    "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+    "tests": 1038,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 97.124,
+    "status": "PASSED",
+    "localhost_access": "sandbox escalation approved",
+    "log_sha256": "85f5cdddbb133de96c35bcf078783e2ae90e2db75ed6ec3b6fe0e12b5bfcd675"
+  },
+  "focused_suite": {
+    "command": ".venv/bin/python -m unittest discover -s tests -p 'test_hook*.py' -v",
+    "tests": 54,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "status": "PASSED",
+    "log_sha256": "14867169ebd4b8d6bb9d1e877d871732f91d9f124e77d4c841335088262b1b3c"
+  },
+  "packaging": {
+    "build": "pip wheel, no dependencies and no build isolation; temporary output directory",
+    "status": "PASSED",
+    "wheel_sha256": "5791328f610d25b5fa3d3c7546cc7a415f7537e625d892e77254d3fc43f3d810",
+    "sdist_wheel_initialization_test": "test_complete_llm_wiki_source_survives_sdist_wheel_and_initialization",
+    "external_handler_receipt": "portable-installed-smoke.json",
+    "external_handler_status": "PASSED",
+    "external_handler_assertions": 385,
+    "external_handler_subprocesses": 63,
+    "external_handler_receipt_sha256": "31e840aead785e22eec87510a2f6e4b556e93e729e2fa7703b103d2369097c29"
+  },
+  "workspace_validation": {
+    "command": ".venv/bin/python -m ai_sdlc_workbench --workspace . validate",
+    "result": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 15,
+      "findings": [],
+      "catalogs": {
+        "repositories": 9,
+        "services": 2,
+        "capabilities": 5,
+        "contracts": 16,
+        "sources": 12,
+        "tools": 15
+      }
+    }
+  },
+  "gherkin": {
+    "command": ".venv/bin/python -m ai_sdlc_workbench --workspace . gherkin docs/HOOKS.md",
+    "status": "UNVERIFIED",
+    "exit_code": 2,
+    "scenarios": 8,
+    "finding_counts": {
+      "UNVERIFIED": 84
+    },
+    "limit": "Evidence manifest and semantic review remain absent; no native execution claim."
+  },
+  "documentation": {
+    "local_links_and_anchors": 303,
+    "cli_help": "PASSED",
+    "diff_check": "PASSED",
+    "asd_review": "PENDING",
+    "implementation_links": 68
+  },
+  "local_installation": {
+    "command": ".venv/bin/ai-sdlc --workspace . hooks install",
+    "status": "READY",
+    "schema_version": 2,
+    "clients": [
+      {
+        "client": "codex",
+        "path": ".codex/hooks.json",
+        "status": "CONFIGURED",
+        "detail": null
+      },
+      {
+        "client": "copilot",
+        "path": ".github/hooks/workbench.json",
+        "status": "CONFIGURED",
+        "detail": null
+      },
+      {
+        "client": "claude",
+        "path": ".claude/workbench-hooks.json",
+        "status": "CONFIGURED",
+        "detail": null,
+        "launch_argv": [
+          "claude",
+          "--settings",
+          ".claude/workbench-hooks.json"
+        ]
+      }
+    ],
+    "native_dispatch": "NOT_RUN",
+    "absolute_bindings": "ABSENT",
+    "hook_doctor": {
+      "id": "hooks",
+      "status": "INCOMPLETE",
+      "checks": [
+        {
+          "id": "hook-configurations",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "executable:ai-sdlc",
+          "status": "INCOMPLETE",
+          "executable": "ai-sdlc",
+          "found": false,
+          "version": null,
+          "next_action": "Install ai-sdlc and add its executable directory to PATH."
+        },
+        {
+          "id": "hooks:codex",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "executable:codex",
+          "status": "READY",
+          "executable": "codex",
+          "found": true,
+          "version": null,
+          "next_action": null
+        },
+        {
+          "id": "hooks:copilot",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "executable:copilot",
+          "status": "INCOMPLETE",
+          "executable": "copilot",
+          "found": false,
+          "version": null,
+          "next_action": "Install copilot and add its executable directory to PATH."
+        },
+        {
+          "id": "hooks:claude",
+          "status": "READY",
+          "next_action": null
+        },
+        {
+          "id": "executable:claude",
+          "status": "READY",
+          "executable": "claude",
+          "found": true,
+          "version": null,
+          "next_action": null
+        }
+      ],
+      "integration_access": "UNTESTED",
+      "limitations": [
+        "The ai-sdlc command and client executables are checked on PATH; desktop-only client installations may need separate verification.",
+        "Claude requires the isolated settings file through --settings. Codex hook trust remains a client decision.",
+        "Configuration and executable discovery do not establish live event delivery or passing business behavior."
+      ],
+      "next_actions": [
+        "Install ai-sdlc and add its executable directory to PATH.",
+        "Install copilot and add its executable directory to PATH."
+      ]
+    }
+  },
+  "earlier_results": [
+    {
+      "run": "runtime checks while expected cue assertions were being updated",
+      "tests": 21,
+      "failures": 1,
+      "cause": "The old assertion expected a pinned Windows Python path. It now asserts a bare ai-sdlc command and absence of machine paths.",
+      "log_sha256": "34821c56509fde080bd5bb19c67a2e86f9d9112717eb7c494fec7efc59a8dfeb"
+    }
+  ],
+  "limits": [
+    "ai-sdlc and Copilot are absent from the current unactivated agent PATH; launch clients from an environment exposing the installed command.",
+    "The built-wheel smoke supplies its own isolated installed console entry on PATH.",
+    "Live native client callbacks, trust, Windows, and cloud execution remain NOT_RUN.",
+    "Historical receipts preserve their original environment bindings; generated configs and new state omit them."
+  ]
+}

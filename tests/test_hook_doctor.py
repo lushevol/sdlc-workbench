@@ -60,10 +60,11 @@ class HookDoctorTests(unittest.TestCase):
             feature = module._hook_feature(self.root)
         self.assertEqual(feature["status"], "READY")
         self.assertEqual(feature["integration_access"], "UNTESTED")
-        self.assertTrue({"codex", "copilot", "claude"}.issubset({call.args[0] for call in which.call_args_list}))
+        self.assertEqual({call.args[0] for call in which.call_args_list}, {"ai-sdlc", "codex", "copilot", "claude"})
         for client in ("codex", "copilot", "claude"):
             self.assertEqual(self.check(feature, "hooks:" + client)["status"], "READY")
             self.assertEqual(self.check(feature, "executable:" + client)["status"], "READY")
+        self.assertEqual(self.check(feature, "executable:ai-sdlc")["status"], "READY")
         self.assertTrue(any("live event delivery" in value for value in feature["limitations"]))
         child.assert_not_called()
         self.assertEqual(self.snapshot(), before)
@@ -78,24 +79,31 @@ class HookDoctorTests(unittest.TestCase):
         executable = self.check(feature, "executable:copilot")
         self.assertEqual(executable["status"], "INCOMPLETE")
         self.assertFalse(executable["found"])
-        which.assert_called_once_with("copilot")
+        self.assertEqual([call.args[0] for call in which.call_args_list], ["ai-sdlc", "copilot"])
         child.assert_not_called()
 
-    def test_missing_registered_python_is_incomplete_even_with_client_on_path(self):
-        executable = self.root / ("hook-python.exe" if sys.platform == "win32" else "hook-python")
-        executable.write_text("Unused executable fixture.\n", encoding="utf-8")
-        executable.chmod(0o755)
-        install_hooks(self.root, ["copilot"], python=executable)
-        executable.unlink()
+    def test_missing_ai_sdlc_on_path_is_incomplete_even_with_client_available(self):
+        install_hooks(self.root, ["copilot"])
         before = self.snapshot()
-        with patch.object(module.shutil, "which", return_value="/available/copilot"), \
+        with patch.object(module.shutil, "which", side_effect=lambda name: None if name == "ai-sdlc" else "/available/copilot"), \
                 patch.object(module.subprocess, "run") as child:
             feature = module._hook_feature(self.root)
         self.assertEqual(feature["status"], "INCOMPLETE")
-        self.assertEqual(self.check(feature, "hooks:copilot")["status"], "INCOMPLETE")
+        self.assertEqual(self.check(feature, "hooks:copilot")["status"], "READY")
+        self.assertEqual(self.check(feature, "executable:ai-sdlc")["status"], "INCOMPLETE")
         self.assertEqual(self.check(feature, "executable:copilot")["status"], "READY")
         child.assert_not_called()
         self.assertEqual(self.snapshot(), before)
+
+    def test_portable_codex_does_not_require_powershell_on_windows(self):
+        install_hooks(self.root, ["codex"])
+        with patch.object(module.sys, "platform", "win32"), \
+                patch.object(module.shutil, "which", return_value="available") as which, \
+                patch.object(module.subprocess, "run") as child:
+            feature = module._hook_feature(self.root)
+        self.assertEqual(feature["status"], "READY")
+        self.assertEqual([call.args[0] for call in which.call_args_list], ["ai-sdlc", "codex"])
+        child.assert_not_called()
 
     def test_unavailable_installed_hook_module_is_incomplete_without_dispatch(self):
         install_hooks(self.root, ["copilot"])

@@ -39,6 +39,19 @@ def _root(value):
     return root
 
 
+def discover_workspace(payload):
+    """Resolve the nearest declared workspace from native cwd without a machine-specific registration."""
+    cwd = payload.get("cwd")
+    if (not isinstance(cwd, str) or len(cwd) > 32768 or any(ord(character) < 32 for character in cwd)
+            or not Path(cwd).is_absolute() or not Path(cwd).is_dir()):
+        raise WorkbenchError("The native hook requires an existing absolute working directory.")
+    directory = Path(cwd).resolve()
+    for candidate in (directory, *directory.parents):
+        if any((candidate / name).is_file() for name in ("workspace.yaml", "workspace.json")):
+            return candidate
+    raise WorkbenchError("No Workbench declaration exists at or above the native working directory.")
+
+
 def _path(root, value, *, exists=False):
     if (not isinstance(value, str) or len(value) > 1024
             or any(ord(character) < 32 for character in value)):
@@ -226,7 +239,16 @@ def _run_checks(root, scope):
             if isinstance(diagnostics, list):
                 for item in diagnostics[:20]:
                     if isinstance(item, dict):
-                        findings.append({key: str(item[key])[:160] for key in ("code", "path", "record_id") if key in item})
+                        finding = {key: str(item[key])[:160] for key in ("code", "record_id") if key in item}
+                        if "path" in item:
+                            path = str(item["path"])
+                            if Path(path).is_absolute():
+                                try:
+                                    path = Path(path).relative_to(root).as_posix()
+                                except ValueError:
+                                    path = "(outside workspace)"
+                            finding["path"] = path[:160]
+                        findings.append(finding)
             results.append({"check": name, "status": "PASSED" if result.returncode == 0 and payload else "FAILED",
                             "exit_code": result.returncode, "findings": findings})
         except subprocess.TimeoutExpired:
@@ -255,11 +277,13 @@ def run_hook(root, client, event, payload):
         return {}, "", 0
     if event == "start":
         state = _load(root, client, session)
-        argv = [sys.executable, "-m", "ai_sdlc_workbench", "--workspace", str(root), "hooks", "bind", "--client", client,
+        relative_root = os.path.relpath(root, Path(cwd).resolve()).replace(os.sep, "/")
+        argv = ["ai-sdlc", "--workspace", relative_root, "hooks", "bind", "--client", client,
                 "--session", session, "--record", "PATH_TO_LIVING_RECORD"]
         command = ("& " + " ".join("'" + value.replace("'", "''") + "'" for value in argv)
                    if sys.platform == "win32" else shlex.join(argv))
-        lines = ["Workbench workspace: " + str(root), "Native hook client/session: " + client + "/" + session]
+        lines = ["Workbench workspace (relative to native cwd): " + relative_root,
+                 "Native hook client/session: " + client + "/" + session]
         if state:
             lines += ["Declared living record: " + state["scope"]["record"],
                       "Next check: inspect this record and its sources; completion checks run after declared inputs change."]

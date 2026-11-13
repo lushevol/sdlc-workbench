@@ -3,7 +3,9 @@
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
+import os
 from pathlib import Path
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -13,6 +15,7 @@ import unittest
 from unittest.mock import patch
 
 from ai_sdlc_workbench import hooks as module
+from ai_sdlc_workbench.hook_install import CONFIGS, install_hooks
 from ai_sdlc_workbench.models import WorkbenchError
 from ai_sdlc_workbench.workspace import initialize_workspace
 
@@ -56,10 +59,110 @@ class HookRuntimeTests(unittest.TestCase):
         return patch.object(module.subprocess, "run", return_value=SimpleNamespace(
             returncode=0, stdout='{"valid": true, "status": "VALID"}', stderr=""))
 
-    def cli(self, *arguments, payload=""):
-        return subprocess.run([sys.executable, "-m", "ai_sdlc_workbench", "--workspace", str(self.root),
-                               "hooks", *arguments], input=payload, capture_output=True, text=True,
-                              timeout=15, shell=False)
+    def cli(self, *arguments, payload="", explicit_workspace=True, cwd=None):
+        command = [sys.executable, "-m", "ai_sdlc_workbench"]
+        if explicit_workspace:
+            command += ["--workspace", str(self.root)]
+        return subprocess.run([*command, "hooks", *arguments], input=payload, cwd=cwd,
+                              capture_output=True, text=True, timeout=15, shell=False)
+
+    def native_context(self, client, result):
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stderr, "")
+        output = json.loads(result.stdout)
+        return output["additionalContext"] if client == "copilot" else output["hookSpecificOutput"]["additionalContext"]
+
+    def test_public_cli_discovers_nearest_workspace_from_native_cwd(self):
+        ordinary_child = self.root / "repos/service/src"
+        ordinary_child.mkdir(parents=True)
+        nested = self.root / "nested/workbench"
+        nested_child = nested / "src"
+        nested_child.mkdir(parents=True)
+        (nested / "workspace.yaml").write_bytes((self.root / "workspace.yaml").read_bytes())
+        nested_record = "tasks/nested/01-intake.md"
+        (nested / nested_record).parent.mkdir(parents=True)
+        (nested / nested_record).write_text("# Inner work\n", encoding="utf-8")
+        for client in ("codex", "copilot", "claude"):
+            self.bind(client)
+            module.bind_scope(nested, client, "same-native-session", nested_record)
+            for cwd, expected_record in ((self.root, self.record), (ordinary_child, self.record),
+                                         (nested_child, nested_record)):
+                with self.subTest(client=client, native_cwd=cwd):
+                    result = self.cli("run", "--client", client, "--event", "start",
+                                      payload=json.dumps(self.payload(client, cwd=str(cwd))),
+                                      explicit_workspace=False, cwd=self.root.parent)
+                    context = self.native_context(client, result)
+                    self.assertIn("Declared living record: " + expected_record, context)
+                    self.assertNotIn(str(self.root), context)
+                    self.assertNotIn(sys.executable, context)
+
+    def test_portable_registrations_and_bindings_survive_workspace_relocation(self):
+        install_hooks(self.root)
+        for client in ("codex", "copilot", "claude"):
+            self.bind(client)
+        saved = {str(path.relative_to(self.root)): path.read_bytes() for path in self.root.rglob("*.json")}
+        for raw in saved.values():
+            self.assertNotIn(str(self.root).encode(), raw)
+            self.assertNotIn(sys.executable.encode(), raw)
+        previous_root = self.root
+        self.root = self.root.rename(self.root.parent / "relocated workspace")
+        child = self.root / "repos/service"
+        for client in ("codex", "copilot", "claude"):
+            result = self.cli("run", "--client", client, "--event", "start", explicit_workspace=False,
+                              payload=json.dumps(self.payload(client, cwd=str(child))), cwd=self.root.parent)
+            context = self.native_context(client, result)
+            self.assertIn("Declared living record: " + self.record, context)
+            self.assertNotIn(str(previous_root), context)
+            self.assertNotIn(str(self.root), context)
+        self.assertEqual({relative: (self.root / relative).read_bytes() for relative in saved}, saved)
+
+        result = self.cli("run", "--client", "codex", "--event", "start", explicit_workspace=False,
+                          payload=json.dumps(self.payload("codex", session="relocated-new-session", cwd=str(child))),
+                          cwd=self.root.parent)
+        context = self.native_context("codex", result)
+        command = context.split("Before scoped edits, bind the existing living record: ", 1)[1].splitlines()[0]
+        arguments = shlex.split(command.removeprefix("& "))
+        self.assertEqual(arguments[:3], ["ai-sdlc", "--workspace", "../.."])
+        arguments[-1] = self.record
+        environment = dict(os.environ)
+        environment["PATH"] = str(Path(sys.executable).parent) + os.pathsep + environment.get("PATH", "")
+        binding = subprocess.run(arguments, cwd=child, env=environment, capture_output=True, text=True,
+                                 timeout=15, shell=False)
+        self.assertEqual(binding.returncode, 0, binding.stderr)
+        self.assertEqual(json.loads(binding.stdout)["status"], "BOUND")
+        for relative in (*CONFIGS.values(), ".workbench/hooks/installation.json"):
+            self.assertEqual((self.root / relative).read_bytes(), saved[relative])
+
+    def test_native_directory_without_declaration_reports_advisory_without_writes(self):
+        outside = self.root.parent / "outside-native-directory"
+        outside.mkdir()
+        for client in ("codex", "copilot", "claude"):
+            with self.subTest(client=client):
+                result = self.cli("run", "--client", client, "--event", "stop", explicit_workspace=False,
+                                  payload=json.dumps(self.payload(client, cwd=str(outside))), cwd=self.root)
+                self.assertEqual(result.returncode, 2 if client == "copilot" else 0)
+                output = json.loads(result.stdout)
+                self.assertNotIn("decision", output)
+                self.assertTrue(result.stderr if client == "copilot" else output.get("systemMessage"))
+                self.assertNotIn(str(outside), result.stdout + result.stderr)
+        self.assertFalse((self.root / ".workbench").exists())
+        self.assertEqual(list(outside.iterdir()), [])
+
+    def test_explicit_workspace_cannot_use_native_cwd_outside_its_boundary(self):
+        outside = self.root.parent / "outside-explicit-directory"
+        outside.mkdir()
+        for client in ("codex", "copilot", "claude"):
+            with self.subTest(client=client):
+                self.bind(client)
+                self.changed()
+                before = {path: path.read_bytes() for path in (self.root / ".workbench").rglob("*") if path.is_file()}
+                result = self.cli("run", "--client", client, "--event", "stop",
+                                  payload=json.dumps(self.payload(client, cwd=str(outside))))
+                self.assertEqual(result.returncode, 2 if client == "copilot" else 0)
+                output = json.loads(result.stdout)
+                self.assertTrue(result.stderr if client == "copilot" else output.get("systemMessage"))
+                self.assertEqual({path: path.read_bytes() for path in before}, before)
+        self.assertEqual(list(outside.iterdir()), [])
 
     def test_public_cli_returns_one_native_context_object_for_each_client(self):
         for client in ("codex", "copilot", "claude"):
@@ -123,7 +226,10 @@ class HookRuntimeTests(unittest.TestCase):
         with patch.object(module.sys, "platform", "win32"), patch.object(module.sys, "executable", "C:\\User's Tools\\python.exe"):
             output, _, code = module.run_hook(self.root, "claude", "start", self.payload("claude"))
         self.assertEqual(code, 0)
-        self.assertIn("& 'C:\\User''s Tools\\python.exe' '-m' 'ai_sdlc_workbench'", output["hookSpecificOutput"]["additionalContext"])
+        context = output["hookSpecificOutput"]["additionalContext"]
+        self.assertIn("& 'ai-sdlc' '--workspace' '.' 'hooks' 'bind'", context)
+        self.assertNotIn("C:\\User", context)
+        self.assertNotIn(str(self.root), context)
 
     def test_changed_workspace_configuration_invalidates_cached_checks(self):
         self.bind()
@@ -222,6 +328,25 @@ class HookRuntimeTests(unittest.TestCase):
                         self.assertTrue(output["systemMessage"])
                     self.assertEqual(module.run_hook(self.root, client, "stop", self.payload(client)), ({}, "", 0))
                     runner.assert_called_once()
+
+    def test_validator_diagnostic_paths_are_retained_relative_to_workspace(self):
+        self.bind()
+        self.changed()
+        diagnostics = {"findings": [
+            {"code": "INVALID_RECORD", "path": str(self.root / self.record)},
+            {"code": "OUTSIDE", "path": str(self.root.parent / "private-external-path")},
+        ]}
+        with patch.object(module.subprocess, "run", return_value=SimpleNamespace(
+                returncode=1, stdout=json.dumps(diagnostics), stderr="")):
+            output, diagnostic, code = module.run_hook(self.root, "codex", "stop", self.payload("codex"))
+        self.assertEqual((diagnostic, code), ("", 0))
+        self.assertTrue(output["systemMessage"])
+        state_path = next((self.root / ".workbench/hooks/sessions").glob("*.json"))
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        findings = state["last_result"]["checks"][0]["findings"]
+        self.assertEqual([item["path"] for item in findings], [self.record, "(outside workspace)"])
+        self.assertNotIn(str(self.root), state_path.read_text(encoding="utf-8"))
+        self.assertNotIn("private-external-path", state_path.read_text(encoding="utf-8"))
 
     def test_existing_stop_continuation_never_launches_more_checks(self):
         self.bind()

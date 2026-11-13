@@ -9,13 +9,16 @@ Use the shared [MCP adapter](../mcp/README.md) when the client needs registered 
 ```text
 ai-sdlc --workspace PATH skills
 ai-sdlc --workspace PATH skills analyze-requirement
-ai-sdlc --workspace PATH hooks install --client codex
-ai-sdlc --workspace PATH hooks status
+ai-sdlc --workspace . hooks install --client codex
+ai-sdlc --workspace . hooks status
 ```
 
 The optional [hook adapter](../../docs/HOOKS.md) maps `SessionStart` and `Stop` to shared Workbench behavior.
 Its project registration is `.codex/hooks.json`.
-Installation preserves unrelated entries and uses the selected installed Python executable.
+Run the hook commands from the workspace root.
+Installation preserves unrelated entries and invokes the installed `ai-sdlc` command through the agent's `PATH`.
+Activate the installed environment before launching Codex, or expose its command through your approved environment setup.
+Native events discover their nearest owning Workbench workspace from their working directory; registrations contain no machine paths.
 Review and trust non-managed hook definitions through Codex hook settings before expecting execution.
 
 Session context and completion checks use an explicit per-session scope.

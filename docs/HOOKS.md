@@ -17,27 +17,30 @@ The existing [workflow skills](../.agents/skills/) retain semantic decisions and
 
 ## Install and inspect
 
-Use an installed Workbench environment and an explicit workspace path.
+Use an installed Workbench environment and run these commands from the workspace root.
 Install only in a workspace whose hook configuration you intend to maintain.
 
 ```sh
-ai-sdlc --workspace PATH hooks install
-ai-sdlc --workspace PATH hooks status
+ai-sdlc --workspace . hooks install
+ai-sdlc --workspace . hooks status
 ```
 
 Installation preserves unrelated hook entries and settings. Repeating installation updates only Workbench-owned entries.
-The installed handlers select the current Python executable explicitly.
-Reinstall after moving the virtual environment or selecting another interpreter.
+The installed handlers invoke `ai-sdlc hooks run --client CLIENT --event EVENT` through `PATH`.
+They store no machine-specific interpreter or workspace path.
+Keep the installed `ai-sdlc` command available in the environment inherited by each agent client.
+Activate the installed Python environment before launching a client, or expose its command through your approved environment setup.
+Moving or copying the workspace does not require rewriting these registrations.
 
 **Claude Code requires the returned launch command with `--settings`. Bare `claude` does not load this isolated registration.**
 The installer returns `launch_argv` for the Claude adapter.
-For example, launch Claude Code with `claude --settings "/ABSOLUTE/WORKSPACE/.claude/workbench-hooks.json"`.
-Use that workspace's absolute path. Ordinary `.claude/settings.json` and `.claude/settings.local.json` remain untouched.
+From the workspace root, launch Claude Code with `claude --settings .claude/workbench-hooks.json`.
+Ordinary `.claude/settings.json` and `.claude/settings.local.json` remain untouched.
 
 To select one client, use `--client codex`, `--client copilot`, or `--client claude` with installation.
 Support for all three clients shares the same runtime and check rules.
 Installing configuration does not prove that a client trusted or executed its hooks.
-`hooks status` checks registration ownership, workspace location, and the selected Python executable.
+`hooks status` checks registration ownership and identifies older registrations that need migration.
 It does not launch clients or check native event delivery.
 
 | Client surface | Native project configuration | Session context | Completion check |
@@ -45,7 +48,7 @@ It does not launch clients or check native event delivery.
 | Codex | `.codex/hooks.json` | `SessionStart` | `Stop` |
 | GitHub Copilot CLI | `.github/hooks/workbench.json` | `sessionStart` | `agentStop` |
 | GitHub Copilot in VS Code, Copilot harness | Same Copilot format | `sessionStart` | `agentStop` |
-| Claude Code | `.claude/workbench-hooks.json`, selected with `claude --settings ABSOLUTE_FILE` | `SessionStart` | `Stop` |
+| Claude Code | `.claude/workbench-hooks.json`, selected with `claude --settings .claude/workbench-hooks.json` from the workspace root | `SessionStart` | `Stop` |
 
 Codex requires review and trust for non-managed hooks. Review the installed entries through `/hooks` or desktop hook settings.
 Claude Code applies its workspace trust and settings rules.
@@ -58,6 +61,12 @@ Copilot loads ordinary repository Claude settings, so Workbench stores its Claud
 Copilot does not discover that file through the documented ordinary Claude settings locations.
 This keeps the installed Workbench handlers separate without disabling unrelated user hooks.
 
+At execution, the hook locates the nearest Workbench workspace ancestor of the native event's working directory.
+Nested repository directories therefore use their owning workspace without an embedded checkout location.
+An event outside a Workbench workspace cannot select an unrelated workspace.
+Run `hooks install` again to migrate earlier Workbench-owned registrations that contain machine paths.
+Unrelated settings and independently modified entries retain the same preservation rules.
+
 ## Bind the active scope
 
 Hooks do not guess a task from its filename, modification time, or dirty files.
@@ -67,9 +76,9 @@ The start cue includes that ID and a bind command.
 Bind before editing so the completion hook can compare the selected inputs with their starting bytes.
 
 ```sh
-ai-sdlc --workspace PATH hooks bind --client codex --session SESSION --record tasks/TASK/01-intake.md
-ai-sdlc --workspace PATH hooks bind --client copilot --session SESSION --record tasks/TASK/01-intake.md --index tasks/TASK/evidence/review-index.json
-ai-sdlc --workspace PATH hooks bind --client claude --session SESSION --record tasks/TASK/01-intake.md --baseline relationships/requirement-code/baselines/BASELINE.json
+ai-sdlc --workspace . hooks bind --client codex --session SESSION --record tasks/TASK/01-intake.md
+ai-sdlc --workspace . hooks bind --client copilot --session SESSION --record tasks/TASK/01-intake.md --index tasks/TASK/evidence/review-index.json
+ai-sdlc --workspace . hooks bind --client claude --session SESSION --record tasks/TASK/01-intake.md --baseline relationships/requirement-code/baselines/BASELINE.json
 ```
 
 Select a current stage record when intake is frozen.
@@ -87,7 +96,7 @@ Separate clients and sessions retain separate bindings.
 Clear a binding when the session no longer owns that scope:
 
 ```sh
-ai-sdlc --workspace PATH hooks clear --client codex --session SESSION
+ai-sdlc --workspace . hooks clear --client codex --session SESSION
 ```
 
 ## Shared behavior and limits
@@ -116,7 +125,7 @@ Use the native client's hook controls to pause execution.
 Remove Workbench-owned entries without deleting unrelated client configuration:
 
 ```sh
-ai-sdlc --workspace PATH hooks uninstall
+ai-sdlc --workspace . hooks uninstall
 ```
 
 Use `--client CLIENT` to remove one client registration.
@@ -127,17 +136,16 @@ Do not overwrite those changes by copying an example configuration over the sett
 
 Hooks reuse Python, the installed Workbench package, and existing validation dependencies.
 They add no Python or npm package, background service, model credential, or runtime network endpoint.
-The Codex Windows registration uses Windows PowerShell to launch the selected executable with safe path quoting.
-Its standard `powershell.exe` prerequisite applies only on Windows.
+Native registrations resolve the installed `ai-sdlc` command through `PATH` on each machine.
 Install the chosen agent client through its approved installation process.
 The client must support the native events listed above and allow the installed hooks.
 Keep the actual client version and enabled harness in execution evidence.
-After installation, `ai-sdlc --workspace PATH doctor` checks configured client executables on `PATH` and the Windows PowerShell prerequisite where applicable.
+After installation, `ai-sdlc --workspace . doctor` checks the installed command and configured client executables on `PATH`.
 Desktop-only installations can need separate executable verification. Doctor does not establish client trust or live event delivery.
 
-Use the selected virtual environment's executable when `ai-sdlc` is absent from the shell path.
-For example, use `.venv/bin/ai-sdlc` on macOS or `.venv\Scripts\ai-sdlc.exe` on Windows.
-Installed handlers must retain correct executable and workspace paths, including spaces and Unicode.
+When `ai-sdlc` is absent from `PATH`, activate the installed Python environment or repair its command exposure before launching the agent.
+Calling a relative virtual-environment executable once does not make it discoverable by later native hook events.
+Keep registrations and session pointers portable. Validate workspace names that contain spaces and Unicode.
 See [setup](SETUP.md#workbench-hooks) and [dependency analysis](DEPENDENCIES.md#workbench-hooks).
 
 Verify start-context delivery and completion checks in each selected client.
@@ -252,6 +260,28 @@ Scenario: Use the installed runtime from a generated workspace
   When hook registrations are installed and exercised with native payloads
   Then every supported client registration invokes the installed package
   And zero copied Python runtime modules appear in the generated workspace
+```
+
+### AC-HOOK-PORTABILITY
+
+```gherkin
+Feature: Shared Workbench hooks
+
+  @AC-HOOK-PORTABILITY
+Scenario Outline: Reuse registrations after a workspace is copied or moved
+  Given a workspace has all three Workbench hook registrations installed
+  And its native configurations and session pointers contain zero machine-specific paths
+  And the installed ai-sdlc command is available on the destination machine's PATH
+  When the workspace is <operation> to a location with spaces and Unicode
+  And a native session-start event runs from a nested directory in that workspace
+  Then the hook selects the nearest owning Workbench workspace
+  And the native configuration bytes remain unchanged
+  And no interpreter or workspace location must be rewritten
+
+  Examples:
+    | operation |
+    | copied |
+    | moved |
 ```
 
 ## Native references

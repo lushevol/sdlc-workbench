@@ -407,15 +407,14 @@ def _hook_feature(root: Path) -> dict:
     status = hook_status(root)
     selected = [item for item in status["clients"] if item["status"] != "NOT_CONFIGURED"]
     checks = [_check("hook-configurations", status["status"] in {"READY", "PARTIAL"},
-                     "Run ai-sdlc --workspace PATH hooks status, then reconcile or install the selected adapters.")]
+                     "Run ai-sdlc hooks status from the workspace root, then reconcile or install the selected adapters."),
+              _executable("ai-sdlc")]
     for client in selected:
         checks.append(_check("hooks:" + client["client"], client["status"] == "CONFIGURED",
                              "Reconcile the Workbench-owned native hook entries before updating them."))
         checks.append(_executable(client["client"]))
-    if sys.platform == "win32" and any(item["client"] == "codex" for item in selected):
-        checks.append(_executable("powershell.exe"))
     return _feature("hooks", checks, configured=True, limitations=(
-        "Client executables are checked on PATH; desktop-only client installations may need separate verification.",
+        "The ai-sdlc command and client executables are checked on PATH; desktop-only client installations may need separate verification.",
         "Claude requires the isolated settings file through --settings. Codex hook trust remains a client decision.",
         "Configuration and executable discovery do not establish live event delivery or passing business behavior."))
 

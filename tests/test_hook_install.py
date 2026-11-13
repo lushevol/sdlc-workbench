@@ -1,9 +1,10 @@
-"""Protect user hook settings, installed-runtime paths, and installation recovery."""
+"""Protect portable registrations, user hook settings, and installation recovery."""
 
 import base64
 import json
 import os
 from pathlib import Path
+import shlex
 import shutil
 import subprocess
 import sys
@@ -37,6 +38,42 @@ class HookInstallationTests(unittest.TestCase):
         return {str(path.relative_to(self.root)): path.read_bytes()
                 for path in self.root.rglob("*.json")}
 
+    def install_legacy(self):
+        """Keep the original v1 registration contract as the migration baseline."""
+        state = {"schema_version": 1, "clients": {}}
+        for client, relative in module.CONFIGS.items():
+            hooks = {}
+            for event in ("start", "stop"):
+                native = ("sessionStart" if event == "start" else "agentStop") if client == "copilot" else (
+                    "SessionStart" if event == "start" else "Stop")
+                arguments = ["-m", "ai_sdlc_workbench", "--workspace", str(self.root), "hooks", "run",
+                             "--client", client, "--event", event]
+                handler = {"type": "command", "args": arguments}
+                if client == "copilot":
+                    handler.update(exec=sys.executable, timeoutSec=15)
+                    entry = handler
+                elif client == "claude":
+                    handler.update(command=sys.executable, timeout=15)
+                    entry = {"hooks": [handler]}
+                else:
+                    argv = [sys.executable, *arguments]
+                    script = "& " + " ".join("'" + value.replace("'", "''") + "'" for value in argv) + "; exit $LASTEXITCODE"
+                    encoded = base64.b64encode(script.encode("utf-16-le")).decode("ascii")
+                    entry = {"hooks": [{"type": "command", "command": shlex.join(argv),
+                              "commandWindows": "powershell.exe -NoProfile -NonInteractive -EncodedCommand " + encoded,
+                              "timeout": 15}]}
+                hooks[native] = [entry]
+            document = {"hooks": hooks}
+            if client == "copilot":
+                document["version"] = 1
+            if client == "codex":
+                document["owner"] = "preserve user settings"
+                hooks["SessionStart"].append({"hooks": [{"type": "command", "command": "user-command"}]})
+            self.write(relative, document)
+            state["clients"][client] = {"python": sys.executable, "workspace": str(self.root),
+                                        "created": client != "codex", "had_hooks": client == "codex"}
+        self.write(module._STATE, state)
+
     def test_status_does_not_create_files_and_reports_execution_unverified(self):
         result = module.hook_status(self.root)
         self.assertEqual(result["status"], "NOT_CONFIGURED")
@@ -55,23 +92,72 @@ class HookInstallationTests(unittest.TestCase):
                 self.assertFalse((self.root / ".workbench").exists())
                 self.assertFalse((self.root / ".codex").exists())
 
-    def test_relocated_configuration_is_reported_then_rebound_on_reinstall(self):
+    def test_relocated_configuration_remains_ready_and_byte_identical(self):
         module.install_hooks(self.root)
-        previous_root = self.root
+        before = self.settings()
         moved = self.root.parent / "moved workspace"
         shutil.move(self.root, moved)
         self.root = moved
         result = module.hook_status(self.root)
-        self.assertEqual(result["status"], "INCOMPLETE")
-        self.assertTrue(all(row["status"] == "INCOMPLETE" for row in result["clients"]))
-        self.assertTrue(all("another workspace" in row["detail"] for row in result["clients"]))
+        self.assertEqual(result["status"], "READY")
+        self.assertTrue(all(row["status"] == "CONFIGURED" for row in result["clients"]))
+        self.assertEqual(self.settings(), before)
         self.assertEqual(module.install_hooks(self.root)["status"], "READY")
+        self.assertEqual(self.settings(), before)
+
+    def test_legacy_install_migrates_all_owned_clients_after_relocation(self):
+        self.install_legacy()
+        status = module.hook_status(self.root)
+        self.assertEqual(status["status"], "INCOMPLETE")
+        self.assertTrue(all("portable reinstall" in row["detail"] for row in status["clients"]))
+        self.assertNotIn(sys.executable, json.dumps(status))
+        moved = self.root.parent / "legacy moved"
+        shutil.move(self.root, moved)
+        self.root = moved
+        self.assertEqual(module.install_hooks(self.root, ["codex"])["status"], "READY")
+        self.assertEqual(self.read(module._STATE)["schema_version"], 2)
+        self.assertNotIn(sys.executable, json.dumps(self.settings_as_json()))
+        codex = self.read(module.CONFIGS["codex"])
+        self.assertEqual(codex["owner"], "preserve user settings")
+        self.assertIn({"hooks": [{"type": "command", "command": "user-command"}]}, codex["hooks"]["SessionStart"])
+        module.remove_hooks(self.root)
+        self.assertEqual(self.read(module.CONFIGS["codex"]), {"owner": "preserve user settings", "hooks": {
+            "SessionStart": [{"hooks": [{"type": "command", "command": "user-command"}]}]}})
+
+    def test_legacy_partial_uninstall_migrates_retained_clients_without_absolute_state(self):
+        self.install_legacy()
+        result = module.remove_hooks(self.root, ["claude"])
+        self.assertEqual(result["status"], "PARTIAL")
         state = self.read(module._STATE)
-        self.assertTrue(all(record["workspace"] == str(moved) for record in state["clients"].values()))
-        self.assertNotIn(str(previous_root), (self.root / module.CONFIGS["copilot"]).read_text(encoding="utf-8"))
+        self.assertEqual(state["schema_version"], 2)
+        self.assertEqual(set(state["clients"]), {"codex", "copilot"})
+        self.assertFalse((self.root / module.CONFIGS["claude"]).exists())
+        self.assertNotIn(sys.executable, json.dumps(self.settings_as_json()))
+        self.assertTrue(all(row["status"] == "CONFIGURED" for row in result["clients"][:2]))
+
+    def test_legacy_uninstall_removes_only_the_exact_old_registrations(self):
+        self.install_legacy()
+        self.assertEqual(module.remove_hooks(self.root)["status"], "NOT_CONFIGURED")
+        self.assertFalse((self.root / module._STATE).exists())
+        self.assertFalse((self.root / module.CONFIGS["copilot"]).exists())
+        self.assertFalse((self.root / module.CONFIGS["claude"]).exists())
+        self.assertEqual(self.read(module.CONFIGS["codex"])["hooks"]["SessionStart"],
+                         [{"hooks": [{"type": "command", "command": "user-command"}]}])
+
+    def test_modified_legacy_entry_prevents_migration_and_partial_uninstall(self):
+        self.install_legacy()
+        document = self.read(module.CONFIGS["claude"])
+        document["hooks"]["Stop"][0]["hooks"][0]["timeout"] = 3
+        self.write(module.CONFIGS["claude"], document)
+        before = self.settings()
+        for operation in (module.install_hooks, module.remove_hooks):
+            with self.subTest(operation=operation.__name__):
+                with self.assertRaisesRegex(WorkbenchError, "changed after installation"):
+                    operation(self.root, ["codex"])
+                self.assertEqual(self.settings(), before)
 
     def test_identical_unowned_codex_registration_cannot_double_run(self):
-        entries = module._registrations("codex", self.root, sys.executable)
+        entries = module._registrations("codex")
         path = self.write(module.CONFIGS["codex"], {"hooks": {event: [entry] for event, entry in entries.items()}})
         raw = path.read_bytes()
         with self.assertRaisesRegex(WorkbenchError, "not owned"):
@@ -91,7 +177,7 @@ class HookInstallationTests(unittest.TestCase):
         self.assertEqual(self.settings(), installed)
         self.assertEqual(ordinary.read_bytes(), original)
         claude = next(row for row in result["clients"] if row["client"] == "claude")
-        self.assertEqual(claude["launch_argv"], ["claude", "--settings", str(self.root / ".claude/workbench-hooks.json")])
+        self.assertEqual(claude["launch_argv"], ["claude", "--settings", ".claude/workbench-hooks.json"])
         self.assertEqual(set(self.read(module.CONFIGS["copilot"])["hooks"]), {"sessionStart", "agentStop"})
         self.assertEqual(set(self.read(module.CONFIGS["claude"])["hooks"]), {"SessionStart", "Stop"})
 
@@ -224,32 +310,68 @@ class HookInstallationTests(unittest.TestCase):
         self.assertEqual(list(external.iterdir()), [])
         self.assertFalse((self.root / module.CONFIGS["copilot"]).exists())
 
-    def test_native_argv_and_encoded_windows_command_preserve_literal_paths(self):
+    def test_native_registrations_state_and_status_have_no_machine_paths(self):
         module.install_hooks(self.root)
-        expected = ["-m", "ai_sdlc_workbench", "--workspace", str(self.root), "hooks", "run",
-                    "--client", "copilot", "--event", "start"]
+        expected = ["hooks", "run", "--client", "copilot", "--event", "start"]
         handler = self.read(module.CONFIGS["copilot"])["hooks"]["sessionStart"][0]
-        self.assertEqual(handler["exec"], sys.executable)
+        self.assertEqual(handler["exec"], "ai-sdlc")
         self.assertEqual(handler["args"], expected)
         self.assertNotIn("bash", handler)
         codex = self.read(module.CONFIGS["codex"])["hooks"]["SessionStart"][0]["hooks"][0]
-        prefix, encoded = codex["commandWindows"].rsplit(" ", 1)
-        self.assertEqual(prefix, "powershell.exe -NoProfile -NonInteractive -EncodedCommand")
-        script = base64.b64decode(encoded).decode("utf-16-le")
-        self.assertIn("'" + str(self.root).replace("'", "''") + "'", script)
-        self.assertIn("'; exit $LASTEXITCODE", script)
+        self.assertEqual(codex["command"], "ai-sdlc hooks run --client codex --event start")
+        self.assertNotIn("commandWindows", codex)
+        claude = self.read(module.CONFIGS["claude"])["hooks"]["SessionStart"][0]["hooks"][0]
+        self.assertEqual(claude["command"], "ai-sdlc")
+        self.assertEqual(claude["args"], ["hooks", "run", "--client", "claude", "--event", "start"])
+        state = self.read(module._STATE)
+        self.assertEqual(state["schema_version"], 2)
+        for client, record in state["clients"].items():
+            self.assertEqual(set(record), {"registrations", "created", "had_hooks"})
+            self.assertEqual(record["registrations"], module._registrations(client))
+        serialized = json.dumps([self.settings_as_json(), module.hook_status(self.root)], ensure_ascii=False)
+        self.assertNotIn(str(self.root), serialized)
+        self.assertNotIn(sys.executable, serialized)
+        self.assertNotIn("powershell", serialized)
+
+    def settings_as_json(self):
+        return {relative: raw.decode("utf-8") for relative, raw in self.settings().items()}
+
+    def test_compatibility_python_option_is_verified_but_never_persisted(self):
+        executable = self.root / "python shim"
+        executable.write_text("Unused executable fixture.\n", encoding="utf-8")
+        executable.chmod(0o700)
+        module.install_hooks(self.root, python=executable)
+        executable.unlink()
+        self.assertEqual(module.hook_status(self.root)["status"], "READY")
+        self.assertNotIn(str(executable), json.dumps(self.settings_as_json()))
+        before = self.settings()
+        with self.assertRaisesRegex(WorkbenchError, "compatibility --python"):
+            module.install_hooks(self.root, python=executable)
+        self.assertEqual(self.settings(), before)
 
     @unittest.skipIf(os.name == "nt", "POSIX shell quoting probe")
-    def test_posix_generated_command_executes_without_expanding_path_metacharacters(self):
-        executable = self.root / "python shim ' $ ` 漢"
+    def test_posix_registrations_use_path_after_workspace_moves(self):
+        directory = Path(self.temporary.name) / "bin ' $ ` 漢"
+        directory.mkdir()
+        executable = directory / "ai-sdlc"
         executable.write_text("#!" + sys.executable + "\nimport json, sys\nprint(json.dumps(sys.argv[1:]))\n", encoding="utf-8")
         executable.chmod(0o700)
-        module.install_hooks(self.root, "codex", python=executable)
-        handler = self.read(module.CONFIGS["codex"])["hooks"]["SessionStart"][0]["hooks"][0]
-        result = subprocess.run(["/bin/sh", "-c", handler["command"]], capture_output=True, text=True, timeout=5)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(json.loads(result.stdout), ["-m", "ai_sdlc_workbench", "--workspace", str(self.root),
-                         "hooks", "run", "--client", "codex", "--event", "start"])
+        module.install_hooks(self.root)
+        before = self.settings()
+        moved = self.root.parent / "moved ' $ ` 漢"
+        shutil.move(self.root, moved)
+        self.root = moved
+        environment = {**os.environ, "PATH": str(directory) + os.pathsep + os.environ.get("PATH", "")}
+        for client in module.CONFIGS:
+            with self.subTest(client=client):
+                entries = self.read(module.CONFIGS[client])["hooks"]
+                handler = entries["sessionStart"][0] if client == "copilot" else entries["SessionStart"][0]["hooks"][0]
+                argv = (["/bin/sh", "-c", handler["command"]] if client == "codex" else
+                        [handler["exec" if client == "copilot" else "command"], *handler["args"]])
+                result = subprocess.run(argv, cwd=self.root, env=environment, capture_output=True, text=True, timeout=5)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(json.loads(result.stdout), ["hooks", "run", "--client", client, "--event", "start"])
+        self.assertEqual(self.settings(), before)
 
 
 if __name__ == "__main__":

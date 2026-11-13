@@ -265,8 +265,9 @@ It preserves original outcomes, characterization, declared scope completeness, a
 ## Shared skills and agent adapters
 
 Use [Workbench hooks](docs/HOOKS.md) for shared session context and scoped completion checks across Codex, Copilot, and Claude Code.
-Install the adapters with `ai-sdlc --workspace PATH hooks install`.
-Claude uses the returned `--settings` launch argument to avoid Copilot importing its registration.
+From the workspace root, install the adapters with `ai-sdlc --workspace . hooks install`.
+Expose installed `ai-sdlc` on the agent's `PATH`; portable registrations discover the workspace from native events.
+Launch Claude with `claude --settings .claude/workbench-hooks.json` to avoid Copilot importing its registration.
 Hooks remain advisory. Bind the active session scope before edits; existing skills retain workflow decisions.
 
 Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.

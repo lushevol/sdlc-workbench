@@ -14,6 +14,8 @@ limitations:
 after this assessment. The current [hook guide](../HOOKS.md) describes the shared runtime, installation, native adapters, and execution limits.
 The implemented Claude adapter uses isolated `.claude/workbench-hooks.json` with an explicit `--settings` launch command,
 so Copilot does not inherit a duplicate registration from ordinary Claude settings.
+The latest [portability requirement](../evidence/workflow-hooks-assessment-20261112/portability-request.md#exact-user-input)
+requires portable commands that resolve installed `ai-sdlc` through `PATH` and discover the workspace from native events.
 The assessment below preserves the preimplementation baseline. Its source hashes, inspection counts, candidate mappings, and validation outcomes are historical evidence.
 
 **Recommendation: share one Workbench hook implementation across Codex, GitHub Copilot, and Claude Code through thin client adapters.**

@@ -169,16 +169,18 @@ Generated workspaces receive instructions and native registration through the in
 
 | Prerequisite | Purpose | Acquisition and verification |
 | --- | --- | --- |
-| Installed Workbench Python environment | Execute shared context and scoped completion checks. | Existing connected setup or matching offline bundle; inspect `hooks status` and run local verification. |
+| Installed Workbench Python environment with `ai-sdlc` on the agent's `PATH` | Execute shared context and scoped completion checks. | Existing connected setup or matching offline bundle; activate the environment or expose its command before launching the agent. Inspect `hooks status` and run local verification. |
 | Codex with native hook support | Dispatch `SessionStart` and `Stop`. | Approved Codex installation; review non-managed hooks and retain the actual client version. |
 | GitHub Copilot CLI or VS Code Copilot harness | Dispatch `sessionStart` and `agentStop`. | Approved client installation; confirm the harness and native event execution. VS Code hooks are preview. |
 | Claude Code with native hook support | Dispatch `SessionStart` and `Stop`. | Approved Claude Code installation; confirm workspace trust and native event execution. |
-| Windows PowerShell, on Windows only | Safely invoke the Codex hook command with the installed Python executable. | Standard `powershell.exe`; diagnose locally without downloading or running client hooks. |
 
 Workbench does not download, update, or authenticate these optional agent clients.
 The agents' own model access remains outside the local hook execution path.
 No new package host or runtime endpoint is introduced by the hooks.
 Offline preparation uses the normal Workbench wheel; regenerate bundles after source changes.
+Native registrations invoke `ai-sdlc` through `PATH`; they bind no machine-specific interpreter or workspace location.
+Each native event selects the nearest Workbench workspace ancestor of its working directory.
+Copying or moving the workspace leaves registration bytes unchanged. The destination still needs its own installed command and client prerequisites.
 
 The native clients have separate configuration, payload, output, and trust rules.
 Configuration validation and payload tests do not establish live client compatibility.

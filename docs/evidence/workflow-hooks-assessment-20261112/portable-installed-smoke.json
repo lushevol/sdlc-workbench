@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "created_at": "2026-11-13T02:49:19.045834+00:00",
+  "environment": {
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "wheel": {
+    "file": "ai_sdlc_workbench-0.1.0-py3-none-any.whl",
+    "sha256": "5791328f610d25b5fa3d3c7546cc7a415f7537e625d892e77254d3fc43f3d810"
+  },
+  "package_source": {
+    "label": "isolated extracted wheel target",
+    "verified_under_target": true
+  },
+  "method": "Extract wheel as tests/test_workspace_layout.py; target-only PYTHONPATH verified; test-only ai-sdlc console entry on PATH; public CLI and exact registered POSIX command/argv with nested native cwd; no client launched.",
+  "commands": {
+    "initialize": "ai-sdlc init FRESH_WORKSPACE",
+    "install_status_uninstall": "ai-sdlc hooks install|status|uninstall (from workspace root)",
+    "bind": "Execute emitted ai-sdlc --workspace RELATIVE_ROOT hooks bind command from nested native cwd",
+    "codex_events": "POSIX shell -c CONFIG.hooks.SessionStart|Stop[owned].hooks[0].command",
+    "copilot_events": "[CONFIG.hooks.sessionStart|agentStop[owned].exec, *args]",
+    "claude_events": "[CONFIG.hooks.SessionStart|Stop[owned].hooks[0].command, *args]"
+  },
+  "prior_attempts": [
+    {
+      "status": "HARNESS_CORRECTED",
+      "assertions_before_stop": 18,
+      "subprocess_invocations": 3,
+      "reason": "The adapted smoke selected owned handlers by the old module name; changed selection to the new bare ai-sdlc contract. No product failure was observed."
+    }
+  ],
+  "assertions": 385,
+  "subprocess_invocations": 63,
+  "clients": [
+    {
+      "client": "codex",
+      "status": "PASSED",
+      "start_context": "PASSED",
+      "distinct_same_session_binding": "PASSED",
+      "unchanged_stop_no_validation": "PASSED",
+      "changed_record_validation": "PASSED",
+      "invalid_selected_artifact_advisory": "PASSED",
+      "identical_stop_warning_suppressed": "PASSED",
+      "warning_exit_code": 0
+    },
+    {
+      "client": "copilot",
+      "status": "PASSED",
+      "start_context": "PASSED",
+      "distinct_same_session_binding": "PASSED",
+      "unchanged_stop_no_validation": "PASSED",
+      "changed_record_validation": "PASSED",
+      "invalid_selected_artifact_advisory": "PASSED",
+      "identical_stop_warning_suppressed": "PASSED",
+      "warning_exit_code": 2
+    },
+    {
+      "client": "claude",
+      "status": "PASSED",
+      "start_context": "PASSED",
+      "distinct_same_session_binding": "PASSED",
+      "unchanged_stop_no_validation": "PASSED",
+      "changed_record_validation": "PASSED",
+      "invalid_selected_artifact_advisory": "PASSED",
+      "identical_stop_warning_suppressed": "PASSED",
+      "warning_exit_code": 0
+    }
+  ],
+  "portability": [
+    {
+      "workspace": "original generated workspace",
+      "status": "PASSED",
+      "configuration_and_session_hashes": {
+        ".codex/hooks.json": "f27b25de107822a866d1aa46d03f15447f1f6313612cdb8701840f13ec7ea1b1",
+        ".github/hooks/workbench.json": "f3496a5fb5ea94b0efb16748f56920d49bf2ff4749ac856beae1eee2307d58ca",
+        ".claude/workbench-hooks.json": "5db71fe605ebc5ab27b781c4a902b63c99773aee1c047a771f03aea2b4ff86fc",
+        ".workbench/hooks/installation.json": "54be344c36a9c25d749ed5a509321ad145cece5203cda9e7e3c2fb8eadf59bf0",
+        ".workbench/hooks/sessions/911df543caf2eb3c7a85909082cb65cd6877f4567d5da737041400c263c6df1e.json": "e24a10e4d428a9080f7d728817f81785cdd9b5988fdb7184684475a802314b9f",
+        ".workbench/hooks/sessions/de42f25377b0b5af54d92f3936d0ef291042580af77f742e14849a2407c9733a.json": "329a02c12a961b64b7c0ee25c1e6e7c5d6dfe77a23fa6b2b0d9320d8cfdf80f5",
+        ".workbench/hooks/sessions/b305aadc594837c7968e10bcf3d3734cf0807f0f01ca69878f095929333ee835.json": "a087053efdd6fe185e701625f9d97a476857dcd52e1650a430c4f3bcf404701a"
+      }
+    },
+    {
+      "workspace": "copy with spaces and Unicode",
+      "status": "PASSED",
+      "nested_cwd_discovery": "PASSED",
+      "unchanged_configuration_and_session_hashes": true,
+      "baseline_hashes_ref": "#/portability/0/configuration_and_session_hashes"
+    },
+    {
+      "workspace": "move with spaces and Unicode",
+      "status": "PASSED",
+      "nested_cwd_discovery": "PASSED",
+      "unchanged_configuration_and_session_hashes": true,
+      "baseline_hashes_ref": "#/portability/0/configuration_and_session_hashes"
+    }
+  ],
+  "preservation_checks": [
+    "No runtime .py files copied into generated core/",
+    "Ordinary .claude/settings.json absent initially and exact bytes preserved after user creation",
+    "Domain, catalog, evidence, guide and skill file hashes unchanged around every native hook invocation",
+    "Reinstall is byte-identical and preserves unrelated Codex hooks/settings",
+    "Uninstall removes only owned registrations, preserving unrelated settings/hooks"
+  ],
+  "live_native_client_dispatch": "NOT_RUN",
+  "windows_execution": "NOT_RUN",
+  "limits": "Local POSIX registered-handler execution with synthetic native payloads; no client trust, actual event dispatch, business acceptance, or publication approval established."
+}

@@ -36,12 +36,14 @@ The [shared hook runtime](../../docs/HOOKS.md) supplies bounded session context 
 Install its Claude Code registration explicitly:
 
 ```text
-ai-sdlc --workspace PATH hooks install --client claude
-ai-sdlc --workspace PATH hooks status
+ai-sdlc --workspace . hooks install --client claude
+ai-sdlc --workspace . hooks status
 ```
 
 The adapter maps native `SessionStart` and `Stop` events through isolated `.claude/workbench-hooks.json`.
-**Launch Claude Code with the installer's returned `launch_argv`, including `--settings ABSOLUTE_FILE`.**
+**From the workspace root, launch Claude Code with `claude --settings .claude/workbench-hooks.json`.**
+Make installed `ai-sdlc` available on the agent's `PATH` before launching Claude Code.
+Native events discover the nearest owning Workbench workspace from their working directory; registrations contain no machine paths.
 Bare `claude` does not activate this isolated registration.
 Ordinary `.claude/settings.json` and `.claude/settings.local.json` remain untouched.
 The isolated file prevents Copilot from inheriting the installed Claude Workbench handlers.

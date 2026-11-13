@@ -35,11 +35,13 @@ The [shared hook runtime](../../docs/HOOKS.md) supplies bounded session context 
 Install its Copilot registration explicitly:
 
 ```text
-ai-sdlc --workspace PATH hooks install --client copilot
-ai-sdlc --workspace PATH hooks status
+ai-sdlc --workspace . hooks install --client copilot
+ai-sdlc --workspace . hooks status
 ```
 
 The adapter uses `.github/hooks/workbench.json` with `sessionStart` and `agentStop` events.
+Run the hook commands from the workspace root and make installed `ai-sdlc` available on the agent's `PATH` before launching Copilot.
+Native events discover the nearest owning Workbench workspace from their working directory; registrations contain no machine paths.
 Copilot CLI and the VS Code Copilot harness share this format.
 The VS Code hooks experience is preview; the deprecated Local harness has a separate schema.
 `sessionEnd` means session termination and does not replace turn completion.
