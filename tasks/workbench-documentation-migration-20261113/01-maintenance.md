@@ -1,6 +1,6 @@
 # Workbench living-documentation migration
 
-**Migration and cleanup are complete. No migration blocker requires user action.**
+**The migration is committed. The follow-up review found five open corrections: a stale graph input, missing overview diagrams, broken replay roots, task links and source-recovery guidance.**
 
 - Work type: Workbench maintenance.
 - Date: 13 November 2026.
@@ -8,6 +8,7 @@
 - Authority: [exact migration and cleanup request](evidence/knowledge-layout-assessment-20261113/user-input.md#documentation-migration-authorization).
 - Governing model: [latest living-documentation clarification](evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
 - Design: [current reviewed proposal](design.md#stable-document-series-and-incremental-task-history).
+- Follow-up: [user review request](evidence/user-review-request-20261113.md) and [migration review](review.md).
 - Baseline: `79a410403`; unrelated `core/release-report/`, the concurrent `core/connectors/yarn.lock` deletion, and the separate ADO skills assessment task are excluded.
 
 ## Scope and current decision
@@ -52,6 +53,14 @@ The final validator exposed an unsupported classification in one newly appended 
 Portal and netting each retain one existing source-review HOLD, with their previous processing queues still open. These are existing knowledge-workflow limits.
 Full runtime tests, live business scenarios, external URLs and native Windows were outside this documentation and packaging check. Some heading fragments remain unchecked by the harness.
 This change establishes documentation and storage maintenance, with no business execution, knowledge publication or live deployment claim.
+
+## Follow-up review outcome
+
+The [requested review](review.md) supersedes any inference that the earlier structural checks established a complete or safe content migration.
+It found two P2 issues and three P3 issues. The graph loader fails on a moved active source; overall diagram coverage was lost; five replay roots and seven task/report links regress; the release-report source recovery section was removed without an adequate replacement.
+All 65 deletions and 49 edited relocations received an independent retention/content assessment. Protected sources, prior audits and the 14 canonical report cases remain exact. Both compacted outputs recover byte-for-byte.
+The 76 affected tests passed again and workspace validation remains valid; these checks do not cover the reported defects.
+The review applied no fixes or further deletion. Correction should preserve useful material, restore affected consumers and verify replacement meaning before additional cleanup.
 
 ```yaml
 standard: ASD-STE100

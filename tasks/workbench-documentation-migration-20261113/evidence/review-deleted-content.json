@@ -1,0 +1,1107 @@
+{
+  "schema": "focused-review-evidence/v1",
+  "date": "2026-11-13",
+  "reviewer": "agent:codex/layout_inventory",
+  "comparison": {
+    "mode": "range",
+    "base": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+    "candidate": "516857d649f5dc557ff58731bb17a09e0308ffce",
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench"
+  },
+  "scope": "Deletion safety and useful semantic coverage of eight removed root documents, two editable SDLC sources and nine diagram index/export files.",
+  "authorization": {
+    "review_request": "tasks/workbench-documentation-migration-20261113/evidence/user-review-request-20261113.md",
+    "operation": "review only; this JSON is the only file written by this review agent"
+  },
+  "findings": [
+    {
+      "id": "deleted-content-1",
+      "priority": "P2",
+      "title": "Retain a current end-to-end SDLC feedback diagram",
+      "anchor": {
+        "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+        "path": "AI SDLC Workbench.drawio",
+        "lines": [
+          278,
+          289
+        ]
+      },
+      "related_deletion_ledger": {
+        "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+        "path": "tasks/workbench-documentation-migration-20261113/evidence/changes.json",
+        "lines": [
+          13876,
+          13897
+        ]
+      },
+      "trigger": "A reader follows the prior Workbench diagram entry point or asks to see the complete SDLC model, as the user did in the latest review request.",
+      "intended": "Preserve current useful documentation while consolidating duplicate/obsolete representations.",
+      "baseline": "The diagram README links both editable sources through URL-encoded filenames and four rendered views. The complete lifecycle includes implementation/review, case execution, comparison and distinct return paths for implementation defects, assertion/execution gaps, and intent/evidence gaps. The three-loop concept explicitly relates intent, reality and observed outcomes.",
+      "candidate": "Both editable sources and all previews/index are deleted. The ledger names ARCHITECTURE.md as the replacement. Its core workflow is linear prose; remaining Mermaid views cover intake/knowledge data flow or static traceability, without the full SDLC feedback/control view.",
+      "consequence": "The owner loses the visual model they use to understand and discuss the Workbench SDLC; prose and narrower diagrams cannot serve the same complete visual explanation. This is documentation/user value loss, with no runtime outage claim.",
+      "source_evidence": [
+        {
+          "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+          "path": "docs/diagrams/workbench/README.md",
+          "lines": [
+            3,
+            4
+          ]
+        },
+        {
+          "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+          "path": "docs/diagrams/workbench/README.md",
+          "lines": [
+            15,
+            18
+          ]
+        },
+        {
+          "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+          "path": "docs/diagrams/workbench/README.md",
+          "lines": [
+            29,
+            35
+          ]
+        },
+        {
+          "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+          "path": "docs/diagrams/workbench/README.md",
+          "lines": [
+            85,
+            85
+          ]
+        },
+        {
+          "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+          "path": "AI SDLC Workbench.drawio",
+          "lines": [
+            506,
+            535
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            347,
+            392
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/WORKSPACE_DESIGN.md",
+          "lines": [
+            414,
+            455
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/WORKSPACE_DESIGN.md",
+          "lines": [
+            536,
+            554
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/KNOWLEDGE_LIFECYCLE.md",
+          "lines": [
+            22,
+            57
+          ]
+        }
+      ],
+      "owner": "Workbench maintainer; named human owner unknown",
+      "next_action": "Retain/update one stable editable concept and end-to-end lifecycle diagram and link it from a maintained guide. Consolidate duplicate previews as useful; the finding does not require restoring every export.",
+      "validation": "Compare the maintained view with the three viewpoints and three feedback routes, open it through the current documentation entry point, and inspect its rendered readability."
+    },
+    {
+      "id": "deleted-content-2",
+      "priority": "P3",
+      "title": "Preserve the supplied-source recovery entry point",
+      "anchor": {
+        "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+        "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+        "lines": [
+          38,
+          57
+        ]
+      },
+      "related_deletion_ledger": {
+        "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+        "path": "tasks/workbench-documentation-migration-20261113/evidence/changes.json",
+        "lines": [
+          211,
+          220
+        ]
+      },
+      "trigger": "A reviewer opens the retained release-report source-analysis or implementation links from a fresh checkout, which has no tracked core/release-report TypeScript source.",
+      "intended": "Retain recovery information and source traceability when removing historical reports.",
+      "baseline": "The preparation guide links the inventory and exact supplied-source archive, states that the source tree is untracked, explains unknown source revision/environment limits, and supplies temporary extraction plus original-path/line-number recovery instructions.",
+      "candidate": "The archive and inventory remain byte-identical under the owning task, but no tracked Markdown refers to the archive or owning inventory. The retained implementation still links the untracked source at line 19 and states its untracked status at line 65. The replacement case catalog preserves cases, not the source-recovery route.",
+      "consequence": "Future readers cannot recover original source for retained analysis from the living documentation path; discovering the archive now requires knowing its filename or consulting the migration ledger/Git history. Impact is limited to source review/reproduction usability.",
+      "source_evidence": [
+        {
+          "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+          "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+          "lines": [
+            38,
+            57
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tasks/workbench-release-report-20261024/implementation.md",
+          "lines": [
+            19,
+            19
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tasks/workbench-release-report-20261024/implementation.md",
+          "lines": [
+            65,
+            65
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tasks/workbench-release-report-20261024/06-test-cases.md",
+          "lines": [
+            12,
+            21
+          ]
+        }
+      ],
+      "owner": "Workbench maintainer; named human owner unknown",
+      "next_action": "Add a compact source recovery note or evidence index under the owning release-report task, linking archive and inventory and describing safe extraction/original locator reuse.",
+      "validation": "In a temporary fresh-checkout view without core/release-report, follow a retained source citation through the documented recovery path, extract the archive to a temporary location and resolve the original member/line."
+    }
+  ],
+  "document_semantic_dispositions": [
+    {
+      "base_path": "docs/INITIAL_CONSTRUCTION.md",
+      "base_scope": [
+        [
+          12,
+          62
+        ],
+        [
+          64,
+          141
+        ],
+        [
+          143,
+          179
+        ]
+      ],
+      "disposition": "No additional actionable loss established. Early gap/stage proposal and parent extraction candidates describe a superseded construction. Current responsibilities and boundaries remain in architecture and workspace design; old test counts and parent-relative commands should not become current instructions.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            21,
+            51
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            149,
+            288
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            347,
+            439
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/WORKSPACE_DESIGN.md",
+          "lines": [
+            8,
+            46
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/WORKSPACE_DESIGN.md",
+          "lines": [
+            571,
+            587
+          ]
+        }
+      ]
+    },
+    {
+      "base_path": "docs/IMPLEMENTATION_REVIEW.md",
+      "base_scope": [
+        [
+          8,
+          65
+        ]
+      ],
+      "disposition": "No additional actionable loss established. The dated 83-test implementation report describes already implemented contracts and bounded historical execution. Current architecture retains ownership/validation limits; native Windows uncertainty remains explicit. This is not a claim that all historical prose is copied.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            192,
+            260
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            288,
+            310
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/DEPENDENCIES.md",
+          "lines": [
+            28,
+            39
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/SETUP.md",
+          "lines": [
+            790,
+            793
+          ]
+        }
+      ]
+    },
+    {
+      "base_path": "docs/MVP_ARCHITECTURE.md",
+      "base_scope": [
+        [
+          3,
+          14
+        ]
+      ],
+      "disposition": "Already explicitly superseded. Mandatory clones and client-specific skill placement were rejected in the base itself. Current principles and architecture retain external asset ownership and seven SDLC concerns.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "PRINCIPLE.md",
+          "lines": [
+            17,
+            45
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            315,
+            344
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            394,
+            409
+          ]
+        }
+      ]
+    },
+    {
+      "base_path": "docs/VALUE_RETENTION_REVIEW.md",
+      "base_scope": [
+        [
+          17,
+          37
+        ],
+        [
+          39,
+          75
+        ],
+        [
+          77,
+          101
+        ]
+      ],
+      "disposition": "No additional actionable loss established. Current-value rule, single-runtime package mapping, example ownership, removed demo/dashboard decision and generated-workspace boundaries remain explicit. Three dated stage Gherkin scenarios refer to obsolete six-skill/76-test counts; current test assertions cover the supported installation/catalog boundaries without preserving obsolete counts as current requirements.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "PRINCIPLE.md",
+          "lines": [
+            138,
+            148
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            288,
+            310
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "ARCHITECTURE.md",
+          "lines": [
+            421,
+            427
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tests/test_workspace_layout.py",
+          "lines": [
+            339,
+            371
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tests/test_catalogs.py",
+          "lines": [
+            279,
+            299
+          ]
+        }
+      ]
+    },
+    {
+      "base_path": "docs/SYSTEM_WORKSPACE_ISOLATION.md",
+      "base_scope": [
+        [
+          13,
+          98
+        ],
+        [
+          100,
+          133
+        ],
+        [
+          135,
+          161
+        ]
+      ],
+      "disposition": "Current system ownership, independent identities, explicit shared-source adoption, process-variable crossover, runtime versioning, external confidentiality boundary and init commands are covered. The old unimplemented generic-generated-guide improvement and populated-workspace adoption work are not asserted as completed. Current setup still requires instruction review and populated-workspace checks; original user input and workspace-check evidence remain retained. No additional concrete loss established.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/WORKSPACE_DESIGN.md",
+          "lines": [
+            48,
+            75
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/SETUP.md",
+          "lines": [
+            757,
+            774
+          ]
+        }
+      ]
+    },
+    {
+      "base_path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+      "base_scope": [
+        [
+          14,
+          70
+        ],
+        [
+          72,
+          251
+        ],
+        [
+          274,
+          412
+        ]
+      ],
+      "disposition": "Fourteen combined RR/RR-P blocks preserved exactly across this file and API design; active collection behavior and unavailable/error boundaries remain documented. Historical failure analyses survive in retained collector-analysis.md/report-ui-analysis.md/integration-analysis.md. Unique source archive and inventory recovery/discovery instructions are lost: finding deleted-content-2.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            103,
+            185
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            204,
+            216
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tasks/workbench-release-report-20261024/06-test-cases.md",
+          "lines": [
+            3,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "base_path": "docs/RELEASE_REPORT_API_DESIGN.md",
+      "base_scope": [
+        [
+          12,
+          96
+        ],
+        [
+          98,
+          247
+        ],
+        [
+          253,
+          347
+        ]
+      ],
+      "disposition": "No separate additional actionable loss established. Current guide covers collection/renderer separation, compatible connector reuse, session/request limits, batching, pagination, streaming, successful-response Retry-After delays, metrics and controlled/live evidence limits. Six original RR-P definitions are preserved exactly and catalog explicitly retains RR-P2/P3 implementation differences. Source-derived old connector findings remain in retained source-review evidence.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            53,
+            83
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            128,
+            145
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            158,
+            185
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            204,
+            235
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tasks/workbench-release-report-20261024/06-test-cases.md",
+          "lines": [
+            18,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "base_path": "docs/RELEASE_REPORT_QUESTIONS.md",
+      "base_scope": [
+        [
+          13,
+          88
+        ]
+      ],
+      "disposition": "No unique answer or source quotation loss identified. Exact Q1 user quotation survives in returned-questions.md. Later clarification inputs survive separately. Current guide preserves one Release ID input, source-derived production selection, explicit unavailable baselines, separate Clinic direct links, and full collected-data scope. Frozen earlier unanswered fields are evidence of their original state, not newly open product decisions.",
+      "current_coverage": [
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024/clarification-20261024/returned-questions.md",
+          "lines": [
+            21,
+            21
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            14,
+            22
+          ]
+        },
+        {
+          "revision": "516857d649f5dc557ff58731bb17a09e0308ffce",
+          "path": "docs/RELEASE_REPORT.md",
+          "lines": [
+            103,
+            156
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "release_case_preservation": {
+      "old_count": 14,
+      "new_count": 14,
+      "exact_full_gherkin_block_matches": {
+        "RR-1": true,
+        "RR-2": true,
+        "RR-3": true,
+        "RR-4": true,
+        "RR-5": true,
+        "RR-6": true,
+        "RR-7": true,
+        "RR-8": true,
+        "RR-P1": true,
+        "RR-P2": true,
+        "RR-P3": true,
+        "RR-P4": true,
+        "RR-P5": true,
+        "RR-P6": true
+      },
+      "same_ids": true,
+      "method": "Extract complete gherkin fences under RR/RR-P headings from both exact committed base documents and compare with the committed task catalog; no normalization."
+    },
+    "exact_user_quote": {
+      "text": "only release workitem id is enough, because you can get all other information from query api",
+      "base": {
+        "revision": "79a4104035785b7d8c37e6d424d5d4c888104eee",
+        "path": "docs/RELEASE_REPORT_QUESTIONS.md",
+        "lines": [
+          17,
+          17
+        ]
+      },
+      "candidate_path": "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024/clarification-20261024/returned-questions.md",
+      "candidate_lines": [
+        21
+      ],
+      "preserved_exactly": true
+    },
+    "supplied_source_recovery": {
+      "candidate_archive": "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024/supplied-source.tar.gz",
+      "archive_sha256": "099d01e984a428780a61370469acf02387f9545aa60a15df3d8b81f26388044f",
+      "archive_byte_identical_to_base": true,
+      "candidate_inventory": "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024/source-inventory.json",
+      "inventory_sha256": "7e6fe4e7a8326a1826b47eacde13945fc5253f9be99a78784003e91422ee2a58",
+      "inventory_byte_identical_to_base": true,
+      "archive_members": 44,
+      "archived_source_bytes": 242794,
+      "archived_example_member": "core/release-report/release/details.tsx",
+      "tracked_core_release_report_files_base": 0,
+      "tracked_core_release_report_files_candidate": 0,
+      "candidate_markdown_archive_or_owning_inventory_references": [],
+      "method": "Git object tree and all tracked Markdown in candidate; archive member inventory read from Git bytes. Local untracked original source excluded."
+    },
+    "diagram_inspection": {
+      "editable_source_pages": {
+        "AI SDLC.drawio": 1,
+        "AI SDLC Workbench.drawio": 4
+      },
+      "xml_and_svg": "Read both XML sources and all four vector export contents. URL-encoded diagram source links count as real consumers.",
+      "png_visual": "All four baseline PNG exports inspected as recovered temporary images; concept/lifecycle/architecture/evidence views readable and semantically consistent with corresponding XML/SVG. Fixed skill inventory and some automation status text are dated.",
+      "unique_missing_view": "Complete concept/lifecycle control view; remaining provenance/knowledge diagrams cover evidence page concepts and parts of architecture but not the full feedback model."
+    }
+  },
+  "path_coverage": [
+    {
+      "base_path": "AI SDLC.drawio",
+      "base_sha256": "bff26cffb78900a884e93bd6a1fef2840b4961b5062dc1881f5dc22b9a76a213",
+      "base_bytes": 29042,
+      "candidate_absent": true,
+      "inspection": "editable_diagram",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 4,
+          "text": "It updates the [earliest draft](../../../AI%20SDLC.drawio) from the current Workbench sources."
+        }
+      ]
+    },
+    {
+      "base_path": "AI SDLC Workbench.drawio",
+      "base_sha256": "6304cfef1d795fe6d25650d4ccde942a8b8c173c9ae15ccfc5b1c6683e729b23",
+      "base_bytes": 115624,
+      "candidate_absent": true,
+      "inspection": "editable_diagram",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 3,
+          "text": "The editable [drawing](../../../AI%20SDLC%20Workbench.drawio) contains four pages."
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/README.md",
+      "base_sha256": "b822766257e78462b32cab9e69df34be92d9ed0cebf93c1ea43d7f4bbd44c77d",
+      "base_bytes": 7045,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/evidence/evidence-retention-review-20261107/review.md",
+          "line": 178,
+          "text": "Both root Draw.io files remain editable design sources with [navigation consumers](../../diagrams/workbench/README.md)."
+        }
+      ],
+      "consumer_search_note": "Exact diagram-directory path references only; a basename README.md search would match unrelated guide links."
+    },
+    {
+      "base_path": "docs/diagrams/workbench/01-concept.svg",
+      "base_sha256": "baed573f288a1892823b7b675d1d12200c8175108ae6aa3d933caf1ef7274a2b",
+      "base_bytes": 13494,
+      "candidate_absent": true,
+      "inspection": "vector_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 15,
+          "text": "| 1. Three loops | Intent, implementation, and observation share an evidence foundation. | [SVG](01-concept.svg) | [PNG](01-concept.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/01-concept.png",
+      "base_sha256": "6e455bb5fae915684a67a897c54600d360352124feec1bd47505001894372cc4",
+      "base_bytes": 437689,
+      "candidate_absent": true,
+      "inspection": "binary_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 15,
+          "text": "| 1. Three loops | Intent, implementation, and observation share an evidence foundation. | [SVG](01-concept.svg) | [PNG](01-concept.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/02-lifecycle.svg",
+      "base_sha256": "d2d100b3dd70d0f7f94ee3ac6d702afed3938200378c86591b87a30739a450ae",
+      "base_bytes": 17862,
+      "candidate_absent": true,
+      "inspection": "vector_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 16,
+          "text": "| 2. Lifecycle control | Intake, readiness, implementation, review, execution, and feedback retain separate controls. | [SVG](02-lifecycle.svg) | [PNG](02-lifecycle.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/02-lifecycle.png",
+      "base_sha256": "1bb71fbbdba9f4999bf11afb99340d531ff2009d748125bba8de809cdcd92b48",
+      "base_bytes": 572762,
+      "candidate_absent": true,
+      "inspection": "binary_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 16,
+          "text": "| 2. Lifecycle control | Intake, readiness, implementation, review, execution, and feedback retain separate controls. | [SVG](02-lifecycle.svg) | [PNG](02-lifecycle.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/03-architecture.svg",
+      "base_sha256": "5919be638d859a92011aa5fd06e3ef2bb5d73daf70d24d09921200bfe1684099",
+      "base_bytes": 14896,
+      "candidate_absent": true,
+      "inspection": "vector_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 17,
+          "text": "| 3. Architecture and skills | Agent interfaces, fourteen shared skills, runtime support, and existing assets have separate responsibilities. | [SVG](03-architecture.svg) | [PNG](03-architecture.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/03-architecture.png",
+      "base_sha256": "b6e70a8f96e68fb09875a3d774f49df00ba1daa0eb1369d5918fb7211509c581",
+      "base_bytes": 599831,
+      "candidate_absent": true,
+      "inspection": "binary_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 17,
+          "text": "| 3. Architecture and skills | Agent interfaces, fourteen shared skills, runtime support, and existing assets have separate responsibilities. | [SVG](03-architecture.svg) | [PNG](03-architecture.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/04-evidence.svg",
+      "base_sha256": "d9678b5f28dbadf6160c81dde9aba81a4a1b4893b62e0f8b07b81eb38684fd17",
+      "base_bytes": 13875,
+      "candidate_absent": true,
+      "inspection": "vector_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 18,
+          "text": "| 4. Knowledge and evidence | Source provenance connects reviewed intent to code, assertions, observations, and scoped conclusions. | [SVG](04-evidence.svg) | [PNG](04-evidence.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/diagrams/workbench/04-evidence.png",
+      "base_sha256": "b920b69b91957160b2431db875969459277df4d4b63d62ab131eff5fddea9aab",
+      "base_bytes": 552600,
+      "candidate_absent": true,
+      "inspection": "binary_image",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/diagrams/workbench/README.md",
+          "line": 18,
+          "text": "| 4. Knowledge and evidence | Source provenance connects reviewed intent to code, assertions, observations, and scoped conclusions. | [SVG](04-evidence.svg) | [PNG](04-evidence.png) |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/INITIAL_CONSTRUCTION.md",
+      "base_sha256": "941cfde175a468d0366bc6147e825f4b4fdf3897d871abf29e511a935df16272",
+      "base_bytes": 16054,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "README.md",
+          "line": 15,
+          "text": "The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundation gaps."
+        }
+      ]
+    },
+    {
+      "base_path": "docs/IMPLEMENTATION_REVIEW.md",
+      "base_sha256": "ceea94d014f22fe64a36ea78c8a866e008bbd3ff50874b782154073b56209f13",
+      "base_bytes": 4401,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/SETUP.md",
+          "line": 769,
+          "text": "| Native Windows and macOS execution need target-PC evidence. See `docs/IMPLEMENTATION_REVIEW.md`. | Static checks and mocked platform tests cannot establish target-PC readiness. | unknown | Run setup, doctor, validation, and selected authorized operations on each target platform. |"
+        }
+      ]
+    },
+    {
+      "base_path": "docs/MVP_ARCHITECTURE.md",
+      "base_sha256": "1f683185aead71326a3241433c509a3ec5425aceb78b4d62c05d9c0591f383b5",
+      "base_bytes": 1151,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/reviews/KNOWLEDGE_LAYOUT_ASSESSMENT_20261113.md",
+          "line": 221,
+          "text": "The organization mixes current manuals, historical records and proposals. [The earlier MVP architecture](../MVP_ARCHITECTURE.md) is explicitly superseded; [the workspace isolation document](../SYSTEM_WORKSPACE_ISOLATION.md) remains a design recommendation. Older business investigations also remain under `docs/reviews/`, while new business investigations belong to their owning tasks. [Benchmark evidence](benchmark-evidence/README.md) is another historical placement exception inside the reviews directory. There is no `docs/README.md` entry point, and the root README responsibility table omits `docs/`."
+        }
+      ]
+    },
+    {
+      "base_path": "docs/VALUE_RETENTION_REVIEW.md",
+      "base_sha256": "8aa8a57c66ae331b671f343726a9386cabc88ed32da38a36327a7bd30d81a538",
+      "base_bytes": 5883,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": []
+    },
+    {
+      "base_path": "docs/SYSTEM_WORKSPACE_ISOLATION.md",
+      "base_sha256": "f46a5dd719cfa56c201c439c978f79c32a36468b32b99ca3dda92bffb3367663",
+      "base_bytes": 12692,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/evidence/system-workspace-isolation-20261107/user-input.md",
+          "line": 7,
+          "text": "- Active review: [System workspace isolation proposal](../../SYSTEM_WORKSPACE_ISOLATION.md)."
+        },
+        {
+          "path": "docs/reviews/KNOWLEDGE_LAYOUT_ASSESSMENT_20261113.md",
+          "line": 221,
+          "text": "The organization mixes current manuals, historical records and proposals. [The earlier MVP architecture](../MVP_ARCHITECTURE.md) is explicitly superseded; [the workspace isolation document](../SYSTEM_WORKSPACE_ISOLATION.md) remains a design recommendation. Older business investigations also remain under `docs/reviews/`, while new business investigations belong to their owning tasks. [Benchmark evidence](benchmark-evidence/README.md) is another historical placement exception inside the reviews directory. There is no `docs/README.md` entry point, and the root README responsibility table omits `docs/`."
+        },
+        {
+          "path": "docs/reviews/PARENT_PROJECT_COMPARISON_20261109.md",
+          "line": 127,
+          "text": "The [system isolation proposal](../SYSTEM_WORKSPACE_ISOLATION.md#recommended-construction) already describes independent framework and system ownership."
+        }
+      ]
+    },
+    {
+      "base_path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+      "base_sha256": "a1de1b3ff1faf45b1196f5f263ce23e9a37215ed04da6cacdceae635ee70f83b",
+      "base_bytes": 28843,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/RELEASE_REPORT_API_DESIGN.md",
+          "line": 9,
+          "text": "The [scope plan](RELEASE_REPORT_REPRODUCTION.md#confirmed-scope) preserves one Release work item ID and separate Release Clinic content."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_API_DESIGN.md",
+          "line": 251,
+          "text": "The [scope cases](RELEASE_REPORT_REPRODUCTION.md#proposed-verification-cases) separately define report behavior and renderer isolation."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 98,
+          "text": "[RR-1](RELEASE_REPORT_REPRODUCTION.md#rr-1-preserve-a-failed-build),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 99,
+          "text": "[RR-2](RELEASE_REPORT_REPRODUCTION.md#rr-2-preserve-an-unknown-production-baseline),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 100,
+          "text": "[RR-3](RELEASE_REPORT_REPRODUCTION.md#rr-3-keep-duplicate-requirement-evidence),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 101,
+          "text": "[RR-4](RELEASE_REPORT_REPRODUCTION.md#rr-4-replay-retained-evidence),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 102,
+          "text": "[RR-5](RELEASE_REPORT_REPRODUCTION.md#rr-5-preserve-graph-limits),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 103,
+          "text": "[RR-6](RELEASE_REPORT_REPRODUCTION.md#rr-6-derive-report-identities),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 104,
+          "text": "[RR-7](RELEASE_REPORT_REPRODUCTION.md#rr-7-link-separate-compliance-content), and"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 105,
+          "text": "[RR-8](RELEASE_REPORT_REPRODUCTION.md#rr-8-continue-without-a-compliance-document)."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_QUESTIONS.md",
+          "line": 9,
+          "text": "The [preparation report](RELEASE_REPORT_REPRODUCTION.md) defines the resulting scope."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_QUESTIONS.md",
+          "line": 83,
+          "text": "The [complete collection plan](RELEASE_REPORT_REPRODUCTION.md#complete-release-information) identifies richer returned records and attachment contents."
+        },
+        {
+          "path": "docs/evidence/release-report-intake-20261024/clarification-20261024/returned-questions.md",
+          "line": 7,
+          "text": "The [preparation report](RELEASE_REPORT_REPRODUCTION.md) explains the source behavior and proposed design."
+        },
+        {
+          "path": "docs/evidence/release-report-intake-20261024/clarification-20261024/returned-questions.md",
+          "line": 62,
+          "text": "The [proposed stages](RELEASE_REPORT_REPRODUCTION.md#small-implementation-stages) start with local JSON and HTML."
+        },
+        {
+          "path": "docs/reviews/KNOWLEDGE_LAYOUT_ASSESSMENT_20261113.md",
+          "line": 246,
+          "text": "4. Group confirmed root history under the existing reviews directory after reference inspection: construction reviews, completed release-report records, and open proposals. Unshipped does not imply obsolete. [Release API design](../RELEASE_REPORT_API_DESIGN.md) and [reproduction preparation](../RELEASE_REPORT_REPRODUCTION.md) still define canonical RR-P1–RR-P6 and RR-1–RR-8 cases named by [integration tests](../../tests/test_release_report_integration.py). Keep those paths initially; any later move must preserve case IDs, anchors, recorded answers and test traceability. Keep historical source/evidence bytes stable and repair active references through one relocation map where required."
+        }
+      ]
+    },
+    {
+      "base_path": "docs/RELEASE_REPORT_API_DESIGN.md",
+      "base_sha256": "4330d2809511aeff60787768600ac6d100cec97072a3542e35c77dcd300609c2",
+      "base_bytes": 21541,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 86,
+          "text": "This refines the earlier [API design](RELEASE_REPORT_API_DESIGN.md#implemented-refinements) without adding a package dependency."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 107,
+          "text": "[RR-P1](RELEASE_REPORT_API_DESIGN.md#rr-p1-batch-unique-work-item-identities),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 108,
+          "text": "[RR-P2](RELEASE_REPORT_API_DESIGN.md#rr-p2-bound-actual-requests-and-reuse-sessions),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 109,
+          "text": "[RR-P3](RELEASE_REPORT_API_DESIGN.md#rr-p3-respect-a-delay-on-a-successful-response),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 110,
+          "text": "[RR-P4](RELEASE_REPORT_API_DESIGN.md#rr-p4-apply-grants-before-cached-data-access),"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 111,
+          "text": "[RR-P5](RELEASE_REPORT_API_DESIGN.md#rr-p5-retain-evidence-larger-than-one-tool-response), and"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+          "line": 112,
+          "text": "[RR-P6](RELEASE_REPORT_API_DESIGN.md#rr-p6-resume-without-concealing-changed-sources)."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_QUESTIONS.md",
+          "line": 11,
+          "text": "The [API design](RELEASE_REPORT_API_DESIGN.md) records connector reuse, SonarQube handling, renderer isolation, and query scheduling."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_QUESTIONS.md",
+          "line": 76,
+          "text": "Include related SonarQube quality data through the [separate source adapter](RELEASE_REPORT_API_DESIGN.md#sonarqube-integration-decision)."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+          "line": 30,
+          "text": "The [API and rendering design](RELEASE_REPORT_API_DESIGN.md) defines connector reuse and the performance approach."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+          "line": 175,
+          "text": "| SonarQube | Collect associated measures, gate results, issues, and hotspots through the [separate Sonar source adapter](RELEASE_REPORT_API_DESIGN.md#sonarqube-integration-decision). |"
+        },
+        {
+          "path": "docs/reviews/KNOWLEDGE_LAYOUT_ASSESSMENT_20261113.md",
+          "line": 246,
+          "text": "4. Group confirmed root history under the existing reviews directory after reference inspection: construction reviews, completed release-report records, and open proposals. Unshipped does not imply obsolete. [Release API design](../RELEASE_REPORT_API_DESIGN.md) and [reproduction preparation](../RELEASE_REPORT_REPRODUCTION.md) still define canonical RR-P1–RR-P6 and RR-1–RR-8 cases named by [integration tests](../../tests/test_release_report_integration.py). Keep those paths initially; any later move must preserve case IDs, anchors, recorded answers and test traceability. Keep historical source/evidence bytes stable and repair active references through one relocation map where required."
+        }
+      ]
+    },
+    {
+      "base_path": "docs/RELEASE_REPORT_QUESTIONS.md",
+      "base_sha256": "e9bdef6671178f0e4331a4362c344e135cabe0fbb18e89df98a4a022380f59d1",
+      "base_bytes": 6466,
+      "candidate_absent": true,
+      "inspection": "markdown",
+      "actual_prior_markdown_consumers": [
+        {
+          "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+          "line": 27,
+          "text": "The [recorded answers](RELEASE_REPORT_QUESTIONS.md) close the earlier questionnaire using user input and source-derived behavior."
+        },
+        {
+          "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+          "line": 67,
+          "text": "| [Recorded answers](RELEASE_REPORT_QUESTIONS.md) | Resolved input, source behavior, scope, and Clinic separation. |"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+          "line": 123,
+          "text": "| Production selection searches bounded keyword pages. See [search](../core/release-report/ado-api/pipeline.ts#L96-L138). | Missing history can omit the baseline. | Workbench maintainer; individual unknown. | Preserve the [source selection rule](RELEASE_REPORT_QUESTIONS.md#q2-production-baseline); paginate and show unavailable evidence. |"
+        },
+        {
+          "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+          "line": 264,
+          "text": "The [recorded answers](RELEASE_REPORT_QUESTIONS.md) establish sufficient scope for implementation."
+        }
+      ]
+    }
+  ],
+  "candidate_supporting_hashes": [
+    {
+      "path": "PRINCIPLE.md",
+      "sha256": "206d90121916b57d12a7a6ab50eb7d5e32c1e90f47290fdd17cd93726cdfdfa3"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "3f0250b5924a039325ec29fc725841b96498039fce43d8a2aa4e4a68d0f8bee6"
+    },
+    {
+      "path": "docs/WORKSPACE_DESIGN.md",
+      "sha256": "756a2a0cb7463722d24116270eb75b9b27a4d98696ed4a1752f20f5779049174"
+    },
+    {
+      "path": "docs/SETUP.md",
+      "sha256": "e41cc832e82e9b4699f83c62741f53ecd0fe149d9f770d6f661ef20503b720b0"
+    },
+    {
+      "path": "docs/DEPENDENCIES.md",
+      "sha256": "ae8a2d5737c7eb07175620f20ab2acd85b92a56ef1c839aa99e216adbc2153ec"
+    },
+    {
+      "path": "docs/KNOWLEDGE_LIFECYCLE.md",
+      "sha256": "3cc7418efe1b3a5ae5d84a12248ea278535bb3d16bc9fb35020618ad1f60bfe3"
+    },
+    {
+      "path": "docs/RELEASE_REPORT.md",
+      "sha256": "e733fc529ae0577d7b332b8f2a0c31135ecae0c2f035e42708d08cc78a9e784a"
+    },
+    {
+      "path": "tasks/workbench-release-report-20261024/06-test-cases.md",
+      "sha256": "c4741244db66a12d866439bdc6b9aaf690a53d685be188b8378e3b1a9c94232f"
+    },
+    {
+      "path": "tasks/workbench-release-report-20261024/implementation.md",
+      "sha256": "18bdcb12d8f503a38a5d32d3cebf43b654e77a2fa4044bfef454758a896d22b2"
+    },
+    {
+      "path": "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024/clarification-20261024/returned-questions.md",
+      "sha256": "0db169099359c59539792cec1b3d06a9479a99a37131c8a36770a23729f4d092"
+    },
+    {
+      "path": "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024/supplied-source.tar.gz",
+      "sha256": "099d01e984a428780a61370469acf02387f9545aa60a15df3d8b81f26388044f"
+    },
+    {
+      "path": "tasks/workbench-release-report-20261024/evidence/release-report-intake-20261024/source-inventory.json",
+      "sha256": "7e6fe4e7a8326a1826b47eacde13945fc5253f9be99a78784003e91422ee2a58"
+    },
+    {
+      "path": "tests/test_workspace_layout.py",
+      "sha256": "1549cdcb0014bb96b30c1f71ad6e38c16e80e635037ccec46421fb29705379c6"
+    },
+    {
+      "path": "tests/test_catalogs.py",
+      "sha256": "e6f4806bc7faaa89d8380a0aa9465c577ca9ec62e41026c26dbc2ba6b597e53d"
+    },
+    {
+      "path": "tasks/workbench-documentation-migration-20261113/evidence/changes.json",
+      "sha256": "e80f2d0fcddc9611d924c666e99bd960168560878459177d6f94fffb6384b8e4"
+    }
+  ],
+  "limits": [
+    "No runtime or business behavior execution; review concerns retained content and documentation/navigation only.",
+    "No source fix, restoration, movement, deletion, staging, commit or sealed-ledger modification performed.",
+    "Unrelated deleted core/connectors/yarn.lock, untracked core/release-report, and concurrent ADO skills task excluded.",
+    "This evidence does not establish complete semantic equivalence of every sentence in removed historical reports; it records material boundaries checked and concrete retained-value losses."
+  ]
+}
