@@ -13,6 +13,16 @@
 
 > Review the agents we just recorded, and check for content that are expired, duplicate, or no longer usable. Make it more efficiency.
 
+### Follow-up assurance request
+
+- Source: user message in the same Codex chat, 13 November 2026 (Asia/Singapore).
+- Priority: high; review commit `e2a8054ea95165030d714b11c4c855dacc9e96f9` for regressions and material rule loss.
+
+> double confirm your change won't introduce side effect and make things become worse.
+
+The follow-up checks compare exact committed endpoints and current protected consumers.
+They cannot guarantee future model adherence or replace missing live-client evidence.
+
 ## Intended outcome and authority
 
 Treat “agents” as the repository's `AGENTS.md` and its connected current agent guidance.
@@ -57,6 +67,27 @@ The byte reduction concerns the root entry guide. It does not measure model toke
 Detailed procedures still require reading when their scope applies. No live agent-client session or business scenario was executed.
 Current documentation updates are limited to the root guide and the stale task-guide statements.
 No critical conclusions require user attention or action.
+
+## Follow-up assurance outcome
+
+**No introduced regression was found in the inspected scope. Live model adherence remains unverified.**
+
+The [assurance record](evidence/assurance.json) compares exact commits `55bc74d19` and `e2a8054ea`.
+Its change fingerprint is `9eae2822e860fce9970b4ff5a2565f67a912ca8c151ef1c7c53cdf7c8b8f33c4`.
+Two independent reviews found no lost requirement or broken consumer contract.
+They traced removed rules to retained root text or mandatory maintained owners.
+
+- All 82 workspace and hook tests pass, with zero failures.
+- Paired installed initialization produces 392 matching paths and 38 matching alias links.
+- Only the two intended guide files differ after excluding the generated workspace UUID.
+- Baseline and candidate workspaces both validate with the same empty catalogs and zero knowledge documents.
+- Across the reviewed commits, runtime code, skills, adapters, package manifests, wiki inputs, and all 245 protected files remain byte-identical.
+- All 25 heading contracts and the source, publication, retention, compatibility, priority, and test requirements remain available.
+
+The paired baseline uses exact prior guide bytes with the unchanged installed initializer and remaining scaffold resources.
+The review added no changes to either guide after `e2a8054ea`.
+These checks found no regression. Future model behavior remains unverified.
+No live agent session, native Windows execution, or business deployment was performed.
 
 ```yaml
 standard: ASD-STE100
