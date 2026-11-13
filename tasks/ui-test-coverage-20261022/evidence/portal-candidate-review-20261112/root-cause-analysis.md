@@ -26,7 +26,7 @@ The failure chain was:
 2. The same numeric facts were treated as invalid everywhere, without classifying their implementation/test meaning.
 3. A shared entity page was treated as a policy-only dependent even though it contained source and execution context.
 4. The review checked current canonical fidelity, but not claim-level loss across retained evidence.
-5. Provenance was advanced outside the transition guard.
+5. Provenance was advanced through the old transition path before the claim-loss guard existed.
 
 ## Similar findings
 
