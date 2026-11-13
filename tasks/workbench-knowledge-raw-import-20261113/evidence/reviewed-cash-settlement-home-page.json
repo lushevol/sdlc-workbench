@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "source_id": "cash-settlement-home-page",
+  "decisions": [
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/01- Function Flow/Cashflow Migration Readiness/page.md",
+      "sha256": "88ac35cf95c106156d3e39e072d80414ec6d043772f9fcac7651ca2ea587a45f",
+      "decision": "EVIDENCE_ONLY",
+      "reason": "The table records delivery readiness, owners, dates, and UAT preparation. Its accounting comment and approval references are meeting or tracker statements whose linked sources are unverified.",
+      "topic": "Cashflow migration readiness",
+      "intent_status": "Historical readiness tracker",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/01- Function Flow/page.md",
+      "sha256": "8fa814e7d4e85e7fec943a74e40b6d8eebebd3408201a574e3face788713d238",
+      "decision": "EXCLUDE",
+      "reason": "The page contains two headings and blank lines. The export supplies no flow text or diagram reference on this page.",
+      "topic": "Cash Settlement function flow navigation",
+      "intent_status": "Heading-only export",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/FX Cashflow Status Write Back - Razor to Stella/page.md",
+      "sha256": "1f9c1d8fddee5e98f9e4649613648c1cd3a1a079349a84b2e4e8b31de68ccc9d",
+      "decision": "KEEP_SECTIONS",
+      "reason": "The requirement and design specify duplicate payment prevention, exclusions for net or split results and reversals, six-field matching, amendments, and the Stella hard-block context. The source conflicts on the ACK requirement and internal NACK handling. Currency and amount tolerance language and referenced attachments need confirmation. The target date is historical.",
+      "topic": "Razor to Stella FX cashflow status write-back",
+      "intent_status": "Documented requirement and design with unverified approval and unresolved acknowledgement contract",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/eb4192cfb68c5b57854823fba7f0cb0b632a4c79d6cb78c9dcc4f00edec575d9.md",
+          "sha256": "eb4192cfb68c5b57854823fba7f0cb0b632a4c79d6cb78c9dcc4f00edec575d9"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          19
+        ],
+        [
+          21,
+          57
+        ],
+        [
+          59,
+          99
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/LifeCycle/Cashflow & Payment cashflow id management/page.md",
+      "sha256": "2f5d809b7453b3284e626c71d9e9b68779e1d9eea1c826c4ed3be582a1fd170f",
+      "decision": "KEEP",
+      "reason": "The page specifies the 12-character source cashflow ID encodings, SWIFT field 20 length and format, and unique resultant IDs for netting and splitting. The generation API includes the requested ID type and a concurrency constraint. Confirm the relationship between MxCash and Razor terminology before broad reuse.",
+      "topic": "Cashflow and payment identifiers",
+      "intent_status": "Exported design with unknown revision, approval and applicability",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/LifeCycle/page.md",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decision": "EXCLUDE",
+      "reason": "The retained lifecycle landing page has zero bytes. Its child pages are separately registered and carry the lifecycle content.",
+      "topic": "Cashflow lifecycle navigation",
+      "intent_status": "Empty export",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/SUSPENDED vs PROJECTED cashflow status in Ratan/page.md",
+      "sha256": "eb4192cfb68c5b57854823fba7f0cb0b632a4c79d6cb78c9dcc4f00edec575d9",
+      "decision": "KEEP_SECTIONS",
+      "reason": "The selected text distinguishes Stella suspension from RATAN suppression, records source status conditions and the suggested future FX policy, and states front-end rule editing and maker-checker for manual STP. The amendment example exposes duplicate or missing payment risk. The omitted export mixes dated entity configuration, open approval notes, and two missing images.",
+      "topic": "Suspended and projected cashflow routing",
+      "intent_status": "Suggested principles, reported current logic and future intent have separate applicability",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/1f9c1d8fddee5e98f9e4649613648c1cd3a1a079349a84b2e4e8b31de68ccc9d.md",
+          "sha256": "1f9c1d8fddee5e98f9e4649613648c1cd3a1a079349a84b2e4e8b31de68ccc9d"
+        }
+      ],
+      "ranges": [
+        [
+          3,
+          36
+        ],
+        [
+          38,
+          41
+        ],
+        [
+          56,
+          70
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Surrounding System Integration/Ratan & Stella cashflow integration/page.md",
+      "sha256": "0fc2d3d755dc6e3749bb531bb8a9f8bb13e4787feb609f0d790d6b8dea3d116f",
+      "decision": "KEEP_SECTIONS",
+      "reason": "The opening proposal assigns cashflow creation to Stella, lifecycle handling to RATAN, and status write-back for amendment blocking. It separates payment date from value date and defines version ownership. The later examples add withdrawal-before-new and concurrent amendment scenarios, including an open transaction reversal question. The proposed settlement trigger and minor-version reset differ from the separate status-machine text.",
+      "topic": "Stella to RATAN cashflow lifecycle integration",
+      "intent_status": "Historical FMRP proposal with unverified approval and differing lifecycle semantics",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/eb4192cfb68c5b57854823fba7f0cb0b632a4c79d6cb78c9dcc4f00edec575d9.md",
+          "sha256": "eb4192cfb68c5b57854823fba7f0cb0b632a4c79d6cb78c9dcc4f00edec575d9"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          12
+        ],
+        [
+          16,
+          20
+        ],
+        [
+          56,
+          69
+        ],
+        [
+          103,
+          122
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Surrounding System Integration/Ratan Action and LMS Event Matrix/page.md",
+      "sha256": "c04682c61c90e4f916c7518d862b5d2b88ce4e6ad1b5b017fa431dcceeb5cc04",
+      "decision": "HOLD",
+      "reason": "The only substantive line links an XLSX matrix missing from the supplied export. The page supplies no event-to-action mapping that can be selected.",
+      "topic": "RATAN actions and LMS event matrix",
+      "intent_status": "Missing attachment",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Cashflow Lifecycle Stamping Logic/page.md",
+      "sha256": "94a25d66f13dd44ac329b7d3f377da2d90314ed531a00f61768a7263f70aaa50",
+      "decision": "KEEP_SECTIONS",
+      "reason": "The selected table records attributes and mandatory status by phase. The design proposes moving stamping out of data persistence into a reusable lifecycle action. The later precheck notes mix implementation detail with unanswered questions.",
+      "topic": "Cashflow lifecycle attribute stamping",
+      "intent_status": "Documented phase scope and proposed design with unverified approval",
+      "context": [],
+      "ranges": [
+        [
+          1,
+          24
+        ]
+      ]
+    }
+  ]
+}

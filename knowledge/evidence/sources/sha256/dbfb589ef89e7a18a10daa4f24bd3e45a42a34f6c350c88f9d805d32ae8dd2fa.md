@@ -1,0 +1,184 @@
+# UK Release Major Issue/problems & future improvement
+
+| Major Issue/Problem | Impact | Root Cause | Lesson Learn & Improvement |
+| --- | --- | --- | --- |
+| Dashboard Performance Issue | Service restart & settlement BAU is blocked for a few hours | 1. Performance testing was not performed with actual production volume. 2. Design is not properly reviewed( dashboard calculation is done in memory) | 1. More clear baseline of performance testing scope & data volume. 2. Design tuning |
+| Netting API timeout | User get timeout error from GUI but | 1. Performance testing was not performed with actual production volume( taking reference to Murex netting volume but it's not exactly same with RATAN process). | 1. Can have more clear agreement with business on the netting volume as the benchmark of our performance testing 2. Our design should have more buffer to support the BAU |
+| Netting Cashflow not feed to LMS | Failure of cash balance projection in LMS | 1. Not all UAT test cases were performed as E2E until LMS | 1. Improve the E2E test case coverage until all downstream |
+| NDS Auto Netting unknown cases happen in production | Some NDS cashflows( new cases)can't be auto netted | 1. UAT test cases quality: No clear responsibility on the UAT test case complication, responsibility on every team means no responsibility | 1. More clear responsibility that settlement team should take responsibility of business case definition, they should approach MO team to define the E2E business cases |
+| SSI+ Best Matching logic | Later requirement and team stretch to design a tactical solution to meet the UK release | Settlement team didn't seriously review the SSI stamping difference between Murex & RATAN in earlier stage | 1. Follow more close with PO & BAU team to get these reviewed in detail level & get clear signoff in earlier stage. |
+| Different Murex SSI between CURRFXD & CURROPT | Wrong payment can happen if the Vostro SSI is not correct | 1. SSI recon review were not properly done by settlement team | 1. Run the SSI recon with more production data |
+| Business Rules are not correctly setup on day 1 | 1. Unexpected STP: Settlement risk 2. Unexpected Gross: Clearing team need to recall the funds | 1. Business rule requirement collection & review was not completed 2. Only one round of data replay to verify the business rules | Replay more production data for settlement team to review the business rule result. |
+| MT605 82A BIC is populated with dummy BIC | Payment Failure | This is new user case. - Common logic provided by ops/PO: Map the ordering customer info to 82A of MT605 - There's special case for some client the ordering customer info are their agent info | 1. Issue had been reported in UAT as part of 2 weeks data comparation. 2. Ops team is taking the action to review & advise the difference, but the review is not that accurate. |
+
+# 13th Oct 2024 DE tech release
+
+CPT Booking
+
+98587988
+
+98588010
+
+98588032
+
+# UK Business Go Live
+
+| Issue NO. | Description | Status | Comment |
+| --- | --- | --- | --- |
+| 1 | NDS Auto Netting | | 1. Clearing Client Portfolio - Murex picking up 2. NDIRS not STP - RATAN to be fixed 3. Netting rule clean up - **Done** 4. NID difference - To be discussed with Murex |
+| 2 | FMSGW Error | | Original FMSGW error message ‘SCB Invalid - For Message type=103 and Currency=MXN; Account field for Beneficiary customer (59) must present‘, |
+| 3 | Murex Metal Payments stuck in grouping blotter | | Adhoc Murex issue which happen only in the go live which their CPN jobs were not ran with proper sequence. |
+| | LMS Feeding failure | | **N00000013011 ** |
+| | Cashflow stuck in swift generation | | M00114289625, M00114289206, need to regenerate the swift message from GUI. |
+| | NSTP Exception is blank | | N00000013347,M00114292534,M00114315716,M00114294044,M00114292381,M00114274380,M00114269381,M00114269368,M00114290810 |
+| | Cashflow Data can't load with API 500 error | | Manual cashflows by Oscar due to RATAN downtime M00111244743 - AUD, M00113836067, M00112645079 - JPY |
+
+**The first 10 payments we intend to release.**
+
+| **Data Publication Date Time** | **Original Trade ID** | **Trade ID** | **Cashflow Id** | **Cashflow Event Type** | **Cashflow State** | **Counterparty BIC CODE** | **Payment Date** | **CCY** | **Amount** | **Cashflow Swift Status** | **Cashflow Swift Reason** |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2025-01-16T12:23:26Z | 98017564 | 98017564 | M00114223342 | New | SETTLED | SCBLDEFXXXX | 2025-01-20 | EUR | 5772 | Released by AMH | {1:F21SCBLGB2LATSY4868907242}{4:{177:2501190625}{451:0}{108:RXA1901250224316}} |
+| 2025-01-13T17:19:42Z | 80317631 | 91277635 | M00114066178 | New | SETTLED | SCBLDEFXXXX | 2025-01-20 | GBP | 537552.74 | Released by AMH | {1:F21SCBLGB2LATSY4867979150}{4:{177:2501190625}{451:0}{108:RXA1901250224320}} |
+| 2025-01-11T04:07:09Z | 95895538 | 95895538 | M00113164317 | New | SETTLED | SCBLDEFXXXX | 2025-01-20 | AUD | 2700.82 | Released by AMH | {1:F21SCBLGB2LCTSY0190703786}{4:{177:2501190612}{451:0}{108:RXA1901250224318}} |
+| 2025-01-11T04:07:09Z | 90023111 | 90136776 | M00113072833 | New | SETTLED | SCBLUS33XXX | 2025-01-20 | AUD | 4158.64 | Released by AMH | {1:F21SCBLGB2LCTSY0190703785}{4:{177:2501190612}{451:0}{108:RXA1901250224322}} |
+| 2025-01-11T04:07:09Z | 93703288 | 93703288 | M00111245670 | New | SETTLED | SCBLIDJXXXX | 2025-01-20 | JPY | 66726736 | Released by AMH | {1:F21SCBLGB2LATSY4867979117}{4:{177:2501190612}{451:0}{108:RXA1901250224324}} |
+| 2025-01-11T04:07:09Z | 98017564 | 98017564 | M00111243957 | New | SETTLED | SCBLDEFXXXX | 2025-01-20 | PLN | 751072.88 | Released by AMH | {1:F21SCBLGB2LDTSY0176804680}{4:{177:2501190612}{451:0}{108:RXA1901250224321}} |
+| 2025-01-11T04:07:09Z | 81080770 | 81280059 | M00111243614 | New | SETTLED | SCBLDEFXXXX | 2025-01-20 | EUR | 13402.21 | Released by AMH | {1:F21SCBLGB2LATSY4867979149}{4:{177:2501190625}{451:0}{108:RXA1901250224315}} |
+| 2025-01-11T04:07:09Z | 73355912 | 98327695 | M00111243188 | New | SETTLED | SCBLHKHHXXX | 2025-01-20 | AUD | 826699.61 | Released by AMH | {1:F21SCBLGB2LDTSY0176804679}{4:{177:2501190612}{451:0}{108:RXA1901250224319}} |
+| 2025-01-11T04:07:09Z | 81376394 | 81453110 | M00111205142 | New | SETTLED | SCBLSG22XXX | 2025-01-20 | EUR | 740288.89 | Released by AMH | {1:F21SCBLGB2LATSY4868907243}{4:{177:2501190625}{451:0}{108:RXA1901250224323}} |
+| 2025-01-11T04:07:09Z | 98021220 | 98055576 | M00111204830 | New | SETTLED | SCBLDEFXXXX | 2025-01-20 | EUR | 13442 | Released by AMH | {1:F21SCBLGB2LATSY4868907241}{4:{177:2501190625}{451:0}{108:RXA1901250224317}} |
+
+**The 3 cashflow which were triggered by the SSI refresh **
+
+| Data Publication Date Time | Original Trade ID | Trade ID | Cashflow Id | Cashflow Event Type | Cashflow State | Counterparty BIC CODE | Payment Date | CCY | Amount | Cashflow Swift Status | Cashflow Swift Reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2025-01-17T08:28:36Z | 100228832 | 100228832 | M00114264086 | New | RELEASED | SBILGB2LXXX | 2025-01-21 | USD | 10000000 | Pending FMSGW Disp | Message is received |
+| 2025-01-17T08:28:36Z | 100228827 | 100228827 | M00114264073 | New | RELEASED | SBILGB2LXXX | 2025-01-21 | USD | 30000000 | Pending FMSGW Disp | Message is received |
+| 2025-01-17T08:28:36Z | 100226568 | 100226568 | M00114260321 | New | RELEASED | SBILGB2LXXX | 2025-01-21 | USD | 37000000 | Pending FMSGW Disp | Message is received |
+| 2025-01-17T08:28:36Z | 100226581 | 100226581 | M00114260338 | New | RELEASED | SBILGB2LXXX | 2025-01-21 | USD | 20000000 | Pending FMSGW Disp | Message is received |
+| 2025-01-17T08:28:36Z | 100226572 | 100226572 | M00114260328 | New | SETTLED | SBILGB2LXXX | 2025-01-21 | USD | 10000000 | Auto Settled by Ratan | |
+| 2025-01-17T08:28:36Z | 100226579 | 100226579 | M00114260324 | New | SETTLED | SBILGB2LXXX | 2025-01-21 | USD | 20000000 | Auto Settled by Ratan | |
+| 2025-01-16T04:17:24Z | 100181916 | 100181916 | M00114195651 | New | SETTLED | WFBIUS6WFFX | 2025-01-21 | USD | 202000000 | Auto Settled by Ratan | |
+| 2025-01-11T04:07:09Z | 78057806 | 78074690 | M00111246979 | New | SETTLED | SBILGB2LXXX | 2025-01-21 | USD | 20000000 | Auto Settled by Ratan | |
+
+| Data Publication Date Time | Original Trade ID | Trade ID | Cashflow Id | Cashflow Event Type | Cashflow State | Murex Product Strategy | Murex Product Typology | ISDA Taxonomy |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2025-01-17T08:28:36Z | 100228832 | 100228832 | M00114264086 | New | RELEASED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-17T08:28:36Z | 100228827 | 100228827 | M00114264073 | New | RELEASED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-17T08:28:36Z | 91739908 | 91739908 | M00114262071 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-17T08:28:36Z | 100226568 | 100226568 | M00114260321 | New | RELEASED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-17T08:28:36Z | 100226572 | 100226572 | M00114260328 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-17T08:28:36Z | 100226581 | 100226581 | M00114260338 | New | RELEASED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-17T08:28:36Z | 100226579 | 100226579 | M00114260324 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-17T04:16:56Z | 100222543 | 100222543 | M00114253410 | New | RELEASED | FX_EURO | | CURR|OPT|SMP |
+| 2025-01-17T02:26Z | 100220508 | 100220508 | M00114250499 | New | RELEASED | FX_EURO | | CURR|OPT|SMP |
+| 2025-01-17T02:26Z | 100220507 | 100220507 | M00114250498 | New | RELEASED | FX_EURO | | CURR|OPT|SMP |
+| 2025-01-17T00:43:01Z | 46507688 | 86519517 | M00114243416 | New | SETTLED | RECALC | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-16T17:23:09Z | 100214876 | 100214876 | M00114239718 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-16T17:23:09Z | 91640829 | 91640829 | M00114238795 | New | SETTLED | | OIS | IRD|IRS |
+| 2025-01-16T15:19:50Z | 100209133 | 100209133 | M00114228195 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-16T12:23:26Z | 100202474 | 100202474 | M00114223733 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-16T12:23:26Z | 100202475 | 100202475 | M00114223734 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-16T12:23:26Z | 100202470 | 100202470 | M00114223725 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-16T12:23:26Z | 98017564 | 98017564 | M00114223342 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-16T10:29:44Z | 99767260 | 99795288 | M00114221673 | New | RELEASED | CR_TRS_UNFND_B | ND-BOND | CRD|RTRS |
+| 2025-01-16T08:27:37Z | 100187036 | 100187036 | M00114208322 | New | RELEASED | FX_SPREAD | | CURR|OPT|SMP |
+| 2025-01-16T04:17:24Z | 100181916 | 100181916 | M00114195651 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-15T10:05:53Z | 100155250 | 100155250 | M00114159867 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-15T10:05:53Z | 100153973 | 100153973 | M00114158351 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-15T10:05:53Z | 100153963 | 100153963 | M00114158339 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-14T10:05:54Z | 100116501 | 100116501 | M00114104000 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-14T10:05:54Z | 100116694 | 100116694 | M00114104301 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-14T04:15:47Z | 100104672 | 100104672 | M00114080729 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-14T02:17:22Z | 100104324 | 100104324 | M00114077880 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-13T17:19:42Z | 80317631 | 91277635 | M00114066178 | New | SETTLED | IR_IRS_CF | Vanilla IR Swap | IRD|IRS |
+| 2025-01-13T17:19:42Z | 81482151 | 81497875 | M00114065582 | New | RELEASED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-11T04:07:09Z | 100037299 | 100037299 | M00113952201 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 100012442 | 100012442 | M00113915094 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 100012444 | 100012701 | M00113915097 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 100012446 | 100012725 | M00113915098 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 100012438 | 100012438 | M00113915087 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99903328 | 99903328 | M00113764893 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99851991 | 99852027 | M00113562377 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99851996 | 99851996 | M00113562385 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99851994 | 99851994 | M00113562382 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99851990 | 99852026 | M00113562376 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99609599 | 99609599 | M00113187102 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99609601 | 99609601 | M00113187106 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99581854 | 99581854 | M00113139036 | New | RELEASED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95895538 | 95895538 | M00113164317 | New | SETTLED | IR_IRS_CF | Structured Swap | IRD|IRS |
+| 2025-01-11T04:07:09Z | 99581855 | 99581855 | M00113139037 | New | RELEASED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 90023111 | 90136776 | M00113072833 | New | SETTLED | | Vanilla IR Swap | IRD|IRS |
+| 2025-01-11T04:07:09Z | 99479277 | 99479277 | M00112959982 | New | RELEASED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99479275 | 99479275 | M00112959981 | New | RELEASED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99337475 | 99337475 | M00112692251 | New | SETTLED | FX_SPREAD | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 99304959 | 99304959 | M00112642277 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98845092 | 98845092 | M00111890041 | New | RELEASED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98742904 | 98742904 | M00111743437 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98742899 | 98742899 | M00111743430 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98665436 | 98665436 | M00111629343 | New | SETTLED | | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98058055 | 98058055 | M00111258302 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98106554 | 98106554 | M00111258282 | New | SETTLED | FX_SPREAD | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98058051 | 98058051 | M00111258301 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98002057 | 98002057 | M00111258270 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 98002061 | 98002061 | M00111258269 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857210 | 95857210 | M00111257848 | New | RELEASED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857209 | 95857209 | M00111257847 | New | SETTLED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95839450 | 95841405 | M00111257850 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95839453 | 95841411 | M00111257851 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857207 | 95857207 | M00111257845 | New | RELEASED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857195 | 95857195 | M00111257838 | New | RELEASED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857208 | 95857208 | M00111257846 | New | SETTLED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857197 | 95857197 | M00111257840 | New | SETTLED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857193 | 95857193 | M00111257837 | New | RELEASED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 95857196 | 95857196 | M00111257839 | New | SETTLED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91771334 | 91771334 | M00111257240 | New | RELEASED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91771329 | 91771329 | M00111257238 | New | RELEASED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91771332 | 91771332 | M00111257239 | New | SETTLED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91771327 | 91771327 | M00111257237 | New | SETTLED | FX_BUTTERFLY | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91758329 | 91758404 | M00111257232 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91758328 | 91758401 | M00111257231 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91739910 | 91739910 | M00111257206 | New | RELEASED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 91739908 | 91739908 | M00111257205 | New | RELEASED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 84596641 | 84596660 | M00111257041 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 84596642 | 84596668 | M00111257042 | New | SETTLED | FX_STRADDLE | | CURR|OPT|SMP |
+| 2025-01-11T04:07:09Z | 78057806 | 78074690 | M00111246979 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-11T04:07:09Z | 93703288 | 93703288 | M00111245670 | New | SETTLED | | IDR_DELIVERABLE | IRD|CS |
+| 2025-01-11T04:07:09Z | 98017564 | 98017564 | M00111243957 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-11T04:07:09Z | 81080770 | 81280059 | M00111243614 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-11T04:07:09Z | 73355912 | 98327695 | M00111243188 | New | SETTLED | | Vanilla X-ccy swap | IRD|CS |
+| 2025-01-11T04:07:09Z | 81376394 | 81453110 | M00111205142 | New | SETTLED | | Vanilla IR Swap | IRD|IRS |
+| 2025-01-11T04:07:09Z | 98021220 | 98055576 | M00111204830 | New | SETTLED | | Vanilla IR Swap | IRD|IRS |
+
+OIS
+
+| Data Publication Date Time | Original Trade ID | Trade ID | ND Parent Trade Id | ND Parent Typology | Murex Product Typology | Cashflow Id | Cashflow Event Type | Cashflow State |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2025-01-19T11:03:06Z | 100222795 | 100222795 | 98198861 | OIS | NDS Fixing | M00114253610 | New | WAITING |
+| 2025-01-19T11:03:06Z | 100222794 | 100222794 | 95430083 | OIS | NDS Fixing | M00114253608 | New | WAITING |
+| 2025-01-19T11:03:06Z | 100222792 | 100222792 | 94779277 | OIS | NDS Fixing | M00114253604 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222797 | 100222797 | 100216964 | OIS | NDS Fixing | M00114253614 | New | WAITING |
+| 2025-01-19T11:03:06Z | 100222790 | 100222790 | 92170030 | OIS | NDS Fixing | M00114253601 | New | WAITING |
+| 2025-01-19T11:03:09Z | 100222784 | 100222784 | 91349794 | OIS | NDS Fixing | M00114253593 | New | WAITING |
+| 2025-01-19T11:03:06Z | 100222787 | 100222787 | 92109900 | OIS | NDS Fixing | M00114253597 | New | WAITING |
+| 2025-01-19T11:03:06Z | 100222793 | 100222793 | 95430069 | OIS | NDS Fixing | M00114253606 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222796 | 100222796 | 100210091 | OIS | NDS Fixing | M00114253612 | New | WAITING |
+| 2025-01-19T11:03:06Z | 100222788 | 100222788 | 92169950 | OIS | NDS Fixing | M00114253599 | New | WAITING |
+| 2025-01-19T11:02:32Z | 100238706 | 100238706 | 100215240 | OIS | NDS Fixing | M00114277268 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222804 | 100222804 | 92109901 | OIS | NDS Fixing | M00114253632 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222819 | 100222819 | 92170031 | OIS | NDS Fixing | M00114253651 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222823 | 100222823 | 95430084 | OIS | NDS Fixing | M00114253666 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222822 | 100222822 | 95430070 | OIS | NDS Fixing | M00114253664 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222821 | 100222821 | 94779278 | OIS | NDS Fixing | M00114253662 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222825 | 100222825 | 98198862 | OIS | NDS Fixing | M00114253669 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222828 | 100222828 | 100216965 | OIS | NDS Fixing | M00114253674 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222813 | 100222813 | 92169951 | OIS | NDS Fixing | M00114253643 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222800 | 100222800 | 91349795 | OIS | NDS Fixing | M00114253618 | New | WAITING |
+| 2025-01-19T11:03:07Z | 100222827 | 100222827 | 100210092 | OIS | NDS Fixing | M00114253672 | New | WAITING |
+| 2025-01-19T11:02:32Z | 100238707 | 100238707 | 100215241 | OIS | NDS Fixing | M00114277270 | New | WAITING |
+
+NDS Issue
+
+- Issue: NDS & NDS Fixing different NID, M00114151898,M00114273743
+- Picking up Razor typology: M00114270111 - Outright, M00114270311 - FX Swap
+- NDS Fixing is stopped by netting rule: M00114149131,M00114273761

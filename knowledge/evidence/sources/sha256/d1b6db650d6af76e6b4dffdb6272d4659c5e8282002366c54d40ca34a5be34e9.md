@@ -1,0 +1,13 @@
+# User cases
+
+| NO. | Description | Steps | Expected Result | Cashflow SCBML |
+| --- | --- | --- | --- | --- |
+| 1 | Stella cashflow from CCS trade | 1. Mock the Stella CCS cashflow 1. Initial exchange cashflows which value date is T+2 2. Final exchange cashflows which value date is in 1 year 2. Manually push new message to Ratan workflow 3. Load cashflow from cashflow blotter | 1. Cashflow with value date as T+2 is moved to 'QUEUED' status 2. Cashflow with value date as 1 year remains in 'PROJECTED' status | |
+| 2 | Stella cashflow forward trade (T+5) | 1. Mock the Stella Forward cashflow, value date is T+5 2. Manually push new message to Ratan workflow 3. Load cashflow from cashflow blotter | 1. Cashflow with value date as T+5 is moved to 'QUEUED' status | |
+| 3 | Stella cashflow forward trade (T+6) | 1. Mock the Stella Forward cashflow, value date is T+6 2. Manually push new message to Ratan workflow 3. Load cashflow from cashflow blotter | 1. Cashflow with value date as T+6 is still in 'PROJECTED' status | |
+| 4 | Stella VD-7 and run materialization on VD-5 | 1. Mock the Stella Forward cashflow, value date is T+7 2. Manually push new message to Ratan workflow 3. Run the materialization job on T+2( in the VD -5 window) | 1. Cashflow status is 'PROJECTED' status on T( VD -7) 2. Cashflow status moved to 'QUEUED" status on T+2( VD-5) | |
+| 5 | Stella Spot New + Amendment | 1. Mock Stella Spot trade cashflow 2. Mock Stella Spot trade amendment cashflow | 1. Only the latest amendment event displayed in cashflow blotter 2. Cashflow New + Amendment audit is available in cashflow history page | |
+| 6 | Stella Spot New + Withdrawal | 1. Mock Stella Spot trade cashflow 2. Mock Stella Spot trade Withdrawal cashflow | 1. Only the latest Withdrawal event displayed in cashflow blotter 2. Cashflow New + Withdrawal audit is available in cashflow history page | |
+| 7 | Murex Spot New + Amendment | 1. Book Murex Spot trade 2. Perform C&R on Murex Spot trade | 1. Only the latest amendment event displayed in cashflow blotter 2. Cashflow New + Amendment audit is available in cashflow history page | |
+| 8 | Netting | 1. Book Spot trades from Murex 2.11 2. Mock Stella Spot trade cashflow 3. Perform the netting from Ratan cashflow blotter | 1. Component cashflow moved to 'Netted' 2. Resultant cashflow created as 'Queued'. 3. Amount of netting resultant cashflow is sum of component cashflows 4. Same netting id for component & resultant cashflow | |
+| 9 | Un-Netting | 1. Perform the un-net from GUI | 1. Component cashflow status moved back to 'Queued' 2. Resultant cashflow status moved to 'Dead' | |

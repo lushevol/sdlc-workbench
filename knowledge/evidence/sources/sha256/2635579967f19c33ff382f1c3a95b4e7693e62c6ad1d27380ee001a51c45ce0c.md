@@ -1,0 +1,143 @@
+# Background
+
+The change is raised in scope of settlement day2. User expects to be able to split cashflow with high amount. To save more manual effort, user could set up auto splitting rules from UI for system to split the cashflow which met the rules automatically. This will result in around 1 hour saving per day.
+
+# Business Benefits
+
+- Support Client Requirements where need to pay split amount to different Client accounts
+- Adherence to Nostro Agent requirement to send payment only within the threshold
+- Avoid risk of manual errors while making manual payment
+- Avoid manual effort to create multiple manual payments
+
+# ADO
+
+[https://dev.azure.com/sc-ado/FMQPR/_workitems/edit/64695](https://dev.azure.com/sc-ado/FMQPR/_workitems/edit/6469617)64
+
+# Review History
+
+| # | Date | Reviewer | Status |
+| --- | --- | --- | --- |
+| 1 | 2025-08-07 | [@Joshi, Rujal Lal](mailto:RujalLal.Joshi@sc.com), [@Dinesh, Arockia](mailto:K.A.Dinesh@sc.com) [@Thomas, David George](mailto:Davidgeorge.Thomas@sc.com) [@Chan, Shiau Fong](mailto:ShiauFong.Chan@sc.com) [@Aganja, Prabesh](mailto:Prabesh.Aganja@sc.com) [@Leong, Weng Hien](mailto:WengHien.Leong@sc.com) [@Gunalan, Mehalai](mailto:Mehalai.Gunalan@sc.com) [@Lakshmanan, Pradeesh](mailto:Pradeesh.Lakshmanan@sc.com) [@Kumar, Babu](mailto:Babu.Kumar@sc.com) [@Wang, Nick Long](mailto:NickLong.Wang@sc.com) [@Hou, Grace Ying](mailto:GraceYing.Hou@sc.com) [@Liu, Wenbin](mailto:Kyle.Liu@sc.com) | Reviewed the requirement and is collecting the official sign off via email |
+| 2 | 2025-08-26 | [@Narasimhanparthasarathy, Lakshmi](mailto:Lakshmi.Narasimhanparthasarathy@sc.com) [@M, Logeashwari](mailto:Logeashwari.M@sc.com)[@Thomas, David George](mailto:Davidgeorge.Thomas@sc.com) [@Sridharan, Sathyanarayanan](mailto:Sathyanarayanan.Sridharan@sc.com) [@Joshi, Rujal Lal](mailto:RujalLal.Joshi@sc.com) [@Aganja, Prabesh](mailto:Prabesh.Aganja@sc.com) [@Kanagaraj, Thiyagarajan](mailto:Thiyagarajan.Kanagaraj@sc.com) [@Dinesh, Arockia](mailto:K.A.Dinesh@sc.com) [@Lakshmanan, Pradeesh](mailto:Pradeesh.Lakshmanan@sc.com) [@K Thirunavukarasu, Cordelia Sumita](mailto:Cordeliasumita.Kthirunavukarasu@sc.com) [@Wang, Nick Long](mailto:NickLong.Wang@sc.com) [@Hou, Grace Ying](mailto:GraceYing.Hou@sc.com) | Review the updates from previous version. Got user sign off to proceed |
+
+# Requirement Details
+
+## Product Scope
+
+Since BCS/LOANIQ/EG/NP/SA are being sent to RAZOR for payment generation, they will be out of scope for splitting functionality.
+
+Only FMRP cashflow will apply the split function.
+
+Once EG/NP/SA migrated to FMRP before split function go live, this will be included in the split function.
+
+## Manual Splitting
+
+Business use case: user get client request to split the cashflow to different amount and may stamp to different vostro/nostro to settle
+
+📎 [Split_Cashflow_J.mp4](attachments/Split_Cashflow_J.mp4)
+
+1. enable new menu item "**Split Cashflow**" for cashflow in below status | User action | Condition | | --- | --- | | Split Cashflow | Cashflow State in ("~~PROJECTED~~", "WAITING", "READY") and Netting Is is empty and Splitting Id is empty and Cashflow Event Type = "New" and Trade Original Source System Name <>'LOANIQ' |
+2. ~~if user split cashflow in PROJECTED status, the child cashflow will be materialized even not reached to the VD -5 scope.~~
+3. User profile to be able to select split action: the same as net
+4. **NO** manual splitting rule required
+5. after user select ‘Split Cashflow’, popup **Cashflow Split Preview** window - columns to be displayed in the popup: - Cashflow State - Booking Entity - Counterparty FMCODE - Currency - Pay/Receive - Payment Amount - Version - Payment Date - system display one record with the original amount by default - if user update the amount, system will automatically generate another new cashflow with the balance, - input validation: - the input amount should between 0 and available balance (>0 and < available balance) - only allow numbers and dot - limit the decimal of input amount per currency (follow the existing rounding logic: [Rounding Rule - Tactical solution for H1 2024 Cashflow Migration - Derivative Strategy Projects - Confluence](https://confluence.global.standardchartered.com/display/DSP/Rounding+Rule+-+Tactical+solution+for+H1+2024+Cashflow+Migration)) - if user continue to change the amount of 2nd cashflow, system will automatically generate the 3rd cashflow with the balance. - allow user to lookup counterparty SI in split preview popup: - user profile allowed is the same as adhoc SSI action - SI query condition sample - *Settlement_Instruction.BranchId_Murex3Id in ("SCB LONDON*LDN","Global") //booking fmcode* - *Settlement_Instruction.Payment_Currency in ("USD") //payment currency* - *Settlement_Instruction.Counterparty_SCI_FMID in ("401064447") //counterparty fmid* - *Settlement_Instruction.SSI_Status in ("Active","New","Update")* - ![image-2025-8-22_16-11-32.png](attachments/image-2025-8-22_16-11-32.png)![image-2025-8-22_16-10-40.png](attachments/image-2025-8-22_16-10-40.png) - once user click "Split With Affirmation" button, system will popup another window requesting affirmation details, child cashflow will be affirmed and won't have pending affirmation exception. - ![image-2025-8-4_19-57-10.png](attachments/image-2025-8-4_19-57-10.png) - single user approve the split action, checker not required.
+6. if user submit successfully, system will generate the cashflow with the amount set by user and the parent cashflow status will be "**SPLIT**" 1. SPLIT status need to write back to Stella, no need to write back to Murex, 1. if withdrawal event moved to SPLIT, also need to write back to Stella 2. If cashflow unsplit, status need to write back to Stella, no need to write back to Murex 3. Released status need to write back to Murex if there is any child cashflow is released 4. if child cashflow Moved to Settled status without Release status, need to write back to Murex 5. if netting resultant in SPLIT status, child cashflow released/settled need to write back to Murex for netting component cashflow
+7. Split child cashflow generated and back to main flow 1. Split cashflow format: **with S prefix **and length as 12. sample: S00123456789
+8. Split child cashflow will be hold in NSTP with **Split Cashflow** exception
+9. need to have a new field to show the linkage between parent/child: **Splitting Id** 1. user is able to see the splitting id in cashflow blotter 2. user is able to query cashflow with the splitting id
+10. User is able to check child cashflow in split parent cashflow ![image-2025-7-22_20-44-20.png](attachments/image-2025-7-22_20-44-20.png) ![image-2025-7-22_21-7-11.png](attachments/image-2025-7-22_21-7-11.png)
+11. user is able to **amend **split amount after split child generated, the action will trigger the amend split popup to update the amount | User action | Condition | | --- | --- | | Amend Split Amount | Cashflow State in ("WAITING") and Splitting Id Exists | - if the cashflow amount exceed user authorized amount, will the user be allowed to perform split action? – 2025-08-29 Dinesh and user confirmed no authorization limitation for split action - if any child released from Ratan, user cannot unsplit the cashflow, but possible to amend the amount for the child which has not released. - amount can be updated if cashflow in (WAITING) - amend is allowed only at least 2 child cashflow are in WAITING status - only be able to update the amount, cannot delete the specific child cashflow or add new child - validation when input amount - the input amount should between 0 and available balance (>0 and < available balance) //available balance here means: original total amount - the amount not eligible for amend - only allow numbers - the cashflow will be hold in NSTP with **Split Cashflow** exception and **Split Amend** exception - single user required for the amend action, checker not required ![image-2025-8-14_15-36-55.png](attachments/image-2025-8-14_15-36-55.png)
+12. Actions allowed on SPLIT status: only Un-Split is allowed, more details tracked in [User Actions on Cashflow Blotter]
+13. User is able to "**Un-Split**", the action can be selected either from parent or child cashflow - | User action | Condition | | --- | --- | | Un-Split | Splitting Id is not null and and Cashflow Event Type = "New" and Cashflow State NOT IN ('RELEASED','SETTLED') | - after user selected "Unsplit", below popup will display all the child cashflow from split action - child cashflow not in eligible status will be highlighted with red color ![image-2025-8-20_11-36-39.png](attachments/image-2025-8-20_11-36-39.png) - once user click "Un-Split All Cashflow" button, system will validate if all child cashflow are => in (QUEUED,WAITING,FAILED, HOLD, READY(NA), CASHFLOW_SUPPRESSED, SWIFT_SUPPRESSED)（) #*not in (Released, Settled, NETTED*) 1. if no, popup error message: "at least one child cashflow is not eligible for un-split" 2. if yes, 1. set child cashflow to "DEAD" state 2. reinstate the parent cashflow and it will be hold in NSTP with **Un-Split** exception
+14. other actions will follow as-is process.
+15. **Overlap between net and split: . ** - net resultant cashflow (including IRS aggregation resultant): - allow auto split ? - Yes - allow manual split ? - （NOT support in Day 1） - split child cashflow - allow auto split? - Yes - allow manual split? - **NO** - allow to hit auto netting rule? - **NO** - allow manual net? - **NO** - allow IRS check** - NO**
+16. Withdrawal event received when - Cashflow in SPLIT status，system will split the withdrawal event to withdrawal each child cashflow - Withdrawal parent cashflow will be moved to SPLIT status - if child cashflow haven't been released from RATAN, it will be moved to CANCELLED status - if child cashflow have been released from RATAN, withdrawal event will be hold in WAITING status pending user manual action.
+17. Trade Undo event: 1. upstream perform undo event when cashflow is in SPLIT status, the new event will be moved in ERROR status in RATAN ,
+18. non-economic amend impact to the cashflow - if cashflow is in SPLIT status and child cashflow in released/settled status: non economic amend (Withdrawal + New cashflow) will be ignored - rest will follow as-is process - if there is manual touch point on the cashflow, non economic amend (Withdrawal + New cashflow) will be ignored - if no manual touch point, system will process the latest version.
+19. SPLIT status will not trigger accounting entry
+20. SPLIT should not be able to moved to FAILED status
+
+## Nostro Threshold Static
+
+1. Need to create a new blotter "**Nostro Threshold Static**" - Data ops have the access to create/update/disable the static, other user profile will be read only view - UI format: refer to existing BIC Netting Static , maker checker required ![image-2025-8-4_20-17-19.png](attachments/image-2025-8-4_20-17-19.png)![image-2025-8-4_20-18-25.png](attachments/image-2025-8-4_20-18-25.png)![image-2025-10-24_10-33-53.png](attachments/image-2025-10-24_10-33-53.png) - Quick Search field in the blotter: Booking Entity, Nostro Agent, Currency, - Field to be involved in the static (all mandatory?) - Booking Entity FMID - optional field, will pop up soft warning if no values set. - Booking Entity FM CODE - backend logic will use FMID to check, FMCODE is only for user reference. - optional field, will pop up soft warning if no values set. - Nostro Agent (53 correspondent swift from nostro static in cashflow details) - optional field - validate 8 or 11 character - Currency - mandatory field - same dropdown list as cashflow quick search, also support user manually key in the values which not in the list - Threshold - mandatory field - no decimals allowed - Amount - mandatory field - no decimals allowed - validation: less than Threshold and limitation - Limitation - mandatory field - no decimals allowed - validation: less than Threshold - Duplication check key: Booking Entity +Nostro Agent + Currency - error message if duplication check failed: Duplicate record exists with the same Booking Entity + Nostro Agent + Currency
+
+# Auto Distribution Process
+
+before cashflow swift generation, system will check if cashflow match the static and cashflow amount >=threshold, if yes, system will automatically distribute the cashflow with lower amount and generate corresponding swift/accounting
+
+1. 1. the static check is triggered before swift generation 2. the static check only apply to SCB pay cashflow 3. if cashflow hit multiple records, best match priority: CCY > Booking Entity > Nostro Agent 4. Netting resultant is allowed to do auto splitting 5. Splitting child cashflow is allowed to do auto splitting
+2. **How to split by system? refer to attached sample** ** 📎 [Auto Split Samples.xlsx](attachments/Auto Split Samples.xlsx) **
+3. <details> <summary>Expand Details</summary> </details>
+4. For the cashflow generated from auto split function, need to set value in field 70/72 - /REC/Split of {CCY} {Parent amount} ： - sample: /REC/Split of USD100.12 - - add split line to 70/72 filed - MT605, MT210 not in scope(although MT605 will generate field 72, it do not need split) - 70 field is suitable for type: Mt103/Mt103Cov(although Mt103|Mt103Cov will generate field 70 and 72, in these two type split only for field 70) - 72 field is suitable for type: Mt202/Mt202Cov/Mt202Flip - add the value to the 1st field which means if there are other value from stamping, push them to the 2nd field....if all field have values, the last one will be discarded. - for INR cases, if LEI need to be added, split will take 3rd line after LEI. Details added to **[FMRP Swift Generation]** - The information will only show up in SWIFT, not in cashflow details
+
+**Exception Handling**
+
+- if there is any exception happened in the auto split process, move cashflow to Cashflow State = READY, Cashflow Sub Status Type = Pending Exception - for example: if deduct amount was <1 in the auto split processing process, there will be exception generation
+
+## Related Document
+
+- **[User Actions on Cashflow Blotter]**
+- **[FMRP Swift Generation]**
+- **[Status Machine - Derivative Strategy Projects - Confluence](https://confluence.global.standardchartered.com/display/DSP/Status+Machine)**
+
+## Surrounding System Impact
+
+- **Blade: **enable hard blocker for split status
+- **Stella**: support Split status and related action
+- **LMS**: Foong, Wei Mun <WeiMun.Foong@[sc.com](http://sc.com)>; Balasubramanian, Nivethitha <Nivethitha.Balasubramanian@[sc.com](http://sc.com)> - no impact, need regression test
+- **DQSL**: need to enable the new field "Cashflow.Splitting_Id"
+- **TLM/EBBS/Aspire:** karthik, balaji - need to get the linkage between split parent and child
+- **RATAN EOD, SSDR **:Zong, Liang <Liang.Zong@sc.com>; Mishra, Nrusingha <Nrusingha.Mishra@sc.com> - need to get the linkage between split parent and child
+- **FMMIS**: J, Thulasi Bai <Thulasibai.J@[sc.com](http://sc.com)> - need to consume the status and related manual touch point (action)
+- **CIS**: Aggarwal, Vivek <Vivek.[Aggarwal@sc.com](mailto:Aggarwal@sc.com)> - need to get the linkage between split parent and child
+- **Go AML**：Eliana, Eliana <Eliana.Eliana@[sc.com](http://sc.com)>; Agung, Deni <Deni.[Agung@sc.com](mailto:Agung@sc.com)> - confirmed no impact, OK to use S prefix for split child cashflow, need regression test
+
+# Future Enhancement
+
+below items not required in day1, please consider the solution to be able to extend with below functions:
+
+| | Description | Comment |
+| --- | --- | --- |
+| 1 | allow user to be able to perform adhoc SSI in split preview popup | |
+| 2 | split cashflow with different direction and higher amount than original once 📎 [RE_ Cashflow Split Requirement Signoff.msg](attachments/RE_ Cashflow Split Requirement Signoff.msg) | 2025-08-29 confirmed no need to enable this function since it's risky |
+| 3 | add split rule id info to history comment story 11425456 | story created to track the enhancement |
+| 4 | disable split function for PM ccy story 11714805 | story created to track the enhancement |
+
+# Open Questions
+
+| | Open Date | Description | Comment | Status | Close Date |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 2025-09-22 | Expected accounting entry for specific split scenario: **Case 1: ** 1. Cashflow C1 split to S1, S2, S3 2. S1 released from Ratan and related accounting generated 3. Withdrawal C1 received in Ratan and hold in NSTP, no accounting generated for this withdrawal 4. User manually swift_suppress or failed the withdrawal C1, what’s the expected behaviour? **Case 2:** 1. Cashflow C1, C2 net to N1 2. User split N1 to S1, S2, S3 3. S1 released from Ratan and related accounting generated 4. Withdrawal C1 received in Ratan and hold in NSTP, no accounting generated for now 5. User manually swift_suppress or failed the withdrawal event, what’s the expected behavior? | Confirmed with @Arockia Dinesh disable manual split over net resultant but need to support manual split over IRS aggregation resultant | | 2025-09-25 |
+| 2 | 2025-09-22 | split child vs. NDS auto netting | Confirmed with @Arockia Dinesh that Split child will not auto netting rule as well as NDS auto netting. | | 2025-09-25 |
+| 3 | 2025-09-25 | IRS Split cases ![image-2025-9-26_11-51-13.png](attachments/image-2025-9-26_11-51-13.png) | Confirmed with @Arockia Dinesh : if we received withdrawal event for IRS leg while the IRS aggregation resultant is in SPLIT status and there are child have been released, Withdrawal event will be hold in NSTP pending user action if user move the withdrawal event to SWIFT_SUPPRESSED or FAILED, system will generate accounting to reversal C1 with the primary ebbs account from N1 This need to be highlighted in the DOI document 2025-09-30 had internal design review, still have concern for this process, suggest to disable the option, will align with Dinesh. | | 2025-09-26 |
+| 4 | 2025-10-10 | not support manual split over IRS aggregation resultant | sync up with BAU leads and add test case for the scenario | | |
+| 5 | 2025-10-10 | Undo event after split will be moved to ERROR status New cashflow C1 Split to S1,S2,S3 S1 released S2 S3 WAITING, Withdrawal C1 Withdrawal S1 WAITING Withdrawal S2, S3 CANCELLED New C1 – ERROR ![image-2025-10-10_10-1-30.png](attachments/image-2025-10-10_10-1-30.png) | sync up with BAU leads and add test case for the scenario make sure hard blocker/soft blocker tested in UAT | | |
+| 6 | 2025-10-14 | if user selected SI when manual split the cashflow, will the SSI ID be stored for the cashflow? if user manual fail/reinstate the cashflow, the cashflow will continue to use the SI picked from manual fail | | | |
+| 7 | 2025-12-01 | TO be enhanced: add auto netting rule info to cashflow history tab | | | |
+| 8 | | | | | |
+
+# Business User Case
+
+| | Function | Scenario | Expected Result |
+| --- | --- | --- | --- |
+| 1 | BCS/LOANIQ cashflow not in split function scope | | |
+| 2 | manual split gross cashflow from Murex | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, user can click "Display child cashflow" button from parent cashflow to see all child cashflow ； child cashflow generated in WAITING status with "Split cashflow" exception 4. swift/accounting generated, cashflow released to downstream with no issues, (Released status write back to Murex) |
+| 3 | manual split gross cashflow from Stella | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, (SPLIT status write back to Stella) user can click "Display child cashflow" button from parent cashflow to see all child cashflow ； child cashflow generated in WAITING status with "Split cashflow" exception 4. swift/accounting generated, cashflow released to downstream with no issues |
+| 4 | manual split IRS netting resultant cashflow | 1. Book new cashflow C1，C2 2. User Net C1, C2 3. User right click the netting resultant cashflow N1 and select "Cashflow Split" 4. User input split amount and affirmation info 5. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Netting resultant N1 generated, component cashflow moved to NETTED status 3. Split Preview popup 4. Netting resultant cashflow moved to SPLIT status, user can click "Display child cashflow" button from parent cashflow to see all child cashflow ； child cashflow generated in WAITING status with "Split cashflow" exception 5. swift/accounting generated, cashflow released to downstream with no issues, released status will write back to Murex if component is from Murex. |
+| 5 | manual split cashflow with SI selected for child cashflow | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and select SI in the lookup field, input affirmation info 4. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 4. swift/accounting generated, cashflow released to downstream with no issues |
+| 6 | split child will not hit netting rule (either manual net/ auto net) | 1. Book new cashflow C1 which will hit auto netting rule 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, will not be in pending auto netting status 4. swift/accounting generated, cashflow released to downstream with no issues |
+| 7 | split child will not hit IRS check condition | 1. Book new IRS cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. maker/checker release the cashflow | 1. Cashflow received in Ratan and stuck in "Pending another leg" 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, will not be in pending another leg status 4. swift/accounting generated, cashflow released to downstream with no issues |
+| 8 | Split child will not hit NDS auto netting rule | | |
+| 9 | withdrawal cashflow in SPLIT status - child released | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. maker/checker release the cashflow 5. Withdrawal C1 received 6. maker/checker release the withdrawal event | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 4. swift/accounting generated, cashflow released to downstream with no issues 5. Withdrawal event is hold in NSTP queue 6. Withdrawal event is stuck in Ready status with swift error |
+| 10 | withdrawal cashflow in SPLIT status - child not released | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. Withdrawal C1 received | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 4. System auto unsplit the cashflow, child cashflow moved to DEAD status, parent cashflow moved to Cancelled status |
+| 11 | withdrawal net component cashflow when netting resultant in SPLIT status, split child is not released | 1. Book new cashflow C1,C2 2. user net the cashflow 3. User right click the cashflow and select "Cashflow Split" 4. User input split amount and affirmation info 5. Withdrawal C1 received | 1. Cashflow received in Ratan 2. Netting resultant N1 generated, component cashflow moved to NETTED status 3. Split Preview popup 4. Netting resultant cashflow moved to SPLIT status, user can click "Display child cashflow" button from parent cashflow to see all child cashflow ； child cashflow generated in WAITING status with "Split cashflow" exception 5. System auto unsplit and unnet the cashflow, C1 moved to Cancelled, C2 moved to WAITING, N1 and all split child moved to DEAD status. |
+| 12 | withdrawal net component cashflow when netting resultant in SPLIT status, split child is released | 1. Book new cashflow C1,C2 2. user net the cashflow 3. User right click the cashflow and select "Cashflow Split" 4. User input split amount and affirmation info 5. maker/checker release the cashflow 6. Withdrawal C1 received 7. maker/checker release the withdrawal event | 1. Cashflow received in Ratan 2. Netting resultant N1 generated, component cashflow moved to NETTED status 3. Split Preview popup 4. netting resultant moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 5. swift/accounting generated, cashflow released to downstream with no issues 6. Withdrawal event is hold in NSTP queue 7. Withdrawal event is stuck in Ready status with swift error |
+| 13 | user is able to query cashflow with splitting Id | | |
+| 14 | Unsplit - child cashflow not released | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. User unsplit cashflow 5. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 4. split child cashflow moved to dead status, parent cashflow moved to WAITING status with Un-Split exception. 5. swift/accounting generated as expected with no issue |
+| 15 | Unsplit - child cashflow released | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. maker/child release child cashflow 5. User unsplit cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 4. swift/accounting generated for the child cashflow 5. got error message that not eligible for unsplit |
+| 16 | Amend Split Amount | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. User select child cashflow and select "Split Amend" 5. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 4. Split child cashflow amount updated as expected and in WAITING status with "Split Amend" exception 5. swift/accounting generated as expected with no issue |
+| 17 | Amend Split Amount - not eligible | 1. Book new cashflow C1 2. User right click the cashflow and select "Cashflow Split" 3. User input split amount and affirmation info 4. user move child cashflow to the status <> WAITING 5. User select child cashflow and select "Split Amend" 6. maker/checker release the cashflow | 1. Cashflow received in Ratan 2. Split Preview popup 3. Original cashflow moved to SPLIT status, child cashflow generated in WAITING status with "Split cashflow" exception, SI stamped with the one selected in split popup 4. Child cashflow status in (HOLD, CASHFLOW_SUPPRESSED, SWIFT_SUPPRESSED, FAILED, READY) 5. child cashflow not in WAITING are not eligible to amend amount, if there is only one in Waiting cannot amend, either 6. swift/accounting generated as expected with no issue |
+| 18 | Gross cashflow amount exceed nostro threshold | | |
+| 19 | Net resultant cashflow amount exceed nostro threshold | | |
+| 20 | Split child cashflow amount exceed nostro threshold | | |
+| 21 | cashflow hit multiple nostro threshold static | | |

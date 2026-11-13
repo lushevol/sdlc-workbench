@@ -274,6 +274,7 @@ Resolve the layout from its unique active source manifest. Reject both manifest 
 Incoming files and retained originals use separate lifecycles within the same evidence area.
 Task-owned investigation captures and source excerpts stay in `tasks/<task-id>/evidence/`.
 `knowledge/evidence/manifest.yaml` records source IDs, locators, revisions, hashes, retrieval times, classifications, and optional snapshot paths.
+The runtime accepts source manifests up to 16 MiB. Individual governed records and audit events retain a one MiB limit.
 `knowledge/records/candidates/` retains draft domain explanations. `knowledge/evidence/findings/` retains investigation findings.
 Published concept directories supply reviewed context for engineering tasks.
 Repository profiles describe responsibility, components, contracts, and dependencies with exact evidence.

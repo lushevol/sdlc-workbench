@@ -1,0 +1,5 @@
+- [RATAN Release](https://confluence.global.standardchartered.com/display/PSS/RATAN+Release)
+- [RATAN-MISC](https://confluence.global.standardchartered.com/display/PSS/RATAN-MISC)
+- [Ratan Pending PID remediations, vulnerabilities, cert renewal](https://confluence.global.standardchartered.com/display/PSS/Ratan+Pending+PID+remediations%2C+vulnerabilities%2C+cert+renewal)
+- [Ratan Prod repeated Incident list](https://confluence.global.standardchartered.com/display/PSS/Ratan+Prod+repeated+Incident+list)
+- [Ratan Tracking of List of key deliverables](https://confluence.global.standardchartered.com/display/PSS/Ratan+Tracking+of+List+of+key+deliverables)

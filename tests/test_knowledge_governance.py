@@ -221,6 +221,21 @@ class KnowledgeGovernanceTests(unittest.TestCase):
                 self.write_manifest()
                 self.assertIn("manifest_invalid", self.codes())
 
+    def test_large_source_manifest_is_read_without_relaxing_record_limit(self):
+        self.manifest["sources"] = [
+            {"id": f"source-{index:04d}", "resource": f"fixture://source-{index:04d}",
+             "revision": "v1", "sha256": "a" * 64,
+             "ingested_at": "2026-10-14T00:00:00Z", "classification": "business"}
+            for index in range(6000)
+        ]
+        self.write_manifest()
+        self.assertGreater((self.root / "evidence/knowledge/manifest.yaml").stat().st_size, 1024 * 1024)
+        self.assertTrue(validate_knowledge(self.root)["valid"])
+        self.write_document()
+        with self.document.open("a") as stream:
+            stream.write("x" * (1024 * 1024))
+        self.assertEqual(self.codes(), {"document_invalid"})
+
     def test_raw_snapshot_hash_mismatch_and_new_revisions(self):
         self.write_document()
         self.raw.write_bytes(b"changed original bytes\n")

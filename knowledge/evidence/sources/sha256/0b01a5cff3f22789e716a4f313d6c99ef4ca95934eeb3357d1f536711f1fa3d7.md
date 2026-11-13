@@ -1,0 +1,20 @@
+# Major functionality
+
+- Monitor the cashflows not fully received yet - Cashflows in next feeding batch - Cashflows stuck in Murex workflow
+- Monitor the cashflows pending trade validation - Market event not validated by MO yet - Market event validated by MO but trade id not sync between Murex 2.11 & RATAN( e.g. non eco amendment)
+
+# 'Group Pending' Monitoring & Investigation
+
+- Monitoring the 'Group Pending' count from cashflow dashboard, if the number is not 0 user can click on the tag & jump to the 'Group Blotter' ![image2024-8-14_14-31-40.png](attachments/image2024-8-14_14-31-40.png)
+- A new 'Group Blotter' tile would be auto opened & showing the 'PENDING' Go to Group Blotter and query the data which 'Status' is 'PENDING'. ![image2024-8-13_22-38-8.png](attachments/image2024-8-13_22-38-8.png)
+- Use the original trade id to query all the underlying payments within this trade. ![image2024-8-13_22-40-8.png](attachments/image2024-8-13_22-40-8.png)
+- Checking the pending reason - There're 2 payments expected for major version 2 - Only one payment received and another is missing - Can see the missing payment id in the 'Pending Reason'
+- ![image2024-8-13_22-42-54.png](attachments/image2024-8-13_22-42-54.png)
+- Check the missing payment status in Murex 2.11 - 108185597 and 108185598 are generated from same market event and suppose be sent to RATAN together - 108185597 was sent to RATAN but 108185598 are not, this is the reason 108185597 is stuck as 'PENDING' in RATAN. - Check with Murex 2.11 PSS team (email: support, murex) for the reason why 108185598 is not pushed from Murex. - Follow the Murex 2.11 DOI to push 108185598 to RATAN, after this the pending exception would be auto fixed.
+- ![image2024-8-13_22-56-54.png](attachments/image2024-8-13_22-56-54.png)
+
+# 'Group Pending Validation' Monitoring & Investigation
+
+- Monitoring the 'Group Pending Validation' count from cashflow dashboard, if the number is not 0 user can click on the tag & jump to the 'Group Blotter' ![image2024-8-14_14-49-42.png](attachments/image2024-8-14_14-49-42.png)
+- System would auto open a new tile 'Group Blotter' loading the cashflows 'Pending Trade Validation', user may need to check the payment which the value date is in near future e.g. the below payment is VD tomorrow. ![image2024-8-14_15-8-2.png](attachments/image2024-8-14_15-8-2.png)
+- Take the trade id and check in TP system, there would be different cases - **Murex** - Trade id is same with RATAN GUI but not validated yet, settlement ops may approach MO to perform trade validation if client is asking for payment affirmation. ![image2024-8-14_15-15-41.png](attachments/image2024-8-14_15-15-41.png) - **Murex **- Trade id is different with RATAN GUI, Murex have new trade id validated( from non eco amendment). For this case ops need to manually push the cashflows from 'Group Blotter'. a) Trade id RATAN received is 96502251 ![image2024-8-14_15-43-56.png](attachments/image2024-8-14_15-43-56.png) b) Murex had performed non eco amendment, which trade id changed from 96502251 to 96522715. New Trade id **96522715 **is **not **sync to RATAN given the known Murex limitation. ![image2024-8-14_15-45-4.png](attachments/image2024-8-14_15-45-4.png) c) MO just did the validation on new trade id **96522715 **n on new** ** ![image2024-8-14_15-46-50.png](attachments/image2024-8-14_15-46-50.png) ![image2024-8-14_15-50-56.png](attachments/image2024-8-14_15-50-56.png) d) User need to manually push the cashflow to 'Cashflow Blotter' given the trade id in RATAN is out of sync with Murex trade id. ![image2024-8-14_15-52-22.png](attachments/image2024-8-14_15-52-22.png) - **Stella **- Trade not validated yet a) Cashflow is holding as 'Pending Trade Validation'| ![image2024-8-14_16-28-37.png](attachments/image2024-8-14_16-28-37.png) b) Go to trade blotter to check the trade state, with same trade id & major version. Trade state is TOBESENT, user need to approach MO to validate the trade. ![image2024-8-14_16-27-45.png](attachments/image2024-8-14_16-27-45.png)

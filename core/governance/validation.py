@@ -18,6 +18,7 @@ from .schemas import AUDIT_EVENT_SCHEMA, DOCUMENT_SCHEMAS, HEADINGS, RAW_MANIFES
 
 
 _MAX_BYTES = 1024 * 1024
+_MAX_MANIFEST_BYTES = 16 * 1024 * 1024
 _FORBIDDEN_KNOWLEDGE_PARTS = {"templates", "examples", "schemas", "raw", "audit", "findings", "logs", "execution"}
 _NAVIGATION = {"README.md", "index.md"}
 _DOMAIN_TYPES = set(DOCUMENT_SCHEMAS) - {"GovernanceFinding"}
@@ -63,11 +64,13 @@ def _yaml_object(text):
         raise WorkbenchError("Use unique YAML keys and JSON-compatible values; quote timestamps.") from None
 
 
-def _read(path):
+def _read(path, maximum=_MAX_BYTES):
     try:
         with path.open("rb") as stream:
-            raw = stream.read(_MAX_BYTES + 1)
-        if len(raw) > _MAX_BYTES:
+            raw = stream.read(maximum + 1)
+        if len(raw) > maximum:
+            if maximum == _MAX_MANIFEST_BYTES:
+                raise WorkbenchError("The source manifest must not exceed 16 MiB.")
             raise WorkbenchError("Knowledge records must not exceed one MiB.")
         return raw, raw.decode("utf-8")
     except (OSError, UnicodeError):
@@ -206,7 +209,7 @@ def validate_knowledge(root: Path) -> dict:
     source_identities = set()
     if confined(manifest_path) and manifest_path.exists():
         try:
-            _, text = _read(manifest_path)
+            _, text = _read(manifest_path, _MAX_MANIFEST_BYTES)
             manifest = _yaml_object(text)
             _profile(manifest, RAW_MANIFEST_SCHEMA)
             for source in manifest["sources"]:

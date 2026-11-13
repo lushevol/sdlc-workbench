@@ -1,0 +1,2 @@
+- Pre Action - Hold Control-M jobs - NA - Stop Service
+- Post Action - Start Service - Release Control-m Jobs - NA - Health Check - RATAN:

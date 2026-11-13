@@ -125,3 +125,8 @@ This records derived freshness only. Candidates remain drafts; human publication
 A user follow-up identified that the 15-second activity window remained material system/test behavior even after it was removed from the candidate policy criteria. The MFE Base page now records the dated source evidence separately: `useController.ts` uses a five-second trailing mouse debounce, while the retained activity helper emits events every 100 ms for a 15-second observation window and checks for renewal in that window. The retained execution reported no successful renewal during continuous movement because the debounce kept resetting.
 
 The 15-second window remains explicitly qualified as implementation/test evidence, not a product-policy timeout. The canonical v9 requirement remains unchanged: AC-1 through AC-3 require eligible activity when renewal is due and success before access expiry and the absolute deadline. One derived page changed; 95 output bytes remained unchanged. Source aliases, shared owners and prior semantic review were preserved. Evidence: `tasks/ui-test-coverage-20261022/evidence/portal-candidate-review-20261112/implementation-evidence.json`.
+
+## [2026-11-13] ingest | Cashflow identity and Stella write-back
+
+Current-session `llm-wiki-agent` maintenance added one draft summary and one index entry. The source is `KT-settlement-cashflow-identity-and-stella-write-back` v1, SHA-256 `f2d265d93d04eeb0e1fe5334b8fbe5bafee6ff1d80b2612d1698ddad70c82433`.
+The review preserved open version, matching, acknowledgement, and retry rules. Both aliases and all 14 wiki bindings passed verification. The exact candidate replans unchanged.
