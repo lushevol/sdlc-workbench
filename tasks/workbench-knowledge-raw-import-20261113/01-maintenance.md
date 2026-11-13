@@ -19,6 +19,12 @@
 
   > go on
 
+- User follow-up on source order in the same Codex chat:
+
+  > won’t you the first step be filtering raw knowledge before processing?
+
+  Apply source filtering first. Use only reviewed selections in any later candidate update.
+
 - Baseline: `ff077ed85`. The unrelated connector lockfile deletion, release-report files, and Azure DevOps assessment are outside this task.
 
 ## Retention and review
@@ -49,7 +55,22 @@ The LMS action matrix remains on hold because its workbook is missing.
 [Cashflow identity and Stella write-back](../../knowledge/records/candidates/settlement/KT-settlement-cashflow-identity-and-stella-write-back.md) covers four Cash pages and two RATAN pages.
 The [independent claim review](evidence/candidate-review.json) records the exact candidate hash. The final ingestion check passed with one new candidate event.
 The [wiki summary](../../knowledge/llm-wiki/wiki/summaries/KT-settlement-cashflow-identity-and-stella-write-back.md) carries the same evidence limits. The scoped wiki plan now returns unchanged.
-The [completion evidence](evidence/completion.json) records both processing receipts. One Cash page and four RATAN pages remain queued for canonical processing.
+The [completion evidence](evidence/completion.json) records both processing receipts. The six source pages match the reviewed selection hashes and ranges.
+
+## Source filtering follow-up
+
+Review retained raw pages and create a filtered view before processing them into candidates. The earlier batch did this for the six processed pages. The earlier handoff put candidate work ahead of the remaining source review.
+
+The follow-up reviewed 86 additional pages. It kept exact sections from seven and excluded 79 confirmed empty exports. The retained originals remain available for provenance.
+
+| Collection | Additional pages kept | Empty pages excluded | Pending source review | Selected pages queued for processing |
+| --- | ---: | ---: | ---: | ---: |
+| `cash-settlement-home-page` | 4 | 72 | 788, including one hold | 5 |
+| `ratan-51358` | 3 | 7 | 170 | 7 |
+
+The Cash selections cover Group Blotter fields and monitoring, cashflow data, and SCBML generation. The RATAN selections cover prechecks, suppression, and stamping. Both preserve unresolved scope and source differences. See the [Cash decisions](evidence/filter-followup-cash-settlement-home-page.json) and [RATAN decisions](evidence/filter-followup-ratan-51358.json).
+
+Workspace validation passed. Source verification found no binding issues and returned `NEEDS_REVIEW` for both collections. The new partial views match the selected hashes and line ranges. See the [filtering checks](evidence/filter-followup-checks.json).
 
 ## Validation and maintenance
 
@@ -63,7 +84,7 @@ The loopback rerun finished with 1,068 tests, two skips, and no failures or erro
 
 ## Next action
 
-Process the four selected RATAN pages on purpose, grouping, trade validation, and pending interfaces next. Review the remaining source pages in bounded topic groups.
+Continue filtering raw pages in topic groups. Use each verified view as the input for later candidate processing. Prioritize related sources that clarify Group Blotter visibility, suppression states, and market applicability.
 The Settlement owner needs to confirm the effective rules below. The owner is unknown.
 The sources describe design and proposed behavior. Approval, current applicability, and production behavior remain unverified.
 
