@@ -283,7 +283,7 @@ Task documentation changes are supporting analysis. They do not implement the mi
 
 | Search scope and source | Revision or hash | Applicable rule or criterion | Authority and limits | Remaining material gap |
 | --- | --- | --- | --- | --- |
-| [SDK knowledge candidate](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#entitlement-retrieval-and-lifecycle). | Version 7; hash in source manifest. | Direct lookup and entitlement-token paths. | Historical guides and prior user answers; candidate status. | Actual supported artifacts and callers. |
+| [SDK knowledge candidate](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#entitlement-retrieval-and-lifecycle). | Version 7; hash in source manifest. | Direct lookup and entitlement-token paths. | Historical guides and prior user answers; candidate status. | Actual supported artifacts and callers. |
 | [Earlier migration intake](../ces-entitlement-migration-20261102/01-intake.md#description) and exact linked user inputs. | Hashes in source manifest. | Final objective, rename, and feature consolidation. | User-stated intent; deployment unverified. | Detailed SDK contract. |
 | SDK, Auth, BFF, and test sources. | Exact revisions and hashes in manifests. | [SDK-AC-001](#sdk-ac-001) and affected interfaces. | Source/assertion inspection. No new business execution. | Candidate tests and retained results. |
 

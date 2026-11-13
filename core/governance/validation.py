@@ -13,6 +13,7 @@ import yaml
 
 from ..context.catalogs import UniqueKeyLoader
 from ..models import WorkbenchError, validate_arguments
+from ..knowledge_layout import knowledge_layout
 from .schemas import AUDIT_EVENT_SCHEMA, DOCUMENT_SCHEMAS, HEADINGS, RAW_MANIFEST_SCHEMA
 
 
@@ -187,7 +188,11 @@ def validate_knowledge(root: Path) -> dict:
             report(path, "unsafe_path", str(error))
             return False
 
-    knowledge = root / "knowledge"
+    try:
+        knowledge, evidence = knowledge_layout(root)
+    except WorkbenchError as error:
+        report(root / "knowledge", "knowledge_layout_invalid", str(error))
+        return {"valid": False, "documents": 0, "findings": findings}
     if knowledge.exists() and not confined(knowledge):
         return {"valid": False, "documents": 0, "findings": findings}
     if knowledge.exists() and not knowledge.is_dir():
@@ -196,7 +201,7 @@ def validate_knowledge(root: Path) -> dict:
 
     # Revisions are immutable declarations. Snapshots are optional; external
     # resource names are never opened, fetched, or modified by validation.
-    manifest_path = root / "evidence" / "knowledge" / "manifest.yaml"
+    manifest_path = evidence / "manifest.yaml"
     source_keys = set()
     source_identities = set()
     if confined(manifest_path) and manifest_path.exists():
@@ -217,7 +222,9 @@ def validate_knowledge(root: Path) -> dict:
                 if "snapshot" in source:
                     try:
                         snapshot = _safe_path(root, source["snapshot"])
-                        if snapshot.resolve().is_relative_to(knowledge.resolve()):
+                        if (snapshot.resolve().is_relative_to(knowledge.resolve())
+                                or is_derived_knowledge_path(snapshot, root)
+                                or is_derived_knowledge_path(snapshot.resolve(), root)):
                             raise WorkbenchError("Store source snapshots outside the domain knowledge directory.")
                         if not snapshot.is_file():
                             raise WorkbenchError("The declared source snapshot does not exist.")
@@ -245,7 +252,7 @@ def validate_knowledge(root: Path) -> dict:
 
     events = []
     event_ids = set()
-    audit_root = root / "evidence" / "knowledge" / "audit"
+    audit_root = evidence / "audit"
     if confined(audit_root) and audit_root.exists():
         for path in sorted(audit_root.rglob("*")):
             if not confined(path) or not path.is_file() or path.name == "README.md":
@@ -294,7 +301,7 @@ def validate_knowledge(root: Path) -> dict:
             continue
         if path.name not in _NAVIGATION:
             domain_documents.append(path)
-    finding_root = root / "evidence" / "knowledge" / "findings"
+    finding_root = evidence / "findings"
     finding_documents = []
     if confined(finding_root) and finding_root.exists():
         for path in sorted(finding_root.rglob("*")):
@@ -313,7 +320,7 @@ def validate_knowledge(root: Path) -> dict:
             metadata = _document_content(text, domain_only=path in domain_documents)
             kind = metadata["type"]
             if path in finding_documents and kind != "GovernanceFinding":
-                raise WorkbenchError("Store only governance findings in evidence/knowledge/findings/.")
+                raise WorkbenchError("Store only governance findings in the knowledge evidence findings directory.")
             identity = metadata["id"], metadata["version"]
             if identity in identities:
                 raise WorkbenchError("A document ID/version pair must occur once.")

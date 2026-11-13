@@ -1,1 +1,1 @@
-../../candidates/settlement/KT-settlement-auto-netting.md
+../../records/candidates/settlement/KT-settlement-auto-netting.md

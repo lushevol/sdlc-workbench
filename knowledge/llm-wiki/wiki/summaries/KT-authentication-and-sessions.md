@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-authentication-and-sessions.md"
 ---
 
-> Derived from [KT-authentication-and-sessions, version 10](../../../candidates/security/KT-authentication-and-sessions.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-authentication-and-sessions, version 10](../../../records/candidates/security/KT-authentication-and-sessions.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Authentication and sessions
 
@@ -22,12 +22,12 @@ Links: [[concepts/portal-entry-and-tile-authorization]], [[concepts/ems2-entitle
 ## Intended session renewal
 The RATAN team owns and reviews portal policy under ICS bank security policy. The user set ceilings of 15 minutes idle and 60 minutes absolute from portal authentication. Eligible mouse, keyboard, and scroll activity supports renewal within the absolute deadline, including across initial refresh credential expiry while access remains valid. At the deadline, further access requires a new authenticated portal session. Before the deadline, the prior idle-prompt recovery keeps the prompt open while renewal is pending, closes it once after success, and permits another eligible attempt after rejection.
 
-The ideal logout target immediately revokes all of the user's portal sessions. Protected actions and renewals using those sessions should fail after logout completes. Entra and other identity-provider sessions are outside that revocation scope. The [logout criterion](../../../candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001) remains a candidate for RATAN review.
+The ideal logout target immediately revokes all of the user's portal sessions. Protected actions and renewals using those sessions should fail after logout completes. Entra and other identity-provider sessions are outside that revocation scope. The [logout criterion](../../../records/candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001) remains a candidate for RATAN review.
 
 Links: [[concepts/session-activity-renewal]], [[concepts/session-expiry-prompt-recovery]], [[summaries/REQ-active-session-renewal]].
 
 ## Authentication responsibilities and Entra migration
-- Entra design: browser redirect, authorization-code exchange through the [[entities/single-ui-bff]]; the BFF builds user information, retrieves [[entities/ems2]] entitlements, and issues authentication and entitlement tokens. The historical design retained OneMFA fallback and described a separate username/password path. The current production target prohibits OneMFA fallback. [Sign-in criterion](../../../candidates/security/KT-authentication-and-sessions.md#portal-sso-ac-001).
+- Entra design: browser redirect, authorization-code exchange through the [[entities/single-ui-bff]]; the BFF builds user information, retrieves [[entities/ems2]] entitlements, and issues authentication and entitlement tokens. The historical design retained OneMFA fallback and described a separate username/password path. The current production target prohibits OneMFA fallback. [Sign-in criterion](../../../records/candidates/security/KT-authentication-and-sessions.md#portal-sso-ac-001).
 - Phase 1 covers UI SSO only. It excludes EMS2 replacement, portal session management, and tenant-onboarding authentication. Machine-to-machine authentication has a separate migration document with unresolved central dependencies.
 - Non-production verification requires a development AD account, Authenticator registration, and RATAN AD-group membership; it checks successful login, user information, and expected tile visibility. The FAQ ties missing entitlements to tile access and EMS2 configuration.
 - The production pilot describes Windows Hello or Authenticator login and a one-hour [[entities/entra]] session; that provider session does not settle the portal refresh-token lifetime. It also warns that AD profile values differ from OUD values: surname formatting, country codes, and missing locale values can affect downstream audit or application logic.

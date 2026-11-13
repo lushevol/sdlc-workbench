@@ -8,7 +8,7 @@ Entry point source: [user request](../../docs/evidence/graph-instruction-integra
 
 ## Existing architecture notes
 
-Start with the [preserved architecture explanation](../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt).
+Start with the [preserved architecture explanation](../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt).
 It describes the four MFE layers, Nginx, BFF, SDK, and Auth Server.
 Keep that historical source unchanged. Add corrections and newer information below.
 

@@ -1,1 +1,1 @@
-../../candidates/evolution/KT-architecture-evolution.md
+../../records/candidates/evolution/KT-architecture-evolution.md

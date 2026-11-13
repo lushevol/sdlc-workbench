@@ -42,7 +42,7 @@ A recorded user clarification handles one narrow case. When a tile's subject set
 
 The provisional SSDR discussion records other alternatives: multiple tile entities, optional subject checks for selected tenants, adding missing EMS2 assignments, and delegating authorization to SSDR. The temporary guest-access proposal is struck through. The discussion states that the portal does not implement entitlement control outside existing systems such as EMS2. None of these alternatives is an approved or deployed rule.
 
-The draft portal principles require matching both the configured EMS2 entity and subject when a tile requires a subject. This is historical draft context. [Historical configured-subject rule](../../../candidates/security/KT-sdk-and-entitlements.md#historical-configured-subject-rule)
+The draft portal principles require matching both the configured EMS2 entity and subject when a tile requires a subject. This is historical draft context. [Historical configured-subject rule](../../../records/candidates/security/KT-sdk-and-entitlements.md#historical-configured-subject-rule)
 
 ## Provisioned records in the CES migration comparison
 
@@ -88,7 +88,7 @@ The migration material adds its own limits. It states intent and comparison scop
 
 Known gaps:
 
-- Portal administrators may read audit history and configuration across tenants. Cross-tenant writes and verification remain open, as does the classification of shared tenant records. A tile must never reference metadata from another tile. [Admin access criteria](../../../candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
+- Portal administrators may read audit history and configuration across tenants. Cross-tenant writes and verification remain open, as does the classification of shared tenant records. A tile must never reference metadata from another tile. [Admin access criteria](../../../records/candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
 - Multiple-entity tile matching is unresolved.
 - SSDR delegation is unresolved.
 - The applicable revision of the setup procedure for the current environment is unconfirmed.

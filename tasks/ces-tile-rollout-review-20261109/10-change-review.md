@@ -23,8 +23,8 @@ A stable endpoint or field name does not prove stable value meaning or behavior.
 Prefer deterministic compatibility handling in the BFF, auth server, SDK, or shared container.
 Highlight exceptions that require business mapping or upper-application changes.
 
-This restates the existing [permission compatibility intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
-The existing [provider-union rule](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004) permits mapped grants from either provider.
+This restates the existing [permission compatibility intent](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
+The existing [provider-union rule](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004) permits mapped grants from either provider.
 Provider union is not itself a finding. CES identity and scalar business profile remain different contracts.
 No new business meaning or knowledge publication results from this clarification.
 The [project guide](../../AGENTS.md#migration-compatibility-in-code-review) now records the review principle.
@@ -245,7 +245,7 @@ Backend rejection and business-flow failure were not executed. No forced logout 
 Owner: unknown.
 Next action: identify the authoritative CES-to-legacy business profile mapping and preserve that scalar contract in a lower shared layer.
 Do not select the first CES entitlement, join role names, or rename the CES entity to invent a profile.
-The existing [role mapping question](../../knowledge/candidates/security/KT-ces-migration-parity.md#open-questions) remains unresolved.
+The existing [role mapping question](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#open-questions) remains unresolved.
 If valid CES roles cannot map to one existing profile, document the necessary caller exception before acceptance.
 Validation: [TC-CONTRACT-PROFILE](06-test-cases.md#tc-contract-profile), [BFF contract trace](evidence/bff-contract-followup.json).
 Confidence: high for the inspected source chain under the stated missing-fallback condition.

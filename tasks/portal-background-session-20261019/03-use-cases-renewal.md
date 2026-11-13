@@ -30,7 +30,7 @@ writing_review:
 The [exact user request](evidence/user-input-20261028-comprehensive-renewal.txt) defines this test-design scope.
 Primary actors are synthetic portal users A and B. Supporting actors include the shell, BFF, application containers, and transport servers.
 The system boundary includes session continuation and concurrent work. It includes authorization observations at downstream boundaries.
-The [requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) remains candidate version 5 with pending publication review.
+The [requirement](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) remains candidate version 5 with pending publication review.
 The [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json) identifies inspected revisions and retained bytes.
 
 ## Proposed flow conditions

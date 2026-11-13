@@ -16,12 +16,14 @@ The projection reads these workspace inputs when present:
 
 | Input | Projection |
 | --- | --- |
-| `knowledge/**/*.md` | Records, exact versions, lifecycle states, citations, related IDs, and acceptance criteria. |
+| `knowledge/records/**/*.md` | Records, exact versions, lifecycle states, citations, related IDs, and acceptance criteria. |
 | Configured catalogs | Repository, service, capability, contract, and source declarations. |
-| `evidence/knowledge/manifest.yaml` | Exact source revisions, hashes, and retained snapshot status. |
-| `evidence/knowledge/findings/**/*.md` | Governance findings and their declared subjects. |
-| `evidence/knowledge/audit/**/*.yaml` | Immutable events and exact record targets. |
+| `knowledge/evidence/manifest.yaml` | Exact source revisions, hashes, and retained snapshot status. |
+| `knowledge/evidence/findings/**/*.md` | Governance findings and their declared subjects. |
+| `knowledge/evidence/audit/**/*.yaml` | Immutable events and exact record targets. |
 | `relationships/requirement-code/baselines/**/*.json` | Behavior, implementation, assertion, execution, and finding declarations. |
+
+The installed layout resolver also supports legacy workspaces before explicit migration. Canonical discovery selects its resolved record root and does not combine records with evidence or derived wiki pages.
 
 Workspace configuration, local repository mappings, and tool catalogs contribute fingerprints.
 Private configuration values and execution grants are not copied into graph properties.

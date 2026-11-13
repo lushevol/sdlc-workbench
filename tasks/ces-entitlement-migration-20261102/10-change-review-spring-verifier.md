@@ -42,7 +42,7 @@ The [operating guide](spring-verifier/README.md) provides build, replay, company
 - Baseline SDK: `b0aa82005e7f14202f85f5ef583f25e42da9eeb3`.
 - Candidate SDK: `fd9a157e260850b6d9efa10da3223950ea61133a`.
 - Intended result: preserve role-scoped permission meaning without missing or unsupported additional grants.
-- Source: [existing compatibility intent](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#sdk-ces-intent-ac-001).
+- Source: [existing compatibility intent](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#sdk-ces-intent-ac-001).
 - The tool does not change assignments, business policy, application source, or deployment.
 - Preserved intake: Workbench revision `5f9ae762688274d6f1c57fd701b5308c91f1476a`; SHA-256 `5271d9c60da0687a58726e7e37858a998f56e596f7a24673cad961ccbb64b0bd`.
 

@@ -133,7 +133,7 @@ What behavior applies when an application's configured entity list is empty?
 The [retained answer](evidence/clarification-20261022/empty-entity-source.json) selects `Deny tile access (Recommended)`.
 Hide the tile and deny direct launch until an EMS2 entity is configured.
 This answer leaves application data permissions separate.
-The [business criterion](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001) isolates the tile rule from portal-entry eligibility.
+The [business criterion](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001) isolates the tile rule from portal-entry eligibility.
 
 | Field | Current record |
 | --- | --- |
@@ -146,7 +146,7 @@ The [business criterion](../../knowledge/candidates/security/KT-sdk-and-entitlem
 | Limits | No approved policy, deployment binding, denial wording, HTTP status, or passing execution is established. |
 
 The [historical question](evidence/knowledge-inspection.md#open-rule-decisions) retains its earlier unresolved state.
-The [empty-role example, lines 13–19](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L13-L19>) does not define empty-entity behavior.
+The [empty-role example, lines 13–19](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L13-L19>) does not define empty-entity behavior.
 
 ### Empty subject configuration
 
@@ -158,7 +158,7 @@ When the subject setting is empty, the portal must show the tile and authorize l
 
 Owner: `portal team`. Scope: local, test, UAT, and production.
 Rule, owner, and scope questions are answered. Publication approval and deployed enforcement remain unconfirmed.
-[UI-EMPTY-SUBJECT-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) defines the measurable result.
+[UI-EMPTY-SUBJECT-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) defines the measurable result.
 The answer selects no multiple-entity matching rule or application data permission.
 
 ### Multiple entity configuration
@@ -189,7 +189,7 @@ The next action is user handback of the [nine remaining entries](05-knowledge-qu
 
 ## Proposed acceptance and validation
 
-Review [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001), [UI-EMPTY-ENTITY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001), and [UI-EMPTY-SUBJECT-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) against the retained answers.
+Review [UI-ENTRY-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001), [UI-EMPTY-ENTITY-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001), and [UI-EMPTY-SUBJECT-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) against the retained answers.
 Check workspace records, source hashes, unchanged historical bytes, links, and the final diff.
 These checks establish record consistency within their stated scope.
 They do not establish policy approval or passing business behavior.
@@ -201,13 +201,13 @@ This stage proposes no application implementation or release.
 
 ## Selected rule and historical conflict
 
-The [draft principles, line 14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>) support the denial direction.
-The [older security proposal, line 7](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7>) permits entry for SC accounts.
+The [draft principles, line 14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>) support the denial direction.
+The [older security proposal, line 7](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7>) permits entry for SC accounts.
 The user selected denial, not that historical allow-entry proposal.
 Neither source establishes approved applicability or owner authority.
 The entry answer selects no HTTP status, denial wording, or additional entity-versus-role semantics.
 
-The [measurable business criterion](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001) requires zero granted entries for the stated attempt.
+The [measurable business criterion](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001) requires zero granted entries for the stated attempt.
 Its observation binding remains unverified. It adds no UI details or executable test case.
 
 ## Canonical case applicability
@@ -241,11 +241,11 @@ Their historical outcomes cannot verify that criterion.
 
 | Question | Affected record | Change and criterion | Finding disposition | Audit |
 | --- | --- | --- | --- | --- |
-| [UI-Q-002](#ui-q-002) | [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule), version 3 → 4 | Record denial, scope, and user-reported entry-policy owner. Link [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001). | Resolve user-reported selection, scope, and owner identity only. Keep authority, approval, and enforcement open. | [Version 4 event](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v4.yaml) |
-| [UI-Q-002](#ui-q-002) | [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-portal-entry-rule), version 3 → 4 | Record denial, scope, user-reported owner, historical conflict, and [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001). | Resolve user-reported facts only. Keep authority, approval, and enforcement open. | [Version 4 event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v4.yaml) |
-| [Empty entity configuration](#empty-entity-configuration) | [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 3 → 4 | Record hidden tiles, denied direct launch, and [UI-EMPTY-ENTITY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001). Link the rule from [authentication knowledge](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule). | Resolve behavior selection only. Keep tile-rule ownership, environment scope, approval, and enforcement open. | Both linked version 4 events cover this candidate update. |
-| [Empty-entity owner and scope](#empty-entity-configuration) | [Authentication](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule) and [SDK entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 4 → 5 | Record `portal team` ownership and all-environment applicability as user reports. | Resolve ownership and scope only. Keep approval and enforcement open. | [Authentication event](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v5.yaml) and [SDK event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v5.yaml). |
-| [Empty-subject rule and scope](#empty-subject-configuration) | [Authentication](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule), version 5 → 6; [SDK entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule), version 5 → 6; [onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md#current-empty-subject-clarification), version 2 → 3 | Record entity-based visibility and launch, portal-team ownership, all environments, and [UI-EMPTY-SUBJECT-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). | Resolve the selected single-entity scope. Keep multiple-entity matching, approval, and enforcement open. | [Authentication event](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v6.yaml), [SDK event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v6.yaml), and [onboarding event](../../evidence/knowledge/audit/AUD-20261022-KT-admin-and-onboarding-v3.yaml). |
+| [UI-Q-002](#ui-q-002) | [KT-authentication-and-sessions](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule), version 3 → 4 | Record denial, scope, and user-reported entry-policy owner. Link [UI-ENTRY-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001). | Resolve user-reported selection, scope, and owner identity only. Keep authority, approval, and enforcement open. | [Version 4 event](../../knowledge/evidence/audit/AUD-20261022-KT-authentication-and-sessions-v4.yaml) |
+| [UI-Q-002](#ui-q-002) | [KT-sdk-and-entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-portal-entry-rule), version 3 → 4 | Record denial, scope, user-reported owner, historical conflict, and [UI-ENTRY-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001). | Resolve user-reported facts only. Keep authority, approval, and enforcement open. | [Version 4 event](../../knowledge/evidence/audit/AUD-20261022-KT-sdk-and-entitlements-v4.yaml) |
+| [Empty entity configuration](#empty-entity-configuration) | [KT-sdk-and-entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 3 → 4 | Record hidden tiles, denied direct launch, and [UI-EMPTY-ENTITY-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001). Link the rule from [authentication knowledge](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule). | Resolve behavior selection only. Keep tile-rule ownership, environment scope, approval, and enforcement open. | Both linked version 4 events cover this candidate update. |
+| [Empty-entity owner and scope](#empty-entity-configuration) | [Authentication](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule) and [SDK entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 4 → 5 | Record `portal team` ownership and all-environment applicability as user reports. | Resolve ownership and scope only. Keep approval and enforcement open. | [Authentication event](../../knowledge/evidence/audit/AUD-20261022-KT-authentication-and-sessions-v5.yaml) and [SDK event](../../knowledge/evidence/audit/AUD-20261022-KT-sdk-and-entitlements-v5.yaml). |
+| [Empty-subject rule and scope](#empty-subject-configuration) | [Authentication](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule), version 5 → 6; [SDK entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule), version 5 → 6; [onboarding](../../knowledge/records/candidates/operations/KT-admin-and-onboarding.md#current-empty-subject-clarification), version 2 → 3 | Record entity-based visibility and launch, portal-team ownership, all environments, and [UI-EMPTY-SUBJECT-AC-001](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). | Resolve the selected single-entity scope. Keep multiple-entity matching, approval, and enforcement open. | [Authentication event](../../knowledge/evidence/audit/AUD-20261022-KT-authentication-and-sessions-v6.yaml), [SDK event](../../knowledge/evidence/audit/AUD-20261022-KT-sdk-and-entitlements-v6.yaml), and [onboarding event](../../knowledge/evidence/audit/AUD-20261022-KT-admin-and-onboarding-v3.yaml). |
 
 All three affected domain records retain candidate/draft state and unknown topic-wide owners. No record receives a verifier or human approval.
 The candidate index links this clarification. Other policy decisions and case revisions remain outside scope.
@@ -256,7 +256,7 @@ Version 5 adds the empty-entity owner and environment answer.
 Version 6 adds the empty-subject rule and scope. The onboarding successor records the same clarification.
 
 Paragraph checks required formatting corrections after the first events.
-The [authentication correction](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v4-format.yaml) and [SDK correction](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v4-format.yaml) bind the final version 4 bytes.
+The [authentication correction](../../knowledge/evidence/audit/AUD-20261022-KT-authentication-and-sessions-v4-format.yaml) and [SDK correction](../../knowledge/evidence/audit/AUD-20261022-KT-sdk-and-entitlements-v4-format.yaml) bind the final version 4 bytes.
 Both corrections reference their preserved earlier events and hashes.
 The version 5 events supersede those content bindings without changing earlier event bytes.
 
@@ -276,10 +276,10 @@ Baseline Git revision: `059a25e5eb072d1b0dcd27c3ddc2ccac6cf6d047`.
 | Empty-subject owner and scope | [SRC-ui-empty-subject-owner-scope-20261022](evidence/clarification-20261022/empty-subject-owner-scope-source.json) | `user-answer-20261022-1`; `a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee` |
 | Frozen intake | [01-intake.md](01-intake.md) | `e819973066ef6668495472728e4785d70ed8bad3600e9cb84c1c58f313d68204` |
 | Canonical catalog | [06-test-cases.md](06-test-cases.md#know-007) | `86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4` |
-| Authentication predecessor | [Version 3 history](../../evidence/knowledge/audit/AUD-20261020-KT-authentication-and-sessions-v3.yaml) | `b213cb77e0ee42787d62da2e0f4b3dfaaa82f5d490e4226a08dd37d53e0ef441` |
-| SDK predecessor | [Version 3 history](../../evidence/knowledge/audit/AUD-20261020-KT-sdk-and-entitlements-v3.yaml) | `f398b389166b7b1da2faffa28fd4be17ce16dc6222021dfef421c823d99af007` |
+| Authentication predecessor | [Version 3 history](../../knowledge/evidence/audit/AUD-20261020-KT-authentication-and-sessions-v3.yaml) | `b213cb77e0ee42787d62da2e0f4b3dfaaa82f5d490e4226a08dd37d53e0ef441` |
+| SDK predecessor | [Version 3 history](../../knowledge/evidence/audit/AUD-20261020-KT-sdk-and-entitlements-v3.yaml) | `f398b389166b7b1da2faffa28fd4be17ce16dc6222021dfef421c823d99af007` |
 
-The [manifest](../../evidence/knowledge/manifest.yaml) registers all eight clarification source identities and exact hashes through appended records.
+The [manifest](../../knowledge/evidence/manifest.yaml) registers all eight clarification source identities and exact hashes through appended records.
 Frozen intake, historical reports, canonical cases, and earlier audit events retain their bytes.
 
 ## Checks and review limits

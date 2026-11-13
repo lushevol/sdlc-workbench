@@ -37,9 +37,9 @@ A service may also constrain retrieval by supplying an application entity list, 
 
 The SDK overview recommends entitlement caching and mentions NGINX stickiness for multiple endpoints. Version 1.1.4 documents logout session rejection and configurable public certificates.
 
-The current candidate requires UI permission revocation at the next login. Protected API calls must reflect revocation after expiry of the applicable Auth Server Redis entry. The entitlement cache expires after one hour and the JWT parsing cache after two hours. Cache selection and interaction for each API, entitlement freshness at UI validation events, and revocation in an already-open tab remain open. [UI-ENTITLEMENT-REVOCATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-entitlement-revocation-ac-001) · [API-ENTITLEMENT-REVOCATION-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#api-entitlement-revocation-ac-001)
+The current candidate requires UI permission revocation at the next login. Protected API calls must reflect revocation after expiry of the applicable Auth Server Redis entry. The entitlement cache expires after one hour and the JWT parsing cache after two hours. Cache selection and interaction for each API, entitlement freshness at UI validation events, and revocation in an already-open tab remain open. [UI-ENTITLEMENT-REVOCATION-AC-001](../../../records/candidates/security/KT-sdk-and-entitlements.md#ui-entitlement-revocation-ac-001) · [API-ENTITLEMENT-REVOCATION-AC-001](../../../records/candidates/security/KT-sdk-and-entitlements.md#api-entitlement-revocation-ac-001)
 
-Logout separately targets immediate revocation of all of the user's portal sessions. Verification across service instances requires deployment and execution evidence. [PORTAL-LOGOUT-AC-001](../../../candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001)
+Logout separately targets immediate revocation of all of the user's portal sessions. Verification across service instances requires deployment and execution evidence. [PORTAL-LOGOUT-AC-001](../../../records/candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001)
 
 ## Migration to CES
 

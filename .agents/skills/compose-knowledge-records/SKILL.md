@@ -26,14 +26,14 @@ Use the [knowledge contract](../../../knowledge/README.md), [schemas and templat
    Group by project question; one source can support several topics and several sources can support one topic.
 2. Preserve source revision, hash, original ranges, purpose, authority, uncertainty, and intended applicability beside claims.
    A filtered view supplies convenient input; citations still bind to original retained sources.
-3. Save new domain drafts under `knowledge/candidates/<classification>/` with stable IDs.
+3. Save new domain drafts under `knowledge/records/candidates/<classification>/` with stable IDs.
    Use `governance_state: candidate`, `status: draft`, and `verified: []` until actual review changes the state.
    Mark an unavailable owner `unknown`.
 4. Reuse unchanged records. Increment the version when content or scope changes.
    Preserve unresolved predecessors and findings; do not overwrite their history to hide conflicts.
    Reconcile the plan's affected closure, including former dependents of withdrawn claims.
    Record supported no-change outcomes separately; do not rewrite records only to advance an observed source hash.
-5. Create or update `knowledge/candidates/index.md` with topic purpose, state, links, and evidence limits.
+5. Create or update `knowledge/records/candidates/index.md` with topic purpose, state, links, and evidence limits.
    Keep reusable `knowledge/index.md` free from live project records.
 6. Use declared registry IDs only for inspected relationships.
    Declarations do not establish runtime integration or execution permission.
@@ -42,7 +42,7 @@ Knowledge describes requirements, intent, and ideal target behavior.
 Retain domain rules, contracts, decisions, and intended business-system architecture.
 Exclude Workbench maintenance, raw sources, code copies, fixtures, execution results, reports, and intermediate files from canonical knowledge.
 Keep implementation facts, deployment status, observations, and conformance results outside canonical intent.
-Store `GovernanceFinding` records under `evidence/knowledge/findings/`.
+Store `GovernanceFinding` records under `knowledge/evidence/findings/`.
 Keep logs, captures, assertions, investigation reports, and old/new gap Markdown under the owning task.
 Keep harness checkpoints in ignored working storage or required retained evidence.
 When useful, link stable gap IDs from reports and navigation without importing their results as intent.

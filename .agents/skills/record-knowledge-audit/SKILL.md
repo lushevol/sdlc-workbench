@@ -13,7 +13,7 @@ Use [the audit schema](../../../core/knowledge/schemas/audit-event.schema.json) 
 
 1. Recheck each prepared full-file hash before writing. Finish all record metadata and formatting before computing event hashes.
 2. Inspect existing events and operation evidence. Resume an existing matching result instead of duplicating an event on retry.
-3. Write each new event as `evidence/knowledge/audit/<id>.yaml`. Never overwrite or remove an earlier event.
+3. Write each new event as `knowledge/evidence/audit/<id>.yaml`. Never overwrite or remove an earlier event.
 4. Record item ID, version, actor, timezone-aware timestamp, action, states, final SHA-256, reason, and nonempty exact evidence references.
 5. Record only actual actors, times, verification, approvals, and source authority. Git and hashes do not authenticate an actor.
 6. Correct an earlier event through a new event with `previous_event_id`. Preserve the earlier bytes and the correction rationale.

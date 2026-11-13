@@ -1,1 +1,1 @@
-../../candidates/operations/KT-release-operations.md
+../../records/candidates/operations/KT-release-operations.md

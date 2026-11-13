@@ -6,7 +6,7 @@ description: "How intent names, context schemas, versions, and readiness gates a
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical basis: [contexts, intents and actions](../../../candidates/interoperability/KT-application-interoperability.md#contexts-intents-and-actions) and [adoption phases](../../../candidates/interoperability/KT-application-interoperability.md#adoption-and-release-phases).
+Canonical basis: [contexts, intents and actions](../../../records/candidates/interoperability/KT-application-interoperability.md#contexts-intents-and-actions) and [adoption phases](../../../records/candidates/interoperability/KT-application-interoperability.md#adoption-and-release-phases).
 
 # Interoperability Contract Governance
 

@@ -14,7 +14,7 @@ from ai_sdlc_workbench.ingestion.sources import (
     apply_selections, refresh_sources, render_sources, verify_sources,
 )
 from ai_sdlc_workbench.models import WorkbenchError
-from ai_sdlc_workbench.workspace import initialize_workspace
+from tests.knowledge_fixtures import initialize_legacy_workspace as initialize_workspace
 
 
 class SourcePreparationTests(unittest.TestCase):

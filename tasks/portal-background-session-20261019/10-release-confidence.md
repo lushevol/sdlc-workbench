@@ -119,10 +119,10 @@ Intended-rule changes in this session scope: zero. The independent gap document 
 
 | Row | Topic and disposition | Intended meaning and separate gap boundary |
 | --- | --- | --- |
-| KS-01 | [Authentication and sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md), v8 → v9; candidate correction | Preserve intended session behavior. Move implementation findings and local observations to the independent gap document. |
-| KS-02 | [Active session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria), v6 → v7; candidate correction | Preserve all seven target criteria. AC-1 through AC-7 remain unchanged. Keep delivery and conformance evidence in task reports. |
-| KS-03 | [SDK and entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md), v8; supported no change within selected session intent scope | Existing SDK session intent remains unchanged. Separate CES migration content changed under its own task. |
-| KS-04 | [Service relationships](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md), v1; supported no change in this scope | Intended service responsibilities remain unchanged. Target deployment evidence is outside this row. |
+| KS-01 | [Authentication and sessions](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md), v8 → v9; candidate correction | Preserve intended session behavior. Move implementation findings and local observations to the independent gap document. |
+| KS-02 | [Active session renewal](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria), v6 → v7; candidate correction | Preserve all seven target criteria. AC-1 through AC-7 remain unchanged. Keep delivery and conformance evidence in task reports. |
+| KS-03 | [SDK and entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md), v8; supported no change within selected session intent scope | Existing SDK session intent remains unchanged. Separate CES migration content changed under its own task. |
+| KS-04 | [Service relationships](../../knowledge/records/candidates/architecture/ARC-portal-service-relationships.md), v1; supported no change in this scope | Intended service responsibilities remain unchanged. Target deployment evidence is outside this row. |
 
 The [independent gap document](09-intent-reality-gaps.md) separates intended, old, new, and observed behavior with exact source bindings.
 The [supplemental dependency review](evidence/knowledge-intent-boundary-20261101/concurrency-review.json) binds the current SDK v8 session scope.
@@ -162,9 +162,9 @@ The [detailed HTML](10-release-confidence-details.html) retains every reason, im
 The [case priority audit](evidence/report-impact-priority-20261029/case-priority-audit.json) covers all 285 cases.
 The [issue audit](evidence/report-impact-priority-20261029/issue-priority-audit.json) also reassesses historical review entries and general controls.
 
-[AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L156) fails because continuous mouse input resets the five-second timer.
-[AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L163) and [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L170) fail because their renewal bindings are absent.
-[AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L177) passed four simulated hours; real SSO and protected-service proof remain unavailable.
+[AC-1](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L156) fails because continuous mouse input resets the five-second timer.
+[AC-2](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L163) and [AC-3](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L170) fail because their renewal bindings are absent.
+[AC-4](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L177) passed four simulated hours; real SSO and protected-service proof remain unavailable.
 These criteria retain their failed or partial status. Their current priority is lower because disruptive user impact remains unproved.
 The [coverage matrices](09-renewal-coverage.md) retain the full denominators and source relationships.
 Each of 12 changed runtime source files has some passing test evidence. Complete behavior coverage remains unknown.

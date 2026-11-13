@@ -68,11 +68,11 @@ Shared-code imports flow back from containers and tiles into shell and container
 
 ### HTTP and token handling
 
-The shared interceptor applies the `Single-UI-Authorization` header to portal requests, with exceptions for authentication, analytics, and server-sent-event requests; relogin uses `Single-UI-Refresh`. The documented downstream SDK filter validates supported requests where it is adopted and enabled; see [[concepts/single-ui-sdk-authentication]] and the [canonical boundary](../../../candidates/architecture/ARC-portal-service-relationships.md#portal-and-sdk-boundaries). The [candidate session requirement](../../../candidates/requirements/REQ-active-session-renewal.md) defines renewal and idle-expiry prompt outcomes. Mapping those outcomes to interceptor or session code requires separate implementation evidence.
+The shared interceptor applies the `Single-UI-Authorization` header to portal requests, with exceptions for authentication, analytics, and server-sent-event requests; relogin uses `Single-UI-Refresh`. The documented downstream SDK filter validates supported requests where it is adopted and enabled; see [[concepts/single-ui-sdk-authentication]] and the [canonical boundary](../../../records/candidates/architecture/ARC-portal-service-relationships.md#portal-and-sdk-boundaries). The [candidate session requirement](../../../records/candidates/requirements/REQ-active-session-renewal.md) defines renewal and idle-expiry prompt outcomes. Mapping those outcomes to interceptor or session code requires separate implementation evidence.
 
 ### Permission API
 
-The intended `hasPermission(code)` API accepts a mapped grant from either EMS2 or CES and logs a provider that supplied an accepted grant. [FE-COMPAT-AC-004](../../../candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004) defines the result and logging contract. Its transport and any interceptor dependency require separate implementation evidence.
+The intended `hasPermission(code)` API accepts a mapped grant from either EMS2 or CES and logs a provider that supplied an accepted grant. [FE-COMPAT-AC-004](../../../records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004) defines the result and logging contract. Its transport and any interceptor dependency require separate implementation evidence.
 
 ### Templates for new applications
 

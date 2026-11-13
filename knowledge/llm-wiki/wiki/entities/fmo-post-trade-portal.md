@@ -33,7 +33,7 @@ The UI guild aims to provide consistent design, shared components, and utilities
 
 The portal introduction names affirmation, confirmation, settlements, and reporting as supported post-trade activities, with blotters and a rules engine as examples. That page remains under edit, so the examples describe stated scope, not a complete application inventory. The supplied materials cover the portal and UI platform, including draft principles and a future deployment proposal. They do not establish complete Financial Markets business-domain coverage.
 
-The [[entities/portal-team]] owns the user-stated portal-entry and tile-authorization rules. The documented Entra UI SSO design assigns authorization-code exchange, user information, EMS2 entitlement retrieval and token issuance to [[entities/single-ui-bff]]. The [[entities/single-ui-sdk]] supplies JWT validation and separate entitlement helpers for downstream Spring applications. Consumer adoption remains conditional and unconfirmed. See the canonical [authentication responsibilities](../../../candidates/security/KT-authentication-and-sessions.md#authentication-responsibilities) and [SDK responsibility boundary](../../../candidates/security/KT-sdk-and-entitlements.md#integration-purpose-and-responsibility-boundary).
+The [[entities/portal-team]] owns the user-stated portal-entry and tile-authorization rules. The documented Entra UI SSO design assigns authorization-code exchange, user information, EMS2 entitlement retrieval and token issuance to [[entities/single-ui-bff]]. The [[entities/single-ui-sdk]] supplies JWT validation and separate entitlement helpers for downstream Spring applications. Consumer adoption remains conditional and unconfirmed. See the canonical [authentication responsibilities](../../../records/candidates/security/KT-authentication-and-sessions.md#authentication-responsibilities) and [SDK responsibility boundary](../../../records/candidates/security/KT-sdk-and-entitlements.md#integration-purpose-and-responsibility-boundary).
 
 ## Working vocabulary
 
@@ -84,9 +84,9 @@ The RATAN team owns and reviews portal policy under ICS bank security policy. Th
 
 Within the deadline, activity can support renewal across initial refresh expiry while access remains valid. Manual recovery uses a usable refresh token, keeps the prompt open while the request is pending, closes it once on success, and permits an eligible retry after rejection. The applicable ICS revision, including treatment of refresh-based recovery after idle expiry, requires RATAN review. See [[concepts/session-activity-renewal]] and [[concepts/session-expiry-prompt-recovery]].
 
-The production sign-in target prohibits OneMFA fallback. The ideal logout target immediately revokes all of the user's portal sessions and excludes identity-provider sessions such as Entra. See [[summaries/KT-authentication-and-sessions]] and the [current criteria](../../../candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001).
+The production sign-in target prohibits OneMFA fallback. The ideal logout target immediately revokes all of the user's portal sessions and excludes identity-provider sessions such as Entra. See [[summaries/KT-authentication-and-sessions]] and the [current criteria](../../../records/candidates/security/KT-authentication-and-sessions.md#portal-logout-ac-001).
 
-The [session criteria](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) cover eligible activity, manual renewal, and idle and absolute expiry. Earlier four-hour comparisons address the predecessor requirement. Cross-origin embedded activity requires separate integration evidence.
+The [session criteria](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) cover eligible activity, manual renewal, and idle and absolute expiry. Earlier four-hour comparisons address the predecessor requirement. Cross-origin embedded activity requires separate integration evidence.
 
 ### Responsibility boundary
 

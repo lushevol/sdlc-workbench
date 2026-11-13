@@ -10449,7 +10449,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
 
 Business intent: Entity-only eligibility permits a matching registered tenant.
 
@@ -10490,7 +10490,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
 
 Business intent: Subject-required tile needs the matching subject.
 
@@ -10525,7 +10525,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
 
 Business intent: Matching entity with a different subject denies the tile.
 
@@ -10560,7 +10560,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
 
 Business intent: Matching subject under another entity does not grant tile access.
 
@@ -10596,7 +10596,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
 
 Business intent: Empty subject skips subject matching for an eligible entity.
 
@@ -10631,7 +10631,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
 
 Business intent: An unrelated entity does not satisfy entity-only eligibility.
 
@@ -10666,7 +10666,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>)
 
 Business intent: A shared subject does not bypass each tile entity condition.
 
@@ -10702,7 +10702,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
+Behavior basis: [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
 
 Business intent: Any configured report entity can grant entity-only tile access.
 
@@ -10741,7 +10741,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-005:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-005:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
 
 Business intent: User without a registered entity cannot enter the portal.
 
@@ -10779,7 +10779,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>); [UI-SRC-005:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
+Behavior basis: [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>); [UI-SRC-005:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
 
 Business intent: Empty entity configuration cannot become implicit guest access.
 
@@ -10813,7 +10813,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
+Behavior basis: [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
 
 Business intent: Unregistered temporary guest has no implied entitlement.
 
@@ -10853,7 +10853,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
+Behavior basis: [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
 
 Business intent: Multiple matching entities do not duplicate one tile.
 
@@ -10888,7 +10888,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-004:14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-005:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
+Behavior basis: [UI-SRC-004:14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>); [UI-SRC-005:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
 
 Business intent: Permission loss between tile discovery and open is rejected.
 
@@ -10928,7 +10928,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-005:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
+Behavior basis: [UI-SRC-005:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
 
 Business intent: Portal tile access does not grant protected tenant data.
 
@@ -10964,7 +10964,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-005:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
+Behavior basis: [UI-SRC-005:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
 
 Business intent: Read permission does not imply tenant edit permission.
 
@@ -11002,7 +11002,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-005:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
+Behavior basis: [UI-SRC-005:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L5>)
 
 Business intent: Catalog deep link does not replace tenant authorization.
 
@@ -11038,7 +11038,7 @@ Actor: Test user Alice; assigned entitlements stated in this case..
 
 Setup: Isolated UI integration environment. Synthetic catalog: Trade tile T-TRADE (entity E-TRADE, subject S-VIEW), Cashflow tile T-CASH (entity E-CASH, subject S-VIEW), Report tile T-REPORT (entities E-RR-A,E-RR-B; empty subject). No production identities or records. Use fresh browser storage and controlled catalog, EMS2, and tenant responses. Capture UI before and after each action.
 
-Behavior basis: [UI-SRC-003:13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
+Behavior basis: [UI-SRC-003:13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L13>)
 
 Business intent: Delegated SSDR authorization still denies an unentitled report.
 
@@ -11078,7 +11078,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Intent navigation activates the target tile.
 
@@ -11113,7 +11113,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Intent context becomes target initial data.
 
@@ -11147,7 +11147,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Target context is isolated between two portal users.
 
@@ -11181,7 +11181,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Intent cannot open a target forbidden to the caller.
 
@@ -11215,7 +11215,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Missing provider registration leaves the source usable.
 
@@ -11251,7 +11251,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Registered provider without a handler cannot show completed handoff.
 
@@ -11285,7 +11285,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Target module load failure is recoverable.
 
@@ -11321,7 +11321,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: A delayed first intent cannot overwrite a newer target context.
 
@@ -11358,7 +11358,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Invalid required context does not load unrelated data.
 
@@ -11393,7 +11393,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Context type mismatch is visible to the caller.
 
@@ -11428,7 +11428,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Target permission check applies after context handoff.
 
@@ -11462,7 +11462,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Optional provider failure status is not shown as success.
 
@@ -11496,7 +11496,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Closing a pending target prevents a late context from reopening it.
 
@@ -11532,7 +11532,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: A repeated context has a stable business result.
 
@@ -11568,7 +11568,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: An unrelated active workspace does not receive target context.
 
@@ -11603,7 +11603,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Closing a source removes its context listener effects.
 
@@ -11639,7 +11639,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-001:5](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
+Behavior basis: [UI-SRC-001:5](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L5>)
 
 Business intent: Context agreement preserves leading zero trade identifiers.
 
@@ -11678,7 +11678,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-006:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
+Behavior basis: [UI-SRC-006:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
 
 Business intent: POC openTile intent opens the named configured tile.
 
@@ -11709,7 +11709,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-006:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
+Behavior basis: [UI-SRC-006:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
 
 Business intent: POC changeTheme payload changes the portal theme.
 
@@ -11740,7 +11740,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-006:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
+Behavior basis: [UI-SRC-006:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
 
 Business intent: POC unknown intent does not open an unrelated tile.
 
@@ -11772,7 +11772,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-006:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
+Behavior basis: [UI-SRC-006:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
 
 Business intent: POC channel isolation prevents unintended tile changes.
 
@@ -11803,7 +11803,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-007:8](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/5. Technical Issue/page.md#L8>)
+Behavior basis: [UI-SRC-007:8](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/5. Technical Issue/page.md#L8>)
 
 Business intent: Mixed FDC3 library handoff exposes a recoverable failure.
 
@@ -11836,7 +11836,7 @@ Actor: Alice; tenant user allowed to open Source A and Target B unless stated ot
 
 Setup: Isolated portal with controlled Source A and Target B tenant modules. Source A exposes fixture action Send trade context. Target B renders its received tradeId and context version. Synthetic trade IDs TR-1001 and TR-1002 contain no production data. Fresh browser profile and fixture catalog. Agree the test intent/context contract before execution. Capture UI before each action.
 
-Behavior basis: [UI-SRC-006:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
+Behavior basis: [UI-SRC-006:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1>)
 
 Business intent: Intent naming mismatch cannot silently open the wrong tile.
 
@@ -11872,7 +11872,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: First load renders the complete selected tenant version.
 
@@ -11907,7 +11907,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: Refresh discovers an updated tile entry.
 
@@ -11943,7 +11943,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: Refresh reuses an unchanged version without blank content.
 
@@ -11979,7 +11979,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: A container entry update is discovered on refresh.
 
@@ -12014,7 +12014,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: A base entry update is discovered on refresh.
 
@@ -12048,7 +12048,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: Logout and re-entry load the selected current build.
 
@@ -12090,7 +12090,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: A stale entry with a removed chunk has a recovery path.
 
@@ -12126,7 +12126,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: Failed asset revalidation does not render mixed business content.
 
@@ -12163,7 +12163,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: Lazy content uses the new referenced chunk after refresh.
 
@@ -12200,7 +12200,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: An updated CSS reference does not leave the tile unstyled.
 
@@ -12236,7 +12236,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: An updated image reference displays the new tile asset.
 
@@ -12272,7 +12272,7 @@ Actor: Alice; authenticated tenant user with T-CACHE access..
 
 Setup: Isolated fixture tenant T-CACHE. Base, container, tile, and lazy panel render V1/V2 markers. The harness controls entry URLs, chunk URLs, cache headers, and asset failures. Markers are test instrumentation, not product controls. Use a dedicated browser cache and fixture server. Keep business data constant across builds. Record entries, asset identity, and the active UI version.
 
-Behavior basis: [UI-SRC-002:1](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+Behavior basis: [UI-SRC-002:1](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
 
 Business intent: Rollback refresh returns a consistent earlier tenant build.
 

@@ -29,7 +29,7 @@ Use [change classification](../classify-knowledge-change/SKILL.md) when deciding
 Give supported answers an evidence-based confidence level and rationale using [the investigation rubric](../../../tasks/README.md#investigate-before-asking).
 For each unresolved finding, record evidence, consequence, owner, and next action. Mark an unavailable owner as `unknown`.
 Preserve contradictory and failed evidence. Restrict partially supported claims to the supported scope.
-When recording governance findings is authorized, use `evidence/knowledge/findings/` and the shipped finding template.
+When recording governance findings is authorized, use `knowledge/evidence/findings/` and the shipped finding template.
 Read-only reviews return findings without writing or changing records.
 Record actual semantic reviewer identities, review times, reviewed hashes, and evidence limits when that review occurs.
 Keep semantic review time separate from pending ASD review fields. Generated text and validator results supply no human approval.

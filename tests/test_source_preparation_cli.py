@@ -11,7 +11,7 @@ import unittest
 import yaml
 
 from ai_sdlc_workbench.cli import main
-from ai_sdlc_workbench.workspace import initialize_workspace
+from tests.knowledge_fixtures import initialize_legacy_workspace as initialize_workspace
 
 
 class SourcePreparationCLITests(unittest.TestCase):

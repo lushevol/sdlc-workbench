@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-architecture-evolution.md"
 ---
 
-> Derived from [KT-architecture-evolution, version 2](../../../candidates/evolution/KT-architecture-evolution.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-architecture-evolution, version 2](../../../records/candidates/evolution/KT-architecture-evolution.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Architecture Evolution and Proposal Boundaries — Summary
 

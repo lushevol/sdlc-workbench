@@ -54,11 +54,11 @@ The corrected candidate content and independent gap document are implemented. Re
 
 | Aspect | Previous placement | Corrected placement | Basis |
 | --- | --- | --- | --- |
-| Intended session behavior | Target criteria existed beside implementation and delivery context. | Knowledge contains the intended target and source design proposals. | [Canonical requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#intended-scope) |
+| Intended session behavior | Target criteria existed beside implementation and delivery context. | Knowledge contains the intended target and source design proposals. | [Canonical requirement](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#intended-scope) |
 | Implementation and observations | Session topic v8 described pinned code and local behavior. | Independent [gap Markdown](09-intent-reality-gaps.md) holds actual comparisons and bounded matches. | Latest clarification and original evidence |
 | Deployment, backlog, and results | Requirement v6 included delivery status and observations. | Gap and release reports hold those facts. | [Gap register](09-intent-reality-gaps.md#risk-and-issue-entries) |
 | Historical security reports | Topic included reported remediation. | Gap context retains the reports and their authority limits. | [Historical context](09-intent-reality-gaps.md#historical-security-note-context) |
-| Business intent | Seven existing criteria define the target. | Zero intended-rule changes. All seven structured criteria and Gherkin blocks remain unchanged. | [Criteria](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
+| Business intent | Seven existing criteria define the target. | Zero intended-rule changes. All seven structured criteria and Gherkin blocks remain unchanged. | [Criteria](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
 
 ## Scope and affected artifacts
 
@@ -67,10 +67,10 @@ Only two session records receive successors. The unchanged dependency rows do no
 
 | Row | Artifact and version | Disposition | Scope and risk | Owner and next action |
 | --- | --- | --- | --- | --- |
-| KS-01 | [Session topic](../../knowledge/candidates/security/KT-authentication-and-sessions.md#intended-session-renewal), v8 → v9 | Correct target-only candidate; no new intended rule | Medium: reality could otherwise be mistaken for intent. | unknown; review final candidate |
-| KS-02 | [Renewal requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#intended-scope), v6 → v7 | Remove reality status; preserve all criteria | Medium: delivery facts could weaken the target. | unknown; review final candidate |
-| KS-03 | [SDK and entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md), v8 | No change within selected session intent scope | Concurrent CES intent changed separately; session dependency meaning remains unchanged. | unknown; retain scoped disposition |
-| KS-04 | [Portal relationships](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md), v1 | Unchanged supporting dependency | No intended service responsibility changes; broader content review is outside this correction. | unknown; retain scoped disposition |
+| KS-01 | [Session topic](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md#intended-session-renewal), v8 → v9 | Correct target-only candidate; no new intended rule | Medium: reality could otherwise be mistaken for intent. | unknown; review final candidate |
+| KS-02 | [Renewal requirement](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#intended-scope), v6 → v7 | Remove reality status; preserve all criteria | Medium: delivery facts could weaken the target. | unknown; review final candidate |
+| KS-03 | [SDK and entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md), v8 | No change within selected session intent scope | Concurrent CES intent changed separately; session dependency meaning remains unchanged. | unknown; retain scoped disposition |
+| KS-04 | [Portal relationships](../../knowledge/records/candidates/architecture/ARC-portal-service-relationships.md), v1 | Unchanged supporting dependency | No intended service responsibility changes; broader content review is outside this correction. | unknown; retain scoped disposition |
 
 Exact prior hashes and bytes are retained in [starting identities](evidence/knowledge-intent-boundary-20261101/base-identities.json) and [predecessors](evidence/knowledge-intent-boundary-20261101/predecessors/).
 The [supplemental concurrency review](evidence/knowledge-intent-boundary-20261101/concurrency-review.json) checks current SDK v8 against the previously reviewed v7.
@@ -126,7 +126,7 @@ No runtime, schema, business source, canonical test, or frozen intake changes ar
 | Source | Exact identity | Limit |
 | --- | --- | --- |
 | [Latest clarification](evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input) | User message, 1 November 2026; exact hash in source registration | Defines the knowledge boundary; changes no session criterion. |
-| [Canonical requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) | v7; all seven predicates unchanged from v6 and retained v5 | Candidate intent; publication review remains separate. |
+| [Canonical requirement](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) | v7; all seven predicates unchanged from v6 and retained v5 | Candidate intent; publication review remains separate. |
 | [Gap source review](evidence/knowledge-intent-boundary-20261101/gap-source-review.json) | Exact source and retained assertion identities | No new execution, deployed target, or complete security baseline. |
 | [Previous attempt](evidence/release-knowledge-sync-20261101/operation.json) | Retained source and local evidence fingerprint | Its v8/v6 review is historical. It does not approve this revised knowledge boundary. |
 

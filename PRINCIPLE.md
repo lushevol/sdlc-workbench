@@ -57,19 +57,21 @@ Keep AI candidates and findings separate from approved knowledge.
 
 ### 4. Knowledge quality first
 
-Keep `knowledge/` limited to curated business-domain Markdown records and navigation.
+Keep one `knowledge/` parent for canonical records, supporting evidence, and derived navigation.
+Keep `knowledge/records/` limited to curated business-domain Markdown records and navigation.
 Knowledge describes requirements, intent, and ideal target behavior.
 Retain domain terms, intended rules, workflows, requirements, decisions, contracts, and target business-system architecture.
 Keep actual implementation and intent-to-reality gaps in independent task gap Markdown, with exact source and execution evidence.
 Implementation evidence cannot redefine intent. A fix that restores intent leaves that rule unchanged.
 Source: [user clarification, 1 November 2026](docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Exclude Workbench maintenance, raw sources, logs, code copies, execution results, reports, fixtures, and intermediate files.
-The reserved `knowledge/llm-wiki/` directory holds one derived wiki, canonical source links, local engine state, and visualization. Use OpenKB when both an LLM URL and token are configured; otherwise use llm-wiki-agent in the current ADE context. Retain the existing pages when the engine changes. Its own verification checks that format; canonical record scanners exclude it to prevent duplicate authority and graph feedback. Canonical knowledge elsewhere retains the domain schema and provenance requirements below.
-Store source provenance, governance findings, and immutable audit events under `evidence/knowledge/`.
+The sibling `knowledge/llm-wiki/` directory holds one derived wiki, canonical source links, local engine state, and visualization. Use OpenKB when both an LLM URL and token are configured; otherwise use llm-wiki-agent in the current ADE context. Retain the existing pages when the engine changes. Its own verification checks that format; canonical record scanners select only `knowledge/records/` to prevent duplicate authority and graph feedback. Canonical knowledge retains the domain schema and provenance requirements below.
+Store source provenance, governance findings, and immutable audit events under `knowledge/evidence/`.
 Keep business investigation evidence under its task and reusable record resources under `core/knowledge/`.
+Layout source: [migration authorization, 13 November 2026](docs/evidence/knowledge-layout-assessment-20261113/implementation-request.md#exact-user-input).
 
 Prepare complete local exports through raw import → filtered source view → canonical knowledge → derived wiki.
-Keep replaceable exports in ignored `evidence/knowledge/incoming/COLLECTION/` and retained originals in `evidence/knowledge/sources/`.
+Keep replaceable exports in ignored `knowledge/evidence/incoming/COLLECTION/` and retained originals in `knowledge/evidence/sources/`.
 Use the existing evidence area for both lifecycles. Do not introduce another top-level raw archive.
 Preserve raw revisions. Store source-page hashes with every source link and selection.
 Keep filtered views generated and reusable through source references, selected ranges, and recorded filter decisions.

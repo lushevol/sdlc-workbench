@@ -64,17 +64,18 @@ Release synchronization classifies changes and reuses only the affected operatio
 
 | Stage | Storage | Reuse and invalidation |
 | --- | --- | --- |
-| Complete export | Ignored `evidence/knowledge/incoming/COLLECTION/` | Replace with the next complete export. |
-| Retained originals | `evidence/knowledge/sources/` and `evidence/knowledge/manifest.yaml` | Preserve bytes and earlier revisions; append changed sources. |
-| Source decisions | `evidence/knowledge/selections/` | Bind page hashes, ranges, policy, and governing context. Reassess changed bindings, including exclusions. |
-| Canonical processing receipts | `evidence/knowledge/processing/` | Bind reviewed outcomes to source selections, recipe, prior outputs, and checked current hashes. |
+| Complete export | Ignored `knowledge/evidence/incoming/COLLECTION/` | Replace with the next complete export. |
+| Retained originals | `knowledge/evidence/sources/` and `knowledge/evidence/manifest.yaml` | Preserve bytes and earlier revisions; append changed sources. |
+| Source decisions | `knowledge/evidence/selections/` | Bind page hashes, ranges, policy, and governing context. Reassess changed bindings, including exclusions. |
+| Canonical processing receipts | `knowledge/evidence/processing/` | Bind reviewed outcomes to source selections, recipe, prior outputs, and checked current hashes. |
 | Incremental plans | Ignored `.workbench/ingestion/` | Keep full baselines on disk. Return compact review/process queues; reject stale plans. |
 | Filtered view | Ignored `.workbench/` working storage | Generate exact excerpts or links with source/output hashes. Regenerate after selection changes. |
-| Canonical knowledge | `knowledge/`, excluding the reserved derived subtree | Changes require source support, applicable review, and exact-byte governance evidence. |
+| Canonical knowledge | `knowledge/records/` | Changes require source support, applicable review, and exact-byte governance evidence. |
 | Wiki source aliases | `knowledge/llm-wiki/raw/` and `knowledge/llm-wiki/wiki/sources/` | Relative symlinks to canonical records. Never write through them. |
 | Derived pages | `knowledge/llm-wiki/wiki/` | Maintain affected summaries, concepts, entities, contradictions, and index through the selected engine. |
 
 Missing source pages preserve history. They do not authorize downstream deletion.
+The shared `knowledge/` parent does not combine these lifecycle states or make evidence and wiki pages canonical records.
 Filtered views support ingestion; canonical citations still identify original retained revisions and exact source sections.
 No additional top-level raw archive or copied filtered source tree is required.
 

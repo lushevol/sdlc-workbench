@@ -18,29 +18,29 @@ Two evidence strands exist. The release calendar records Entra go-live entries a
 
 ### Release calendar entries
 
-- The release calendar lists separate **Entra technical** and **Entra business** go-live entries. [Release calendar, lines 5–16](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/page.md#L5>)
+- The release calendar lists separate **Entra technical** and **Entra business** go-live entries. [Release calendar, lines 5–16](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/page.md#L5>)
 - This entry pair separates a technical milestone from a business activation milestone.
 - A calendar entry gives planning context only. It does not prove deployment, approval, or successful adoption.
 - No document in this set records an Entra configuration change, a completed go-live, or an acceptance sign-off.
 
 ### Intended authentication flow
 
-- The design uses a browser redirect followed by an authorization-code exchange through the BFF. [Entra design, lines 7–31, 40–68](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
+- The design uses a browser redirect followed by an authorization-code exchange through the BFF. [Entra design, lines 7–31, 40–68](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
 - The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens.
 - The historical design retained OneMFA fallback during the pilot and described a separate username/password path.
 - The migration replaces the SSO provider. Entitlement retrieval and portal-session management remain separate responsibilities.
 
 ### Phase 1 scope
 
-- Phase 1 covers UI SSO migration only. [Entra phase 1, lines 15–21, 48–57](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md>)
+- Phase 1 covers UI SSO migration only. [Entra phase 1, lines 15–21, 48–57](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md>)
 - It excludes EMS2 replacement, portal session management, and tenant-onboarding authentication.
-- Machine-to-machine authentication has a separate phase 2 service-account document with unresolved central dependencies. [Service-account migration, lines 1–10](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md>)
+- Machine-to-machine authentication has a separate phase 2 service-account document with unresolved central dependencies. [Service-account migration, lines 1–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md>)
 
 ### Onboarding and verification steps
 
-- The non-production guide requires a development AD account, Authenticator registration, and RATAN AD-group membership. [Non-production verification guide, lines 5–56, 58–126](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md>)
+- The non-production guide requires a development AD account, Authenticator registration, and RATAN AD-group membership. [Non-production verification guide, lines 5–56, 58–126](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md>)
 - It asks teams to check successful login, user information, and expected tile visibility. Its FAQ associates missing entitlements with tile access and EMS2 configuration.
-- The production pilot describes Windows Hello or Authenticator login and an Entra session of one hour. [Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
+- The production pilot describes Windows Hello or Authenticator login and an Entra session of one hour. [Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
 - That one-hour provider session does not settle the portal refresh-token lifetime.
 
 ### Profile differences during migration

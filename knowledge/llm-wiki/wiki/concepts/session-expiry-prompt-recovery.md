@@ -6,7 +6,7 @@ description: "How the expiry prompt behaves across pending, success, and rejecti
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical criteria: [pending, successful and rejected renewal outcomes](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+Canonical criteria: [pending, successful and rejected renewal outcomes](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 
 # Session Expiry Prompt and Recovery
 
@@ -26,7 +26,7 @@ Three transitions in [[summaries/REQ-active-session-renewal]] apply before the s
 
 Together these define a prompt whose lifecycle is bound to the outcome of the renewal request rather than to the user's click.
 
-The [canonical criteria](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) define the measurable outcomes. Both the requirement and its parent topic remain candidate drafts for RATAN review.
+The [canonical criteria](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) define the measurable outcomes. Both the requirement and its parent topic remain candidate drafts for RATAN review.
 
 ## Preconditions that keep the prompt meaningful
 

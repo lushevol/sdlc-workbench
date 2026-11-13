@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/REQ-active-session-renewal.md"
 ---
 
-> Derived from [REQ-active-session-renewal, version 9](../../../candidates/requirements/REQ-active-session-renewal.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [REQ-active-session-renewal, version 9](../../../records/candidates/requirements/REQ-active-session-renewal.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Active Session Renewal (REQ-active-session-renewal)
 
@@ -23,7 +23,7 @@ This is a candidate requirement describing *intended target behavior* for portal
 
 ## Acceptance criteria (9 scenarios)
 
-[Canonical acceptance criteria](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+[Canonical acceptance criteria](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 
 | ID | Scenario | Measure |
 |---|---|---|

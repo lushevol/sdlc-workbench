@@ -68,7 +68,7 @@ A successful upload proves neither tile reachability nor business readiness. [[c
 
 A user needs [[entities/ems2]] entitlements to use these functions. The manual identifies `FMO PORTAL ADMIN` entitlements for the import-map, category, and tile functions. [[concepts/ems2-entitlement-provisioning]] explains how to create the entity, actions, roles, and subjects. These are prerequisites only. They do not show that any current operator has a grant.
 
-Portal administrators can read every tenant's audit history and configuration. A tile must never reference metadata from another tile, including when a portal administrator submits its configuration. The classification of particular category or import-map records as tile-specific or shared remains open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
+Portal administrators can read every tenant's audit history and configuration. A tile must never reference metadata from another tile, including when a portal administrator submits its configuration. The classification of particular category or import-map records as tile-specific or shared remains open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../records/candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../records/candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
 
 ## Persistence
 

@@ -45,7 +45,7 @@ A completed caller alone cannot enable the full feature. The provider also needs
 
 ## Access and integration
 
-The supplied capability map describes tile eligibility in [[entities/ems2]] role terms. The current candidate migration intent requires each tile to select EMS2 or CES admission independently, while the shared `hasPermission(code)` provider-union check remains separate from tile admission. See the [canonical provider boundary](../../../candidates/security/KT-ces-migration-parity.md#independent-tile-provider-selection), [[concepts/portal-entry-and-tile-authorization]], and [[concepts/entitlement-retrieval]]. The cooperation guide says portal routing provides access control, but the supplied copy does not establish that access-control enforcement is in place.
+The supplied capability map describes tile eligibility in [[entities/ems2]] role terms. The current candidate migration intent requires each tile to select EMS2 or CES admission independently, while the shared `hasPermission(code)` provider-union check remains separate from tile admission. See the [canonical provider boundary](../../../records/candidates/security/KT-ces-migration-parity.md#independent-tile-provider-selection), [[concepts/portal-entry-and-tile-authorization]], and [[concepts/entitlement-retrieval]]. The cooperation guide says portal routing provides access control, but the supplied copy does not establish that access-control enforcement is in place.
 
 Tenant UI and API traffic are described as routed through the portal's [[entities/nginx]] boundary, which relates to [[concepts/portal-ingress-path]]. Frontend onboarding of a tenant application is a separate concern described in [[concepts/frontend-onboarding]].
 

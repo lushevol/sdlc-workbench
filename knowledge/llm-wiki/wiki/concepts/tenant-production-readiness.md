@@ -24,7 +24,7 @@ The release proposal asks for solution intent, user profiles, routing details, c
 
 These describe what a complete request should contain. They do not show that any particular tenant satisfied them.
 
-The unfinished checklist calls for tenant review with RATAN before preparing each production release and gives the tenant responsibility for checking its new upstream host for disaster recovery. A separate production checklist includes viewing the sign-in page before authentication. [Canonical release guidance](../../../candidates/operations/KT-release-operations.md#readiness-before-scheduling).
+The unfinished checklist calls for tenant review with RATAN before preparing each production release and gives the tenant responsibility for checking its new upstream host for disaster recovery. A separate production checklist includes viewing the sign-in page before authentication. [Canonical release guidance](../../../records/candidates/operations/KT-release-operations.md#readiness-before-scheduling).
 
 ## Evidence gaps observed
 

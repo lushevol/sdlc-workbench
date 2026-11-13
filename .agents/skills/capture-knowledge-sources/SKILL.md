@@ -20,7 +20,7 @@ Review-only scope inspects and reports references. Skip retention steps that mut
    Reuse the caller's valid pre-edit baseline for the same batch; do not overwrite checkpoint reports.
 3. For a complete Markdown collection, follow [refresh the complete export](../ingest-knowledge/references/source-preparation.md#refresh-the-complete-export).
    Use installed `sources refresh` with the actual registered collection ID and replaceable inbox.
-4. For other authorized inputs, reuse retained originals or append new snapshots and manifest revisions under `evidence/knowledge/`.
+4. For other authorized inputs, reuse retained originals or append new snapshots and manifest revisions under `knowledge/evidence/`.
    Use the [source provenance contract](../../../knowledge/README.md#source-provenance-outside-knowledge).
 5. Verify retained bytes and provenance before deriving claims.
    Preserve stable source IDs, previous manifest records, candidate records, findings, and immutable audit history.

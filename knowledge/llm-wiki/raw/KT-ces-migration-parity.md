@@ -1,1 +1,1 @@
-../../candidates/security/KT-ces-migration-parity.md
+../../records/candidates/security/KT-ces-migration-parity.md

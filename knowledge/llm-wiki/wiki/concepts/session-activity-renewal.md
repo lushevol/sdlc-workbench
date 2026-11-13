@@ -6,7 +6,7 @@ description: "Mouse, keyboard, and scroll activity renew a portal session within
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical criteria: [active session renewal](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+Canonical criteria: [active session renewal](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 
 # Activity-Driven Session Renewal
 

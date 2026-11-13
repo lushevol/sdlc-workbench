@@ -6,7 +6,7 @@ description: "How platform and tenant teams divide delivery, catalog, and releas
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical basis: [composition ownership](../../../candidates/architecture/KT-frontend-composition.md#ownership-and-availability) and [release ownership](../../../candidates/operations/KT-release-operations.md#ownership-and-release-scope).
+Canonical basis: [composition ownership](../../../records/candidates/architecture/KT-frontend-composition.md#ownership-and-availability) and [release ownership](../../../records/candidates/operations/KT-release-operations.md#ownership-and-release-scope).
 
 # Application ownership and team responsibilities
 
@@ -94,7 +94,7 @@ Input conventions bind administration to frontend module loading. Operators ente
 
 ### Maker and checker responsibilities
 
-The user manual requires different maker and checker users. Creation or modification produces an `un-verified` record; another user checks and verifies it before activation. Deactivation of a verified record returns it to `un-verified`, and each function provides record-specific audit history. Portal administrators may read audit history and configuration across tenants. A tile must never reference another tile's metadata. Cross-tenant maker and checker write or verification permissions remain open. See [[concepts/maker-checker-verification-workflow]]. [Admin access criteria](../../../candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
+The user manual requires different maker and checker users. Creation or modification produces an `un-verified` record; another user checks and verifies it before activation. Deactivation of a verified record returns it to `un-verified`, and each function provides record-specific audit history. Portal administrators may read audit history and configuration across tenants. A tile must never reference another tile's metadata. Cross-tenant maker and checker write or verification permissions remain open. See [[concepts/maker-checker-verification-workflow]]. [Admin access criteria](../../../records/candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
 
 ### Administration boundaries
 

@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-portal-purpose.md"
 ---
 
-> Derived from [KT-portal-purpose, version 2](../../../candidates/background/KT-portal-purpose.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-portal-purpose, version 2](../../../records/candidates/background/KT-portal-purpose.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal Purpose and Capability Map — Summary
 

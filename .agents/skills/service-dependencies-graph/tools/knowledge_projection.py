@@ -28,6 +28,32 @@ LIMITATIONS = [
 ]
 
 
+
+def _knowledge_roots(project):
+    """Reuse runtime layout resolution; standalone graph environments need no runtime install."""
+    try:
+        from ai_sdlc_workbench.knowledge_layout import knowledge_layout
+    except ImportError as error:
+        if error.name not in {None, "ai_sdlc_workbench", "ai_sdlc_workbench.knowledge_layout"}:
+            raise
+        # Standalone graph runtimes can omit the Workbench package.
+        project = Path(project).resolve()
+        current, legacy = project / "knowledge/evidence", project / "evidence/knowledge"
+        current_marker, legacy_marker = current / "manifest.yaml", legacy / "manifest.yaml"
+        current_present = current_marker.exists() or current_marker.is_symlink()
+        legacy_present = legacy_marker.exists() or legacy_marker.is_symlink()
+        if current_present and legacy_present:
+            raise ValueError("Both knowledge manifests exist. Finish or recover the layout migration before continuing.")
+        if current_present:
+            records = project / "knowledge/records"
+            if not records.is_dir():
+                raise ValueError("The consolidated knowledge layout requires knowledge/records/. Restore it before continuing.")
+            return records, current
+        if not legacy_present and any(path.exists() or path.is_symlink() for path in (current, project / "knowledge/records")):
+            raise ValueError("The consolidated knowledge layout is incomplete. Restore knowledge/evidence/manifest.yaml before continuing.")
+        return project / "knowledge", legacy
+    return knowledge_layout(project)
+
 def _identity(kind, *parts):
     raw = json.dumps(parts, sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False)
     return 'knowledge:' + kind + ':' + hashlib.sha256(raw.encode()).hexdigest()[:24]
@@ -155,7 +181,8 @@ def _catalog_locations(root):
 
 
 def _manifest(root):
-    path = _safe(root, 'evidence/knowledge/manifest.yaml')
+    _, evidence = _knowledge_roots(root)
+    path = _safe(root, (evidence / 'manifest.yaml').relative_to(root).as_posix())
     if not path.exists():
         return path, []
     value = _decode(path)
@@ -188,8 +215,10 @@ def input_fingerprints(workspace):
     """Return sorted local inputs. Missing historical targets are not invented."""
     root = Path(workspace).resolve()
     paths = set()
-    for relative, suffixes in (('knowledge', {'.md'}), ('evidence/knowledge/findings', {'.md'}),
-                               ('evidence/knowledge/audit', {'.yaml', '.yml'}),
+    canonical, evidence = _knowledge_roots(root)
+    for relative, suffixes in ((canonical.relative_to(root).as_posix(), {'.md'}),
+                               ((evidence / 'findings').relative_to(root).as_posix(), {'.md'}),
+                               ((evidence / 'audit').relative_to(root).as_posix(), {'.yaml', '.yml'}),
                                ('relationships/requirement-code/baselines', {'.json'})):
         paths.update(_walk(root, relative, suffixes))
     catalogs, configs = _catalog_locations(root)
@@ -373,7 +402,9 @@ class _Projection:
 
     def load_records(self):
         identities = set()
-        for folder in ('knowledge', 'evidence/knowledge/findings'):
+        canonical, evidence = _knowledge_roots(self.root)
+        for folder in (canonical.relative_to(self.root).as_posix(),
+                       (evidence / 'findings').relative_to(self.root).as_posix()):
             for file in _walk(self.root, folder, {'.md'}):
                 meta = _frontmatter(file)
                 if meta is None:
@@ -479,7 +510,8 @@ class _Projection:
                 self.edge(node, target, 'SAME_REPOSITORY_AS', path, graph_repository_id=matches[0], binding='EXACT_LOCAL_PATH')
 
     def load_audits(self):
-        for file in _walk(self.root, 'evidence/knowledge/audit', {'.yaml', '.yml'}):
+        _, evidence = _knowledge_roots(self.root)
+        for file in _walk(self.root, (evidence / 'audit').relative_to(self.root).as_posix(), {'.yaml', '.yml'}):
             event = _decode(file)
             for field in ('id', 'item_id', 'content_sha256', 'action', 'from_state', 'to_state'):
                 if not isinstance(event.get(field), str) or not event[field]:

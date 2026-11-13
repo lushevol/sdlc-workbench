@@ -10,7 +10,7 @@ Use this unit before semantic maintenance or after an authorized canonical reloc
 
 ## Prepare the binding
 
-1. Select canonical records outside `knowledge/llm-wiki/` and run [canonical integrity checks](../check-knowledge-integrity/SKILL.md).
+1. Select canonical records from the resolved record root (`knowledge/records/` in the consolidated layout) and run [canonical integrity checks](../check-knowledge-integrity/SKILL.md).
    Reject conflicting IDs, duplicate filenames, paths outside the workspace, and derived wiki inputs.
    Raw exports and filtered excerpts enter through [source preparation](../prepare-knowledge-sources/SKILL.md), not wiki aliases.
    Run local wiki `plan --source DIR --record PATH` before semantic dispatch. Repeat `--record` for each exact input.
@@ -18,6 +18,7 @@ Use this unit before semantic maintenance or after an authorized canonical reloc
    Matching reviewed completion and output hashes permit skipping. A source hash alone cannot establish completion.
 2. Record each source's path, full-file SHA-256, ID, version, status, and governance state before semantic work.
    Read existing manifest entries to identify new, changed, relocated, or unchanged inputs.
+   For an authorized move, use [canonical origin relocation](../llm-wiki/references/workflows.md#relocate-canonical-origins). Origin-only relocation preserves observed hashes; optional exact Git and locator-map proof can rebind hashes for Markdown destination repairs. Preserve missing completion receipts, prior staleness, and pending attempts; relocation supplies no semantic review.
    Do not promote candidate knowledge or select a business answer from a newer timestamp alone.
    Legacy bindings without receipts require scoped review of existing pages, not automatic global recompilation.
    Preserve `expected_outputs`, including former dependents and affected explorations, for maintenance and review.

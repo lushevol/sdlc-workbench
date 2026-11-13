@@ -2,7 +2,7 @@
 query: "What candidate interoperability contract and OpenFin/FDC3 context readiness are required between caller and provider applications?"
 ---
 
-> Review qualification (12 November 2026): The original saved answer below is preserved. Read its statements that no production authentication design, security approval, token-transport review or approved contract exists as limits of this retained evidence scope: none was supplied or inspected here. Their existence elsewhere remains unconfirmed. See the [canonical interoperability evidence limits](../../../candidates/interoperability/KT-application-interoperability.md#evidence-limits).
+> Review qualification (12 November 2026): The original saved answer below is preserved. Read its statements that no production authentication design, security approval, token-transport review or approved contract exists as limits of this retained evidence scope: none was supplied or inspected here. Their existence elsewhere remains unconfirmed. See the [canonical interoperability evidence limits](../../../records/candidates/interoperability/KT-application-interoperability.md#evidence-limits).
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 

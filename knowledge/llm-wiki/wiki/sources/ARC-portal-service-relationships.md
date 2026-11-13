@@ -1,1 +1,1 @@
-../../../candidates/architecture/ARC-portal-service-relationships.md
+../../../records/candidates/architecture/ARC-portal-service-relationships.md

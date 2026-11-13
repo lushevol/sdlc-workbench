@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-admin-and-onboarding.md"
 ---
 
-> Derived from [KT-admin-and-onboarding, version 4](../../../candidates/operations/KT-admin-and-onboarding.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-admin-and-onboarding, version 4](../../../records/candidates/operations/KT-admin-and-onboarding.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Admin and onboarding — Summary
 
@@ -21,7 +21,7 @@ The admin manual describes three functions in the application catalog: Module Ma
 
 The manual defines a [[concepts/maker-checker-verification-workflow]]: creation or modification produces an `un-verified` record; a different user checks and verifies it before activation. Deactivation returns a verified record to `un-verified`. Each admin function keeps its own audit history. The supplied text does not fully specify rollback, activation propagation, or concurrent edits.
 
-The 12 November clarification allows a portal administrator to read every tenant's audit history and configuration. A tile must never reference metadata from another tile, including when an administrator submits its configuration. Cross-tenant write and verification permissions, the classification of tile metadata, and rules for shared tenant records remain open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
+The 12 November clarification allows a portal administrator to read every tenant's audit history and configuration. A tile must never reference metadata from another tile, including when an administrator submits its configuration. Cross-tenant write and verification permissions, the classification of tile metadata, and rules for shared tenant records remain open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../records/candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../records/candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
 
 ### Onboarding path
 
@@ -39,7 +39,7 @@ The NGINX draft collects upstream name, host, port, route path, rewrite rule, pr
 
 ### Empty-subject tile clarification
 
-The explicit user clarification permits tile visibility and launch through one configured EMS2 entity when the tile's subject setting is empty. The user must still satisfy portal-entry requirements and hold entitlement for that entity. The owner and scope answer identifies [[entities/portal-team]] across local, test, UAT, and production. This decision has approval pending. It resolves only the single-entity, empty-subject scope; it does not select a multiple-entity matching rule or an SSDR delegation option. The measurable result is defined in [UI-EMPTY-SUBJECT-AC-001](../../../candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). See [[concepts/portal-entry-and-tile-authorization]].
+The explicit user clarification permits tile visibility and launch through one configured EMS2 entity when the tile's subject setting is empty. The user must still satisfy portal-entry requirements and hold entitlement for that entity. The owner and scope answer identifies [[entities/portal-team]] across local, test, UAT, and production. This decision has approval pending. It resolves only the single-entity, empty-subject scope; it does not select a multiple-entity matching rule or an SSDR delegation option. The measurable result is defined in [UI-EMPTY-SUBJECT-AC-001](../../../records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). See [[concepts/portal-entry-and-tile-authorization]].
 
 ### SSDR alternatives
 

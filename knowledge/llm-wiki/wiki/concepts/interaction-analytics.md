@@ -10,7 +10,7 @@ description: "Portal activity analytics for CPO usage review, with event design 
 
 ## Definition
 
-Interaction analytics collects Portal user activity for CPO review of business product usage. The event vocabulary describes which UI elements emit events and which event types apply to each element. [Current analytics purpose](../../../candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary)
+Interaction analytics collects Portal user activity for CPO review of business product usage. The event vocabulary describes which UI elements emit events and which event types apply to each element. [Current analytics purpose](../../../records/candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary)
 
 This concept is documented in [[summaries/KT-observability-and-performance]].
 
@@ -66,7 +66,7 @@ The supported producer, transport, and storage limit remains unresolved. A produ
 
 ## Data governance
 
-The candidate requires three months of retention for Portal user activity analytics in PROD. The design examples include identity context and search values. Permitted fields, authorized reader roles, handling of identifiable values, the retention clock, and expiry treatment remain open. [Retention criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-analytics-ac-001) · [Canonical open questions](../../../candidates/observability/KT-observability-and-performance.md#open-questions)
+The candidate requires three months of retention for Portal user activity analytics in PROD. The design examples include identity context and search values. Permitted fields, authorized reader roles, handling of identifiable values, the retention clock, and expiry treatment remain open. [Retention criterion](../../../records/candidates/observability/KT-observability-and-performance.md#portal-analytics-ac-001) · [Canonical open questions](../../../records/candidates/observability/KT-observability-and-performance.md#open-questions)
 
 ## Reporting surface
 

@@ -38,7 +38,7 @@ writing_review:
 | Included components and interfaces | Shell renewal interceptors, session generation, timeout ownership, browser storage, BFF renewal and logout, downstream SDK guards. |
 | Environment and revision | Shell `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`; BFF `19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a`; SDK `b0aa82005e7f14202f85f5ef583f25e42da9eeb3`. |
 | Frontend comparison | Merge base `f025513f696476a9cc8162681410cbd21e029bcb` through committed shell candidate. |
-| Security requirements | [User request](evidence/user-input-20261028-comprehensive-renewal.txt) and [requirement rationale](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#rationale). Security proposals remain distinguishable from approved business criteria. |
+| Security requirements | [User request](evidence/user-input-20261028-comprehensive-renewal.txt) and [requirement rationale](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#rationale). Security proposals remain distinguishable from approved business criteria. |
 | Exclusions and evidence limits | No production test, target artifact binding, penetration test, dependency vulnerability scan, or external identity-provider execution. |
 | Worktree boundary | Local Home-controller formatting edits and generated compiler state were preserved. They were excluded from committed-source conclusions. |
 | Assumptions needing confirmation | Gateway trust, revocation consistency, stream authorization, retention policy, and actual session owners remain unknown. |
@@ -120,7 +120,7 @@ The [canonical catalog](06-test-cases.md) keeps the human-readable Gherkin defin
 | Target composition | Served artifact, effective settings, gateways, identities, and entitlements were not bound to the tested composition. | unknown release owner | pending | null |
 | Streams and long operations | Server enforcement, reconnect policy, replay rules, and permission withdrawal remain unverified. | unknown transport owner | pending | null |
 | Browser and module trust | Storage exposure, module loading, CSP, destination restrictions, and cross-origin behavior need target tests. | unknown security owner | pending | null |
-| Long session policy | Continuous renewal target does not establish enterprise approval for every lifetime or compromised-credential condition. | unknown business and security owners | pending | [Requirement rationale](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#rationale) |
+| Long session policy | Continuous renewal target does not establish enterprise approval for every lifetime or compromised-credential condition. | unknown business and security owners | pending | [Requirement rationale](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#rationale) |
 | Security instrumentation | No configured vulnerability analyzer, live penetration result, or production telemetry was evaluated. | unknown security owner | pending | null |
 
 Operational controls: retain hashes and synthetic observations. Exclude raw credentials, customer data, and private keys from saved evidence.

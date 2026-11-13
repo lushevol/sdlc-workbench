@@ -14,7 +14,7 @@ Run commands through the [project-scoped launcher](../llm-wiki/references/workfl
 
 ```sh
 python3 .agents/skills/llm-wiki/scripts/wiki.py verify
-python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/health-plan.json
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/records/candidates --output .workbench/wiki/health-plan.json
 ```
 
 The bridge checks canonical source hashes, both relative aliases, registry consistency, and all six native structural categories.

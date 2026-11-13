@@ -6,7 +6,7 @@ description: "How EMS2 roles, entities, subjects, and actions map to CES entitle
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical basis: [authorization mapping](../../../candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts) and [frontend compatibility criteria](../../../candidates/security/KT-ces-migration-parity.md#intended-frontend-acceptance-criteria).
+Canonical basis: [authorization mapping](../../../records/candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts) and [frontend compatibility criteria](../../../records/candidates/security/KT-ces-migration-parity.md#intended-frontend-acceptance-criteria).
 
 # EMS2 to CES Permission Mapping and Parity
 

@@ -69,7 +69,7 @@ This is the main issue record. Detailed evidence remains in the [evidence index]
 [Earlier verification detail](verification.md) records historical assertions and capture limits.
 Version 9 repairs evidence links after the domain-only knowledge migration.
 The [earlier manifest](evidence/manifest.json) records the previous task cleanup.
-The [migration map](../../evidence/knowledge/migration-20261020/cleanup.json) records current locators, retained hashes, and additional deletions.
+The [migration map](../../knowledge/evidence/migration-20261020/cleanup.json) records current locators, retained hashes, and additional deletions.
 Registered snapshots and existing audit events remain unchanged.
 
 ## Existing knowledge and code facts
@@ -78,7 +78,7 @@ Registered snapshots and existing audit events remain unchanged.
 
 | Source | Established understanding | Authority and limit |
 | --- | --- | --- |
-| [REQ-active-session-renewal v4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | Eligible portal activity retains renewal across initial refresh expiry. Inactivity retains renewal through usable refresh credentials. | Recorded user intent and Q-010; candidate publication review remains pending. Browser suspension is a separate condition. |
+| [REQ-active-session-renewal v4](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md) | Eligible portal activity retains renewal across initial refresh expiry. Inactivity retains renewal through usable refresh credentials. | Recorded user intent and Q-010; candidate publication review remains pending. Browser suspension is a separate condition. |
 | Requirement AC-5–AC-7 | Pending renewal has zero successful prompt closures. Success closes once. Failure preserves another attempt. | AC-5 and AC-6 assume usable refresh credentials. These criteria do not settle Run 001's absent-credential boundary. |
 | [Raw renewal intent](evidence/authentication/requests/session-renewal-intent-2026-10-15.txt) and [activity reply](evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt) | Continued activity renewal and retained idle refresh are explicit. | Read directly. They specify no new server timeout or deployed configuration. |
 | Historical V1, SRC-confluence-aa082f0221001faa | Extend is proposed while refresh remains valid. | Historical refresh-duration examples conflict: 105 versus 225 minutes. They cannot establish current PROD policy. |
@@ -107,7 +107,7 @@ Repository and service declarations identify investigation scope. They do not es
 | Source group | Locator and revision | Hash and authority |
 | --- | --- | --- |
 | User reports | SRC-portal-intake-reporter: current source chat `01a152fa-aff2-7582-aaf4-8e7b4d9c7f2f`. Follow-up: `01a15450-d00a-7d32-91ee-34e5a648cb59`, 19 October 2026. | Chat has no file hash. User-reported experience and local authorization; no PROD telemetry. |
-| Requirement and raw intent | Linked above; requirement v4 and replies dated 15 and 20 October 2026. | Current requirement SHA-256: `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`. Raw hashes resolve in the [source manifest](../../evidence/knowledge/manifest.yaml). |
+| Requirement and raw intent | Linked above; requirement v4 and replies dated 15 and 20 October 2026. | Current requirement SHA-256: `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`. Raw hashes resolve in the [source manifest](../../knowledge/evidence/manifest.yaml). |
 | Implementation | MFE `f025513f696476a9cc8162681410cbd21e029bcb`; root config `83091d85beff5306ca0cd643955d8ea6ed0a2d93`; BFF `85d7cc03eb12710d6facf581987fd4ae24fc9844`. | Exact source snapshots and hashes resolve through [the evidence index](evidence/index.md), C-006. Owners unknown; local source evidence only. |
 | Tests | MFE and BFF revisions above; Robot `a639c6a92b2f125e2e99a0ca282ad7178e8c2c40`. | Source receipt and test-engine inspection above. Owners unknown; assertion inspection does not establish passing execution. |
 | Runs and screenshot | Local runs dated 19 October 2026. Screenshot retained 20 October 2026; capture phase unknown. | Linked below and indexed with hashes. Owners unknown; local observations only. |

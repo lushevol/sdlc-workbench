@@ -118,7 +118,7 @@ No database migration, endpoint, configuration, external call, or dependency is 
 
 ## Proposed acceptance and validation
 
-Canonical criteria: [BFF-ENTITY-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001), [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002), and [BFF-ENTITY-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
+Canonical criteria: [BFF-ENTITY-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001), [BFF-ENTITY-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002), and [BFF-ENTITY-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
 Cases: [BFF entity field extension](06-test-cases.md#bff-entity-field-extension).
 Definitions, inspected assertions, execution, and business acceptance remain separate evidence classes.
 
@@ -126,9 +126,9 @@ Definitions, inspected assertions, execution, and business acceptance remain sep
 
 | Criterion | Canonical cases | Direct assertion scope |
 | --- | --- | --- |
-| [BFF-ENTITY-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001) | [TC-BFF-ENTITY-001](06-test-cases.md#tc-bff-entity-001), [TC-BFF-ENTITY-005](06-test-cases.md#tc-bff-entity-005) | Seven exact names and separate application role lists. |
-| [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) | [TC-BFF-ENTITY-002](06-test-cases.md#tc-bff-entity-002), [TC-BFF-ENTITY-005](06-test-cases.md#tc-bff-entity-005) | Exact textual ITAM ID and two isolated applications. |
-| [BFF-ENTITY-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003) | [TC-BFF-ENTITY-001](06-test-cases.md#tc-bff-entity-001), [TC-BFF-ENTITY-003](06-test-cases.md#tc-bff-entity-003), [TC-BFF-ENTITY-004](06-test-cases.md#tc-bff-entity-004) | No invented scalar role; legacy JSON equality; optional metadata does not discard grants. |
+| [BFF-ENTITY-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001) | [TC-BFF-ENTITY-001](06-test-cases.md#tc-bff-entity-001), [TC-BFF-ENTITY-005](06-test-cases.md#tc-bff-entity-005) | Seven exact names and separate application role lists. |
+| [BFF-ENTITY-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) | [TC-BFF-ENTITY-002](06-test-cases.md#tc-bff-entity-002), [TC-BFF-ENTITY-005](06-test-cases.md#tc-bff-entity-005) | Exact textual ITAM ID and two isolated applications. |
+| [BFF-ENTITY-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003) | [TC-BFF-ENTITY-001](06-test-cases.md#tc-bff-entity-001), [TC-BFF-ENTITY-003](06-test-cases.md#tc-bff-entity-003), [TC-BFF-ENTITY-004](06-test-cases.md#tc-bff-entity-004) | No invented scalar role; legacy JSON equality; optional metadata does not discard grants. |
 
 Definition linkage: 3/3 scoped criteria. Complete frontend compatibility is outside this denominator.
 
@@ -136,9 +136,9 @@ Definition linkage: 3/3 scoped criteria. Complete frontend compatibility is outs
 
 | Criterion | Changed production unit | Required unchanged path |
 | --- | --- | --- |
-| [BFF-ENTITY-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001) | [Entity fields](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java#L20-L21), [mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L76-L77), [merge](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java#L194-L206). | Existing feature/action mapping. |
-| [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) | [Entity fields](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java#L16-L17), [mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L75), [merge](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java#L194-L206). | Legacy numeric IDs. |
-| [BFF-ENTITY-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003) | [Per-field serialization](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java#L16-L21), [optional metadata](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L75-L77). | Existing EMS2 routing and scalar fields. |
+| [BFF-ENTITY-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001) | [Entity fields](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java#L20-L21), [mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L76-L77), [merge](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java#L194-L206). | Existing feature/action mapping. |
+| [BFF-ENTITY-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) | [Entity fields](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java#L16-L17), [mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L75), [merge](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java#L194-L206). | Legacy numeric IDs. |
+| [BFF-ENTITY-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003) | [Per-field serialization](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java#L16-L21), [optional metadata](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L75-L77). | Existing EMS2 routing and scalar fields. |
 
 Source linkage: 3/3 scoped criteria. Links alone do not establish execution or universal conformance.
 
@@ -234,7 +234,7 @@ Validation and source bindings: [assessment checks](evidence/frontend-entitlemen
 
 ## Sources and evidence limits
 
-- Intent: [exact request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) and [candidate contract](../../knowledge/candidates/security/KT-ces-migration-parity.md#ces-entity-role-and-application-fields).
+- Intent: [exact request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) and [candidate contract](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#ces-entity-role-and-application-fields).
 - API sample: [supplied CES response](api/EMS3-user%20entitlements%20by%20app%20and%20user%20%281481696%29.yml). No live request was sent.
 - Prior frontend source findings: [impact analysis](05-impact-analysis-frontend-entitlements.md).
 - Remaining contracts: [source hashes and locators](evidence/frontend-entitlement-impact-20261105/remaining-contract-gaps-20261106.json).
@@ -267,14 +267,14 @@ These controlled results do not establish a complete suite, live endpoint, brows
 
 ## Knowledge-update log
 
-The explicit field decision updates [CES migration parity](../../knowledge/candidates/security/KT-ces-migration-parity.md#ces-entity-role-and-application-fields) from version 2 to version 3.
+The explicit field decision updates [CES migration parity](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#ces-entity-role-and-application-fields) from version 2 to version 3.
 The [update record](evidence/frontend-entitlement-impact-20261105/entity-fields-knowledge-update-20261106.json) binds source hashes, criteria, review, and validation.
-The [new audit event](../../evidence/knowledge/audit/AUD-20261106-KT-ces-migration-parity-v3.yaml) preserves predecessor identity.
+The [new audit event](../../knowledge/evidence/audit/AUD-20261106-KT-ces-migration-parity-v3.yaml) preserves predecessor identity.
 The record remains a draft candidate. No scalar-role projection or publication approval was added.
 The [identity clarification update](evidence/frontend-entitlement-impact-20261105/identity-knowledge-update-20261106.json) advances the candidate to version 4.
 It preserves legacy team `applicationName`, CES `name`, and application ID as separate meanings.
-Its [v4 audit](../../evidence/knowledge/audit/AUD-20261106-KT-ces-migration-parity-v4.yaml) retains the version 3 predecessor.
-The refined [identity criterion](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) has a separate unrun test scenario.
+Its [v4 audit](../../knowledge/evidence/audit/AUD-20261106-KT-ces-migration-parity-v4.yaml) retains the version 3 predecessor.
+The refined [identity criterion](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) has a separate unrun test scenario.
 
 
 ## Requested decision and actual disposition

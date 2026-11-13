@@ -13,7 +13,7 @@ This parent selects operations and reconciles their results. The reusable units 
 Start through the [project-scoped launcher](references/workflows.md#project-scoped-commands):
 
 ```sh
-python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/plan.json
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/records/candidates --output .workbench/wiki/plan.json
 python3 .agents/skills/llm-wiki/scripts/wiki.py run status
 python3 .agents/skills/llm-wiki/scripts/wiki.py engine
 ```

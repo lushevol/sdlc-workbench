@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-settlement-auto-netting.md"
 ---
 
-> Derived from [KT-settlement-auto-netting, version 1](../../../candidates/settlement/KT-settlement-auto-netting.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-settlement-auto-netting, version 1](../../../records/candidates/settlement/KT-settlement-auto-netting.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Cash Settlement Auto-Netting
 

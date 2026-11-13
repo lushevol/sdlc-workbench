@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-application-interoperability.md"
 ---
 
-> Derived from [KT-application-interoperability, version 2](../../../candidates/interoperability/KT-application-interoperability.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-application-interoperability, version 2](../../../records/candidates/interoperability/KT-application-interoperability.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal application interoperability and OpenFin context
 

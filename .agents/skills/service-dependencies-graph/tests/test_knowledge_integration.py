@@ -14,6 +14,7 @@ from unittest.mock import patch
 import yaml
 
 from ai_sdlc_workbench.runtime import Workbench
+from ai_sdlc_workbench.knowledge_layout import knowledge_layout
 from ai_sdlc_workbench.workspace import initialize_workspace
 
 load_tool = runpy.run_path(str(Path(__file__).with_name('_support.py')))['load_tool']
@@ -41,13 +42,15 @@ class KnowledgeBuildIntegrationTests(unittest.TestCase):
         return path
 
     def fixture(self):
-        self.source = self.write('evidence/knowledge/sources/policy.txt',
+        canonical, evidence = knowledge_layout(self.root)
+        canonical_name, evidence_name = (path.relative_to(self.root).as_posix() for path in (canonical, evidence))
+        self.source = self.write(evidence_name + '/sources/policy.txt',
                                  'Orders require one recorded decision.\nPRIVATE_RETAINED_BODY_247\n')
         source = {'id': 'SRC-orders', 'resource': 'policy://orders', 'revision': 'policy-v1',
                   'sha256': digest(self.source.read_bytes()),
                   'snapshot': self.source.relative_to(self.root).as_posix(),
                   'classification': 'business', 'ingested_at': '2026-11-03T01:00:00Z'}
-        self.write('evidence/knowledge/manifest.yaml',
+        self.write(evidence_name + '/manifest.yaml',
                    yaml.safe_dump({'schema_version': 1, 'sources': [source]}, sort_keys=False))
         metadata = {'type': 'Requirement', 'id': 'REQ-orders', 'version': 1,
                     'owner': 'human:orders', 'governance_state': 'candidate', 'status': 'draft',
@@ -57,7 +60,7 @@ class KnowledgeBuildIntegrationTests(unittest.TestCase):
                                              'then': 'Then one decision exists',
                                              'measure': {'metric': 'decisions', 'operator': 'equals',
                                                          'value': 1, 'unit': 'count'}}]}
-        self.record = self.write('knowledge/candidates/orders.md',
+        self.record = self.write(canonical_name + '/candidates/orders.md',
                                  '---\n' + yaml.safe_dump(metadata, sort_keys=False) +
                                  '---\n# Order policy\n\nPRIVATE_AUTHORED_BODY_248\n')
         return source

@@ -1,11 +1,13 @@
 """Exercise source-bound knowledge projection without changing canonical records."""
 from copy import deepcopy
+import builtins
 import hashlib
 import json
 from pathlib import Path
 import runpy
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import yaml
 
@@ -251,6 +253,46 @@ class KnowledgeProjectionTests(unittest.TestCase):
         self.assertEqual(self.nodes('KNOWLEDGE_RECORD')[0]['properties']['governance_state'], 'stale')
         self.assertEqual(self.graph.nodes['service:fixture']['type'], 'SERVICE')
         self.assertEqual(self.nodes('ACCEPTANCE_CRITERION')[0]['properties']['version'], 2)
+
+
+    def consolidate(self):
+        canonical = self.root / 'knowledge/records'
+        canonical.mkdir()
+        (self.root / 'knowledge/candidates').rename(canonical / 'candidates')
+        (self.root / 'evidence/knowledge').rename(self.root / 'knowledge/evidence')
+        manifest_path = self.root / 'knowledge/evidence/manifest.yaml'
+        manifest = yaml.safe_load(manifest_path.read_text())
+        for source in manifest['sources']:
+            source['snapshot'] = source['snapshot'].replace('evidence/knowledge/', 'knowledge/evidence/', 1)
+        manifest_path.write_text(yaml.safe_dump(manifest))
+
+    def test_consolidated_projection_excludes_raw_source_markdown_and_wiki(self):
+        self.consolidate()
+        self.write('knowledge/evidence/sources/not-canonical.md', '# Unreviewed original without metadata.\n')
+        self.write('knowledge/llm-wiki/wiki/summaries/not-canonical.md', '# Derived content without canonical metadata.\n')
+        projection.apply_knowledge(self.graph)
+        records = [node for node in self.graph.nodes.values() if node['type'] == 'KNOWLEDGE_RECORD']
+        self.assertEqual(len(records), 1)
+        self.assertEqual(records[0]['source_paths'], ['knowledge/records/candidates/orders.md'])
+        inputs = {row['path'] for row in projection.input_fingerprints(self.root)}
+        self.assertIn('knowledge/evidence/sources/policy.txt', inputs)
+        self.assertNotIn('knowledge/evidence/sources/not-canonical.md', inputs)
+        self.assertNotIn('knowledge/llm-wiki/wiki/summaries/not-canonical.md', inputs)
+
+    def test_standalone_fallback_supports_consolidation_and_rejects_ambiguous_layout(self):
+        self.consolidate()
+        original_import = builtins.__import__
+        def standalone_import(name, *args, **kwargs):
+            if name == 'ai_sdlc_workbench.knowledge_layout':
+                raise ModuleNotFoundError('Synthetic standalone environment', name=name)
+            return original_import(name, *args, **kwargs)
+        with patch('builtins.__import__', side_effect=standalone_import):
+            projection.apply_knowledge(self.graph)
+            self.write('evidence/knowledge/manifest.yaml', 'schema_version: 1\nsources: []\n')
+            with self.assertRaisesRegex(ValueError, 'Both knowledge manifests'):
+                projection.input_fingerprints(self.root)
+        with self.assertRaisesRegex(ValueError, 'Both knowledge manifests'):
+            projection.input_fingerprints(self.root)
 
 
 if __name__ == '__main__':

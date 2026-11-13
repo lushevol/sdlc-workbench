@@ -8,7 +8,8 @@ import hashlib
 import importlib.util
 import json
 import os
-from pathlib import Path
+import posixpath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
 import shutil
 import shlex
@@ -17,6 +18,7 @@ import sys
 import tempfile
 from datetime import datetime
 import uuid
+from urllib.parse import unquote, urlsplit
 
 VERSION = "0.5.0rc2.dev3+gff54396e5"
 REVISION = "ff54396e575ee6feb0113b631a34caa082b441cc"
@@ -24,6 +26,43 @@ REQUIREMENT = f"openkb @ git+https://github.com/VectifyAI/OpenKB.git@{REVISION}"
 ROOT = Path(__file__).resolve().parents[4]
 UPSTREAM = Path(__file__).resolve().parents[1] / "upstream"
 INCREMENTAL_CONTRACT = 1
+
+
+
+def knowledge_roots(project):
+    """Reuse runtime layout resolution; isolated OpenKB environments need no runtime install."""
+    try:
+        from ai_sdlc_workbench.knowledge_layout import knowledge_layout
+    except ImportError as error:
+        if error.name not in {None, "ai_sdlc_workbench", "ai_sdlc_workbench.knowledge_layout"}:
+            raise
+        # OpenKB and standalone skill runtimes can omit the Workbench package.
+        project = Path(project).resolve()
+        current, legacy = project / "knowledge/evidence", project / "evidence/knowledge"
+        current_marker, legacy_marker = current / "manifest.yaml", legacy / "manifest.yaml"
+        current_present = current_marker.exists() or current_marker.is_symlink()
+        legacy_present = legacy_marker.exists() or legacy_marker.is_symlink()
+        if current_present and legacy_present:
+            raise ValueError("Both knowledge manifests exist. Finish or recover the layout migration before continuing.")
+        if current_present:
+            records = project / "knowledge/records"
+            if not records.is_dir():
+                raise ValueError("The consolidated knowledge layout requires knowledge/records/. Restore it before continuing.")
+            return records, current
+        if not legacy_present and any(path.exists() or path.is_symlink() for path in (current, project / "knowledge/records")):
+            raise ValueError("The consolidated knowledge layout is incomplete. Restore knowledge/evidence/manifest.yaml before continuing.")
+        return project / "knowledge", legacy
+    return knowledge_layout(project)
+
+
+def canonical_folder(project, source=None):
+    canonical, _ = knowledge_roots(project)
+    if any(path.is_symlink() for path in (canonical, *canonical.parents) if path != project and path.is_relative_to(project)):
+        raise ValueError("Canonical knowledge roots must not use symbolic links")
+    folder = canonical / "candidates" if source is None else (canonical if source == "knowledge" else project / source)
+    folder = folder.resolve()
+    folder.relative_to(canonical.resolve())
+    return folder
 
 
 def configured_credentials(project):
@@ -62,7 +101,7 @@ def validate_api_config(config):
         raise ValueError("Configure the URL/token through OPENAI_API_BASE and LLM_API_KEY, not LiteLLM credential overrides")
 
 
-def agent_handoff(project, operation, source="knowledge/candidates", arguments=()):
+def agent_handoff(project, operation, source=None, arguments=()):
     print("Selected engine: llm-wiki-agent (both LLM URL and token were not provided).")
     print("Agent handoff only; no model client was called and no wiki pages were changed.")
     print(f"Current ADE agent: follow {UPSTREAM / 'AGENTS.md'} for {operation}.")
@@ -71,7 +110,7 @@ def agent_handoff(project, operation, source="knowledge/candidates", arguments=(
         if "--record" in arguments:
             print("Read only the complete canonical records named by --record below and their affected wiki dependencies.")
         else:
-            print(f"Read complete canonical records from: {project / source}")
+            print(f"Read complete canonical records from: {canonical_folder(project, source)}")
     if arguments:
         print("Requested arguments: " + " ".join(arguments))
     print("Retain the existing page format: summaries/ holds source summaries; sources/ and raw/ are immutable canonical links.")
@@ -204,8 +243,7 @@ def link_source(link, source):
 def canonical_records(project, source, selected=()):
     """Resolve exact canonical inputs before any engine or credential setup."""
     import yaml
-    folder = (project / source).resolve()
-    folder.relative_to(project / "knowledge")
+    folder = canonical_folder(project, source)
     wiki = (project / "knowledge/llm-wiki").resolve()
     if folder.is_relative_to(wiki):
         raise ValueError("Derived wiki files are not canonical inputs")
@@ -323,12 +361,13 @@ def dependent_outputs(kb, doc_name):
     return result
 
 
-def update_plan(project, source="knowledge/candidates", selected=(), recipe="default"):
+def update_plan(project, source=None, selected=(), recipe="default"):
     """Local inventory and receipts only: no OpenKB imports or private settings."""
     if not isinstance(recipe, str) or not recipe.strip():
         raise ValueError("A nonempty, nonsecret processing recipe identity is required")
     project = project.resolve()
     kb = project / "knowledge/llm-wiki"
+    source = canonical_folder(project, source).relative_to(project).as_posix()
     records = canonical_records(project, source, selected)
     manifest, registry = wiki_state(kb)
     state = manifest["incremental"]
@@ -539,6 +578,233 @@ def compile_sources(project, source, selected=(), recipe="default", force=False)
         return update_plan(project, source, selected, recipe)
 
 
+
+
+def markdown_destinations(text):
+    """Return destination spans, preserving labels, titles, and all other bytes for proof."""
+    spans, code_ranges = [], []
+    frontmatter = re.match(r"\A---\r?\n.*?\r?\n---(?:\r?\n|\Z)", text, re.S)
+    if frontmatter:
+        code_ranges.append((0, frontmatter.end()))
+    fence, start, offset = None, None, 0
+    for line in text.splitlines(keepends=True):
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line.rstrip("\r\n"))
+        if fence is not None:
+            if marker and marker[1][0] == fence[0] and len(marker[1]) >= len(fence) and not marker[2].strip():
+                code_ranges.append((start, offset + len(line)))
+                fence = None
+        elif marker:
+            fence, start = marker[1], offset
+        elif line.startswith(("    ", "\t")):
+            code_ranges.append((offset, offset + len(line)))
+        offset += len(line)
+    if fence is not None:
+        code_ranges.append((start, len(text)))
+    for pattern in (r"(?<!`)(`+)(?!`)(.*?)(?<!`)\1(?!`)", r"<(pre|code)\b[^>]*>.*?</\1\s*>"):
+        code_ranges.extend((match.start(), match.end()) for match in re.finditer(pattern, text, re.S | re.I))
+    patterns = (r"!?\[[^\]\n]*\]\(\s*(<[^>\n]*>|(?:\\.|[^()\n]|\([^()\n]*\))*)\)",
+                r"^ {0,3}\[[^\]\n]+\]:[ \t]*(<[^>\n]*>|[^\n]+)")
+    for pattern in patterns:
+        for match in re.finditer(pattern, text, re.M):
+            if any(match.start() < end and match.end() > start for start, end in code_ranges):
+                continue
+            raw, start = match.group(1), match.start(1)
+            if raw.startswith("<") and ">" in raw:
+                spans.append((start + 1, start + raw.index(">")))
+            else:
+                target = re.sub(r"\s+(['\"]).*\1\s*$", "", raw).rstrip()
+                if target:
+                    spans.append((start, start + len(target)))
+    return sorted(set(spans))
+
+
+def prove_locator_change(project, revision, before_path, after_path, before_sha, after_sha, locations):
+    """Prove a Git-bound migration changed only local Markdown link destinations."""
+    if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-fA-F]{40}|[0-9a-fA-F]{64}", revision):
+        raise ValueError("Locator proof requires an exact baseline Git revision")
+    raw = subprocess.run(["git", "-C", str(project), "show", f"{revision}:{before_path}"],
+                         capture_output=True, check=True).stdout
+    current = (project / after_path).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != before_sha or hashlib.sha256(current).hexdigest() != after_sha:
+        raise ValueError("Locator proof baseline or current bytes do not match the receipt")
+    old_text, new_text = raw.decode("utf-8"), current.decode("utf-8")
+    old_spans, new_spans = markdown_destinations(old_text), markdown_destinations(new_text)
+    def masked(text, spans):
+        for start, end in reversed(spans):
+            text = text[:start] + "<LOCATOR>" + text[end:]
+        return text
+    if len(old_spans) != len(new_spans) or masked(old_text, old_spans) != masked(new_text, new_spans):
+        raise ValueError("Locator proof rejected changes outside Markdown destinations")
+    for (old_start, old_end), (new_start, new_end) in zip(old_spans, new_spans):
+        old, new = old_text[old_start:old_end], new_text[new_start:new_end]
+        old_url, new_url = urlsplit(old), urlsplit(new)
+        if old_url.scheme or old_url.netloc or not old_url.path or old_url.path.startswith("/"):
+            if old != new:
+                raise ValueError("Locator proof cannot change external or fragment-only destinations")
+            continue
+        if (new_url.scheme or new_url.netloc or (old_url.query, old_url.fragment) != (new_url.query, new_url.fragment)):
+            raise ValueError("Locator proof cannot change destination type, query, or fragment")
+        def local_target(origin, destination):
+            decoded = unquote(destination)
+            if (PurePosixPath(decoded).is_absolute() or PureWindowsPath(decoded).drive
+                    or "\\" in decoded):
+                raise ValueError("Locator proof requires workspace-relative local destinations without backslashes")
+            # Baseline identity is lexical: current aliases may already point at a new origin.
+            relative = posixpath.normpath(posixpath.join(str(PurePosixPath(origin).parent), decoded))
+            if relative == ".." or relative.startswith("../"):
+                raise ValueError("Locator proof local destinations must stay inside the workspace")
+            return relative
+        previous = local_target(before_path, old_url.path)
+        target = local_target(after_path, new_url.path)
+        if target != locations.get(previous, previous):
+            raise ValueError(f"Locator proof target does not match the migration map: {old}")
+        # The current target must also remain confined after following live symlinks.
+        (project / target).resolve().relative_to(project)
+    return after_sha
+
+
+def relocate_sources(project, receipt):
+    """Move canonical origins and aliases without advancing semantic hashes or completion."""
+    from openkb.locks import kb_ingest_lock
+
+    if not isinstance(receipt.get("reason"), str) or not receipt["reason"].strip():
+        raise ValueError("Canonical relocation requires its recorded reason")
+    sources = receipt.get("sources")
+    if not isinstance(sources, list) or not sources:
+        raise ValueError("Canonical relocation requires nonempty source mappings")
+    outputs = receipt.get("outputs", [])
+    if not isinstance(outputs, list) or any(not isinstance(output, dict)
+            or any(not isinstance(output.get(key), str) or not output[key] for key in ("path", "before_sha256", "sha256"))
+            for output in outputs):
+        raise ValueError("Output relocation mappings require path, before_sha256, and current sha256")
+    project = project.resolve()
+    kb = project / "knowledge/llm-wiki"
+    with kb_ingest_lock(kb / ".openkb"):
+        manifest, registry, expected_pair = wiki_state(kb, with_bytes=True)
+        bindings = {record["id"]: record for record in manifest["sources"]}
+        planned, seen, aliases = [], set(), {}
+        outputs_before = output_hashes(kb)
+        proof_revision = receipt.get("baseline_revision")
+        locations, map_path, map_sha = {}, None, None
+        if proof_revision is not None:
+            relative = receipt.get("locator_map")
+            if not isinstance(relative, str) or Path(relative).is_absolute() or ".." in Path(relative).parts:
+                raise ValueError("Locator proof requires a workspace-relative migration map")
+            map_path = project / relative
+            map_path.resolve().relative_to(project)
+            map_sha = digest(map_path)
+            mapping = json.loads(map_path.read_text(encoding="utf-8"))
+            if mapping.get("source_revision") != proof_revision or not isinstance(mapping.get("entries"), list):
+                raise ValueError("Locator proof baseline and migration map disagree")
+            for row in mapping["entries"]:
+                if not isinstance(row, dict) or not all(isinstance(row.get(key), str) for key in ("old", "new")):
+                    raise ValueError("Migration map entries require old and new workspace paths")
+                if row["old"] in locations and locations[row["old"]] != row["new"]:
+                    raise ValueError("Migration map has conflicting destinations")
+                locations[row["old"]] = row["new"]
+        for source in sources:
+            if not isinstance(source, dict) or not all(isinstance(source.get(key), str) and source[key]
+                                                     for key in ("id", "from", "to", "sha256")):
+                raise ValueError("Relocation mappings require id, from, to, and current target sha256")
+            if source["id"] in seen:
+                raise ValueError("Relocation mappings require unique canonical IDs")
+            seen.add(source["id"])
+            for value in (source["from"], source["to"]):
+                if Path(value).is_absolute() or ".." in Path(value).parts:
+                    raise ValueError("Relocation paths must be workspace-relative without traversal")
+            canonical = canonical_records(project, "knowledge", [source["to"]])
+            record = canonical.get(source["id"])
+            binding = bindings.get(source["id"])
+            if record is None or binding is None or record["sha256"] != source["sha256"]:
+                raise ValueError("Relocation target identity or current bytes do not match the receipt")
+            original = record["path"]
+            if (binding["origin"] not in {source["from"], source["to"]}
+                    or original.stem != binding["doc_name"] or Path(source["from"]).name != original.name):
+                raise ValueError("Relocation conflicts with the existing canonical origin or filename")
+            for relative in (f"raw/{original.name}", f"wiki/sources/{original.name}"):
+                link = kb / relative
+                if (not link.is_symlink() or os.path.isabs(os.readlink(link))
+                        or link.resolve() not in {(project / source["from"]).resolve(), original.resolve()}):
+                    raise ValueError(f"Relocation requires the existing relative canonical alias: {relative}")
+                aliases[link] = (os.readlink(link), os.path.relpath(original, link.parent))
+            if proof_revision is not None:
+                before_sha = source.get("before_sha256")
+                if locations.get(source["from"]) != source["to"]:
+                    raise ValueError("Canonical relocation is absent from the migration map")
+                prove_locator_change(project, proof_revision, source["from"], source["to"],
+                                     before_sha, source["sha256"], locations)
+                if binding.get("sha256") not in {before_sha, source["sha256"]}:
+                    raise ValueError("Locator proof cannot advance a preexisting stale source binding")
+                entry = registry.get(binding["sha256"])
+                if not entry or entry.get("doc_name") != binding["doc_name"]:
+                    raise ValueError("Locator proof requires the matching observed source registry entry")
+                if source["sha256"] in registry and registry[source["sha256"]].get("doc_name") != binding["doc_name"]:
+                    raise ValueError("Locator proof conflicts with another source hash registry entry")
+                registry.pop(binding["sha256"])
+                registry[source["sha256"]] = entry
+                binding["sha256"] = source["sha256"]
+            binding["origin"] = source["to"]
+            completed = manifest["incremental"]["completed"].get(binding["doc_name"])
+            if completed is not None:
+                if completed.get("origin") not in {source["from"], source["to"]}:
+                    raise ValueError("Relocation conflicts with an existing completion origin")
+                completed["origin"] = source["to"]
+                if proof_revision is not None and completed.get("sha256") in {source.get("before_sha256"), source["sha256"]}:
+                    completed["sha256"] = source["sha256"]
+            planned.append(source)
+        for output in outputs:
+            if proof_revision is None:
+                raise ValueError("Output hash rebinding requires exact locator proof")
+            path = output_path(kb, output["path"])
+            relative = path.relative_to(project).as_posix()
+            prove_locator_change(project, proof_revision, relative, relative,
+                                 output.get("before_sha256"), output.get("sha256"), locations)
+            observed = manifest["incremental"]["outputs"].get(output["path"])
+            if observed is not None:
+                if observed.get("sha256") not in {output.get("before_sha256"), output.get("sha256")}:
+                    raise ValueError("Locator proof cannot advance a preexisting stale output binding")
+                observed["sha256"] = output["sha256"]
+
+        def check_targets():
+            for source in planned:
+                if digest(project / source["to"]) != source["sha256"]:
+                    raise ValueError("Canonical target changed during relocation")
+            if output_hashes(kb) != outputs_before:
+                raise ValueError("Derived output bytes changed during relocation")
+            if map_path is not None and digest(map_path) != map_sha:
+                raise ValueError("Migration map changed during locator proof")
+
+        def replace_alias(link, target):
+            temporary = link.with_name(f".{link.name}.{uuid.uuid4().hex}.link")
+            try:
+                temporary.symlink_to(target)
+                os.replace(temporary, link)
+            finally:
+                temporary.unlink(missing_ok=True)
+
+        check_targets()
+        require_binding_bytes(kb, expected_pair)
+        try:
+            for link, (before, after) in aliases.items():
+                if os.readlink(link) != before:
+                    raise ValueError("Canonical aliases changed concurrently")
+                replace_alias(link, after)
+            def check_after_write():
+                check_targets()
+                if any(not link.is_symlink() or os.readlink(link) != after
+                       for link, (_, after) in aliases.items()):
+                    raise ValueError("Canonical aliases changed during relocation")
+            write_binding_pair(project, manifest, registry, expected_pair, check_after_write)
+        except BaseException:
+            for link, (before, after) in aliases.items():
+                if link.is_symlink() and os.readlink(link) == after:
+                    replace_alias(link, before)
+            raise
+    disposition = "proven locator hashes rebound" if proof_revision is not None else "observed hashes preserved"
+    print(f"Relocated {len(planned)} canonical origins; {disposition}; semantic completion was preserved")
+    return {"relocated": sorted(seen), "semantic_completion": "UNCHANGED"}
+
+
 def review_sources(project, receipt):
     """Record supplied semantic review, never manufacture it from observed hashes."""
     from openkb.locks import kb_ingest_lock
@@ -739,11 +1005,12 @@ def verify(project):
     if version("openkb") != VERSION:
         raise ValueError(f"Expected OpenKB {VERSION}; run install")
     kb = project / "knowledge/llm-wiki"
+    canonical = canonical_folder(project, "knowledge")
     manifest = json.loads((kb / "source-manifest.json").read_text())
     registry = json.loads((kb / ".openkb/hashes.json").read_text())
     for record in manifest["sources"]:
         original = project / record["origin"]
-        original.resolve().relative_to(project)
+        original.resolve().relative_to(canonical.resolve())
         if digest(original) != record["sha256"]:
             raise ValueError(f"Compiled source binding is stale: {original}; compile it before advancing the hash")
         for relative in (f"raw/{original.name}", f"wiki/sources/{original.name}"):
@@ -768,17 +1035,19 @@ def main():
     commands.add_parser("graph")
     commands.add_parser("engine", help="Show the selected semantic engine without exposing credentials")
     compiler = commands.add_parser("compile", help="Run the original OpenKB semantic compiler on linked canonical records")
-    compiler.add_argument("--source", default="knowledge/candidates")
+    compiler.add_argument("--source", help="Canonical folder; defaults to the active layout candidates directory")
     compiler.add_argument("--record", action="append", default=[], help="Exact workspace-relative canonical record; repeat as needed")
     compiler.add_argument("--recipe", default="default", help="Nonsecret identity of semantic settings and governing policy")
     compiler.add_argument("--force", action="store_true", help="Intentionally recompile selected inputs, including legacy bindings")
     planner = commands.add_parser("plan", help="Plan incremental wiki work locally without an engine or credentials")
-    planner.add_argument("--source", default="knowledge/candidates")
+    planner.add_argument("--source", help="Canonical folder; defaults to the active layout candidates directory")
     planner.add_argument("--record", action="append", default=[])
     planner.add_argument("--recipe", default="default")
     planner.add_argument("--output", type=Path, help="Save the complete plan and print compact counts and queued paths")
     reviewer = commands.add_parser("review", help="Finalize an actual source/output semantic review receipt")
     reviewer.add_argument("--receipt", type=Path, required=True)
+    relocator = commands.add_parser("relocate", help="Move canonical origins/aliases while preserving observed hashes and pending work")
+    relocator.add_argument("--receipt", type=Path, required=True)
     native = commands.add_parser("run")
     native.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
@@ -828,7 +1097,7 @@ def main():
                 arguments.extend(["--record", item["path"]])
             if args.force:
                 arguments.append("--force")
-        agent_handoff(project, operation, getattr(args, "source", "knowledge/candidates"),
+        agent_handoff(project, operation, getattr(args, "source", None),
                       arguments)
         return
     if not python.exists():
@@ -839,6 +1108,8 @@ def main():
         compile_sources(project, args.source, args.record, args.recipe, args.force)
     elif args.command == "review":
         review_sources(project, json.loads(args.receipt.read_text(encoding="utf-8")))
+    elif args.command == "relocate":
+        relocate_sources(project, json.loads(args.receipt.read_text(encoding="utf-8")))
     else:
         arguments = ["visualize", "--no-open"] if args.command == "graph" else args.arguments
         from openkb.cli import cli

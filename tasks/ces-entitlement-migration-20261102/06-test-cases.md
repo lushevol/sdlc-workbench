@@ -35,7 +35,7 @@ writing_review:
 ## Objective and traceability
 
 These cases define coverage automation checks for the [current migration scope](01-intake.md#current-task-state).
-The [candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#documented-knowledge) defines the mapped permission concepts.
+The [candidate intent](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#documented-knowledge) defines the mapped permission concepts.
 Historical coverage case definitions retain version 4. The Spring extension below has definition version 1.
 Actual execution remains separate.
 
@@ -490,7 +490,7 @@ Any later live migration evidence requires its own environment and extraction id
 | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
 | [Current request](evidence/coverage-automation-20261103/user-input.md#exact-user-input) requires all users, beyond the two examples. | A two-account comparison cannot establish complete user coverage. | unknown | Execute dynamic discovery and retain the full inventory. |
-| [Candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#evidence-limits) records remaining evidence limits. | Functional agreement alone cannot prove complete data-scope equality. | unknown | Acquire the required legacy data definitions or retain an unassessed result. |
+| [Candidate intent](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#evidence-limits) records remaining evidence limits. | Functional agreement alone cannot prove complete data-scope equality. | unknown | Acquire the required legacy data definitions or retain an unassessed result. |
 
 ## Sources
 
@@ -501,7 +501,7 @@ Any later live migration evidence requires its own environment and extraction id
 | USER-EMS2-ENV-20261103 | [Exact extension request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input) | user-request-20261103-environment-coverage | SHA-256 in the [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | User-defined tooling scope; mock execution only in this session. |
 | USER-COVERAGE-20261103 | [Exact request](evidence/coverage-automation-20261103/user-input.md#exact-user-input) | user-clarification-20261103-1 | `10c503fba499b7dfbcad08481293fcfd9cf0b108f692052bb9f5537a3d89ff57` | User-stated intent; no actual execution or publication approval. |
 | USER-MOCK-20261103 | [Exact mock instruction](evidence/coverage-mock-20261103/user-input.md#exact-user-input) | user-clarification-20261103-mock | `72e80490baec682cca54f4288496026105466d2e2b676c7d964bc72f135da887` | User-defined execution boundary; excludes enterprise access from this session. |
-| KT-ces-migration-parity | [Candidate knowledge](../../knowledge/candidates/security/KT-ces-migration-parity.md) | Version 1 | Final file hash in its candidate audit event. | Candidate synthesis; human review pending. |
+| KT-ces-migration-parity | [Candidate knowledge](../../knowledge/records/candidates/security/KT-ces-migration-parity.md) | Version 1 | Final file hash in its candidate audit event. | Candidate synthesis; human review pending. |
 
 ## Spring verifier case extension
 
@@ -835,14 +835,14 @@ The original captures remain canonical. Their hashes appear in the [capture summ
 Use the [repository bindings](evidence/frontend-entitlement-impact-20261105/bff-contract.json) and [frontend bindings](evidence/frontend-entitlement-impact-20261105/mfe-base.json).
 The container has [file hashes](evidence/frontend-entitlement-impact-20261105/ratan-container.json), without independent Git history.
 No frontend implementation change exists. User-stated compatibility decisions do not establish passing implementation evidence.
-The [knowledge criteria](../../knowledge/candidates/security/KT-ces-migration-parity.md#frontend-compatibility-and-per-tile-migration) define the scoped intent.
+The [knowledge criteria](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#frontend-compatibility-and-per-tile-migration) define the scoped intent.
 Earlier probe results retain their actual source identities and case-definition scope.
 
 ### TC-FE-CES-001
 
 Purpose: resolve captured Ratan feature/action grants through the shared helper.
 Level: controlled helper compatibility probe. Owner: unknown.
-Intent: [permission preservation](../../knowledge/candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts).
+Intent: [permission preservation](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts).
 Setup: inject captured entities into `Hooks.getHooks`; use no network or browser.
 The probe transpiles the original TypeScript module without changing its source.
 Isolation: use one Node process. Cleanup: terminate that process after saving the compact result.
@@ -1053,7 +1053,7 @@ The [union case](#tc-fe-ces-008) defines provider combination. This case defines
 
 Purpose: preserve existing upper-application permission APIs during provider adaptation.
 Definition version: 2. Level: actual-source controlled integration case. Owner: unknown.
-Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
+Intent: [FE-COMPAT-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
 Setup: retain an unchanged upper-application consumer and equivalent mapped EMS2/CES feature/action fixtures.
 Keep existing upper imports and arguments. Configure the corresponding CES application in the shared layer.
 Use no production state. Dispose of isolated fixture processes after saving results.
@@ -1085,7 +1085,7 @@ The scalar role contract is excluded from this case. Its exception remains in [T
 
 Purpose: preserve existing permission calls while either mapped provider can supply the grant.
 Definition version: 2. Level: actual-source controlled integration case. Owner: unknown.
-Intent: [FE-COMPAT-AC-004](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004).
+Intent: [FE-COMPAT-AC-004](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004).
 Source: [provider-union clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
 Tile admission remains separate and follows each tile's configured provider.
 CES fixtures retain a complete configured application route, including when an EMS2 route shares the feature.
@@ -1138,7 +1138,7 @@ Each browser check receives a fresh context. Close contexts and the local server
 
 Purpose: distribute authoritative routing independently of granted tiles.
 Level: BFF mapper and JSON contract unit cases.
-Intent: [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002) and [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
+Intent: [FE-COMPAT-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002) and [FE-COMPAT-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
 Setup: effective active tile rows include granted tile 1 and denied tile 2.
 Both select CES application 51358 with explicit application names and feature lists.
 The route field is additive: `entitlementRouting`.
@@ -1176,7 +1176,7 @@ Result at definition: `NOT_RUN`. Baseline compilation cannot execute the absent 
 
 Purpose: refresh permission data and clear stale authorized catalogs.
 Level: base unit tests and actual shared-module browser integration.
-Intent: [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002).
+Intent: [FE-COMPAT-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002).
 Setup: user 1481696 has CES grant `feature-a:action-a`, one current drawer tile, and complete routing.
 Hooks dispatch is controlled in the browser integration. Token validation and persistence are substituted.
 
@@ -1205,7 +1205,7 @@ Result at definition: `NOT_RUN`. Identity acceptance and live refresh remain out
 
 Purpose: preserve CES display identity and expose assignments without inventing scalar role semantics.
 Level: base/container unit tests and actual shared-module browser integration.
-Intent: [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) and [role boundary](#tc-fe-ces-005).
+Intent: [BFF-ENTITY-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) and [role boundary](#tc-fe-ces-005).
 Setup: application 51358 has name RATAN_ENTITLEMENT_RULE, team RATAN, and roles Role A and Role B.
 Legacy numeric identifiers and roleName are null. CES subject actions remain structured.
 
@@ -1244,7 +1244,7 @@ CES saved-view ownership, new owner selection, role query semantics, and trusted
 Definition version: 2. Source: [latest compatibility clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
 Purpose: preserve tile identity through launches and restore current authorized definitions.
 Level: base unit tests and actual shared-module browser integration.
-Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001) and [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
+Intent: [FE-COMPAT-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001) and [FE-COMPAT-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
 Setup: tiles 1 and 2 share a container/module/route. Their entry names differ where stated.
 A workspace UUID identifies an instance. `applicationTileId` identifies its database tile.
 
@@ -1284,7 +1284,7 @@ The controlled browser runner does not mount the full portal shell. Full-shell s
 
 Purpose: exercise the actual React portal with the shared permission adapter.
 Definition version: 2. Level: browser E2E with controlled services. Owner: unknown.
-Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001), [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002), and [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
+Intent: [FE-COMPAT-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001), [FE-COMPAT-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002), and [FE-COMPAT-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
 Setup: run [the local portal script](frontend-tests/run-portal.mjs) with installed Chromium and existing base dependencies.
 The real base App, login, provider, profile, drawer, launch, and container-mount components execute.
 An isolated remote consumer calls the actual shared authenticator without changing permission arguments.
@@ -1341,7 +1341,7 @@ A passing scenario requires all checkpoints. Screenshots alone do not prove perm
 
 Purpose: keep CES role-owned writes pending without changing private or EMS2 writes.
 Definition version: 2. Level: store unit assertions and rendered shared-control assertions. Owner: unknown.
-Intent: [FE-ROLE-WRITE-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-role-write-ac-001).
+Intent: [FE-ROLE-WRITE-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-role-write-ac-001).
 Source: [explicit user answer](evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer).
 Setup: isolated shared view/filter stores with mocked HTTP clients and effective provider routes.
 A private creator-owned item has neither a moduleOwner nor role assignees.
@@ -1404,7 +1404,7 @@ The [service assertions](../../repos/services/single-ui-bff/src/test/java/com/sc
 ### TC-BFF-ENTITY-001
 
 Purpose: expose corresponding CES entitlement names and preserve their complete list.
-Intent: [BFF-ENTITY-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001).
+Intent: [BFF-ENTITY-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001).
 Level: mapper and JSON serialization unit case. Owner: unknown.
 
 ```gherkin
@@ -1427,7 +1427,7 @@ Fixture names come from the [supplied CES capture](api/EMS3-user%20entitlements%
 Definition version: 2. The original ITAM assertion remains unchanged.
 The added scenario follows the [identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input).
 Purpose: preserve the CES application identifier, authorization name, and legacy team label separately.
-Intent: [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002).
+Intent: [BFF-ENTITY-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002).
 Level: mapper and JSON serialization unit case. Owner: unknown.
 
 ```gherkin
@@ -1463,7 +1463,7 @@ This added scenario is `NOT_RUN`. The earlier 33 passing invocations predate it.
 ### TC-BFF-ENTITY-003
 
 Purpose: preserve an EMS2 entity's existing JSON fields without null CES additions.
-Intent: [BFF-ENTITY-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
+Intent: [BFF-ENTITY-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
 Level: DTO serialization unit case. Owner: unknown.
 
 ```gherkin
@@ -1483,7 +1483,7 @@ This case establishes fixture serialization only. Existing dual-provider tests c
 ### TC-BFF-ENTITY-004
 
 Purpose: keep optional metadata absence independent from effective action grants.
-Intent: [BFF-ENTITY-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
+Intent: [BFF-ENTITY-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
 Level: mapper unit case. Owner: unknown.
 
 ```gherkin
@@ -1503,7 +1503,7 @@ Assertions: unchanged granted action, an empty list, and no fabricated applicati
 ### TC-BFF-ENTITY-005
 
 Purpose: preserve application identity and role lists through service assembly.
-Intent: [BFF-ENTITY-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001) and [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002).
+Intent: [BFF-ENTITY-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001) and [BFF-ENTITY-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002).
 Level: actual authorization service with mocked upstreams. Owner: unknown.
 
 ```gherkin
@@ -1530,7 +1530,7 @@ Assertions: two entities, exact application IDs, isolated role lists, isolated a
 Purpose: compare an existing launcher against duplicate entries in the supplied authorized EMS2 catalog.
 Definition version: 1. Level: actual-source module comparison. Owner: unknown.
 Source: [assessment request](evidence/frontend-minimize-20261106/user-upper-app-impact-20261107.md#exact-user-input).
-Related intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
+Related intent: [FE-COMPAT-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
 This characterization records source behavior. It does not approve either ambiguity policy.
 Setup uses the [captured login](<ces migration/login-response.json>) for user 1481696.
 Baseline: `4c36f8e14e3d9f178b226000ebbcb41aa611616a`. Candidate: `5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7`.

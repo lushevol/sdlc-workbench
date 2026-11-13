@@ -45,7 +45,7 @@ Application fixes, publication, deployment, and acceptance remain separate activ
 | BFF candidate | `19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a` | [Security source register](evidence/comprehensive-renewal-20261028/security-review.json) |
 | SDK candidate | `b0aa82005e7f14202f85f5ef583f25e42da9eeb3` | [Security source register](evidence/comprehensive-renewal-20261028/security-review.json) |
 | Consumer source | Per-file hashes and revision claims | [Source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json); worktree observations are separate |
-| Requirement | Candidate version 5; SHA-256 in source manifest | [Seven criteria](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria); publication review pending |
+| Requirement | Candidate version 5; SHA-256 in source manifest | [Seven criteria](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria); publication review pending |
 
 The [current catalog](06-test-cases.md) remains the single case-definition source.
 
@@ -119,7 +119,7 @@ approval: null
 
 ## Facts, inferences, and unresolved questions
 
-The [requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) contains seven criteria and pending publication review.
+The [requirement](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) contains seven criteria and pending publication review.
 Existing reports contain local results and unresolved release evidence. New definitions do not establish passing execution.
 
 ## Findings

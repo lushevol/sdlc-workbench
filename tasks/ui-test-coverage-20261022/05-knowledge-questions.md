@@ -103,11 +103,11 @@ These answers are carried forward. Correct them only if your intended rule has c
 | Deny portal entry without entitlement for any registered application entity. | Portal team; local, test, UAT, production. | [Recorded answer](05-entry-clarification.md#ui-q-002) |
 | Hide the tile and deny direct launch when no EMS2 entity is configured. | Portal team; local, test, UAT, production. | [Recorded answer](05-entry-clarification.md#empty-entity-configuration) |
 | With one configured entity and an empty subject, allow visibility and launch through the entity check. | Portal team; local, test, UAT, production. | [Recorded answer](05-entry-clarification.md#empty-subject-configuration) |
-| Continuous eligible activity must support renewal within the absolute session limit. | The 12 November clarification sets a 60-minute ceiling. | [Recorded answer](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
-| Mouse, keyboard, and scroll activity count. An eligible user can extend during the idle prompt while the session remains eligible. | The idle timeout ceiling is 15 minutes. Token lifetimes and environment bindings remain open. | [Recorded answer](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
+| Continuous eligible activity must support renewal within the absolute session limit. | The 12 November clarification sets a 60-minute ceiling. | [Recorded answer](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
+| Mouse, keyboard, and scroll activity count. An eligible user can extend during the idle prompt while the session remains eligible. | The idle timeout ceiling is 15 minutes. Token lifetimes and environment bindings remain open. | [Recorded answer](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) |
 | The reported UAT page was Cashflow Blotter. | The earlier Dashboard description is superseded. | [Recorded answer](../portal-background-session-20261019/10-change-review.md#sources-and-evidence-limits) |
-| The four MFE layers and reported BFF, SDK, and Auth responsibilities are recorded. | Effective deployment and consumer adoption remain qualified. | [Recorded answer](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md#components) |
-| API Gateway implementation analysis remains excluded. | The unavailable boundary remains visible in architecture. | [Recorded answer](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md#decisions) |
+| The four MFE layers and reported BFF, SDK, and Auth responsibilities are recorded. | Effective deployment and consumer adoption remain qualified. | [Recorded answer](../../knowledge/records/candidates/architecture/ARC-portal-service-relationships.md#components) |
+| API Gateway implementation analysis remains excluded. | The unavailable boundary remains visible in architecture. | [Recorded answer](../../knowledge/records/candidates/architecture/ARC-portal-service-relationships.md#decisions) |
 
 ## Returned answers
 
@@ -147,9 +147,9 @@ Consequence: Policy review can be routed to RATAN. A named reviewer and complete
 
 Next action: Continue the candidate review using the recorded portal rules. ICS source and revision follow-up is deferred and requires no response for this review.
 
-Evidence: [REQ-active-session-renewal.md L1-L25](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L1-L25>); [REQ-active-session-renewal.md acceptance-criteria](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria>); [10-change-review.md unknowns-and-blockers](<../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers>).
-Evidence: [index.ejs L8-L16](<../../repos/ui/mfe-root-config/src/index.ejs#L8-L16>); [KT-portal-purpose.md scope](<../../knowledge/candidates/background/KT-portal-purpose.md#scope>); [user-message.txt L7-L22](<../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L22>).
-Evidence: [empty-subject-owner-scope-source.json](<evidence/clarification-20261022/empty-subject-owner-scope-source.json>); [KT-authentication-and-sessions.md L1-L120](<../../knowledge/candidates/security/KT-authentication-and-sessions.md#L1-L120>); [KT-sdk-and-entitlements.md L1-L143](<../../knowledge/candidates/security/KT-sdk-and-entitlements.md#L1-L143>).
+Evidence: [REQ-active-session-renewal.md L1-L25](<../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L1-L25>); [REQ-active-session-renewal.md acceptance-criteria](<../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria>); [10-change-review.md unknowns-and-blockers](<../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers>).
+Evidence: [index.ejs L8-L16](<../../repos/ui/mfe-root-config/src/index.ejs#L8-L16>); [KT-portal-purpose.md scope](<../../knowledge/records/candidates/background/KT-portal-purpose.md#scope>); [user-message.txt L7-L22](<../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L22>).
+Evidence: [empty-subject-owner-scope-source.json](<evidence/clarification-20261022/empty-subject-owner-scope-source.json>); [KT-authentication-and-sessions.md L1-L120](<../../knowledge/records/candidates/security/KT-authentication-and-sessions.md#L1-L120>); [KT-sdk-and-entitlements.md L1-L143](<../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#L1-L143>).
 
 ### KQ-SEC-04
 
@@ -211,7 +211,7 @@ Consequence: Production acceptance must check that sign-in cannot use OneMFA fal
 
 Next action: Retain an applicable deployment or execution observation when production conformance is assessed.
 
-Evidence: [featureFlagController.ts L14-L38](<../../repos/ui/mfe-base/src/utils/featureFlagController.ts#L14-L38>); [common.ts L131-L153](<../../repos/ui/mfe-base/src/utils/common.ts#L131-L153>); [UI SSO Entra Design L7-L30](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L7-L30>).
+Evidence: [featureFlagController.ts L14-L38](<../../repos/ui/mfe-base/src/utils/featureFlagController.ts#L14-L38>); [common.ts L131-L153](<../../repos/ui/mfe-base/src/utils/common.ts#L131-L153>); [UI SSO Entra Design L7-L30](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L7-L30>).
 
 ### KQ-SEC-14
 
@@ -335,7 +335,7 @@ Consequence: The answer defines admin reads and tile-owned references. Permissio
 
 Next action: Classify category and import-map ownership before applying the reference rule to those fields.
 
-Evidence: [AdminModuleUtil.java L41-L68](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java#L41-L68>); [ImportMapController.java L141-L164](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java#L141-L164>); [ApplicationTileController.java L46-L64](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java#L46-L64>); [User Manual L19-L35](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L19-L35>).
+Evidence: [AdminModuleUtil.java L41-L68](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java#L41-L68>); [ImportMapController.java L141-L164](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java#L141-L164>); [ApplicationTileController.java L46-L64](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java#L46-L64>); [User Manual L19-L35](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L19-L35>).
 
 ### KQ-OBS-002
 
@@ -366,7 +366,7 @@ Consequence: The five-second threshold needs a measurement scope and method befo
 
 Next action: Identify the covered APIs, timing boundaries, workload, and environment for acceptance.
 
-Evidence: [FMO Post Trade Portal Frontend Performance Testing May 2023 L5-L36](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L5-L36>); [FMO Post Trade Portal Frontend Performance Testing May 2023 L68-L89](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L68-L89>).
+Evidence: [FMO Post Trade Portal Frontend Performance Testing May 2023 L5-L36](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L5-L36>); [FMO Post Trade Portal Frontend Performance Testing May 2023 L68-L89](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L68-L89>).
 
 ### KQ-OBS-005
 
@@ -397,7 +397,7 @@ Consequence: The answer gives the purpose and PROD retention period. Field and r
 
 Next action: Bind the applicable data rules and retention clock before field-level or expiry verification.
 
-Evidence: [model.ts L12-L69](<../../repos/ui/mfe-base/src/analytics/model.ts#L12-L69>); [AnalyticServiceImplementation.java L24-L32](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/AnalyticServiceImplementation.java#L24-L32>); [Design L43-L47](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L43-L47>).
+Evidence: [model.ts L12-L69](<../../repos/ui/mfe-base/src/analytics/model.ts#L12-L69>); [AnalyticServiceImplementation.java L24-L32](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/AnalyticServiceImplementation.java#L24-L32>); [Design L43-L47](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L43-L47>).
 
 ## Investigated findings and retained limits
 
@@ -424,7 +424,7 @@ Consequence: Use the documented any-one rule for the qualified knowledge answer.
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [SSDR On Board Discussion L17-L20](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>); [Post Trade Portal Principles (Draft) L14-L24](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14-L24>); [AdminModuleUtil.java L101-L137](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java#L101-L137>).
+Evidence: [SSDR On Board Discussion L17-L20](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>); [Post Trade Portal Principles (Draft) L14-L24](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14-L24>); [AdminModuleUtil.java L101-L137](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java#L101-L137>).
 
 ### KQ-SEC-02
 
@@ -443,7 +443,7 @@ Consequence: Record the reviewer and reviewed scope once. Do not repeat rule own
 
 Next action: Use [KQ-SEC-03](#kq-sec-03) for the consolidated contact or evidence follow-up.
 
-Evidence: [empty-subject-owner-scope-source.json](<evidence/clarification-20261022/empty-subject-owner-scope-source.json>); [KT-authentication-and-sessions.md L1-L120](<../../knowledge/candidates/security/KT-authentication-and-sessions.md#L1-L120>); [KT-sdk-and-entitlements.md L1-L143](<../../knowledge/candidates/security/KT-sdk-and-entitlements.md#L1-L143>).
+Evidence: [empty-subject-owner-scope-source.json](<evidence/clarification-20261022/empty-subject-owner-scope-source.json>); [KT-authentication-and-sessions.md L1-L120](<../../knowledge/records/candidates/security/KT-authentication-and-sessions.md#L1-L120>); [KT-sdk-and-entitlements.md L1-L143](<../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#L1-L143>).
 
 ### KQ-SEC-05
 
@@ -481,7 +481,7 @@ Consequence: Carry current provider and rollout state into the specific deployme
 
 Next action: Use [KQ-SEC-05](#kq-sec-05) for the consolidated contact or evidence follow-up.
 
-Evidence: [UI SSO Entra Design L7-L31](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L7-L31>); [Post Trade Portal Entra Migration - Phase 1 - UI SSO L15-L57](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md#L15-L57>); [Entra SSO Prod Guide L38-L46](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L38-L46>).
+Evidence: [UI SSO Entra Design L7-L31](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L7-L31>); [Post Trade Portal Entra Migration - Phase 1 - UI SSO L15-L57](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md#L15-L57>); [Entra SSO Prod Guide L38-L46](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L38-L46>).
 
 ### KQ-SEC-08
 
@@ -500,7 +500,7 @@ Consequence: Record the evidenced profile shape and migration differences. Do no
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [Entra SSO Prod Guide L48-L83](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L48-L83>); [EntraAuthenticationServiceImpl.java L59-L96](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/EntraAuthenticationServiceImpl.java#L59-L96>); [index.tsx L200-L248](<../../repos/ui/mfe-base/src/components/Profile/index.tsx#L200-L248>).
+Evidence: [Entra SSO Prod Guide L48-L83](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L48-L83>); [EntraAuthenticationServiceImpl.java L59-L96](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/EntraAuthenticationServiceImpl.java#L59-L96>); [index.tsx L200-L248](<../../repos/ui/mfe-base/src/components/Profile/index.tsx#L200-L248>).
 
 ### KQ-SEC-09
 
@@ -519,7 +519,7 @@ Consequence: Retain the evidenced client flow as candidate knowledge with limits
 
 Next action: Collect the missing binding when its deployment, release, compatibility, or verification decision requires it.
 
-Evidence: [Reference of FMAA API L24-L30](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L24-L30>); [Post Trade Portal & RATAN Entra Migration - Phase 2 - service account L1-L10](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md#L1-L10>); [FmaaAuth.java L60-L82](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/FmaaAuth.java#L60-L82>).
+Evidence: [Reference of FMAA API L24-L30](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L24-L30>); [Post Trade Portal & RATAN Entra Migration - Phase 2 - service account L1-L10](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md#L1-L10>); [FmaaAuth.java L60-L82](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/FmaaAuth.java#L60-L82>).
 
 ### KQ-SEC-10
 
@@ -538,7 +538,7 @@ Consequence: Keep historical remediation statements bounded. Do not use them as 
 
 Next action: Collect the missing binding when its deployment, release, compatibility, or verification decision requires it.
 
-Evidence: [Penetration Testing report for SPT001414 – SSI+ BA L5-L29](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L5-L29>); [WAS Scan Report SIA-ETASK1854215- 11282023 L31-L53](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md#L31-L53>); [Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023 L6-L18](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023/page.md#L6-L18>).
+Evidence: [Penetration Testing report for SPT001414 – SSI+ BA L5-L29](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L5-L29>); [WAS Scan Report SIA-ETASK1854215- 11282023 L31-L53](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md#L31-L53>); [Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023 L6-L18](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023/page.md#L6-L18>).
 
 ### KQ-SEC-11
 
@@ -595,7 +595,7 @@ Consequence: Record the responsibility boundary. Defer individual business-opera
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Tile Security Control - EMS2 L7-L11](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7-L11>); [user-message.txt L16-L22](<../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt#L16-L22>); [AuthTokenFilter.java L83-L118](<../../repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java#L83-L118>).
+Evidence: [Tile Security Control - EMS2 L7-L11](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7-L11>); [user-message.txt L16-L22](<../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt#L16-L22>); [AuthTokenFilter.java L83-L118](<../../repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java#L83-L118>).
 
 ### KQ-SEC-16
 
@@ -614,7 +614,7 @@ Consequence: Record the evidenced separation. Do not ask the user to repeat loca
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [JwtAuthenticationController.java L97-L121](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L97-L121>); [JwtTokenUtil.java L48-L84](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java#L48-L84>); [Single UI SDK V1.1.4 L7-L14](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md#L7-L14>).
+Evidence: [JwtAuthenticationController.java L97-L121](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L97-L121>); [JwtTokenUtil.java L48-L84](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java#L48-L84>); [Single UI SDK V1.1.4 L7-L14](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md#L7-L14>).
 
 ### KQ-SEC-17
 
@@ -635,7 +635,7 @@ Consequence: Keep the existing required outcome. Remove the repeated correction-
 
 Next action: Retain the recorded answer. Do not infer a fallback or waiver.
 
-Evidence: [user-request.txt](<../portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt>); [REQ-active-session-renewal.md description](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#description>); [10-change-review.md sequential-minor-corrections-25-october-2026](<../portal-background-session-20261019/10-change-review.md#sequential-minor-corrections-25-october-2026>).
+Evidence: [user-request.txt](<../portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt>); [REQ-active-session-renewal.md description](<../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#description>); [10-change-review.md sequential-minor-corrections-25-october-2026](<../portal-background-session-20261019/10-change-review.md#sequential-minor-corrections-25-october-2026>).
 
 ### KQ-SEC-18
 
@@ -656,7 +656,7 @@ Consequence: Carry the current full requirement scope. Do not solicit optional d
 
 Next action: Retain the recorded answer. Do not infer a fallback or waiver.
 
-Evidence: [REQ-active-session-renewal.md acceptance-criteria](<../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria>); [user-request.txt](<../portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt>); [10-change-review.md sequential-minor-corrections-25-october-2026](<../portal-background-session-20261019/10-change-review.md#sequential-minor-corrections-25-october-2026>).
+Evidence: [REQ-active-session-renewal.md acceptance-criteria](<../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria>); [user-request.txt](<../portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt>); [10-change-review.md sequential-minor-corrections-25-october-2026](<../portal-background-session-20261019/10-change-review.md#sequential-minor-corrections-25-october-2026>).
 
 ### KQ-SEC-20
 
@@ -696,7 +696,7 @@ Consequence: The existing name and documented scope need no repeated explanation
 
 Next action: Use [KQ-SEC-03](#kq-sec-03) for the consolidated contact or evidence follow-up.
 
-Evidence: [index.ejs L8-L16](<../../repos/ui/mfe-root-config/src/index.ejs#L8-L16>); [KT-portal-purpose.md scope](<../../knowledge/candidates/background/KT-portal-purpose.md#scope>); [user-message.txt L7-L22](<../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L22>).
+Evidence: [index.ejs L8-L16](<../../repos/ui/mfe-root-config/src/index.ejs#L8-L16>); [KT-portal-purpose.md scope](<../../knowledge/records/candidates/background/KT-portal-purpose.md#scope>); [user-message.txt L7-L22](<../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L22>).
 
 ### KQ-ARCH-02
 
@@ -715,7 +715,7 @@ Consequence: Keep source statuses and completed user decisions. Review remaining
 
 Next action: Use [KQ-SEC-03](#kq-sec-03) for the consolidated contact or evidence follow-up.
 
-Evidence: [Post Trade Portal Principles (Draft) L1-L16](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L1-L16>); [ui-q-002-source.json](<evidence/clarification-20261022/ui-q-002-source.json>); [empty-entity-source.json](<evidence/clarification-20261022/empty-entity-source.json>).
+Evidence: [Post Trade Portal Principles (Draft) L1-L16](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L1-L16>); [ui-q-002-source.json](<evidence/clarification-20261022/ui-q-002-source.json>); [empty-entity-source.json](<evidence/clarification-20261022/empty-entity-source.json>).
 
 ### KQ-ARCH-03
 
@@ -734,7 +734,7 @@ Consequence: Retain these items as proposals. No current question requires the u
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Portal New Deployment L3-L18](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3-L18>); [Portal New Deployment L49-L70](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L49-L70>); [user-request.json](<evidence/question-refinement-20261026/user-request.json>).
+Evidence: [Portal New Deployment L3-L18](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3-L18>); [Portal New Deployment L49-L70](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L49-L70>); [user-request.json](<evidence/question-refinement-20261026/user-request.json>).
 
 ### KQ-ARCH-04
 
@@ -772,7 +772,7 @@ Consequence: Document the inspected baseline and approval limit. Request a compa
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [Development Guideline L1-L15](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L1-L15>); [package.json](<../../repos/ui/mfe-base/package.json>); [package.json](<../../repos/ui/mfe-ratan-container/package.json>).
+Evidence: [Development Guideline L1-L15](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L1-L15>); [package.json](<../../repos/ui/mfe-base/package.json>); [package.json](<../../repos/ui/mfe-ratan-container/package.json>).
 
 ### KQ-ARCH-06
 
@@ -791,7 +791,7 @@ Consequence: Carry forward documented MT and MAT roles. Consolidate any current 
 
 Next action: Use [KQ-SEC-03](#kq-sec-03) for the consolidated contact or evidence follow-up.
 
-Evidence: [Development Principle L4-L10](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md#L4-L10>).
+Evidence: [Development Principle L4-L10](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md#L4-L10>).
 
 ### KQ-ARCH-07
 
@@ -810,7 +810,7 @@ Consequence: Retain the stated rule. Obtain a specific exception decision only w
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [Supplementary Principle_ External Frontend Dependency Control L3-L10](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md#L3-L10>); [Supplementary Principle_ External Frontend Dependency Control L23-L54](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md#L23-L54>).
+Evidence: [Supplementary Principle_ External Frontend Dependency Control L3-L10](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md#L3-L10>); [Supplementary Principle_ External Frontend Dependency Control L23-L54](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md#L23-L54>).
 
 ### KQ-ARCH-08
 
@@ -829,7 +829,7 @@ Consequence: Retain the documented pattern and missing-archive limit. Remove the
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [ReactJS Standalone Project L1-L17](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md#L1-L17>); [repositories.yaml](<../../registry/repositories.yaml>); [user-request.json](<evidence/question-refinement-20261026/user-request.json>).
+Evidence: [ReactJS Standalone Project L1-L17](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md#L1-L17>); [repositories.yaml](<../../registry/repositories.yaml>); [user-request.json](<evidence/question-refinement-20261026/user-request.json>).
 
 ### KQ-ARCH-09
 
@@ -867,7 +867,7 @@ Consequence: Keep the report as research. Reopen provenance and pilot questions 
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [React Build Tooling Research Report L13-L17](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/React Build Tooling Research Report/page.md#L13-L17>); [React Build Tooling Research Report L261-L271](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/React Build Tooling Research Report/page.md#L261-L271>); [package.json](<../../repos/ui/mfe-base/package.json>).
+Evidence: [React Build Tooling Research Report L13-L17](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/React Build Tooling Research Report/page.md#L13-L17>); [React Build Tooling Research Report L261-L271](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/React Build Tooling Research Report/page.md#L261-L271>); [package.json](<../../repos/ui/mfe-base/package.json>).
 
 ### KQ-ARCH-11
 
@@ -886,7 +886,7 @@ Consequence: Retain the experiments as proposals. Remove the request to select a
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Notification (DRAFT) L58-L102](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/page.md#L58-L102>); [index.ts L249-L255](<../../repos/ui/mfe-base/src/hooks/dispathcer/index.ts#L249-L255>); [repositories.yaml](<../../registry/repositories.yaml>).
+Evidence: [Notification (DRAFT) L58-L102](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/page.md#L58-L102>); [index.ts L249-L255](<../../repos/ui/mfe-base/src/hooks/dispathcer/index.ts#L249-L255>); [repositories.yaml](<../../registry/repositories.yaml>).
 
 ### KQ-ARCH-12
 
@@ -905,7 +905,7 @@ Consequence: Keep the alternatives in historical knowledge. Reopen retention onl
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Table Schema L18-L36](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Table Schema/page.md#L18-L36>); [user-request.json](<evidence/question-refinement-20261026/user-request.json>).
+Evidence: [Table Schema L18-L36](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Table Schema/page.md#L18-L36>); [user-request.json](<evidence/question-refinement-20261026/user-request.json>).
 
 ### KQ-ARCH-13
 
@@ -924,7 +924,7 @@ Consequence: Preserve the contradiction. Remove the premature request to choose 
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Notification Store and React.useEffect L1-L13](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L1-L13>); [Notification Store and React.useEffect L63-L75](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L63-L75>); [Table Schema L28-L36](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Table Schema/page.md#L28-L36>).
+Evidence: [Notification Store and React.useEffect L1-L13](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L1-L13>); [Notification Store and React.useEffect L63-L75](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L63-L75>); [Table Schema L28-L36](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Table Schema/page.md#L28-L36>).
 
 ### KQ-ARCH-14
 
@@ -943,7 +943,7 @@ Consequence: Retain these items as unchecked proposals. Reopen acceptance and co
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Markets Operation One TODO List L1-L4](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operation One TODO List/page.md#L1-L4>); [pom.xml](<../../repos/services/single-ui-bff/pom.xml>); [pom.xml](<../../repos/services/ratan-auth-server/pom.xml>).
+Evidence: [Markets Operation One TODO List L1-L4](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operation One TODO List/page.md#L1-L4>); [pom.xml](<../../repos/services/single-ui-bff/pom.xml>); [pom.xml](<../../repos/services/ratan-auth-server/pom.xml>).
 
 ### KQ-ARCH-15
 
@@ -962,7 +962,7 @@ Consequence: Retain the reported topology and exact template exceptions. Request
 
 Next action: Collect the missing binding when its deployment, release, compatibility, or verification decision requires it.
 
-Evidence: [ratan_servers.conf.j2 L150-L256](<../../repos/infra/nginx/ratan_servers.conf.j2#L150-L256>); [ratan_upstreams.conf.j2 L1-L26](<../../repos/infra/nginx/ratan_upstreams.conf.j2#L1-L26>); [user-message.txt L16-L22](<../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt#L16-L22>).
+Evidence: [ratan_servers.conf.j2 L150-L256](<../../repos/infra/nginx/ratan_servers.conf.j2#L150-L256>); [ratan_upstreams.conf.j2 L1-L26](<../../repos/infra/nginx/ratan_upstreams.conf.j2#L1-L26>); [user-message.txt L16-L22](<../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt#L16-L22>).
 
 ### KQ-ARCH-16
 
@@ -1021,7 +1021,7 @@ Consequence: The generic procedure question need not return to the user. Any dep
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [Frontend Onboarding Process L1-L15](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md#L1-L15>); [Backend Onboarding Process L1-L7](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Backend Onboarding Process/page.md#L1-L7>); [Admin Module Release Flow L3-L24](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L24>).
+Evidence: [Frontend Onboarding Process L1-L15](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md#L1-L15>); [Backend Onboarding Process L1-L7](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Backend Onboarding Process/page.md#L1-L7>); [Admin Module Release Flow L3-L24](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L24>).
 
 ### KQ-OPS-003
 
@@ -1040,7 +1040,7 @@ Consequence: Describe the documented controls without treating a historical prop
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [Admin Module L9-L18](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L9-L18>); [Admin Module Release Flow L3-L17](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L17>); [User Manual L31-L35](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L31-L35>).
+Evidence: [Admin Module L9-L18](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L9-L18>); [Admin Module Release Flow L3-L17](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L17>); [User Manual L31-L35](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L31-L35>).
 
 ### KQ-OPS-004
 
@@ -1078,7 +1078,7 @@ Consequence: Do not reopen a portal-entry exception through a historical tenant 
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [ui-q-002-source.json](<evidence/clarification-20261022/ui-q-002-source.json>); [empty-subject-source.json](<evidence/clarification-20261022/empty-subject-source.json>); [SSDR On Board Discussion L27-L37](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L27-L37>).
+Evidence: [ui-q-002-source.json](<evidence/clarification-20261022/ui-q-002-source.json>); [empty-subject-source.json](<evidence/clarification-20261022/empty-subject-source.json>); [SSDR On Board Discussion L27-L37](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L27-L37>).
 
 ## Release operations
 
@@ -1099,7 +1099,7 @@ Consequence: Record the proposal conflict. Ask for a governing duration only whe
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Markets Operations One Release L13-L19](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L13-L19>); [Markets Operations One Release L44-L54](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L44-L54>).
+Evidence: [Markets Operations One Release L13-L19](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L13-L19>); [Markets Operations One Release L44-L54](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L44-L54>).
 
 ### KQ-REL-002
 
@@ -1118,7 +1118,7 @@ Consequence: Preserve the contradiction without asking an irrelevant scheduling 
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Markets Operations One Release L144-L151](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L144-L151>).
+Evidence: [Markets Operations One Release L144-L151](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L144-L151>).
 
 ### KQ-REL-003
 
@@ -1137,7 +1137,7 @@ Consequence: Use the known pipeline entrypoints and documented promotion contrac
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [azure-pipelines-maven.yml L1-L46](<../../repos/services/single-ui-bff/azure-pipelines-maven.yml#L1-L46>); [azure-pipelines-npm.yml L5-L47](<../../repos/ui/mfe-base/azure-pipelines-npm.yml#L5-L47>); [Admin Module Release Flow L3-L24](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L24>).
+Evidence: [azure-pipelines-maven.yml L1-L46](<../../repos/services/single-ui-bff/azure-pipelines-maven.yml#L1-L46>); [azure-pipelines-npm.yml L5-L47](<../../repos/ui/mfe-base/azure-pipelines-npm.yml#L5-L47>); [Admin Module Release Flow L3-L24](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L24>).
 
 ### KQ-REL-004
 
@@ -1156,7 +1156,7 @@ Consequence: Record FMAA as the implemented dependency. Reopen migration plannin
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [ApplicationConfigController.java L53-L72](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java#L53-L72>); [ApplicationConfigServiceImpl.java L20-L31](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/ApplicationConfigServiceImpl.java#L20-L31>); [Admin Module Release Checklist Template L16](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L16>).
+Evidence: [ApplicationConfigController.java L53-L72](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java#L53-L72>); [ApplicationConfigServiceImpl.java L20-L31](<../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/ApplicationConfigServiceImpl.java#L20-L31>); [Admin Module Release Checklist Template L16](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L16>).
 
 ### KQ-REL-005
 
@@ -1175,7 +1175,7 @@ Consequence: Keep technical and business activation distinct. Do not request all
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Markets Operations One Release Calendar L7-L16](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/page.md#L7-L16>); [[Template] Markets Operations One Change Request L21-L23](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/[Template] Markets Operations One Change Request/page.md#L21-L23>); [FSSDS Data Distribution and Reporting (DDR) L9-L17](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L9-L17>).
+Evidence: [Markets Operations One Release Calendar L7-L16](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/page.md#L7-L16>); [[Template] Markets Operations One Change Request L21-L23](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/[Template] Markets Operations One Change Request/page.md#L21-L23>); [FSSDS Data Distribution and Reporting (DDR) L9-L17](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L9-L17>).
 
 ### KQ-REL-006
 
@@ -1194,7 +1194,7 @@ Consequence: Preserve requested capability descriptions as historical intent. Av
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Markets Operation One Change Request - CDUPS L14-L21](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/Markets Operation One Change Request - CDUPS/page.md#L14-L21>); [VPA Fix-link and Monitor Change Request L12-L22](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/VPA Fix-link and Monitor Change Request/page.md#L12-L22>); [Admin Module Release Checklist Template L19-L29](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L19-L29>).
+Evidence: [Markets Operation One Change Request - CDUPS L14-L21](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/Markets Operation One Change Request - CDUPS/page.md#L14-L21>); [VPA Fix-link and Monitor Change Request L12-L22](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/VPA Fix-link and Monitor Change Request/page.md#L12-L22>); [Admin Module Release Checklist Template L19-L29](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L19-L29>).
 
 ## Application interoperability
 
@@ -1215,7 +1215,7 @@ Consequence: Use the documented joint-delivery model without asking the user to 
 
 Next action: Use this bounded answer. Apply separate review gates before any governed publication.
 
-Evidence: [Interoperability Guide L27-L60](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L27-L60>); [useOpenfin.ts L47-L108](<../../repos/ui/mfe-base/src/pages/Home/common/useOpenfin.ts#L47-L108>); [index.ts L152-L178](<../../repos/ui/mfe-base/src/hooks/dispathcer/index.ts#L152-L178>).
+Evidence: [Interoperability Guide L27-L60](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L27-L60>); [useOpenfin.ts L47-L108](<../../repos/ui/mfe-base/src/pages/Home/common/useOpenfin.ts#L47-L108>); [index.ts L152-L178](<../../repos/ui/mfe-base/src/hooks/dispathcer/index.ts#L152-L178>).
 
 ### KQ-INT-002
 
@@ -1272,7 +1272,7 @@ Consequence: Describe the implemented development-only bootstrap. Do not ask the
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [useController.ts L38-L72](<../../repos/ui/mfe-base/src/routing/common/useController.ts#L38-L72>); [3. Application Interoperability L1-L23](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/3. Application Interoperability/page.md#L1-L23>).
+Evidence: [useController.ts L38-L72](<../../repos/ui/mfe-base/src/routing/common/useController.ts#L38-L72>); [3. Application Interoperability L1-L23](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/3. Application Interoperability/page.md#L1-L23>).
 
 ### KQ-INT-005
 
@@ -1291,7 +1291,7 @@ Consequence: Retain the exact declared versions with their distinct scopes. Requ
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [manifest.fin.json L1-L17](<../../repos/ui/mfe-root-config/public/manifest.fin.json#L1-L17>); [package.json L109-L120](<../../repos/ui/mfe-base/package.json#L109-L120>); [Ratan OpenFin Briefing L56-L61](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L56-L61>).
+Evidence: [manifest.fin.json L1-L17](<../../repos/ui/mfe-root-config/public/manifest.fin.json#L1-L17>); [package.json L109-L120](<../../repos/ui/mfe-base/package.json#L109-L120>); [Ratan OpenFin Briefing L56-L61](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L56-L61>).
 
 ### KQ-INT-006
 
@@ -1350,7 +1350,7 @@ Consequence: Keep the historical report qualified. Collect a current run after a
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Throughput Testing in UAT L11-L44](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Throughput Testing in UAT/page.md#L11-L44>); [FMO Post Trade Portal Frontend Performance Testing May 2023 L230-L256](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L230-L256>).
+Evidence: [Throughput Testing in UAT L11-L44](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Throughput Testing in UAT/page.md#L11-L44>); [FMO Post Trade Portal Frontend Performance Testing May 2023 L230-L256](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L230-L256>).
 
 ### KQ-OBS-004
 
@@ -1388,35 +1388,35 @@ Consequence: Preserve the production observation limit. Obtain active URLs and o
 
 Next action: Retain the stated limit. Reopen only when a concrete decision requires this scope.
 
-Evidence: [Analytic Dashboard in Kibana L1-L17](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L1-L17>); [KT-observability-and-performance.md usage-dashboards](<../../knowledge/candidates/observability/KT-observability-and-performance.md#usage-dashboards>).
+Evidence: [Analytic Dashboard in Kibana L1-L17](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L1-L17>); [KT-observability-and-performance.md usage-dashboards](<../../knowledge/records/candidates/observability/KT-observability-and-performance.md#usage-dashboards>).
 
 ## Knowledge update log
 
-Source: [Exact user answers](evidence/portal-ingestion-answers-20261112.md#exact-user-input), recorded 12 November 2026 as `SRC-portal-clarification-20261112` in the [manifest](../../evidence/knowledge/manifest.yaml).
+Source: [Exact user answers](evidence/portal-ingestion-answers-20261112.md#exact-user-input), recorded 12 November 2026 as `SRC-portal-clarification-20261112` in the [manifest](../../knowledge/evidence/manifest.yaml).
 RATAN is the user-identified policy owner and reviewer. The user reported the ICS policy limits. The underlying policy source remains unverified; the latest user direction defers its source-related questions without blocking review of these candidate versions.
 
 | Answer | Record and version | Acceptance criteria and scope | Audit event |
 | --- | --- | --- | --- |
-| 1, 2 | [Session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) v7 → v8 | AC-1 through AC-7 apply within the absolute deadline. AC-8 sets the idle ceiling. AC-9 sets the absolute ceiling. Earlier [execution comparisons](../portal-background-session-20261019/09-intent-reality-gaps.md) address the preceding target. | [Session requirement v8](../../evidence/knowledge/audit/AUD-20261112-REQ-active-session-renewal-v8.yaml) |
-| Source-support correction, 13 November | [Session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) v8 → v9 | Remove unsupported fixed timing from AC-1 through AC-3. Eligible activity when renewal is due must produce success before access expiry and the absolute deadline. AC-4 through AC-9 and historical execution results are unchanged. | [Session requirement v9](../../evidence/knowledge/audit/AUD-20261113-REQ-active-session-renewal-v9.yaml) |
-| 1, 2, 3, 5 | [Authentication and sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md) v9 → v10 | RATAN ownership, ICS ceilings, PORTAL-SSO-AC-001, and ideal PORTAL-LOGOUT-AC-001. The [refresh revocation finding](../../evidence/knowledge/findings/GF-refresh-revocation-scope.md) still requires execution evidence. | [Authentication v10](../../evidence/knowledge/audit/AUD-20261112-KT-authentication-and-sessions-v10.yaml) |
-| 4, 6 | [SDK and entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) v8 → v9 | UI-ENTITLEMENT-REVOCATION-AC-001, API-ENTITLEMENT-REVOCATION-AC-001, UI-TILE-VALIDATION-AC-001. Existing tab freshness before next login and cache bindings by API remain open. | [Entitlements v9](../../evidence/knowledge/audit/AUD-20261112-KT-sdk-and-entitlements-v9.yaml) |
-| 7 | [Admin and onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md) v3 → v4 | ADMIN-CROSS-TENANT-READ-AC-001, ADMIN-TILE-METADATA-AC-001. Writes, verification, and shared tenant records require their own rules. | [Admin v4](../../evidence/knowledge/audit/AUD-20261112-KT-admin-and-onboarding-v4.yaml) |
-| 8, 9 | [Observability and performance](../../knowledge/candidates/observability/KT-observability-and-performance.md) v2 → v3 | PORTAL-API-PERF-AC-001 and PORTAL-ANALYTICS-AC-001. API measurement and analytics field, reader, and expiry details remain open. | [Observability v3](../../evidence/knowledge/audit/AUD-20261112-KT-observability-and-performance-v3.yaml) |
-| 1 | [Portal purpose](../../knowledge/candidates/background/KT-portal-purpose.md) v2 | Not applicable. RATAN policy ownership supplies no ownership decision for the complete portal capability inventory. | Not applicable |
+| 1, 2 | [Session renewal](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md) v7 → v8 | AC-1 through AC-7 apply within the absolute deadline. AC-8 sets the idle ceiling. AC-9 sets the absolute ceiling. Earlier [execution comparisons](../portal-background-session-20261019/09-intent-reality-gaps.md) address the preceding target. | [Session requirement v8](../../knowledge/evidence/audit/AUD-20261112-REQ-active-session-renewal-v8.yaml) |
+| Source-support correction, 13 November | [Session renewal](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md) v8 → v9 | Remove unsupported fixed timing from AC-1 through AC-3. Eligible activity when renewal is due must produce success before access expiry and the absolute deadline. AC-4 through AC-9 and historical execution results are unchanged. | [Session requirement v9](../../knowledge/evidence/audit/AUD-20261113-REQ-active-session-renewal-v9.yaml) |
+| 1, 2, 3, 5 | [Authentication and sessions](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md) v9 → v10 | RATAN ownership, ICS ceilings, PORTAL-SSO-AC-001, and ideal PORTAL-LOGOUT-AC-001. The [refresh revocation finding](../../knowledge/evidence/findings/GF-refresh-revocation-scope.md) still requires execution evidence. | [Authentication v10](../../knowledge/evidence/audit/AUD-20261112-KT-authentication-and-sessions-v10.yaml) |
+| 4, 6 | [SDK and entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md) v8 → v9 | UI-ENTITLEMENT-REVOCATION-AC-001, API-ENTITLEMENT-REVOCATION-AC-001, UI-TILE-VALIDATION-AC-001. Existing tab freshness before next login and cache bindings by API remain open. | [Entitlements v9](../../knowledge/evidence/audit/AUD-20261112-KT-sdk-and-entitlements-v9.yaml) |
+| 7 | [Admin and onboarding](../../knowledge/records/candidates/operations/KT-admin-and-onboarding.md) v3 → v4 | ADMIN-CROSS-TENANT-READ-AC-001, ADMIN-TILE-METADATA-AC-001. Writes, verification, and shared tenant records require their own rules. | [Admin v4](../../knowledge/evidence/audit/AUD-20261112-KT-admin-and-onboarding-v4.yaml) |
+| 8, 9 | [Observability and performance](../../knowledge/records/candidates/observability/KT-observability-and-performance.md) v2 → v3 | PORTAL-API-PERF-AC-001 and PORTAL-ANALYTICS-AC-001. API measurement and analytics field, reader, and expiry details remain open. | [Observability v3](../../knowledge/evidence/audit/AUD-20261112-KT-observability-and-performance-v3.yaml) |
+| 1 | [Portal purpose](../../knowledge/records/candidates/background/KT-portal-purpose.md) v2 | Not applicable. RATAN policy ownership supplies no ownership decision for the complete portal capability inventory. | Not applicable |
 
 The [review-scope clarification](evidence/portal-ingestion-question-20261112.md#defer-ics-source-questions-without-blocking-review) changes procedure only. Knowledge record versions, acceptance criteria, provenance, immutable audit events, processing receipts and wiki completion remain unchanged. A new canonical knowledge transition is not applicable because the user supplied no changed target behavior.
 
 ## Portal export reconciliation
 
-The 12 November pass reviewed 61 selected sources and recorded 19 queued omissions from the existing source selections. The [processing receipts](../../evidence/knowledge/processing/portal-document-export.json) bind all 80 reviewed outcomes to the selected sources, output hashes, and the passed sealed check.
+The 12 November pass reviewed 61 selected sources and recorded 19 queued omissions from the existing source selections. The [processing receipts](../../knowledge/evidence/processing/portal-document-export.json) bind all 80 reviewed outcomes to the selected sources, output hashes, and the passed sealed check.
 The next local plan reports zero pending processing items. The [meeting-minutes page](../../docs/evidence/initial-ingestion-source-filter-20261111/filter-review.md#documents-on-hold) remains the sole source-review hold while its attachments are unavailable.
 
 | Candidate | Reconciliation |
 | --- | --- |
-| [Frontend composition v4](../../knowledge/candidates/architecture/KT-frontend-composition.md) | Retains versioned component error boundaries and preferred lazy tile loading, plus historical direct access to non-sensitive static files before sign-in. [Audit event](../../evidence/knowledge/audit/AUD-20261112-KT-frontend-composition-v4.yaml) |
-| [Release operations v3](../../knowledge/candidates/operations/KT-release-operations.md) | Retains unfinished checklist guidance on RATAN review and tenant upstream disaster recovery, plus the sign-in page reachability check. [Audit event](../../evidence/knowledge/audit/AUD-20261112-KT-release-operations-v3.yaml) |
-| [SDK and entitlements v10](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) | Retains historical configured entity and subject matching and links the recorded empty-entity rule. [Audit event](../../evidence/knowledge/audit/AUD-20261112-KT-sdk-and-entitlements-v10.yaml) |
+| [Frontend composition v4](../../knowledge/records/candidates/architecture/KT-frontend-composition.md) | Retains versioned component error boundaries and preferred lazy tile loading, plus historical direct access to non-sensitive static files before sign-in. [Audit event](../../knowledge/evidence/audit/AUD-20261112-KT-frontend-composition-v4.yaml) |
+| [Release operations v3](../../knowledge/records/candidates/operations/KT-release-operations.md) | Retains unfinished checklist guidance on RATAN review and tenant upstream disaster recovery, plus the sign-in page reachability check. [Audit event](../../knowledge/evidence/audit/AUD-20261112-KT-release-operations-v3.yaml) |
+| [SDK and entitlements v10](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md) | Retains historical configured entity and subject matching and links the recorded empty-entity rule. [Audit event](../../knowledge/evidence/audit/AUD-20261112-KT-sdk-and-entitlements-v10.yaml) |
 
 The sealed source check passed with three new candidate events and zero findings. The [derived wiki](../../knowledge/llm-wiki/wiki/index.md) was refreshed locally with the current-agent fallback. The seven reviewed bindings are current, with 37 edited pages across the 96-page dependency scope. Full wiki verification passed with 13 linked canonical sources and zero structural findings. The [wiki graph](../../knowledge/llm-wiki/output/visualize/graph.html) was rebuilt.
 
@@ -1529,18 +1529,18 @@ These are the exact candidate bytes reviewed by the agents. All remain `candidat
 
 | Candidate | Version | SHA-256 |
 | --- | --- | --- |
-| [ARC-portal-service-relationships](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md) | 1 | `08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5` |
-| [KT-frontend-composition](../../knowledge/candidates/architecture/KT-frontend-composition.md) | 4 | `700d44d622d5c2cdb8655f1bd096574fee6dd95f5b6909d383efee22ab304668` |
-| [KT-portal-purpose](../../knowledge/candidates/background/KT-portal-purpose.md) | 2 | `29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620` |
-| [KT-architecture-evolution](../../knowledge/candidates/evolution/KT-architecture-evolution.md) | 2 | `e89f82a3803eb61b562c419e82df1ed29f44c1510d6499aa731821ae08114552` |
-| [KT-admin-and-onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md) | 4 | `ccdbb0e15f134a8d97981d1fc8b88955b9bd826a7dcef4c3e423ae17b48fa8f9` |
-| [KT-release-operations](../../knowledge/candidates/operations/KT-release-operations.md) | 3 | `6abb62a2b36ae98527801d1d81b22b89a353b883de7a52706311573defd33600` |
-| [KT-application-interoperability](../../knowledge/candidates/interoperability/KT-application-interoperability.md) | 2 | `6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72` |
-| [KT-observability-and-performance](../../knowledge/candidates/observability/KT-observability-and-performance.md) | 3 | `edd20330c29cfddf534f0836ad529c115cb61e39d9f1d53435f106eb2fc3510d` |
-| [REQ-active-session-renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | 9 | `13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1` |
-| [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md) | 10 | `4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06` |
-| [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) | 10 | `dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe` |
-| [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md) | 6 | `9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0` |
+| [ARC-portal-service-relationships](../../knowledge/records/candidates/architecture/ARC-portal-service-relationships.md) | 1 | `08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5` |
+| [KT-frontend-composition](../../knowledge/records/candidates/architecture/KT-frontend-composition.md) | 4 | `700d44d622d5c2cdb8655f1bd096574fee6dd95f5b6909d383efee22ab304668` |
+| [KT-portal-purpose](../../knowledge/records/candidates/background/KT-portal-purpose.md) | 2 | `29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620` |
+| [KT-architecture-evolution](../../knowledge/records/candidates/evolution/KT-architecture-evolution.md) | 2 | `e89f82a3803eb61b562c419e82df1ed29f44c1510d6499aa731821ae08114552` |
+| [KT-admin-and-onboarding](../../knowledge/records/candidates/operations/KT-admin-and-onboarding.md) | 4 | `ccdbb0e15f134a8d97981d1fc8b88955b9bd826a7dcef4c3e423ae17b48fa8f9` |
+| [KT-release-operations](../../knowledge/records/candidates/operations/KT-release-operations.md) | 3 | `6abb62a2b36ae98527801d1d81b22b89a353b883de7a52706311573defd33600` |
+| [KT-application-interoperability](../../knowledge/records/candidates/interoperability/KT-application-interoperability.md) | 2 | `6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72` |
+| [KT-observability-and-performance](../../knowledge/records/candidates/observability/KT-observability-and-performance.md) | 3 | `edd20330c29cfddf534f0836ad529c115cb61e39d9f1d53435f106eb2fc3510d` |
+| [REQ-active-session-renewal](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md) | 9 | `13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1` |
+| [KT-authentication-and-sessions](../../knowledge/records/candidates/security/KT-authentication-and-sessions.md) | 10 | `4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06` |
+| [KT-sdk-and-entitlements](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md) | 10 | `dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe` |
+| [KT-ces-migration-parity](../../knowledge/records/candidates/security/KT-ces-migration-parity.md) | 6 | `9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0` |
 
 </details>
 

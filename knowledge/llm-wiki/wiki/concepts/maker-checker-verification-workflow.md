@@ -47,7 +47,7 @@ See [[concepts/ems2-entitlement-provisioning]] and [[entities/ems2]].
 
 The admin overview proposes tenant-maintained configuration with tenant-specific roles. The manual lists shared admin subjects and a different-user check.
 The user-stated rule allows a portal administrator to read audit history and configuration across tenants. It separately prohibits any tile reference to metadata from another tile.
-Which cross-tenant writes and verification actions makers and checkers may perform remains open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
+Which cross-tenant writes and verification actions makers and checkers may perform remains open. [ADMIN-CROSS-TENANT-READ-AC-001](../../../records/candidates/operations/KT-admin-and-onboarding.md#admin-cross-tenant-read-ac-001) · [ADMIN-TILE-METADATA-AC-001](../../../records/candidates/operations/KT-admin-and-onboarding.md#admin-tile-metadata-ac-001)
 
 ## Relation to tile authorization
 

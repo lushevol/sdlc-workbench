@@ -20,8 +20,8 @@ Before changing a derived page, classify each material changed or removed claim 
 With both configured URL and token, use the bridge's native semantic compiler:
 
 ```sh
-python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates
-python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates --record knowledge/candidates/security/access.md --recipe default
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/records/candidates
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/records/candidates --record knowledge/records/candidates/security/access.md --recipe default
 ```
 
 Select the actual authorized canonical directory for `--source`; the example is not a required scope.

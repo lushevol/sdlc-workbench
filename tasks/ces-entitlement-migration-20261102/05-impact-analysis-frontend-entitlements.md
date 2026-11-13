@@ -79,7 +79,7 @@ CES role names and legacy numeric identifiers are null.
 The entitlement token contains the key `RATAN_ENTITLEMENT_RULE:null`. This suffix is not an assigned role.
 
 The [existing name clarification](evidence/user-input-20261030-field-equivalence.txt) establishes the migration name correspondence.
-The [permission intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts) requires application scope.
+The [permission intent](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts) requires application scope.
 Matching feature names across different applications cannot establish equivalent permissions.
 
 ## Stage boundary and readiness
@@ -409,7 +409,7 @@ Deny tiles absent from the current authorized catalog. Reconcile template and bl
 
 The candidate BFF bypasses CES lookup when the configured feature is blank.
 That behavior can return a tile with empty entities. It is not approved by this source analysis.
-The prior [empty-subject intent](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule) still requires an entitled configured entity.
+The prior [empty-subject intent](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule) still requires an entitled configured entity.
 CSV tile `192` is inactive and absent from this login. It does not establish a current login failure.
 Do not expand blank-feature access until this policy difference is reconciled.
 
@@ -500,7 +500,7 @@ Static consumer inspection does not establish the deployed shared-module version
 
 ## Proposed acceptance and validation
 
-The latest user decisions establish three scoped intent criteria in the [knowledge candidate](../../knowledge/candidates/security/KT-ces-migration-parity.md#frontend-compatibility-and-per-tile-migration).
+The latest user decisions establish three scoped intent criteria in the [knowledge candidate](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#frontend-compatibility-and-per-tile-migration).
 Complete product AC inventory and business acceptance remain unresolved.
 Case definitions do not establish implementation conformance or passing business execution.
 
@@ -508,9 +508,9 @@ Case definitions do not establish implementation conformance or passing business
 
 | Available intent or proposed boundary | Canonical cases | Assertion and execution state |
 | --- | --- | --- |
-| [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001): preserve upper APIs. | [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007) | Compatibility integration `NOT_RUN`. |
-| [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002): per-tile provider routing. | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006) | Provider isolation `NOT_RUN`. |
-| [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003): independent cutover and role boundary. | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-005](06-test-cases.md#tc-fe-ces-005) | Mixed-instance cutover `NOT_RUN`; scalar multiple-role semantics remain open. |
+| [FE-COMPAT-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001): preserve upper APIs. | [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007) | Compatibility integration `NOT_RUN`. |
+| [FE-COMPAT-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002): per-tile provider routing. | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006) | Provider isolation `NOT_RUN`. |
+| [FE-COMPAT-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003): independent cutover and role boundary. | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-005](06-test-cases.md#tc-fe-ces-005) | Mixed-instance cutover `NOT_RUN`; scalar multiple-role semantics remain open. |
 | Preserve scoped permission meaning. | [TC-FE-CES-001](06-test-cases.md#tc-fe-ces-001), [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006) | Original-module failure retained; cross-app boundary `NOT_RUN`. |
 | Preserve reviewed tile admission. | [TC-FE-CES-002](06-test-cases.md#tc-fe-ces-002), [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003) | Capture predicates match; changed-feature integration `NOT_RUN`. |
 | Manage CES metadata; preserve role attribution. | [TC-FE-CES-004](06-test-cases.md#tc-fe-ces-004), [TC-FE-CES-005](06-test-cases.md#tc-fe-ces-005) | Admin assertions unavailable; absent-role observation retained. |
@@ -565,9 +565,9 @@ The latest user clarification updates intended migration knowledge. It does not 
 
 | Record | Intended meaning changed | Source and disposition |
 | --- | --- | --- |
-| [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md), version 1 → 2. | Preserve upper APIs, select providers per tile, and retain the non-unique-role boundary. | [User clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input). Candidate and draft remain unchanged. |
-| [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md), version 3 → 4. | Keep legacy team `applicationName: RATAN` separate from CES `name` and string ITAM ID. | [Identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) and [sealed update checks](evidence/frontend-entitlement-impact-20261105/identity-knowledge-update-20261106.json). Candidate status remains. |
-| Three compatibility criteria. | Define measurable mapped-call compatibility, provider isolation, and independent tile changes. | [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001), [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002), [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003). Execution remains separate. |
+| [KT-ces-migration-parity](../../knowledge/records/candidates/security/KT-ces-migration-parity.md), version 1 → 2. | Preserve upper APIs, select providers per tile, and retain the non-unique-role boundary. | [User clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input). Candidate and draft remain unchanged. |
+| [KT-ces-migration-parity](../../knowledge/records/candidates/security/KT-ces-migration-parity.md), version 3 → 4. | Keep legacy team `applicationName: RATAN` separate from CES `name` and string ITAM ID. | [Identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) and [sealed update checks](evidence/frontend-entitlement-impact-20261105/identity-knowledge-update-20261106.json). Candidate status remains. |
+| Three compatibility criteria. | Define measurable mapped-call compatibility, provider isolation, and independent tile changes. | [FE-COMPAT-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001), [FE-COMPAT-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002), [FE-COMPAT-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003). Execution remains separate. |
 
 The [knowledge update binding](evidence/frontend-entitlement-impact-20261105/knowledge-update-20261106.json) records the predecessor, source hash, successor, and audit event.
 An independent agent read checked the revised intent against the preserved clarification.

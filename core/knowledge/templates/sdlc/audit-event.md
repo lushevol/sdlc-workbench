@@ -15,7 +15,7 @@ Read the [sample context](sample-context.md) before interpreting the example.
 - Use a new event ID and filename for every actual event.
 - Never overwrite an earlier audit file.
 - Human approval requires an actual human reviewer and matching verification evidence.
-- The sample below is incomplete and must never enter evidence/knowledge/audit/.
+- The sample below is incomplete and must never enter knowledge/evidence/audit/.
 
 ## Template
 
@@ -125,7 +125,7 @@ writing_review:
 
 SAMPLE-REQ-001 is an illustrative requirement.
 No actual lifecycle change occurred.
-Do not write this preparation example into evidence/knowledge/audit/.
+Do not write this preparation example into knowledge/evidence/audit/.
 
 ## Event YAML
 

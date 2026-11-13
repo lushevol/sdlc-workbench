@@ -43,7 +43,7 @@ The comparison does not establish a production failure or authorize application 
 - Base main: `f025513f696476a9cc8162681410cbd21e029bcb`.
 - Container source: filesystem copy; no independent Git history. [Hashes](evidence/container-source-hashes.json) identify inspected bytes.
 - Actual chronology: task registered 5 November 2026; previous implementation approval remains unknown.
-- Supported rationale: [permission preservation and mapping intent](../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
+- Supported rationale: [permission preservation and mapping intent](../../knowledge/evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
 - Evidence limit: local refs were not refreshed from a remote. Deployed builds and live CES behavior remain unknown.
 
 ## Stage boundary and readiness
@@ -178,7 +178,7 @@ CSV supports four entitlement headers together, or a legacy file without them.
 Quote comma-separated lists. Partial entitlement headers fail validation.
 See [CSV contract](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/CsvUtility.java#L93).
 
-FMO Portal Admin remains lower priority under the [3 November clarification](../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
+FMO Portal Admin remains lower priority under the [3 November clarification](../../knowledge/evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
 That source reports non-production, unlaunched, and unassigned status.
 CES-only admin authorization also requires backend maker/checker role support.
 This analysis does not establish an admin production blocker.
@@ -297,7 +297,7 @@ Bounded exploration coding is not applicable; existing helpers were executed wit
 | BFF-001 | [Provider comparison](evidence/bff-contract-analysis.md) | Exact base and candidate above | [Manifest](evidence/source-manifest.json) | Owner unknown; current source evidence. |
 | BASE-001 | [Base consumers](evidence/mfe-base-analysis.md) | Exact HEAD and baseline above | [Hashes](evidence/mfe-base-source-hashes.json) | Owner unknown; local state preserved. |
 | CONTAINER-001 | [Container consumers](evidence/mfe-ratan-container-analysis.md) | No independent revision | [Hashes](evidence/container-source-hashes.json) | Owner unknown; filesystem snapshot. |
-| INTENT-001 | [Mapping clarification](../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md) | user-clarification-20261103-1 | [Knowledge manifest](../../evidence/knowledge/manifest.yaml) | User-stated mapping and FMO exception; no execution proof. |
+| INTENT-001 | [Mapping clarification](../../knowledge/evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md) | user-clarification-20261103-1 | [Knowledge manifest](../../knowledge/evidence/manifest.yaml) | User-stated mapping and FMO exception; no execution proof. |
 
 The graph snapshot is [STALE](evidence/graph-coverage.json) for current BFF source.
 Direct current source supports this report; the graph was not rebuilt.

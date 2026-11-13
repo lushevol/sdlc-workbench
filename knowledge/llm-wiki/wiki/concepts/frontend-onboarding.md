@@ -122,7 +122,7 @@ The guideline names an older React version without an effective date or superses
 - Which owner controls compatibility changes across shared modules and tenant applications?
 - Which dependency exceptions have platform review, accountable tenant ownership, and effective dates?
 - Which standalone template and shared-component versions remain supported?
-- Which cross-tenant write and verification permissions apply to makers and checkers? Portal administrators may read audit history and configuration across tenants. A tile must never reference another tile's metadata. [Admin access criteria](../../../candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
+- Which cross-tenant write and verification permissions apply to makers and checkers? Portal administrators may read audit history and configuration across tenants. A tile must never reference another tile's metadata. [Admin access criteria](../../../records/candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references)
 - Which release, approval, rollback, and emergency-change controls govern self-service catalog changes in production?
 - Which checklist governs each environment, and what replaces FMAA authentication after the planned decommissioning?
 - Which evidence proves technical readiness and business activation separately for each tenant request?

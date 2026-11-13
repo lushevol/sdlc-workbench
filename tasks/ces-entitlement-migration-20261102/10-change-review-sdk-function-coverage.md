@@ -64,7 +64,7 @@ Neither result establishes current live permission equality.
 - Candidate branch: `codex/initial-baseline`; this is the latest available local SDK commit.
 - Repository: [registered SDK checkout](../../repos/libraries/single-ui-sdk-starter/).
 - API source: [supplied migration APIs](api/).
-- Intent: [exact compatibility and token clarification](../../evidence/knowledge/sources/user-clarifications/single-ui-sdk-ces-migration-20261101/user-clarification-implementation.md#exact-user-input).
+- Intent: [exact compatibility and token clarification](../../knowledge/evidence/sources/user-clarifications/single-ui-sdk-ces-migration-20261101/user-clarification-implementation.md#exact-user-input).
 - Prior implementation record: [SDK stage](../single-ui-sdk-ces-migration-20261101/10-change-review.md#selected-compatibility-design).
 
 No remote-head or deployment comparison was performed. “Latest” means the latest available local migration commit.
@@ -268,7 +268,7 @@ No knowledge meaning, review state, or publication approval changed.
 | Historical consumers | Direct upgrade compatibility remains unverified. | unknown | Bind actual artifacts and execute consumer compilation, startup, and permission checks. |
 | Logout/replay assertions | Complete authentication regression verification remains incomplete. | unknown | Add explicit assertions before claiming full session-function coverage. |
 
-FMO administration remains a separate lower-priority non-production comparison under the [recorded scope](../../knowledge/candidates/security/KT-ces-migration-parity.md#fmo-scope-exception).
+FMO administration remains a separate lower-priority non-production comparison under the [recorded scope](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fmo-scope-exception).
 UAT `FMO_OPS_BOM` assignments differ from the CES catalog.
 The CES role definition contains five additional pairs compared with EMS2 UAT.
 UAT subject `srv.fxu.001` lacks a feature-name match in both supplied CES catalogs.

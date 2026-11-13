@@ -10,15 +10,15 @@ Each root Markdown template, except this guide, is a complete illustrative candi
 The fixture has no business authority. No example records approval or verification.
 The example source and manifest are in `examples/`.
 
-Copy the relevant domain-record template into `knowledge/candidates/` to instantiate it.
-Place `GovernanceFinding` records under `evidence/knowledge/findings/`; they are governance evidence rather than domain candidates.
+Copy the relevant domain-record template into `knowledge/records/candidates/` to instantiate it.
+Place `GovernanceFinding` records under `knowledge/evidence/findings/`; they are governance evidence rather than domain candidates.
 Describe intended rules, contracts, responsibilities, and target architecture.
 Keep inspected implementation, actual deployment, execution results, and differences in an independent task gap Markdown document.
 Link canonical knowledge from each gap. Do not change the expected rule to match code.
 Use `knowledge-topic.md` for connected background, terms, workflows, and historical explanations.
-Classified topic drafts can use subdirectories beneath `knowledge/candidates/`.
+Classified topic drafts can use subdirectories beneath `knowledge/records/candidates/`.
 Replace the illustrative IDs, source references, owner, dates, and domain content.
-Register real source revisions in `evidence/knowledge/manifest.yaml` before validation.
+Register real source revisions in `knowledge/evidence/manifest.yaml` before validation.
 Review the body and structured fields together.
 
 Validation excludes `templates/` and `examples/` until their documents are instantiated.

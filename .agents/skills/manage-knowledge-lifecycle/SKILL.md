@@ -28,6 +28,7 @@ Inspect the active task evidence index, living questions and knowledge-update lo
 canonical IDs/versions/states and review/audit evidence, then wiki bindings, pending attempts, completion receipts and outputs.
 Use exact paths, source revisions and hashes. Prior summaries locate evidence; reopen claim-bearing artifacts before declaring current status.
 Limit semantic reading to queued sources, affected records and necessary context. Broaden discovery when dependencies are incomplete.
+In the consolidated layout, inspect canonical intent in `knowledge/records/`, provenance and receipts in `knowledge/evidence/`, and derived outputs in `knowledge/llm-wiki/`. Use the runtime-resolved legacy roots for an existing unmigrated workspace; never merge both manifest locations or infer canonical intent from the whole parent tree.
 
 Report these dimensions separately rather than assigning one overall “complete” state:
 

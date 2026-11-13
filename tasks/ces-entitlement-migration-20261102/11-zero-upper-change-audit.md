@@ -229,7 +229,7 @@ The existing ownership hold remains effective. No additional business answer is 
 
 ## Proposed acceptance and validation
 
-The candidate [FE-COMPAT-AC-004](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004) defines the newly clarified permission rule.
+The candidate [FE-COMPAT-AC-004](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-004) defines the newly clarified permission rule.
 It includes all four EMS2/CES grant combinations and accepted-decision source logs.
 Historical strict-routing cases do not test conformance to this revised rule.
 

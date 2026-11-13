@@ -1,0 +1,258 @@
+---
+type: KnowledgeTopic
+id: KT-frontend-composition
+version: 4
+owner: unknown
+governance_state: candidate
+status: draft
+sources:
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md
+  revision: sha256:b2677f993b154c2705c4fe103d5e2bbff1a45b618f0129ae0234fa69c381b692
+  sha256: b2677f993b154c2705c4fe103d5e2bbff1a45b618f0129ae0234fa69c381b692
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md
+  revision: sha256:572dffb64891e80af50f57d5cc2e34fe8ffb3d92751b779d25b5b8b84b999cf7
+  sha256: 572dffb64891e80af50f57d5cc2e34fe8ffb3d92751b779d25b5b8b84b999cf7
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/Single SPA vs Module
+    Federation vs iFrame/page.md
+  revision: sha256:160a35ff2264138ee7f53fbb9798b28848d172d07208e78ba9d98adb4ae2025d
+  sha256: 160a35ff2264138ee7f53fbb9798b28848d172d07208e78ba9d98adb4ae2025d
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/Getting Started
+    with Single-Spa Micro-Frontend/page.md
+  revision: sha256:6734c72b2f533af13944ad668a4a6d6bbccd79e60e7bdfbed9e59ed528c68215
+  sha256: 6734c72b2f533af13944ad668a4a6d6bbccd79e60e7bdfbed9e59ed528c68215
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Development Principle - Development Guideline - Onboarding Process/Development
+    Principle/page.md
+  revision: sha256:06ce1c57bd699e5100e82a59b79c59a1cec1a8973223586a2eba9a9bda29d5b3
+  sha256: 06ce1c57bd699e5100e82a59b79c59a1cec1a8973223586a2eba9a9bda29d5b3
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Development Principle - Development Guideline - Onboarding Process/Development
+    Guideline/page.md
+  revision: sha256:4e7399bf03a672bb61ca5d1a30ee3275e44e779ba5f0f097db9613a3fe47391d
+  sha256: 4e7399bf03a672bb61ca5d1a30ee3275e44e779ba5f0f097db9613a3fe47391d
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend
+    Onboarding Process/page.md
+  revision: sha256:b93d2fc08759df036482b632fe9c8f8f966be1d4c98eedc235c5206a036c587f
+  sha256: b93d2fc08759df036482b632fe9c8f8f966be1d4c98eedc235c5206a036c587f
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/UI Tech Stack/page.md
+  revision: sha256:a287cbc3a9ece0575b92860108de185b1303655322af30e9dc14a60709cb4137
+  sha256: a287cbc3a9ece0575b92860108de185b1303655322af30e9dc14a60709cb4137
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md
+  revision: sha256:d95c3a34b07bccd986dee4b7508d6723ca938ef5addc44419e48d58801dca0f6
+  sha256: d95c3a34b07bccd986dee4b7508d6723ca938ef5addc44419e48d58801dca0f6
+- resource: knowledge/raw/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md
+  revision: sha256:a1ae5104849e9ca7b6276064b6f8c7870fe55b36e7cc5c80be54b11619a1b4cf
+  sha256: a1ae5104849e9ca7b6276064b6f8c7870fe55b36e7cc5c80be54b11619a1b4cf
+- resource: evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt
+  revision: sha256:446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758
+  sha256: 446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758
+- resource: evidence/knowledge/sources/user-clarifications/architecture-20261022/source-review.json
+  revision: sha256:aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
+  sha256: aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
+previous_version: 3
+previous_content_sha256: c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718
+generated:
+  by: agent:codex
+  at: '2026-11-12T21:53:10+08:00'
+verified: []
+classification: architecture
+scope: The documented microfrontend design, shared UI boundaries, and application
+  onboarding flow.
+summary: The design combines shared portal modules with independently owned tenant
+  containers and tiles.
+related:
+- ARC-portal-service-relationships
+- KT-portal-purpose
+- KT-admin-and-onboarding
+- KT-authentication-and-sessions
+- KT-sdk-and-entitlements
+- KT-release-operations
+- KT-architecture-evolution
+open_questions:
+- Which exact repository revisions implement the current container, tile, and routing
+  interfaces?
+- Which development guidelines and shared dependency versions are currently accepted?
+- Which owner controls compatibility changes across shared modules and tenant applications?
+- Which dependency exceptions have platform review, accountable tenant ownership,
+  and effective dates?
+- Which standalone template and shared-component versions remain supported?
+writing_review:
+  standard: ASD-STE100
+  automated_check: PASSED
+  asd_review: PENDING
+  reviewer: null
+  reviewed_at: null
+  limitations:
+  - Automated checks do not check the complete approved dictionary or grammar rules.
+---
+# Frontend composition and application ownership
+
+## Scope
+
+This topic explains the documented composition model and the responsibilities required to onboard an application.
+It connects design explanations, development guidance, and setup procedures.
+The linked architecture clarification adds bounded inspection of current local source.
+Deployed interface compatibility remains unconfirmed.
+The source dates and applicable framework versions remain partly unresolved.
+
+## Summary
+
+The design separates common platform modules from application-owned domain modules.
+Import maps connect module names to deployed files.
+The shared base supplies common context while tenant teams supply containers and tiles.
+The [ownership design](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L130>) and [onboarding procedure](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md#L1>) describe this division.
+
+## Documented knowledge
+
+### Current four-layer clarification
+
+The user identifies four layers: Root Config, Base shell, application container, and feature tile.
+The [service relationship record](ARC-portal-service-relationships.md#four-mfe-layers) retains the layer roles and inspected loading paths.
+Single-SPA registers only the shell. SystemJS and React Router support successive container and tile loading.
+Container and tile props select distinct route stages.
+
+The [clarification](../../../evidence/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L12) supplies current reported architecture.
+The [source review](../../../evidence/sources/user-clarifications/architecture-20261022/source-review.json) records matching local declarations and limits.
+JavaScript entry bundles can produce lazy chunks. Shared-code dependencies also point back toward common libraries.
+This clarification does not establish runtime rendering, accepted dependency versions, or active deployment.
+
+### Why the design separates modules
+
+The microfrontend explanation identifies coupled releases, broad testing scope, unclear ownership, and repeated components as design problems.
+It proposes application-specific repositories and pipelines alongside shared modules.
+The intended benefit is separate team delivery within one user workspace. [Design problems and ownership](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L119>).
+These are design goals; the document does not demonstrate their achievement across every application.
+
+### Roles in composition
+
+| Element | Documented responsibility |
+| --- | --- |
+| Root configuration and import map | Locate modules and support shared loading configuration. |
+| SystemJS | Resolve module names to files and load modules into the page. |
+| Single-spa | Mount applications and manage application lifecycle. |
+| Base container | Provide common routing, global state, and theme context. |
+| Application container | Connect an application's domain modules with the shared portal. |
+| Application tiles | Supply user-facing domain views that open within workspaces. |
+| Nginx integration | Route application static files and API requests through configured locations. |
+
+The [module design](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L147>), [stack explanation](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/page.md#L35>), and [development principles](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md#L4>) support these roles.
+The table explains the source model; it does not assert the current runtime implementation.
+
+The historical web application scan notes describe direct access to non-sensitive static files before sign-in.
+The note concerns static file retrieval. It supplies no rule permitting directory listing or bypassing portal-entry or API authorization.
+[Historical scan notes, lines 9–12](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md#L9-L12>).
+
+### Ownership and availability
+
+The principles assign shared backend availability to the microfrontend team.
+They assign application-domain backend availability to each application team.
+Each application team can choose its deployment approach and must supply static-file and API URLs.
+The same principles reserve review and approval of shared repositories to the microfrontend team. [Team responsibilities](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md#L4>).
+
+The sources record role declarations. Current named owners and effective approvals remain unknown.
+
+### Documented onboarding sequence
+
+1. Obtain root configuration and application templates.
+2. Create separate application container and tile repositories.
+3. Update module names, build configuration, imports, interfaces, and container entry points.
+4. Update unit tests and the local import map.
+5. Configure the tile through the Admin Module procedure.
+6. Build and deploy the application files, then supply static-file and API URLs to the platform team.
+
+This sequence condenses the [frontend onboarding procedure](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md#L1>).
+The [getting-started guide](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Getting Started with Single-Spa Micro-Frontend/page.md#L11>) describes three local projects and attached source archives.
+Those archives and setup screenshots are absent from the supplied copy.
+This ingestion executed no setup command or deployment.
+
+### Shared code and compatibility
+
+The design uses exports and imports to share modules through registered names.
+The framework comparison distinguishes shared dependencies from libraries retained within individual applications.
+It cautions that shared dependencies require coordinated upgrades. [Sharing model](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L79>); [Dependency comparison](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Single SPA vs Module Federation vs iFrame/page.md#L11>).
+Inference: A shared interface change can affect several tenant consumers.
+This inference requires exact provider and consumer evidence before assessing a particular change.
+
+### Development guidance and performance boundaries
+
+The guideline prescribes TypeScript, functional components, shared MUI themes, and separation of view, logic, styles, and interfaces.
+It also names React 18.2.0 and prefers Context and Reducer over additional state libraries. [Development guideline](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L1>).
+The same guideline calls for component error boundaries and prefers lazy loading for tiles where possible.
+[Development guideline, lines 5–7](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L5-L7>).
+These versioned instructions must retain their source context before reuse for new development.
+
+The onboarding procedure suggests 500 KB files and six concurrent static-file requests as optional loading guidance.
+It does not establish an accepted performance SLA. [Optional loading guidance](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md#L15>).
+
+### Standalone React integration pattern
+
+The standalone guide describes a React template that reuses MFE-Base components through import-map registration.
+Its no-install statement concerns consuming those components; the example still installs the template's own dependencies.
+The guide also states that the template includes Jest configuration.
+[Standalone template, lines 1–17](<../../../evidence/sources/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md#L1>).
+
+This pattern describes shared-component reuse outside the documented container-and-tile startup example.
+It does not establish that every standalone application can integrate without adaptation.
+The linked `simple-app.zip` archive and screenshot are absent from this supplied copy.
+Current template, dependency, and loading compatibility require separate inspection.
+[Standalone archive and setup, lines 7–17](<../../../evidence/sources/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md#L7>).
+
+### External frontend dependencies
+
+The supplementary principle prohibits direct external GUI dependencies unless platform governance reviews and approves an exception.
+It describes internal packaging and tenant-owned backend encapsulation as implementation options.
+Tenant teams retain security, licensing, vulnerability, support, resilience, and rollback responsibilities.
+These are source-stated rules with unconfirmed authority and effective applicability.
+[Dependency principle, lines 3–10, 23–54](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md#L3>).
+
+## Connections
+
+- [Portal purpose](../background/KT-portal-purpose.md) explains the user and platform goals behind composition.
+- [Administration and onboarding](../operations/KT-admin-and-onboarding.md) supplies tile configuration and promotion context.
+- [Authentication and sessions](../security/KT-authentication-and-sessions.md) and [SDK and entitlements](../security/KT-sdk-and-entitlements.md) describe identity propagation across these boundaries.
+- [Release operations](../operations/KT-release-operations.md) describes controlled delivery and rollback procedures.
+- [Architecture evolution](../evolution/KT-architecture-evolution.md) distinguishes existing guidance from migration proposals.
+
+## Evidence limits
+
+Evidence: The [source manifest](../../../evidence/manifest.yaml) identifies local bytes without original page revisions or confirmed source authority.
+Consequence: The citations support a reproducible reading but do not establish approved or current project intent.
+Owner: unknown.
+Next action: Confirm source ownership, applicability, and original revisions before publication.
+
+Evidence: The [getting-started guide](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Getting Started with Single-Spa Micro-Frontend/page.md#L13>) depends on missing archives and screenshots.
+Consequence: The supplied text cannot reproduce its complete setup procedure.
+Owner: unknown.
+Next action: Recover the applicable templates and compare them with exact registered repository revisions.
+
+Evidence: The [guideline](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L2>) names an older React version without an effective-date or supersession record.
+Consequence: Its technical instructions cannot establish the current platform baseline.
+Owner: unknown.
+Next action: Confirm accepted versions, shared dependency policy, and applicable guideline revisions.
+
+Evidence: The [framework comparison](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Single SPA vs Module Federation vs iFrame/page.md#L18>) contains scores and technical opinions without retained project measurements.
+Consequence: Its ranking cannot establish current compatibility, security, or performance.
+Owner: unknown.
+Next action: Treat it as historical rationale and collect project evidence for any new framework decision.
+
+Evidence: The [standalone guide](<../../../evidence/sources/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md#L7>) depends on an absent template archive.
+Consequence: Its reuse instructions cannot establish runnable setup or current shared-component compatibility.
+Owner: unknown.
+Next action: Recover the applicable template and inspect its import map, shared dependencies, and retained test assertions.
+
+## Open questions
+
+Owner: unknown for all questions.
+
+- Which exact repository revisions implement the current container, tile, and routing interfaces?
+- Which development guidelines and shared dependency versions are currently accepted?
+- Which owner controls compatibility changes across shared modules and tenant applications?
+- Which dependency exceptions have platform review, accountable tenant ownership, and effective dates?
+
+- Which standalone template and shared-component versions remain supported?
+
+Next action: Resolve the relevant boundary before using this topic to implement a new application or shared change.

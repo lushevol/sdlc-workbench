@@ -4,7 +4,7 @@ query: "How should the Portal preserve an active session across refresh-token ex
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-> **Historical exploration.** The answer below reflects requirement v7. The 12 November clarification supersedes its unlimited-renewal and four-hour statements. Current requirement v9 sets a 15-minute idle ceiling and a 60-minute absolute ceiling from portal authentication. It removes the unsupported 100 ms activity cadence, 15-second observation window, and 30-second remaining-time setup from AC-1 through AC-3; these figures below are historical. Renewal across initial refresh expiry and eligible manual recovery apply within the absolute deadline. See the [current candidate criteria](../../../candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) and [[summaries/REQ-active-session-renewal]].
+> **Historical exploration.** The answer below reflects requirement v7. The 12 November clarification supersedes its unlimited-renewal and four-hour statements. Current requirement v9 sets a 15-minute idle ceiling and a 60-minute absolute ceiling from portal authentication. It removes the unsupported 100 ms activity cadence, 15-second observation window, and 30-second remaining-time setup from AC-1 through AC-3; these figures below are historical. Renewal across initial refresh expiry and eligible manual recovery apply within the absolute deadline. See the [current candidate criteria](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) and [[summaries/REQ-active-session-renewal]].
 
 ## Preserving an active session across refresh-token expiry
 

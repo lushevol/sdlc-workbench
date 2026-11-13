@@ -37,7 +37,7 @@ Deliver source-linked changes, compatibility boundaries, validation needs, and m
 
 The [exact request](evidence/user-input.md#exact-user-input) is the first-priority source for this analysis scope.
 Existing migration intent requires permission preservation after explicit concept mapping.
-Read the [preserved clarification](../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
+Read the [preserved clarification](../../knowledge/evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
 That source does not establish current deployment or complete permission equality.
 
 ## Scope
@@ -89,7 +89,7 @@ The probes execute existing function bodies without changing application behavio
 | Actor | Rule ID | Condition | Required behavior | Source |
 | --- | --- | --- | --- | --- |
 | Frontend maintainer | ANALYSIS-01 | BFF migration changes consumed entitlement contracts. | Identify source-backed frontend work and its limits. | [User request](evidence/user-input.md#exact-user-input) |
-| Portal user | Existing migration intent | EMS2 permissions map to CES application, entitlement, feature, and action. | Preserve permission meaning within the mapped scope. | [Prior clarification](../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input) |
+| Portal user | Existing migration intent | EMS2 permissions map to CES application, entitlement, feature, and action. | Preserve permission meaning within the mapped scope. | [Prior clarification](../../knowledge/evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input) |
 
 This intake does not create new role, multi-application, or data-authorization policy.
 
@@ -169,7 +169,7 @@ acceptance_criteria:
 | BFF-001 | [BFF analysis](evidence/bff-contract-analysis.md) | Baseline and candidate above | [Manifest](evidence/source-manifest.json) | Owner unknown; implementation evidence. | Local refs; no remote refresh. |
 | BASE-001 | [Base analysis](evidence/mfe-base-analysis.md) | HEAD and baseline above | [Hashes](evidence/mfe-base-source-hashes.json) | Owner unknown; implementation evidence. | Local edits preserved. |
 | CONTAINER-001 | [Container analysis](evidence/mfe-ratan-container-analysis.md) | Filesystem copy | [Hashes](evidence/container-source-hashes.json) | Owner unknown; implementation evidence. | No independent Git history. |
-| INTENT-001 | [Migration clarification](../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md) | user-clarification-20261103-1 | [Knowledge manifest](../../evidence/knowledge/manifest.yaml) | Explicit user scope and mapping intent. | No deployed parity proof. |
+| INTENT-001 | [Migration clarification](../../knowledge/evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md) | user-clarification-20261103-1 | [Knowledge manifest](../../knowledge/evidence/manifest.yaml) | Explicit user scope and mapping intent. | No deployed parity proof. |
 
 ## Evidence and open questions
 
@@ -183,8 +183,8 @@ acceptance_criteria:
 
 | Search scope and source | Revision or hash | Applicable rule or criterion | Authority and limits | Remaining material gap |
 | --- | --- | --- | --- | --- |
-| Knowledge index and [SDK topic](../../knowledge/candidates/security/KT-sdk-and-entitlements.md) | Version 8; candidate | Permission preservation and renamed application. | Candidate intent; cited clarification inspected. | Role equivalence remains unknown. |
-| [CES parity topic](../../knowledge/candidates/security/KT-ces-migration-parity.md) | Version 1; candidate | Explicit concept mapping. | Original user clarification inspected. | Live data restriction equivalence unavailable. |
+| Knowledge index and [SDK topic](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md) | Version 8; candidate | Permission preservation and renamed application. | Candidate intent; cited clarification inspected. | Role equivalence remains unknown. |
+| [CES parity topic](../../knowledge/records/candidates/security/KT-ces-migration-parity.md) | Version 1; candidate | Explicit concept mapping. | Original user clarification inspected. | Live data restriction equivalence unavailable. |
 | [Prior frontend investigation](../ces-entitlement-migration-20261102/evidence/frontend-analysis-20261030.md) | 30 October 2026 | Consumer discovery. | Secondary evidence; current BFF is newer. | Current source supersedes old field names. |
 | Graph coverage operation | [Retained coverage](evidence/graph-coverage.json) | Relationship discovery only. | STALE for current BFF and SDK. | Direct current source used; graph not rebuilt. |
 

@@ -76,21 +76,22 @@ workbench/
 │   ├── sources.yaml
 │   ├── tools.yaml
 │   └── examples/                    # Catalog examples checked against registry contracts.
-├── knowledge/                      # Business-domain records and navigation only.
-│   ├── candidates/
-│   ├── requirements/
-│   ├── architecture/
-│   ├── decisions/
-│   └── repository-profiles/
-├── evidence/
-│   └── knowledge/
-│       ├── incoming/                # Ignored replaceable complete exports, grouped by collection.
-│       ├── sources/                 # Retained original source snapshots.
-│       ├── selections/              # Hash-bound source filtering decisions.
-│       ├── processing/              # Reviewed canonical processing receipts.
-│       ├── manifest.yaml            # Source identities, revisions, and hashes.
-│       ├── findings/                # Investigation and governance records.
-│       └── audit/                   # Immutable governance events.
+├── knowledge/                      # One parent; three distinct content responsibilities.
+│   ├── records/                    # Canonical business-domain Markdown and navigation.
+│   │   ├── candidates/
+│   │   ├── requirements/
+│   │   ├── architecture/
+│   │   ├── decisions/
+│   │   └── repository-profiles/
+│   ├── evidence/                   # Supporting sources, provenance, and governance.
+│   │   ├── incoming/               # Ignored replaceable complete exports, grouped by collection.
+│   │   ├── sources/                # Retained original source snapshots.
+│   │   ├── selections/             # Hash-bound source filtering decisions.
+│   │   ├── processing/             # Reviewed canonical processing receipts.
+│   │   ├── manifest.yaml           # Source identities, revisions, and hashes.
+│   │   ├── findings/               # Investigation and governance records.
+│   │   └── audit/                  # Immutable governance events.
+│   └── llm-wiki/                   # Single derived wiki, canonical aliases, and local engine state.
 ├── relationships/
 │   ├── requirement-code/
 │   ├── code-test/
@@ -186,7 +187,8 @@ Use `workspace.yaml` for new workspaces.
 
 ### Knowledge
 
-`knowledge/` contains curated business-domain Markdown records and navigation only.
+`knowledge/` groups canonical records, supporting evidence, and one derived wiki.
+Only `knowledge/records/` contains curated business-domain Markdown records and navigation.
 It describes requirements, intended rules, ideal behavior, contracts, and target business-system architecture.
 Business-system technical explanations qualify when they describe intended domain behavior or responsibilities.
 Independent task gap Markdown compares that intent with exact implementation, deployment evidence, and observed execution.
@@ -195,27 +197,31 @@ Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, executi
 Its candidates retain draft domain claims before review.
 Its published directories hold reviewed domain knowledge with evidence references.
 
-`evidence/knowledge/incoming/COLLECTION/` holds replaceable complete exports and remains ignored.
-`evidence/knowledge/sources/` retains original snapshots outside the knowledge base.
+`knowledge/evidence/incoming/COLLECTION/` holds replaceable complete exports and remains ignored.
+`knowledge/evidence/sources/` retains original snapshots outside the canonical record tree.
 Keep these lifecycles separate within the evidence area. New exports must not overwrite retained snapshot bytes.
-`evidence/knowledge/manifest.yaml` records their identities, revisions, locators, retrieval times, and hashes.
+`knowledge/evidence/manifest.yaml` records their identities, revisions, locators, retrieval times, and hashes.
 Task-generated logs, execution captures, investigation reports, and incident excerpts belong under the owning task.
 The source manifest can reference those task paths while retaining stable source identities and hashes.
 An authorized relocation preserves prior manifest bytes and records old-to-new locators without rewriting audit history.
-`evidence/knowledge/findings/` retains governance findings, conflicts, missing evidence, and open questions.
+`knowledge/evidence/findings/` retains governance findings, conflicts, missing evidence, and open questions.
 `core/knowledge/` supplies reusable schemas and templates.
 Domain knowledge can remain in registered external sources.
 Do not relocate authoritative source documents solely to match this directory tree.
 
+New initialization creates this consolidated layout. Existing workspaces with the former `knowledge/` canonical root and `evidence/knowledge/manifest.yaml` remain supported until explicitly migrated.
+The shared runtime resolves the active layout from the unique source manifest location. Both manifest locations are ambiguous; a consolidated manifest without `knowledge/records/` is incomplete. Diagnose either condition instead of merging inputs or silently falling back.
+Canonical discovery selects the resolved record root; evidence and wiki operations use their own roots and validation contracts.
+
 `KnowledgeTopic` records connect background, domain terms, workflows, and historical explanations across sources.
-Classified drafts live under `knowledge/candidates/<classification>/` with a project-specific `index.md`.
+Classified drafts live under `knowledge/records/candidates/<classification>/` with a project-specific `index.md`.
 The ingestion skill supplies review and ingestion modes for agent-assisted operation.
 Classification does not establish approved intent or source authority.
 The installed ingestion harness checks retained history, locators, execution source hashes, and prepared content.
 Semantic classification and source review remain agent responsibilities.
 
 The source pipeline is complete raw export → filtered source view → canonical knowledge → derived wiki.
-`ai-sdlc sources` imports registered local Markdown collections and records selections under `evidence/knowledge/selections/`.
+`ai-sdlc sources` imports registered local Markdown collections and records selections under `knowledge/evidence/selections/`.
 It preserves prior snapshots and manifest records, then generates exact excerpts or links in ignored working storage.
 Each selection binds source-page SHA-256, original ranges, policy hash, and governing context hashes.
 Every generated link also records the source identity and output hash.
@@ -242,7 +248,7 @@ Important requirements and decisions require recorded human review before public
 Keep OKF `status` and `verified` separate from Workbench lifecycle and business execution results.
 Do not fabricate approvals or reviewer identities.
 
-Retain each governance event in a new YAML file under `evidence/knowledge/audit/`.
+Retain each governance event in a new YAML file under `knowledge/evidence/audit/`.
 Preserve earlier events and Git history.
 An event binds the item version, content hash, actor, and supporting evidence.
 Deterministic validation checks saved records and provenance.
@@ -386,8 +392,8 @@ Keep facts, inferences, and unresolved questions separate throughout the workflo
 | SDLC concern | Workspace representation |
 | --- | --- |
 | Domain knowledge | Capability context, registered sources, knowledge references, and governance checks. |
-| Requirements | `knowledge/requirements/` and requirement-to-code relationships. |
-| System design | `knowledge/architecture/`, `knowledge/decisions/`, and service context. |
+| Requirements | `knowledge/records/requirements/` and requirement-to-code relationships. |
+| System design | `knowledge/records/architecture/`, `knowledge/records/decisions/`, and service context. |
 | Source repositories | `registry/repositories.yaml` and registered Git tools. Local clones remain optional. |
 | Service Dependencies Graph | `relationships/service-dependencies/` and registered graph-generation or query tools. |
 | E2E engine | Registered existing test engine, case references, execution tools, and retained observations. |

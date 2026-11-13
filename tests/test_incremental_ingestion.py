@@ -18,7 +18,7 @@ from ai_sdlc_workbench.ingestion.incremental import complete_sources, load_plan,
 from ai_sdlc_workbench.ingestion.sources import apply_selections, refresh_sources
 from ai_sdlc_workbench.models import WorkbenchError
 from ai_sdlc_workbench.validation import validate_workspace
-from ai_sdlc_workbench.workspace import initialize_workspace
+from tests.knowledge_fixtures import initialize_legacy_workspace as initialize_workspace
 
 
 class IncrementalIngestionTests(unittest.TestCase):

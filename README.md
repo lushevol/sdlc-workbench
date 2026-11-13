@@ -111,11 +111,12 @@ The project structure separates these responsibilities:
 | `repos/` | Independent Git checkouts and their setup guide. |
 | `tasks/` | Requirement and issue intake, questions, investigation results, reports, and evidence. |
 | `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
-| `knowledge/` | Canonical business-domain Markdown records and navigation, plus the reserved derived wiki below. |
+| `knowledge/` | One entry point for canonical records, supporting evidence, and the derived wiki. |
+| `knowledge/records/` | Canonical business-domain Markdown records and navigation; the domain validation and retrieval boundary. |
 | `knowledge/llm-wiki/` | One derived wiki, relative canonical source aliases, native state and wiki visualization; checked through the wiki bridge. |
-| `knowledge/candidates/` | Draft domain knowledge awaiting review. |
-| `knowledge/requirements/`, `architecture/`, `decisions/` | Reviewed business-domain requirements, architecture, and decisions. |
-| `evidence/knowledge/` | Source snapshots, provenance manifest, governance findings, and immutable audit events. |
+| `knowledge/records/candidates/` | Draft domain knowledge awaiting review. |
+| `knowledge/records/requirements/`, `architecture/`, `decisions/` | Reviewed business-domain requirements, architecture, and decisions. |
+| `knowledge/evidence/` | Source snapshots, provenance manifest, governance findings, and immutable audit events. |
 | `core/knowledge/schemas/`, `core/knowledge/templates/` | Reusable record contracts and starting records. |
 | `relationships/` | Requirement-to-code, code-to-test, and service dependency references. |
 | `.agents/skills/` | Canonical knowledge, analysis, verification, onboarding, and dependency procedures. |
@@ -165,13 +166,13 @@ Restart CLI or MCP processes after configuration changes.
 ## Preserve and govern knowledge
 
 Use full raw export → filtered source view → canonical knowledge → derived wiki.
-Place complete local Markdown exports in `evidence/knowledge/incoming/YOUR_SOURCE_ID/`.
-Follow [the source import guide](evidence/knowledge/README.md#complete-source-imports). Do not remove unrelated documents manually.
-Keep retained originals under `evidence/knowledge/sources/`. Replace incoming exports without overwriting those snapshots.
+Place complete local Markdown exports in `knowledge/evidence/incoming/YOUR_SOURCE_ID/`.
+Follow [the source import guide](knowledge/evidence/README.md#complete-source-imports). Do not remove unrelated documents manually.
+Keep retained originals under `knowledge/evidence/sources/`. Replace incoming exports without overwriting those snapshots.
 Refresh retains original revisions and records source-page hashes before the agent selects relevant passages.
 
 ```sh
-ai-sdlc --workspace . sources refresh --source YOUR_SOURCE_ID --input evidence/knowledge/incoming/YOUR_SOURCE_ID
+ai-sdlc --workspace . sources refresh --source YOUR_SOURCE_ID --input knowledge/evidence/incoming/YOUR_SOURCE_ID
 ai-sdlc --workspace . sources select --source YOUR_SOURCE_ID --decisions .workbench/ingestion/decisions.json
 ai-sdlc --workspace . sources view --source YOUR_SOURCE_ID --output .workbench/ingestion/filtered/run-1
 ai-sdlc --workspace . sources verify --source YOUR_SOURCE_ID
@@ -180,14 +181,15 @@ ai-sdlc --workspace . sources verify --source YOUR_SOURCE_ID
 Follow the [source preparation procedure](.agents/skills/ingest-knowledge/references/source-preparation.md) for registration, decisions, and freshness rules.
 Filtered views use hash-bound source links or exact excerpts. They do not create another authoritative knowledge collection.
 
-Keep canonical records in `knowledge/` limited to business-domain Markdown and navigation. The reserved `knowledge/llm-wiki/` subtree holds the derived wiki and its native artifacts; the [knowledge standards](knowledge/README.md) define separate validation responsibilities.
+Use one `knowledge/` parent with `records/`, `evidence/`, and the existing `llm-wiki/` workspace.
+Keep canonical records in `knowledge/records/` limited to business-domain Markdown and navigation. The sibling `knowledge/evidence/` holds sources and governance; `knowledge/llm-wiki/` holds the derived wiki and its native artifacts. The [knowledge standards](knowledge/README.md) define separate validation responsibilities.
 Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
 Exclude Workbench maintenance, raw sources, logs, code copies, fixtures, execution results, reports, and intermediate files.
-Keep investigation evidence under its task. Keep source provenance and governance records under `evidence/knowledge/`.
+Keep investigation evidence under its task. Keep source provenance and governance records under `knowledge/evidence/`.
 Use Markdown with YAML frontmatter for portable knowledge documents.
 The contracts follow [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) with Workbench SDLC constraints.
 Use the [knowledge guide](knowledge/README.md), shipped schemas, and templates for actual records.
-Keep original source bytes under `evidence/knowledge/sources/`. Record source identities and hashes in `evidence/knowledge/manifest.yaml`.
+Keep original source bytes under `knowledge/evidence/sources/`. Record source identities and hashes in `knowledge/evidence/manifest.yaml`.
 Create candidates and findings before publishing derived knowledge.
 
 Use `governance_state` for candidate → investigated → verified → published.
@@ -198,7 +200,7 @@ Never invent approval or reviewer identities.
 
 Requirements use measurable Gherkin acceptance criteria.
 Each criterion states conditions, an action, an observable result, and a measurable expectation.
-Record each governance change in a new YAML event under `evidence/knowledge/audit/`.
+Record each governance change in a new YAML event under `knowledge/evidence/audit/`.
 Preserve earlier snapshots, events, and Git history.
 
 Use the [SDLC authoring catalog](core/knowledge/templates/sdlc/README.md) for templates, illustrative samples, and AI completion checks.
@@ -305,7 +307,7 @@ Check the shared wiki and generate its original OpenKB graph through the bridge:
 
 ```sh
 python3 .agents/skills/llm-wiki/scripts/wiki.py install
-python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/plan.json
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/records/candidates --output .workbench/wiki/plan.json
 python3 .agents/skills/llm-wiki/scripts/wiki.py verify
 python3 .agents/skills/llm-wiki/scripts/wiki.py run status
 python3 .agents/skills/llm-wiki/scripts/wiki.py graph

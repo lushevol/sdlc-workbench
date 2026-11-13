@@ -19,20 +19,20 @@ During the Entra migration, the production pilot guide warns that AD profile val
 - Locale values can be missing.
 
 The guide states that downstream audit or application logic can therefore require a profile-field review during migration. The same guide describes the intended pilot-user authentication journey, including Windows Hello or Authenticator authentication and a one-hour Entra session. That provider-session statement does not settle portal refresh-token lifetime or profile contracts.
-[Production pilot guide](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
+[Production pilot guide](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
 
 ## Where the profile is built
 The Entra design describes a browser redirect and BFF code exchange. The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens. The design places provider-to-portal profile mapping at the BFF and leaves the full downstream contract open. The November clarification prohibits OneMFA fallback for portal SSO. [Canonical SSO criterion](../sources/KT-authentication-and-sessions.md#portal-sso-ac-001)
-[Entra design, lines 7–31, 40–68](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
+[Entra design, lines 7–31, 40–68](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
 
 ## Scope boundaries
 Phase 1 of the migration covers UI SSO only. It excludes EMS2 replacement, portal session management, and tenant-onboarding authentication. Machine-to-machine authentication has a separate migration document with unresolved central dependencies. Profile attribute differences therefore sit inside the phase 1 SSO boundary but can still affect any downstream consumer of user attributes.
-[Entra phase 1, lines 15–21, 48–57](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md>)
-[Service-account migration, lines 1–10](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md>)
+[Entra phase 1, lines 15–21, 48–57](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md>)
+[Service-account migration, lines 1–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md>)
 
 ## Non-production checks
 The non-production verification guide requires a development AD account, Authenticator registration, and RATAN AD-group membership. It asks teams to check successful login, user information, and expected tile visibility. It does not name a profile-field comparison step.
-[Non-production verification guide, lines 5–56, 58–126](<../../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md>)
+[Non-production verification guide, lines 5–56, 58–126](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md>)
 
 ## Evidence limits
 - The supplied pilot documents have local byte revisions. Human publication review and the full downstream profile contract remain pending.

@@ -1,1 +1,1 @@
-../../candidates/interoperability/KT-application-interoperability.md
+../../records/candidates/interoperability/KT-application-interoperability.md

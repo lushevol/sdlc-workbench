@@ -124,7 +124,7 @@ Record deleted paths, hashes, prior Git revisions, and reasons in one cleanup re
 For an authorized relocation, preserve bytes and stable source identities in an old-to-new locator manifest.
 Archive the prior provenance manifest, update active snapshot paths, and append a relocation audit event.
 
-Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
+Use three primary inputs: canonical intent in `knowledge/records/`, registered repository code and tests, and investigation results.
 Read existing reports as additional evidence before asking users to repeat available information.
 Inspect registered repository code, test assertions, and retained executions at exact revisions.
 Always compare old and new behavior when analyzing requirement-to-implementation gaps.
@@ -147,7 +147,9 @@ Generated workspaces receive `tasks/README.md` without project task contents.
 
 ## Evidence and knowledge
 
-Keep `knowledge/` limited to business-domain Markdown records and navigation.
+Use one `knowledge/` parent with `records/` for canonical intent, `evidence/` for its supporting sources and governance, and `llm-wiki/` for derived navigation.
+High-priority source: [layout migration authorization, 13 November 2026](docs/evidence/knowledge-layout-assessment-20261113/implementation-request.md#exact-user-input).
+Keep `knowledge/records/` limited to business-domain Markdown records and navigation.
 Knowledge describes requirements, intent, and ideal target system behavior.
 Retain business terms, intended rules, workflows, requirements, decisions, contracts, and target business-system architecture.
 Business-system technical knowledge qualifies when it explains intended domain behavior or responsibilities.
@@ -159,10 +161,10 @@ High-priority source: [user clarification, 1 November 2026](docs/evidence/knowle
 Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
 Keep task investigations under `tasks/<task-id>/evidence/`.
 
-Store retained source snapshots under `evidence/knowledge/sources/` and their manifest at `evidence/knowledge/manifest.yaml`.
-Store governance findings and immutable audit events under `evidence/knowledge/findings/` and `evidence/knowledge/audit/`.
+Store retained source snapshots under `knowledge/evidence/sources/` and their manifest at `knowledge/evidence/manifest.yaml`.
+Store governance findings and immutable audit events under `knowledge/evidence/findings/` and `knowledge/evidence/audit/`.
 Keep record schemas and templates under `core/knowledge/`.
-Knowledge records can cite external evidence without copying it into `knowledge/`.
+Knowledge records can cite supporting evidence without copying it into `knowledge/records/`.
 
 Repositories, services, capabilities, contracts, sources, and executable tools have separate identities.
 Support many-to-many relationships through declared IDs and evidence links.
@@ -174,7 +176,7 @@ Preserve raw snapshot bytes and stable manifest source identities.
 Preserve previous manifest bytes when an explicitly authorized relocation changes snapshot locations.
 Add a new snapshot when a source changes.
 Preserve candidate knowledge and findings until investigation resolves them.
-Keep approved domain knowledge separate from candidates. Keep raw evidence outside `knowledge/`.
+Keep approved domain knowledge separate from candidates. Keep raw evidence outside `knowledge/records/`.
 Use the shipped schemas and templates for Workbench records.
 
 Record each governance change in a new audit event YAML file.
@@ -220,7 +222,7 @@ Use `sources plan` after refresh and selection; use `sources view --plan` for qu
 Load only queued sources, prior affected records, and necessary governing context into semantic review.
 Review former dependents when a source withdraws claims. Broaden discovery when declared relationships are incomplete.
 Record successful canonical processing with `sources complete`; selection or observed hashes alone do not establish completion.
-Keep processing receipts under `evidence/knowledge/processing/`; keep full planning baselines in ignored working storage.
+Keep processing receipts under `knowledge/evidence/processing/`; keep full planning baselines in ignored working storage.
 Plan wiki updates before engine dispatch. Skip unchanged inputs only when reviewed receipts and current outputs agree.
 Use exact canonical record selection for scoped wiki work. Missing completion evidence requires scoped review.
 Keep failed and partial work retryable. Do not advance receipts to conceal incomplete processing.
@@ -232,10 +234,10 @@ High-priority source: [implementation request, 11 November 2026](docs/evidence/i
 Layout correction: [cleanup authorization, 12 November 2026](docs/evidence/initial-ingestion-source-filter-20261111/user-layout-cleanup.md#exact-user-input).
 
 Use these processing stages: complete raw export → filtered source view → canonical knowledge → derived wiki.
-Accept complete exports in ignored `evidence/knowledge/incoming/COLLECTION/`. Do not create a separate top-level raw directory.
-Keep retained originals under `evidence/knowledge/sources/`. Preserve registered source snapshots and previous manifest records.
+Accept complete exports in ignored `knowledge/evidence/incoming/COLLECTION/`. Do not create a separate top-level raw directory.
+Keep retained originals under `knowledge/evidence/sources/`. Preserve registered source snapshots and previous manifest records.
 Use [prepare-knowledge-sources](.agents/skills/prepare-knowledge-sources/SKILL.md), [the command reference](.agents/skills/ingest-knowledge/references/source-preparation.md), and installed `ai-sdlc sources` commands.
-Keep selection metadata under `evidence/knowledge/selections/`. Generate filtered views only in ignored working storage.
+Keep selection metadata under `knowledge/evidence/selections/`. Generate filtered views only in ignored working storage.
 
 Apply [the source filter policy](.agents/skills/ingest-knowledge/assets/source-filter.yaml) through semantic source review.
 Select intended behavior, domain definitions, contracts, responsibilities, and behavior-relevant constraints.
@@ -265,7 +267,7 @@ Use [OpenKB](.agents/skills/openkb/SKILL.md) as primary only when both an LLM UR
 Use private `OPENAI_API_BASE` and `LLM_API_KEY` in the project KB `.env` or process environment.
 If either value is absent, use the unchanged llm-wiki-agent skill in the current ADE agent context.
 Keep the active compiled workspace at `knowledge/llm-wiki/` and link source inputs to canonical records.
-Reserve that directory for the single derived wiki, source aliases, state, and visualization; canonical knowledge validation, ingestion and service-graph projection exclude it and continue checking the original records.
+Reserve that directory for the single derived wiki, source aliases, state, and visualization; canonical knowledge validation, ingestion and service-graph projection select only `knowledge/records/` and keep evidence and wiki content separately typed.
 Validate its engine-specific format and source bindings with the bridge's `verify` command.
 In fallback mode, read llm-wiki-agent's original `AGENTS.md`, then apply the bridge's source-link and existing-layout constraints.
 Maintain summaries, concepts, entities, contradictions, and the index. Preserve OpenKB fields and use explorations for saved synthesis.

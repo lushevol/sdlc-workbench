@@ -1,1 +1,1 @@
-../../candidates/observability/KT-observability-and-performance.md
+../../records/candidates/observability/KT-observability-and-performance.md

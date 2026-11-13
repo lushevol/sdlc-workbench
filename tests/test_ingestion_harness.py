@@ -15,7 +15,7 @@ import yaml
 
 from ai_sdlc_workbench.governance.schemas import HEADINGS
 from ai_sdlc_workbench.ingestion.harness import main
-from ai_sdlc_workbench.workspace import initialize_workspace
+from tests.knowledge_fixtures import initialize_legacy_workspace as initialize_workspace
 
 
 class IngestionHarnessTests(unittest.TestCase):

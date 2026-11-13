@@ -6,7 +6,7 @@ description: "Portal API loading intent, historical frontend measurements, throu
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical basis: [current API loading limit](../../../candidates/observability/KT-observability-and-performance.md#current-api-loading-limit), [historical frontend measurement intent](../../../candidates/observability/KT-observability-and-performance.md#historical-frontend-measurement-intent), and [capacity evidence limits](../../../candidates/observability/KT-observability-and-performance.md#service-throughput-and-capacity-boundaries).
+Canonical basis: [current API loading limit](../../../records/candidates/observability/KT-observability-and-performance.md#current-api-loading-limit), [historical frontend measurement intent](../../../records/candidates/observability/KT-observability-and-performance.md#historical-frontend-measurement-intent), and [capacity evidence limits](../../../records/candidates/observability/KT-observability-and-performance.md#service-throughput-and-capacity-boundaries).
 
 # Frontend performance measurement and capacity evidence
 
@@ -22,11 +22,11 @@ Portal performance discussions mix several kinds of material: design proposals, 
 
 ### Current API loading limit
 
-The 12 November 2026 clarification gives a five-second API loading limit and specifies no mandatory UI performance metric. Covered API requests, timing boundaries, workload, environment, and measurement method remain open. [API performance criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-api-perf-ac-001)
+The 12 November 2026 clarification gives a five-second API loading limit and specifies no mandatory UI performance metric. Covered API requests, timing boundaries, workload, environment, and measurement method remain open. [API performance criterion](../../../records/candidates/observability/KT-observability-and-performance.md#portal-api-perf-ac-001)
 
 ### Historical draft targets
 
-The May 2023 frontend performance document lists draft targets of five-second response time, 100 users, CPU below 50 percent, and JavaScript heap below 80 percent. Its sign-off table has no attached approval or sign-off date. The named non-functional requirements export contains no substantive text. [Historical frontend measurement intent](../../../candidates/observability/KT-observability-and-performance.md#historical-frontend-measurement-intent)
+The May 2023 frontend performance document lists draft targets of five-second response time, 100 users, CPU below 50 percent, and JavaScript heap below 80 percent. Its sign-off table has no attached approval or sign-off date. The named non-functional requirements export contains no substantive text. [Historical frontend measurement intent](../../../records/candidates/observability/KT-observability-and-performance.md#historical-frontend-measurement-intent)
 
 ### Reported browser metrics
 

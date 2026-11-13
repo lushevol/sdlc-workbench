@@ -14,6 +14,7 @@ from ..artifact_lint import _FRONTMATTER
 from ..context.catalogs import UniqueKeyLoader
 from ..governance.validation import _NAVIGATION, _timestamp, is_derived_knowledge_path
 from ..models import WorkbenchError
+from ..knowledge_layout import knowledge_layout
 from ..validation import validate_workspace
 from .harness import _destinations
 from .sources import (
@@ -43,14 +44,14 @@ def _fingerprint(value):
     return _digest(_json(value))
 
 
-def _receipt_path(source_id):
-    _index_path(source_id)
-    return f"evidence/knowledge/processing/{source_id}.json"
+def _receipt_path(root, source_id):
+    _index_path(root, source_id)
+    return (knowledge_layout(root)[1] / "processing" / f"{source_id}.json").relative_to(root).as_posix()
 
 
 def _canonical_path(root, value):
     path = _local(root, value)
-    if (not value.startswith("knowledge/") or path.suffix.lower() != ".md"
+    if (not path.is_relative_to(knowledge_layout(root)[0]) or path.suffix.lower() != ".md"
             or is_derived_knowledge_path(path, root)):
         raise WorkbenchError("Processing outputs must be canonical Markdown paths outside the derived wiki.")
     return path
@@ -79,7 +80,7 @@ def _review(value):
 
 
 def _receipts(root, source_id, manifest):
-    path = _local(root, _receipt_path(source_id))
+    path = _local(root, _receipt_path(root, source_id))
     if not path.exists():
         return {"schema_version": 1, "source_id": source_id, "receipts": {}}
     state = _object(path)
@@ -143,7 +144,7 @@ def _receipts(root, source_id, manifest):
 
 def _canonical(root):
     hashes, citations, links, ids = {}, {}, {}, {}
-    base = _local(root, "knowledge")
+    base = _local(root, knowledge_layout(root)[0].relative_to(root).as_posix())
     for path in sorted(base.rglob("*")):
         if is_derived_knowledge_path(path, root):
             continue
@@ -220,7 +221,7 @@ def _capture(root, source_id):
     index = _index(root, source_id, manifest)
     if index is None:
         raise WorkbenchError("Refresh the source collection before planning canonical work.")
-    index_raw = _read(_local(root, _index_path(source_id)))
+    index_raw = _read(_local(root, _index_path(root, source_id)))
     receipts = _receipts(root, source_id, manifest)
     inputs = _local(root, index["input_root"])
     incoming = _inventory(root, index["input_root"]) if inputs.exists() else {}
@@ -488,9 +489,9 @@ def complete_sources(root: Path, source_id: str, plan_path: str, results_path: s
         applied = sum(prior_receipts.get(name) != receipt for name, receipt in updates.items())
         if applied:
             value = {**state["receipts"], "receipts": {**prior_receipts, **updates}}
-            _atomic(_local(root, _receipt_path(source_id)), _json(value))
+            _atomic(_local(root, _receipt_path(root, source_id)), _json(value))
         remaining_review = len(plan["review_queue"])
         return {"schema_version": 1, "status": "PARTIAL" if remaining or remaining_review else "COMPLETED", "source_id": source_id,
-                "plan_id": plan["plan_id"], "receipts": _receipt_path(source_id), "completed": len(updates),
+                "plan_id": plan["plan_id"], "receipts": _receipt_path(root, source_id), "completed": len(updates),
                 "written": applied, "remaining": remaining, "remaining_process": remaining, "remaining_review": remaining_review,
                 "limits": list(_LIMITS)}

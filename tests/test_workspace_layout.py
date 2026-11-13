@@ -51,9 +51,9 @@ TASK_LOCAL_FILES = (
 )
 
 KNOWLEDGE_EVIDENCE_FILES = (
-    "evidence/knowledge/sources/private.txt",
-    "evidence/knowledge/audit/private.yaml",
-    "evidence/knowledge/findings/private.md",
+    "knowledge/evidence/sources/private.txt",
+    "knowledge/evidence/audit/private.yaml",
+    "knowledge/evidence/findings/private.md",
 )
 
 REPOSITORY_LOCAL_FILES = (
@@ -338,13 +338,13 @@ class WorkspaceLayoutTests(unittest.TestCase):
 
     def test_clean_initialization_has_the_requested_roots_without_business_fixtures(self):
         directories = (
-            "registry", "knowledge/requirements", "knowledge/architecture", "knowledge/decisions",
+            "registry", "knowledge/records/requirements", "knowledge/records/architecture", "knowledge/records/decisions",
             "relationships/requirement-code", "relationships/code-test", "relationships/service-dependencies",
             *(f".agents/skills/{identifier}" for identifier in CANONICAL_SKILL_IDS),
             "core/context", "core/relationships", "core/evidence", "core/execution",
             "adapters/claude-code", "adapters/copilot", "adapters/mcp",
-            "knowledge/candidates", "evidence/knowledge/audit", "evidence/knowledge/findings",
-            "evidence/knowledge/sources",
+            "knowledge/records/candidates", "knowledge/evidence/audit", "knowledge/evidence/findings",
+            "knowledge/evidence/sources",
             "core/knowledge/schemas", "core/knowledge/templates", "core/ingestion", "core/understanding",
             "core/governance", "adapters/sources", "tasks", "repos",
         )
@@ -358,7 +358,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
                          "docs/GHERKIN_QUALITY.md", "docs/examples/gherkin-session/session.md",
                          "docs/examples/gherkin-session/ambiguous.md", "docs/examples/gherkin-session/manifest.json",
                          "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md",
-                         "repos/README.md", "core/knowledge/README.md", "evidence/knowledge/README.md"):
+                         "repos/README.md", "core/knowledge/README.md", "knowledge/evidence/README.md"):
             self.assertTrue((self.root / relative).is_file(), relative)
         ignored = (self.root / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertTrue({".workbench/", "workspace.local.yaml"} <= set(ignored))
@@ -372,7 +372,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         for relative in ("knowledge/raw", "knowledge/audit", "knowledge/findings",
                          "knowledge/schemas", "knowledge/templates"):
             self.assertFalse((self.root / relative).exists(), relative)
-        self.assertEqual(yaml.safe_load((self.root / "evidence/knowledge/manifest.yaml").read_text()),
+        self.assertEqual(yaml.safe_load((self.root / "knowledge/evidence/manifest.yaml").read_text()),
                          {"schema_version": 1, "sources": []})
         self.assertTrue((self.root / "core/knowledge/schemas/requirement.schema.json").is_file())
         self.assertEqual(sorted(path.name for path in (self.root / "tasks").iterdir()), ["README.md"])
@@ -439,10 +439,10 @@ class WorkspaceLayoutTests(unittest.TestCase):
         configuration.update(plugins=["project.provider"], resources=[{**tool, "id": "inline-project-tool"}])
         (source / "workspace.yaml").write_text(yaml.safe_dump(configuration), encoding="utf-8")
         private_paths = (
-            "knowledge/raw/project-source.bin", "knowledge/candidates/project.md",
-            "knowledge/repository-profiles/project.md", "knowledge/audit/project.yaml",
-            "knowledge/findings/project.md", "knowledge/requirements/project.md",
-            "knowledge/architecture/project.md", "knowledge/decisions/project.md",
+            "knowledge/raw/project-source.bin", "knowledge/records/candidates/project.md",
+            "knowledge/records/repository-profiles/project.md", "knowledge/audit/project.yaml",
+            "knowledge/findings/project.md", "knowledge/records/requirements/project.md",
+            "knowledge/records/architecture/project.md", "knowledge/records/decisions/project.md",
             *BROWSER_LOCAL_FILES,
             *TASK_LOCAL_FILES,
             *REPOSITORY_LOCAL_FILES,
@@ -451,7 +451,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         for relative in private_paths:
             (source / relative).parent.mkdir(parents=True, exist_ok=True)
             (source / relative).write_bytes(b"Private project fixture bytes.\x00\xff\n")
-        (source / "evidence/knowledge/manifest.yaml").write_text(
+        (source / "knowledge/evidence/manifest.yaml").write_text(
             "schema_version: 1\nsources:\n- id: private-project-source\n", encoding="utf-8")
         before = {str(path.relative_to(source)): path.read_bytes()
                   for path in source.rglob("*") if path.is_file()}
@@ -463,7 +463,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(generated["resources"], [])
         self.assertEqual(resources, {})
         self.assertTrue(all(entries == [] for entries in generated["_catalogs"].values()))
-        self.assertEqual(yaml.safe_load((target / "evidence/knowledge/manifest.yaml").read_text()),
+        self.assertEqual(yaml.safe_load((target / "knowledge/evidence/manifest.yaml").read_text()),
                          {"schema_version": 1, "sources": []})
         for relative in private_paths:
             self.assertFalse((target / relative).exists(), relative)
@@ -666,7 +666,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(document["sha256"], hashlib.sha256(content).hexdigest())
         self.assertEqual(source.read_bytes(), content)
         self.assertEqual(list(outside.iterdir()), [source])
-        self.assertEqual(list((self.root / "knowledge/requirements").glob("payment.md")), [])
+        self.assertEqual(list((self.root / "knowledge/records/requirements").glob("payment.md")), [])
         self.assertEqual(workbench.run(action["id"])["result"], action["result"])
 
     def test_catalog_tool_grants_deny_and_retain_a_write_attempt(self):

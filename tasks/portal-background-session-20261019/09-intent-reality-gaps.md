@@ -23,7 +23,7 @@ writing_review:
 # Session renewal: intent and reality gaps
 
 The comparisons below use the 1 November target. The [12 November policy answer](../ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input) supersedes the earlier elapsed-time exception with a 60-minute absolute ceiling and a 15-minute idle ceiling.
-Use the [current requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) for new acceptance work. The retained comparisons address the earlier target and require reassessment against the current criteria.
+Use the [current requirement](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) for new acceptance work. The retained comparisons address the earlier target and require reassessment against the current criteria.
 
 The [13 November candidate review](../ui-test-coverage-20261022/05-knowledge-questions.md#candidate-review-completion) corrected inherited timing fixtures in requirement v9, AC-1 through AC-3. Those criteria now require eligible activity when renewal is due and success before access expiry and the absolute deadline; they prescribe no fixed activity cadence or renewal interval. Historical case definitions and execution results remain unchanged. Their earlier 100 ms, 15-second and 30-second setups do not establish current conformance. No new execution was performed in this knowledge review.
 
@@ -255,13 +255,13 @@ The review does not authenticate an actor or replace human approval.
 ### Historical security-note context
 
 The historical scan notes remain supporting context outside the six-row renewal inventory.
-The [2023 penetration notes, lines 5–15](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L5-L15>) list logout, access-control, headers, TLS, storage, and CORS findings.
-Their [remediation text, lines 23–29](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L23-L29>) reports removal of normal production login.
-Their [logout text, lines 47–50](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L47-L50>) reports session blacklisting.
+The [2023 penetration notes, lines 5–15](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L5-L15>) list logout, access-control, headers, TLS, storage, and CORS findings.
+Their [remediation text, lines 23–29](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L23-L29>) reports removal of normal production login.
+Their [logout text, lines 47–50](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md#L47-L50>) reports session blacklisting.
 These are historical reported changes, not approved target policy or current implementation verification.
 
-The [WAS notes, lines 31–53](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md#L31-L53>) report UAT header changes.
-The [API scan notes, lines 6–18](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023/page.md#L6-L18>) report Dev corrections planned for UAT in December 2023.
+The [WAS notes, lines 31–53](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md#L31-L53>) report UAT header changes.
+The [API scan notes, lines 6–18](<../../knowledge/evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023/page.md#L6-L18>) report Dev corrections planned for UAT in December 2023.
 Referenced scan screenshots are unavailable in the retained source copies checked here.
 No assertion-bearing security retest was inspected for those historical remediation claims.
 Owner: unknown security owner. Next action: obtain applicable policy, complete scan reports, deployment bindings, and retest evidence when required.

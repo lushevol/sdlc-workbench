@@ -6,7 +6,7 @@ description: "The portal's four-tier frontend composition model and how tiers lo
 
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
-Canonical basis: [four-layer clarification](../../../candidates/architecture/KT-frontend-composition.md#current-four-layer-clarification).
+Canonical basis: [four-layer clarification](../../../records/candidates/architecture/KT-frontend-composition.md#current-four-layer-clarification).
 
 # Microfrontend Layering
 

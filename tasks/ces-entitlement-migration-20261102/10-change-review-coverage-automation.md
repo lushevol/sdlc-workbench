@@ -46,7 +46,7 @@ writing_review:
 
 The user resolves FMO Portal Admin as an unlaunched non-production exception with no current account assignments.
 Its comparison remains lower priority and outside production denominators.
-The [candidate knowledge](../../knowledge/candidates/security/KT-ces-migration-parity.md) records this clarification and the four-concept mapping.
+The [candidate knowledge](../../knowledge/records/candidates/security/KT-ces-migration-parity.md) records this clarification and the four-concept mapping.
 
 ## Stage boundary and readiness
 
@@ -114,7 +114,7 @@ All additions below are implemented in the local candidate.
 | [Task configuration](coverage/config.json) | SHA-256 in the run binding. | Keep tenant endpoints, entity mappings, exclusions, and workbook paths outside shared defaults. | Moderate; mappings control comparison meaning. | unknown |
 | [Canonical cases](06-test-cases.md) | Version 3. | Define thirteen comparison, failure, recovery, isolation, and suite cases. | Low; actual outcomes remain separate. | unknown |
 | Four test modules | [Earlier suite](evidence/coverage-automation-20261103/unit-tests-all.log) and [mock validation](evidence/coverage-mock-20261103/validation.json). | Preserve 47 earlier checks and add default mock-isolation assertions. | Low; controlled services limit live claims. | unknown |
-| [Candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md) | Version 1; [audit](../../evidence/knowledge/audit/AUD-20261103-KT-ces-migration-parity-v1.yaml). | Preserve user clarification and source provenance. | Candidate only; publication remains pending. | unknown |
+| [Candidate intent](../../knowledge/records/candidates/security/KT-ces-migration-parity.md) | Version 1; [audit](../../knowledge/evidence/audit/AUD-20261103-KT-ces-migration-parity-v1.yaml). | Preserve user clarification and source provenance. | Candidate only; publication remains pending. | unknown |
 | [EMS2 environment runner](../../core/ems2_coverage.py) | Hashes in [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | Compare environment inventories and each discovered account while preserving entity identity. | Moderate; wrong environment routing could misstate parity. | unknown |
 | [Coverage suite](../../core/coverage_suite.py) | Hashes in the same validation. | Invoke both comparators, retain child failures, and render one dashboard. | Low; aggregate status must retain incomplete children. | unknown |
 | [Detailed report renderer](../../core/coverage_reporting.py) | Hashes in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). | Render the same result as complete Markdown and HTML. | Moderate; omitted rows, unsafe text, or misleading denominators could misstate evidence. | unknown |
@@ -155,7 +155,7 @@ Owner: unknown. Next action: compare report counts and rows with retained JSON.
 | --- | --- | --- | --- |
 | Run replay against supplied examples. | Checks supplied captures and retains unavailable accounts without enterprise access. | [Mock run](evidence/coverage-runs/mock-supplied-20261103/result.json). | Selected by the latest user instruction and default launcher. |
 | Run live collection. | Requires a different authorized environment and its own evidence boundary. | [Historical preflight](evidence/coverage-runs/live-access-check-unsandboxed/result.json). | Outside this session. No credential or CA action is requested. |
-| Accept catalog counts as complete migration proof. | Would omit assignments, extra grants, unavailable accounts, and data restrictions. | [Candidate evidence limits](../../knowledge/candidates/security/KT-ces-migration-parity.md#evidence-limits). | Unsupported by current evidence. |
+| Accept catalog counts as complete migration proof. | Would omit assignments, extra grants, unavailable accounts, and data restrictions. | [Candidate evidence limits](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#evidence-limits). | Unsupported by current evidence. |
 
 ## Proposed acceptance and validation
 
@@ -354,7 +354,7 @@ No new enterprise access or comparison execution occurred for this answer.
 | Finding | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- | --- |
 | Supplied responses cover only two paired users. | [Mock run](evidence/coverage-runs/mock-supplied-20261103/result.json). | The other 1,049 discovered accounts remain unassessed. | unknown | Preserve the sample limit and unavailable accounts; do not fabricate responses. |
-| Data restriction definitions are incomplete. | [Candidate open questions](../../knowledge/candidates/security/KT-ces-migration-parity.md#open-questions). | Full data-profile equality remains unassessed. | unknown | Obtain authoritative EMS2 field/value definitions. |
+| Data restriction definitions are incomplete. | [Candidate open questions](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#open-questions). | Full data-profile equality remains unassessed. | unknown | Obtain authoritative EMS2 field/value definitions. |
 | Discovery sources are bounded. | [Contract inspection](evidence/coverage-automation-20261103/contracts.json). | Accounts absent from both matrices and the CES catalog are outside demonstrated discovery coverage. | unknown | Supply an authoritative complete account inventory when available. |
 | Additional grants and source discrepancies need review. | [Mock differences](evidence/coverage-runs/mock-supplied-20261103/differences.csv). | Exact equal-content acceptance remains unresolved. | unknown | Review mappings, empty profiles, and catalog membership semantics. |
 

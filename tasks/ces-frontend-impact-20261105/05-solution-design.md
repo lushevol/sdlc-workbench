@@ -336,7 +336,7 @@ const tilePatch = {
 ```
 
 The global mode is the rollout control; stored per-tile source selects the transition route.
-FMO administrative role migration remains lower priority under the [recorded exception](../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
+FMO administrative role migration remains lower priority under the [recorded exception](../../knowledge/evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input).
 It still requires explicit backend maker/checker support before CES-only administration.
 
 At final cutover, set `EMS3_ONLY` and confirm all intended business tiles use CES configuration.

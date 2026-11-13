@@ -1,12 +1,14 @@
 """Exercise OpenKB's canonical-source boundary without its optional runtime."""
 
 from contextlib import nullcontext, redirect_stdout
+import builtins
 from dataclasses import dataclass
 import hashlib
 import importlib.util
 import io
 import json
 import os
+import subprocess
 from pathlib import Path
 import sys
 import tempfile
@@ -931,6 +933,285 @@ class OpenKBWorkflowTests(unittest.TestCase):
         fixed_tmp.write_text("An unrelated recovery marker")
         WIKI.save_json(path, {"fixture": True})
         self.assertEqual(fixed_tmp.read_text(), "An unrelated recovery marker")
+
+
+    def consolidate(self):
+        records = self.project / "knowledge/records"
+        records.mkdir()
+        self.candidates.rename(records / "candidates")
+        self.candidates = records / "candidates"
+        evidence = self.project / "knowledge/evidence"
+        evidence.mkdir()
+        (evidence / "manifest.yaml").write_text("schema_version: 1\nsources: []\n")
+
+    def test_consolidated_plan_only_reads_canonical_records_and_rejects_evidence_selection(self):
+        self.record()
+        self.consolidate()
+        evidence = self.project / "knowledge/evidence/sources/unreviewed.md"
+        evidence.parent.mkdir()
+        evidence.write_text("---\nid: NOT-CANONICAL\n---\nUnreviewed source.\n")
+        plan = WIKI.update_plan(self.project)
+        self.assertEqual([item["id"] for item in plan["records"]], ["TOPIC"])
+        self.assertEqual(plan["source"], "knowledge/records/candidates")
+        for source, selected in (("knowledge/evidence", ()),
+                                 ("knowledge", [evidence.relative_to(self.project).as_posix()])):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                WIKI.update_plan(self.project, source=source, selected=selected)
+
+    def test_standalone_layout_fallback_matches_runtime_and_rejects_ambiguous_manifests(self):
+        self.record()
+        original_import = builtins.__import__
+        def standalone_import(name, *args, **kwargs):
+            if name == "ai_sdlc_workbench.knowledge_layout":
+                raise ModuleNotFoundError("Synthetic standalone environment", name=name)
+            return original_import(name, *args, **kwargs)
+        with patch("builtins.__import__", side_effect=standalone_import):
+            self.assertEqual(WIKI.knowledge_roots(self.project)[0], self.project / "knowledge")
+            self.consolidate()
+            self.assertEqual(WIKI.knowledge_roots(self.project)[0], self.project / "knowledge/records")
+            legacy = self.project / "evidence/knowledge/manifest.yaml"
+            legacy.parent.mkdir(parents=True)
+            legacy.write_text("schema_version: 1\nsources: []\n")
+            with self.assertRaisesRegex(ValueError, "Both knowledge manifests"):
+                WIKI.update_plan(self.project)
+        with self.assertRaisesRegex(ValueError, "Both knowledge manifests"):
+            WIKI.update_plan(self.project)
+
+    def test_relocation_preserves_stale_hashes_completion_and_outputs_and_is_retryable(self):
+        source = self.record()
+        self.complete(source)
+        before, registry = WIKI.wiki_state(self.kb)
+        before_outputs = WIKI.output_hashes(self.kb)
+        old = source.relative_to(self.project).as_posix()
+        source.write_text(source.read_text() + "A preexisting business clarification not yet compiled.\n")
+        self.consolidate()
+        target = self.candidates / source.name
+        receipt = {"reason": "Synthetic path consolidation; pending semantic work remains pending.",
+                   "sources": [{"id": "TOPIC", "from": old,
+                                "to": target.relative_to(self.project).as_posix(), "sha256": WIKI.digest(target)}]}
+        with redirect_stdout(io.StringIO()):
+            result = WIKI.relocate_sources(self.project, receipt)
+            retry = WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(result, retry)
+        after, registry_after = WIKI.wiki_state(self.kb)
+        self.assertEqual(registry_after, registry)
+        expected = json.loads(json.dumps(before))
+        expected["sources"][0]["origin"] = receipt["sources"][0]["to"]
+        expected["incremental"]["completed"]["topic"]["origin"] = receipt["sources"][0]["to"]
+        self.assertEqual(after, expected)
+        self.assertEqual(WIKI.output_hashes(self.kb), before_outputs)
+        self.assertEqual(WIKI.update_plan(self.project)["counts"], {"changed": 1})
+        for relative in ("raw/topic.md", "wiki/sources/topic.md"):
+            link = self.kb / relative
+            self.assertEqual(link.resolve(), target)
+            self.assertFalse(os.path.isabs(os.readlink(link)))
+
+    def test_relocation_rejects_conflicting_links_without_changing_provenance(self):
+        source = self.record()
+        self.complete(source)
+        old = source.relative_to(self.project).as_posix()
+        self.consolidate()
+        target = self.candidates / source.name
+        link = self.kb / "raw/topic.md"
+        link.unlink()
+        link.symlink_to("../wiki/index.md")
+        before = self.state_bytes()
+        receipt = {"reason": "Synthetic migration.", "sources": [{"id": "TOPIC", "from": old,
+                   "to": target.relative_to(self.project).as_posix(), "sha256": WIKI.digest(target)}]}
+        with self.assertRaisesRegex(ValueError, "existing relative canonical alias"):
+            WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(self.state_bytes(), before)
+        self.assertEqual(os.readlink(link), "../wiki/index.md")
+
+    def test_relocation_restores_owned_aliases_and_binding_pair_after_failed_verification(self):
+        source = self.record()
+        self.complete(source)
+        old = source.relative_to(self.project).as_posix()
+        self.consolidate()
+        target = self.candidates / source.name
+        aliases = [self.kb / relative for relative in ("raw/topic.md", "wiki/sources/topic.md")]
+        before_links = [os.readlink(link) for link in aliases]
+        before = self.state_bytes()
+        receipt = {"reason": "Synthetic migration.", "sources": [{"id": "TOPIC", "from": old,
+                   "to": target.relative_to(self.project).as_posix(), "sha256": WIKI.digest(target)}]}
+        outputs = WIKI.output_hashes(self.kb)
+        with patch.object(WIKI, "output_hashes", side_effect=[outputs, outputs, {"changed": "fixture"}]), \
+                self.assertRaisesRegex(ValueError, "Derived output bytes changed"):
+            WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(self.state_bytes(), before)
+        self.assertEqual([os.readlink(link) for link in aliases], before_links)
+
+
+    def locator_migration_fixture(self, *, bootstrap=False, stale=False, alias=False):
+        source = self.record(body="See [policy](../../evidence/knowledge/sources/policy.md).\n")
+        policy = self.project / "evidence/knowledge/sources/policy.md"
+        policy.parent.mkdir(parents=True)
+        policy.write_text("An original policy.\n")
+        async def compile_links(doc_name, *args, **kwargs):
+            text = "See [canonical](../../../candidates/topic.md).\n"
+            if alias:
+                text += "See [alias](../sources/topic.md).\n"
+            self.derived("wiki/summaries/topic.md", text)
+            self.derived("wiki/index.md", "[[summaries/topic]]\n")
+        self.compiler.side_effect = compile_links
+        self.compile()
+        self.review(self.receipt([source]))
+        manifest, registry = WIKI.wiki_state(self.kb)
+        before_sha = WIKI.digest(source)
+        if bootstrap:
+            manifest["incremental"]["completed"].pop("topic")
+            manifest["incremental"]["outputs"].pop("wiki/summaries/topic.md")
+        manifest["incremental"]["attempts"]["topic"] = {"status": "failed", "sha256": before_sha, "recipe": "pending-fixture"}
+        if stale:
+            manifest["sources"][0]["sha256"] = "f" * 64
+            registry["f" * 64] = registry.pop(before_sha)
+        WIKI.save_json(self.manifest_path, manifest)
+        WIKI.save_json(self.registry_path, registry)
+        for args in (["init", "--quiet"], ["add", "knowledge", "evidence"],
+                     ["-c", "user.name=Synthetic fixture", "-c", "user.email=fixture@example.invalid", "commit", "--quiet", "-m", "Fixture baseline"]):
+            subprocess.run(["git", *args], cwd=self.project, capture_output=True, check=True)
+        revision = subprocess.run(["git", "rev-parse", "HEAD"], cwd=self.project, capture_output=True, text=True, check=True).stdout.strip()
+        old = source.relative_to(self.project).as_posix()
+        summary = self.kb / "wiki/summaries/topic.md"
+        output_before = WIKI.digest(summary)
+        self.consolidate()
+        target = self.candidates / source.name
+        target.write_text(target.read_text().replace("../../evidence/knowledge/sources/policy.md", "../../evidence/sources/policy.md"))
+        new_policy = self.project / "knowledge/evidence/sources/policy.md"
+        new_policy.parent.mkdir()
+        policy.rename(new_policy)
+        summary.write_text(summary.read_text().replace("../../../candidates/topic.md", "../../../records/candidates/topic.md"))
+        mapping = {"source_revision": revision, "entries": [
+            {"old": old, "new": target.relative_to(self.project).as_posix()},
+            {"old": "evidence/knowledge/sources/policy.md", "new": "knowledge/evidence/sources/policy.md"}]}
+        (self.project / "relocation-map.json").write_text(json.dumps(mapping))
+        receipt = {"reason": "Proven synthetic locator migration.", "baseline_revision": revision,
+                   "locator_map": "relocation-map.json", "sources": [{"id": "TOPIC", "from": old,
+                   "to": target.relative_to(self.project).as_posix(), "before_sha256": before_sha,
+                   "sha256": WIKI.digest(target)}], "outputs": [{"path": "wiki/summaries/topic.md",
+                   "before_sha256": output_before, "sha256": WIKI.digest(summary)}]}
+        return receipt, target, manifest
+
+    def test_proven_locator_rebinding_preserves_missing_receipts_and_pending_attempts(self):
+        receipt, target, before = self.locator_migration_fixture(bootstrap=True)
+        with redirect_stdout(io.StringIO()):
+            WIKI.relocate_sources(self.project, receipt)
+            WIKI.relocate_sources(self.project, receipt)
+        after, registry = WIKI.wiki_state(self.kb)
+        self.assertEqual(after["sources"][0]["sha256"], WIKI.digest(target))
+        self.assertIn(WIKI.digest(target), registry)
+        self.assertNotIn("topic", after["incremental"]["completed"])
+        self.assertNotIn("wiki/summaries/topic.md", after["incremental"]["outputs"])
+        self.assertEqual(after["incremental"]["attempts"], before["incremental"]["attempts"])
+
+    def test_proven_locator_rebinding_updates_only_existing_matching_hashes(self):
+        receipt, target, before = self.locator_migration_fixture()
+        with redirect_stdout(io.StringIO()):
+            WIKI.relocate_sources(self.project, receipt)
+        after, _ = WIKI.wiki_state(self.kb)
+        completion = after["incremental"]["completed"]["topic"]
+        self.assertEqual(completion["sha256"], WIKI.digest(target))
+        self.assertEqual(completion["reviewed_by"], before["incremental"]["completed"]["topic"]["reviewed_by"])
+        self.assertEqual(after["incremental"]["outputs"]["wiki/summaries/topic.md"]["sha256"], receipt["outputs"][0]["sha256"])
+        self.assertEqual(after["incremental"]["attempts"], before["incremental"]["attempts"])
+
+    def test_locator_proof_rejects_actual_prose_changes(self):
+        receipt, target, _ = self.locator_migration_fixture()
+        target.write_text(target.read_text() + "A changed business rule.\n")
+        receipt["sources"][0]["sha256"] = WIKI.digest(target)
+        before = self.state_bytes()
+        with self.assertRaisesRegex(ValueError, "outside Markdown destinations"):
+            WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(self.state_bytes(), before)
+
+    def test_locator_proof_does_not_advance_preexisting_stale_hashes(self):
+        receipt, _, _ = self.locator_migration_fixture(stale=True)
+        before = self.state_bytes()
+        with self.assertRaisesRegex(ValueError, "preexisting stale source binding"):
+            WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(self.state_bytes(), before)
+
+
+    def test_consolidated_canonical_root_cannot_alias_the_evidence_tree(self):
+        self.record()
+        self.consolidate()
+        records = self.project / "knowledge/records"
+        records.rename(self.project / "real-records")
+        records.symlink_to("evidence", target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, "roots must not use symbolic links"):
+            WIKI.update_plan(self.project)
+
+    def test_locator_proof_rejects_malformed_output_mappings(self):
+        receipt, _, _ = self.locator_migration_fixture()
+        receipt["outputs"] = ["wiki/summaries/topic.md"]
+        before = self.state_bytes()
+        with self.assertRaisesRegex(ValueError, "Output relocation mappings require"):
+            WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(self.state_bytes(), before)
+
+
+    def test_locator_proof_cannot_rebind_changed_link_literals_inside_code(self):
+        path = self.candidates / "literal.md"
+        relative = path.relative_to(self.project).as_posix()
+        for template in ("`[literal](../OLD.md)`\n", "```text\n[literal](../OLD.md)\n```\n",
+                         "    [literal](../OLD.md)\n", "<code>[literal](../OLD.md)</code>\n"):
+            before = template.replace("OLD", "old").encode()
+            after = template.replace("OLD", "new").encode()
+            path.write_bytes(after)
+            with self.subTest(template=template), \
+                    patch.object(WIKI.subprocess, "run", return_value=SimpleNamespace(stdout=before)), \
+                    self.assertRaisesRegex(ValueError, "outside Markdown destinations"):
+                WIKI.prove_locator_change(self.project, "a" * 40, relative, relative,
+                    hashlib.sha256(before).hexdigest(), hashlib.sha256(after).hexdigest(),
+                    {"knowledge/old.md": "knowledge/new.md"})
+
+
+    def test_locator_proof_rejects_absolute_target_without_advancing_existing_completion(self):
+        receipt, target, _ = self.locator_migration_fixture()
+        absolute = (self.project / "knowledge/evidence/sources/policy.md").as_posix()
+        target.write_text(target.read_text().replace("../../evidence/sources/policy.md", absolute))
+        receipt["sources"][0]["sha256"] = WIKI.digest(target)
+        before = self.state_bytes()
+        with self.assertRaisesRegex(ValueError, "workspace-relative local destinations"):
+            WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(self.state_bytes(), before)
+
+    def test_locator_proof_rejects_encoded_absolute_windows_and_escaping_destinations(self):
+        path = self.candidates / "literal.md"
+        relative = path.relative_to(self.project).as_posix()
+        before = b"See [policy](../old.md).\n"
+        for destination in ("%2Ftmp/policy.md", "C%3A/policy.md", "..%5Cpolicy.md", "../../../../outside.md"):
+            after = f"See [policy]({destination}).\n".encode()
+            path.write_bytes(after)
+            with self.subTest(destination=destination), \
+                    patch.object(WIKI.subprocess, "run", return_value=SimpleNamespace(stdout=before)), \
+                    self.assertRaises(ValueError):
+                WIKI.prove_locator_change(self.project, "a" * 40, relative, relative,
+                    hashlib.sha256(before).hexdigest(), hashlib.sha256(after).hexdigest(),
+                    {"knowledge/old.md": "knowledge/new.md"})
+
+    def test_locator_proof_keeps_unchanged_alias_identity_before_alias_relocation(self):
+        receipt, target, _ = self.locator_migration_fixture(alias=True)
+        alias = self.kb / "wiki/sources/topic.md"
+        self.assertNotEqual(alias.resolve(), target)
+        with redirect_stdout(io.StringIO()):
+            WIKI.relocate_sources(self.project, receipt)
+        self.assertEqual(alias.resolve(), target)
+        after, _ = WIKI.wiki_state(self.kb)
+        self.assertEqual(after["incremental"]["completed"]["topic"]["sha256"], WIKI.digest(target))
+
+
+    def test_locator_proof_cannot_rebind_markdown_shaped_metadata_values(self):
+        path = self.candidates / "metadata.md"
+        relative = path.relative_to(self.project).as_posix()
+        before = b'---\nid: TOPIC\nsummary: "[literal](../old.md)"\n---\nA rule.\n'
+        after = before.replace(b"../old.md", b"../new.md")
+        path.write_bytes(after)
+        with patch.object(WIKI.subprocess, "run", return_value=SimpleNamespace(stdout=before)), \
+                self.assertRaisesRegex(ValueError, "outside Markdown destinations"):
+            WIKI.prove_locator_change(self.project, "a" * 40, relative, relative,
+                hashlib.sha256(before).hexdigest(), hashlib.sha256(after).hexdigest(),
+                {"knowledge/old.md": "knowledge/new.md"})
 
 
 if __name__ == "__main__":

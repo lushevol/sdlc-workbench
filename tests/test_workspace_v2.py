@@ -82,7 +82,7 @@ class WorkspaceV2Tests(unittest.TestCase):
         self.assertFalse((self.root / ".workbench").exists())
 
     def test_validation_reports_invalid_configuration_and_knowledge(self):
-        (self.root / "knowledge/requirements/REQ-invalid.md").write_text(
+        (self.root / "knowledge/records/requirements/REQ-invalid.md").write_text(
             "# Requirement without metadata\n", encoding="utf-8")
         output = io.StringIO()
         with redirect_stdout(output):

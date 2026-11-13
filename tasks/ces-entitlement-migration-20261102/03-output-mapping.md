@@ -356,8 +356,8 @@ Code-to-test evidence remains partial; this document supplies no new passing-exe
 
 ### Knowledge-update log
 
-The confirmed rename remains recorded in [KT-sdk-and-entitlements v7](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration).
-Its [audit event](../../evidence/knowledge/audit/AUD-20261030-KT-sdk-and-entitlements-v7.yaml) and source provenance remain unchanged.
+The confirmed rename remains recorded in [KT-sdk-and-entitlements v7](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration).
+Its [audit event](../../knowledge/evidence/audit/AUD-20261030-KT-sdk-and-entitlements-v7.yaml) and source provenance remain unchanged.
 This request consolidates existing findings and adds no new business-policy answer.
 No additional governed record update or publication is required for this presentation change.
 

@@ -12,7 +12,7 @@ class PortalKnowledgeBoundaryTests(unittest.TestCase):
         return (ROOT / relative).read_text(encoding="utf-8")
 
     def test_session_fixture_is_removed_from_policy_but_retained_as_evidence(self):
-        requirement = self.read("knowledge/candidates/requirements/REQ-active-session-renewal.md")
+        requirement = self.read("knowledge/records/candidates/requirements/REQ-active-session-renewal.md")
         criteria = requirement.split("## Acceptance criteria", 1)[1].split("Owner:", 1)[0]
         for fixture in ("100 milliseconds", "15 seconds", "30 seconds"):
             self.assertNotIn(fixture, criteria)

@@ -27,7 +27,7 @@ Conflating them produces policies that either expire active users or silently ex
 
 ## Current session ceilings
 
-The user attributed two ceilings to ICS bank security policy: at most 15 minutes idle and at most 60 minutes absolute from portal authentication. The absolute limit applies during eligible activity and renewal. RATAN owns and reviews portal policy. The [current requirement](../../../candidates/requirements/REQ-active-session-renewal.md#intended-scope) records the source and the remaining review limits.
+The user attributed two ceilings to ICS bank security policy: at most 15 minutes idle and at most 60 minutes absolute from portal authentication. The absolute limit applies during eligible activity and renewal. RATAN owns and reviews portal policy. The [current requirement](../../../records/candidates/requirements/REQ-active-session-renewal.md#intended-scope) records the source and the remaining review limits.
 
 ## Historical proposals and their conflicts
 

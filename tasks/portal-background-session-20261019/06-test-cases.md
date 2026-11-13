@@ -93,7 +93,7 @@ The [execution report](10-release-readiness.md#execution-evidence) summarizes re
 The [prior review](10-issue-catalog.md#findings) explains earlier change impact and network sequences.
 Existing outcomes retain their original implementation and test bindings. New Blotter observation cases have separate execution bindings.
 
-The requirement remains [candidate version 5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+The requirement remains [candidate version 5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 No acceptance waiver or policy change is recorded. The [frozen aliases](#frozen-regression-aliases) map earlier proposed scopes.
 The [input hashes](evidence/canonical-gherkin-20261021/inputs.json) identify the requirement, intake, reports, and active checkout.
 
@@ -205,7 +205,7 @@ The [frozen alias table](#frozen-regression-aliases) links earlier TC identifier
 
 **Continuous mouse activity renews access**
 
-Definition version: `1`. Criterion: [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L137).
+Definition version: `1`. Criterion: [AC-1](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L137).
 
 Use the fast fixture: 60-second access and 144-second refresh lifetimes. These values define test data, not production policy.
 
@@ -246,7 +246,7 @@ Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/brow
 
 **Continuous keyboard activity renews access**
 
-Definition version: `1`. Criterion: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L144).
+Definition version: `1`. Criterion: [AC-2](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L144).
 
 Use the fast fixture: 60-second access and 144-second refresh lifetimes. These values define test data, not production policy. The input selector is `input[aria-label="Workspace Name"]`.
 
@@ -287,7 +287,7 @@ Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/brow
 
 **Continuous scroll activity renews access**
 
-Definition version: `1`. Criterion: [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L151).
+Definition version: `1`. Criterion: [AC-3](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L151).
 
 Use the fast fixture: 60-second access and 144-second refresh lifetimes. These values define test data, not production policy. The panel selector is `[role=tabpanel]:not([hidden]) .tabmain`.
 
@@ -328,7 +328,7 @@ Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/brow
 
 **Pending Extend closes the Timeout prompt only after successful renewal**
 
-Definition version: `1`. Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166), [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173), and [TC-01](intake.md#L263).
+Definition version: `1`. Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L166), [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L173), and [TC-01](intake.md#L263).
 
 Use the fast fixture. Hold the actual relogin request before dispatch for 1,500 milliseconds. Forward it without token fabrication.
 
@@ -379,7 +379,7 @@ Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/brow
 
 **A transport failure leaves Extend available for actual-service retry**
 
-Definition version: `1`. Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L180) and [TC-02](intake.md#L264).
+Definition version: `1`. Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L180) and [TC-02](intake.md#L264).
 
 Use the fast fixture. Abort only the first relogin request. Hold the retry for 1,500 milliseconds before actual service dispatch.
 
@@ -432,7 +432,7 @@ Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/brow
 
 **Continued activity crosses the initial refresh expiry in real time**
 
-Definition version: `1`. Partial criterion probe: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158). The four-hour controlled-clock assertion remains separate.
+Definition version: `1`. Partial criterion probe: [AC-4](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L158). The four-hour controlled-clock assertion remains separate.
 
 Use the fast fixture and real wall time. Mouse activity occurs every requested 10 seconds through initial refresh expiry plus 30 seconds.
 
@@ -479,7 +479,7 @@ Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/brow
 
 **A naturally hidden session supports held Extend after thirty minutes**
 
-Definition version: `1`. Criteria: [TC-03](intake.md#L265), [TC-06](intake.md#L268), [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166), and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173).
+Definition version: `1`. Criteria: [TC-03](intake.md#L265), [TC-06](intake.md#L268), [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L166), and [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L173).
 
 Use natural-fixture credentials: 900-second access and 13,524-second refresh lifetimes. Both sessions use identical revisions and settings.
 
@@ -588,7 +588,7 @@ Physical UI and native lifecycle remain unverified while macOS is locked.
 
 **Rapid native Extend activations share one renewal**
 
-Definition version: `1`. Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166) and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173).
+Definition version: `1`. Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L166) and [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L173).
 
 Use the fast fixture. Hold relogin before dispatch. Attempt the second activation at the rendered Extend button center.
 
@@ -641,7 +641,7 @@ Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/brow
 
 **Keyboard Enter activates Extend with completion-aware prompt closure**
 
-Definition version: `1`. Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166) and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173).
+Definition version: `1`. Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L166) and [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L173).
 
 Use the fast fixture. Focus Extend explicitly. Hold actual relogin for 1,500 milliseconds before service dispatch.
 
@@ -1332,7 +1332,7 @@ Natural freezing and deployed provider behavior remain untested. Raw `heldRefres
 
 Definition version: `1`. Scope: supplemental recovery probe, outside the original 22-case suite.
 Related criteria: [TC-03](intake.md#L265) and [TC-06](intake.md#L268).
-This probe records closure ordering. It does not assert [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166).
+This probe records closure ordering. It does not assert [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L166).
 
 Use natural-fixture credentials: 900-second access and 13,524-second refresh lifetimes.
 Use separate native browser contexts for the hidden subject and visible idle control.
@@ -1432,7 +1432,7 @@ No new execution occurred while this catalog was written.
 
 Title: preserve active access across the initial refresh expiry.
 Definition version: 1. Level: controlled Home and Timeout integration.
-Intent: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158-L162), candidate requirement version 4.
+Intent: [AC-4](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L158-L162), candidate requirement version 4.
 Original mapping: [E2E-06](#e2e-06) checks the related shortened browser boundary.
 This controlled case reaches the exact four-hour fixture boundary. It does not replace the browser case.
 Finding: [F-01](10-issue-catalog.md#findings).
@@ -1667,7 +1667,7 @@ Owner: unknown application owner. Next action: retain this unchanged failure whe
 
 Title: enable manual recovery when scheduled refresh delivery follows access expiry.
 Definition version: 1. Level: controlled Home, Timeout, and service integration.
-Intent: [required background-recovery scope](10-release-readiness.md#current-task-state) and successful manual renewal under [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
+Intent: [required background-recovery scope](10-release-readiness.md#current-task-state) and successful manual renewal under [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
 The exact late-delivery expectation is a source-backed review expectation. The candidate requirement has publication review pending.
 Original mapping: [TC-03](intake.md#L265), [TC-06](intake.md#L268), and the separate [PROBE-DELAYED-REFRESH](#probe-delayed-refresh) investigation.
 
@@ -1724,7 +1724,7 @@ Owner: unknown application owner; user for acceptance. Next action: retain inher
 
 Title: renew access when hide-triggered refresh arrives after access expiry.
 Definition version: 1. Level: controlled Home and Timeout integration.
-Intent: [required background-recovery scope](10-release-readiness.md#current-task-state) and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
+Intent: [required background-recovery scope](10-release-readiness.md#current-task-state) and [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
 Original test mapping: `[KNOWN-DEFECT]` case at the new revision. Related browser scopes are [E2E-07](#e2e-07) and [PROBE-DELAYED-REFRESH](#probe-delayed-refresh).
 
 Setup: use 15-minute access, no refresh credential, a 25-second acquisition lead, and a held refresh response.
@@ -1839,7 +1839,7 @@ Reading order:
 
 Assertion implementation: [retained driver](evidence/uat-blotter-browser-20261021/browser/blotter-visible-01/runner.mjs.snapshot).
 Actual result: **PASSED**, three assertions. [Execution](evidence/uat-blotter-browser-20261021/browser/blotter-visible-01/result.json).
-Business intent remains the [candidate criteria](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+Business intent remains the [candidate criteria](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 
 ### UAT-BLOTTER-HIDDEN
 
@@ -2396,7 +2396,7 @@ Owner: unknown business owner. Next action: define these outcomes before assigni
 
 These cases extend [REVIEW-F01](#review-f01) with replacement credentials and later recovery.
 Definition version: `1`. Level: controlled Home, Timeout, reducer, and Axios integration in JSDOM.
-Intent: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158-L162), candidate requirement version 4.
+Intent: [AC-4](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L158-L162), candidate requirement version 4.
 The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) bind the original source and authorized correction.
 The [candidate source binding](evidence/active-cutoff-fix-20261024/setup/source-binding.json) identifies the working implementation.
 These cases do not replace the original browser [E2E-06](#e2e-06).
@@ -2680,7 +2680,7 @@ Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/brow
 ### FIX-DELAYED-BROWSER-SCHEDULED
 
 Definition version: 1. Level: native browser and actual local authentication service.
-Intent: [REVIEW-DELAYED-SCHEDULED](#review-delayed-scheduled), [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166), and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173).
+Intent: [REVIEW-DELAYED-SCHEDULED](#review-delayed-scheduled), [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L166), and [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L173).
 Assertions: `assertDelayedScheduledRefreshRecovery` in the [retained extension](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot).
 Setup: use the fast local profile. Access lifetime is one minute. Acquisition starts 25 seconds before expiry.
 
@@ -3527,7 +3527,7 @@ The definitions extend existing criteria. They introduce no new production durat
 
 Title: retain the portal through four controlled hours of accepted activity.
 Level: controlled browser integration with the actual MFE, root composition, DOM, store, and HTTP interceptors.
-Intent: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria), requirement candidate version 5.
+Intent: [AC-4](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria), requirement candidate version 5.
 Actor: Playwright drives headless Edge. The fixture controls browser time and authentication responses.
 Setup: perform local sign-in through the actual form and retain its noncredential response fields.
 Return synthetic access credentials valid for fifteen minutes and initial refresh credentials valid for two hours.
@@ -4129,7 +4129,7 @@ Case priorities are test-planning proposals. They do not replace recorded busine
 
 Use case: [UC-R01](03-use-cases-renewal.md#uc-r01). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187)
+Criteria: [AC-1](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L187)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4154,7 +4154,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R01](03-use-cases-renewal.md#uc-r01). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+Criteria: [AC-2](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L194)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4179,7 +4179,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R01](03-use-cases-renewal.md#uc-r01). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+Criteria: [AC-3](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L201)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4204,7 +4204,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187), [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194), [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+Criteria: [AC-1](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L187), [AC-2](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L194), [AC-3](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L201)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4228,7 +4228,7 @@ Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity fai
 
 Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+Criteria: [AC-2](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L194)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4252,7 +4252,7 @@ Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity fai
 
 Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+Criteria: [AC-3](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L201)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4420,7 +4420,7 @@ Execution: `NOT_RUN`. Limits: Activity eligibility or acceptance for this input 
 
 Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+Criteria: [AC-2](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L194)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4902,7 +4902,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4926,7 +4926,7 @@ Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding a
 
 Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223)
+Criteria: [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L223)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4951,7 +4951,7 @@ Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding a
 
 Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -4976,7 +4976,7 @@ Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding a
 
 Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5001,7 +5001,7 @@ Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding a
 
 Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5197,7 +5197,7 @@ Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding a
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5222,7 +5222,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5247,7 +5247,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5272,7 +5272,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5297,7 +5297,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5322,7 +5322,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5347,7 +5347,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5372,7 +5372,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5397,7 +5397,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5422,7 +5422,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5447,7 +5447,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5472,7 +5472,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -5497,7 +5497,7 @@ Execution: `NOT_RUN`. Limits: New definition; executable binding and target exec
 
 Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6429,7 +6429,7 @@ Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts 
 
 Use case: [UC-R14](03-use-cases-renewal.md#uc-r14). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208)
+Criteria: [AC-4](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L208)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6743,7 +6743,7 @@ Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage 
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6769,7 +6769,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6795,7 +6795,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6821,7 +6821,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6847,7 +6847,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6873,7 +6873,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6899,7 +6899,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6925,7 +6925,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6951,7 +6951,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -6977,7 +6977,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7003,7 +7003,7 @@ Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Re
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L90-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7028,7 +7028,7 @@ Execution: `NOT_RUN`. Limits: A maximum request duration and pending-state recov
 
 Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `observed`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7640,7 +7640,7 @@ Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniquen
 
 Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216)
 
 Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7667,7 +7667,7 @@ Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniquen
 
 Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223)
+Criteria: [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L223)
 
 Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7695,7 +7695,7 @@ Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniquen
 
 Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7839,7 +7839,7 @@ Acceptance: BLOCKED. Policy gap: External FDC3 intent eligibility and queuing du
 
 Use case: [UC-W06](03-use-cases-renewal.md#uc-w06). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187)
+Criteria: [AC-1](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L187)
 
 Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [REQ-active-session-renewal.md](evidence/comprehensive-renewal-20261028/sources/3db69ca6827b/REQ-active-session-renewal.md#L165-L242). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7865,7 +7865,7 @@ Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniquen
 
 Use case: [UC-W06](03-use-cases-renewal.md#uc-w06). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+Criteria: [AC-2](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L194)
 
 Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [REQ-active-session-renewal.md](evidence/comprehensive-renewal-20261028/sources/3db69ca6827b/REQ-active-session-renewal.md#L165-L242). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -7891,7 +7891,7 @@ Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniquen
 
 Use case: [UC-W06](03-use-cases-renewal.md#uc-w06). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+Criteria: [AC-3](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L201)
 
 Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [REQ-active-session-renewal.md](evidence/comprehensive-renewal-20261028/sources/3db69ca6827b/REQ-active-session-renewal.md#L165-L242). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -10319,7 +10319,7 @@ Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is
 
 Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `browser-e2e`. Evidence class: `proposed-security`.
 
-Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L110). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -11117,7 +11117,7 @@ Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is
 
 Use case: [UC-X01](03-use-cases-renewal.md#uc-x01). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+Criteria: [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L223), [AC-7](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L230)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L79-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L15-L54); [renewal-loop-e2e.mjs](evidence/comprehensive-renewal-20261028/sources/209e83f359a0/renewal-loop-e2e.mjs#L55-L63). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 
@@ -11151,7 +11151,7 @@ Results: [retained execution](evidence/comprehensive-renewal-20261028/rn-x001/re
 
 Use case: [UC-X02](03-use-cases-renewal.md#uc-x02). Level: `browser-e2e`. Evidence class: `target`.
 
-Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223)
+Criteria: [AC-5](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-6](../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L223)
 
 Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L79-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L15-L54); [renewal-loop-e2e.mjs](evidence/comprehensive-renewal-20261028/sources/209e83f359a0/renewal-loop-e2e.mjs#L64-L68). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
 

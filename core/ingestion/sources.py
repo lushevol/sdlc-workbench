@@ -19,11 +19,11 @@ from ..governance.schemas import RAW_MANIFEST_SCHEMA
 from ..artifact_lint import _FRONTMATTER
 from ..governance.validation import _timestamp, is_derived_knowledge_path
 from ..models import WorkbenchError, validate_arguments
+from ..knowledge_layout import knowledge_layout
 from ..workspace import load_workspace
 
 
 _POLICY = ".agents/skills/ingest-knowledge/assets/source-filter.yaml"
-_MANIFEST = "evidence/knowledge/manifest.yaml"
 _HASH = re.compile(r"[a-f0-9]{64}\Z")
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,79}\Z")
 _DECISIONS = {"KEEP", "KEEP_SECTIONS", "EVIDENCE_ONLY", "EXCLUDE", "HOLD"}
@@ -87,14 +87,14 @@ def _hash(value):
     return isinstance(value, str) and bool(_HASH.fullmatch(value))
 
 
-def _index_path(source_id):
+def _index_path(root, source_id):
     if not isinstance(source_id, str) or not _ID.fullmatch(source_id):
         raise WorkbenchError("Use a registered source ID without path separators.")
-    return f"evidence/knowledge/selections/{source_id}.json"
+    return (knowledge_layout(root)[1] / "selections" / f"{source_id}.json").relative_to(root).as_posix()
 
 
 def _collection(root, source_id):
-    _index_path(source_id)
+    _index_path(root, source_id)
     configuration, _ = load_workspace(root)
     entry = next((item for item in configuration.get("_catalogs", {}).get("sources", [])
                   if item["id"] == source_id), None)
@@ -111,7 +111,7 @@ def _policy(root, path):
 
 
 def _manifest(root):
-    path = _local(root, _MANIFEST)
+    path = _local(root, (knowledge_layout(root)[1] / "manifest.yaml").relative_to(root).as_posix())
     raw = _read(path)
     value = _object(path)
     validate_arguments(value, RAW_MANIFEST_SCHEMA, "source manifest")
@@ -128,8 +128,9 @@ def _manifest(root):
         _timestamp(record["ingested_at"])
         if "snapshot" in record:
             snapshot = _local(root, record["snapshot"])
-            if snapshot.is_relative_to(root / "knowledge"):
-                raise WorkbenchError("Retained source snapshots must remain outside knowledge.")
+            if (snapshot.is_relative_to(knowledge_layout(root)[0])
+                    or is_derived_knowledge_path(snapshot, root)):
+                raise WorkbenchError("Retained source snapshots must remain outside canonical knowledge records.")
     return value, raw
 
 
@@ -141,8 +142,8 @@ def _binding(record):
 
 def _snapshot(root, source):
     path = _local(root, source["snapshot"])
-    if path.is_relative_to(root / "knowledge"):
-        raise WorkbenchError("Prepared source snapshots must remain outside knowledge.")
+    if path.is_relative_to(knowledge_layout(root)[0]) or is_derived_knowledge_path(path, root):
+        raise WorkbenchError("Prepared source snapshots must remain outside canonical knowledge records.")
     raw = _read(path)
     if _digest(raw) != source["sha256"]:
         raise WorkbenchError("Retained source hash mismatch: " + source["snapshot"])
@@ -185,7 +186,7 @@ def _contexts(root, context, *, check_hash=False):
 
 
 def _index(root, source_id, manifest):
-    path = _local(root, _index_path(source_id))
+    path = _local(root, _index_path(root, source_id))
     if not path.exists():
         return None
     index = _object(path)
@@ -277,7 +278,7 @@ def _atomic(path, data):
 
 
 def _save_index(root, source_id, index):
-    _atomic(_local(root, _index_path(source_id)),
+    _atomic(_local(root, _index_path(root, source_id)),
             (json.dumps(index, indent=2, ensure_ascii=False) + "\n").encode("utf-8"))
 
 
@@ -304,7 +305,7 @@ def _context_current(root, row):
         return False
 
 
-def _summary(source_id, index, findings=()):
+def _summary(root, source_id, index, findings=()):
     if not index["sources"]:
         findings = [*findings, {"path": index["input_root"], "code": "empty_export",
                                "message": "No Markdown pages are available for source review."}]
@@ -312,7 +313,7 @@ def _summary(source_id, index, findings=()):
     pending = sum(not row["present"] or row["decision"] in {"NEEDS_REVIEW", "HOLD"}
                   for row in index["sources"])
     return {"schema_version": 1, "status": "NEEDS_REVIEW" if pending or findings else "READY",
-            "source_id": source_id, "selection": _index_path(source_id),
+            "source_id": source_id, "selection": _index_path(root, source_id),
             "counts": {"documents": len(index["sources"]),
                        "present": sum(row["present"] for row in index["sources"]),
                        "missing": sum(not row["present"] for row in index["sources"]),
@@ -324,7 +325,7 @@ def _affected_knowledge(root, changes):
     affected = []
     if not changes:
         return affected
-    for path in sorted((root / "knowledge").rglob("*.md")):
+    for path in sorted(knowledge_layout(root)[0].rglob("*.md")):
         if is_derived_knowledge_path(path, root):
             continue
         _local(root, path.relative_to(root).as_posix())
@@ -354,11 +355,13 @@ def refresh_sources(root: Path, source_id: str, input_dir: str, policy_path: str
     with _lock(root):
         collection = _collection(root, source_id)
         directory = _local(root, input_dir)
-        if (directory == root or directory.is_relative_to(root / "knowledge")
+        canonical, evidence = knowledge_layout(root)
+        if (directory == root or directory == root / "knowledge" or directory.is_relative_to(canonical)
+                or is_derived_knowledge_path(directory, root)
                 or directory.is_relative_to(root / ".workbench")
                 or directory.is_relative_to(root / ".git")
-                or (directory.is_relative_to(root / "evidence") and directory != collection
-                    and not directory.is_relative_to(root / "evidence/knowledge/incoming"))):
+                or ((directory.is_relative_to(root / "evidence") or directory.is_relative_to(evidence))
+                    and directory != collection and not directory.is_relative_to(evidence / "incoming"))):
             raise WorkbenchError("Use a writable import folder, the knowledge inbox, or this collection's retained snapshots.")
         manifest, manifest_raw = _manifest(root)
         previous = _index(root, source_id, manifest)
@@ -389,7 +392,7 @@ def refresh_sources(root: Path, source_id: str, input_dir: str, policy_path: str
                         _snapshot(root, record)
                     snapshot = record["snapshot"]
                     break
-                snapshot = snapshot or f"evidence/knowledge/sources/sha256/{sha256}.md"
+                snapshot = snapshot or (evidence / "sources/sha256" / f"{sha256}.md").relative_to(root).as_posix()
                 target = _local(root, snapshot)
                 if target.exists():
                     if _read(target) != raw:
@@ -423,7 +426,7 @@ def refresh_sources(root: Path, source_id: str, input_dir: str, policy_path: str
                             "present": path in incoming}
                            for path in sorted(set(changes["modified"] + changes["missing"]))]
         affected = _affected_knowledge(root, changed_sources)
-        if _read(_local(root, _MANIFEST)) != manifest_raw or _inventory(root, input_dir) != incoming:
+        if _read(_local(root, (knowledge_layout(root)[1] / "manifest.yaml").relative_to(root).as_posix())) != manifest_raw or _inventory(root, input_dir) != incoming:
             raise WorkbenchError("Sources or manifest changed during refresh; repeat the operation.")
         if _policy(root, policy["path"]) != policy:
             raise WorkbenchError("Filter policy changed during refresh; repeat the operation.")
@@ -434,9 +437,9 @@ def refresh_sources(root: Path, source_id: str, input_dir: str, policy_path: str
                 stream.write(raw)
         if additions:
             manifest["sources"].extend(additions)
-            _atomic(_local(root, _MANIFEST), yaml.safe_dump(manifest, sort_keys=False, allow_unicode=True).encode("utf-8"))
+            _atomic(_local(root, (knowledge_layout(root)[1] / "manifest.yaml").relative_to(root).as_posix()), yaml.safe_dump(manifest, sort_keys=False, allow_unicode=True).encode("utf-8"))
         _save_index(root, source_id, index)
-        return {**_summary(source_id, index), "changes": changes,
+        return {**_summary(root, source_id, index), "changes": changes,
                 "new_source_revisions": len(additions), "new_snapshot_payloads": len(snapshots),
                 "changed_sources": changed_sources, "affected_knowledge": affected}
 
@@ -514,7 +517,7 @@ def apply_selections(root: Path, source_id: str, decisions_path: str) -> dict:
         if [finding for finding in _freshness(root, index) if finding["code"] != "input_missing"]:
             raise WorkbenchError("Source or context changed during selection; refresh and repeat the review.")
         _save_index(root, source_id, index)
-        return {**_summary(source_id, index), "applied_decisions": len(updates)}
+        return {**_summary(root, source_id, index), "applied_decisions": len(updates)}
 
 
 def verify_sources(root: Path, source_id: str) -> dict:
@@ -526,10 +529,15 @@ def verify_sources(root: Path, source_id: str) -> dict:
         index = _index(root, source_id, manifest)
         if index is None:
             raise WorkbenchError("Refresh the collection before verifying source selections.")
-        return _summary(source_id, index, _freshness(root, index))
+        return _summary(root, source_id, index, _freshness(root, index))
     except (WorkbenchError, OSError) as error:
+        location = "knowledge"
+        try:
+            location = _index_path(root, source_id)
+        except WorkbenchError:
+            pass
         return {"schema_version": 1, "status": "FAILED", "source_id": source_id,
-                "findings": [{"path": _index_path(source_id), "code": "source_binding_invalid", "message": str(error)}]}
+                "findings": [{"path": location, "code": "source_binding_invalid", "message": str(error)}]}
 
 
 def render_sources(root: Path, source_id: str, output_dir: str, *, plan_path: str | None = None) -> dict:
@@ -541,7 +549,7 @@ def render_sources(root: Path, source_id: str, output_dir: str, *, plan_path: st
         index = _index(root, source_id, manifest)
         if index is None:
             raise WorkbenchError("Refresh and review source selections before creating a view.")
-        index_raw = _read(_local(root, _index_path(source_id)))
+        index_raw = _read(_local(root, _index_path(root, source_id)))
         freshness = [finding for finding in _freshness(root, index) if finding["code"] != "input_missing"]
         if freshness:
             raise WorkbenchError("Source preparation is stale; refresh and review before creating a view.")
@@ -594,13 +602,13 @@ def render_sources(root: Path, source_id: str, output_dir: str, *, plan_path: st
         for row, raw in selected:
             if _snapshot(root, row["source"]) != raw:
                 raise WorkbenchError("Retained source changed during rendering; restore its source binding.")
-        if (_read(_local(root, _index_path(source_id))) != index_raw
-                or _read(_local(root, _MANIFEST)) != manifest_raw
+        if (_read(_local(root, _index_path(root, source_id))) != index_raw
+                or _read(_local(root, (knowledge_layout(root)[1] / "manifest.yaml").relative_to(root).as_posix())) != manifest_raw
                 or [finding for finding in _freshness(root, index) if finding["code"] != "input_missing"]):
             raise WorkbenchError("Source preparation changed during rendering; refresh and create a new view.")
         view = {"schema_version": 1, "source_id": source_id,
-                "selection": {"path": _index_path(source_id),
-                              "sha256": _digest(_read(_local(root, _index_path(source_id))))},
+                "selection": {"path": _index_path(root, source_id),
+                              "sha256": _digest(_read(_local(root, _index_path(root, source_id))))},
                 "policy": index["policy"], "sources": entries, "omitted": omitted}
         if plan is not None:
             load_plan(root, source_id, plan_path)

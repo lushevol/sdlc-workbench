@@ -35,7 +35,7 @@ Backend configuration and integration can change. A separate zero-consumer-sourc
 No application fix, entitlement decision, deployment, or publication is authorized by this explanation.
 
 The intended permission contract has zero missing and zero unsupported additional role-specific permissions.
-Its source is [SDK intent version 8](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#sdk-ces-intent-ac-001).
+Its source is [SDK intent version 8](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#sdk-ces-intent-ac-001).
 That knowledge remains candidate and draft. It does not establish deployed parity or publication approval.
 The SDK already supports multiple distinct role keys. Role multiplicity alone is not an SDK defect.
 
@@ -275,7 +275,7 @@ The [existing portal audit](../ces-entitlement-migration-20261102/11-zero-upper-
 Cashflow passes one profile into authorization-limit URLs.
 Shared saved views and filters require scalar ownership values.
 CES users can have several roles, so arbitrary first-role selection or comma-joined roles cannot establish an equivalent owner or profile.
-Current [ownership intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#interim-rule-for-ces-role-owned-writes) keeps affected CES writes pending until agreement.
+Current [ownership intent](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#interim-rule-for-ces-role-owned-writes) keeps affected CES writes pending until agreement.
 That preserves the recorded interim rule but does not supply a seamless full-feature migration.
 
 Evidence: [Cashflow profile call](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts:688), [profile URL](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts:128), and [BFF role list](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:84).
@@ -308,7 +308,7 @@ The critical current consequence is an unsupported seamless-migration claim, rat
 | Source ID | Locator | Exact revision or hash binding | Owner, authority, and limit |
 | --- | --- | --- | --- |
 | USER-SEAMLESS | [Exact user request](evidence/user-seamless-migration-gaps-20261108.md#exact-user-input) | 8 November 2026 chat. | Human user; explanation scope only. |
-| SDK-INTENT | [SDK intended compatibility](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#sdk-300-ces-migration-intent) | Version 8; [hash binding](evidence/gap-source-bindings-20261108.json). | User-sourced target; candidate publication remains pending. |
+| SDK-INTENT | [SDK intended compatibility](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#sdk-300-ces-migration-intent) | Version 8; [hash binding](evidence/gap-source-bindings-20261108.json). | User-sourced target; candidate publication remains pending. |
 | API-COMPARISON | [Retained API analysis](evidence/api-compatibility-20261108.json) | Eighteen exact request hashes remain unchanged. | Static examples; no current deployment proof. |
 | SOURCE-BINDINGS | [Additional source review](evidence/gap-source-bindings-20261108.json) | Exact source revisions and SHA-256 values. | Codex inspection; no new business execution. |
 
@@ -320,7 +320,7 @@ No full-migration coverage percentage is supported.
 
 ## Unresolved questions
 
-Reuse the domain's [existing open questions](../../knowledge/candidates/security/KT-ces-migration-parity.md#open-questions) for unresolved business mappings.
+Reuse the domain's [existing open questions](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#open-questions) for unresolved business mappings.
 The meaningful remaining decisions concern supported CES role attribution, scoped extra grants, resolved data restrictions, and scalar role/profile/ownership rules.
 These decisions have no invented answers. Their accountable owners remain unknown.
 Resolve technical contract questions through the CES owner before requesting user policy clarification.

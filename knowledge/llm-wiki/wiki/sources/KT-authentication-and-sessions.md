@@ -1,1 +1,1 @@
-../../../candidates/security/KT-authentication-and-sessions.md
+../../../records/candidates/security/KT-authentication-and-sessions.md

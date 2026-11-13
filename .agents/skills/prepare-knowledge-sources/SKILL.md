@@ -12,8 +12,8 @@ This stage preserves evidence and selects inputs. Canonical meaning and publicat
 ## Inputs
 
 Use the selected workspace, registered collection ID, complete export, applicable filter policy, and governing context.
-Keep replaceable exports in ignored `evidence/knowledge/incoming/COLLECTION/`.
-Retain originals under `evidence/knowledge/sources/`; do not introduce another top-level raw directory.
+Keep replaceable exports in ignored `knowledge/evidence/incoming/COLLECTION/`.
+Retain originals under `knowledge/evidence/sources/`; do not introduce another top-level raw directory.
 Review-only requests inspect these inputs without importing or changing selections.
 
 ## Coordinate the operations

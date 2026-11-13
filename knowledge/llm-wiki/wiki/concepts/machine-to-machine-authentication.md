@@ -27,7 +27,7 @@ The historical [[entities/fmaa]] reference describes the documented M2M model:
 - **OUD-managed accounts.** The historical reference describes accounts managed in OUD and authenticated through FMAA. Current directory ownership remains unconfirmed.
 - **Generated-token validity.** The historical reference states generated-token validity of 17 years for service accounts and seven days for bank IDs.
 
-These historical generated-token examples define no password or client-secret rotation interval. The applicable provider contract, validity limits, and rotation policy require authoritative confirmation. See the [canonical historical M2M limits](../../../candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-authentication).
+These historical generated-token examples define no password or client-secret rotation interval. The applicable provider contract, validity limits, and rotation policy require authoritative confirmation. See the [canonical historical M2M limits](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-authentication).
 
 ## Evidence limits
 

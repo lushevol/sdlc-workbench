@@ -48,6 +48,42 @@ The bridge calls the compiler directly, so native `add` batch rollback does not 
 Partial derived pages can remain after failure. ADE's two provenance writes are also not crash-atomic.
 Reuse the existing controls without introducing another canonical source approval lifecycle.
 
+## Relocate canonical origins
+
+For an authorized path-only canonical move, retain an explicit JSON mapping receipt and run:
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py relocate --receipt PATH_TO_RETAINED_MAPPING.json
+```
+
+```json
+{
+  "reason": "ACTUAL_AUTHORIZED_RELOCATION_REASON",
+  "sources": [{
+    "id": "CANONICAL_ID",
+    "from": "OLD_WORKSPACE_RELATIVE_CANONICAL_PATH",
+    "to": "knowledge/records/candidates/security/access.md",
+    "sha256": "CURRENT_TARGET_FULL_FILE_SHA256"
+  }]
+}
+```
+
+Use inspected IDs, workspace-relative locators, and current target hashes. The operation validates the target identity and existing relative aliases, then updates alias targets and binding/completion origin paths through the existing paired-write recovery controls.
+By default, this origin-only operation preserves all observed source and output hashes, including existing staleness.
+
+When migration also repairs local Markdown destinations, these optional receipt fields enable exact locator proof:
+
+| Field | Required proof input |
+| --- | --- |
+| `baseline_revision` | Full Git commit SHA containing the original bytes. |
+| `locator_map` | Workspace-relative JSON map with the same `source_revision` and `entries` containing exact `old` and `new` workspace paths. |
+| `sources[].before_sha256` | Original source hash; existing `sha256` remains the current target hash. |
+| `outputs[]` | Optional entries with wiki-relative `path`, original `before_sha256`, and current `sha256`. |
+
+The proof loads exact old Git blobs and rejects any change outside Markdown destinations, including prose or metadata changes. Repaired local destinations must resolve through the migration map with queries and fragments preserved; external and fragment-only destinations cannot change.
+Only existing source observations and output bindings matching the before hash, or the current target hash on retry, can be rebound. Preexisting stale observations are rejected. Existing completion hashes advance only when they match those proven bytes; missing completion or output receipts remain missing, and stale completion hashes remain stale.
+Neither mode creates semantic completion, clears pending attempts, changes recipes, invokes a model, or grants publication approval. Inspect a fresh `plan` and complete any remaining maintenance through the normal operations below.
+
 ## Compile canonical records
 
 Use these reusable operations in order:
@@ -57,10 +93,10 @@ Use these reusable operations in order:
 3. [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) checks completion, provenance, and verification, with coordinated recovery where applicable.
 
 ```sh
-python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/candidates --output .workbench/wiki/plan.json
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/records/candidates --output .workbench/wiki/plan.json
 python3 .agents/skills/llm-wiki/scripts/wiki.py compile
-python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates/security
-python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/candidates --record knowledge/candidates/security/access.md --recipe default
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/records/candidates/security
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/records/candidates --record knowledge/records/candidates/security/access.md --recipe default
 ```
 
 Run `plan` before semantic dispatch. It uses local hashes and metadata without credentials, runtime installation, or model calls.
@@ -120,7 +156,7 @@ Prepare a JSON receipt using actual reviewed hashes and scope:
   "reviewed_at": "2026-11-12T00:00:00Z",
   "review_note": "REPLACE_WITH_ACTUAL_SEMANTIC_REVIEW",
   "sources": [{
-    "path": "knowledge/candidates/security/access.md",
+    "path": "knowledge/records/candidates/security/access.md",
     "sha256": "SOURCE_BEFORE_SHA256",
     "outputs": ["wiki/summaries/access.md", "wiki/index.md"],
     "withdrawn_outputs": [],
@@ -146,7 +182,7 @@ Shared-page review must preserve every existing owner or explicitly withdraw tha
 Updated global navigation hashes do not independently force unrelated canonical inputs through compilation.
 
 Use source-level `unchanged_reason` when review supports unchanged summary bytes after a source change.
-Use `relocation_reason` when an authorized canonical move changes the binding path.
+Use `relocation_reason` during actual semantic review when an authorized canonical move changes the binding path. Use the separate `relocate` operation for a path-only move that preserves existing semantic completion and staleness.
 For former dependencies, add `withdrawn_outputs: [{"path": "wiki/concepts/FORMER.md", "reason": "ACTUAL_DISPOSITION"}]`.
 Also supply `withdrawal_review_note` and review the former output's current bytes after removing or qualifying unsupported claims.
 For an authorized removed derived page, its output entry uses `sha256: null` and `disposition: "removed"`.

@@ -9,15 +9,16 @@ They preserve sources and apply inspected selections. They do not classify meani
 
 ## Processing stages
 
-1. **Complete raw export:** accept the whole collection in ignored `evidence/knowledge/incoming/COLLECTION/`.
+1. **Complete raw export:** accept the whole collection in ignored `knowledge/evidence/incoming/COLLECTION/`.
 2. **Filtered source view:** retain source revisions, record selections, and generate exact excerpts or source links when needed.
 3. **Canonical knowledge:** reconcile intent across selected sources through the ingestion and governance procedures.
 4. **Derived wiki:** compile canonical records through the [wiki bridge](../../llm-wiki/SKILL.md).
 
-The input directory is replaceable. Registered snapshots under `evidence/knowledge/sources/` remain protected.
+The input directory is replaceable. Registered snapshots under `knowledge/evidence/sources/` remain protected.
 Keep these lifecycles separate within the existing evidence area. No top-level raw directory is required.
-Keep generated views outside `knowledge/`. A view does not create another source of authority.
+Keep generated views in ignored working storage outside `knowledge/`. A view does not create another source of authority.
 The commands do not refresh wiki pages, publish knowledge, or delete missing source material.
+Paths shown here use the consolidated layout. Existing legacy workspaces retain their `evidence/knowledge/` area until explicitly migrated; source commands resolve the active manifest, while explicit input and output paths must match that workspace.
 
 ## Refresh the complete export
 
@@ -29,13 +30,13 @@ Use the source's actual registered ID in place of `COLLECTION`.
 Keep existing registered source identities and locations. The input option selects the replaceable inbox for the current export.
 
 ```sh
-ai-sdlc --workspace PATH sources refresh --source COLLECTION --input evidence/knowledge/incoming/COLLECTION
+ai-sdlc --workspace PATH sources refresh --source COLLECTION --input knowledge/evidence/incoming/COLLECTION
 ```
 
 Refresh records source identity, revision, snapshot location, and SHA-256 before interpretation.
 It reuses retained bytes and prior source records when possible.
 It appends new revisions without overwriting registered snapshots.
-The selection index lives at `evidence/knowledge/selections/COLLECTION.json`.
+The selection index lives at `knowledge/evidence/selections/COLLECTION.json`.
 
 New and changed pages require review, including previously excluded pages.
 Changed policy or governing context also invalidates previous decisions.
@@ -174,7 +175,7 @@ After actual review and integrity checks, prepare a results JSON for the saved p
     {
       "path": "design/page.md",
       "disposition": "updated",
-      "outputs": ["knowledge/candidates/security/access.md"],
+      "outputs": ["knowledge/records/candidates/security/access.md"],
       "review": {
         "actor": "ACTUAL_REVIEWER",
         "reviewed_at": "2026-11-12T00:00:00Z",
@@ -203,7 +204,7 @@ ai-sdlc --workspace PATH sources complete --source COLLECTION --plan .workbench/
 ai-sdlc --workspace PATH sources plan --source COLLECTION --recipe canonical-v1
 ```
 
-Completion stores compact receipts at `evidence/knowledge/processing/COLLECTION.json`.
+Completion stores compact receipts at `knowledge/evidence/processing/COLLECTION.json`.
 Partial results clear only their successfully checked items. Other work remains pending.
 Completion reports `remaining_process` and `remaining_review`; either nonzero count keeps the result `PARTIAL`.
 The compatibility field `remaining` counts processing work only.

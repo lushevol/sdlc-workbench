@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-observability-and-performance.md"
 ---
 
-> Derived from [KT-observability-and-performance, version 3](../../../candidates/observability/KT-observability-and-performance.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-observability-and-performance, version 3](../../../records/candidates/observability/KT-observability-and-performance.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal observability, performance, and cache behavior
 
@@ -15,7 +15,7 @@ The 12 November 2026 clarification defines current candidate intent for API load
 
 ## Interaction analytics
 
-Portal analytics collect user activity for CPO review of business product usage. The required PROD retention period is three months. Permitted fields, the full set of authorized readers, handling of identifiable values, and the retention clock and expiry treatment remain open. [Analytics purpose](../../../candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary) · [Retention criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-analytics-ac-001)
+Portal analytics collect user activity for CPO review of business product usage. The required PROD retention period is three months. Permitted fields, the full set of authorized readers, handling of identifiable values, and the retention clock and expiry treatment remain open. [Analytics purpose](../../../records/candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary) · [Retention criterion](../../../records/candidates/observability/KT-observability-and-performance.md#portal-analytics-ac-001)
 
 - The analytics effort aims to understand user interaction, improve adoption, and reduce time to value.
 - Captured UI elements include tiles, modals, workspace tabs, buttons, switches, and dropdowns.
@@ -34,7 +34,7 @@ Related concept: usage dashboards.
 
 ## Frontend performance and non-functional requirements
 
-The current candidate sets a five-second API loading limit. The clarification specifies no mandatory UI performance metric. API scope, timing boundaries, workload, environment, and measurement method remain open. [API loading limit](../../../candidates/observability/KT-observability-and-performance.md#current-api-loading-limit) · [API performance criterion](../../../candidates/observability/KT-observability-and-performance.md#portal-api-perf-ac-001)
+The current candidate sets a five-second API loading limit. The clarification specifies no mandatory UI performance metric. API scope, timing boundaries, workload, environment, and measurement method remain open. [API loading limit](../../../records/candidates/observability/KT-observability-and-performance.md#current-api-loading-limit) · [API performance criterion](../../../records/candidates/observability/KT-observability-and-performance.md#portal-api-perf-ac-001)
 
 The monitoring page proposes weekly review of development performance. It discusses login, post-login, and blotter rendering with cache and compression changes.
 
@@ -60,7 +60,7 @@ Related concept: [[concepts/mfe-cache-strategy]].
 
 ## Evidence limits
 
-The named non-functional requirements export contains no substantive text. The five-second API loading limit comes from the later user clarification. The historical frontend targets retain their draft status. [Canonical evidence limits](../../../candidates/observability/KT-observability-and-performance.md#evidence-limits)
+The named non-functional requirements export contains no substantive text. The five-second API loading limit comes from the later user clarification. The historical frontend targets retain their draft status. [Canonical evidence limits](../../../records/candidates/observability/KT-observability-and-performance.md#evidence-limits)
 
 Local hashes identify supplied document bytes without establishing original authority or current applicability. The sources mix design examples, draft targets, reported results, and future planning. Missing diagrams, screenshots, JMeter plans, and execution archives limit verification. No browser measurement, telemetry query, load test, or server-header check ran during ingestion.
 

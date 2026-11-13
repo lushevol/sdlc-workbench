@@ -778,14 +778,14 @@ Source: [configuration and cache boundaries](evidence/backend-analysis-20261030.
 
 ### Knowledge-update log
 
-The latest clarification is recorded in [CES migration parity intent](../../knowledge/candidates/security/KT-ces-migration-parity.md).
+The latest clarification is recorded in [CES migration parity intent](../../knowledge/records/candidates/security/KT-ces-migration-parity.md).
 This candidate records mapping, account scope, match filtering, and the FMO exception.
-Its [immutable audit event](../../evidence/knowledge/audit/AUD-20261103-KT-ces-migration-parity-v1.yaml) binds the candidate and source.
+Its [immutable audit event](../../knowledge/evidence/audit/AUD-20261103-KT-ces-migration-parity-v1.yaml) binds the candidate and source.
 Publication remains pending. The candidate does not establish passing production migration.
 
 The 3 November discussion refines measurement scope and records source observations.
 No domain knowledge meaning, publication state, or existing approval was changed.
-Existing [entity rename intent](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration) remains the sourced mapping baseline.
+Existing [entity rename intent](../../knowledge/records/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration) remains the sourced mapping baseline.
 The [earlier user clarification](evidence/user-input-20261030-api-samples-and-feature-consolidation.txt) places functional and data features under CES RATAN.
 FMO mapping and complete data-scope equivalence remain unresolved.
 

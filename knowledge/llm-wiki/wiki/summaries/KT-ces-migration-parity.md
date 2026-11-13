@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-ces-migration-parity.md"
 ---
 
-> Derived from [KT-ces-migration-parity, version 6](../../../candidates/security/KT-ces-migration-parity.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-ces-migration-parity, version 6](../../../records/candidates/security/KT-ces-migration-parity.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # CES Migration Permission Preservation
 
