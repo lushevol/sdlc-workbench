@@ -27,3 +27,13 @@ Inspect current ownership, content, consumers, provenance, and retention constra
 > Alright, now let's look at something else: what is the docs directory for, and why are these files in there?
 
 Scope: explain current documentation ownership, retained contents, consumers and overlap. This question does not authorize cleanup or relocation.
+
+## Documentation optimization proposal
+
+- Source: user follow-up in the same Codex chat
+- Date: 2026-11-13 (Asia/Singapore)
+- Priority: high; proposal and design scope
+
+> how to optimize, what's your proposal
+
+Scope: propose documentation organization, content ownership, retention and a staged migration. The earlier design-first instruction remains applicable; this request does not authorize implementing the proposed reorganization.

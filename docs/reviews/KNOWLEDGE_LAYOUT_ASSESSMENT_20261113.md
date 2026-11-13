@@ -221,3 +221,33 @@ The reusable guides explain Workbench installation, architecture, commands and p
 The organization mixes current manuals, historical records and proposals. [The earlier MVP architecture](../MVP_ARCHITECTURE.md) is explicitly superseded; [the workspace isolation document](../SYSTEM_WORKSPACE_ISOLATION.md) remains a design recommendation. Older business investigations also remain under `docs/reviews/`, while new business investigations belong to their owning tasks. [Benchmark evidence](benchmark-evidence/README.md) is another historical placement exception inside the reviews directory. There is no `docs/README.md` entry point, and the root README responsibility table omits `docs/`.
 
 Confidence is high in these ownership and navigation findings. Representative inspection does not establish that every historical file is necessary or redundant. Any later reorganization needs a separate scope and consumer/provenance review. No documentation cleanup, relocation or implementation was performed for this question.
+
+## Documentation optimization proposal
+
+Status: proposed on 13 November 2026; not implemented. Authority: [exact proposal request](../evidence/knowledge-layout-assessment-20261113/user-input.md#documentation-optimization-proposal), within the earlier design-first boundary.
+
+Optimize discovery, currentness and repeated content before moving retained evidence. Keep the existing reusable guide paths; they have README, skill, scaffold, package and workspace-test consumers. Use the existing directories:
+
+```text
+docs/
+├── README.md                       # Proposed reading routes for current guides.
+├── <current guides>.md             # Keep supported command/reference paths.
+├── reviews/
+│   ├── README.md                   # Proposed statuses, baselines and current successors.
+│   └── <designs and reviews>.md
+├── evidence/<scope>/               # Required inputs, results and recovery material.
+├── diagrams/
+└── examples/
+```
+
+1. Add a small documentation entry point with setup, knowledge, integration/testing and maintainer reading routes. Add the missing ownership row in the root README. Keep the portable entry point's links limited to shipped guides and skills; checkout-only history navigation belongs in the unshipped reviews index. Mark historical baseline, superseded, proposed and completed-with-limits material clearly. Index legacy business reviews as historical evidence; new investigations remain task-owned.
+2. Repair stale current examples before cosmetic moves. [Question reconciliation](../QUESTION_RECONCILIATION.md) and [the Gherkin fixture](../examples/gherkin-session/session.md) still use pre-migration `knowledge/candidates/` paths. The fixture's manifest also carries those locators. Repair bindings through the owning contract and preserve its `UNVERIFIED` state; a locator correction does not establish semantic review or business execution.
+3. Give each maintained topic one procedure owner. Keep command syntax and machine contracts in their current guides; keep semantic operation steps in their owning skills and link them. Retain short consequential boundaries at entry points. Shorten repeated operation sequences in [the lifecycle map](../KNOWLEDGE_LIFECYCLE.md), and repeated semantic coverage rules in [behavior review](../BEHAVIOR_REVIEW.md). Preserve useful anchors. Move dated proposal/implementation/result narrative out of [the Gherkin command guide](../GHERKIN_QUALITY.md) into one owning historical review. Keep [baseline review](../BEHAVIOR_REVIEW.md), [review-index/coverage contracts](../REVIEW_INDEX.md) and [question reconciliation](../QUESTION_RECONCILIATION.md) separate because they document different operations.
+4. Group confirmed root history under the existing reviews directory after reference inspection: construction reviews, completed release-report records, and open proposals. Unshipped does not imply obsolete. [Release API design](../RELEASE_REPORT_API_DESIGN.md) and [reproduction preparation](../RELEASE_REPORT_REPRODUCTION.md) still define canonical RR-P1–RR-P6 and RR-1–RR-8 cases named by [integration tests](../../tests/test_release_report_integration.py). Keep those paths initially; any later move must preserve case IDs, anchors, recorded answers and test traceability. Keep historical source/evidence bytes stable and repair active references through one relocation map where required.
+5. Apply the existing [critical evidence policy](../../tasks/README.md#critical-evidence-and-reusable-payloads). Reuse one payload and one living report per scope. Keep routine logs and optional exports in ignored working storage. Review the 947 evidence files by current consumer and recoverability before proposing any deletions; age, format or successful execution alone cannot justify deletion. Retain registered sources, required raw evidence and immutable history. A later authorized relocation can consolidate the five remaining root maintenance-evidence files into `docs/evidence/`. Do not introduce another archive tree or parallel documentation registry.
+
+Suggested delivery order: navigation and stale-example corrections; focused content consolidation and confirmed history relocation; then a separately scoped evidence-retention review. The first two stages improve reading cost and currentness; no storage-reduction estimate is supported yet.
+
+Implementation checks should cover local file/heading links, preserved case IDs and anchors, affected example/manifest bindings, exact evidence hashes for any relocation, and the relevant existing validators/tests. Any changes to shipped documentation require scaffold/package review and installed empty-workspace link checks. Maintain required failure and recovery evidence; generated workspaces must continue excluding project history and live business content.
+
+Qualitative risk is low for navigation additions and moderate for content relocation, binding updates and package traceability. The intended outcome is one discoverable current answer per topic, preserved provenance and reduced repeated reading. This proposal adds no runtime, dependency or new lifecycle state.
