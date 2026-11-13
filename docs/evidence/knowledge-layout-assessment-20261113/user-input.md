@@ -18,3 +18,12 @@ Inspect current ownership, content, consumers, provenance, and retention constra
 - Date: 2026-11-13 (Asia/Singapore)
 
 > what the evidence folder for ?
+
+## Documentation-directory follow-up
+
+- Source: user follow-up in the same Codex chat
+- Date: 2026-11-13 (Asia/Singapore)
+
+> Alright, now let's look at something else: what is the docs directory for, and why are these files in there?
+
+Scope: explain current documentation ownership, retained contents, consumers and overlap. This question does not authorize cleanup or relocation.

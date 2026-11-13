@@ -209,3 +209,15 @@ Denominators: six scoped layout contracts mapped to implementation and inspected
 
 The [folder-purpose follow-up](../evidence/knowledge-layout-assessment-20261113/user-input.md#folder-purpose-follow-up) prompted a current inventory. Root `evidence/` retains five tracked historical Workbench maintenance/design files: one Gherkin-quality validation JSON and four knowledge-methodology input/discussion/plan Markdown files. The migration moved only its knowledge subtree.
 `knowledge/evidence/` now owns knowledge sources, provenance, selection/processing records, findings and audit history. The remaining root maintenance files overlap the purpose of `docs/evidence/`; a later authorized consolidation can relocate them there with link repair and preserved provenance.
+
+## Documentation directory purpose
+
+The [documentation-directory follow-up](../evidence/knowledge-layout-assessment-20261113/user-input.md#documentation-directory-follow-up) asks for an explanation, without cleanup or relocation. Inspection on 13 November 2026 found 1,042 tracked files under `docs/`: 25 root guides/designs, 58 review files, 947 evidence files, nine diagram files and three example files.
+
+The reusable guides explain Workbench installation, architecture, commands and procedures. [The scaffold](../../scaffold.json) ships 15 root Markdown guides and the Gherkin example directory to generated workspaces. It excludes the project review and evidence directories. [The ownership rule](../../PRINCIPLE.md#ownership-boundary) keeps Workbench maintenance outside canonical business knowledge and business task intake.
+
+`docs/reviews/` records assessments, findings and decisions. `docs/evidence/` retains their source inputs, inspected-source bindings, required results and recovery material. For example, this assessment's relocation map is referenced by the [immutable relocation audit](../../knowledge/evidence/audit/AUD-20261113-knowledge-layout-relocation-v1.yaml). Historical evidence can therefore remain an active provenance dependency after its implementation stage finishes.
+
+The organization mixes current manuals, historical records and proposals. [The earlier MVP architecture](../MVP_ARCHITECTURE.md) is explicitly superseded; [the workspace isolation document](../SYSTEM_WORKSPACE_ISOLATION.md) remains a design recommendation. Older business investigations also remain under `docs/reviews/`, while new business investigations belong to their owning tasks. [Benchmark evidence](benchmark-evidence/README.md) is another historical placement exception inside the reviews directory. There is no `docs/README.md` entry point, and the root README responsibility table omits `docs/`.
+
+Confidence is high in these ownership and navigation findings. Representative inspection does not establish that every historical file is necessary or redundant. Any later reorganization needs a separate scope and consumer/provenance review. No documentation cleanup, relocation or implementation was performed for this question.
