@@ -65,3 +65,19 @@ Continue the ownership explanation and proposal refinement. No missing business 
 > reconclude your proposal again
 
 Scope: consolidate the existing proposed ownership and migration design for review; no implementation or relocation is requested by this recap.
+
+## Living documentation model clarification
+
+- Source: user follow-up in the same Codex chat
+- Date: 2026-11-13 (Asia/Singapore)
+- Priority: high; latest intended documentation model, superseding conflicting proposal assumptions
+
+### Exact user input
+
+```text
+I think tasks is decentralized. These are incremental changes that migrate along a timeline. Docs, on the other hand, consists of overall, constant, real-time updated documentation. \
+\
+So for Docs, I don't want frequent additions of new documents. Instead, I want to maintain a series of documents that cover every lifecycle and every domain.
+```
+
+Scope: refine the design so tasks retain incremental work history and documentation provides a stable, comprehensive and continuously maintained current view. Avoid creating a new documentation page per work item or change. This clarification defines the proposal's direction; no relocation, deletion or runtime implementation is inferred.

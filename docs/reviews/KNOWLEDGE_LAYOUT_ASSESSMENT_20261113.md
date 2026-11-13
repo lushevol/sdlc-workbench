@@ -254,7 +254,7 @@ Qualitative risk is low for navigation additions and moderate for content reloca
 
 ## Documentation and tasks: ownership refinement
 
-Status: proposed clarification and design refinement; no ownership-rule change or migration implemented. Authority: [the ownership question and continuation](../evidence/knowledge-layout-assessment-20261113/user-input.md#documentation-and-task-ownership-clarification).
+Status: proposed clarification and design refinement; no ownership-rule change or migration implemented. Authority: [the ownership question and continuation](../evidence/knowledge-layout-assessment-20261113/user-input.md#documentation-and-task-ownership-clarification). The latest living-documentation clarification below expands the proposed role of `docs/` from reusable instructions to the integrated current view across lifecycle stages and domains.
 
 The [current task scope rules](../../tasks/README.md#scope) separate business work from Workbench maintenance. Business work uses `tasks/<task-id>/`; Workbench maintenance requires no business task and has accumulated reviews and evidence under `docs/`. Both can update reusable manuals. Historical mixed records also remain: [the session pilot report](SESSION_RENEWAL_FULL_PILOT_REPORT.md) contains Workbench and session-verification material, while the ongoing [portal task evidence index](../../tasks/portal-background-session-20261019/evidence/index.md) owns later investigation results. The historical report is referenced by [immutable audit history](../../knowledge/evidence/audit/AUD-20261019-RAW-session-renewal-full-v1.yaml), so its current location cannot be treated as permission to move or delete it.
 
@@ -264,7 +264,7 @@ The refined recommendation is to organize by artifact purpose:
 
 | Artifact | Proposed owner |
 | --- | --- |
-| Reusable Workbench instructions, supported command contracts, examples and lasting architecture | `docs/` and the existing root architecture/principle guides. |
+| Integrated current documentation across applicable lifecycle stages and domains, including instructions, supported contracts, examples and lasting architecture | Maintained `docs/` pages, existing root architecture/principle guides and linked owning repository documents. |
 | One work item's request, analysis, questions, design, review, outcomes and limits | `tasks/<work-id>/`. |
 | New captures, source excerpts and assertion/execution evidence for that work item | `tasks/<work-id>/evidence/`. |
 | Canonical business intent and governed supporting sources/audits | Their existing `knowledge/records/` and `knowledge/evidence/` owners. |
@@ -277,3 +277,37 @@ For example, a session investigation keeps its question, case, analysis, screens
 Apply the new ownership convention to future work first if authorized. Treat existing `docs/reviews/`, `docs/evidence/` and root evidence as legacy work material requiring individual owner, consumer and provenance assessment. Reference protected historical material from its owner instead of copying it; relocate only through a separately authorized, hash-preserving map and necessary provenance procedure. No immediate bulk migration or new archive is required.
 
 This refinement provides one owner for new work-specific materials while retaining separate business and maintenance procedures. Before implementation, reconcile the proposed convention in the principles, task guide, workspace design, agent/skill instructions, templates and hook context bindings that currently distinguish task and maintenance records. Ship only reusable guides and procedures into empty workspaces, with no live task history or project evidence.
+
+## Stable document series and incremental task history
+
+Status: revised proposal, not implemented. The [latest explicit user clarification](../evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification) is the first-priority reference for this design. Tasks represent decentralized incremental changes over time. Documentation provides the consolidated current view through a stable series covering the applicable lifecycle and domains. Stable means durable document identities and scopes; the content changes as current understanding and supported behavior change.
+
+Documentation must incorporate the supported consequences of task changes into its existing explanations, diagrams, contracts and procedures. A collection of task reports or a list of links alone does not provide the overall view. Task records preserve requests, alternatives, decisions, implementation deltas, investigations and exact evidence. Documentation explains the resulting current whole and links material provenance without reproducing work diaries or execution payloads.
+
+### Proposed maintained coverage
+
+Use the existing root principles/architecture, the 15 shipped guides, responsibility guides, relevant skill procedures and owning repository documentation as the starting series. Add one stable `docs/README.md` coverage map rather than creating another document for each feature, task, release or investigation. Organize its reading routes by lifecycle and domain. The following areas describe coverage, not a requirement to create a file for each row:
+
+| Maintained area | Current starting points and content to integrate |
+| --- | --- |
+| System overview, scope and architecture | Root principles/architecture and `WORKSPACE_DESIGN.md`: responsibilities, boundaries, domains, dependencies, intended design and implemented limits. |
+| End-to-end lifecycle | The proposed documentation index, task guide, `KNOWLEDGE_LIFECYCLE.md` and owning skills: intake, analysis, design, implementation, review, verification, release and feedback. |
+| Domain and capability views | Existing architecture/responsibility sections and relevant integration guides: each active domain's responsibilities, workflows, interfaces, data and relationships. Link applicable canonical intent and exact owning repository contracts. |
+| Development and integration | `SETUP.md`, `DEPENDENCIES.md`, `CONNECTORS.md` and `HOOKS.md`: supported setup, conventions, extension boundaries and integration behavior. |
+| Testing, quality and traceability | Existing Gherkin, browser, Robot, preflight, baseline, review-index and question-reconciliation guides: distinct contracts and evidence limits, connected through a coherent reading route. |
+| Release, operation, recovery and feedback | Existing release-report, Release Clinic, setup/recovery and lifecycle sections: supported operational procedures and feedback paths. Mark unsupported or undocumented areas as gaps; do not imply that reporting tools implement deployment or incident orchestration. |
+
+For this source checkout, capability domains are Workbench responsibilities. In an adopting system workspace, the documentation view covers that system's business and engineering domains and references the relevant existing repository documents. Retain the scope and ownership of those sources; do not copy their implementation or domain-specific settings into generic framework guides.
+
+Map each applicable lifecycle stage and domain to its owning maintained section. Mark unsupported scope or a genuine documentation gap explicitly. Extend or merge existing sections by default. Add a maintained page only for a lasting, distinct domain or lifecycle scope that the existing series cannot represent clearly; give it an owner, stable scope and index entry. A new task, iteration, feature or release alone is insufficient reason. Preserve useful anchors and current guide paths when consolidating repeated content.
+
+### Update contract for every change
+
+1. At work entry, identify the lifecycle/domain sections affected and read their current account. Keep this small documentation-impact note in the existing work record.
+2. As a supported decision or implementation change becomes current within its stated scope, update the relevant existing sections in the same change. Replace obsolete explanations and reconcile diagrams and cross-references instead of appending another task narrative. Keep proposals and rejected alternatives in their work record until their disposition changes.
+3. Keep intended design, source-inspected implementation, retained verification and actual deployment distinct. State applicable versions and material limits. Canonical business intent remains in `knowledge/records/`; documentation summarizes and links it without becoming a second governed authority. Actual gaps and execution history remain in their task records. A local passing check cannot establish a production rollout.
+4. Before handoff, reconcile changes against the affected maintained pages and record their exact sections and the update result, or a supported reason that the change has no documentation impact. Check local links, anchors, examples and relevant source bindings. Check packaging/empty-workspace links when shipped content changes.
+
+The duty to maintain current documentation applies to both business work and maintenance. It does not itself impose business intake, knowledge publication or release approval on maintenance. Changes during long tasks should keep supported current sections synchronized; the final handoff check reconciles them. Real-time maintenance here means updates alongside relevant changes, with clear revision/status applicability. It introduces no background monitor, automatic publication, or claim that documentation always reflects unobserved live deployment.
+
+The target is that a reader can understand the current lifecycle and each active domain from the maintained series without reconstructing the timeline of tasks. Routine changes update existing pages and preserve their identities. Task history and Git preserve evolution; retained evidence supports claims. Earlier `docs/reviews/` and `docs/evidence/` work material remains transitional history pending the separately scoped ownership/provenance review already described. No further date-based documentation series or archive tree is proposed.
