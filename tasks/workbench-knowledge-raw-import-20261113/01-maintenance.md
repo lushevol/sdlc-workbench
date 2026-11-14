@@ -39,6 +39,10 @@
 
   > go on
 
+- Goal request on 14 November 2026 (Asia/Singapore), from the same Codex chat:
+
+  > make a goal to process all knowledges till blocked by my input
+
 - Baseline: `ff077ed85`. The unrelated connector lockfile deletion, release-report files, and Azure DevOps assessment are outside this task.
 
 ## Retention and review
@@ -116,6 +120,25 @@ The RATAN selections cover Aspire, EBBS, ENISIS, FXU, Murex, OLTP, TIS, and TLM.
 
 Workspace validation passed. Both source verifiers returned `NEEDS_REVIEW` with zero binding findings. All 80 queued outputs match the retained source hashes and selected lines. This batch stopped at filtered views. See the [batch checks](evidence/filter-release-and-accounting-checks.json).
 
+## Full processing goal
+
+Complete semantic filtering for both registered exports. Process the supported selections into reviewed candidates and applicable wiki pages. Continue independent work while any source or decision is pending.
+
+### First source review checkpoint
+
+This batch reviewed 111 pages. It kept 52, classified 28 as evidence only, excluded 28, and placed three on hold.
+
+| Collection | Pages reviewed | Pages kept | Evidence only | Excluded | Held in this batch | Pending source review | Selected pages queued for processing |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `cash-settlement-home-page` | 76 | 20 | 27 | 26 | 3 | 645 | 75 |
+| `ratan-51358` | 35 | 32 | 1 | 2 | 0 | 117 | 57 |
+
+The Cash decisions cover onboarding, market routing, blotter fields, netting, and exception handling. Three holds cover Murex cancellation sequencing, Razor precedence, and the entitlement fetch flow. The last two lack their source diagrams. See the [Cash decisions](evidence/goal-source-review-01-cash-settlement-home-page.json).
+
+The RATAN decisions cover external interfaces and scoped release requirements. The decisions preserve entitlement migration scope and an unresolved timestamp convention. See the [RATAN decisions](evidence/goal-source-review-01-ratan-51358.json).
+
+Workspace validation passed. Both source verifiers returned `NEEDS_REVIEW` with zero binding findings. The 132 queued outputs match the original hashes and selected lines. See the [checkpoint checks](evidence/goal-source-review-01-checks.json).
+
 ## Validation and maintenance
 
 The larger source manifest exceeded the validator's one MiB record limit.
@@ -128,7 +151,7 @@ The loopback rerun finished with 1,068 tests, two skips, and no failures or erro
 
 ## Next action
 
-Continue filtering raw pages in topic groups. Use each verified view as the input for later candidate processing. Review manual-entity onboarding, SWIFT rules, and market exceptions in the next source group.
+Continue the manual-entity, RATAN interface, and RATAN release reviews. Review the remaining Cash requirement and design groups in parallel. Reuse the verified views as inputs for candidate processing.
 The Settlement owner needs to confirm the effective rules below. The owner is unknown.
 The sources describe design and proposed behavior. Approval, current applicability, and production behavior remain unverified.
 
