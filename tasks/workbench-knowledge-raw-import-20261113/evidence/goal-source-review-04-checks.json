@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "checkpoint": "goal-source-review-04",
+  "decision_batch": {
+    "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-04-cash-settlement-home-page.json",
+    "sha256": "b33294a7d737abf034e0159ac474ece6f64a8fefca337d624219c838d949d0ce",
+    "count": 4,
+    "decisions": {"KEEP_SECTIONS": 4}
+  },
+  "collections": {
+    "cash-settlement-home-page": {
+      "selection": {
+        "path": "knowledge/evidence/selections/cash-settlement-home-page.json",
+        "sha256": "6424f597dcea519a0b63551c49f10bd1dd44381f9227b186165edde10ba137ad"
+      },
+      "verify": {
+        "status": "NEEDS_REVIEW",
+        "counts": {"documents": 872, "present": 872, "missing": 0, "needs_review": 584},
+        "findings": []
+      },
+      "plan": {
+        "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-04/cash-after-plan.json",
+        "sha256": "ae3aae3d50cf45fc74da3d16a9343e8989d4b5b7681d2c900f5c87aa548015fc",
+        "plan_id": "e8a7fcfddf9c02780fcbb54441a9595bb9b9256ce7441325edfab15c00d05a67",
+        "counts": {"documents": 872, "review": 584, "process": 103, "unchanged": 185}
+      },
+      "view": {
+        "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-04/cash-settlement-home-page-view",
+        "manifest": ".workbench/ingestion/raw-import-20261113/goal-source-review-04/cash-settlement-home-page-view/manifest.json",
+        "manifest_sha256": "722f940de1463090951608f6b868011be43bade8e3163cd0305f58546e04c8af",
+        "selection_sha256": "6424f597dcea519a0b63551c49f10bd1dd44381f9227b186165edde10ba137ad",
+        "entries_checked": 103,
+        "exact_source_ranges_and_output_hashes": "PASSED",
+        "new_decision_pattern_scan": "PASSED",
+        "counts": {"selected": 103, "omitted": 769, "links": 9, "excerpts": 94, "copies": 0}
+      }
+    },
+    "ratan-51358": {
+      "selection": {
+        "path": "knowledge/evidence/selections/ratan-51358.json",
+        "sha256": "c6dcf759ac7ca3e1656f53acb190b0638363ab2198d3e07dce3b64173e994352"
+      },
+      "verify": {
+        "status": "NEEDS_REVIEW",
+        "counts": {"documents": 188, "present": 188, "missing": 0, "needs_review": 4},
+        "findings": []
+      },
+      "plan": {
+        "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-04/ratan-current-plan.json",
+        "sha256": "7f75d3e16716b4a2b2ab211d209f15d56dbec1f18ff1b6fc54d8160b5a7baf80",
+        "plan_id": "8c360f893bd16c2061aa4035d3aeb476196ea15c62606d2e815006531877eff2",
+        "counts": {"documents": 188, "review": 4, "process": 75, "unchanged": 109},
+        "holds": [
+          "RATAN - 51358/RATAN -Architecture/page.md",
+          "RATAN - 51358/RATAN -Core Function/RATAN-Settlement  7_Last Mile Check/page.md",
+          "RATAN - 51358/RATAN -Firewall rules/page.md",
+          "RATAN - 51358/RATAN -Interfaces/0_Ratan_Interfaces Diagram/page.md"
+        ]
+      }
+    }
+  },
+  "workspace_validation": {
+    "status": "VALID",
+    "documents": 16,
+    "findings": [],
+    "report_sha256": "dd485ec58bf7868a5d63c35ad9d2ff8c11a0c0f2abe3d8eb180ada38797181aa"
+  },
+  "limits": [
+    "Source verification remains NEEDS_REVIEW because selected and held pages remain queued.",
+    "The pattern scan covers only the four new decisions and cannot prove complete secret absence.",
+    "No canonical candidate was updated in this source-filtering checkpoint."
+  ]
+}

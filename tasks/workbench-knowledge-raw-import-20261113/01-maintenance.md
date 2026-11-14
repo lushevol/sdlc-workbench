@@ -139,6 +139,69 @@ The RATAN decisions cover external interfaces and scoped release requirements. T
 
 Workspace validation passed. Both source verifiers returned `NEEDS_REVIEW` with zero binding findings. The 132 queued outputs match the original hashes and selected lines. See the [checkpoint checks](evidence/goal-source-review-01-checks.json).
 
+### Second source review checkpoint
+
+This batch reviewed 101 new pages and refined one existing selection.
+
+| Collection | New pages reviewed | Pages kept | Evidence only | Excluded | Held in this batch | Pending source review | Selected pages queued for processing |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `cash-settlement-home-page` | 29 | 6 | 19 | 4 | 0 | 616 | 81 |
+| `ratan-51358` | 72 | 13 | 47 | 10 | 2 | 47 | 70 |
+
+The Cash review completes the available manual-entity pages and adds dated release requirements. The updated onboarding selection includes accounting time zones. Retained source line 1211 confirms UK SSI precedence and also contains an entity list. The view omits that line. See the [Cash decisions](evidence/goal-source-review-02-cash-settlement-home-page.json).
+
+The RATAN review covers core functions, operations, and dated release changes. The architecture and firewall pages remain on hold because their referenced content is missing. See the [RATAN decisions](evidence/goal-source-review-02-ratan-51358.json).
+
+The 29 Cash and 72 RATAN decision rows were recovered from the saved post-first plan and pre-third selection snapshots. Their source hashes, reasons, ranges, topics, intent statuses, and contexts match those snapshots. See the [Cash decisions](evidence/goal-source-review-02-cash-settlement-home-page.json), [RATAN decisions](evidence/goal-source-review-02-ratan-51358.json), and [reconstruction record](evidence/goal-source-review-02-reconstruction.json).
+
+The original workspace validation, source verification, and 151-entry view check were not retained. This recovery does not recreate those command results.
+
+### Third source review checkpoint
+
+This batch reviewed 72 new pages and rechecked 17 existing Cash decisions.
+
+| Collection | New pages reviewed | Pages kept | Evidence only | Excluded | Held in this batch | Pending source review | Selected pages queued for processing |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `cash-settlement-home-page` | 29 | 18 | 8 | 2 | 1 | 588 | 99 |
+| `ratan-51358` | 43 | 5 | 33 | 5 | 0 | 4, all holds | 75 |
+
+The Cash selections cover 2026 migration controls, new currency static data, Nostro, Vostro, and rounding. The rounding table is a dated 2024 proposal. Its current applicability remains unknown. See the [Cash decisions](evidence/goal-source-review-03-cash-settlement-home-page.json).
+
+The RATAN selections complete the release-plan review. They retain dated requirements and rollout evidence with separate status. See the [RATAN decisions](evidence/goal-source-review-03-ratan-51358.json).
+
+Workspace validation passed. Both source verifiers returned `NEEDS_REVIEW` with zero binding findings. All 174 queued view entries match retained source hashes and selected lines. See the [checkpoint checks](evidence/goal-source-review-03-checks.json).
+
+The check file's before plans show 645 Cash and 117 RATAN pending pages. The saved pre-third selection snapshots show 616 and 47. The immediate before-plan ID is missing; see the [checkpoint integrity note](evidence/goal-source-review-03-integrity-note.json).
+
+Decision and check filenames moved from `goal-source-review-02-*` to `goal-source-review-03-*`. The decision-file hashes stayed unchanged.
+
+### Fourth source review checkpoint
+
+This batch reviewed four Cash pages and selected sections from all four. It made no new RATAN decisions.
+
+| Collection | Pages reviewed | Kept sections | Pending source review | Selected pages queued for processing |
+| --- | ---: | ---: | ---: | ---: |
+| `cash-settlement-home-page` | 4 | 4 | 584, including eight holds | 103 |
+| `ratan-51358` | 0 | 0 | 4, all holds | 75 |
+
+The Cash selections preserve a proposed API Gateway resilience design, Indonesia onshore requirements, the migration cutover sequence, and message-bridge changes. The `folder` route type remains unresolved. The [decision batch](evidence/goal-source-review-04-cash-settlement-home-page.json) records exact ranges and status.
+
+Workspace validation returned `VALID`. Both source verifiers returned `NEEDS_REVIEW` with zero findings. All 103 Cash view entries match source hashes, ranges, mappings, and output hashes. The new ranges passed the configured secret-pattern scan. See the [checkpoint checks](evidence/goal-source-review-04-checks.json).
+
+No canonical candidate changed during this source-filtering checkpoint.
+
+### Fifth source review checkpoint
+
+This batch reviewed three new Cash pages. It kept one page and classified two as evidence only.
+
+The Indonesia UI page contributes eight dated requirements. The RDM day-zero page describes implementation alternatives, observed database counts, service links, and scheduled jobs. It remains evidence only because no approved business-level data-coverage rule is stated. The upstream and downstream inventory also remains evidence only.
+
+Both collection verifiers returned `NEEDS_REVIEW` with zero findings. Cash has 573 undecided pages and eight holds. RATAN has four holds. The fresh Cash plan queues 104 selected pages for later processing.
+
+Workspace validation returned `VALID`. All 104 queued view entries match their retained source hashes and selected line ranges. See the [checkpoint checks](evidence/goal-source-review-05-checks.json) and [Cash decisions](evidence/goal-source-review-05-cash-settlement-home-page.json).
+
+No canonical candidate changed during this source-filtering checkpoint.
+
 ## Validation and maintenance
 
 The larger source manifest exceeded the validator's one MiB record limit.
@@ -151,7 +214,7 @@ The loopback rerun finished with 1,068 tests, two skips, and no failures or erro
 
 ## Next action
 
-Continue the manual-entity, RATAN interface, and RATAN release reviews. Review the remaining Cash requirement and design groups in parallel. Reuse the verified views as inputs for candidate processing.
+Continue reviewing the remaining Cash pages from the current plan. The next queued page is `2025 Target`, followed by the AI Discovery pages. Process selected pages only after source review is complete.
 The Settlement owner needs to confirm the effective rules below. The owner is unknown.
 The sources describe design and proposed behavior. Approval, current applicability, and production behavior remain unverified.
 
@@ -160,6 +223,8 @@ The sources describe design and proposed behavior. Approval, current applicabili
 | Which parties send each ACK or NACK? What triggers retry or reconciliation? | The FX source names an internal NACK and a Razor ACK. The SABRE page describes a separate Stella booking response. | Pending |
 | Which cashflow version, event, and matching fields apply to each flow? | The Uber validation description and Stella integration proposal use different duplicate checks. The FX source also names a message ID and tolerances. | Pending |
 | Which entity, event, and reversal conditions govern the write-back rule? | The FX requirements and technical flow list different trigger sets. Their current scope is unresolved. | Pending |
+| Should the Indonesia message bridge keep the `folder` route type? | The integration plan asks this. An unreviewed restructure page contains historical folder routes, but does not answer the Indonesia target. | Pending |
+| Does the API Gateway resilience proposal apply to the RATAN Indonesia scope? | The design lists proposed resilience changes without recorded approval or scope confirmation. | Pending |
 
 ```yaml
 standard: ASD-STE100
