@@ -202,6 +202,18 @@ Workspace validation returned `VALID`. All 104 queued view entries match their r
 
 No canonical candidate changed during this source-filtering checkpoint.
 
+### Sixth source review checkpoint
+
+This batch reviewed 20 Cash pages: six evidence only, four excluded, three kept, five section selections, and two holds.
+
+The kept pages cover a proposed Ratan Code Review Agent, Octopus Service API material, Java coding guidance, and draft quality rules. Proposal and draft status remain explicit. The [decision batch](evidence/goal-source-review-06-cash-settlement-home-page.json) records exact source hashes, ranges, and reasons.
+
+The handover does not decide whether Uber lifecycle actions call `status/move` or publish domain events. The SSI form draft requests further design review. Both pages remain held until their expected behavior is confirmed.
+
+Cash verification returned `NEEDS_REVIEW` with zero binding findings. It reports 553 undecided pages and ten holds. The fresh plan queues 112 pages for later processing. The 112-page view omits both new holds. Its source hashes, ranges, mappings, and output hashes passed checks. See the [checkpoint checks](evidence/goal-source-review-06-checks.json).
+
+Workspace validation returned `VALID`. No canonical candidate changed during this source-filtering checkpoint. RATAN still has four held pages.
+
 ## Validation and maintenance
 
 The larger source manifest exceeded the validator's one MiB record limit.
@@ -214,7 +226,7 @@ The loopback rerun finished with 1,068 tests, two skips, and no failures or erro
 
 ## Next action
 
-Continue reviewing the remaining Cash pages from the current plan. The next queued page is `2025 Target`, followed by the AI Discovery pages. Process selected pages only after source review is complete.
+Continue reviewing Cash pages from the current plan. Skip the two held pages and start with `Testing SpringData with Embedded PostgreSQL`. Process selected pages only after both source queues are decided or remaining pages have supported held dispositions.
 The Settlement owner needs to confirm the effective rules below. The owner is unknown.
 The sources describe design and proposed behavior. Approval, current applicability, and production behavior remain unverified.
 
@@ -225,6 +237,8 @@ The sources describe design and proposed behavior. Approval, current applicabili
 | Which entity, event, and reversal conditions govern the write-back rule? | The FX requirements and technical flow list different trigger sets. Their current scope is unresolved. | Pending |
 | Should the Indonesia message bridge keep the `folder` route type? | The integration plan asks this. An unreviewed restructure page contains historical folder routes, but does not answer the Indonesia target. | Pending |
 | Does the API Gateway resilience proposal apply to the RATAN Indonesia scope? | The design lists proposed resilience changes without recorded approval or scope confirmation. | Pending |
+| For Uber lifecycle updates, should each action call `status/move`, publish only a domain event, or vary by action? | The handover leaves the call open. The Uber workflow API page also says publishing behavior needs confirmation. | Pending |
+| For SSI UI, should 57A BIC format validation run independently of mandatory checks and rule order for MT202? | The draft requests further design review. The linked work items and screenshots are not retained. | Pending |
 
 ```yaml
 standard: ASD-STE100
