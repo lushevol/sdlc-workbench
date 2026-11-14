@@ -25,6 +25,14 @@
 
   Apply source filtering first. Use only reviewed selections in any later candidate update.
 
+- Latest continuation in the same Codex chat:
+
+  > go on
+
+- Continuation on 14 November 2026 (Asia/Singapore):
+
+  > go on
+
 - Baseline: `ff077ed85`. The unrelated connector lockfile deletion, release-report files, and Azure DevOps assessment are outside this task.
 
 ## Retention and review
@@ -72,6 +80,21 @@ The Cash selections cover Group Blotter fields and monitoring, cashflow data, an
 
 Workspace validation passed. Source verification found no binding issues and returned `NEEDS_REVIEW` for both collections. The new partial views match the selected hashes and line ranges. See the [filtering checks](evidence/filter-followup-checks.json).
 
+## Grouping and settlement rules filtering
+
+On 14 November 2026, this batch reviewed 43 pages. It kept 31, classified five as evidence only, excluded five, and placed two on hold.
+
+| Collection | Pages kept | Evidence only | Excluded | Held in this batch | Pending source review | Selected pages queued for processing |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `cash-settlement-home-page` | 22 | 5 | 5 | 0 | 756 | 27 |
+| `ratan-51358` | 9 | 0 | 0 | 2 | 161 | 16 |
+
+The Cash selections cover Group Blotter visibility, trade validation, and manual STP. They also cover market-specific SSI matching, suppression, and LMS eligibility. The decisions retain conflicting status names, eligibility conditions, and market scope. See the [Cash decisions](evidence/filter-grouping-and-rules-cash-settlement-home-page.json).
+
+The RATAN selections cover netting, SSI stamping, exception checks, SWIFT, accounting, and related interfaces. Last Mile Check remains held because its prose and SQL give different economic comparisons. The interface diagram remains held because the export contains only its link. See the [RATAN decisions](evidence/filter-grouping-and-rules-ratan-51358.json).
+
+Workspace validation passed. Both source verifiers returned `NEEDS_REVIEW` with zero binding findings. All 43 queued outputs match their retained hashes and source lines. See the [batch checks](evidence/filter-grouping-and-rules-checks.json).
+
 ## Validation and maintenance
 
 The larger source manifest exceeded the validator's one MiB record limit.
@@ -84,7 +107,7 @@ The loopback rerun finished with 1,068 tests, two skips, and no failures or erro
 
 ## Next action
 
-Continue filtering raw pages in topic groups. Use each verified view as the input for later candidate processing. Prioritize related sources that clarify Group Blotter visibility, suppression states, and market applicability.
+Continue filtering raw pages in topic groups. Use each verified view as the input for later candidate processing. The next source group covers release eligibility, downstream settlement, and accounting by market.
 The Settlement owner needs to confirm the effective rules below. The owner is unknown.
 The sources describe design and proposed behavior. Approval, current applicability, and production behavior remain unverified.
 
