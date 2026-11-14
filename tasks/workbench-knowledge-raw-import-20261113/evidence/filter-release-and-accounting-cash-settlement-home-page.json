@@ -1,0 +1,988 @@
+{
+  "schema_version": 1,
+  "source_id": "cash-settlement-home-page",
+  "decisions": [
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2024 changes/FMRP Swift Generation/Production Issue - Swift Message/page.md",
+      "sha256": "ad28752a4f9a9510484bf78063f97c04fe4676671d10d3ba54ab01cbfff75482",
+      "decision": "EVIDENCE_ONLY",
+      "topic": "Observed SWIFT message production incidents",
+      "intent_status": "Observed incident records and interventions.",
+      "reason": "Keep the original as incident evidence for BIC, account-field and custodian formatting cases. The recorded incidents and interventions provide no general target rule.",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2024 changes/Q3 Function Analysis/Swap Agent Payment/page.md",
+      "sha256": "0c6d461490909360ae049eb7253577a04d4cb7dfadb6dbb53328a9dc8b17cc2f",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          1,
+          12
+        ],
+        [
+          18,
+          36
+        ]
+      ],
+      "topic": "Murex Swap Agent payment and accounting split",
+      "intent_status": "Historical requirement and proposed RATAN change. Adoption unverified.",
+      "reason": "Keep the initial and final bilateral principal, the accounting-only treatment of other payments, and the source statement that this model needs no netting. The later Day 2 scope documents different coupon and MTM netting. The source provides a dated comparison and cannot establish precedence across all clients.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/74bf8b994022b427e999626ab1d3cc3cf5cbb0101af6367525835bfc9cb6bb8f.md",
+          "sha256": "74bf8b994022b427e999626ab1d3cc3cf5cbb0101af6367525835bfc9cb6bb8f"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/e4064ff9510fc8f03be1906c6a45923d3a9528741de9c8971b2c4162e44b31f5.md",
+          "sha256": "e4064ff9510fc8f03be1906c6a45923d3a9528741de9c8971b2c4162e44b31f5"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2026 Changes/Cash Settlement -- Korea Migration/COMP status to drive STP process/page.md",
+      "sha256": "a27ec94a124c1ad80e2235ed7b782db25f05967eaa6732bd63f2c6b7144d74d6",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Korea migration COMP trigger",
+      "intent_status": "Korea-specific migration design and source-recorded cancellation and reissue clarification.",
+      "reason": "Keep direct Murex Korea to RATAN delivery for COMP because the Korea flow lacks COMP from TDS3. Preserve COMP and validation mapping and the prior unconfirmed trade case. RATAN cancels the original cashflow, and the replacement awaits confirmation from the new trade. Apply this route within the Korea migration scope. Exclude sample trade identifiers and screenshot references.",
+      "ranges": [
+        [
+          1,
+          1
+        ],
+        [
+          13,
+          19
+        ],
+        [
+          25,
+          27
+        ]
+      ],
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/fc741b7ca9888a2210e6d48f581b2ec703a980ad23b3e56cf2045c03e22d1387.md",
+          "sha256": "fc741b7ca9888a2210e6d48f581b2ec703a980ad23b3e56cf2045c03e22d1387"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/77d4c8db4af6922d53f80eb6999b1cb760f98024089ea7449d243a3e8979e26a.md",
+          "sha256": "77d4c8db4af6922d53f80eb6999b1cb760f98024089ea7449d243a3e8979e26a"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2026 Changes/Cash Settlement -- Korea Migration/Increase Payment Amount within USD 1 Threshold/Potential flow2/page.md",
+      "sha256": "84dea6d11fd5a5303db21c673beb2c855c19c9f73fb358a85156bbe1b66dcfc4",
+      "decision": "HOLD",
+      "topic": "Korea amount adjustment rejection",
+      "reason": "One sentence describes a possible state after rejection. The parent describes the proposed checker return to Pending Operator. The child supplies no distinct trigger, alternate outcome, or decision. Confirm whether it denotes a separate flow.",
+      "intent_status": "Source evidence only or unresolved scope.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/b4752705e8346717931ed280e8168a5a1e11870463974ecbbfbf0160d9ee79c2.md",
+          "sha256": "b4752705e8346717931ed280e8168a5a1e11870463974ecbbfbf0160d9ee79c2"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2026 Changes/Cash Settlement -- Korea Migration/Korea OLA and other release related DOCs/page.md",
+      "sha256": "a5069ed201b867448b9d7392a776b8dbf7158978eca21d764037fbd215f7c1f2",
+      "decision": "EVIDENCE_ONLY",
+      "ranges": [],
+      "topic": "Korea migration OLA and documentation status",
+      "intent_status": "Dated operational checklist. Current sign-off unverified.",
+      "reason": "The page tracks pending reviews and links the interface specifications. It includes a checked COMP trade ACK note without the original contract or approval. Keep it as supporting migration context.",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2026 Changes/Cash Settlement -- Korea Migration/RATAN to ENISIS/page.md",
+      "sha256": "f742eae54e879b6928e98ef8fdaacff1589e107f583bde2cc8d6f67900bd357c",
+      "decision": "KEEP_SECTIONS",
+      "topic": "RATAN to ENISIS message and acknowledgement boundary",
+      "intent_status": "Korea migration target and proposed message contract. Format and exception details require confirmation.",
+      "reason": "Keep the RELEASED or SETTLED eligibility with NOS, Solace target, MT210 exception, and technical ACK distinct from final ACK and NAK. Preserve tracking identifier semantics and the open format and exception scenarios. A separate proposal says to retain the old connection. Confirm route and transition scope. Exclude populated MT, MX and ACK message samples and connection payloads.",
+      "ranges": [
+        [
+          1,
+          5
+        ],
+        [
+          155,
+          161
+        ],
+        [
+          237,
+          242
+        ]
+      ],
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/77d4c8db4af6922d53f80eb6999b1cb760f98024089ea7449d243a3e8979e26a.md",
+          "sha256": "77d4c8db4af6922d53f80eb6999b1cb760f98024089ea7449d243a3e8979e26a"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/063a7540f6ac6217447951dfd897775c5e77508e9710a5298c6c8bb391704efd.md",
+          "sha256": "063a7540f6ac6217447951dfd897775c5e77508e9710a5298c6c8bb391704efd"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/a7c48470a31afa6b04d49ab9f306c8bc285cda1d29ae968a2c8b9742173f2ec0.md",
+          "sha256": "a7c48470a31afa6b04d49ab9f306c8bc285cda1d29ae968a2c8b9742173f2ec0"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2026 Changes/Cash Settlement -- Korea Migration/Swift Comparison between Korea Murex and RATAN/page.md",
+      "sha256": "4b8789e4a9f6ba7c08bc3d09a84a1a0e9ebef709c297dd0f02def7271f75a1a1",
+      "decision": "EVIDENCE_ONLY",
+      "topic": "Korea legacy SWIFT comparison inventory",
+      "intent_status": "Legacy message inventory and incomplete comparison.",
+      "reason": "The source lists Korea Murex message types and comparison field names. The empty comparison results leave target field mappings and message parity unresolved.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/f742eae54e879b6928e98ef8fdaacff1589e107f583bde2cc8d6f67900bd357c.md",
+          "sha256": "f742eae54e879b6928e98ef8fdaacff1589e107f583bde2cc8d6f67900bd357c"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2026 Changes/Cash Settlement -- Korea Migration/page.md",
+      "sha256": "77d4c8db4af6922d53f80eb6999b1cb760f98024089ea7449d243a3e8979e26a",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Korea cash settlement migration boundaries",
+      "intent_status": "Korea-specific migration objectives and linked interface designs.",
+      "reason": "Keep the migration from Murex Korea settlement to RATAN, ENISIS validation before SAA, OLTP accounting, SSI+ ownership, TLM suspense reconciliation and the TIS manual payment route. Preserve the distinct interim CSV link. Use child designs for conditions and contracts. Exclude test and release navigation and team contacts.",
+      "ranges": [
+        [
+          1,
+          9
+        ],
+        [
+          11,
+          31
+        ]
+      ],
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/a27ec94a124c1ad80e2235ed7b782db25f05967eaa6732bd63f2c6b7144d74d6.md",
+          "sha256": "a27ec94a124c1ad80e2235ed7b782db25f05967eaa6732bd63f2c6b7144d74d6"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/f742eae54e879b6928e98ef8fdaacff1589e107f583bde2cc8d6f67900bd357c.md",
+          "sha256": "f742eae54e879b6928e98ef8fdaacff1589e107f583bde2cc8d6f67900bd357c"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Accounting & Recon/page.md",
+      "sha256": "7047b0c5c69f2ec703da722d3b49d74fda5cccb5614fdc1c1ca47ff263321bce",
+      "decision": "EVIDENCE_ONLY",
+      "topic": "Historical accounting and reconciliation estimates",
+      "intent_status": "Planning estimate with alternatives and open eligibility. Authority unverified.",
+      "reason": "Retain the estimate as context for planning. The early country allocations and end-of-day versus real-time design options have unresolved eligibility and differ from the more specific payment-accounting overview. No intended routing is selected from this page.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97.md",
+          "sha256": "071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771.md",
+          "sha256": "e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40.md",
+          "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Failed Process/Failed Cashflow Accounting/page.md",
+      "sha256": "7db43f248bbf098cc95cf41a4f9bfa38086bbe3d77c8ba56236d65ff7e8e24df",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Razor cashflow failure and accounting reprocessing",
+      "intent_status": "Documented source-specific flow. Reversal behavior on unchanged reprocessing remains unresolved.",
+      "reason": "Keep the Razor value-date end-of-day failure trigger, the accounting-only outcome, the unchanged-trade READY and SWIFT date behavior, and the changed-trade reversal. The populated row at line 8 describes reversal and new accounting on unchanged reprocessing, in tension with the SWIFT-only wording at line 4. Preserve the conflict and verify before applying a reversal rule. The EBBS and Aspire reinstatement flows have separate stated scope.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40.md",
+          "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771.md",
+          "sha256": "e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Multi Exceptions/High Value Exception Scenario Analysis/page.md",
+      "sha256": "d8bed812dfafe635df24f63ca31c41132bd5b4580b1e577c01da91f923d3a581",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          1,
+          23
+        ]
+      ],
+      "topic": "High-value exception eligibility and resolution",
+      "intent_status": "Documented requirement and expected outcomes. Trigger conflict remains open.",
+      "reason": "Keep both the prose that requires another checker exception and the table that also triggers for a maker-only exception. Preserve the manual versus automatic resolution examples. The general RATAN exception page lists High Value as a check without resolving this conflict.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/bb673d577aa8824afc835778505b0e2970f55e645a52e1ce35585d75b97d6e5c.md",
+          "sha256": "bb673d577aa8824afc835778505b0e2970f55e645a52e1ce35585d75b97d6e5c"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Payment Accounting/Cash Settlement - Aspire Accounting/page.md",
+      "sha256": "e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Aspire accounting eligibility and end-of-day feed",
+      "intent_status": "Historical agreement and compensation design. Current entity scope and late-file cutoff require confirmation.",
+      "reason": "Keep the qualified entity list, event and reversal conditions, missing data states, and Aspire SUCCESS-on-send semantics. Keep the local eligibility cutoff, business-day and holiday rules, late-file agreement, format compatibility, and compensation. The delay agreement and next-day fallback at 3 AM may describe different failure conditions. Preserve the source wording at the intermediate 12 PM threshold pending clarification. Scenario workbook outcomes and populated payloads are outside this selection.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97.md",
+          "sha256": "071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40.md",
+          "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/3e590bff0dba8a3f78409d039f29504997675464b6f05c0baee7eef4a6f8a74f.md",
+          "sha256": "3e590bff0dba8a3f78409d039f29504997675464b6f05c0baee7eef4a6f8a74f"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c.md",
+          "sha256": "b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          42
+        ],
+        [
+          47,
+          53
+        ],
+        [
+          87,
+          95
+        ],
+        [
+          303,
+          310
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Payment Accounting/Cash Settlement - EBBS Accounting/page.md",
+      "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40",
+      "decision": "KEEP_SECTIONS",
+      "topic": "EBBS payment accounting eligibility, reversal and retry",
+      "intent_status": "Documented agreement and exception design. Retry details and response precedence remain unresolved.",
+      "reason": "Keep value-date routing, release versus settled deduplication, suppression and missing Nostro, manual versus automatic failure, reversal, retry, and component withdrawal mapping. Line 46 retains a separate UK currency exception in the original, with accounting suppressed and SWIFT preserved. Its concrete booking identifiers stay outside the view. The retry count wording and interval and error code differ across sources. The success-first examples conflict with the page claim to display the latest response. The workbook and populated walkthrough stay outside the view.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/7db43f248bbf098cc95cf41a4f9bfa38086bbe3d77c8ba56236d65ff7e8e24df.md",
+          "sha256": "7db43f248bbf098cc95cf41a4f9bfa38086bbe3d77c8ba56236d65ff7e8e24df"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97.md",
+          "sha256": "071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md",
+          "sha256": "b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c.md",
+          "sha256": "b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          45
+        ],
+        [
+          48,
+          66
+        ],
+        [
+          70,
+          75
+        ],
+        [
+          77,
+          77
+        ],
+        [
+          207,
+          218
+        ],
+        [
+          220,
+          236
+        ],
+        [
+          238,
+          245
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Payment Accounting/Cash Settlement - Korea Accounting Recon - RATAN- TLM/page.md",
+      "sha256": "87712fe287796fc9588a6b9f62e974c9091dceeca2640937b0e20aa0d9996967",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Interim Korea accounting reconciliation through TLM",
+      "intent_status": "Documented interim agreement. Query-window inclusivity and current activation remain unresolved.",
+      "reason": "Keep the transition from direct RATAN reads to a planned Aspire route, Korea-only scope, sent task history, three-day limit, and response statuses. The business parameter table uses an exclusive start and inclusive end. The technical table specifies the opposite and differs on fmidList type. Both exact contracts remain in the retained sources pending resolution. Endpoint and populated request details stay outside the view.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/77369026ca156ce6cf786a72f2126f9ecab884f33e52b20b3a0526ac3b755f23.md",
+          "sha256": "77369026ca156ce6cf786a72f2126f9ecab884f33e52b20b3a0526ac3b755f23"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/1023d7e0fe6af94c86f2e5ce9920a9479a6c0550921e162c490c9ce0c6bc9872.md",
+          "sha256": "1023d7e0fe6af94c86f2e5ce9920a9479a6c0550921e162c490c9ce0c6bc9872"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          13
+        ],
+        [
+          17,
+          19
+        ],
+        [
+          28,
+          39
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Payment Accounting/Korea Cashflow Migration -Ratan to OLTP Accounting/page.md",
+      "sha256": "1023d7e0fe6af94c86f2e5ce9920a9479a6c0550921e162c490c9ce0c6bc9872",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Korea OLTP accounting eligibility and operational exceptions",
+      "intent_status": "Documented Korea flow and dated answers. The allowlist versus blacklist scope remains unresolved.",
+      "reason": "Keep Murex-KR scope, the listed settlement and account categories, operational handling during the local end-of-day break, OLTP ACK for success, and the dated no-retry and held-send answers. The stated positive filter and the code blacklist description cover different possible NOX accounts. The technical design also spells UIDD differently. Do not generalize the scope or assume current deployment. Populated messages, endpoint details, and account-number examples are excluded.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md",
+          "sha256": "b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/87712fe287796fc9588a6b9f62e974c9091dceeca2640937b0e20aa0d9996967.md",
+          "sha256": "87712fe287796fc9588a6b9f62e974c9091dceeca2640937b0e20aa0d9996967"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97.md",
+          "sha256": "071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          47
+        ],
+        [
+          569,
+          575
+        ],
+        [
+          688,
+          689
+        ],
+        [
+          693,
+          693
+        ],
+        [
+          697,
+          698
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Payment Accounting/page.md",
+      "sha256": "071c84ca1600030202cdd33c354093a1aa3d77cd1233646bb95be10f9bba3f97",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Payment accounting destination and Keystone routing",
+      "intent_status": "Documented overview with before and after scope. Effective date and deployment unverified.",
+      "reason": "Keep the Hong Kong Main Nostro versus suspense split around Keystone and the listed country routing. Historical Aspire and RATAN service pages show different Hong Kong scopes. Preserve the overview as a scoped routing statement and verify precedence and effective dates before applying it.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771.md",
+          "sha256": "e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40.md",
+          "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c.md",
+          "sha256": "b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c"
+        }
+      ],
+      "ranges": [
+        [
+          6,
+          9
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Auto Populate Ordering Info for Notice to Receive Cashflow/page.md",
+      "sha256": "a5aca52341b5c08c790fb9f69d8f6211ebddc90007298c67d1521466f9270413",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Notice to Receive ordering information from SCI",
+      "intent_status": "Functional story and acceptance criteria with open applicability details.",
+      "reason": "Keep automatic SCI enrichment for eligible SCB receive cashflows when Notice to Receive is Y. Preserve the Vostro exclusion, bank-type BIC precedence, fallback to name, address and country, and no-enrichment cases. The details include HAU among excluded currencies. The acceptance cases omit HAU. The NOS condition is struck through and marked for verification. Exported screenshot contents are unavailable. Acceptance examples describe expected behavior.",
+      "ranges": [
+        [
+          1,
+          5
+        ],
+        [
+          9,
+          14
+        ]
+      ],
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Splitting/Cashflow Auto Distribution Design/page.md",
+      "sha256": "1f892e514d6c756c6a7cfd4d458327eea4021d9a809a18bfe24f465369b89707",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          1,
+          3
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          13,
+          23
+        ],
+        [
+          60,
+          80
+        ]
+      ],
+      "topic": "Automatic cashflow distribution and technical failure recovery",
+      "intent_status": "Documented design with alternatives and missing diagrams.",
+      "reason": "Keep the configured threshold trigger, algorithm constraints, and the proposed TechFail change for handling withdrawal after a split failure. The text describes an earlier AutoSplitFail option and then prefers TechFail. Sample numbers cannot supply actual thresholds. Confirm precise arithmetic from the original design before implementation.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/0e87eff30a2907b6d5341924c21c30752c1366c3a59e2ac2e5f0c721fd04e10e.md",
+          "sha256": "0e87eff30a2907b6d5341924c21c30752c1366c3a59e2ac2e5f0c721fd04e10e"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Splitting/Cashflow Split Static/page.md",
+      "sha256": "cf0e79e604c73dcab0557ee6f43e01e1db55139fb22a7e6f446c10b519a9f1f6",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          3,
+          10
+        ],
+        [
+          13,
+          17
+        ]
+      ],
+      "topic": "Manual verification of split cashflow actions",
+      "intent_status": "Proposed static rules. Activation unverified.",
+      "reason": "Keep four new split event rules and their maker and checker requirements. The table leaves status blank. The threshold scope awaits confirmation. The pending NDS row mixes intent with an operational rule identifier and remains in the retained source.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/2ef4305d826e2db2b0e53e0ad91843401fd27613d763fc302372e90443aae8b2.md",
+          "sha256": "2ef4305d826e2db2b0e53e0ad91843401fd27613d763fc302372e90443aae8b2"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Splitting/Splitting Release/page.md",
+      "sha256": "2ef4305d826e2db2b0e53e0ad91843401fd27613d763fc302372e90443aae8b2",
+      "decision": "EVIDENCE_ONLY",
+      "ranges": [],
+      "topic": "Split release implementation context",
+      "intent_status": "Dated branch, PR and rule configuration record. No independent requirement or rollout evidence.",
+      "reason": "The page lists build and branch references and copied rule expressions. The screenshots that could establish full configured outcomes are unavailable. Use the separate split static and distribution design for intended rules.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/cf0e79e604c73dcab0557ee6f43e01e1db55139fb22a7e6f446c10b519a9f1f6.md",
+          "sha256": "cf0e79e604c73dcab0557ee6f43e01e1db55139fb22a7e6f446c10b519a9f1f6"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/1f892e514d6c756c6a7cfd4d458327eea4021d9a809a18bfe24f465369b89707.md",
+          "sha256": "1f892e514d6c756c6a7cfd4d458327eea4021d9a809a18bfe24f465369b89707"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Enable Settlement for Manual Entities/03 UAT testing/003 QATAR SLATE ONE LLC DOH(GBS)/page.md",
+      "sha256": "7d1194a3901058a8da6c0d6d76572741c88ee698ed0148bc787c67e1ceac5119",
+      "decision": "KEEP",
+      "topic": "Qatar SLATE manual-entity cashflow suppression",
+      "reason": "The dated UAT page records an entity-specific decision to use cashflow suppression and omit other static setup. The Cash suppression design explains its accounting and SWIFT effects. The note supplies no rollout evidence or basis for generalizing to other Qatar entities.",
+      "intent_status": "Dated UAT decision note. Rollout unverified.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/411359b9dd50ccbbbc55a0f6cede4bbf10a080fb74b1ed07fc733f82b074780e.md",
+          "sha256": "411359b9dd50ccbbbc55a0f6cede4bbf10a080fb74b1ed07fc733f82b074780e"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Enable Settlement for Manual Entities/03 UAT testing/010 SRI LANKA SCB COLOMBO CMB(In Country)/Hands on Training Use Cases/page.md",
+      "sha256": "48ae20990e78309e1c526b3f35523388fcc62ddc51e830d1b19a04508a1f7863",
+      "decision": "EVIDENCE_ONLY",
+      "topic": "Sri Lanka hands-on settlement training",
+      "reason": "The page lists eight training actions. It contains no eligibility conditions, expected outcomes, or execution results.",
+      "intent_status": "Source evidence only or unresolved scope.",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Enable Settlement for Manual Entities/03 UAT testing/020 TLM/page.md",
+      "sha256": "ed90ad381f056273c38b7ab09c23d406731b571538294146d9005fdc8564c64a",
+      "decision": "HOLD",
+      "topic": "Manual-entity TLM reconciliation UAT",
+      "reason": "The page names a separate reconciliation UAT document. The supplied text has no scenarios, assertions, or results. Recover that document before drawing any TLM conclusion from it.",
+      "intent_status": "Source evidence only or unresolved scope.",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/High Value Payment Control - RATAN/page.md",
+      "sha256": "0e87eff30a2907b6d5341924c21c30752c1366c3a59e2ac2e5f0c721fd04e10e",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          3,
+          20
+        ],
+        [
+          24,
+          39
+        ],
+        [
+          41,
+          115
+        ],
+        [
+          117,
+          127
+        ]
+      ],
+      "topic": "High-value payment classification and authorization",
+      "intent_status": "Dated requirement with scoped answers and open choices. Rollout unverified.",
+      "reason": "Keep BCS and FMRP/LOANIQ scope, user actions, authorization limits, and message fields. The source distinguishes BCS transmission via Razor. Its open questions retain auto-split inheritance, the Korea ENISIS exclusion, and separate BCS and FMRP affirmation decisions. The mail and screenshot evidence is absent.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/d8bed812dfafe635df24f63ca31c41132bd5b4580b1e577c01da91f923d3a581.md",
+          "sha256": "d8bed812dfafe635df24f63ca31c41132bd5b4580b1e577c01da91f923d3a581"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Nostro Centralization/page.md",
+      "sha256": "4e9b71cc57b322fa06b6680a12f321998dcf77e8db73dbf5654481a3e86c16d2",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          1,
+          7
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          15,
+          17
+        ]
+      ],
+      "topic": "Nostro static consolidation and refresh",
+      "intent_status": "Early estimate and proposed integration. Message contract unconfirmed.",
+      "reason": "Keep the proposed ownership boundary and the impact on stamping, accounting, and refresh on new, update or delete events. The message mapping, additional event types, and migration of existing references remain open. Existing RFI portfolio matching creates an explicit overlap.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/c3f430a1472df88805901bb83d0193abacfc7513b7f08cd98634c41cd9cc3954.md",
+          "sha256": "c3f430a1472df88805901bb83d0193abacfc7513b7f08cd98634c41cd9cc3954"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Nostro Maintenance By Uploading CSV File/page.md",
+      "sha256": "c45abdb13faf9d810d51d81e798b61bd5f193aae3e0015b853997a45cc44a551",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          1,
+          10
+        ]
+      ],
+      "topic": "Nostro CSV upload behavior",
+      "intent_status": "Documented API example. Implementation and authorization unverified.",
+      "reason": "Keep the described all-or-nothing response, duplicate tuple and confirmation branches. The sample count and rejected row are illustrative. The source does not specify authorization or reconcile the older duplicate tuple with the proposed RFI-specific Nostro Type dimension.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/c3f430a1472df88805901bb83d0193abacfc7513b7f08cd98634c41cd9cc3954.md",
+          "sha256": "c3f430a1472df88805901bb83d0193abacfc7513b7f08cd98634c41cd9cc3954"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/RFI Nostro stamping based on Portfolio/RFI Nostro stamping based on Portfolio - UAT/RFI Nostro Trade Stamping Regression/page.md",
+      "sha256": "4c3ef5fd7e691fc65c8d3da11718721065bed5004d118476038c866eccbfa208",
+      "decision": "EVIDENCE_ONLY",
+      "ranges": [],
+      "topic": "RFI trade stamping regression evidence",
+      "intent_status": "Scenario inventory. Attachment outcomes unavailable.",
+      "reason": "The table names missing, best-match, and multiple-match cases for four product groups. The evidence column points to images outside the export. Keep it as test context for the separate cashflow versus trade stamping scope.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/c3f430a1472df88805901bb83d0193abacfc7513b7f08cd98634c41cd9cc3954.md",
+          "sha256": "c3f430a1472df88805901bb83d0193abacfc7513b7f08cd98634c41cd9cc3954"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Swap Agent Day2/page.md",
+      "sha256": "74bf8b994022b427e999626ab1d3cc3cf5cbb0101af6367525835bfc9cb6bb8f",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          1,
+          14
+        ],
+        [
+          17,
+          26
+        ]
+      ],
+      "topic": "Earlier Swap Agent coupon and MTM netting",
+      "intent_status": "Documented Day 2 requirement. Current applicability by client unverified.",
+      "reason": "Keep separate coupon and interim MTM rules, the grouping fields, the retry schedule, resultant types, and the source rule for LMS. The later principal proposal changes selected client scope. The LMS receipt exception is separately proposed and does not settle whether it applies here. The mixed physical mapping row remains outside the view.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/e4064ff9510fc8f03be1906c6a45923d3a9528741de9c8971b2c4162e44b31f5.md",
+          "sha256": "e4064ff9510fc8f03be1906c6a45923d3a9528741de9c8971b2c4162e44b31f5"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b284c8591daf044d40e88e4d2e050c9fef51bdf943ca8605a123f5ac6ef516b0.md",
+          "sha256": "b284c8591daf044d40e88e4d2e050c9fef51bdf943ca8605a123f5ac6ef516b0"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Swap Agent Payment Enhancement/page.md",
+      "sha256": "e4064ff9510fc8f03be1906c6a45923d3a9528741de9c8971b2c4162e44b31f5",
+      "decision": "KEEP_SECTIONS",
+      "ranges": [
+        [
+          1,
+          21
+        ],
+        [
+          23,
+          40
+        ]
+      ],
+      "topic": "Swap Agent principal exchange expansion",
+      "intent_status": "Proposed enhancement and dated confirmations. Payment-type eligibility and rollout unverified.",
+      "reason": "Keep principal exchange eligibility for configurable clients, both upstream indicators, netting precedence, and suppression of unmatched eligible cashflows. Keep the no-currency-filter decision and the unresolved Stella payment-type scope. The earlier Day 2 design uses separate coupon and MTM rules and excludes principal.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/74bf8b994022b427e999626ab1d3cc3cf5cbb0101af6367525835bfc9cb6bb8f.md",
+          "sha256": "74bf8b994022b427e999626ab1d3cc3cf5cbb0101af6367525835bfc9cb6bb8f"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/0c6d461490909360ae049eb7253577a04d4cb7dfadb6dbb53328a9dc8b17cc2f.md",
+          "sha256": "0c6d461490909360ae049eb7253577a04d4cb7dfadb6dbb53328a9dc8b17cc2f"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Trade event trigger cashflow STP/page.md",
+      "sha256": "b5a5cd9e6118b1cf502751949cd4843098a463d0cfffac3a6281fa58dc7a2f53",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Trade and cashflow affirmation rule for STP",
+      "intent_status": "Documented rule excerpt with walkthrough evidence excluded.",
+      "reason": "Keep the three Inbound Completed triggers and the NSTP rule as a conjunction of all three stated conditions. The linked Stella design also mentions NONCONFIRMED for closing a pending exception. Preserve the different stated gates and confirm any shared applicability. Exclude the populated walkthrough and unavailable screenshots.",
+      "ranges": [
+        [
+          8,
+          14
+        ],
+        [
+          18,
+          20
+        ]
+      ],
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/fc741b7ca9888a2210e6d48f581b2ec703a980ad23b3e56cf2045c03e22d1387.md",
+          "sha256": "fc741b7ca9888a2210e6d48f581b2ec703a980ad23b3e56cf2045c03e22d1387"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/[Accounting Enhancement] Prepare Nstro Account Info before Sent/page.md",
+      "sha256": "3b9dc4ad0cc4ea7fa69a3affe0de14cea9382c953397d2f936875b8deef31584",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Nostro refresh for held accounting tasks",
+      "intent_status": "Documented Day 2 answer. Netting and component withdrawal remain open.",
+      "reason": "Keep the answer that held tasks regenerate the Nostro-related part of the request before send after a refresh. The symbolic net resultant and withdrawn component example has no answer. It cannot establish which refreshed Nostro to use for those cases.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40.md",
+          "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c.md",
+          "sha256": "b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c"
+        }
+      ],
+      "ranges": [
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          14
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Surrounding System Integration/Settlement - Murex 2.11 Cashflow Integration/FMRP CN Settlement - Murex Cashflow to LMS/page.md",
+      "sha256": "0a1d39f3a6cf7b390c911b410fdf776f8257107362e2f02a3ce10481f78cecda",
+      "decision": "EXCLUDE",
+      "topic": "Murex cashflow to LMS placeholder",
+      "reason": "The page has only Current State and Target State labels. It provides no integration rule or linked source to interpret.",
+      "intent_status": "Source evidence only or unresolved scope.",
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Trade Confirmation & Cashflow STP/page.md",
+      "sha256": "fc741b7ca9888a2210e6d48f581b2ec703a980ad23b3e56cf2045c03e22d1387",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Trade-confirmation exception closure and cashflow STP",
+      "intent_status": "Historical integration design. Market exceptions and adoption require confirmation.",
+      "reason": "Keep the TDS3 trade-update design and the Stella and Murex 2.11 correlation and exception conditions. Preserve Stella cancellation and latest-version handling. Murex COMP moves a cashflow to STP only if the pending confirmation exception was its sole exception. The Korea migration design supplies a scoped direct COMP route. Exclude environment topic names.",
+      "ranges": [
+        [
+          1,
+          19
+        ],
+        [
+          22,
+          24
+        ]
+      ],
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/a27ec94a124c1ad80e2235ed7b782db25f05967eaa6732bd63f2c6b7144d74d6.md",
+          "sha256": "a27ec94a124c1ad80e2235ed7b782db25f05967eaa6732bd63f2c6b7144d74d6"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b5a5cd9e6118b1cf502751949cd4843098a463d0cfffac3a6281fa58dc7a2f53.md",
+          "sha256": "b5a5cd9e6118b1cf502751949cd4843098a463d0cfffac3a6281fa58dc7a2f53"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/2026 Design/Auto Release Process/page.md",
+      "sha256": "563322118ecff042e2159b8ee33523faaae68287194dc21e2d50f34f12e3beb0",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Auto-release eligibility and competing cashflow actions",
+      "intent_status": "January 2026 design and discussion. Proposed protections and described controls have unverified adoption.",
+      "reason": "Keep the READY and PendingAck action matrix, proposed last-mile payment reconciliation, concurrency limits, and duplicate-prevention conditions. Preserve the LOANIQ and UTIL/PASTDUE qualifications in the action matrix. The January discussion proposes READY+NA+NA before publishing to the SWIFT service and READY+NA+PendingAck before generating SWIFT. The final outbound gatekeeper, synchronization changes, and job interactions require confirmation. Job times and the ten-minute control apply only to this source context. Exclude incident references.",
+      "ranges": [
+        [
+          1,
+          44
+        ],
+        [
+          48,
+          68
+        ],
+        [
+          72,
+          91
+        ]
+      ],
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/97226b3c39ebbcb4be4ac414c156ad2b656ad04bc0629dd2cc9ec3352d5efae9.md",
+          "sha256": "97226b3c39ebbcb4be4ac414c156ad2b656ad04bc0629dd2cc9ec3352d5efae9"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/600da2fa0ed91bc2bd0a3ca531fb206b872edf82b125339a91c7149de13791ec.md",
+          "sha256": "600da2fa0ed91bc2bd0a3ca531fb206b872edf82b125339a91c7149de13791ec"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Settlement Accounting for Aspire Tech design/page.md",
+      "sha256": "3e590bff0dba8a3f78409d039f29504997675464b6f05c0baee7eef4a6f8a74f",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Aspire accounting batch ownership and compensation",
+      "intent_status": "Technical design. Exact schedule and current behavior unverified.",
+      "reason": "Keep event and held-task responsibilities and the stated local polling, cutoff, and empty-file fallback. The source names EBBS in its principle and Aspire in its workflow. Its schedule and empty-file fallback need reconciliation with the Aspire business page. The stated eligibility cutoff and the technical job trigger may describe distinct events. Populated batch examples are excluded.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771.md",
+          "sha256": "e29343b246403b331196e29dfd593b4a0c38147cd590ec13419f8929d932c771"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c.md",
+          "sha256": "b6483eac46350162278f908db435d2554eda3a472b1ddaab4c931431a62e511c"
+        }
+      ],
+      "ranges": [
+        [
+          9,
+          17
+        ],
+        [
+          23,
+          27
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Korea Accounting - OLTP/page.md",
+      "sha256": "b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65",
+      "decision": "KEEP_SECTIONS",
+      "topic": "Korea OLTP versus EBBS accounting task design",
+      "intent_status": "Technical design with unresolved account category and comparative retry details.",
+      "reason": "Keep currency-dependent bridge selection, task validation, posting and reversal payload responsibilities, Korea no-retry design, scheduled held sends, and response handling. The technical UUID spelling differs from the business UIDD category. Its EBBS retry code and four-minute interval differ from the EBBS business page. Preserve these as unresolved differences. Transport endpoints and populated samples are excluded.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/1023d7e0fe6af94c86f2e5ce9920a9479a6c0550921e162c490c9ce0c6bc9872.md",
+          "sha256": "1023d7e0fe6af94c86f2e5ce9920a9479a6c0550921e162c490c9ce0c6bc9872"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40.md",
+          "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40"
+        }
+      ],
+      "ranges": [
+        [
+          11,
+          40
+        ],
+        [
+          53,
+          72
+        ]
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Korea Accounting - TLM Recon/page.md",
+      "sha256": "77369026ca156ce6cf786a72f2126f9ecab884f33e52b20b3a0526ac3b755f23",
+      "decision": "HOLD",
+      "topic": "Korea TLM reconciliation query boundary and response contract",
+      "intent_status": "Conflicting business and technical contracts. Owner confirmation required.",
+      "reason": "Technical lines 55–56 use an inclusive start and exclusive end. Business lines 23–26 use an exclusive start and inclusive end. The parameter types also differ. The technical response labels an EBBS JSON message in a Korea OLTP scope. Hold these query and response details pending clarification. The companion business page retains independently supported interim scope, statuses, and window length.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/87712fe287796fc9588a6b9f62e974c9091dceeca2640937b0e20aa0d9996967.md",
+          "sha256": "87712fe287796fc9588a6b9f62e974c9091dceeca2640937b0e20aa0d9996967"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md",
+          "sha256": "b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Korea Swift - Enisis/page.md",
+      "sha256": "063a7540f6ac6217447951dfd897775c5e77508e9710a5298c6c8bb391704efd",
+      "decision": "KEEP",
+      "topic": "Korea ENISIS connection continuity proposal",
+      "intent_status": "Brief proposal with unresolved connection scope.",
+      "reason": "Keep the proposal to extend the existing flow and retain the old ENISIS connection. The linked migration design describes a target move from SFTP to Solace. Confirm whether the brief proposal refers to a parallel interface, a transition phase, or a superseded approach.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/f742eae54e879b6928e98ef8fdaacff1589e107f583bde2cc8d6f67900bd357c.md",
+          "sha256": "f742eae54e879b6928e98ef8fdaacff1589e107f583bde2cc8d6f67900bd357c"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/a7c48470a31afa6b04d49ab9f306c8bc285cda1d29ae968a2c8b9742173f2ec0.md",
+          "sha256": "a7c48470a31afa6b04d49ab9f306c8bc285cda1d29ae968a2c8b9742173f2ec0"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Tech Live of Ratan - Accounting Service with EBBS/page.md",
+      "sha256": "35b46f9b0f6ee3be863acd05875edbbd4a726d40571ddbbd05535b8965f17bf9",
+      "decision": "EVIDENCE_ONLY",
+      "topic": "EBBS accounting rollout and mock-test planning",
+      "intent_status": "Dated rollout planning and reported UAT. Live conformance unverified.",
+      "reason": "Retain the end-to-end versus Solace-only mock options and reported test progress as rollout evidence. The page provides no independent approved eligibility rule or verified live accounting behavior.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40.md",
+          "sha256": "cac36fca967c51ce4d6563763c74a0a88c35f4c9f6b96125dfa612a4df228a40"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/page.md",
+      "sha256": "f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770",
+      "decision": "KEEP_SECTIONS",
+      "topic": "EBBS value-date publishing and reversal intent",
+      "intent_status": "Technical design for the named EBBS flow. Approval and market adoption are unverified.",
+      "reason": "Keep event-driven feed generation, the value-date gate, up to three retries on validation error codes, and withdrawal in the reverse direction of the New event. Preserve distinct reinstate and SwiftUnSuppressed flags and the reinstate plus negative last published balance filter. Confirm applicable markets and the missing state-transition detail. Exclude measurements and an incomplete UK note.",
+      "ranges": [
+        [
+          9,
+          13
+        ],
+        [
+          17,
+          21
+        ]
+      ],
+      "context": []
+    },
+    {
+      "path": "Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation Tech design/page.md",
+      "sha256": "45deac9009747dcb9ddc488aef2a7869fd233e7ccf52193f39b7806dc03677e0",
+      "decision": "EXCLUDE",
+      "topic": "SWIFT generation design navigation",
+      "intent_status": "Navigation and unavailable attachment.",
+      "reason": "The page points to SWIFT design documents and an unavailable database image. The export supplies no standalone behavior rule. Review the linked substantive sources under their own identities.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/97226b3c39ebbcb4be4ac414c156ad2b656ad04bc0629dd2cc9ec3352d5efae9.md",
+          "sha256": "97226b3c39ebbcb4be4ac414c156ad2b656ad04bc0629dd2cc9ec3352d5efae9"
+        }
+      ]
+    }
+  ]
+}

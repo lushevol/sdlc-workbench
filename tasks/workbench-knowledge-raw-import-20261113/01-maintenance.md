@@ -33,6 +33,12 @@
 
   > go on
 
+- Source-filtering follow-up and continuation in the same chat:
+
+  > why you missed the first step filtering ?
+
+  > go on
+
 - Baseline: `ff077ed85`. The unrelated connector lockfile deletion, release-report files, and Azure DevOps assessment are outside this task.
 
 ## Retention and review
@@ -95,6 +101,21 @@ The RATAN selections cover netting, SSI stamping, exception checks, SWIFT, accou
 
 Workspace validation passed. Both source verifiers returned `NEEDS_REVIEW` with zero binding findings. All 43 queued outputs match their retained hashes and source lines. See the [batch checks](evidence/filter-grouping-and-rules-checks.json).
 
+## Release eligibility and accounting filtering
+
+On 14 November 2026, this batch reviewed 50 pages. It kept 37, classified eight as evidence only, excluded two, and placed three on hold.
+
+| Collection | Pages kept | Evidence only | Excluded | Held in this batch | Pending source review | Selected pages queued for processing |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `cash-settlement-home-page` | 28 | 8 | 2 | 3 | 718, including four holds | 55 |
+| `ratan-51358` | 9 | 0 | 0 | 0 | 152, including two holds | 25 |
+
+The Cash selections cover payment release, splitting, Nostro, SWIFT, and accounting by market. The high-value exception prose and scenario table disagree on the maker-only case. The Korea TLM technical page remains on hold because the sources give different query boundaries and parameter types. The other holds cover a possible Korea rejection flow and a missing TLM UAT artifact. The two exclusions contain only headings or navigation. See the [Cash decisions](evidence/filter-release-and-accounting-cash-settlement-home-page.json).
+
+The RATAN selections cover Aspire, EBBS, ENISIS, FXU, Murex, OLTP, TIS, and TLM. The Korea sources describe SFTP as the baseline and Solace as the proposed target. The TLM selections preserve opposite endpoint inclusivity rules for the query window. See the [RATAN decisions](evidence/filter-release-and-accounting-ratan-51358.json).
+
+Workspace validation passed. Both source verifiers returned `NEEDS_REVIEW` with zero binding findings. All 80 queued outputs match the retained source hashes and selected lines. This batch stopped at filtered views. See the [batch checks](evidence/filter-release-and-accounting-checks.json).
+
 ## Validation and maintenance
 
 The larger source manifest exceeded the validator's one MiB record limit.
@@ -107,7 +128,7 @@ The loopback rerun finished with 1,068 tests, two skips, and no failures or erro
 
 ## Next action
 
-Continue filtering raw pages in topic groups. Use each verified view as the input for later candidate processing. The next source group covers release eligibility, downstream settlement, and accounting by market.
+Continue filtering raw pages in topic groups. Use each verified view as the input for later candidate processing. Review manual-entity onboarding, SWIFT rules, and market exceptions in the next source group.
 The Settlement owner needs to confirm the effective rules below. The owner is unknown.
 The sources describe design and proposed behavior. Approval, current applicability, and production behavior remain unverified.
 
