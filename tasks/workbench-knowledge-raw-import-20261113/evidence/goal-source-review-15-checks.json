@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "checkpoint": "goal-source-review-15",
+  "reviewed_at": null,
+  "reviewer": null,
+  "decision_batches": [
+    {
+      "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-15-cash-settlement-home-page.json",
+      "sha256": "bdf1128a83928294da8ed529e253ee56a7ef538e8cb299c3d6641d8b73ae12f9",
+      "count": 2,
+      "decisions": {
+        "KEEP_SECTIONS": 2
+      }
+    }
+  ],
+  "collections": {
+    "cash-settlement-home-page": {
+      "selection": {
+        "path": "knowledge/evidence/selections/cash-settlement-home-page.json",
+        "sha256": "a5878adbea4f448a1b2136792de2982c6bd88b23e08414c68ac5701e98c463f0"
+      },
+      "verify": {
+        "status": "NEEDS_REVIEW",
+        "counts": {
+          "documents": 884,
+          "present": 884,
+          "missing": 0,
+          "undecided": 498,
+          "held": 12
+        },
+        "findings": []
+      },
+      "plan": {
+        "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-15/cash-after-plan.json",
+        "sha256": "2c685c7d247c3547ee87616fbff23a8b8259d5a316a2e7eae8d9467b1844ae8e",
+        "plan_id": "e704eac95daf919c1973fd2189e0bc5929e45b74dacec225cb84f72bc1766517",
+        "counts": {
+          "documents": 884,
+          "review": 510,
+          "process": 125,
+          "unchanged": 249
+        }
+      },
+      "view": {
+        "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-15/cash-view",
+        "manifest": ".workbench/ingestion/raw-import-20261113/goal-source-review-15/cash-view/manifest.json",
+        "manifest_sha256": "d7381601bc03a8e96fd898ebd72d0c5f46826bcd17c2ca767a9bf20ccadda9cd",
+        "selection_sha256": "a5878adbea4f448a1b2136792de2982c6bd88b23e08414c68ac5701e98c463f0",
+        "policy": {
+          "path": ".agents/skills/ingest-knowledge/assets/source-filter.yaml",
+          "sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92"
+        },
+        "plan_id": "e704eac95daf919c1973fd2189e0bc5929e45b74dacec225cb84f72bc1766517",
+        "entries_checked": 125,
+        "omissions_checked": 759,
+        "exact_source_hashes_ranges_mappings_and_output_bytes": "PASSED",
+        "counts": {
+          "selected": 125,
+          "omitted": 759,
+          "links": 12,
+          "excerpts": 113,
+          "copies": 0
+        }
+      }
+    }
+  },
+  "raw_snapshot_retention_gate": {
+    "source_id": "ratan-51358",
+    "path": "knowledge/evidence/sources/sha256/578788716ff73afc96c0b97eb6cecb8880c55d850fc20731cb2703b7272d6b8d.md",
+    "sha256": "578788716ff73afc96c0b97eb6cecb8880c55d850fc20731cb2703b7272d6b8d",
+    "intent_view_decision": "EVIDENCE_ONLY",
+    "git_retention_decision": "PENDING_USER_INPUT"
+  },
+  "workspace_validation": {
+    "status": "VALID",
+    "documents": 16,
+    "findings": []
+  },
+  "diff_check": "PASSED",
+  "candidate_records_changed": false,
+  "wiki_outputs_changed": false,
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "limitations": [
+    "Cash has 498 undecided pages and 12 held pages; RATAN has four held pages.",
+    "The RATAN ITRS source is excluded from the intent view, but its Git retention decision remains pending.",
+    "The migration pages record proposed or dated procedures without establishing current approval or execution.",
+    "Automated checks do not establish complete writing review."
+  ],
+  "next_action": "Review the 16 May 2026 FMRP7.0 go-live runbook after four existing Cash holds, then continue the Cash source queue."
+}

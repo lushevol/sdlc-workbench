@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "checkpoint": "goal-source-review-119",
+  "checkpoint_reviewed_at": "2026-11-15",
+  "source": {
+    "source_id": "cash-settlement-home-page",
+    "selection": "knowledge/evidence/selections/cash-settlement-home-page.json",
+    "selection_sha256": "af53e914b02809a2f0244735a7df44e8e0300f89da7b1909c78f0540ca32667f",
+    "decision_batch": {
+      "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-119-decisions.json",
+      "sha256": "d819705b87833581aa3bfde17302c09370b4cde67d7999773001c9d1fab20b64",
+      "count": 18,
+      "decisions": {
+        "EVIDENCE_ONLY": 4,
+        "EXCLUDE": 3,
+        "HOLD": 1,
+        "KEEP": 5,
+        "KEEP_SECTIONS": 5
+      }
+    },
+    "selection_receipt": {
+      "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-119-select.json",
+      "sha256": "3d1888544019fc7c3823ed7293df0f10faf3de6164039f64c5ffa85ed2cb0424"
+    },
+    "verification": {
+      "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-119-cash-verify.json",
+      "sha256": "d3deffbc85c2f0ec13898d54b3919b64b5867d851f805f86cb6ec87eb33f70c3",
+      "status": "NEEDS_REVIEW",
+      "exit_code": 1,
+      "counts": {
+        "documents": 884,
+        "present": 884,
+        "missing": 0,
+        "needs_review": 187,
+        "undecided": 152,
+        "held": 35
+      },
+      "findings": []
+    },
+    "plan_after_selection": {
+      "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-119/cash-after-plan.json",
+      "sha256": "75ade0eb3a938215c588e262f5ba3236059cfd1fa57e352507510be2f01830d4",
+      "plan_id": "0ed029fc314b58889a64e23fb0ff57c4f61b55c4ba4e4ef1ab9a7ebe59bfe1e3",
+      "counts": {
+        "documents": 884,
+        "review": 187,
+        "process": 326,
+        "unchanged": 371
+      },
+      "next_eligible_review_item": {
+        "queue_index": 32,
+        "path": "Cash Settlement Home Page/Ratan OpenFin & FDC3 Explore/FDC3 & OpenFin Integration Design/Intent Declarations/page.md",
+        "sha256": "6a2eb282e31f59221e99cc2e7c4390fb804678020d371d2b1c20ebab3ced4f43"
+      }
+    },
+    "workspace_validation": {
+      "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-119-workspace-validate.json",
+      "sha256": "dd485ec58bf7868a5d63c35ad9d2ff8c11a0c0f2abe3d8eb180ada38797181aa",
+      "status": "VALID",
+      "documents": 16,
+      "findings": []
+    }
+  },
+  "documentation_checks": {
+    "relative_links": {"status": "PASSED", "links_checked": 619, "broken": 0},
+    "workspace_validation": {"status": "VALID", "documents": 16},
+    "diff_check": {"command": "git diff --check", "status": "PASSED"},
+    "json_syntax": "PASSED"
+  },
+  "questions": {
+    "before": 129,
+    "after": 156,
+    "worker_question_strings": 30,
+    "merged_into_existing": 3,
+    "new_pending": 27
+  },
+  "candidate_records_changed": false,
+  "governance_audit_events_changed": false,
+  "wiki_outputs_changed": false,
+  "view": {
+    "refreshed": false,
+    "last_bound_checkpoint": 100,
+    "next_refresh": "After both source collections complete filtering."
+  },
+  "limitations": [
+    "Cash source filtering remains incomplete with 152 undecided and 35 held pages.",
+    "RATAN source filtering remains incomplete with three held items and 76 processing items.",
+    "The flagged FDC3 2026 Plan source remains held pending sanitized content or owner confirmation.",
+    "The filtered view still binds checkpoint 100.",
+    "Automated checks do not establish complete writing review, human approval, or current business behavior."
+  ],
+  "next_action": "Review the next eligible Cash source at review-queue item 32: FDC3 & OpenFin Integration Design/Intent Declarations."
+}

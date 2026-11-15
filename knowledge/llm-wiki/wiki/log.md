@@ -136,3 +136,17 @@ The review preserved open version, matching, acknowledgement, and retry rules. B
 
 Current-session `llm-wiki-agent` maintenance added the draft summary and index entry for `KT-settlement-payment-amount-adjustment` v1. The canonical SHA-256 is `a236e368b57a0e5d52133427f1b08c78cd24f82540e318d6bd38e0bb304d0ba2`.
 The review checked the two accounting treatments, approval conditions, and split-child conflict. The bridge verified 15 canonical bindings. The scoped plan reports the candidate as unchanged.
+
+
+## [2026-11-15] ingest | Four Cash Settlement candidate summaries
+
+Current-session llm-wiki-agent maintenance added four draft summaries and four index entries. The bridge reviewed the exact canonical records and their dependent wiki pages, preserved the 15 earlier index owners, and verified all six structural categories. The four sources replan unchanged.
+
+Reviewed canonical source SHA-256 values:
+
+- KT-settlement-cpn-netting v1 7528df2ca4bfd3aa32bd1542169a88eff728c3a7dbab2ef1beda10676e7bd7a5
+- KT-settlement-group-blotter-controls v1 b0271355dd8d6ab88e4be09806651720ed875cbdf6e73c7991dcae4669c5eaa7
+- KT-settlement-lms-feed v1 f0fb8d3d6107f3a051d611f53db608c9c6551ec9dc6c20fe08c60beac09e3627
+- KT-settlement-korea-trade-confirmation v1 55c580354fcdef192ac085fe770c7ba28405f29fe96086a94908e12a4985e21d
+
+The summaries retain draft status, open owner questions, and evidence limits. The RATAN Korea interface page remains partially reviewed for its separate ENISIS payment transport and recovery content. No candidate was published.

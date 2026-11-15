@@ -1,0 +1,17 @@
+{
+  "checkpoint": 85,
+  "operation": "sources select --source cash-settlement-home-page",
+  "attempt": 1,
+  "decision_path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-85-decisions.json",
+  "result": {
+    "error": {
+      "code": "WORKBENCH_ERROR",
+      "message": "Source line ranges must be ordered, disjoint, and within the retained source."
+    }
+  },
+  "cause": "The decision paths used the correct source hashes, but the overview and detailed source contents were matched to the opposite paths. The detailed-page ranges therefore exceeded the 92-line overview.",
+  "recovery": "Corrected the path-to-content mapping before retrying. The active selection remained unchanged; verification still reported 348 undecided pages and 26 holds with zero findings.",
+  "limits": [
+    "The rejected batch applied no selection decisions."
+  ]
+}

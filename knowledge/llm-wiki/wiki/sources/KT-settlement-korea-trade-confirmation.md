@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-settlement-korea-trade-confirmation.md

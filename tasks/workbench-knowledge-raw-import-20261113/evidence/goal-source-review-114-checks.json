@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "checkpoint": "goal-source-review-114",
+  "reviewed_at": "2026-11-15",
+  "reviewer": null,
+  "source": {
+    "source_id": "cash-settlement-home-page",
+    "path": "Cash Settlement Home Page/Functional Requirement/Trade & Cashflow Events Control/Cashflow Events Control/CN Drop 2 UAT - Settlements Scenarios - 2024/page.md",
+    "revision": "sha256:ffea9fb8847d7f2e5585b08f98c741a21eb33f552c161f0da73b01eb772f72b6",
+    "snapshot": "knowledge/evidence/sources/sha256/ffea9fb8847d7f2e5585b08f98c741a21eb33f552c161f0da73b01eb772f72b6.md",
+    "lines": 100
+  },
+  "decision_batch": {
+    "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-114-decisions.json",
+    "sha256": "14ee8524bb599b535d0112d24c59798cf4d7c4a77c3abc0e4f97c49c098aaf6c",
+    "count": 1,
+    "decisions": {
+      "EVIDENCE_ONLY": 1
+    },
+    "context": [
+      {
+        "path": "knowledge/evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md",
+        "sha256": "b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c"
+      }
+    ]
+  },
+  "selection": {
+    "path": "knowledge/evidence/selections/cash-settlement-home-page.json",
+    "sha256": "efb713795130580c2acea1bc4f55019ff481ed5f06e9bed0f178a5e120c8f65e",
+    "receipt": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-114-select.json"
+  },
+  "source_verification": {
+    "status": "NEEDS_REVIEW",
+    "exit_code": 1,
+    "counts": {
+      "documents": 884,
+      "present": 884,
+      "missing": 0,
+      "needs_review": 208,
+      "undecided": 174,
+      "held": 34
+    },
+    "findings": []
+  },
+  "plans": {
+    "before_selection": {
+      "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-113/cash-after-plan.json",
+      "sha256": "70dea70f180efbe337d34b3d2152d59ce880c18e97a7272195522f2bc1fee32ae",
+      "plan_id": "8ebf7f9d9582a56a7db2643fbde4d110efb6fd831d030b018d3cc32aba01ae07",
+      "counts": {
+        "documents": 884,
+        "review": 209,
+        "process": 312,
+        "unchanged": 363
+      }
+    },
+    "after_selection": {
+      "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-114/cash-after-plan-corrected.json",
+      "sha256": "2c7181ac95e89ddcbf2b67c946e561557c7668881951f4f5a42089cae12a9620",
+      "plan_id": "b374e6a5e8aeb061ca01f2b987de0cca030635535b64e62b0a6c238af6941019",
+      "counts": {
+        "documents": 884,
+        "review": 208,
+        "process": 312,
+        "unchanged": 364
+      },
+      "affected_knowledge": []
+    }
+  },
+  "baseline": {
+    "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-114/baseline.json",
+    "sha256": "6b23d45a48a8e0ec5b06ab4fad010d811794cc5004326f0a0e273af9395eb709",
+    "status": "PASSED",
+    "counts": {
+      "raw_files": 1413,
+      "audit_files": 83,
+      "governed_documents": 16,
+      "manifest_records": 1633
+    }
+  },
+  "workspace_validation": {
+    "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-114-workspace-validate.json",
+    "sha256": "dd485ec58bf7868a5d63c35ad9d2ff8c11a0c0f2abe3d8eb180ada38797181aa",
+    "status": "VALID",
+    "documents": 16,
+    "findings": []
+  },
+  "pending_questions": {
+    "before": 125,
+    "after": 126,
+    "updated_questions": [
+      "Which parties send each ACK or NACK? What triggers retry or reconciliation?",
+      "Which cashflow version, event, status, and matching fields apply to each flow?"
+    ],
+    "new_question": "Do the upstream trade-expiry gate and RATAN expiry-event handling apply together, and what happens on undo?"
+  },
+  "candidate_records_changed": false,
+  "governance_audit_events_changed": false,
+  "wiki_outputs_changed": false,
+  "view": {
+    "refreshed": false,
+    "last_bound_checkpoint": 100,
+    "next_refresh": "After both source collections complete filtering."
+  },
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Cash filtering remains incomplete with 174 undecided and 34 held pages.",
+    "The UAT evidence is not an approved target rule; the upstream trade-expiry gate and downstream event-handling rule need owner confirmation.",
+    "The filtered view remains bound to checkpoint 100.",
+    "Automated checks do not establish complete writing review, human approval, or business behavior."
+  ],
+  "next_action": "Review the next unflagged undecided Cash source: Cashflow Events Control/page.md."
+}

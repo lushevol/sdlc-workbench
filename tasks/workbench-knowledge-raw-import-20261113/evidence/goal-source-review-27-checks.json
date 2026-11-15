@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "checkpoint": "goal-source-review-27",
+  "recorded_at": "2026-11-14",
+  "collections": {
+    "cash-settlement-home-page": {
+      "selection": {
+        "command": "ai-sdlc --workspace . sources select --source cash-settlement-home-page --decisions tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-27-cash-settlement-home-page.json",
+        "status": "NEEDS_REVIEW",
+        "applied_decisions": 2,
+        "counts": {
+          "documents": 884,
+          "present": 884,
+          "missing": 0,
+          "needs_review": 499,
+          "EVIDENCE_ONLY": 128,
+          "EXCLUDE": 125,
+          "HOLD": 17,
+          "KEEP": 13,
+          "KEEP_SECTIONS": 119,
+          "NEEDS_REVIEW": 482
+        },
+        "findings": []
+      },
+      "verification": {
+        "command": "ai-sdlc --workspace . sources verify --source cash-settlement-home-page",
+        "status": "NEEDS_REVIEW",
+        "exit_code": 1,
+        "findings": []
+      },
+      "plan": {
+        "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-27/cash-after-plan.json",
+        "plan_id": "206aebe8124780a0ca1e03662b99ec6d3db4b5f990b7acb8927bdd4dc6a0f690",
+        "counts": {
+          "documents": 884,
+          "review": 499,
+          "process": 128,
+          "unchanged": 257
+        },
+        "next_undecided": "Cash Settlement Home Page/FMRP China Cash Settlement Delivery Plan/Cash Settlement RATAN ONE 2026 Release Plan/Release On 2026-04-04 CR  RATAN Settlement - Uber Go-Live, FXU Biz Go-Live， Cashflow Status_Update filter & CES tech integration/RATAN One Settlement - Performance Test For Uber FXU Go-Live on April 4th/Test Plan for April 4th/page.md"
+      },
+      "view": {
+        "manifest": ".workbench/ingestion/raw-import-20261113/goal-source-review-27/cash-view/manifest.json",
+        "status": "VIEW_CREATED",
+        "counts": {
+          "selected": 128,
+          "omitted": 756,
+          "links": 12,
+          "excerpts": 116,
+          "copies": 0
+        },
+        "plan_id": "206aebe8124780a0ca1e03662b99ec6d3db4b5f990b7acb8927bdd4dc6a0f690",
+        "selection_sha256": "97268a510a111250f857041726bdd5c8e1e3a48dd3f5e5a80cb674979de823ef",
+        "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+        "manual_binding_check": {
+          "status": "PASSED",
+          "source_and_output_hashes": 128,
+          "mapped_lines": 4353
+        }
+      }
+    },
+    "ratan-51358": {
+      "status": "NEEDS_REVIEW",
+      "findings": [],
+      "counts": {
+        "documents": 189,
+        "present": 189,
+        "missing": 0,
+        "NEEDS_REVIEW": 0,
+        "HOLD": 4,
+        "process": 75
+      },
+      "plan": ".workbench/ingestion/raw-import-20261113/goal-source-review-27/ratan-after-plan.json"
+    }
+  },
+  "prior_checkpoints": {
+    "22-26": "Decision files are present and match the active selection index. Per-checkpoint check files were not retained; intermediate counts and views are unknown."
+  },
+  "workspace_validation": {
+    "status": "VALID",
+    "documents": 16,
+    "findings": 0
+  },
+  "git_diff_check": "PASSED",
+  "knowledge_outputs_changed": false,
+  "limitations": [
+    "Source verification reports partial collections while undecided pages or holds remain.",
+    "The checks establish bindings and view fidelity, not source authority, current applicability, or approval."
+  ]
+}

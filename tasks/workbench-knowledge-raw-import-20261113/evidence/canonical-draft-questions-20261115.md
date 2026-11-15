@@ -2,8 +2,8 @@
 
 15 November 2026 (Asia/Singapore).
 
-This annex collects 1412 question occurrences from the six draft packs under the [living task](../01-maintenance.md).
-The register groups exact text into 875 rows and preserves each location.
+This annex collects 1435 question occurrences from the six draft packs and four coordinator-reviewed candidates under the [living task](../01-maintenance.md).
+The register groups exact text into 898 rows and preserves each location.
 The earlier task questions and source review inventory keep their own rows.
 Related wording can still refer to the same business decision.
 
@@ -934,16 +934,47 @@ References lead to the exact draft locations and may change when a working pack 
 | KDQ-1162250fc8 | Which owner confirms option-expiry rate source, cut identity, and dashboard exception policy? | [operations/subsets/part-c reconciliation L45](../../../.workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/operations/subsets/part-c/reconciliation.md#L45) |  |
 | KDQ-431f791492 | Which owner maintains the RATAN DR runbook and current failover evidence? | [operations/subsets/part-c reconciliation L46](../../../.workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/operations/subsets/part-c/reconciliation.md#L46) |  |
 
+## Coordinator-reviewed candidates (checkpoint 141)
+
+This section records every open question in the four reviewed candidate bodies and two precise Group Blotter follow-ups. Owners remain unknown. Answers remain blank until supplied or found in authoritative project evidence.
+
+| ID | Question or requested decision | Candidate and source evidence | Answer |
+| --- | --- | --- | --- |
+| KDQ-a66db4f36b | Which edition of the ad hoc action matrix applies to Projected, Queued, Pending, and Validated components? | [KT-settlement-cpn-netting L122](../../../knowledge/records/candidates/settlement/KT-settlement-cpn-netting.md#L122) |  |
+| KDQ-ee65b4f0e6 | Does Reviewed precede Pending Release or describe the same approved resultant stage in a different state field? | [KT-settlement-cpn-netting L123](../../../knowledge/records/candidates/settlement/KT-settlement-cpn-netting.md#L123) |  |
+| KDQ-25fc3935cb | Which corrected example establishes the ad hoc preview state and approved resultant ID? | [KT-settlement-cpn-netting L124](../../../knowledge/records/candidates/settlement/KT-settlement-cpn-netting.md#L124) |  |
+| KDQ-6c660ace27 | Which entity, product, and release scopes apply to the historical proposals? | [KT-settlement-cpn-netting L125](../../../knowledge/records/candidates/settlement/KT-settlement-cpn-netting.md#L125) |  |
+| KDQ-d0006a79f3 | Which order selects the first component for settlement instructions and product mapping? | [KT-settlement-cpn-netting L126](../../../knowledge/records/candidates/settlement/KT-settlement-cpn-netting.md#L126) |  |
+| KDQ-1d73dace14 | Which role approves Force Gross and which operations are permitted after cancellation? | [KT-settlement-cpn-netting L127](../../../knowledge/records/candidates/settlement/KT-settlement-cpn-netting.md#L127) |  |
+| KDQ-bc01352fbf | How do PENDING_TRADE_VALIDATION, DATA_VALIDATION_FAILED, PENDING_PRE_GROUP, and PENDING_PREV_GROUP map between UI action eligibility, stored group status, and the closed decision by release? | [KT-settlement-group-blotter-controls L123](../../../knowledge/records/candidates/settlement/KT-settlement-group-blotter-controls.md#L123) |  |
+| KDQ-a7f1510a6c | How does the bulk service use the original single-message logic after precheck, and what replay and mixed-result rules protect against duplicate payments? | [KT-settlement-group-blotter-controls L124](../../../knowledge/records/candidates/settlement/KT-settlement-group-blotter-controls.md#L124) |  |
+| KDQ-6835042c96 | Which control takes precedence when the bulk UI permits a pending-validation row and the trade-validation design disables Manual STP? | [KT-settlement-group-blotter-controls L125](../../../knowledge/records/candidates/settlement/KT-settlement-group-blotter-controls.md#L125) |  |
+| KDQ-443823268d | Which release activates the SCBML and Uber settlement-method and RFI portfolio projections? | [KT-settlement-group-blotter-controls L126](../../../knowledge/records/candidates/settlement/KT-settlement-group-blotter-controls.md#L126) |  |
+| KDQ-0d1eb2ec2a | Which statuses, settlement means, beneficiary BIC rules, and account fields apply to each LMS consumer and payment flow? | [KT-settlement-lms-feed L113](../../../knowledge/records/candidates/settlement/KT-settlement-lms-feed.md#L113) |  |
+| KDQ-be3cc13b21 | Which Swift Suppressed receipt events should LMS accept for undo, withdrawal, and manual failure? | [KT-settlement-lms-feed L114](../../../knowledge/records/candidates/settlement/KT-settlement-lms-feed.md#L114) |  |
+| KDQ-078bfdbb0d | Which replacement or correction payload does LMS need if account stamping is unavailable? | [KT-settlement-lms-feed L115](../../../knowledge/records/candidates/settlement/KT-settlement-lms-feed.md#L115) |  |
+| KDQ-391d66c862 | Which entities may RATAN send, and which entities must each LMS consumer exclude? | [KT-settlement-lms-feed L116](../../../knowledge/records/candidates/settlement/KT-settlement-lms-feed.md#L116) |  |
+| KDQ-af8e8d522e | Which source value, Field 20 prefix, and netting-resultant fallback apply to each Murex, Stella, and LOANIQ flow? | [KT-settlement-lms-feed L117](../../../knowledge/records/candidates/settlement/KT-settlement-lms-feed.md#L117) |  |
+| KDQ-8fce8ca649 | What should RATAN send when allotment or product taxonomy is blank outside the cross-product netting case? | [KT-settlement-lms-feed L118](../../../knowledge/records/candidates/settlement/KT-settlement-lms-feed.md#L118) |  |
+| KDQ-40a31f11e8 | Which MXML contract, scope, and effective date does the Korea settlement owner approve? | [KT-settlement-korea-trade-confirmation L81](../../../knowledge/records/candidates/settlement/KT-settlement-korea-trade-confirmation.md#L81) |  |
+| KDQ-4f15d478db | Which trade identifier and version bind a COMP event to the correct cashflow? | [KT-settlement-korea-trade-confirmation L82](../../../knowledge/records/candidates/settlement/KT-settlement-korea-trade-confirmation.md#L82) |  |
+| KDQ-f9db7b4acb | How should RATAN handle out-of-order, duplicate, or late COMP after cancellation and reissue? | [KT-settlement-korea-trade-confirmation L83](../../../knowledge/records/candidates/settlement/KT-settlement-korea-trade-confirmation.md#L83) |  |
+| KDQ-0d710b10d8 | Which acknowledgement, replay, or manual affirmation control applies when a COMP message is missing? | [KT-settlement-korea-trade-confirmation L84](../../../knowledge/records/candidates/settlement/KT-settlement-korea-trade-confirmation.md#L84) |  |
+| KDQ-fdb66de9c4 | What condition switches the tactical confirmation transport to the strategic path? | [KT-settlement-korea-trade-confirmation L85](../../../knowledge/records/candidates/settlement/KT-settlement-korea-trade-confirmation.md#L85) |  |
+| KDQ-5f9a9d464e | Does the closed-entry PENDING_PREV_GROUP spelling refer to the same stored group state as PENDING_PRE_GROUP in the UI and processing design? Which release and source resolve it? | [Closed risk decision](../../../knowledge/evidence/sources/sha256/6bcb2e54cc2804f73a76d025beb0c52cf0bc7ed56824209974602fa0f2585bb7.md#L18), [KT-settlement-group-blotter-controls L123](../../../knowledge/records/candidates/settlement/KT-settlement-group-blotter-controls.md#L123) |  |
+| KDQ-8639a6d970 | Which restriction takes precedence where the bulk UI exposes pending-validation rows and the trade-validation design disables Manual STP? | [Preferred trade-validation design](../../../knowledge/evidence/sources/sha256/8adcc39be9a985c5c32d3e4bc1db41d3cad779084f20a0aeed1dc4d3b8d70bdf.md#L22), [KT-settlement-group-blotter-controls L125](../../../knowledge/records/candidates/settlement/KT-settlement-group-blotter-controls.md#L125) |  |
+
 ## Writing and automated checks
 
 ```yaml
 standard: ASD-STE100
-automated_check: PASSED
+automated_check: PENDING
 asd_review: PENDING
 reviewer: null
 reviewed_at: null
 limitations:
   - Automated checks cover input counts, unique IDs, local reference lines, and Markdown table structure.
   - The capture covers explicit drafts and does not reconcile equivalent phrasings or assess source authority.
+  - Open questions do not establish owner approval or effective policy.
   - Automated checks do not establish complete writing review.
 ```

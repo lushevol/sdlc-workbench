@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "source_id": "cash-settlement-home-page",
+  "decisions": [
+    {
+      "path": "Cash Settlement Home Page/FMRP China Cash Settlement Delivery Plan/Cash Settlement RATAN ONE 2026 Release Plan/Release On 2026-08-08  CR    RATAN Settlement FMRP8.0 - FXO - Suspension logic movement/Retrospective 2026-08-26/page.md",
+      "sha256": "7a66033559c607df0a44a6139ed654c77121308deb6e8edb340689ed0bb1dee1",
+      "decision": "KEEP_SECTIONS",
+      "reason": "Select only the dated strategic-fix section. It proposes propagating Is_Auto_Netting and Auto_Netting_Stp_Level and hard-stopping when those control attributes are missing. The incident history, payment and test identifiers, test matrix, and separate BCS library issue are evidence, not target intent. Approval and delivery remain unverified.",
+      "ranges": [
+        [60, 64]
+      ],
+      "topic": "Auto-netting NSTP control attributes",
+      "intent_status": "Proposed strategic fixes by 29 August 2026; approval and delivery status are unverified."
+    },
+    {
+      "path": "Cash Settlement Home Page/FMRP China Cash Settlement Delivery Plan/Cash Settlement RATAN ONE 2026 Release Plan/Release On 2026-08-08  CR    RATAN Settlement FMRP8.0 - FXO - Suspension logic movement/UVT for Suspension logic movement + Uber adoption for all entities/page.md",
+      "sha256": "f0c7f2b051ea6a533451d77995b5a5ddd41a816b568fcad575ebb2b63b2189f2",
+      "decision": "HOLD",
+      "reason": "The background and test revisions leave the post-movement RATAN state unclear between RATAN_SUSPENDED and CASHFLOW_SUPPRESSED. The page also says Uber adoption applies to all entities, while the paired release record lists LOANIQ-scoped switches. Its test result fields are blank. Available sources do not settle the target status mapping or entity scope.",
+      "topic": "Suspension movement state and Uber entity scope",
+      "intent_status": "Owner clarification required; the source includes unresolved status and scope claims.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/eb4192cfb68c5b57854823fba7f0cb0b632a4c79d6cb78c9dcc4f00edec575d9.md",
+          "sha256": "eb4192cfb68c5b57854823fba7f0cb0b632a4c79d6cb78c9dcc4f00edec575d9"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/362501f01ae4b7e34963662f88f0df9a534d6b90a31c636d0bf2afb4f994d1e4.md",
+          "sha256": "362501f01ae4b7e34963662f88f0df9a534d6b90a31c636d0bf2afb4f994d1e4"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/FMRP China Cash Settlement Delivery Plan/Cash Settlement RATAN ONE 2026 Release Plan/Release On 2026-08-08  CR    RATAN Settlement FMRP8.0 - FXO - Suspension logic movement/page.md",
+      "sha256": "362501f01ae4b7e34963662f88f0df9a534d6b90a31c636d0bf2afb4f994d1e4",
+      "decision": "EVIDENCE_ONLY",
+      "reason": "The page records package versions, deployment switches, pipeline references, test categories, sign-off labels, and passing PIT queries. Its title and release-summary dates differ, and the recorded rollout does not establish approved suspension behavior or current entity scope.",
+      "topic": "FXO suspension and Uber deployment evidence",
+      "intent_status": "Historical release report; current behavior and approved scope are unverified."
+    }
+  ]
+}

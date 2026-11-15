@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "source_id": "cash-settlement-home-page",
+  "decisions": [
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/2024 changes/Swift Customization Details/page.md",
+      "sha256": "1dd72316aed56b38058e26b2f7992060e4a8bd428f067a082b4f1a42db3de0fe",
+      "decision": "KEEP_SECTIONS",
+      "reason": "Keep the documented entity, currency, message-type, settlement-account, and SWIFT field rules for India, Egypt, China, Singapore, UAE, UK, Kuwait, Hong Kong, Thailand, and Vietnam. The source mixes work-item descriptions with code paths and has no approval or rollout status. The India row says MT103+202COV was not observed; the linked LEI requirement says that scenario is not required. Preserve both statements without resolving the difference.",
+      "ranges": [[4, 5], [7, 7], [11, 15], [17, 19]],
+      "topic": "Entity-specific SWIFT customization rules",
+      "intent_status": "Dated work-item descriptions; current approval, applicability, and rollout are unverified.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/6be4ea90921e02ac058f229bcd9c06e4387181864a82c23ba86a00f9f51d8dc8.md",
+          "sha256": "6be4ea90921e02ac058f229bcd9c06e4387181864a82c23ba86a00f9f51d8dc8"
+        },
+        {
+          "path": "knowledge/evidence/sources/sha256/3b343203fb430bd95b7f86b1c590dd2988e29fb0278bb7940f282f713b03f523.md",
+          "sha256": "3b343203fb430bd95b7f86b1c590dd2988e29fb0278bb7940f282f713b03f523"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Capture LEI/page.md",
+      "sha256": "6be4ea90921e02ac058f229bcd9c06e4387181864a82c23ba86a00f9f51d8dc8",
+      "decision": "KEEP_SECTIONS",
+      "reason": "Keep the stated India regulatory purpose, scope predicates, LEI lookup and placement rules, MT192/MT292 behavior, exclusions, and field-capacity exception. Omit the sample LEI and UAT case identifiers. This source says MT103+202COV is not required, while Swift Customization Details says the scenario was not observed; retain the distinction for later review.",
+      "ranges": [[3, 3], [11, 17], [19, 20]],
+      "topic": "India payment LEI capture in SWIFT messages",
+      "intent_status": "The source has no recorded version history; current approval, applicability, and rollout are unverified.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/1dd72316aed56b38058e26b2f7992060e4a8bd428f067a082b4f1a42db3de0fe.md",
+          "sha256": "1dd72316aed56b38058e26b2f7992060e4a8bd428f067a082b4f1a42db3de0fe"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/HKCS initiative/page.md",
+      "sha256": "3b343203fb430bd95b7f86b1c590dd2988e29fb0278bb7940f282f713b03f523",
+      "decision": "KEEP",
+      "reason": "Keep the complete dated HAU/HKCS requirement, version history, functional rules, exceptions, and open-question table. Preserve the statements marked confirmed as source statements, not as independent approval evidence. The source references missing images and mail attachments; current rollout remains unverified.",
+      "topic": "HKCS HAU settlement and SWIFT requirements",
+      "intent_status": "Version 1.0 is marked finalized for development, with later dated changes through 2026-09-30; deployment and current applicability are unverified."
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/HKCS initiative/Onboarding for HAU currency/page.md",
+      "sha256": "8272f1b9aaaac16467a7ed2a67b28900386968ddaf7e3e3e7f6cea33d9f3d045",
+      "decision": "KEEP_SECTIONS",
+      "reason": "Keep the HAU configuration checklist and its TBD list as proposed scope. Preserve the open holiday-currency mapping and cutoff questions. Omit UAT SQL and sample trade setup, service-branch inventory, and linked work-item list because they describe implementation or lower-environment evidence rather than approved target behavior.",
+      "ranges": [[5, 18], [20, 25]],
+      "topic": "HAU onboarding configuration and unresolved decisions",
+      "intent_status": "Checklist proposals and TBDs; confirmation, current applicability, and rollout are unverified.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/3b343203fb430bd95b7f86b1c590dd2988e29fb0278bb7940f282f713b03f523.md",
+          "sha256": "3b343203fb430bd95b7f86b1c590dd2988e29fb0278bb7940f282f713b03f523"
+        }
+      ]
+    },
+    {
+      "path": "Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/HKCS initiative/HKCS E2E Test/page.md",
+      "sha256": "bf00d790598bd138d91eb9d25c08205f8927ca0052727b0da31690cf43c962f2",
+      "decision": "EVIDENCE_ONLY",
+      "reason": "This page is an SCT, DVP, and cancellation test guide with sample SWIFT messages and images. Test status and LMS submission fields are blank, so it records neither executed results nor acceptance. Retain it as evidence without using it as intended behavior or proof of business outcomes.",
+      "topic": "HKCS end-to-end test guide",
+      "intent_status": "Test cases and samples only; execution and acceptance are not recorded.",
+      "context": [
+        {
+          "path": "knowledge/evidence/sources/sha256/3b343203fb430bd95b7f86b1c590dd2988e29fb0278bb7940f282f713b03f523.md",
+          "sha256": "3b343203fb430bd95b7f86b1c590dd2988e29fb0278bb7940f282f713b03f523"
+        }
+      ]
+    }
+  ]
+}

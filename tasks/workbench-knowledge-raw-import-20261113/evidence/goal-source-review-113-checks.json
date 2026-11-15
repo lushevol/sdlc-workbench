@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "checkpoint": "goal-source-review-113",
+  "reviewed_at": "2026-11-15",
+  "reviewer": null,
+  "source": {
+    "source_id": "cash-settlement-home-page",
+    "path": "Cash Settlement Home Page/Functional Requirement/Surrounding System Integration/UK - Murex -  RATAN cashflow feeding/page.md",
+    "revision": "sha256:adf12d24386ece86835635d31d42762e2621c2cde5c83d4316084a406508b52a",
+    "snapshot": "knowledge/evidence/sources/sha256/adf12d24386ece86835635d31d42762e2621c2cde5c83d4316084a406508b52a.md",
+    "lines": 82
+  },
+  "decision_batch": {
+    "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-113-decisions.json",
+    "sha256": "4da3fb882ebc46000fe2fe3abe1ab18a9d995642fa680589c79759512092947b",
+    "count": 1,
+    "decisions": {
+      "KEEP_SECTIONS": 1
+    },
+    "ranges": [[1, 7], [9, 14]]
+  },
+  "selection": {
+    "path": "knowledge/evidence/selections/cash-settlement-home-page.json",
+    "sha256": "eb3bb9b27b2534d468e668301a68c502807c319fb48453f7da6db8377f264aa5",
+    "receipt": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-113-select.json"
+  },
+  "source_verification": {
+    "status": "NEEDS_REVIEW",
+    "exit_code": 1,
+    "counts": {
+      "documents": 884,
+      "present": 884,
+      "missing": 0,
+      "needs_review": 209,
+      "undecided": 175,
+      "held": 34
+    },
+    "findings": []
+  },
+  "plans": {
+    "before_selection": {
+      "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-113/cash-before-plan.json",
+      "sha256": "81d3ffa2215a3e19d0589a74c2facfb04ac6ef22a64407b8bf0bebc5f4570f38",
+      "plan_id": "8d5526e212fd51fa257ed28d521cfcc599f60f52c0c334609bea3854467ea037",
+      "counts": {
+        "documents": 884,
+        "review": 210,
+        "process": 311,
+        "unchanged": 363
+      }
+    },
+    "after_selection": {
+      "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-113/cash-after-plan.json",
+      "sha256": "70dea70f180efbe337d34b3d2152d59ce880c18e97a7272195522f2bc1fee32ae",
+      "plan_id": "8ebf7f9d9582a56a7db2643fbde4d110efb6fd831d030b018d3cc32aba01ae07",
+      "counts": {
+        "documents": 884,
+        "review": 209,
+        "process": 312,
+        "unchanged": 363
+      },
+      "affected_knowledge": []
+    },
+    "ratan_51358": {
+      "verification_path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-113-ratan-verify.json",
+      "verification_sha256": "cc391bf387bad669402c25b3d2159ec1fd1b00f802905f36838369a615d476c9c",
+      "status": "NEEDS_REVIEW",
+      "plan_path": ".workbench/ingestion/raw-import-20261113/goal-source-review-113/ratan-current-plan.json",
+      "plan_sha256": "977745fa6bbe231471496378202f120b138708fb0c101fb8f1a218abbd1f3afd",
+      "plan_id": "87b92e3bbbe9c7180a17e0bf63730371bc18dc6d4e3a516b9cac5fe1342ef146",
+      "counts": {
+        "documents": 189,
+        "review": 3,
+        "process": 76,
+        "unchanged": 110
+      }
+    }
+  },
+  "baseline": {
+    "path": ".workbench/ingestion/raw-import-20261113/goal-source-review-113/baseline.json",
+    "sha256": "d2dd5d33305335ab53fcf8dbd2e8a3394ba9a1dc8289232051c88fc9b5e54665",
+    "status": "PASSED",
+    "counts": {
+      "raw_files": 1413,
+      "audit_files": 83,
+      "governed_documents": 16,
+      "manifest_records": 1633
+    }
+  },
+  "workspace_validation": {
+    "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/goal-source-review-113-workspace-validate.json",
+    "sha256": "dd485ec58bf7868a5d63c35ad9d2ff8c11a0c0f2abe3d8eb180ada38797181aa",
+    "status": "VALID",
+    "documents": 16,
+    "findings": []
+  },
+  "pending_questions": {
+    "before": 124,
+    "after": 125,
+    "updated_question": "Which parties send each ACK or NACK? What triggers retry or reconciliation?",
+    "new_question": "Does the undated UK Murex-to-RATAN feed design remain current and approved, including date windows, publishing hours, end-of-day signaling, and snapshot statuses?"
+  },
+  "candidate_records_changed": false,
+  "governance_audit_events_changed": false,
+  "wiki_outputs_changed": false,
+  "view": {
+    "refreshed": false,
+    "last_bound_checkpoint": 100,
+    "next_refresh": "After both source collections complete filtering."
+  },
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Cash filtering remains incomplete with 175 undecided and 34 held pages.",
+    "RATAN has three held pages and 76 selected pages queued for canonical processing.",
+    "The UK feed source is undated and does not establish current approval or applicability.",
+    "The filtered view remains bound to checkpoint 100.",
+    "Automated checks do not establish complete writing review, human approval, or business behavior."
+  ],
+  "next_action": "Review the next unflagged undecided Cash source after skipping held entries."
+}

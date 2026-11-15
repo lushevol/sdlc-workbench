@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "status": "PARTIAL",
+  "completed_pages": 17,
+  "candidate_final_checkpoint": {
+    "prepared": {
+      "path": ".workbench/ingestion/raw-import-20261113/coordinator-next-batch-20261115/prepared-revised.json",
+      "sha256": "2618b25880fd50f4ad2f3b63130ec4a6327936432242a39195a53bbccf9678e1",
+      "status": "PREPARED",
+      "findings": 0,
+      "deferred": 4
+    },
+    "final": {
+      "path": ".workbench/ingestion/raw-import-20261113/coordinator-next-batch-20261115/final.json",
+      "sha256": "1470dbf6bce82463a6f91b9b469efaf902e0dbe6fedf10ff9384ae0634253c9b",
+      "status": "PASSED",
+      "findings": 0,
+      "audit_events": 4
+    }
+  },
+  "source_complete_commands": [
+    {
+      "source_id": "cash-settlement-home-page",
+      "plan_id": "e8b4a7c21f852778b4f4da485e36bd473914e8a804e8f28861abcdc58c3a1a50",
+      "results": ".workbench/ingestion/raw-import-20261113/coordinator-next-batch-20261115/cash-settlement-home-page-results.json",
+      "completed": 16,
+      "command_status": "PARTIAL",
+      "remaining_process": 438,
+      "remaining_review": 38,
+      "receipt": "knowledge/evidence/processing/cash-settlement-home-page.json",
+      "receipt_sha256": "d72227c4e99b1511a1d94ed3933cdf548267aecb50d2bdf9ecb72fc7bd0c4c6e",
+      "receipt_count": 21
+    },
+    {
+      "source_id": "ratan-51358",
+      "plan_id": "49cecc648e7703a84e1c88f6f35c2809a3754f2bde2997f1998e638500bb0dd2",
+      "results": ".workbench/ingestion/raw-import-20261113/coordinator-next-batch-20261115/ratan-51358-results.json",
+      "completed": 1,
+      "command_status": "PARTIAL",
+      "remaining_process": 77,
+      "remaining_review": 3,
+      "receipt": "knowledge/evidence/processing/ratan-51358.json",
+      "receipt_sha256": "26c25fc1f2d245e99c38992efda9aa44dba45ae2d33de76c0b6dc478af60be97",
+      "receipt_count": 3
+    }
+  ],
+  "post_completion_plans": [
+    {
+      "source_id": "cash-settlement-home-page",
+      "path": ".workbench/ingestion/raw-import-20261113/coordinator-next-batch-20261115/cash-plan-after-receipts.json",
+      "plan_id": "7ad919bc55423668813e106df23e8e26d55d2711172c45575f04b2518049840c",
+      "counts": {
+        "documents": 884,
+        "review": 38,
+        "process": 438,
+        "unchanged": 408
+      }
+    },
+    {
+      "source_id": "ratan-51358",
+      "path": ".workbench/ingestion/raw-import-20261113/coordinator-next-batch-20261115/ratan-plan-after-receipts.json",
+      "plan_id": "7684f11613acc382964233c5d0d17b4e550ea8386036979dd2b9916f3728c1b3",
+      "counts": {
+        "documents": 189,
+        "review": 3,
+        "process": 77,
+        "unchanged": 109
+      }
+    }
+  ],
+  "queue_totals": {
+    "documents": 1073,
+    "process": 515,
+    "review": 41,
+    "unchanged": 517
+  },
+  "partial_source": {
+    "id": "SRC-ba86435ac90f289ab511ed78",
+    "path": "RATAN - 51358/RATAN -Interfaces/Ratan and Murex KR 50216/page.md",
+    "reason": "The selected page also contains ENISIS payment transport and recovery; that scope is outside the candidate review."
+  },
+  "questions": {
+    "path": "tasks/workbench-knowledge-raw-import-20261113/evidence/canonical-draft-questions-20261115.md",
+    "occurrences": 1435,
+    "exact_wording_rows": 898,
+    "answers_blank": true
+  },
+  "limitations": [
+    "The 41 review-queue pages remain held for source-selection review.",
+    "Receipts record declared processing review; they do not establish publication approval or implemented business behavior."
+  ],
+  "checks": {
+    "workspace_validate": {
+      "status": "VALID",
+      "documents": 21,
+      "findings": 0,
+      "command": ".venv/bin/ai-sdlc --workspace . validate"
+    },
+    "wiki_verify": {
+      "status": "PASSED",
+      "bound_canonical_sources": 19,
+      "structural_findings": 0,
+      "command": "python3 .agents/skills/llm-wiki/scripts/wiki.py verify"
+    },
+    "markdown_local_links": {
+      "status": "PASSED",
+      "report": "tasks/workbench-knowledge-raw-import-20261113/evidence/link-check-20261115.json",
+      "files": 17,
+      "links": 2466,
+      "missing": 0
+    },
+    "git_diff_check": {
+      "status": "PASSED",
+      "command": "git diff --check"
+    },
+    "question_annex": {
+      "rows": 898,
+      "unique_ids": 898,
+      "nonblank_answers": 0
+    }
+  }
+}

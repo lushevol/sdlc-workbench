@@ -37,6 +37,12 @@ The integrations worker fork is `01a1de64-12c4-79f0-b37c-0ed4b505229a`.
 It began verifying the consolidated candidate files with `gpt-6-luna` and `max` reasoning.
 The six worker packs contain reviewed draft dispositions for all 527 assigned pages.
 
+## Model verification
+
+Codex turn metadata confirmed `gpt-6-luna` and `max` reasoning in both forks.
+The integrations worker completed validation with these settings.
+The canonical integration fork saved its checkpoint and resumed with these settings in a new turn.
+
 ## Writing review
 
 ```yaml
@@ -47,5 +53,6 @@ reviewer: null
 reviewed_at: null
 limitations:
   - The document checks cover the exact requests, the local reference, and whitespace.
+  - Separate turn checks confirm the model and reasoning settings for both forks.
   - Automated checks do not establish complete writing review.
 ```

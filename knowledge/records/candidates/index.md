@@ -43,6 +43,10 @@ Original source authority and current applicability require review.
 | Settlement | [Cash Settlement auto-netting](settlement/KT-settlement-auto-netting.md) — `KT-settlement-auto-netting` | Trace rule matching, scheduled execution, grouping, and resultant cashflow handling. | Calendar, late-arrival, and exception variants need domain-owner review. |
 | Settlement | [Cashflow identity and Stella status write-back](settlement/KT-settlement-cashflow-identity-and-stella-write-back.md) — `KT-settlement-cashflow-identity-and-stella-write-back` | Trace source and resultant IDs, duplicate checks, and FX status write-back. | Versioning, acknowledgement, and applicable rollout scope need domain-owner review. |
 | Settlement | [Payment amount adjustment](settlement/KT-settlement-payment-amount-adjustment.md) — `KT-settlement-payment-amount-adjustment` | Compare manual amount changes, approval states, and downstream amounts. | Day 2 and Korea migration accounting rules differ. Effective scope needs review. |
+| Settlement | [CPN netting](settlement/KT-settlement-cpn-netting.md) — `KT-settlement-cpn-netting` | Trace historical China Day 1 netting eligibility, manual actions, and recovery scenarios. | Historical proposals contain conflicting state and action labels. Current scope needs review. |
+| Settlement | [Group Blotter controls](settlement/KT-settlement-group-blotter-controls.md) — `KT-settlement-group-blotter-controls` | Trace Manual STP selection, bulk processing, outcomes, and field projection. | UI and service predicates differ. Status mappings and release need review. |
+| Settlement | [LMS cashflow feeds](settlement/KT-settlement-lms-feed.md) — `KT-settlement-lms-feed` | Trace settlement feeds, Swift Suppressed proposals, entity scope, and source mapping. | Later proposals need consumer scope and effective-date confirmation. |
+| Settlement | [Korea trade confirmation](settlement/KT-settlement-korea-trade-confirmation.md) — `KT-settlement-korea-trade-confirmation` | Trace Korea Murex COMP transport and the payment STP confirmation gate. | The tactical design remains in progress. Scope and contract need review. |
 
 Each topic links related topics and cites source sections or line ranges.
 Registry references provide declared context.
@@ -88,8 +92,8 @@ Use [govern-knowledge](../../../.agents/skills/govern-knowledge/SKILL.md) to inv
 
 ## Coverage and review limits
 
-The collection mainly covers the portal and UI platform, with Cash Settlement topics on auto-netting, cashflow identity, status write-back, and payment amount adjustment.
-The wider Settlement domain and other Netting workflows need canonical review.
+The collection mainly covers the portal and UI platform. Settlement candidates now include auto-netting, CPN, Group Blotter, LMS feeds, Korea trade confirmation, cashflow identity, status write-back, and amount adjustment.
+Other Settlement topics and remaining Netting workflows still need canonical review.
 
 Missing local attachments limit diagrams, scan reports, screenshots, examples, and retained execution evidence.
 External destinations were not fetched.
