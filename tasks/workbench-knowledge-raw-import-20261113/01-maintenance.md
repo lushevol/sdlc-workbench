@@ -1,16 +1,16 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 163.** The 12-page RATAN interface candidate is audited, sealed, receipted, and wiki-reviewed as a draft.
+> **Checkpoint 168.** Raw filtering covers all 1,073 present pages. Both collections verify with zero findings and 41 held pages.
 >
-> Current plans queue 438 Cash and 66 RATAN pages. They hold 41 and list 528 unchanged pages. Each view contains only its queue.
+> Fresh plans queue 433 Cash and 64 RATAN pages. They hold 41 and list 535 unchanged pages.
 >
-> Ledgers hold 31 Cash and 15 RATAN receipt rows. The 12 interface pages have current RATAN receipts.
+> Processing ledgers contain 36 Cash and 17 RATAN receipts. All seven coordinator-reviewed no-change outcomes already have receipts.
 >
-> All 1,073 present pages have filter decisions. The question annex records 1,443 occurrences across 906 unanswered rows.
+> The question annex records 1,518 occurrences across 980 exact-text rows. It lists 28 held groups separately.
 >
-> Thirteen withheld source snapshots remain present and unstaged. Their original bytes remain unchanged.
+> All resumed semantic merge drafts are model-unverified. No candidate integration or wiki semantic maintenance is authorized.
 >
-> The interface wiki summary is reviewed and its scoped plan is unchanged. The full wiki plan still queues 18 repairs and one recipe review.
+> The current gate and exact blocker path are recorded in [checkpoint 168](evidence/checkpoint-168-model-gate.json).
 
 ## Request and scope
 
@@ -74,6 +74,10 @@
   The manifest, chat list, and safety contract are under `.workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/`. Read only completed lane packs. Screened originals may be represented only by safe selected views.
 
 - Additional worker execution constraint on 15 November 2026 (Asia/Singapore): the user requested GPT-6 Luna Max for each worker and a one-hour target. The exact input is [preserved here](evidence/user-request-luna-max-parallel-20261115.md).
+
+- Rolling integration handoff on 15 November 2026 (Asia/Singapore): the user reports 31 source-review jobs and three selection-hold reviews started. The exact direction is [preserved here](evidence/user-handoff-luna-max-rolling-20261115.md). It directs ready-row integration using fresh plans and the coordinator checks.
+
+- Merge review handoff on 15 November 2026 (Asia/Singapore): three reviewers found no safe basis to clear any of the 41 held pages. Ten GPT-6 Luna Max merge workers are preparing isolated proposals. The exact direction is [preserved here](evidence/user-handoff-luna-max-merge-wave-20261115.md).
 
 - Parallel source filtering direction on 15 November 2026 (Asia/Singapore), from this Codex chat:
 
@@ -3878,4 +3882,119 @@ limitations:
   - Withheld raw snapshots remain local and unstaged under the retention screen.
   - Matching SHA-256 filenames confirm byte integrity, not semantic source quality.
   - Source receipts and wiki completion do not establish publication approval or business execution.
+```
+
+## Checkpoint 164: Rolling source review resumed
+
+Date: 15 November 2026 (Asia/Singapore).
+
+Commit `d325b32b5` records 50 scoped paths. The staged diff check passed. Thirteen withheld snapshots remain present and unstaged. The remaining non-screened source snapshot is included in the commit.
+
+Fresh [Cash](../../.workbench/ingestion/raw-import-20261113/coordinator-resume-20261115-02/cash-plan.json) and [RATAN](../../.workbench/ingestion/raw-import-20261113/coordinator-resume-20261115-02/ratan-plan.json) plans match the dispatch bindings. Their process queues total 504 pages. The plans hold 41 selections and list 528 unchanged pages.
+
+The [rolling report](../../.workbench/ingestion/luna-max-20261115/progress-coordinator-164-refresh1.json) records 84 review rows. Binding checks accepted 80: 28 ready updates, ten no-change rows, 29 draft-only rows, and 13 incomplete rows. Four lines failed source or output binding checks.
+
+The 31 source workers and three hold reviewers use the requested GPT-6 Luna model with Max reasoning. Hold triage has no completed output file yet. Reviewer rows do not create official receipts.
+
+The Day 2 coordinator pack currently passes its scoped validator: 76 coverage rows, 88 claims, 28 draft files, and 92 body line references. It reports zero findings. Seventy-one assigned sources remain in the fresh process queues; five are outside them and have no current receipt.
+
+Four no-change reviews from Integrations worker 04 have independent output closures. Six Day 2 no-change reviews overlap outputs with pending update proposals. I will defer those six until their grouped changes are reconciled.
+
+**Current stage:** source reviews are arriving. No new receipt has been recorded from the rolling dispatch. The user questions remain unanswered.
+
+**Current blocker:** none for the four independent no-change rows or other currently supported work. Thirteen reviewed sources remain incomplete, and 41 source selections remain held.
+
+**Next action:** prepare and inspect the four independent no-change results. Then record them against the current Cash plan and replan both collections.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Worker binding checks do not establish complete semantic review or publication approval.
+  - The one-hour target start time is absent from the retained dispatch manifest.
+  - Held and incomplete sources remain outside completed semantic processing.
+```
+
+## Continuation checkpoint 167: resumed Luna Max workers
+
+Date: 16 November 2026 (Asia/Singapore).
+
+The user requested continuation after the prior worker threads stopped for credit exhaustion. The exact request is preserved in [user-request-resume-luna-max-20261116.md](evidence/user-request-resume-luna-max-20261116.md).
+
+The desktop thread-fork controls were unavailable in the current session. I recreated the unfinished work as three fresh isolated workers. The [continuation dispatch](../../.workbench/ingestion/luna-max-20261115/continuation-dispatch-20261116.json) records each worker as GPT-6 Luna Max with Max reasoning and its exclusive output directory.
+
+The resumed source-plan worker confirmed current Cash plan 0e2bf881e2890ee2f6614e273cf6d56b4bef52fc33500169e55288e601a0d231 with 433 process pages and current RATAN plan 70489f99ac43198623f6f856d98d7880bbb8181e285f8cb8da0135d96c7fa880 with 64 process pages. Forty-one source selections remain held. Both source verifiers remain NEEDS_REVIEW with zero binding findings.
+
+The worker progress collector currently reports all 504 assignments received, 479 reviewed, 269 ready updates, 116 draft-only reviews, 20 owner-input rows, 37 ready no-change rows, and 37 incomplete rows. Binding checks are evidence only. They do not issue official receipts.
+
+The processing ledgers contain 36 Cash receipts and 17 RATAN receipts. Seven no-change rows from the prior wave are already recorded. I will not resubmit them.
+
+The derived wiki has 18 repair reviews and one recipe change. Structural verification reports zero findings. Semantic completion and publication remain pending.
+
+**Current stage:** the interrupted work is resumed with fresh isolated GPT-6 Luna Max workers. Their output remains coordinator review material.
+
+**Current blocker:** 41 held selections need owner answers or missing artifacts. Additional candidate updates need final-byte reconciliation before source receipts.
+
+**Next action:** inspect the resumed merge and rejection handoffs, reconcile accepted candidate bytes, then record only fresh reviewed source completions against the current plan IDs. Replan both collections after each completion wave.
+
+YAML status: automated check PASSED. ASD review PENDING. No publication, implementation, or business behavior claim is made.
+
+## Checkpoint 168: model gate and deterministic progress
+
+Date: 16 November 2026 (Asia/Singapore).
+
+The exact [model-availability directions](evidence/user-model-availability-gate-20261116.md) require deterministic work only. They hold semantic updates, candidate integration, and wiki semantic maintenance until runtime evidence verifies GPT-6 Luna Max.
+
+The CCIL preflight reports `deepseek-v4-flash` through `CHATBOT_OPENAI_MODEL` and `DEEPSEEK_LLM_MODEL`. Its exact evidence is [model-mismatch.md](../../.workbench/ingestion/luna-max-20261115/workers/merge-ccil/resume-20261116/model-correction/model-mismatch.md). This is a hard model-availability blocker.
+
+The resumed handoffs do not establish one verified runtime model. Some copy `gpt-6-luna` and `max`; others report missing deployment metadata. Keep every semantic merge draft pending.
+
+| Merge lane | Reported runtime metadata | Status |
+| --- | --- | --- |
+| [auto-netting](../../.workbench/ingestion/luna-max-20261115/workers/merge-auto-netting/resume-20261116/handoff.md) | `gpt-6-luna`, `max`; no independent runtime preflight | Unverified |
+| [CCIL](../../.workbench/ingestion/luna-max-20261115/workers/merge-ccil/resume-20261116/handoff.md) | `deepseek-v4-flash`; reasoning not exposed | Mismatch |
+| [exceptions](../../.workbench/ingestion/luna-max-20261115/workers/merge-exceptions/resume-20261116/handoff.md) | `gpt-6-luna`, `max`; no independent runtime preflight | Unverified |
+| [CN workflow](../../.workbench/ingestion/luna-max-20261115/workers/merge-cn-workflow/resume-20261116/handoff.md) | GPT-6 label; exact variant and reasoning unavailable | Unverified |
+| [manual netting](../../.workbench/ingestion/luna-max-20261115/workers/merge-manual-netting/resume-20261116/handoff.md) | GPT-6 label; reasoning unavailable | Unverified |
+| [SSI and Nostro](../../.workbench/ingestion/luna-max-20261115/workers/merge-ssi-nostro/resume-20261116/handoff.md) | GPT-6 runtime label; deployment and reasoning unavailable | Unverified |
+| [cashflow identity](../../.workbench/ingestion/luna-max-20261115/workers/merge-cashflow-identity/resume-20261116/handoff.md) | Runtime model not exposed | Unverified |
+| [Murex feed](../../.workbench/ingestion/luna-max-20261115/workers/merge-murex-feed/resume-20261116/semantic-review-and-handoff.md) | No explicit runtime model evidence | Unverified |
+| [Uber](../../.workbench/ingestion/luna-max-20261115/workers/merge-uber/merged/semantic-review.md) | Runtime model not recorded | Unverified |
+| [RATAN interface](../../.workbench/ingestion/luna-max-20261115/workers/merge-ratan-interface/resume-20261116/candidate.md) | Runtime model not exposed | Unverified |
+
+Fresh Cash plan `0e2bf881e2890ee2f6614e273cf6d56b4bef52fc33500169e55288e601a0d231` queues 433 pages, holds 38, and lists 413 unchanged. Fresh RATAN plan `70489f99ac43198623f6f856d98d7880bbb8181e285f8cb8da0135d96c7fa880` queues 64, holds three, and lists 122 unchanged.
+
+Both source verifiers return `NEEDS_REVIEW`, with zero findings and zero missing pages. Cash has 884 present pages; RATAN has 189. Their 41 held selections remain unresolved.
+
+The processing ledgers contain 36 Cash and 17 RATAN rows. All seven items in the checkpoint 166 no-change review match existing receipts. No duplicate receipt was submitted.
+
+The prior worker scan has 504 assignments and 504 received rows. It reviewed 479 rows: 269 ready updates, 116 draft-only, 20 owner-input, 37 no-change, and 37 incomplete. These are worker reports, not completion receipts.
+
+The [question annex](evidence/canonical-draft-questions-20261115.md) now records 1,518 question occurrences across 980 exact-text rows. It adds 54 occurrences across 53 phrasings from 62 resumed review rows. Those reported questions remain model-unverified. One incomplete row lacks its question text; the annex records it separately. All answers remain blank.
+
+Both current plans completed deterministic planning. The first RATAN attempt met a transient source-operation lock; a retry completed with the current saved plan identity. Source verification still returns `NEEDS_REVIEW` because 41 pages are held.
+
+The user reports that all ten resumed merge child threads now show idle. The saved [RATAN plan](../../.workbench/ingestion/luna-max-20261115/coordinator-plan-20261116/ratan-plan-after-nochange.json) and the resumed worker plan both retain plan ID `70489f99ac43198623f6f856d98d7880bbb8181e285f8cb8da0135d96c7fa880`. The source-operation lock cleared before the successful retry. I did not delete or bypass it.
+
+Workspace validation returned `VALID` for 26 documents with zero findings. The question annex IDs and linked review rows also passed structural checks.
+
+**Current stage:** source filtering is complete for present pages. Canonical processing has 497 pages queued, and 41 source pages need owner evidence. Existing no-change receipts are current.
+
+**Current blocker:** semantic work needs a fresh runtime preflight that explicitly reports GPT-6 Luna Max and a model-verified handoff for each merge draft.
+
+**Next action:** continue only deterministic/no-change work. Resume semantic integration only after the required model evidence arrives. The goal remains active.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Model labels copied into handoffs do not prove the actual runtime model.
+  - Source verification remains NEEDS_REVIEW for 41 held pages.
+  - Worker reports and candidate drafts do not establish receipts, publication, or business execution.
 ```
