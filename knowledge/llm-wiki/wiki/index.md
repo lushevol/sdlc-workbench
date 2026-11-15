@@ -7,11 +7,16 @@ Exact canonical paths, record versions, lifecycle states, and SHA-256 source bin
 ## Documents
 - [[summaries/KT-settlement-payment-amount-adjustment]] (short) — Compares the Day 2 and Korea migration designs for manual payment amount adjustments.
 - [[summaries/KT-settlement-auto-netting]] (short) — Documents scheduled cash settlement auto-netting rules, grouping, outcomes, and unresolved policy differences.
+- [[summaries/KT-day2-auto-netting-service-design]] (short) — Summarizes proposed lifecycle and netting service boundaries, APIs, persistence, and rule mappings.
+- [[summaries/KT-settlement-ccil-netting]] (short) — Documents CCIL workflow proposals, dated IRS examples, and unresolved rule conflicts.
 - [[summaries/KT-settlement-cashflow-identity-and-stella-write-back]] (short) — Documents cashflow ID design and unresolved Stella write-back rules.
+- [[summaries/KT-settlement-amendment-reversal-rebook-exceptions]] (short) — Covers proposed reversal and rebook exceptions and the missing cashflow link after amendment.
 - [[summaries/KT-settlement-cpn-netting]] (short) — Historical China Day 1 and Payment Lake proposals for CPN eligibility, manual review, and lifecycle rules.
 - [[summaries/KT-settlement-group-blotter-controls]] (short) — Group Blotter action eligibility, batch processing predicates, expected outcomes, and field projections.
 - [[summaries/KT-settlement-korea-trade-confirmation]] (short) — Korea Murex COMP proposals for the RATAN payment confirmation gate and tactical transport.
+- [[summaries/INT-KT-ratan-cashflow-settlement-interfaces]] (short) — Selected RATAN accounting, cashflow, settlement, and SSI interfaces; Korea transport remains unresolved.
 - [[summaries/KT-settlement-lms-feed]] (short) — LMS release and settlement baseline with later receipt-event and entity-scope proposals.
+- [[summaries/KT-day2-swap-agent]] (short) — Summarizes proposed Swap Agent netting, suppression, and release controls for selected flows.
 - [[summaries/KT-ces-migration-parity]] (short) — Defines intended EMS2-to-CES permission parity, per-tile migration, and frontend compatibility rules.
 - [[summaries/KT-authentication-and-sessions]] (short) — RATAN policy ownership, Entra sign-in, portal session ceilings, and the logout target.
 - [[summaries/REQ-active-session-renewal]] (short) — Candidate v9: activity-driven renewal within credential deadlines and manual recovery within the session ceilings; no fixed activity cadence.

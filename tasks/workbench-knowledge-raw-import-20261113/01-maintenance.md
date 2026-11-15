@@ -1,12 +1,16 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 144.** Four settlement candidates are finalized, sealed, and reflected in reviewed wiki summaries. Receipts now cover 16 Cash and one RATAN LMS page; 515 pages remain queued.
+> **Checkpoint 163.** The 12-page RATAN interface candidate is audited, sealed, receipted, and wiki-reviewed as a draft.
 >
-> Fresh source plans queue 438 Cash and 77 RATAN pages. They hold 41 pages for source review and list 517 unchanged pages. The mixed RATAN COMP page stays queued because its ENISIS payment and recovery scope remains unreviewed.
+> Current plans queue 438 Cash and 66 RATAN pages. They hold 41 and list 528 unchanged pages. Each view contains only its queue.
 >
-> All 1,073 present pages have filter decisions. The question annex records 1,435 occurrences in 898 exact-wording rows, with every answer blank.
+> Ledgers hold 31 Cash and 15 RATAN receipt rows. The 12 interface pages have current RATAN receipts.
 >
-> No user answer blocks the next independent batch. Owner decisions remain open in the question annex and keep all four candidates in draft.
+> All 1,073 present pages have filter decisions. The question annex records 1,443 occurrences across 906 unanswered rows.
+>
+> Thirteen withheld source snapshots remain present and unstaged. Their original bytes remain unchanged.
+>
+> The interface wiki summary is reviewed and its scoped plan is unchanged. The full wiki plan still queues 18 repairs and one recipe review.
 
 ## Request and scope
 
@@ -68,6 +72,8 @@
   > Parallel dispatch is concrete and running: six new worker chats, 527 disjoint queued sources. Manifest: .workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/dispatch-manifest.json; chat IDs: threads.json beside it; safety contract: worker-brief.md. Lanes/counts: netting48, day2 76, workflows85, platform132, integrations94, operations92. All six were observed active. Each writes claims, source coverage, candidate proposals and handoff ONLY inside its exclusive lane folder; no shared canonical/receipt/audit/wiki writes. Nine screened originals must be consumed through safe selected views only. Please use lane packs as they complete, reconcile overlap, and remain sole integrator. The user explicitly requested more worker chats; no publication approval is implied. Include the retained exact user-request file in your scoped task commit.
 
   The manifest, chat list, and safety contract are under `.workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/`. Read only completed lane packs. Screened originals may be represented only by safe selected views.
+
+- Additional worker execution constraint on 15 November 2026 (Asia/Singapore): the user requested GPT-6 Luna Max for each worker and a one-hour target. The exact input is [preserved here](evidence/user-request-luna-max-parallel-20261115.md).
 
 - Parallel source filtering direction on 15 November 2026 (Asia/Singapore), from this Codex chat:
 
@@ -3207,11 +3213,11 @@ The staged-diff check found an extra terminal blank line in six prior JSON evide
 
 This correction changes formatting only. It does not change source decisions, candidate bytes, processing receipts, or wiki outputs. The current lifecycle position remains four draft candidates, 17 completed source receipts, 515 queued pages, and 41 review-held pages.
 
-**Current stage:** the completed four-candidate checkpoint is ready for its scoped commit. New screened raw snapshots remain in the worktree and are not included in this commit.
+**Current stage:** the completed four-candidate checkpoint was committed as `845aa0e6e`. New screened raw snapshots remain in the worktree and were not included in that commit.
 
 **Current blocker:** none of the independently queued pages needs a new user answer. The 41 review-held pages and mixed RATAN interface page retain their recorded limits.
 
-**Next action:** commit the completed checkpoint, then begin the next source batch.
+**Next action:** review existing worker packs against fresh process plans, reconcile overlaps, and begin the next independently processable source batch.
 
 **Checkpoint checks:** six JSON files parse with unchanged values; formatting now ends with one newline. Staged and unstaged `git diff --check` passed. The staged path audit found 553 paths, all under `knowledge/` and this task. It found no repository, source-snapshot, runtime, or unrelated task paths.
 
@@ -3224,4 +3230,652 @@ reviewed_at: null
 limitations:
   - Staging this checkpoint does not make raw source snapshots part of the commit.
   - Candidates remain drafts and the reviewed queue is not complete.
+```
+
+## Checkpoint 146: queued-source views refreshed
+
+Date: 15 November 2026 (Asia/Singapore).
+
+I generated fresh queued-page views from the post-receipt plans. The Cash view contains 438 selected pages; the RATAN view contains 77. Both manifests bind to the current source plans. The first simultaneous run received a workspace-lock error for Cash. The sequential retry completed both views.
+
+The saved plans remain unchanged: 438 Cash and 77 RATAN pages need canonical processing. Another 41 pages remain held for selection review. The four reviewed candidates and 17 receipts remain complete.
+
+**Current stage:** fresh queued-page views are ready for matching against worker-reviewed claim packs.
+
+**Current blocker:** none of the independent source pages needs a user answer. The source-review holds and owner questions remain recorded separately.
+
+**Next action:** match worker source IDs to the current queues, reconcile candidate overlap, then inspect only the selected views for the next batch.
+
+**Checkpoint checks:** both `sources view --plan` commands returned `VIEW_CREATED`; Cash selected 438 and RATAN selected 77. The first concurrent Cash attempt failed on the workspace lock, then passed when rerun sequentially.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The filtered views do not establish semantic claim support or collection completeness.
+  - Forty-one pages remain held outside these processing views.
+```
+
+## Checkpoint 147: CCIL cross-source conflict recorded
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The six CCIL worker identities match the current Cash plan and selected-view hashes. I compared them with the broader GUI/API proposal, source `SRC-426393fda3ed4becdfc99390`. Its current view hash is `a3280d65be379b07ead27411e1c1e95a112a37b07cd7ba7af2f74fe31f2caa94`.
+
+The CCIL design permits different counterparties for CCIL flows. The general backend proposal requires the same counterparty across selected components. Its GUI and backend status lists also differ. The CCIL records do not define how those general gates apply.
+
+The worker draft also includes a hub-scope assertion and a family/group comparison unsupported by its selected citations. I will remove those assertions and keep the unresolved target scope explicit. I did not inspect omitted source lines.
+
+I added two owner questions to the [question annex](evidence/canonical-draft-questions-20261115.md): different-counterparty handling and GUI/API status gates. The annex now contains 1,437 occurrences in 900 unique rows. All answer cells remain blank.
+
+**Current stage:** CCIL source bindings and claim conflicts are reviewed; the candidate is not yet integrated into canonical records.
+
+**Current blocker:** no user answer blocks a draft that records these conflicts. Owner decisions remain required before authoritative policy use.
+
+**Next action:** add the broader GUI/API source as context, repair the CCIL candidate claims, complete its sealed review and wiki entry, then record source receipts.
+
+**Checkpoint checks:** all six CCIL worker sources match current source hashes, selected ranges, and view hashes. The GUI/API context source matches its queued-plan binding and worker-selected view. Question IDs are unique; all 900 answer cells are blank.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Source comparisons document conflicting proposals; they do not resolve current policy.
+  - Worker coverage and filtered-view hashes do not establish business acceptance.
+  - CCIL remains a draft candidate until human review and approval.
+```
+
+## Checkpoint 148: CCIL source bindings rechecked
+
+Date: 15 November 2026 (Asia/Singapore).
+
+I verified the CCIL worker's six source identities against the current Cash plan and selected-view manifest. All six source hashes, view hashes, and selected ranges match. The two duplicate content pairs retain separate source identities.
+
+The broader GUI/API source and Cashflow Blotter actions remain queued. Their current selected views support two documented conflicts: counterparty eligibility and status gates. The User Actions citation for the second owner question is present. Day 2 auto-netting remains queued for separate cross-lane reconciliation. I did not inspect omitted lines or change its canonical record.
+
+The question annex contains 1,437 occurrences in 900 unique rows. All answers are blank. The ingestion baseline passed with 1,413 raw files, 88 audit files, 21 governed documents, and 1,633 manifest records. Its SHA-256 is `356806d0ff0e8de36709ba456c93b55a5d46c25d6577daf55a2238c9b9ad145c`.
+
+**Current stage:** four settlement candidates and 17 source receipts remain complete. The current plans contain 438 Cash and 77 RATAN pages to process. Another 41 pages remain held. The CCIL candidate is not yet integrated.
+
+**Current blocker:** no answer blocks a qualified CCIL candidate. The recorded owner questions still block definitive policy selection and publication approval.
+
+**Next action:** correct and review the CCIL draft against selected evidence, prepare and seal its changed bytes, update the derived wiki, then complete only its six fully reviewed source identities.
+
+**Checkpoint checks:** both plan files parse and report the stated queues. The Cash view manifest contains all nine cross-check identities with matching bindings. The question annex has 900 unique IDs and zero answers. The saved baseline reports `PASSED` with no findings. Existing unrelated worktree changes remain untouched.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Draft review records documented proposals and conflicts, not an approved policy.
+  - GUI/API and User Actions pages remain queued for full canonical processing.
+  - The Day 2 source remains queued for the auto-netting cross-lane review.
+```
+
+## Checkpoint 149: CCIL draft integrated with corrected evidence
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The CCIL candidate now exists at [KT-settlement-ccil-netting](../../knowledge/records/candidates/settlement/KT-settlement-ccil-netting.md). It contains 32 traceable claims and eight source identities. Its SHA-256 is `c43bde6249de20e9b59ab93ec413c11a992ad4a59a1699180c3ed5a5c9f51b6c`. It remains `candidate`, `draft`, with `verified: []` and owner `unknown`.
+
+Direct inspection of the selected views corrected two errors from the earlier review. Technical line 10 lists family IRS and group IRD. Functional lines 136–137 list family IRD and group IRS. The conflict is supported and remains unresolved. General API validation is at original line 17. The general GUI gate is at line 5. Previous references to lines 15 and 3 pointed to a blank line and heading.
+
+I added claims for the counterparty and status conflicts. The question annex links the correct source lines and contains 1,437 occurrences, 900 unique IDs, and zero answers. The [CCIL review report](evidence/canonical-draft-review-ccil-20261115.md) records eight source bindings, review scope, findings, and limits.
+
+**Current stage:** five settlement candidates and 17 source receipts exist. The CCIL candidate has not passed its sealed ingestion checkpoint or received a source receipt. The wiki plan queues one new candidate with its summary and index as expected outputs.
+
+**Current blocker:** no owner answer blocks this qualified candidate. Owner decisions still block definitive policy selection and publication approval. Other queued pages remain processable.
+
+**Next action:** prepare and seal the CCIL candidate with the saved baseline, record its candidate audit event, verify the final checkpoint, maintain the derived wiki, then complete only the six CCIL-specific source identities.
+
+**Checkpoint checks:** workspace validation returned `VALID` for 22 documents with no findings. Candidate link check found zero broken links. The full question annex link check found zero broken links. Question IDs are unique and every answer is blank. The wiki plan marks this candidate `new`. No business tests or execution evidence were claimed.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Two contextual source pages remain queued for full canonical processing.
+  - The new candidate does not establish an approved CCIL policy.
+  - Wiki content and the six CCIL source receipts are still pending.
+```
+
+## Checkpoint 150: candidate preparation found retained source aliases
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The first CCIL prepare checkpoint returned `FAILED`. It reported 11 `linked_source_not_declared` findings. The linked content hashes match retained snapshots, but those snapshots also have earlier source identities in `knowledge/evidence/manifest.yaml`.
+
+The findings identify `SRC-a5bac081fa53386d1cebeb7d` for the CCIL technical design, `SRC-83752d4f8891392fb5d5d81a` for the business case, and `SRC-47997ab448281d8fdb1ba7a4` plus `SRC-337472978edf74a738f8a7c4` for the general GUI/API page. The earlier failed report remains at `coordinator-next-batch-20261115-ccil/prepared.json` in ignored working storage.
+
+**Current stage:** the draft, semantic review, and wiki plan remain unchanged. No candidate audit event or source receipt has been written. The required audit event appears as a deferred finding, as expected before audit.
+
+**Current blocker:** no user answer is required. The candidate needs four existing retained source identities declared before preparation can pass.
+
+**Next action:** add those identity aliases without changing source bytes or claims. Update the review report with the new hash, rerun preparation to a new report path, then continue the review and audit.
+
+**Checkpoint checks:** the saved result records 11 undeclared-link findings and 1 deferred missing-audit finding. The baseline remains the original passing checkpoint. Current queues remain 438 Cash and 77 RATAN pages, with 41 held. The question annex has 900 unanswered rows.
+
+```yaml
+standard: ASD-STE100
+automated_check: FAILED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The failure concerns source identity declarations, not snapshot-byte mismatch.
+  - The failed report remains preserved and must not be overwritten.
+  - The candidate remains a draft and has no new audit event or receipt.
+```
+
+## Checkpoint 151: retained source aliases declared
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The candidate now declares 12 source identities: eight current collection identities and four retained aliases with duplicate source bytes. I added no claims or source content. The candidate SHA-256 is now `87816e22088e2dba2a8c9b37916b482b071aacd07101eb7003e7877fb592653b`.
+
+The [CCIL review report](evidence/canonical-draft-review-ccil-20261115.md) now binds that hash. It distinguishes selected current identities from the four retained aliases. A new wiki plan also binds the updated candidate hash and still queues one new summary.
+
+**Current stage:** candidate validation passes. The first prepare report remains failed and preserved. No audit event or source receipt exists for CCIL.
+
+**Current blocker:** no user answer blocks this draft. Owner decisions remain open for definitive policy and publication.
+
+**Next action:** run a new harness prepare checkpoint at `prepared-r2.json`. Review its exact findings, then record the candidate event and run the final seal.
+
+**Checkpoint checks:** workspace validation returned `VALID` for 22 documents. Candidate links: 26 checked, none broken. Question annex links: 1,437 checked, none broken. The annex has 900 unique question IDs and zero answers. The review report has four local links, none broken. The wiki plan queues one new candidate.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The preserved first prepare attempt failed on source identity declarations.
+  - Final harness seal, wiki maintenance, and source receipts remain pending.
+  - Owner policy questions and publication review remain open.
+```
+
+## Checkpoint 152: CCIL candidate prepared
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The second prepare report at `coordinator-next-batch-20261115-ccil/prepared-r2.json` returned `PREPARED` with zero findings. It binds candidate SHA-256 `87816e22088e2dba2a8c9b37916b482b071aacd07101eb7003e7877fb592653b` and index SHA-256 `43245fd5f674897a6d8ee650ce16bc6edf27ac5ab327bf7da756b1bc8ffae1d1`.
+
+The report confirms the workspace is `VALID` for 22 documents. It records one expected deferred finding: the new candidate still needs its matching audit event. Six inherited index heading fragments remain outside the harness check.
+
+**Current stage:** the exact draft bytes are semantically reviewed and prepared. No candidate event, sealed final report, wiki output, or CCIL source receipt exists yet.
+
+**Current blocker:** no owner answer blocks candidate audit or qualified wiki maintenance. Owner decisions still block definitive policy use and publication.
+
+**Next action:** append the `untracked` to `candidate` event for these exact bytes, run the final sealed check, then maintain and review the wiki summary.
+
+**Checkpoint checks:** the prepare report has zero findings and one deferred audit finding. Its workspace validation is `VALID`. The selected baseline remains the original `PASSED` report. Cash and RATAN queues remain 438 and 77; 41 pages remain held.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Candidate audit and final seal remain pending.
+  - Wiki maintenance and source receipts remain pending.
+  - Owner review and publication approval remain absent.
+```
+
+## Checkpoint 153: CCIL draft sealed and audited
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The candidate audit event `AUD-20261115-KT-settlement-ccil-netting-v1` records `untracked` to `candidate` for the reviewed hash. The final harness report at `coordinator-next-batch-20261115-ccil/final.json` returned `PASSED` with zero findings and one new audit event. Its seal hash is `24129e627716466515d0bea0246efc6a19dc12c385456e8a891c23b73265b2ad`.
+
+The final report confirms the workspace is `VALID` for 22 documents. It leaves six inherited index heading fragments unchecked. The check does not establish source truth, human approval, publication, or business execution.
+
+**Current stage:** five settlement candidates and 17 source receipts remain. The CCIL draft is audited and sealed. Its wiki summary and six source completion receipts remain pending.
+
+**Current blocker:** no user input blocks qualified wiki maintenance or source completion. Policy owner decisions and publication approval remain open.
+
+**Next action:** bind and maintain the CCIL wiki summary through the project bridge, review the outputs, verify them, then refresh both source plans and complete the six CCIL-specific identities.
+
+**Checkpoint checks:** final status `PASSED`; findings zero; deferred findings zero; audit file count 89; candidate hash matches the prepared report. The selected baseline remains `PASSED`. Current plans still show 438 Cash and 77 RATAN process pages, with 41 held.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The candidate remains a draft and has no human publication approval.
+  - Wiki maintenance and source receipts remain pending.
+  - Unchecked index heading fragments remain outside this checkpoint.
+```
+
+## Checkpoint 154: CCIL wiki reviewed and six sources receipted
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The `llm-wiki-agent` fallback added [the CCIL summary](../../knowledge/llm-wiki/wiki/summaries/KT-settlement-ccil-netting.md) and an index entry. The source remains candidate/draft. The summary SHA-256 is `34c2ccd6f588bcfe4492670e1973d31f49afb16780f6670c65a512cc09f0e3ab`. The review receipt and binding before-images are in ignored `.workbench/wiki/ccil-netting-20261115-run01/`.
+
+Both aliases are relative and resolve to the canonical candidate. The bridge recorded reviewed completion. It verified all 20 linked canonical sources and reported zero findings across six structural categories. A local check found no broken links or checked canonical anchors among 14 summary links. The candidate's exact wiki plan now reports `unchanged`. The operation is recorded in `knowledge/llm-wiki/wiki/log.md`.
+
+The Cash processing receipt now covers the six CCIL-specific source identities: `SRC-512ace11dd56f19bf781d531`, `SRC-5f68d1e47d5b2c04e8639c17`, `SRC-d856b444e14a0493cc473bde`, `SRC-2ed473c923bd76833481326f`, `SRC-17f5cbc4dfeeb07df7397528`, and `SRC-36e628fbb28fa91eae5735d7`. Completion bound them to the passed prepared and final checkpoints. It returned `PARTIAL` and wrote six receipts.
+
+Fresh plans show 432 Cash processing pages, 38 Cash review-held pages, and 414 unchanged pages. RATAN has 77 processing pages, three review-held pages, and 109 unchanged pages. Across 1,073 pages, 509 remain queued for processing, 41 remain held, and 523 remain unchanged. The six receipts raise the prior 17 to 23.
+
+The [question annex](evidence/canonical-draft-questions-20261115.md) still has 900 unique unanswered rows. The Day 2 pack has 49 additional question instances across eight phrasings identified during review; those instances still need reconciliation into the annex. The owner decisions in the CCIL candidate remain open. No answer currently blocks independent source processing.
+
+**Current stage:** the CCIL candidate, audit, wiki summary, and source receipts are complete as a draft-processing slice. Canonical publication and definitive policy approval remain pending.
+
+**Current blocker:** none for remaining processable pages. The 41 held pages need source-policy review; no user answer is yet required to proceed on the independent queue.
+
+**Next action:** reconcile the Day 2 coverage and citation findings using selected views only, capture its additional questions, then integrate completed candidate packs and continue the queued pages.
+
+**Checkpoint checks:** the CCIL final harness seal remains `PASSED`; workspace validation remains `VALID` for 22 documents. Wiki verification reports 20 linked sources, six structural categories with zero findings, and the scoped plan reports `unchanged`. The latest plan IDs are Cash `c30fc8223ede3bfbc2eeca27fc45c9e842c56edba72e016d42271e9846784d8f` and RATAN `1909d0364bdff952dc3259a6b5966afe3458b2ba00a9015922bc15a941113fb2`.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Candidate and wiki claims remain draft and do not establish approved or implemented policy.
+  - Source processing receipts record review declarations and checkpoint bindings, not publication approval.
+  - Day 2 pack findings and its additional questions remain unresolved.
+```
+
+## Checkpoint 155: three Day 2 claims integrated
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The review integrated `D2-C001`, `D2-C019`, and `D2-C022` into three candidate records.
+It mapped four selected source pages because two rule-action pages have separate identities and identical bytes.
+The [review report](evidence/day2-no-output-integration-review-20261115.md) binds each claim to its selected source ranges.
+
+The new auto-netting service candidate declares 12 source identities across four hashes.
+This includes seven additional byte-identical source identities found during preparation.
+The Swap Agent candidate preserves the separate hard-blocker proposal and its interaction question.
+The amendment candidate records reversal and rebook exceptions, the missing linkage, and two open questions.
+All three records remain candidates with draft status, unknown owners, and empty `verified` lists.
+
+**Correction to checkpoint 154:** the 49 worker question occurrences were already represented in the annex.
+The coordinator added one HVP revision question, and this integration added four questions.
+The [annex](evidence/canonical-draft-questions-20261115.md) now contains 1,442 occurrences in 905 unanswered rows.
+Day 2 contains 102 occurrences in 84 rows; no answer has been supplied.
+
+The first prepare report returned 12 link findings across seven distinct missing source aliases.
+The candidate now declares those aliases without changing source bytes.
+The corrected prepare checkpoint returned `PREPARED` with zero findings.
+The final checkpoint returned `PASSED` with zero findings and six new audit events.
+Three later audit events correct the review report hash and preserve the earlier event files.
+Workspace validation returned `VALID` for 25 documents; six inherited heading fragments remain unchecked.
+
+The Cash plan still shows 432 process pages, 38 held pages, and 414 unchanged pages.
+RATAN still shows 77 process pages, three held pages, and 109 unchanged pages.
+The four Day 2 source completion receipts and wiki update remain pending.
+Seventy-two assigned Day 2 pages still need coordinator integration review.
+
+**Current stage:** three draft records are prepared, reviewed, indexed, and audited.
+**Current blocker:** no user answer blocks these four source receipts or independent queued work.
+Owner approval, applicability decisions, and publication approval remain open.
+The 41 held pages still require policy review.
+
+**Next action:** complete the four Cash source pages against plan `c30fc8223ede3bfbc2eeca27fc45c9e842c56edba72e016d42271e9846784d8f`.
+Then refresh the source plan, plan wiki scope for these records, and continue Day 2 integration.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Harness validation does not establish authority, human approval, implementation, or live behavior.
+  - Wiki maintenance and source completion remain pending for this slice.
+  - Other Day 2 and cross-lane candidate integrations remain open.
+```
+
+## Checkpoint 156: four Day 2 source receipts recorded
+
+Date: 15 November 2026 (Asia/Singapore).
+
+I corrected the hard-blocker result to include both affected candidates.
+The auto-netting service record and Swap Agent record preserve their unresolved interaction.
+
+Cash plan `1221e3b82c0cbfb8d9b0b9c5591a0b59fd8ac7447cf05d4feeff13f97f9c2322` accepted four source-page receipts.
+The [completion batch](../../.workbench/ingestion/day2-no-output-integration-20261115-01/cash-results-02.json) records two byte-identical rule-mapping identities, the hard-blocker page, and the rebook page.
+The CLI returned `PARTIAL`: 439 pages remain queued and 38 remain held.
+
+I reconciled the receipt total against both live ledgers.
+They contain 31 Cash receipts and three RATAN receipts, 34 total.
+Checkpoint 154 reported 23, omitting seven existing ledger rows: four Cash under plan `507a14b3e8c84daff7d07d75a9f4169a125003b073d56e90f27fb78af591eff9`, two RATAN under plan `af987a974771041b78b370bc1747c029996e63bcf67cf356baa4eef7a69f92ec`, and one Manual Rounding page under plan `ba9f4f0800cf7734f03466ad01ca78bdd5ededd33457c6c9d69042c9bd3ba2b4`.
+These rows remain preserved; this checkpoint adds four more Cash receipts.
+
+Fresh Cash plan `3e3ae8aa86bd4324d76cb7681eb62a06bfedbea2add1dda2a252d2d83972bcb5` covers 884 pages.
+It queues 439, holds 38, and lists 407 unchanged.
+Fresh RATAN plan `f1638b83c67f4ac6bc78af26040f879cba01389ecd8d46783b60c61c041c91d2` covers 189 pages.
+It queues 78, holds three, and lists 108 unchanged.
+Across both collections, 517 pages remain queued, 41 are held, and 515 are unchanged.
+
+The scoped [wiki plan](../../.workbench/ingestion/day2-no-output-integration-20261115-01/wiki-plan.json) queues three new summaries and the shared index.
+The question annex remains at 1,442 occurrences and 905 unique unanswered rows.
+Day 2 accounts for 102 occurrences and 84 rows.
+
+**Current stage:** four Day 2 pages have source receipts; wiki maintenance for their three candidate records remains pending.
+The source collections remain open, with 517 selected pages queued and 41 held.
+
+**Current blocker:** no user answer blocks the next selected page batch.
+The 41 held pages require source-selection review; policy-owner answers and publication approval remain unresolved.
+
+**Next action:** bind and maintain the three Day 2 wiki summaries, review their outputs, then continue coordinator integration of completed knowledge packs.
+
+**Checkpoint checks:** source completion wrote four receipts and returned `PARTIAL`.
+The completion command passed its required workspace-integrity check.
+Both fresh source plans and the exact wiki plan are saved in ignored `.workbench` storage.
+The question annex contains 905 unique IDs and every answer cell is blank.
+
+```yaml
+standard: ASD-STE100
+automated_check: PENDING
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Source receipts record reviewed selected pages, not business approval.
+  - Candidate status does not establish implementation, deployment, or publication.
+  - Wiki maintenance has not started for these three candidate records.
+```
+
+## Checkpoint 157: Day 2 wiki summaries reviewed
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The [wiki review receipt](../../.workbench/wiki/day2-no-output-20261115-run01/review.json) records three new candidate summaries and the shared index.
+The current-session `llm-wiki-agent` maintained the pages because no model URL or token is configured.
+The source candidates remain drafts; the summaries do not establish publication or implementation.
+
+The summaries preserve proposed service boundaries and unresolved rule mappings, Swap Agent controls and its release blocker, and amendment reversal/rebook exceptions.
+They link to existing netting, identity, CPN, payment-adjustment, and LMS context.
+Existing concepts and summaries remain unchanged because these candidates add separate proposals without correcting their claims.
+
+The summary hashes are `aa8a12b3b0d76be89f5af21c011291c3e6402b0532fd32eaa0a8bb763817effa`, `ac9f3d3f0b25714349c7af35a370102a917a1c6339341e1c8bed18d9283a92de`, and `15bb9b285327cb71d07a5c2dd97648cd052e498bf32f14cdf3a743f530b9e72d`.
+The [run folder](../../.workbench/wiki/day2-no-output-20261115-run01/) preserves provenance before-images, source bindings, the review receipt, and the failed first review attempt.
+That attempt was rejected before provenance writes because new-summary cross-links expanded dependent outputs.
+I removed two redundant cross-links, refreshed the plan, and retried without changing candidate bytes.
+
+The review recorded three canonical sources and four outputs.
+Verification found zero issues across all six structural categories and verified 23 canonical source bindings.
+The [post-review plan](../../.workbench/ingestion/day2-no-output-integration-20261115-01/wiki-final-plan.json) marks all three candidates `unchanged`.
+The wiki operation log now contains the exact source and summary hashes.
+
+The [question annex](evidence/canonical-draft-questions-20261115.md) still has 1,442 occurrences in 905 unique rows.
+Day 2 accounts for 102 occurrences and 84 rows; all answer cells are blank.
+The source ledgers contain 34 receipts: 31 Cash and three RATAN.
+
+**Current stage:** the latest three candidates have reviewed wiki summaries and four source-page receipts.
+The collection plans remain at 439 Cash and 78 RATAN process pages, with 41 held pages.
+
+**Current blocker:** no user answer blocks the remaining selected-source work.
+The 41 held pages and owner decisions remain unresolved; the mixed RATAN COMP page still has unreviewed ENISIS scope.
+
+**Next action:** refresh completed-lane status, integrate the next non-overlapping reviewed pack, preserve new owner questions, and continue source completion.
+Seventy-two assigned Day 2 pages still need coordinator integration review.
+
+**Checkpoint checks:** `wiki.py review` recorded three sources and four outputs.
+`wiki.py verify` reported zero structural findings and 23 unchanged canonical bindings.
+The scoped plan reported three unchanged records.
+[Workspace validation](evidence/checkpoint-157-workspace-validation.json) returned `VALID` for 25 documents with zero findings.
+[Task-local link check](evidence/checkpoint-157-link-check.json) checked 2,577 links across 23 files with zero missing targets.
+`git diff --check` passed; the three new summaries have no trailing whitespace.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The review receipt records declared semantic review but does not authenticate its actor.
+  - Candidate and wiki claims remain drafts without owner approval or publication.
+  - Source receipts do not establish implementation or live business behavior.
+  - Link scanning does not verify heading fragments, reference-style links, remote targets, or semantic correctness.
+```
+
+## Checkpoint 158: expanded source closures refreshed
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The current Cash plan accepted ten no-change receipts. The current RATAN plan accepted one.
+These receipts refreshed existing source rows under expanded dependency closures. Ledger row counts remain 31 Cash and three RATAN.
+The candidate outputs remain byte-identical. The completion commands returned `PARTIAL` because other source pages remain queued.
+
+The three Group Blotter pages and three Cash Korea COMP pages already have earlier receipts. The fresh plans list them as unchanged, so this batch did not duplicate them.
+The mixed RATAN Murex KR 50216 page remains queued. Its selected payment and recovery passages need review before source completion.
+
+Fresh Cash plan `7299e1fa45003a600201ee901124a6cfa11146d38538953f0d9e5b354b5f5b10` covers 884 pages. It queues 429, holds 38, and lists 417 unchanged.
+Fresh RATAN plan `0626b1e509c72fc6dbeb6006ac5f1c6b5b8f18afcecd82c66b0e1bb9e8a98a44` covers 189 pages. It queues 77, holds three, and lists 109 unchanged.
+Across both collections, 506 pages remain queued, 41 remain held, and 526 remain unchanged.
+
+The [post-receipt views](../../.workbench/ingestion/next-batch-review-20261115/post-receipts/) contain all 506 queued pages. They omit completed, held, and otherwise out-of-plan pages.
+
+Both source verifiers return `NEEDS_REVIEW` because the 41 holds remain. Each reports zero binding findings and no missing pages.
+Workspace validation returns `VALID` for 25 documents with zero findings.
+Wiki verification reports zero structural findings across six categories and 23 unchanged canonical source bindings.
+The current candidate wiki plan queues 17 repair reviews and one recipe review. Five candidate records remain unchanged.
+
+The [question annex](evidence/canonical-draft-questions-20261115.md) still has 1,442 occurrences across 905 unanswered rows. This batch adds no questions beyond the existing CPN and interface entries.
+The [checkpoint evidence](evidence/checkpoint-158-processing-state.json) records command results, receipt and plan hashes, view bindings, and remaining wiki work.
+
+**Current stage:** source filtering is complete. The latest eleven no-change receipts have current output closures, and fresh views are ready for the next review batch.
+
+**Current blocker:** no user answer blocks independent processing. The 41 held pages and candidate owner decisions remain unresolved. The mixed RATAN payment and recovery scope is not yet reviewed.
+
+**Next action:** inspect the next non-overlapping worker pack against the fresh views. Review the mixed RATAN selected payment and recovery passages before completing that page. Then process the remaining wiki repair queue by affected scope.
+
+**Checkpoint checks:** both completion commands passed their required workspace-integrity checks. Fresh source plans, selected views, and both source verifiers match the recorded counts. Wiki verification and planning completed successfully.
+The [task-local link check](evidence/checkpoint-158-link-check.json) checked 2,584 links across 23 files with zero missing targets. `git diff --check` passed.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Source verification remains NEEDS_REVIEW for 41 held pages despite zero binding findings.
+  - Wiki freshness planning still requires 17 repair reviews and one recipe review.
+  - Receipts and wiki checks do not establish approval, implementation, or business execution.
+```
+
+## Checkpoint 159: RATAN interface review ready for canonical integration
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The [current RATAN plan](../../.workbench/ingestion/next-batch-review-20261115/post-receipts/ratan-plan-retry.json) queues 77 pages and holds three. Its plan ID is `0626b1e509c72fc6dbeb6006ac5f1c6b5b8f18afcecd82c66b0e1bb9e8a98a44`.
+
+I reviewed 12 selected interface pages from its queue. The [view manifest](../../.workbench/ingestion/next-batch-review-20261115/post-receipts/ratan-view/manifest.json) binds their source hashes, ranges, and output hashes. The [review checkpoint](evidence/checkpoint-159-interface-review.json) records all 12 source identities.
+
+The [coordinator candidate](../../.workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/coordinator/candidates/KT-ratan-cashflow-settlement-interfaces.md) has 12 sources and four open questions. Its SHA-256 is `328cc81f4cc08bc3a8d2589e88c22e71533ae315c6937e1ec8596a88029f40b5`.
+
+The review preserves selected Murex file, ACK/NACK, status, and recovery details. It also preserves the separate Murex KR SFTP and ENISIS FM Solace routes. The selected pages do not explain whether message type, stage, or revision explains the difference.
+
+The [question annex](evidence/canonical-draft-questions-20261115.md) records this issue as `KDQ-4a3f5b0866`. It now contains 1,443 question occurrences across 906 rows. All answer cells remain blank.
+
+The LMS interface page already has a `no_change` receipt under plan `f1638b83c67f4ac6bc78af26040f879cba01389ecd8d46783b60c61c041c91d2`. Its selected behavior remains in the focused [LMS candidate](../../knowledge/records/candidates/settlement/KT-settlement-lms-feed.md); I excluded it from this broad candidate.
+
+The existing [Korea confirmation candidate](../../knowledge/records/candidates/settlement/KT-settlement-korea-trade-confirmation.md) retains COMP rules. The new interface candidate links to that record and preserves only the separate payment conversion and recovery material.
+
+Cash still queues 429 pages and holds 38. RATAN queues 77 and holds three. Together, 506 pages remain queued, 41 remain held, and 526 are unchanged. The ledgers still contain 31 Cash and three RATAN receipt rows. None of the 12 reviewed interface pages has a new receipt.
+
+Both source verifiers remain `NEEDS_REVIEW` because of the 41 holds. They report zero binding findings and no missing pages. Workspace validation remains valid for 25 documents. Wiki verification reports zero structural findings and 23 unchanged canonical bindings. Wiki planning still queues 17 repair reviews and one recipe review.
+
+The [pre-edit harness baseline](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/baseline.json) passed with 1,413 raw files, 95 audit files, 25 governed documents, and 1,633 manifest records. The coordinator candidate passes source-hash, citation-link, selected-range, and sentence-length checks.
+
+**Current stage:** the interface candidate is reviewed in an ignored coordinator copy. It is not yet in `knowledge/records/`; its 12 source pages remain queued.
+
+**Current blocker:** no user answer blocks adding this qualified candidate. The route question requires owner confirmation before asserting one current Korea path. The record will retain both descriptions and remain a draft.
+
+**Next action:** add the candidate and index entry, prepare and review exact bytes, append its candidate audit event, and run the final harness check. Then refresh the source plans, generate the current RATAN views, complete the 12 source receipts, maintain the affected wiki page, and continue the remaining queues.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Candidate review uses selected source ranges and does not establish current authority.
+  - Source receipts, audit events, and wiki summaries do not establish approval or business execution.
+```
+
+## Checkpoint 160: RATAN interface candidate audited and sealed
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The canonical [interface candidate](../../knowledge/records/candidates/settlement/INT-KT-ratan-cashflow-settlement-interfaces.md) is a draft with unknown ownership. Its full-file SHA-256 is `25e797a8845a09a4f78798115b686fb3b79e7c51e301467090bb8b8b1d4cbec5`.
+
+The candidate covers 12 selected RATAN pages and has 27 direct source citations. I checked each citation against the fresh filtered view. Every cited range fits the active selection, and each retained snapshot hash matches.
+
+Murex KR describes SFTP; ENISIS describes FM Solace. The sources do not explain the route difference by message, stage, or revision. The unresolved question remains [KDQ-4a3f5b0866](evidence/canonical-draft-questions-20261115.md). The candidate's four questions all appear in the annex. No answer cell is filled.
+
+The [candidate review](evidence/canonical-draft-review-ratan-interfaces-20261115.md) records the claim review, source limits, overlaps, and unanswered questions. The matching candidate event is [AUD-20261115-INT-KT-ratan-cashflow-settlement-interfaces-v1](../../knowledge/evidence/audit/AUD-20261115-INT-KT-ratan-cashflow-settlement-interfaces-v1.yaml).
+
+The sealed [final checkpoint](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/final-with-dependent.json) passed with zero findings and zero deferred findings. It covers the candidate, index, and unchanged Korea confirmation record. Six existing index heading fragments remain unchecked. Workspace validation returned `VALID` for 26 documents.
+
+Fresh [Cash plan](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/cash-plan.json) `5f6bff6f663d55a13d77ed53db2bb9bca1c6aa84b209592563b4f7246dc828a8` queues 438 pages, holds 38, and lists 408 unchanged. Fresh [RATAN plan](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/ratan-plan.json) `0f8c20fbf88a143fc2392e76d01bf38e40eaa0712920366c6e4476a8d59ae0b8` queues 78 pages, holds three, and lists 108 unchanged.
+
+The matching [Cash view](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/cash-view/manifest.json) contains 438 selected pages. The [RATAN view](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/ratan-view/manifest.json) contains 78. Together, 516 pages are queued, 41 are held, and 516 are unchanged.
+
+Both source verifiers return `NEEDS_REVIEW` for the 41 held pages. They report zero binding findings and no missing pages. All 1,073 present pages retain filter decisions.
+
+The ledgers still contain 31 Cash and three RATAN receipt rows. None of the 12 interface pages has a new receipt. The Murex KR page also affects the existing COMP candidate; its unchanged hash is included in the sealed checkpoint.
+
+The question annex contains 1,443 occurrences across 906 unanswered rows. The [checkpoint evidence](evidence/checkpoint-160-interface-candidate.json) binds current plans, views, verifiers, candidate, audit event, and harness results.
+
+**Current stage:** the candidate is audited and sealed as a draft. Its 12 source receipts and wiki summary remain pending.
+
+**Current blocker:** no user answer blocks the 12 receipts or the next independent queue. Candidate approval and the current Korea route remain owner decisions.
+
+**Next action:** record the 12 RATAN receipts with the existing COMP record preserved, refresh the wiki plan, then continue queued processing.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Held selections keep both collections in NEEDS_REVIEW.
+  - Candidate and source receipts do not establish publication, implementation, or business execution.
+```
+
+## Checkpoint 161: RATAN interface source receipts recorded
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The fresh RATAN plan `0f8c20fbf88a143fc2392e76d01bf38e40eaa0712920366c6e4476a8d59ae0b8` contained all 12 reviewed interface pages. Its [completion results](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/ratan-interface-results.json) bind them to the sealed final checkpoint.
+
+The completion command recorded all 12 receipts and returned `PARTIAL`. It left 66 process pages and three held pages. The [post-receipt RATAN plan](../../.workbench/ingestion/coordinator-korea-interfaces-20261115-01/ratan-postreceipts-plan.json) records 66 process, three review, and 120 unchanged pages.
+
+The Korea Murex receipt preserves [the existing confirmation record](../../knowledge/records/candidates/settlement/KT-settlement-korea-trade-confirmation.md) as an unchanged dependent. Its COMP rules remain separate from the interface candidate.
+
+Current Cash planning still queues 438 pages, holds 38, and lists 408 unchanged. Across both collections, 504 pages remain queued, 41 remain held, and 528 are unchanged.
+
+RATAN now has 15 receipt rows; Cash remains at 31. The question annex remains at 1,443 occurrences across 906 unanswered rows.
+
+The exact [wiki plan](../../.workbench/wiki/ratan-interfaces-20261115-plan.json) queues one new candidate and expects its summary plus the shared index. No alias or derived page has changed yet.
+
+The [receipt checkpoint](evidence/checkpoint-161-ratan-interface-receipts.json) records the 12 rows, their output closures, current plans, and wiki scope.
+
+**Current stage:** source processing is receipted for the 12-page candidate. Its derived wiki summary remains pending.
+
+**Current blocker:** no user answer blocks this wiki slice or the remaining queued pages. Forty-one pages remain held for source review.
+
+**Next action:** bind the candidate source aliases, maintain and review its summary, then refresh the wiki and source plans.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Receipt declarations do not authenticate an actor or establish publication approval.
+  - Held source pages remain outside semantic processing until their selections are resolved.
+```
+
+## Checkpoint 162: RATAN interface wiki summary reviewed
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The [RATAN interface summary](../../knowledge/llm-wiki/wiki/summaries/INT-KT-ratan-cashflow-settlement-interfaces.md) records the candidate's selected accounting, cashflow, settlement, SSI, and Korea route claims. It preserves the candidate's draft status and unanswered owner decisions.
+
+The [raw alias](../../knowledge/llm-wiki/raw/INT-KT-ratan-cashflow-settlement-interfaces.md) and [wiki source alias](../../knowledge/llm-wiki/wiki/sources/INT-KT-ratan-cashflow-settlement-interfaces.md) point to the candidate bytes. The review receipt is [retained here](../../.workbench/wiki/ratan-interfaces-20261115-run01/review.json). It binds the candidate hash, summary hash, and shared index hash.
+
+The scoped wiki plan now reports the candidate `unchanged`. Wiki verification reports zero findings across six structural categories and verifies 24 linked canonical records. The four related settlement summaries retained their previous hashes. The [wiki checkpoint](evidence/checkpoint-162-interface-wiki.json) records the outputs, provenance, plan scope, and receipt totals.
+
+The latest full wiki plan queues 18 repair reviews and one recipe change. Five records remain unchanged. These items include material outside the current Cash and RATAN source batches; review each affected scope before changing pages.
+
+Cash queues 438 pages; RATAN queues 66. Together, 504 processable pages remain. Forty-one pages remain held; 528 pages are unchanged. The ledgers hold 31 Cash and 15 RATAN receipt rows.
+
+The question annex remains at 1,443 occurrences across 906 unanswered rows. The Korea SFTP versus FM Solace route remains unresolved under `KDQ-4a3f5b0866`.
+
+**Current stage:** the interface candidate, its 12 source receipts, and its reviewed wiki summary are complete as a draft-processing slice.
+
+**Current blocker:** no user answer blocks the next independent source batch. Forty-one selections remain held, and policy owners have not answered the recorded questions.
+
+**Next action:** inspect the next completed source pack against the current selected views. Continue coordinator integration and process the queued Cash and RATAN pages.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The full wiki plan contains pending repair work outside this candidate's scoped completion.
+  - Source receipts and wiki completion do not establish publication approval or business execution.
+```
+
+## Checkpoint 163: Raw snapshot integrity confirmed
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The [retention screen](evidence/retention-screen.json) lists 13 source snapshots as withheld. I removed those paths from the Git index only. All 13 local files remain present with matching SHA-256 hashes.
+
+Three withheld snapshots triggered 18 trailing-whitespace warnings before removal. Their bytes matched their SHA-256 filenames. The post-removal `git diff --cached --check` passed with zero withheld snapshots staged.
+
+The exact worker model and time target are retained in the [user input record](evidence/user-request-luna-max-parallel-20261115.md). The current processing record remains linked to that input.
+
+The [question annex](evidence/canonical-draft-questions-20261115.md) has 1,443 question occurrences and 906 unanswered rows. No question blocks the next independent batch. The 41 held selections remain outside semantic processing until their source review is resolved.
+
+**Current stage:** the interface draft, 12 RATAN receipts, and scoped wiki summary are complete. Their audit, source, and summary bindings are recorded.
+
+**Current blocker:** none for independent batch processing. Owner answers remain required for publication or any conflicting business rules.
+
+**Next action:** inspect available completed source packs, resolve coverage and citation findings, record all questions, then process the next supported selected sources.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Withheld raw snapshots remain local and unstaged under the retention screen.
+  - Matching SHA-256 filenames confirm byte integrity, not semantic source quality.
+  - Source receipts and wiki completion do not establish publication approval or business execution.
 ```

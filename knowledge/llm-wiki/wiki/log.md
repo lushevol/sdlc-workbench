@@ -150,3 +150,43 @@ Reviewed canonical source SHA-256 values:
 - KT-settlement-korea-trade-confirmation v1 55c580354fcdef192ac085fe770c7ba28405f29fe96086a94908e12a4985e21d
 
 The summaries retain draft status, open owner questions, and evidence limits. The RATAN Korea interface page remains partially reviewed for its separate ENISIS payment transport and recovery content. No candidate was published.
+
+
+## [2026-11-15 11:09:52] ingest | CCIL netting candidate
+
+Current-session llm-wiki-agent maintenance added the draft summary and index entry for `KT-settlement-ccil-netting` v1, SHA-256 `87816e22088e2dba2a8c9b37916b482b071aacd07101eb7003e7877fb592653b`. The summary preserves the dated workflow examples, family/group, counterparty and status conflicts, open questions, and evidence limits. Its SHA-256 is `34c2ccd6f588bcfe4492670e1973d31f49afb16780f6670c65a512cc09f0e3ab`.
+
+The reviewed completion receipt is `.workbench/wiki/ccil-netting-20261115-run01/review.json`. The bridge verified all 20 linked canonical sources and all six structural categories. The scoped plan reports this candidate unchanged. The candidate remains a draft; owner decisions and publication approval remain pending.
+
+
+## [2026-11-15 12:24 UTC] ingest | Day 2 Cash Settlement candidates
+
+Current-session `llm-wiki-agent` maintenance added three draft summaries and index entries for `KT-day2-auto-netting-service-design`, `KT-day2-swap-agent`, and `KT-settlement-amendment-reversal-rebook-exceptions`.
+
+Canonical source SHA-256 values:
+
+- `KT-day2-auto-netting-service-design`: `c5bf82ae06abe33000a1b2c7393106836889c1cc2d2ce0b00826bdaed4936f3b`
+- `KT-day2-swap-agent`: `6ff9b22d53f4ef1bdbe76981e66cafe2e42f0fbc9723377c7d848cfcbf528e3d`
+- `KT-settlement-amendment-reversal-rebook-exceptions`: `168be34d0bbde1faea559ba4b99144dd553ad5383c95d55543bd3a544696f93a`
+
+Summary SHA-256 values:
+
+- `KT-day2-auto-netting-service-design`: `aa8a12b3b0d76be89f5af21c011291c3e6402b0532fd32eaa0a8bb763817effa`
+- `KT-day2-swap-agent`: `ac9f3d3f0b25714349c7af35a370102a917a1c6339341e1c8bed18d9283a92de`
+- `KT-settlement-amendment-reversal-rebook-exceptions`: `15bb9b285327cb71d07a5c2dd97648cd052e498bf32f14cdf3a743f530b9e72d`
+
+The review receipt is `.workbench/wiki/day2-no-output-20261115-run01/review.json`.
+The bridge verified 23 canonical sources and reported zero findings across six structural categories.
+The scoped plan reports all three records unchanged.
+The records remain candidates; no owner approval, publication, or implementation evidence was added.
+
+
+## [2026-11-15 23:21:39+0800] ingest | RATAN interface candidate
+
+Current-session `llm-wiki-agent` direct ADE maintenance added the candidate summary and one index entry.
+
+Canonical source `INT-KT-ratan-cashflow-settlement-interfaces` v1 SHA-256: `25e797a8845a09a4f78798115b686fb3b79e7c51e301467090bb8b8b1d4cbec5`.
+Summary SHA-256: `975e23127fd2c7fdb9dd29a12620e08e6458b55dbf047f3aaf91f625b61792fa`. Index SHA-256: `a38743e82d928e515d9adc3cfbf654e965bf5d72a14720285e8175bd8c5d53d4`.
+
+The reviewed receipt is `.workbench/wiki/ratan-interfaces-20261115-run01/review.json`. The review preserved the distinct source-described flows, the unresolved SFTP versus FM Solace route, and the candidate status.
+Existing LMS, Korea COMP, identity, and auto-netting summaries remain unchanged. No candidate was published.
