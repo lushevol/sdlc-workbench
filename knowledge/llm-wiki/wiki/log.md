@@ -130,3 +130,9 @@ The 15-second window remains explicitly qualified as implementation/test evidenc
 
 Current-session `llm-wiki-agent` maintenance added one draft summary and one index entry. The source is `KT-settlement-cashflow-identity-and-stella-write-back` v1, SHA-256 `f2d265d93d04eeb0e1fe5334b8fbe5bafee6ff1d80b2612d1698ddad70c82433`.
 The review preserved open version, matching, acknowledgement, and retry rules. Both aliases and all 14 wiki bindings passed verification. The exact candidate replans unchanged.
+
+
+## [2026-11-15] ingest | Payment amount adjustment
+
+Current-session `llm-wiki-agent` maintenance added the draft summary and index entry for `KT-settlement-payment-amount-adjustment` v1. The canonical SHA-256 is `a236e368b57a0e5d52133427f1b08c78cd24f82540e318d6bd38e0bb304d0ba2`.
+The review checked the two accounting treatments, approval conditions, and split-child conflict. The bridge verified 15 canonical bindings. The scoped plan reports the candidate as unchanged.

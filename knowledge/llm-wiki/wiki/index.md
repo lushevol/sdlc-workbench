@@ -5,6 +5,7 @@ This wiki and its saved explorations are derived from candidate/draft Workbench 
 Exact canonical paths, record versions, lifecycle states, and SHA-256 source bindings are recorded in [source-manifest.json](../source-manifest.json). The `sources/` entries link to those canonical records; changes to compiled pages do not promote the records.
 
 ## Documents
+- [[summaries/KT-settlement-payment-amount-adjustment]] (short) — Compares the Day 2 and Korea migration designs for manual payment amount adjustments.
 - [[summaries/KT-settlement-auto-netting]] (short) — Documents scheduled cash settlement auto-netting rules, grouping, outcomes, and unresolved policy differences.
 - [[summaries/KT-settlement-cashflow-identity-and-stella-write-back]] (short) — Documents cashflow ID design and unresolved Stella write-back rules.
 - [[summaries/KT-ces-migration-parity]] (short) — Defines intended EMS2-to-CES permission parity, per-tile migration, and frontend compatibility rules.

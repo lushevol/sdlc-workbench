@@ -1,8 +1,14 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **The two collections are registered. Both still need source review.**
+> **Checkpoint 140. The payment adjustment candidate, its wiki summary, and the Manual Rounding source receipt are complete.** The candidate remains a draft. The accounting rules need owner review.
 >
-> Use the reviewed subset for draft knowledge. Confirm the applicable write-back rules with the Settlement domain owner before using them as requirements. The owner is unknown.
+> Current plans queue 532 pages: 454 Cash and 78 RATAN. This includes 526 pages from the original 527 and six earlier receipts reopened by a new record dependency.
+>
+> All 1,073 present pages have filter decisions. Forty-one remain held: 38 Cash and three RATAN.
+>
+> All six worker packs are present. Day 2 passed coordinator binding checks. The operations repairs passed for 19 drafts. Two requirement drafts need business decisions. Platform link repairs are saved. The integrations pack passed final validation.
+>
+> The editable question annex contains 875 rows grouped by exact wording. The work has more independently reviewable candidates. No user answer blocks that work.
 
 ## Request and scope
 
@@ -249,4 +255,99 @@ reviewed_at: null
 limitations:
   - Automated checks do not establish complete writing review.
   - Source checks do not establish applicability, approval, or production behavior.
+```
+
+## Checkpoint 137: quota recovery and all draft packs present
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The user directed recovery in forked chats. This fork owns integration in the existing workspace. [Exact user requests](evidence/user-request-quota-recovery-20261115.md).
+
+| Lane | Reviewed draft dispositions | Claims | Draft candidates | Coordinator status |
+| --- | ---: | ---: | ---: | --- |
+| Netting | 48 | 121 | 9 | Prior structural validation passed. |
+| Workflows | 85 | 218 | 28 | Prior structural validation passed. |
+| Platform | 132 | 104 | 23 | Four coverage links cross source hashes. |
+| Day 2 | 76 | 87 | 28 | Coverage and selected-range repairs underway. |
+| Integrations | 94 | 187 | 22 | Combined files are present. Final validation handoff pending. |
+| Operations | 92 | 115 | 21 | Coverage and selected-range repairs underway. |
+| Total | 527 | 832 | 131 | Worker dispositions. Canonical processing remains open. |
+
+The last observed wiki compile was 13 November, with 14 indexed records. The next action is to reconcile draft evidence and prepare a bounded set of canonical candidates. Owners for material business decisions remain unknown unless the question ledger records one.
+
+## Checkpoint 138: first canonical candidate and draft question annex
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The recovery fork now has an active continuation goal. All six draft packs are on disk.
+
+The first consolidated candidate compares the strict amount limit, maker/checker controls, eligible states, and downstream accounting amounts. It retains both source variants and the contradictory split-child scenario. The coordinator reviewed the relevant selected lines. The prepared and sealed checks passed with zero findings and one new audit event. [Payment amount adjustment](../../knowledge/records/candidates/settlement/KT-settlement-payment-amount-adjustment.md) · [Audit event](../../knowledge/evidence/audit/AUD-20261115-KT-settlement-payment-amount-adjustment-v1.yaml).
+
+### Editable questions
+
+The [canonical draft questions](evidence/canonical-draft-questions-20261115.md) preserve 1,412 occurrences in 875 rows grouped by exact wording. All links and source line bounds in the annex passed a local check. Claim and draft references point to ignored working files. Wording overlap with the earlier rows still needs reconciliation.
+
+| Decision needed | Owner | Answer |
+| --- | --- | --- |
+| Which Day 2 or Korea migration adjustment design applies per payment flow, entity, date, and state? | Unknown | |
+| Which amount should settlement accounting use for each flow, and how does TLM reconcile the difference? | Unknown | |
+| Which exchange rate and timestamp determine the USD equivalent? | Unknown | |
+| Which downstream contracts and rebook linkage cover adjusted payments? | Unknown | |
+| Which GraphQL operations are approved for FMRP Strategic Settlement, especially netting preview and execution? | Unknown | |
+
+### Next action
+
+Finish the derived wiki update for the amount adjustment record. Review source completion for each cited page. Continue Day 2, platform, and operations repair review in parallel with candidate overlap review.
+
+## Checkpoint 139: first wiki and source receipt
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The bridge verified 15 canonical bindings and found zero issues in all six structural categories. The scoped wiki plan reports the amount adjustment candidate as `unchanged` with an empty queue. [Wiki summary](../../knowledge/llm-wiki/wiki/summaries/KT-settlement-payment-amount-adjustment.md) · [Wiki bindings](../../knowledge/llm-wiki/source-manifest.json).
+
+The Cash completion command accepted one `updated` receipt for Manual Rounding. The receipt records 454 process entries and 38 held pages. The Korea adjustment source remains queued for its additional downstream, cancellation, and scenario claims. [Cash receipts](../../knowledge/evidence/processing/cash-settlement-home-page.json).
+
+The Cash replan has 450 never-completed entries and four reopened entries. RATAN has 76 never-completed entries and two reopened entries. The planner found the new relationship to Cashflow identity and Stella write-back. The six prior receipts remain recorded. Their new closure requires review before rebinding.
+
+| Pack | Coordinator result | Remaining work |
+| --- | --- | --- |
+| Day 2 | 76 view hashes, 76 coverage rows, 88 claim rows, and 92 draft line references passed. The HVP design now has its own claim. Three equal-byte aliases have explicit links. | Review applicability and merge related candidates. |
+| Platform | Four cross-hash links now have independently cited corrections. The repair check covered 132 coverage rows and 108 claims. | Reconcile ten coverage rows whose labels say they have claims but whose claim lists are empty. |
+| Operations | The corrected pack covers 92 views, 116 claims, and 19 structurally valid drafts. | Reconcile topic overlaps. Two requirement drafts need measurable rules and authority. |
+| Integrations | The saved pack contains 94 coverage rows and 22 drafts. | Check the recovery worker's final validation. |
+
+Day 2, platform, and operations repair artifacts are in the ignored [coordinator working folder](../../.workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/coordinator/). The original worker packs remain available.
+
+### Additional questions
+
+| Decision needed | Evidence | Owner | Answer |
+| --- | --- | --- | --- |
+| Which revision of the High Value Payment service and header contract applies? | Day 2 `D2-C-HVP-DESIGN-01` | Unknown | |
+| Which record resolves the Hefei branch SSI appearing as Global in Murex 2.11? | Operations repair `OPS-B-CLAIM-033` | Unknown | |
+| Which Phase 2 rule defines past-due timing, utilization and reversal accounting, and entity scope? | Operations `OPS-C-CLAIM-021` | Unknown | |
+| Which rate source and cut identity apply, and what qualifies a rate discrepancy for an exception? | Operations `OPS-C-CLAIM-017` | Unknown | |
+
+### Next action
+
+Continue source and claim review in related topic groups. Include new dependents in completion scope. Keep the six reopened source receipts in the queue until their current closure is reviewed.
+
+## Checkpoint 140: integrations validation and model handoff
+
+Date: 15 November 2026 (Asia/Singapore).
+
+The integrations recovery worker validated 94 source dispositions, 187 claims, 22 candidate drafts, and 149 citation links. All listed checks passed. The drafts are ready for coordinator overlap review. [Integrations validation](../../.workbench/ingestion/raw-import-20261113/canonical-parallel-20261115/integrations/validation.json).
+
+The current candidate, wiki binding, audit event, and source receipt completed their checks. The workspace validator returned `VALID`. No new canonical batch started after this stage. The next turn continues after the requested model switch. [Exact model request](evidence/user-request-quota-recovery-20261115.md#exact-user-input).
+
+**Resume with:** reconcile the netting, cashflow action, and interface clusters using the saved plans and corrected packs. Review exact sources for each independent candidate. Record output hashes and clear only source pages whose selected scope has a reviewed outcome. Review the six reopened dependency scopes as related candidate changes settle.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The scoped checks confirm source bindings, candidate structure, and reviewed output hashes.
+  - Automated checks do not establish complete writing review or approved business intent.
 ```
