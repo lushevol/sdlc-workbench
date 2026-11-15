@@ -193,6 +193,25 @@ The runtime does not calculate the six directional review metrics from the share
 Those measures require separately declared code and test inventories.
 Empty or retired-only behavior scope is invalid and cannot establish successful coverage.
 
+## Review backward compatibility
+
+Use this procedure when the owning project requires backward compatibility.
+Identify the production-facing baseline, candidate revision, and affected downstream consumers.
+Review existing consumers against the candidate and supported mixed-version combinations.
+
+| Review area | Required comparison |
+| --- | --- |
+| Functional | Can existing callers use the same APIs? Do affected data structures remain compatible? Can downstream systems observe a change in behavior? |
+| Performance | Are existing APIs slower? Compare baseline and candidate timings for affected APIs under comparable workloads, environments, and configurations. |
+
+For functional review, compare requests, responses, types, defaults, errors, and other observable behavior on the affected paths.
+Record a separate conclusion and evidence for each review area. Explain any unaffected scope.
+For timing results, record the workload, measurements, variability, and known limits.
+Mark any conclusion that lacks enough evidence as unverified.
+
+When a downstream-visible change is unavoidable, explain why a compatible approach cannot work.
+Minimize API changes. Highlight the before-and-after contracts and behavior, affected consumers, and any required downstream modifications.
+
 ## Coverage output for requirements and defects
 
 The [recorded user direction](../AGENTS.md#coverage-output) requires three explicit views in human coverage reports.

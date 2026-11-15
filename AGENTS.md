@@ -121,6 +121,15 @@ When valid new semantics cannot fit, identify the unresolved decision and necess
 Keep source-derived compatibility, controlled execution, and live verification separate.
 Authority: [10 November migration clarification](tasks/ces-tile-rollout-review-20261109/evidence/user-followup-20261110.md#exact-user-input).
 
+## Portal backward compatibility
+
+Backward compatibility is mandatory for changes affecting FMO Post Trade Portal (Markets Operations One), including `single-ui-bff` and `mfe-base`.
+Design changes so existing production consumers can upgrade without modifications or observable behavior changes.
+For every portal change, review API compatibility, data structure compatibility, downstream-observable behavior, and whether existing APIs become slower.
+Follow the [backward compatibility review procedure](docs/BEHAVIOR_REVIEW.md#review-backward-compatibility).
+If a downstream-visible change is unavoidable, minimize API changes and highlight the before-and-after contracts and behavior.
+Authority: [15 November portal compatibility direction](tasks/workbench-portal-compatibility-rule-20261115/01-maintenance.md#exact-user-input).
+
 ## Code review verification
 
 Use [code-review](.agents/skills/code-review/SKILL.md). Review alone does not authorize fixes, deployment, publication, or external messages.
