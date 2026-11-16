@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-advanced-search-p3
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -15,8 +15,8 @@ sources:
   revision: sha256:098042589beedfc1d4898db3c7b7a35f2db0e0e8c3ba5e68ea796f1b8b99f04f
   sha256: 098042589beedfc1d4898db3c7b7a35f2db0e0e8c3ba5e68ea796f1b8b99f04f
 generated:
-  by: agent:sol-auto-netting-review
-  at: '2026-11-16T09:23:59.479662+08:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T08:24:41.523565+00:00'
 verified: []
 scope: Historical selected-source design for advanced search p3.
 classification: query
@@ -34,6 +34,8 @@ writing_review:
   reviewed_at: null
   limitations:
   - Automated checks do not establish complete writing review.
+previous_version: 2
+previous_content_sha256: 8b4c4bafacbf87bd711d35161e1b5f60fb57af24fedc270daf8a313fb4d7ce40
 ---
 # Advanced search p3
 
@@ -81,6 +83,23 @@ The proposal defines cashflowUltraQuery and cashflowUltraQueryCount with LogicFi
 The benefits statement does not establish OpenSearch parity or OOM safety.
 
 Sources: [original lines 3–105](../../../evidence/sources/sha256/098042589beedfc1d4898db3c7b7a35f2db0e0e8c3ba5e68ea796f1b8b99f04f.md#L3-L105), [original lines 136–143](../../../evidence/sources/sha256/098042589beedfc1d4898db3c7b7a35f2db0e0e8c3ba5e68ea796f1b8b99f04f.md#L136-L143).
+
+### Typed advanced-query input and result catalog
+
+The guide explicitly leaves operator and value selectors unchanged.
+The motivating request concerns commodity or precious-metal UK payments. The design still requires compatibility with all existing query scenarios.
+The selected endpoint table is the exact GraphQL input, result and nullability catalog.
+
+RatanUltraQuery requires filters, pagingOption, pageIndex, itemsPerPage and orderArgs. Its cursor remains an optional placeholder.
+QueryOrder requires orderField and orderType, with ASC or DESC. Required orderArgs coexist with the configurable-sorting placeholder.
+The example supplies an empty orderArgs array. It establishes no executed sorting or pagination compatibility.
+
+UltraQueryResult requires totalResult, itemsPerPage, lastPage and results. The result also declares nullable pageIndex and pagingCursors.
+The results list and its ResultNew items are non-null. Cursor previous and next values are nullable strings.
+The count input requires filters, and its result requires integer count. Both query payload arguments are nullable in the shown signatures.
+
+These source-specific declarations remain proposed contracts. Existing contradictory DSL examples and placeholder qualifications remain unresolved.
+[Selected original lines 3–105](../../../evidence/sources/sha256/098042589beedfc1d4898db3c7b7a35f2db0e0e8c3ba5e68ea796f1b8b99f04f.md#L3-L105) [Selected original lines 136–143](../../../evidence/sources/sha256/098042589beedfc1d4898db3c7b7a35f2db0e0e8c3ba5e68ea796f1b8b99f04f.md#L136-L143) [Selected original lines 10–13](../../../evidence/sources/sha256/35dddbc053e967ef7fdf94ae3bdb35cb97c397a21ccecf954436a8d4c0227359.md#L10-L13)
 
 ## Connections
 

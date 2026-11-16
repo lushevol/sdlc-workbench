@@ -1,0 +1,142 @@
+{
+  "id": "KT-settlement-event-sequencing",
+  "reviewer": "agent:codex/sol_wiki_review_1",
+  "reviewed_at": "2026-11-16T08:13:53.290175+00:00",
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "unavailable; native selected-agent context only",
+  "review_scope": "complete canonical semantic text and complete summary proposal; referenced source metadata retained below",
+  "source": "knowledge/records/candidates/settlement/KT-settlement-event-sequencing.md",
+  "source_sha256": "bcbc1414fa30aefdb777a18fa5e846f841ea0b0f07f49c1730314c71089ec4c9",
+  "assignment_source_sha256": "bcbc1414fa30aefdb777a18fa5e846f841ea0b0f07f49c1730314c71089ec4c9",
+  "input_proposal": ".workbench/wiki/resume-20261116/draft-lane-1/wiki/summaries/KT-settlement-event-sequencing.md",
+  "input_proposal_sha256": "6d78c63df8a5776763c6b5708430acb93e0a96cb80800409485318017cffe5a5",
+  "output": ".workbench/wiki/resume-20261116/sol-review-lane-1/wiki/summaries/KT-settlement-event-sequencing.md",
+  "output_sha256": "6d78c63df8a5776763c6b5708430acb93e0a96cb80800409485318017cffe5a5",
+  "assessment": "supported within candidate qualifications",
+  "review_note": "Confirmed event ordering and STP/NSTP checkpoint distinct from settlement. Producer mapping examples, revival/release branches and multicurrency open question remain source-specific.",
+  "claim_register": [
+    {
+      "claim": "Event identity and sequencing",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-event-sequencing.md#event-identity-and-sequencing",
+      "source_lines": [
+        47,
+        59
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Event identity and sequencing\n\nThe design uses New and Withdrawal events.\nStella trade ID, cashflow major version, and BatchId_Sequence_Count identify and sequence events.\nIncomplete batches stay outside the blotter and settlement flow.\nA later batch waits until the earlier batch reaches STP or NSTP.\n\nThis completion point does not mean settlement.\nNew/Withdrawal and New/Withdrawal/New sequences execute in order.\nRepeated New events process only the first event.\n\nSources: [original lines 1\u201310](../../../evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md#L1-L10), [original lines 12\u201315](../../../evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md#L12-L15), [original lines 27\u201340](../../../evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md#L27-L40).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Post-release lifecycle branches",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-event-sequencing.md#post-release-lifecycle-branches",
+      "source_lines": [
+        60,
+        73
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Post-release lifecycle branches\n\nPost-release cancellation or amendment uses NSTP reversal and rebooking.\nCloseout uses a new NSTP trade and manual netting.\nPortfolio reassignment requires duplicate-payment inspection and suppression.\nRevival restores an unreleased original cancellation.\n\nWhen the original was released, an unreleased cancellation is ignored.\nFO/MO cannot undo a cancellation after MTx92 release.\nFixing after payment release in the same period uses NSTP.\nExpiry events are discarded.\n\nSources: [original lines 46\u201357](../../../evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md#L46-L57).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Murex event mapping and limits",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-event-sequencing.md#murex-event-mapping-and-limits",
+      "source_lines": [
+        74,
+        82
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Murex event mapping and limits\n\nThe mapping converts RPL, RPL_M, MOD, CNCL, and XIT to Withdrawal plus New.\nRPL_D maps to Withdrawal, EXR to New, and NET to NA.\nThe examples show version transitions without execution evidence.\nThe source leaves linked versus independent multicurrency resultant cancellation unresolved.\n\nSources: [original lines 57\u201357](../../../evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md#L57-L57), [original lines 77\u201397](../../../evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md#L77-L97), [original lines 126\u2013128](../../../evidence/sources/sha256/b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c.md#L126-L128).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    }
+  ],
+  "changed_claim_retention_mapping": [],
+  "canonical_source_bindings": [
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Trade & Cashflow Events Control/Cashflow Events Control/page.md",
+      "revision": "sha256:b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c",
+      "sha256": "b0ca7168fda2aeefad5f3fb61a7976d5eef9df457045be16b0dd1842b1c5154c"
+    }
+  ],
+  "questions_for_central_annex": [
+    "Which event mappings and concurrent amendment/release/netting order apply?",
+    "Are multicurrency netted resultants changed jointly or independently?"
+  ],
+  "limits": [
+    "Candidate records remain draft and unpublished.",
+    "No implementation, execution, acceptance or deployment is established by this review.",
+    "Original source snapshots are referenced by canonical records. This derived review does not repeat their entire upstream source review.",
+    "ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ],
+    "checks": ".workbench/wiki/resume-20261116/sol-review-lane-1/validation.json"
+  },
+  "summary_claim_register": [
+    {
+      "claim": "Trade ID, cashflow version, and batch sequence order processing; STP/NSTP is not settlement.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-event-sequencing.md#event-identity-and-sequencing",
+      "source_sha256": "bcbc1414fa30aefdb777a18fa5e846f841ea0b0f07f49c1730314c71089ec4c9",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Confirmed event ordering and STP/NSTP checkpoint distinct from settlement. Producer mapping examples, revival/release branches and multicurrency open question remain source-specific.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "Post-release amendments, closeout, portfolio changes, and revival use distinct branches.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-event-sequencing.md#post-release-lifecycle-branches",
+      "source_sha256": "bcbc1414fa30aefdb777a18fa5e846f841ea0b0f07f49c1730314c71089ec4c9",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Confirmed event ordering and STP/NSTP checkpoint distinct from settlement. Producer mapping examples, revival/release branches and multicurrency open question remain source-specific.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "Murex event mapping examples leave linked versus independent currency resultant handling open.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-event-sequencing.md#murex-event-mapping-and-limits",
+      "source_sha256": "bcbc1414fa30aefdb777a18fa5e846f841ea0b0f07f49c1730314c71089ec4c9",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Confirmed event ordering and STP/NSTP checkpoint distinct from settlement. Producer mapping examples, revival/release branches and multicurrency open question remain source-specific.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    }
+  ],
+  "active_prior_output": {
+    "path": "knowledge/llm-wiki/wiki/summaries/KT-settlement-event-sequencing.md",
+    "exists": false
+  }
+}

@@ -1,62 +1,64 @@
 ---
-{
-  "type": "KnowledgeTopic",
-  "id": "KT-settlement-cashflow-monitoring",
-  "version": 1,
-  "owner": "unknown",
-  "governance_state": "candidate",
-  "status": "draft",
-  "sources": [
-    {
-      "id": "SRC-713f1c4ad8de46361b74800b",
-      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Grouping Blotter Monitoring/page.md",
-      "revision": "sha256:0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7",
-      "sha256": "0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7",
-      "snapshot": "knowledge/evidence/sources/sha256/0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7.md"
-    },
-    {
-      "id": "SRC-ca7e3edc7111e978313c158a",
-      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/KTLO Requirement/9244099-Add timer Dashboard exceptions/page.md",
-      "revision": "sha256:1bbc8f746200553d7c3b7ba8cf6bb0d8f249f17cd2e28219793d64b9f13c2504",
-      "sha256": "1bbc8f746200553d7c3b7ba8cf6bb0d8f249f17cd2e28219793d64b9f13c2504",
-      "snapshot": "knowledge/evidence/sources/sha256/1bbc8f746200553d7c3b7ba8cf6bb0d8f249f17cd2e28219793d64b9f13c2504.md"
-    },
-    {
-      "id": "SRC-35d67fec74236455bc812343",
-      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/RATAN Cashflow Dashboard/page.md",
-      "revision": "sha256:874cbc9010d6d423b2e0a5be226815e592b5bc361c083a844f95d598b2c2f255",
-      "sha256": "874cbc9010d6d423b2e0a5be226815e592b5bc361c083a844f95d598b2c2f255",
-      "snapshot": "knowledge/evidence/sources/sha256/874cbc9010d6d423b2e0a5be226815e592b5bc361c083a844f95d598b2c2f255.md"
-    }
-  ],
-  "generated": {
-    "by": "agent:codex/sol_cn_workflow_review",
-    "at": "2026-11-16T01:54:24.353134+00:00"
-  },
-  "verified": [],
-  "classification": "settlement",
-  "scope": "Cashflow counters, group investigation, search dimensions, and the proposed exception timer.",
-  "summary": "Use categorized dashboard counters to investigate settlement exceptions and incomplete or unvalidated groups.",
-  "related": [
-    "KT-settlement-monitoring-and-touchpoints",
-    "KT-settlement-trade-validation-and-confirmation",
-    "KT-settlement-event-sequencing"
-  ],
-  "open_questions": [
-    "What are the Queued, Hold, and Group Pending Validation counter predicates?",
-    "Which local date, timezone, and five-minute timer boundaries apply?",
-    "Which entity and country dropdown mappings govern the dashboard?"
-  ],
-  "standard": "ASD-STE100",
-  "automated_check": "PASSED",
-  "asd_review": "PENDING",
-  "reviewer": null,
-  "reviewed_at": null,
-  "limitations": [
-    "Automated checks do not establish complete writing review.",
-    "Authority, applicability, and human publication review remain pending."
-  ]
-}
+type: KnowledgeTopic
+id: KT-settlement-cashflow-monitoring
+version: 2
+owner: unknown
+governance_state: candidate
+status: draft
+sources:
+- id: SRC-713f1c4ad8de46361b74800b
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional
+    Requirement/Grouping Blotter Monitoring/page.md
+  revision: sha256:0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7
+  sha256: 0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7
+  snapshot: knowledge/evidence/sources/sha256/0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7.md
+- id: SRC-ca7e3edc7111e978313c158a
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional
+    Requirement/KTLO Requirement/9244099-Add timer Dashboard exceptions/page.md
+  revision: sha256:1bbc8f746200553d7c3b7ba8cf6bb0d8f249f17cd2e28219793d64b9f13c2504
+  sha256: 1bbc8f746200553d7c3b7ba8cf6bb0d8f249f17cd2e28219793d64b9f13c2504
+  snapshot: knowledge/evidence/sources/sha256/1bbc8f746200553d7c3b7ba8cf6bb0d8f249f17cd2e28219793d64b9f13c2504.md
+- id: SRC-35d67fec74236455bc812343
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional
+    Requirement/RATAN Cashflow Dashboard/page.md
+  revision: sha256:874cbc9010d6d423b2e0a5be226815e592b5bc361c083a844f95d598b2c2f255
+  sha256: 874cbc9010d6d423b2e0a5be226815e592b5bc361c083a844f95d598b2c2f255
+  snapshot: knowledge/evidence/sources/sha256/874cbc9010d6d423b2e0a5be226815e592b5bc361c083a844f95d598b2c2f255.md
+generated:
+  by: agent:sol_complete_sources
+  at: '2026-11-16T08:15:07.668955+00:00'
+verified: []
+classification: settlement
+scope: Cashflow counters, group investigation, search dimensions, and the proposed
+  exception timer.
+summary: Use categorized dashboard counters to investigate settlement exceptions and
+  incomplete or unvalidated groups.
+related:
+- KT-settlement-monitoring-and-touchpoints
+- KT-settlement-trade-validation-and-confirmation
+- KT-settlement-event-sequencing
+open_questions:
+- What are the Queued, Hold, and Group Pending Validation counter predicates?
+- Which local date, timezone, and five-minute timer boundaries apply?
+- Which entity and country dropdown mappings govern the dashboard?
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+- Automated checks do not establish complete writing review.
+- Authority, applicability, and human publication review remain pending.
+previous_version: 1
+previous_content_sha256: 02e679ca2841bad3764c2a7ca98ab5d79c47e7273cd4b743f1350e33d77d96e0
+writing_review:
+  standard: ASD-STE100
+  automated_check: PASSED
+  asd_review: PENDING
+  reviewer: null
+  reviewed_at: null
+  limitations:
+  - Automated checks do not establish complete writing review.
 ---
 # Cashflow dashboard and group monitoring
 
@@ -123,6 +125,13 @@ Pending Validation opens a Pending Trade Validation view and directs attention t
 These source examples do not establish diagnosed production incidents.
 [Group investigation](../../../../knowledge/evidence/sources/sha256/0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7.md#L1-L11)
 [Pending validation](../../../../knowledge/evidence/sources/sha256/0b01a5cff3f22789e716a4f313d6c99ef4ca95934eeb3357d1f536711f1fa3d7.md#L16-L19)
+
+### Timer proposal indicator scope
+
+The source names separate QUEUED/pending-exception, Group Pending and Group Pending Validation indicators.
+All named indicators use its stuck-for-more-than-five-minutes display condition.
+The Group Pending row retains its to-be-confirmed trade-validation mapping.
+[Selected original lines 1–7](../../../evidence/sources/sha256/1bbc8f746200553d7c3b7ba8cf6bb0d8f249f17cd2e28219793d64b9f13c2504.md#L1-L7)
 
 ## Connections
 

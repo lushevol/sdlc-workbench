@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-settlement-feeds-p3
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -38,8 +38,8 @@ sources:
   revision: sha256:dd611ea0f0c470cd374db0a276f99692dba67264d63089c00a9772226378ec1c
   sha256: dd611ea0f0c470cd374db0a276f99692dba67264d63089c00a9772226378ec1c
 generated:
-  by: agent:sol-auto-netting-review
-  at: '2026-11-16T09:16:56.137220+08:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:55:20.538353+00:00'
 verified: []
 scope: Historical selected-source design for settlement feeds p3.
 classification: settlement
@@ -57,6 +57,8 @@ writing_review:
   reviewed_at: null
   limitations:
   - Automated checks do not establish complete writing review.
+previous_version: 2
+previous_content_sha256: acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94
 ---
 # Settlement feeds p3
 
@@ -126,6 +128,44 @@ Its stated filter combines reversal flag reinstate with last published balance b
 It does not define every downstream reversal, retry, or idempotency rule.
 
 Sources: [original lines 17–21](../../../evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md#L17-L21).
+
+### Historical write-back downstream version
+
+The write-back design specifically names STELLA or Murex2.11 as downstream synchronization targets.
+Its source-specific qualifier leaves other Murex versions outside this fragment's documented contract.
+[Selected original lines 1–9](../../../evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md#L1-L9) [Selected original lines 15–35](../../../evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md#L15-L35)
+
+### Proposed LMS identifier migration
+
+The proposed identifiers retain these source-specific mappings.
+
+| Upstream | Original source | Current MessageSender | Proposed Stack Flow |
+| --- | --- | --- | --- |
+| Murex/Stella | MUREX/STELLA | FMRP, default | FMRPSTELLA, default |
+| LoanIQ | LOANIQ | LOANIQ | FMRPSTELLA-LOANIQ |
+
+The source requires LMS alignment. Its no-risk statement remains a technical claim without compatibility execution evidence.
+[Selected original lines 1–6](../../../evidence/sources/sha256/ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8.md#L1-L6)
+
+### Korean accounting selection and validation conditions
+
+The EBBS initialization uses one bridge account per entity. OLTP instead chooses its bridge account by currency.
+Reversal and netted/split task initialization follow the corresponding normal-task rules.
+EBBS validation additionally checks that its JSON fields are populated after Nostro and bridge stamping.
+
+The OLTP JSON proposal calls for additional 53 BIC and receiver-BIC logic. Its selected text leaves that mapping unspecified.
+The SOD job selects Hold tasks whose payment_date is at most current_date.
+EBBS generates missing Request_info before processing. OLTP checks ExtColumn2 and generates its missing JSON before processing.
+[Selected original lines 11–40](../../../evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md#L11-L40) [Selected original lines 53–72](../../../evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md#L53-L72)
+
+### Reinstatement trigger and reversal tags
+
+A reinstate action after FAILED status produces reversal tag reinstate in the selected design.
+An approval after SWIFT_SUPPRESSED status produces tag SwiftUnSuppressed.
+The stated filter selects reversal flag reinstate together with last published balance below zero.
+
+These source-specific predicates leave other reversal and idempotency decisions unresolved.
+[Selected original lines 9–13](../../../evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md#L9-L13) [Selected original lines 17–21](../../../evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md#L17-L21)
 
 ## Connections
 

@@ -1,0 +1,103 @@
+{
+  "status": "UNAPPLIED_PROPOSALS_AWAITING_FINAL_BYTES",
+  "reviewer": "agent:sol_complete_sources",
+  "reviewed_at": "2026-11-16T07:55:20.447462+00:00",
+  "proposals": [
+    {
+      "canonical": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md",
+      "base_sha256": "acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94",
+      "heading": "Historical write-back downstream version",
+      "text": "The write-back design specifically names STELLA or Murex2.11 as downstream synchronization targets.\nIts source-specific qualifier leaves other Murex versions outside this fragment's documented contract.",
+      "source_proofs": [
+        {
+          "source_id": "SRC-406a0bf364317447aded40ee",
+          "source_sha256": "2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6",
+          "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/Backward Workflow Design/page.md",
+          "view_sha256": "4ae699123aba41fd98c25cec995b6de94bfc78ed13143e88bfb4b36560df36d6",
+          "ranges": [
+            [
+              1,
+              9
+            ],
+            [
+              15,
+              35
+            ]
+          ],
+          "original": "knowledge/evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md"
+        }
+      ]
+    },
+    {
+      "canonical": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md",
+      "base_sha256": "acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94",
+      "heading": "Proposed LMS identifier migration",
+      "text": "The proposed identifiers retain these source-specific mappings.\n\n| Upstream | Original source | Current MessageSender | Proposed Stack Flow |\n| --- | --- | --- | --- |\n| Murex/Stella | MUREX/STELLA | FMRP, default | FMRPSTELLA, default |\n| LoanIQ | LOANIQ | LOANIQ | FMRPSTELLA-LOANIQ |\n\nThe source requires LMS alignment. Its no-risk statement remains a technical claim without compatibility execution evidence.",
+      "source_proofs": [
+        {
+          "source_id": "SRC-256b00485f16723a43eb2aa2",
+          "source_sha256": "ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8",
+          "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Ratan - LMS feed/page.md",
+          "view_sha256": "ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8",
+          "ranges": [
+            [
+              1,
+              6
+            ]
+          ],
+          "original": "knowledge/evidence/sources/sha256/ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8.md"
+        }
+      ]
+    },
+    {
+      "canonical": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md",
+      "base_sha256": "acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94",
+      "heading": "Korean accounting selection and validation conditions",
+      "text": "The EBBS initialization uses one bridge account per entity. OLTP instead chooses its bridge account by currency.\nReversal and netted/split task initialization follow the corresponding normal-task rules.\nEBBS validation additionally checks that its JSON fields are populated after Nostro and bridge stamping.\nThe OLTP JSON proposal calls for additional 53 BIC and receiver-BIC logic. Its selected text leaves that mapping unspecified.\nThe SOD job selects Hold tasks whose payment_date is at most current_date.\nEBBS generates missing Request_info before processing. OLTP checks ExtColumn2 and generates its missing JSON before processing.",
+      "source_proofs": [
+        {
+          "source_id": "SRC-dd35ec2d0b4d3d1d6b519594",
+          "source_sha256": "b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65",
+          "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Korea Accounting - OLTP/page.md",
+          "view_sha256": "9ef8fd12c1befd7b5ccb971c25fd5b496d6e02192028c1a41cd01577d81b7b76",
+          "ranges": [
+            [
+              11,
+              40
+            ],
+            [
+              53,
+              72
+            ]
+          ],
+          "original": "knowledge/evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md"
+        }
+      ]
+    },
+    {
+      "canonical": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md",
+      "base_sha256": "acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94",
+      "heading": "Reinstatement trigger and reversal tags",
+      "text": "A reinstate action after FAILED status produces reversal tag reinstate in the selected design.\nAn approval after SWIFT_SUPPRESSED status produces tag SwiftUnSuppressed.\nThe stated filter selects reversal flag reinstate together with last published balance below zero.\nThese source-specific predicates leave other reversal and idempotency decisions unresolved.",
+      "source_proofs": [
+        {
+          "source_id": "SRC-6c5e6da847423b07bebdc4c3",
+          "source_sha256": "f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770",
+          "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/page.md",
+          "view_sha256": "a7aa113e778c6951bf19386f422fead38b1ea2094f7cd63c118d6773dcda1c0d",
+          "ranges": [
+            [
+              9,
+              13
+            ],
+            [
+              17,
+              21
+            ]
+          ],
+          "original": "knowledge/evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md"
+        }
+      ]
+    }
+  ]
+}

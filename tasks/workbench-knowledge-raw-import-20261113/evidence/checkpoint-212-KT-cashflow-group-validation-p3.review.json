@@ -1,0 +1,162 @@
+{
+  "id": "KT-cashflow-group-validation-p3",
+  "reviewer": "agent:codex/sol_wiki_review_1",
+  "reviewed_at": "2026-11-16T08:10:34.980277+00:00",
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "unavailable; native selected-agent context only",
+  "review_scope": "complete canonical semantic text and complete summary proposal; referenced source metadata retained below",
+  "source": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md",
+  "source_sha256": "e0e637d23cadec2913b0c252c350689f9258ea9655f3097680d80f4fc8a7b812",
+  "assignment_source_sha256": "e0e637d23cadec2913b0c252c350689f9258ea9655f3097680d80f4fc8a7b812",
+  "input_proposal": ".workbench/wiki/resume-20261116/draft-lane-1/wiki/summaries/KT-cashflow-group-validation-p3.md",
+  "input_proposal_sha256": "41db02d6f391f716be0b24957de332b7e4c4838123b3ef6781f05599047082dd",
+  "output": ".workbench/wiki/resume-20261116/sol-review-lane-1/wiki/summaries/KT-cashflow-group-validation-p3.md",
+  "output_sha256": "33996a7598ced16591e532ffe2477f02571856a4dac8eda2ff80a948a54dcdb7",
+  "assessment": "supported after listed corrections",
+  "review_note": "Corrected material classification error. Non-economic pairing requires equal direction and opposite events. Validation/producer conditions and missing-flag ambiguity retained.",
+  "claim_register": [
+    {
+      "claim": "Grouping and ordered release",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md#grouping-and-ordered-release",
+      "source_lines": [
+        73,
+        84
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Grouping and ordered release\n\nThe design groups events by trade ID and major version, using the declared event count for completeness.\nIt waits for the group and preceding pending major-version groups.\nGroup states distinguish pending arrivals, prior-group dependency, ready, pending withdrawal, completed, and pending trade validation.\nGroup-message states distinguish pending, delivered, end, and offset.\n\nOne module row says missing group flags use the current flow, but its nested consumer wording says otherwise stop.\nMissing-flag behavior therefore remains ambiguous.\n\nSources: [original lines 3\u201313](../../../evidence/sources/sha256/89f7f53c3b2251d3580b9d5d43105c52a576dfec2638207cc76ba6315b1d6fa5.md#L3-L13), [original lines 57\u201364](../../../evidence/sources/sha256/89f7f53c3b2251d3580b9d5d43105c52a576dfec2638207cc76ba6315b1d6fa5.md#L57-L64).\n"
+    },
+    {
+      "claim": "Amendment and non-economic pairing",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md#amendment-and-non-economic-pairing",
+      "source_lines": [
+        85,
+        96
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Amendment and non-economic pairing\n\nWithdrawal/New groups are amendments.\nNon-economic pairs match booking entity, counterparty FMID, currency, amount, value date, and direction, with opposite events.\nOther amendment cashflows are economic amendments.\nThe design keeps original/replaced cashflow versions and mapping history, with message-I/O keys including trade, major version, and cashflow.\n\nThe June 14, 2024 enhancement sends non-economic amendments through workflow when the replaced payment is PROJECTED or QUEUED.\nThe broader ignored-if-touched-or-settled wording does not settle every other state.\n\nSources: [original lines 1\u201386](../../../evidence/sources/sha256/129507722b7986a380ca7039b8e63fdf587a4f61a6ea2e1be79461a62946cad3.md#L1-L86), [original lines 3\u201313](../../../evidence/sources/sha256/89f7f53c3b2251d3580b9d5d43105c52a576dfec2638207cc76ba6315b1d6fa5.md#L3-L13).\n"
+    },
+    {
+      "claim": "Trade validation gate",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md#trade-validation-gate",
+      "source_lines": [
+        97,
+        112
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Trade validation gate\n\nThe May 29, 2024 preferred design keeps validation gating in group service.\nPublish requires a complete group and validated trade.\nManual STP is disabled for unvalidated items.\nFMRP validation uses trade ID, major version, and SENT, AFFIRMED, CONFIRMED, or TOBESENT with Validate action.\n\nFMRP validation applies backward to earlier major versions.\nMurex validation uses trade ID and VALD or COMP, without the FMRP version rule.\nThe alternative lifecycle TOBEVALIDATED state is struck through.\nMurex trade/cashflow linkage and LIEN effects remain open.\n\nThe source treats the late-validation amendment hold control as desirable, rather than mandatory.\n\nSources: [original lines 1\u201327](../../../evidence/sources/sha256/8adcc39be9a985c5c32d3e4bc1db41d3cad779084f20a0aeed1dc4d3b8d70bdf.md#L1-L27).\n"
+    },
+    {
+      "claim": "POC and H1/H2 scenarios",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md#poc-and-h1h2-scenarios",
+      "source_lines": [
+        113,
+        123
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### POC and H1/H2 scenarios\n\nThe non-economic POC expects mapped IDs in status-sync queues, failed-sync exception closure on replay, and deferred unnet synchronization after success.\nIts trade-confirmation scenarios expect pending-affirmation exceptions to close, but one scenario changes trade IDs inconsistently.\nThe H1/H2 analysis illustrates group continuity across a model switch and a cancelled component forcing completion.\nIts dates and weekday labels are inconsistent and do not define a release schedule.\n\nThese are design examples, without passing execution or a complete transition rule.\n\nSources: [original lines 66\u201386](../../../evidence/sources/sha256/129507722b7986a380ca7039b8e63fdf587a4f61a6ea2e1be79461a62946cad3.md#L66-L86), [original lines 1\u201339](../../../evidence/sources/sha256/54bbdba96b430484c23bad067317cd0d045bd0f6fc8e54608cdfe73b88a03d3b.md#L1-L39).\n"
+    },
+    {
+      "claim": "L3-GROUP-01 \u2014 Producer-specific validation and completeness",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md#l3-group-01--producer-specific-validation-and-completeness",
+      "source_lines": [
+        124,
+        129
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### L3-GROUP-01 \u2014 Producer-specific validation and completeness\n\nFor SCBML, hide cashflows from Settlement Ops while incomplete or pending trade validation. If cashflow trade state is unvalidated, inspect parent trade validation. Hold an unvalidated parent and resume affected cashflows from the TDS3 validation update. Uber checks for an existing group; create one only when absent. Offset matching cashflows, otherwise save messages pending. Uber resolves pending trade validation through the validated Uber version without a query. These are separate producer paths.\n\n[Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L3-L10). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L13-L23). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L29-L45). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L51). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L56).\n"
+    },
+    {
+      "claim": "L3-GROUP-02 \u2014 Group ordering and search identity",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md#l3-group-02--group-ordering-and-search-identity",
+      "source_lines": [
+        130,
+        135
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### L3-GROUP-02 \u2014 Group ordering and search identity\n\nA declared cashflow count gates normal group processing until all expected messages arrive. Even a complete batch can remain pending_pre_group until previous groups consume necessary messages. The page mentions manual delivery without defining grants or recovery. FMRP uses trade ID for all-version Group Blotter searches. Murex uses original trade ID and maps upstream flow ID to its RATAN cashflow identity. Examples are explanatory, without executed completeness or identity assertions.\n\n[Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L3-L10). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L13-L23). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L29-L45). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L51). [Original evidence](../../../evidence/sources/sha256/183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794.md#L56).\n"
+    }
+  ],
+  "changed_claim_retention_mapping": [
+    {
+      "before": "amount, value date, and opposite direction",
+      "after": "amount, value date, and direction, with opposite New/Withdrawal events",
+      "classification": "intent",
+      "disposition": "superseded",
+      "rationale": "Canonical six-field match includes equal direction. Events are opposite.",
+      "evidence": "knowledge/records/candidates/settlement/KT-cashflow-group-validation-p3.md"
+    }
+  ],
+  "canonical_source_bindings": [
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/H1 -  H2 booking model historical data analyse/page.md",
+      "revision": "sha256:54bbdba96b430484c23bad067317cd0d045bd0f6fc8e54608cdfe73b88a03d3b",
+      "sha256": "54bbdba96b430484c23bad067317cd0d045bd0f6fc8e54608cdfe73b88a03d3b"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Ratan processing on cashflow events/Group Management Service - Non-Eco Amendment Technical Design/page.md",
+      "revision": "sha256:129507722b7986a380ca7039b8e63fdf587a4f61a6ea2e1be79461a62946cad3",
+      "sha256": "129507722b7986a380ca7039b8e63fdf587a4f61a6ea2e1be79461a62946cad3"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Ratan processing on cashflow events/Trade Validation Confirmation Process Tech Design/page.md",
+      "revision": "sha256:8adcc39be9a985c5c32d3e4bc1db41d3cad779084f20a0aeed1dc4d3b8d70bdf",
+      "sha256": "8adcc39be9a985c5c32d3e4bc1db41d3cad779084f20a0aeed1dc4d3b8d70bdf"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Ratan processing on cashflow events/page.md",
+      "revision": "sha256:89f7f53c3b2251d3580b9d5d43105c52a576dfec2638207cc76ba6315b1d6fa5",
+      "sha256": "89f7f53c3b2251d3580b9d5d43105c52a576dfec2638207cc76ba6315b1d6fa5"
+    },
+    {
+      "id": "SRC-5cbe745c795e25c01bb377e7",
+      "resource": "source:ratan-51358/RATAN - 51358/RATAN -Core Function/RATAN-Settlement  0.1_Grouping/page.md",
+      "revision": "sha256:183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794",
+      "sha256": "183a86d21e8e7a6cf30d97e9d00844dfae46fa06d64d73bea6565ec0eaf34794"
+    }
+  ],
+  "questions_for_central_annex": [
+    "What is the effective missing-group-flag behavior and message ordering?",
+    "Which validation scope and incomplete-group recovery rules apply by producer?"
+  ],
+  "limits": [
+    "Candidate records remain draft and unpublished.",
+    "No implementation, execution, acceptance or deployment is established by this review.",
+    "Original source snapshots are referenced by canonical records. This derived review does not repeat their entire upstream source review.",
+    "ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PENDING",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ]
+  }
+}

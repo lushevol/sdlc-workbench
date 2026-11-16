@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: INT-KT-ratan-reference-and-control-interfaces
-version: 1
+version: 2
 owner: unknown
 governance_state: candidate
 status: draft
@@ -62,8 +62,8 @@ sources:
   revision: sha256:63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757
   sha256: 63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757
 generated:
-  by: agent:codex:sol-integrations-review
-  at: '2026-11-16T01:13:24.337722+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T08:31:09.909131+00:00'
 verified: []
 classification: settlement
 scope: Selected RATAN reference, trade-control, valuation, confirmation, and proposed
@@ -97,6 +97,8 @@ writing_review:
   reviewed_at: null
   limitations:
   - Automated checks do not establish complete writing review.
+previous_version: 1
+previous_content_sha256: 25daf3352b783b4daaced00ef7d7a9058d41cf1569161d1bf0e19d01e0e1f908
 ---
 # RATAN reference and control interface responsibilities
 
@@ -245,6 +247,26 @@ FinalCancelled represents an ENISIS NACK; the workflow permits exception-blotter
 The temporary COMP-upload requirement remains separate from strategic confirmation options. Images and current execution remain unverified.
 
 [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L9). [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L22-L46). [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L50-L57). [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L61-L65). [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L69). [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L73). [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L85-L87). [Selected original evidence](../../../evidence/sources/sha256/63a8b949d41e43f089e893bbe689c00204251e0aedee3bbdf5fb2dc9568a1757.md#L91).
+
+### CDUPS subscriber responsibility
+
+The catalog specifically assigns CDU-IS subscription to RATAN trade messages for confirmation.
+That subscriber responsibility accompanies the separately documented stamping, confirmation and outbound trade-information flows.
+[Selected original lines 13–24](../../../evidence/sources/sha256/908a70ef5493fb1dfc0fdb1a33ad87b8953ab4376defbb25ce2a575603ec5d0f.md#L13-L24) [Selected original lines 40–42](../../../evidence/sources/sha256/908a70ef5493fb1dfc0fdb1a33ad87b8953ab4376defbb25ce2a575603ec5d0f.md#L40-L42)
+
+### Literal Markets UDP intraday timing catalog
+
+The selected interface catalog gives these literal expected feed and exception times.
+
+| Batch | Feed time | RATAN exception time |
+| --- | --- | --- |
+| Batch 1 | T 15:00 SGT, shown as 06:00 UTC | T 16:00 SGT, shown as 07:00 UTC |
+| Batch 2 | T 15:00 UKT, shown as 14:00 UTC | T 16:00 UKT, shown as 15:00 UTC |
+| Batch 3 | T 15:00 UST, shown as 18:00 UTC | T 16:00 UST, shown as 19:00 UTC |
+
+The existing SGT conversion inconsistency remains unresolved. UKT/UST abbreviations and applicable clock/date profiles also require confirmation.
+These expected timings remain historical source declarations. They establish no executed batch schedule or current service guarantee.
+[Selected original lines 9–23](../../../evidence/sources/sha256/d4bb2ea7fd3d5edf2edc4c6afd0ad83c64ae9c06906d1e3d54a5d40e0bcf5084.md#L9-L23) [Selected original lines 49–49](../../../evidence/sources/sha256/d4bb2ea7fd3d5edf2edc4c6afd0ad83c64ae9c06906d1e3d54a5d40e0bcf5084.md#L49)
 
 ## Connections
 

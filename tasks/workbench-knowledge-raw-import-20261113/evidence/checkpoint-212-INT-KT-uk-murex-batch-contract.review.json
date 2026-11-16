@@ -1,0 +1,98 @@
+{
+  "id": "INT-KT-uk-murex-batch-contract",
+  "reviewer": "agent:codex/sol_wiki_review_1",
+  "reviewed_at": "2026-11-16T08:12:38.719591+00:00",
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "unavailable; native selected-agent context only",
+  "review_scope": "complete canonical semantic text and complete summary proposal; referenced source metadata retained below",
+  "source": "knowledge/records/candidates/settlement/INT-KT-uk-murex-batch-contract.md",
+  "source_sha256": "c0de33a15dad550e5fd8cd923573e0674c9c343e8ed0c51b49b95c9cc2efd2e2",
+  "assignment_source_sha256": "c0de33a15dad550e5fd8cd923573e0674c9c343e8ed0c51b49b95c9cc2efd2e2",
+  "input_proposal": ".workbench/wiki/resume-20261116/draft-lane-1/wiki/summaries/INT-KT-uk-murex-batch-contract.md",
+  "input_proposal_sha256": "51771387220939a61d50a9f220a3cc13c254becaafa272278e15492e3e9cf0c2",
+  "output": ".workbench/wiki/resume-20261116/sol-review-lane-1/wiki/summaries/INT-KT-uk-murex-batch-contract.md",
+  "output_sha256": "5f4aa402c01fe1d8833b4ecc7e3981575a074d383cf2c1809da3668d6fab2aa2",
+  "assessment": "supported within candidate qualifications",
+  "review_note": "Confirmed business-day T bands, END file, 30-minute wait, file/payment error distinction and 45000/6000 separate capacities. Timezone/version and replay remain unresolved.",
+  "claim_register": [
+    {
+      "claim": "INT-BATCH-01 \u2014 UK payment bands and file contract",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/INT-KT-uk-murex-batch-contract.md#int-batch-01--uk-payment-bands-and-file-contract",
+      "source_lines": [
+        60,
+        76
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### INT-BATCH-01 \u2014 UK payment bands and file contract\n\nThe UK proposal separates individual MxML payments from CSV batches; the two feeds must not overlap.\nReal-time input covers T-1, T, and T+1 business days. CSV covers T+2 through T+7, excluding weekends, 25 December, and 1 January.\nEach batch has Base, Snapshot, and Completion files.\nNames use `FMRP_Murex_Payments_YYYYMMDD_XXX_Base.csv`, corresponding `_Snapshot.csv`, and `_Completion_ZZZZ.csv`.\n`XXX` is the daily batch sequence; `ZZZZ` is the Base payment count for reconciliation.\nAn `_END.csv` file is mandatory even when no batch ran.\nThe Base has fixed column names and order. Snapshot processing uses CNCL and SNTR, and ignores INIT.\nMurex waits for the RATAN Ack or Nack file before processing the next batch.\nWithout a response for 30 minutes, processing holds for Murex PSS investigation.\nNACK requires RATAN PSS escalation to Murex PSS.\nFile errors stop the batch and subsequent batches. Payment errors let the batch continue and raise a payment exception.\nThe detailed payment-error display and action remain TBC.\n\n[Selected original evidence](../../../evidence/sources/sha256/adf12d24386ece86835635d31d42762e2621c2cde5c83d4316084a406508b52a.md#L1-L14).\n"
+    },
+    {
+      "claim": "INT-BATCH-02 \u2014 UK file exception distinctions",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/INT-KT-uk-murex-batch-contract.md#int-batch-02--uk-file-exception-distinctions",
+      "source_lines": [
+        77,
+        88
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### INT-BATCH-02 \u2014 UK file exception distinctions\n\nThe functional proposal names `BatchFileNotComplete`, `BatchReconError`, and `BatchFormatError`.\nThese apply to missing files, payment-count mismatch, and incorrect columns or order.\nIt names `BatchDateNotEnd` when batch 001 arrives before the previous ending file.\nThe receiver holds batch 001 while awaiting that ending file.\nMissing batch 002 raises no exception; the join repeats until its completion file arrives.\nExpected Murex replay and resend actions are explicitly TBC.\n`PaymentValidationError` covers missing or invalid fields and Base payments missing from Snapshot; response behavior remains TBC.\n\n[Selected original evidence](../../../evidence/sources/sha256/adf12d24386ece86835635d31d42762e2621c2cde5c83d4316084a406508b52a.md#L14).\n"
+    },
+    {
+      "claim": "INT-BATCH-03 \u2014 Technical batch design and unresolved contract differences",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/INT-KT-uk-murex-batch-contract.md#int-batch-03--technical-batch-design-and-unresolved-contract-differences",
+      "source_lines": [
+        89,
+        101
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### INT-BATCH-03 \u2014 Technical batch design and unresolved contract differences\n\nThe technical sketch proposes batches every two hours from `00:00:00` through `19:00:00`. It gives no timezone.\nEach batch sends Snapshot and Base, followed by a completion file after upload.\nThe proposed Base limit is 45,000 records; Base contains SNTR only.\nIt names `BatchFileFormatError` and `BatchCountReconError`, unlike the functional proposal's labels.\nBoth stop the current and subsequent files until Murex republishes the current batch.\nIts `PaymentValidationError` stops one record until the payment is republished.\nThis technical proposal does not resolve the functional page's TBC response.\nThe separate H2 DOI uses 6,000 distant-date payments per two-hour run. It supplies a different version and scope, not an equivalent 45,000-record contract.\n\n[Selected original evidence](../../../evidence/sources/sha256/0151166eeb599d2368378e0e1963783e150b62b6430e1d19104bdabebf4bc6b3.md#L1-L20).\n"
+    }
+  ],
+  "changed_claim_retention_mapping": [],
+  "canonical_source_bindings": [
+    {
+      "id": "SRC-97fdce8330e2bfa135f8d2b6",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Surrounding System Integration/UK - Murex -  RATAN cashflow feeding/page.md",
+      "revision": "sha256:adf12d24386ece86835635d31d42762e2621c2cde5c83d4316084a406508b52a",
+      "sha256": "adf12d24386ece86835635d31d42762e2621c2cde5c83d4316084a406508b52a"
+    },
+    {
+      "id": "SRC-ca5bac3c10527815ef86dde4",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Murex batch processing/page.md",
+      "revision": "sha256:0151166eeb599d2368378e0e1963783e150b62b6430e1d19104bdabebf4bc6b3",
+      "sha256": "0151166eeb599d2368378e0e1963783e150b62b6430e1d19104bdabebf4bc6b3"
+    }
+  ],
+  "questions_for_central_annex": [
+    "Which timezone, endpoint inclusivity, capacity, and effective source version govern the UK bands?",
+    "Which validation errors and stable response names are accepted?",
+    "Who authorizes replay after NACK or timeout and what reconciliation gates restart?"
+  ],
+  "limits": [
+    "Candidate records remain draft and unpublished.",
+    "No implementation, execution, acceptance or deployment is established by this review.",
+    "Original source snapshots are referenced by canonical records. This derived review does not repeat their entire upstream source review.",
+    "ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PENDING",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ]
+  }
+}

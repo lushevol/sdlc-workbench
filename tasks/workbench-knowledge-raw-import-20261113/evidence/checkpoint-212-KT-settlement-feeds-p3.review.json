@@ -1,0 +1,166 @@
+{
+  "id": "KT-settlement-feeds-p3",
+  "reviewer": "agent:codex/sol_wiki_review_1",
+  "reviewed_at": "2026-11-16T08:11:36.992081+00:00",
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "unavailable; native selected-agent context only",
+  "review_scope": "complete canonical semantic text and complete summary proposal; referenced source metadata retained below",
+  "source": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md",
+  "source_sha256": "acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94",
+  "assignment_source_sha256": "acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94",
+  "input_proposal": ".workbench/wiki/resume-20261116/draft-lane-1/wiki/summaries/KT-settlement-feeds-p3.md",
+  "input_proposal_sha256": "f7f3ec1a49ddd213c03b7e01e34c136ba23c2f7ac09eecd237615a059dff2614",
+  "output": ".workbench/wiki/resume-20261116/sol-review-lane-1/wiki/summaries/KT-settlement-feeds-p3.md",
+  "output_sha256": "b34aa179ac0053372d097fb4be6f2e651da658e669f36022da447e3b340dde3c",
+  "assessment": "supported after listed corrections",
+  "review_note": "Corrected gross-versus-netted payload distinction and Aspire value-date timing. EBBS, OLTP and Aspire retries, ACKs and storage remain source-specific.",
+  "claim_register": [
+    {
+      "claim": "Status write-back contract",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md#status-write-back-contract",
+      "source_lines": [
+        73,
+        83
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Status write-back contract\n\nRazor returns ACK/NACK, RELEASED, and SETTLED status information.\nRATAN updates cashflow status and synchronizes STELLA or Murex.\nThe adaptor example batches netted components and sends a single gross cashflow ID.\nIts payload carries Cashflow__Cashflow_State, nullable Cashflow__Netting_Id, and Cashflow__Cashflow_Id array.\n\nThe state examples cover RELEASED or SETTLED; they do not define an ACK/NACK payload.\n\nSources: [original lines 1\u20139](../../../evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md#L1-L9), [original lines 15\u201335](../../../evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md#L15-L35).\n"
+    },
+    {
+      "claim": "LMS and trade information",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md#lms-and-trade-information",
+      "source_lines": [
+        84,
+        92
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### LMS and trade information\n\nThe proposed stack-flow identifiers distinguish default Murex/Stella and LoanIQ feeds.\nThe source requires LMS alignment and does not establish no-risk compatibility.\nTrade information supplies entity LEID and trader ID for LMS.\nInstrument data for cashflow-blotter querying is only potential scope.\n\nSources: [original lines 1\u20136](../../../evidence/sources/sha256/ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8.md#L1-L6), [original lines 3\u20136](../../../evidence/sources/sha256/dd611ea0f0c470cd374db0a276f99692dba67264d63089c00a9772226378ec1c.md#L3-L6).\n"
+    },
+    {
+      "claim": "EBBS and Aspire publication variants",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md#ebbs-and-aspire-publication-variants",
+      "source_lines": [
+        93,
+        105
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### EBBS and Aspire publication variants\n\nThe EBBS principle generates feeds from events, holds until value date, publishes directly when due, and limits retries to three for specified error codes.\nWithdrawal reverses the New direction.\nThe Aspire design instead publishes batch files after value-date 22:05 local time.\nIts Control-M schedule runs every 30 minutes from 22:05 to 02:05 and selects payment_date <= current date with creation before 22:00.\n\nIt calls for one workday file and a 03:30 empty-file job.\nThe after-midnight date interpretation and EBBS/Aspire storage-column choice remain unresolved.\nDirect and batch publication are separate design variants.\n\nSources: [original lines 9\u201317](../../../evidence/sources/sha256/3e590bff0dba8a3f78409d039f29504997675464b6f05c0baee7eef4a6f8a74f.md#L9-L17), [original lines 23\u201327](../../../evidence/sources/sha256/3e590bff0dba8a3f78409d039f29504997675464b6f05c0baee7eef4a6f8a74f.md#L23-L27), [original lines 9\u201313](../../../evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md#L9-L13).\n"
+    },
+    {
+      "claim": "Korea accounting task differences",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md#korea-accounting-task-differences",
+      "source_lines": [
+        106,
+        121
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Korea accounting task differences\n\nEBBS and OLTP use payment date as system date, while bridge-account selection differs.\nValidation checks stamped accounts; OLTP disables a task when settlementMeans is NOX and settlementAccount contains UUID or UISUS.\nEBBS Request_info and OLTP ExtColumn2 hold their distinct JSON messages.\nReversal flips account/direction; OLTP also flips TransData.\n\nEBBS retries absent responses or TXN99999/TEC0004 three times at four-minute intervals.\nOLTP has no retry and Korean tasks are excluded from that retry job.\nBoth variants use hourly SOD processing from 06:00 through 18:00 and generate missing message JSON before processing.\nAcknowledgements arrive on distinct topics, are saved, and update task status.\n\nThe Enisis/Enisis-named Swift fragment retains the old connection while adding logic; it supplies no new wire contract.\n\nSources: [original lines 11\u201340](../../../evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md#L11-L40), [original lines 53\u201372](../../../evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md#L53-L72), [original lines 1\u20134](../../../evidence/sources/sha256/063a7540f6ac6217447951dfd897775c5e77508e9710a5298c6c8bb391704efd.md#L1-L4).\n"
+    },
+    {
+      "claim": "Reversal and reinstatement limits",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md#reversal-and-reinstatement-limits",
+      "source_lines": [
+        122,
+        129
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Reversal and reinstatement limits\n\nThe selected EBBS note distinguishes reinstate and SwiftUnSuppressed reversal tags.\nIts stated filter combines reversal flag reinstate with last published balance below zero.\nIt does not define every downstream reversal, retry, or idempotency rule.\n\nSources: [original lines 17\u201321](../../../evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md#L17-L21).\n"
+    }
+  ],
+  "changed_claim_retention_mapping": [
+    {
+      "before": "while the adaptor example sends a gross cashflow ID with component IDs.",
+      "after": "while the adaptor examples batch netted component IDs and use a single ID for gross cashflows.",
+      "classification": "intent",
+      "disposition": "superseded",
+      "rationale": "Status-writeback examples are separate netted and gross payloads.",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md"
+    },
+    {
+      "before": "Aspire describes local-time batch files after value date.",
+      "after": "Aspire describes batch publication from 22:05 local time on value date.",
+      "classification": "intent",
+      "disposition": "superseded",
+      "rationale": "Canonical timing is value-date 22:05, not a later date.",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md"
+    }
+  ],
+  "canonical_source_bindings": [
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Backward Workflow Design/page.md",
+      "revision": "sha256:2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6",
+      "sha256": "2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Ratan - LMS feed/page.md",
+      "revision": "sha256:ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8",
+      "sha256": "ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Settlement Accounting for Aspire Tech design/page.md",
+      "revision": "sha256:3e590bff0dba8a3f78409d039f29504997675464b6f05c0baee7eef4a6f8a74f",
+      "sha256": "3e590bff0dba8a3f78409d039f29504997675464b6f05c0baee7eef4a6f8a74f"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Korea Accounting - OLTP/page.md",
+      "revision": "sha256:b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65",
+      "sha256": "b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Korea Swift - Enisis/page.md",
+      "revision": "sha256:063a7540f6ac6217447951dfd897775c5e77508e9710a5298c6c8bb391704efd",
+      "sha256": "063a7540f6ac6217447951dfd897775c5e77508e9710a5298c6c8bb391704efd"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/page.md",
+      "revision": "sha256:f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770",
+      "sha256": "f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Trade Information Tech Design/page.md",
+      "revision": "sha256:dd611ea0f0c470cd374db0a276f99692dba67264d63089c00a9772226378ec1c",
+      "sha256": "dd611ea0f0c470cd374db0a276f99692dba67264d63089c00a9772226378ec1c"
+    }
+  ],
+  "questions_for_central_annex": [
+    "Which direct or batch variant, value-date boundary, and storage schema apply by destination?",
+    "Which Korea acknowledgment and retry contract is current?",
+    "What reversal and idempotency conditions govern feed publication?"
+  ],
+  "limits": [
+    "Candidate records remain draft and unpublished.",
+    "No implementation, execution, acceptance or deployment is established by this review.",
+    "Original source snapshots are referenced by canonical records. This derived review does not repeat their entire upstream source review.",
+    "ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PENDING",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ]
+  }
+}

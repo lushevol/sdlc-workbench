@@ -1,0 +1,211 @@
+{
+  "id": "KT-lock-concurrency-p3",
+  "reviewer": "agent:codex/sol_wiki_review_1",
+  "reviewed_at": "2026-11-16T08:17:00.680697+00:00",
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "unavailable; native selected-agent context only",
+  "review_scope": "complete canonical semantic text and complete summary proposal; referenced source metadata retained below",
+  "source": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md",
+  "source_sha256": "19d660b7597dc61d59ddbc2481aa127c52ceaf710e9baed218736f6047c8926a",
+  "assignment_source_sha256": "19d660b7597dc61d59ddbc2481aa127c52ceaf710e9baed218736f6047c8926a",
+  "input_proposal": ".workbench/wiki/resume-20261116/draft-lane-1/wiki/summaries/KT-lock-concurrency-p3.md",
+  "input_proposal_sha256": "0fbd9eebe21c975b181b56fe280b76ab008abf30dd4767c120203f6f586f8e5a",
+  "output": ".workbench/wiki/resume-20261116/sol-review-lane-1/wiki/summaries/KT-lock-concurrency-p3.md",
+  "output_sha256": "de29d7a63ff47920940146c82907d03d03df44b3868975f9be4bfdd02ca2c072",
+  "assessment": "supported within candidate qualifications",
+  "review_note": "Confirmed cashflow-lock ownership, partial acquisition release, retry and timeout gaps, millisecond-expiry to second-wait semantic change and SB3.4.4 requirement. No consumer compatibility inferred.",
+  "claim_register": [
+    {
+      "claim": "Business locking and recovery responsibilities",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#business-locking-and-recovery-responsibilities",
+      "source_lines": [
+        64,
+        72
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Business locking and recovery responsibilities\n\nThe lock-process design keys locks by cashflow ID.\nUI operations show a lock alert and require manual retry.\nWorkflow events, SWIFT status updates, and Accounting status updates automatically retry under their stated processing responsibilities.\nThe source says until succeeded, without defining delay, maximum duration, or terminal failure handling.\n\nSources: [original lines 3\u20136](../../../evidence/sources/sha256/37aba76d2ac09f6b8eb8559b0eaff0977a5d9d151ced692ec297320ab6259722.md#L3-L6).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Lock ownership and atomicity design",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#lock-ownership-and-atomicity-design",
+      "source_lines": [
+        73,
+        85
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Lock ownership and atomicity design\n\nThe redesign requires atomic lock and unlock and automatic release on exceptional paths.\nThe owner creates, extends, releases, and retries after rejected validation.\nA reentrant client only validates and rejects expired or invalid locks.\nParallel work is excluded unless stateless.\n\nThe design retains enhanced Redis and Redisson alternatives with different validation and renewal behavior.\nBatch locking must cover all netting components and release partial acquisitions on failure.\nMultiLock/FasterMultiLock alternatives require validation of single-key mutual exclusion; source performance estimates are not acceptance guarantees.\n\nSources: [original lines 1\u201334](../../../evidence/sources/sha256/a28ccd6544778f0d3f39dc6f7000f49169f01ff95cd608fa15dcb1718f280a5b.md#L1-L34), [original lines 40\u2013117](../../../evidence/sources/sha256/a28ccd6544778f0d3f39dc6f7000f49169f01ff95cd608fa15dcb1718f280a5b.md#L40-L117).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Timeout and interservice consistency limits",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#timeout-and-interservice-consistency-limits",
+      "source_lines": [
+        86,
+        94
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Timeout and interservice consistency limits\n\nThe redesign identifies a gap when a parent fails or times out while a child continues.\nBatch netting can leave service data inconsistent despite resource locking.\nIt proposes idempotent APIs with retrieval of the last call result and aligned request/rebalance timeouts.\nThose are design remedies, not proof of transactional consistency or retry safety.\n\nSources: [original lines 40\u2013117](../../../evidence/sources/sha256/a28ccd6544778f0d3f39dc6f7000f49169f01ff95cd608fa15dcb1718f280a5b.md#L40-L117).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Migration API semantics",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#migration-api-semantics",
+      "source_lines": [
+        95,
+        107
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Migration API semantics\n\nThe new lock guidance changes the second argument from lock expiry to retry/wait duration.\nThe release note makes the unit change explicit: old milliseconds become waitTimeSeconds.\nRedisson watchdog manages duration in the proposed new contract.\nSingle-key and list overloads retain their call shapes, so unchanged syntax does not preserve meaning.\n\nDirect ResourceLock usage must release in finally.\nThe guidance requires the foundation feature and Spring Boot 3.4.4 and says Failsafe is unnecessary for lock retries.\nThese statements do not establish consumer migration or mixed-version compatibility.\n\nSources: [original lines 14\u201331](../../../evidence/sources/sha256/d62877540ee41f1a79889fb319ae00ced0c75d9e04a3490166dde1c31a637f87.md#L14-L31), [original lines 33\u201346](../../../evidence/sources/sha256/d62877540ee41f1a79889fb319ae00ced0c75d9e04a3490166dde1c31a637f87.md#L33-L46), [original lines 174\u2013202](../../../evidence/sources/sha256/a28ccd6544778f0d3f39dc6f7000f49169f01ff95cd608fa15dcb1718f280a5b.md#L174-L202), [original lines 19\u201345](../../../evidence/sources/sha256/f7825ba44cd92205c90fcfa0e02049219a16d87908747add0c9829fc7a19c24d.md#L19-L45).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Shared event and Redis configuration proposals",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#shared-event-and-redis-configuration-proposals",
+      "source_lines": [
+        108,
+        115
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Shared event and Redis configuration proposals\n\nThe foundation note agrees a shared cash_settlement_cashflow_domain_events topic.\nThe Redis-timeout proposal replaces default autoconfiguration with retryAttempts=4, three-second retry/reconnect delays, keepAlive=true, and connectTimeout=3600000 milliseconds.\nThe one-hour connection timeout is a proposal without a retained domain availability or latency acceptance contract.\n\nSources: [original lines 86\u201386](../../../evidence/sources/sha256/f7825ba44cd92205c90fcfa0e02049219a16d87908747add0c9829fc7a19c24d.md#L86-L86), [original lines 19\u201330](../../../evidence/sources/sha256/f3b2931c92146e713460f2ea7ed4a59ec91e13a0c464ee3263a5e5d6fca8683f.md#L19-L30).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    }
+  ],
+  "changed_claim_retention_mapping": [],
+  "canonical_source_bindings": [
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Cash Settlement Lock Process/page.md",
+      "revision": "sha256:37aba76d2ac09f6b8eb8559b0eaff0977a5d9d151ced692ec297320ab6259722",
+      "sha256": "37aba76d2ac09f6b8eb8559b0eaff0977a5d9d151ced692ec297320ab6259722"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Distribution lock test cases  && Uber orchestration/page.md",
+      "revision": "sha256:d62877540ee41f1a79889fb319ae00ced0c75d9e04a3490166dde1c31a637f87",
+      "sha256": "d62877540ee41f1a79889fb319ae00ced0c75d9e04a3490166dde1c31a637f87"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Design Principle/RATANONE Distributed Lock ReDesign/page.md",
+      "revision": "sha256:a28ccd6544778f0d3f39dc6f7000f49169f01ff95cd608fa15dcb1718f280a5b",
+      "sha256": "a28ccd6544778f0d3f39dc6f7000f49169f01ff95cd608fa15dcb1718f280a5b"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Ratanone-Foundation release note/page.md",
+      "revision": "sha256:f7825ba44cd92205c90fcfa0e02049219a16d87908747add0c9829fc7a19c24d",
+      "sha256": "f7825ba44cd92205c90fcfa0e02049219a16d87908747add0c9829fc7a19c24d"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Redisson timeout analysis/page.md",
+      "revision": "sha256:f3b2931c92146e713460f2ea7ed4a59ec91e13a0c464ee3263a5e5d6fca8683f",
+      "sha256": "f3b2931c92146e713460f2ea7ed4a59ec91e13a0c464ee3263a5e5d6fca8683f"
+    }
+  ],
+  "questions_for_central_annex": [
+    "Which lock implementation, ownership checks, atomic batch behavior, and recovery contract are approved?",
+    "Which caller migration preserves API meaning across versions?",
+    "Which retry/timeout values and deployment constraints have accepted NFR evidence?"
+  ],
+  "limits": [
+    "Candidate records remain draft and unpublished.",
+    "No implementation, execution, acceptance or deployment is established by this review.",
+    "Original source snapshots are referenced by canonical records. This derived review does not repeat their entire upstream source review.",
+    "ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ],
+    "checks": ".workbench/wiki/resume-20261116/sol-review-lane-1/validation.json"
+  },
+  "summary_claim_register": [
+    {
+      "claim": "Lock ownership, retry, and atomic release requirements vary by caller and implementation proposal.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#lock-ownership-and-atomicity-design",
+      "source_sha256": "19d660b7597dc61d59ddbc2481aa127c52ceaf710e9baed218736f6047c8926a",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Confirmed cashflow-lock ownership, partial acquisition release, retry and timeout gaps, millisecond-expiry to second-wait semantic change and SB3.4.4 requirement. No consumer compatibility inferred.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "Parent/child timeout and partial batch concerns motivate idempotent result recovery proposals.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#timeout-and-interservice-consistency-limits",
+      "source_sha256": "19d660b7597dc61d59ddbc2481aa127c52ceaf710e9baed218736f6047c8926a",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Confirmed cashflow-lock ownership, partial acquisition release, retry and timeout gaps, millisecond-expiry to second-wait semantic change and SB3.4.4 requirement. No consumer compatibility inferred.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "The second lock argument changes meaning from expiry milliseconds to wait seconds.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#migration-api-semantics",
+      "source_sha256": "19d660b7597dc61d59ddbc2481aa127c52ceaf710e9baed218736f6047c8926a",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Confirmed cashflow-lock ownership, partial acquisition release, retry and timeout gaps, millisecond-expiry to second-wait semantic change and SB3.4.4 requirement. No consumer compatibility inferred.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "Shared event and Redis timeout values are configuration proposals without acceptance evidence.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/architecture/KT-lock-concurrency-p3.md#shared-event-and-redis-configuration-proposals",
+      "source_sha256": "19d660b7597dc61d59ddbc2481aa127c52ceaf710e9baed218736f6047c8926a",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Confirmed cashflow-lock ownership, partial acquisition release, retry and timeout gaps, millisecond-expiry to second-wait semantic change and SB3.4.4 requirement. No consumer compatibility inferred.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    }
+  ],
+  "active_prior_output": {
+    "path": "knowledge/llm-wiki/wiki/summaries/KT-lock-concurrency-p3.md",
+    "exists": false
+  },
+  "navigation_review": "Added links to complete canonical topics inspected in this lane. Links do not merge contracts or establish deployed integration."
+}

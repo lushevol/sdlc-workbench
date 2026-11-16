@@ -1,0 +1,79 @@
+{
+  "status": "PREPARED_PRIVATE_SUCCESSOR_AWAITING_FINAL_SEMANTIC_REVIEW",
+  "canonical": "knowledge/records/candidates/settlement/KT-settlement-feeds-p3.md",
+  "starting_sha256": "acc3916fc616460e13279cd3ff7fe889cb5c7fbf73fdb68f56a5c38d83f6ae94",
+  "candidate": ".workbench/ingestion/review-resume-20261116/source-completion-review/candidates/KT-settlement-feeds-p3.md",
+  "candidate_sha256": "2018a3e257f9f6130884e23ce030436e33f5fd8baf8257617da27d4a6634012b",
+  "candidate_version": 3,
+  "original_body_preserved": true,
+  "added_body": "### Historical write-back downstream version\n\nThe write-back design specifically names STELLA or Murex2.11 as downstream synchronization targets.\nIts source-specific qualifier leaves other Murex versions outside this fragment's documented contract.\n[Selected original lines 1\u20139](../../../evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md#L1-L9) [Selected original lines 15\u201335](../../../evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md#L15-L35)\n\n### Proposed LMS identifier migration\n\nThe proposed identifiers retain these source-specific mappings.\n\n| Upstream | Original source | Current MessageSender | Proposed Stack Flow |\n| --- | --- | --- | --- |\n| Murex/Stella | MUREX/STELLA | FMRP, default | FMRPSTELLA, default |\n| LoanIQ | LOANIQ | LOANIQ | FMRPSTELLA-LOANIQ |\n\nThe source requires LMS alignment. Its no-risk statement remains a technical claim without compatibility execution evidence.\n[Selected original lines 1\u20136](../../../evidence/sources/sha256/ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8.md#L1-L6)\n\n### Korean accounting selection and validation conditions\n\nThe EBBS initialization uses one bridge account per entity. OLTP instead chooses its bridge account by currency.\nReversal and netted/split task initialization follow the corresponding normal-task rules.\nEBBS validation additionally checks that its JSON fields are populated after Nostro and bridge stamping.\n\nThe OLTP JSON proposal calls for additional 53 BIC and receiver-BIC logic. Its selected text leaves that mapping unspecified.\nThe SOD job selects Hold tasks whose payment_date is at most current_date.\nEBBS generates missing Request_info before processing. OLTP checks ExtColumn2 and generates its missing JSON before processing.\n[Selected original lines 11\u201340](../../../evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md#L11-L40) [Selected original lines 53\u201372](../../../evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md#L53-L72)\n\n### Reinstatement trigger and reversal tags\n\nA reinstate action after FAILED status produces reversal tag reinstate in the selected design.\nAn approval after SWIFT_SUPPRESSED status produces tag SwiftUnSuppressed.\nThe stated filter selects reversal flag reinstate together with last published balance below zero.\n\nThese source-specific predicates leave other reversal and idempotency decisions unresolved.\n[Selected original lines 9\u201313](../../../evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md#L9-L13) [Selected original lines 17\u201321](../../../evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md#L17-L21)\n\n",
+  "source_proofs": [
+    {
+      "source_id": "SRC-406a0bf364317447aded40ee",
+      "source_sha256": "2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6",
+      "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/Backward Workflow Design/page.md",
+      "view_sha256": "4ae699123aba41fd98c25cec995b6de94bfc78ed13143e88bfb4b36560df36d6",
+      "ranges": [
+        [
+          1,
+          9
+        ],
+        [
+          15,
+          35
+        ]
+      ],
+      "original": "knowledge/evidence/sources/sha256/2c590a56cbacc8d67569b9b51033f8c93ca921f8b18fc8dfeb52a5dfdef125c6.md"
+    },
+    {
+      "source_id": "SRC-256b00485f16723a43eb2aa2",
+      "source_sha256": "ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8",
+      "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Ratan - LMS feed/page.md",
+      "view_sha256": "ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8",
+      "ranges": [
+        [
+          1,
+          6
+        ]
+      ],
+      "original": "knowledge/evidence/sources/sha256/ef80d9b2baac593bbaac2d8cbb0ef8abbfa5fc02143a4dce172ce2dd460fbaf8.md"
+    },
+    {
+      "source_id": "SRC-dd35ec2d0b4d3d1d6b519594",
+      "source_sha256": "b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65",
+      "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/Korea Accounting - OLTP/page.md",
+      "view_sha256": "9ef8fd12c1befd7b5ccb971c25fd5b496d6e02192028c1a41cd01577d81b7b76",
+      "ranges": [
+        [
+          11,
+          40
+        ],
+        [
+          53,
+          72
+        ]
+      ],
+      "original": "knowledge/evidence/sources/sha256/b52a48f1b57aea90c69cc72ba6b53f91174318e523b9d0e195eb7f38bac95d65.md"
+    },
+    {
+      "source_id": "SRC-6c5e6da847423b07bebdc4c3",
+      "source_sha256": "f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770",
+      "view": ".workbench/ingestion/review-resume-20261116/broad-review/cash-settlement-home-page-view/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Swift Generation & Settlement Accounting Tech design/page.md",
+      "view_sha256": "a7aa113e778c6951bf19386f422fead38b1ea2094f7cd63c118d6773dcda1c0d",
+      "ranges": [
+        [
+          9,
+          13
+        ],
+        [
+          17,
+          21
+        ]
+      ],
+      "original": "knowledge/evidence/sources/sha256/f669575b4c1dd607ecf658b75aa9a5bd03bfc1123e8519ebfa2027757e5a6770.md"
+    }
+  ],
+  "raw_populated_examples": "Populated cashflow identifiers remain illustrative source context. Detailed unmodified protocol fields remain exact linked source catalogs.",
+  "canonical_writes": false,
+  "source_context": "The LMS no-risk statement remains a source technical claim. Current applicability and execution remain unverified."
+}

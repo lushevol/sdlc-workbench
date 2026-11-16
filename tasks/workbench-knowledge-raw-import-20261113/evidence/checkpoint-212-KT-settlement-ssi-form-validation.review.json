@@ -1,0 +1,158 @@
+{
+  "id": "KT-settlement-ssi-form-validation",
+  "reviewer": "agent:codex/sol_wiki_review_1",
+  "reviewed_at": "2026-11-16T08:11:36.988518+00:00",
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "unavailable; native selected-agent context only",
+  "review_scope": "complete canonical semantic text and complete summary proposal; referenced source metadata retained below",
+  "source": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md",
+  "source_sha256": "4a57d4dc44e9791040e4bf3853977af33c4666bba0620b59341abcd6cdaaf600",
+  "assignment_source_sha256": "4a57d4dc44e9791040e4bf3853977af33c4666bba0620b59341abcd6cdaaf600",
+  "input_proposal": ".workbench/wiki/resume-20261116/draft-lane-1/wiki/summaries/KT-settlement-ssi-form-validation.md",
+  "input_proposal_sha256": "64b443f21a00399d8a2e493cd15923f25eee4d1b6c8e3a95d0d3ecee797a6c41",
+  "output": ".workbench/wiki/resume-20261116/sol-review-lane-1/wiki/summaries/KT-settlement-ssi-form-validation.md",
+  "output_sha256": "91dd71ba915eb4ad069c3cf74a312f755aed5cc9dc0076f11f1e95018b4e09d3",
+  "assessment": "supported after listed corrections",
+  "review_note": "Restored MT103+NOS covered-payment condition and field54/56 exclusion. Kept conditional beneficiary constraints, unknown formats, Dubai predicate and conflicting READY transitions.",
+  "claim_register": [
+    {
+      "claim": "Mandatory form fields",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md#mandatory-form-fields",
+      "source_lines": [
+        72,
+        77
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Mandatory form fields\n\nThe form requires settlement account, settlement means, SSI type, message type and eBBS Nostro account. SSI type allows Primary/Secondary. Message type allows MT103, MT103 SERIAL and MT202. Settlement-account maximum is20 characters, although its length pattern permits zero while mandatory forbids blank. Settlement-means prose says Nostro while regex says NOS. Do not infer normalization. Mandatory means nonempty; optional populated fields still meet their length/format constraints. Question-mark entries remain undefined.\n\n[Source 9, lines 19-19](../../../../knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md#L19-L19) [Source 9, lines 45-57](../../../../knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md#L45-L57)\n"
+    },
+    {
+      "claim": "Conditional beneficiary and ordering fields",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md#conditional-beneficiary-and-ordering-fields",
+      "source_lines": [
+        78,
+        83
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Conditional beneficiary and ordering fields\n\nMT103 requires field57 BIC, beneficiary account/address/charges, and ordering account/address/name. MT103 plus RUB requires field57 account, whose length/format remain unknown. MT202 with Over-Account also requires beneficiary account. For MT202, missing beneficiary name requires BIC; missing BIC requires name. Beneficiary account length is2\u201334; ordering account is1\u201350. Ordering name maximum is70. Charges allow OUR/SHA/BEN. Explicitly constrained BICs require8 or11 uppercase alphanumeric characters. Intermediary account, ordering BIC and receiver-correspondent account retain unknown specifications.\n\n[Source 9, lines 7-34](../../../../knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md#L7-L34)\n"
+    },
+    {
+      "claim": "Optional formats and line lengths",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md#optional-formats-and-line-lengths",
+      "source_lines": [
+        84,
+        89
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Optional formats and line lengths\n\nThe table generally permits letters, digits and whitespace in addresses/names, with address maximum60 and most names maximum35. Receiver-correspondent name uses a different regex accepting word characters, so underscore behavior is unresolved. Field70 and72 first lines allow35 characters; subsequent lines allow33. Field70 has four lines;72 has six. Those lines allow arbitrary characters subject to length. The source regexes are recorded specifications, without verified Swift-wire conformance.\n\n[Source 9, lines 8-44](../../../../knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md#L8-L44)\n"
+    },
+    {
+      "claim": "Covered and serial payment controls",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md#covered-and-serial-payment-controls",
+      "source_lines": [
+        90,
+        95
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Covered and serial payment controls\n\nFor MT103 plus NOS, ticking Covered Payment makes field54 BIC mandatory. A correctly formatted field54 BIC forces the checkbox selected and reverses manual unticking. The main design allows manual or candidate-selected inputs for MT103, NOS and field54. Both input routes use maker/checker handling and documented payment-method enrichment. Adhoc/Vostro-exception input cannot populate54 and56 together; entering one disables the other.\n\n[Source 9, lines 59-62](../../../../knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md#L59-L62) [Source 7, lines 112-129](../../../../knowledge/evidence/sources/sha256/dcda0030ded419ffb15b4b0a093b369a9a99d16dfd3cf87745718e5324450d28.md#L112-L129) [Source 7, lines 133-148](../../../../knowledge/evidence/sources/sha256/dcda0030ded419ffb15b4b0a093b369a9a99d16dfd3cf87745718e5324450d28.md#L133-L148)\n"
+    },
+    {
+      "claim": "Dubai purpose predicate",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md#dubai-purpose-predicate",
+      "source_lines": [
+        96,
+        101
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Dubai purpose predicate\n\nThe purpose field appears only when mandatory: MT103, entity FMID5, non-AED currency, NOS, account containing MAIN, and beneficiary BIC not SUPPRESSXXX. Maximum length is90. The mapping proposes IRP for listed IRS taxonomies and FDA for other derivative payments, with maker/checker handling like70/72. Effective regional/product applicability remains unconfirmed.\n\n[Source 9, lines 45-45](../../../../knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md#L45-L45) [Source 9, lines 64-66](../../../../knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md#L64-L66) [Source 7, lines 94-94](../../../../knowledge/evidence/sources/sha256/dcda0030ded419ffb15b4b0a093b369a9a99d16dfd3cf87745718e5324450d28.md#L94-L94)\n"
+    },
+    {
+      "claim": "Adhoc transition conflict",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md#adhoc-transition-conflict",
+      "source_lines": [
+        102,
+        107
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Adhoc transition conflict\n\nThe WAITING table sends maker adhoc input from Pending Operator to Pending Verification. Approval returns READY and clears exception/substates; rejection returns Pending Operator with AdhocSI. Its first READY row instead retains READY with Pending Exception/Pending Verification after maker action. The later READY table initially retains READY and adds AdhocSI with blank substates; maker input then enters Pending Verification. Approval/rejection both retain READY and blank substates there. These presentations do not define one consistent initial READY transition; do not merge them.\n\n[Source 5, lines 1-24](../../../../knowledge/evidence/sources/sha256/168a6b94aa27cbb4c8eaf70b3af2da1f453da208e036090de1e000175e9be3e2.md#L1-L24)\n"
+    }
+  ],
+  "changed_claim_retention_mapping": [
+    {
+      "before": "MT103 and MT202 branches carry distinct account, BIC, and charges requirements. Covered-payment behavior links field54 BIC to a selected checkbox, while 70/72 inputs use maker/checker handling.",
+      "after": "MT103 and MT202 branches carry distinct account and BIC requirements. MT103 charges permit OUR/SHA/BEN. For MT103 plus NOS, covered-payment behavior links field54 BIC to a selected checkbox. Adhoc/Vostro-exception input cannot populate fields54 and56 together. Fields70/72 use maker/checker handling.",
+      "classification": "intent",
+      "disposition": "superseded",
+      "rationale": "Preserve branch-specific charges, covered-payment eligibility and mutually exclusive fields.",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-ssi-form-validation.md"
+    }
+  ],
+  "canonical_source_bindings": [
+    {
+      "id": "SRC-85922e06ef72466af62b7be6",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/SSI Stamping Notification/Adhoc SI/page.md",
+      "revision": "sha256:168a6b94aa27cbb4c8eaf70b3af2da1f453da208e036090de1e000175e9be3e2",
+      "sha256": "168a6b94aa27cbb4c8eaf70b3af2da1f453da208e036090de1e000175e9be3e2",
+      "snapshot": "knowledge/evidence/sources/sha256/168a6b94aa27cbb4c8eaf70b3af2da1f453da208e036090de1e000175e9be3e2.md"
+    },
+    {
+      "id": "SRC-a9ddc4cb9e33456363257e26",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/SSI Stamping Notification/FMRP - SSI Stamping Flow/SSI Validation Rule for UI Form/page.md",
+      "revision": "sha256:7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff",
+      "sha256": "7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff",
+      "snapshot": "knowledge/evidence/sources/sha256/7a8b712550c0de49ca426d16eb880ba6ee4d88e519777ad071d1361143af60ff.md"
+    },
+    {
+      "id": "SRC-233fb8a6609ed65875103b53",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/SSI Stamping Notification/FMRP - SSI Stamping Flow/page.md",
+      "revision": "sha256:dcda0030ded419ffb15b4b0a093b369a9a99d16dfd3cf87745718e5324450d28",
+      "sha256": "dcda0030ded419ffb15b4b0a093b369a9a99d16dfd3cf87745718e5324450d28",
+      "snapshot": "knowledge/evidence/sources/sha256/dcda0030ded419ffb15b4b0a093b369a9a99d16dfd3cf87745718e5324450d28.md"
+    }
+  ],
+  "questions_for_central_annex": [
+    "Which field limits, regexes, message types, and NOS/Nostro normalization apply?",
+    "Which region and taxonomy govern Dubai purpose values?",
+    "Which adhoc transition and checker semantics are authoritative?"
+  ],
+  "limits": [
+    "Candidate records remain draft and unpublished.",
+    "No implementation, execution, acceptance or deployment is established by this review.",
+    "Original source snapshots are referenced by canonical records. This derived review does not repeat their entire upstream source review.",
+    "ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PENDING",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ]
+  }
+}

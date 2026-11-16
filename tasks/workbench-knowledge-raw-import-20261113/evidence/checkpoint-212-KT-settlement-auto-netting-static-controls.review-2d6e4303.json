@@ -1,0 +1,229 @@
+{
+  "id": "KT-settlement-auto-netting-static-controls",
+  "reviewer": "agent:codex/sol_wiki_review_1",
+  "reviewed_at": "2026-11-16T08:11:36.996263+00:00",
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "unavailable; native selected-agent context only",
+  "review_scope": "complete canonical semantic text and complete summary proposal; referenced source metadata retained below",
+  "source": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md",
+  "source_sha256": "b8b239f415da9b3728cee7e9de1bdaa116336b64e37142e56812d4e83a1fdd81",
+  "assignment_source_sha256": "b8b239f415da9b3728cee7e9de1bdaa116336b64e37142e56812d4e83a1fdd81",
+  "input_proposal": ".workbench/wiki/resume-20261116/draft-lane-1/wiki/summaries/KT-settlement-auto-netting-static-controls.md",
+  "input_proposal_sha256": "8ba72b202b71464da3d1e316962544ecfdd1a8bbf7d92d130b81f2d65fe9683e",
+  "output": ".workbench/wiki/resume-20261116/sol-review-lane-1/wiki/summaries/KT-settlement-auto-netting-static-controls.md",
+  "output_sha256": "a5a25d403e20bdc9ed9d67083a2a2cb0fce23e4688a1f2557bd081848e58026e",
+  "assessment": "supported after listed corrections",
+  "review_note": "Clarified absent booking entity versus missing netting-ID exclusion warnings. Kept Data Ops maintenance, disabled FULL_STP, inheritance and refresh ambiguity.",
+  "claim_register": [
+    {
+      "claim": "Static rule access and validation",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#static-rule-access-and-validation",
+      "source_lines": [
+        57,
+        67
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Static rule access and validation\n\nOnly Data Ops may create or update auto-netting static; other users have read-only access.\nA rule containing only booking entity is rejected.\nAn absent booking entity produces a warning that the rule applies to all booking locations.\nMissing netting-ID exclusion also produces a warning.\n\nChanging a rule netting type requires confirmation.\n\nSources: [original lines 34\u201336](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L34-L36), [original lines 54\u201356](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L54-L56).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Netting-type conditions",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#netting-type-conditions",
+      "source_lines": [
+        68,
+        78
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Netting-type conditions\n\nCCIL type requires settlement method CCIL.\nMissing counterparty exclusion for 400021949 produces a warning.\nBIC type requires Counterparty_SCI_BIC_Net_Flag Y.\nThese validations differ: the counterparty exclusion is a warning, not a mandatory error.\n\nThe static UI also distinguishes manual and auto rule types.\n\nSources: [original lines 34\u201336](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L34-L36).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Execution-key and resultant mappings",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#execution-key-and-resultant-mappings",
+      "source_lines": [
+        79,
+        89
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Execution-key and resultant mappings\n\nBilateral grouping uses booking entity, counterparty, currency, and payment date.\nCCIL grouping omits counterparty and maps resultant counterparty to 400021949, CLEARING CORP*MMB, with Cash settlement method.\nBIC grouping adds SCI BIC-net flag and BIC code.\nSAL MTM and SAL Coupon grouping add payment type.\n\nTheir resultant payment types retain the named netting type.\n\nSources: [original lines 34\u201334](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L34-L34).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "STP controls and inheritance",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#stp-controls-and-inheritance",
+      "source_lines": [
+        90,
+        101
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### STP controls and inheritance\n\nNSTP_MAKER_CHECKER requires maker and checker approval for the auto-netted exception.\nNSTP_CHECKER_ONLY requires checker approval, plus maker handling when other exceptions require it.\nFULL_STP remains disabled in the Day1 UI.\nIts proposed bypass covers net-cashflow, pending-affirmation, and high-value exceptions, keeping the cashflow Unaffirmed.\n\nManual and auto resultants inherit DVP when any component is DVP, plus LIEN and commodity flags.\nIntent-to-clear inheritance remains unresolved.\n\nSources: [original lines 34\u201334](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L34-L34), [original lines 63\u201366](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L63-L66).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Rule refresh boundary and contradiction",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#rule-refresh-boundary-and-contradiction",
+      "source_lines": [
+        102,
+        112
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Rule refresh boundary and contradiction\n\nThe main requirement refreshes eligible unnetted WAITING/Pending Netting or Pending Exception and READY cashflows after rule creation.\nDisabling refreshes tagged WAITING/Pending Auto Netting cashflows.\nUpdates include tagged pending-auto cashflows and eligible new matches.\nThe update text also lists Pending Auto Netting among exclusions, creating an ambiguity.\n\nA historical no-refresh alternative remains in the clarification table.\n\nSources: [original lines 41\u201341](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L41-L41), [original lines 65\u201365](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L65-L65), [original lines 76\u201376](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L76-L76).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    },
+    {
+      "claim": "Source-specific priority and result exceptions",
+      "classification": "intent",
+      "source_locator": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#source-specific-priority-and-result-exceptions",
+      "source_lines": [
+        113,
+        121
+      ],
+      "support": "Complete canonical section reviewed for conditions, authority, contradictions and evidence limits.",
+      "confidence": "high for correspondence to this candidate, current authority unresolved",
+      "disposition": "preserved",
+      "retention": "Full numeric and behavioral details remain in the hash-bound canonical section. Summary selects topic-level claims without changing the canonical record.",
+      "source_excerpt": "### Source-specific priority and result exceptions\n\nThe July review ranks SAL MTM, SAL Coupon, Clearing_Swift_Suppress, CCIL, BIC, and Bilateral types.\nThe main requirement resolves multiple matches by lowest priority number and later creation within a type.\nIt permits auto-netting over IRS resultants while otherwise prohibiting net-over-net.\nThe Clearing_Swift_Suppress resultant mapping and single-item treatment contain struck-through or differing source text.\n\nSources: [original lines 23\u201326](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L23-L26), [original lines 34\u201334](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L34-L34), [original lines 42\u201348](../../../evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md#L42-L48).\n",
+      "classifications": [
+        "intent"
+      ],
+      "evidence_status": "Source-described intent only."
+    }
+  ],
+  "changed_claim_retention_mapping": [
+    {
+      "before": "gives warnings for missing booking-entity or netting-ID exclusions.",
+      "after": "warns when booking entity is absent or the netting-ID exclusion is missing.",
+      "classification": "intent",
+      "disposition": "superseded",
+      "rationale": "The warning predicates are different.",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md",
+      "evidence_sha256": "b8b239f415da9b3728cee7e9de1bdaa116336b64e37142e56812d4e83a1fdd81",
+      "retention": "The final corrected wording retains supported meaning. The complete original proposal remains hash-bound."
+    }
+  ],
+  "canonical_source_bindings": [
+    {
+      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md",
+      "revision": "sha256:a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62",
+      "sha256": "a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/page.md",
+      "revision": "sha256:a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62",
+      "sha256": "a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62"
+    },
+    {
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md",
+      "revision": "sha256:a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62",
+      "sha256": "a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62"
+    }
+  ],
+  "questions_for_central_annex": [
+    "Which effective static fields, type priorities, and resultant mappings are approved?",
+    "Which state-specific refresh and re-entry rules apply?",
+    "Which roles and STP bypass controls are current?"
+  ],
+  "limits": [
+    "Candidate records remain draft and unpublished.",
+    "No implementation, execution, acceptance or deployment is established by this review.",
+    "Original source snapshots are referenced by canonical records. This derived review does not repeat their entire upstream source review.",
+    "ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ],
+    "checks": ".workbench/wiki/resume-20261116/sol-review-lane-1/validation.json"
+  },
+  "summary_claim_register": [
+    {
+      "claim": "Rule access, warnings, and type-specific validation distinguish static-control conditions.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#static-rule-access-and-validation",
+      "source_sha256": "b8b239f415da9b3728cee7e9de1bdaa116336b64e37142e56812d4e83a1fdd81",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Clarified absent booking entity versus missing netting-ID exclusion warnings. Kept Data Ops maintenance, disabled FULL_STP, inheritance and refresh ambiguity.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "Bilateral, CCIL, BIC, and SAL types use different execution keys and resultants.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#execution-key-and-resultant-mappings",
+      "source_sha256": "b8b239f415da9b3728cee7e9de1bdaa116336b64e37142e56812d4e83a1fdd81",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Clarified absent booking entity versus missing netting-ID exclusion warnings. Kept Data Ops maintenance, disabled FULL_STP, inheritance and refresh ambiguity.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "Maker/checker, checker-only, and FULL_STP controls retain distinct exceptions.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#stp-controls-and-inheritance",
+      "source_sha256": "b8b239f415da9b3728cee7e9de1bdaa116336b64e37142e56812d4e83a1fdd81",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Clarified absent booking entity versus missing netting-ID exclusion warnings. Kept Data Ops maintenance, disabled FULL_STP, inheritance and refresh ambiguity.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    },
+    {
+      "claim": "Rule-refresh text conflicts with exclusions and a no-refresh alternative.",
+      "classification": "intent",
+      "evidence": "knowledge/records/candidates/settlement/KT-settlement-auto-netting-static-controls.md#rule-refresh-boundary-and-contradiction",
+      "source_sha256": "b8b239f415da9b3728cee7e9de1bdaa116336b64e37142e56812d4e83a1fdd81",
+      "assessment": "supported within source-specific candidate qualifications",
+      "confidence": "high for canonical correspondence",
+      "rationale": "Clarified absent booking entity versus missing netting-ID exclusion warnings. Kept Data Ops maintenance, disabled FULL_STP, inheritance and refresh ambiguity.",
+      "current_authority": "unresolved",
+      "execution": "not established"
+    }
+  ],
+  "active_prior_output": {
+    "path": "knowledge/llm-wiki/wiki/summaries/KT-settlement-auto-netting-static-controls.md",
+    "exists": false
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "path": "wiki/concepts/permission-check-provider-union.md",
+  "private_path": ".workbench/wiki/resume-20261116/sol-review-existing-portal/wiki/concepts/permission-check-provider-union.md",
+  "sha256": "02d3b722aa67a99237e6be9d65372978df4fdc35ce7cc8aa2b9e085e15bdc89c",
+  "before_path": "knowledge/llm-wiki/wiki/concepts/permission-check-provider-union.md",
+  "before_sha256": "627a4631ea1543165b134cbe74611eb4e009b27127ee311d952161874fe09a0c",
+  "reviewed_by": "agent:/root/sol_wiki_review_2",
+  "reviewed_at": "2026-11-16T08:20:35.926707+00:00",
+  "native_model_setting": "GPT-6.1 Sol, medium",
+  "runtime_attestation": "unavailable; accepted limit",
+  "claim_review": {
+    "changed_outputs": [
+      {
+        "path": "wiki/concepts/permission-check-provider-union.md",
+        "sha256": "02d3b722aa67a99237e6be9d65372978df4fdc35ce7cc8aa2b9e085e15bdc89c",
+        "change_type": "mixed",
+        "removed_claims": [
+          {
+            "claim": "During per-tile migration, some tiles still admit through EMS2 while others already use CES. Upper applications and shared containers call a single functional permission check. Replacing the provider wholesale would have forced caller changes; keeping only the EMS2 provider would have hidden CES grants. The union keeps the functional check stable across the transition while [[concepts/per-tile-provider-selection]] governs which provider admits each tile.",
+            "claim_type": "unknown",
+            "disposition": "superseded",
+            "evidence": [
+              "knowledge/records/candidates/security/KT-ces-migration-parity.md#independent-tile-provider-selection"
+            ],
+            "replacement": "The migration intent supports EMS2 and CES tile-admission choices while preserving the existing shared permission API. The mapped grant union accepts either provider and logs its source. [[concepts/per-tile-provider-selection]] retains the separate tile-admission rule.",
+            "note": "Replaced unsupported inevitable caller-change counterfactual with explicit source intent."
+          }
+        ]
+      }
+    ],
+    "review_note": "Complete prior concept meaning and numeric facts reviewed against full current canonical sources. Recorded corrections remove unsupported inference or sharpen source-scoped meaning."
+  },
+  "preservation_map": [
+    {
+      "claim": "All prior paragraphs except explicitly recorded corrections",
+      "claim_type": "intent",
+      "disposition": "preserved",
+      "evidence": [
+        "knowledge/llm-wiki/wiki/concepts/permission-check-provider-union.md",
+        "627a4631ea1543165b134cbe74611eb4e009b27127ee311d952161874fe09a0c"
+      ]
+    }
+  ],
+  "numeric_fact_disposition": "All prior numerical, implementation, test, and execution observations retained. Explicit corrections are recorded separately."
+}
