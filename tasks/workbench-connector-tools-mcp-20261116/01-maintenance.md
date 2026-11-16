@@ -77,6 +77,28 @@ Limits:
 - Discovery adds one action record per connector at client startup.
 - Relative `.venv/bin/python` and `--workspace .` assume the client starts the server at the checkout root.
 
+## Follow-up: VS Code Copilot startup
+
+On 16 November 2026 at 14:12 and 14:13 (Asia/Singapore), a manual start attempt failed in the VS Code Copilot harness.
+The agent host log recorded the exact cause:
+
+```text
+[error] Server 'workbench' failed: Cannot start an MCP server before the session runtime has been created. Send a message first.
+```
+
+Evidence: `~/Library/Application Support/Code/logs/20261112T071640/window2/agentHostMcpServer.eb288d3121c0e94fa09970acdd3103b061265f06.log`.
+
+The Customizations view started the server inside a hidden policy session that had no session runtime.
+VS Code created the log file for the workspace `.mcp.json` entry, so registration was read.
+The error reports a Copilot lifecycle precondition, not a command or protocol failure.
+
+Next action: send one message in Copilot Chat with the Copilot harness selected.
+That action creates the runtime and starts the server.
+The connector guide records this step.
+
+This follow-up did not confirm the post-session start.
+If that start fails, inspect the new agent host log line before changing the command.
+
 ## Documentation reconciliation
 
 Updated sections:

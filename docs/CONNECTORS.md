@@ -134,6 +134,11 @@ This checkout registers the server and enables it by default:
 Client trust and per-tool approval remain client decisions.
 Restart the client after a connector grant or tool change.
 
+In VS Code Copilot, the server starts with the chat session.
+A manual start before the session runtime exists fails with `Cannot start an MCP server before the session runtime has been created. Send a message first.`
+Send one message in Copilot Chat with the Copilot harness selected.
+This action creates the session runtime and starts the server.
+
 ## Analyze Elasticsearch logs through Kibana
 
 The Kibana connector supports read-only log analysis through Console proxy access.
