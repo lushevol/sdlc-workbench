@@ -37,10 +37,10 @@ def _error(identifier: object, code: int, message: str) -> dict:
     return {"jsonrpc": "2.0", "id": identifier, "error": {"code": code, "message": message}}
 
 
-def _validate(name: str, arguments: object) -> dict:
+def _validate(name: str, arguments: object, tools: list[dict] | None = None) -> dict:
     if not isinstance(arguments, dict):
         raise WorkbenchError("Tool arguments must be a JSON object.")
-    descriptor = next((item for item in TOOLS if item["name"] == name), None)
+    descriptor = next((item for item in (TOOLS if tools is None else tools) if item["name"] == name), None)
     if descriptor is None:
         raise WorkbenchError("The requested tool does not exist.")
     schema = descriptor["inputSchema"]
@@ -69,12 +69,83 @@ def _content(value: object, *, failed: bool = False) -> dict:
     return result
 
 
+def _connector_result(action: dict) -> dict:
+    payload = action.get("result")
+    nested = payload.get("result") if isinstance(payload, dict) else None
+    if isinstance(nested, dict):
+        content = nested.get("content")
+        result = {"content": content if isinstance(content, list) else []}
+        structured = nested.get("structuredContent")
+        if isinstance(structured, dict):
+            result["structuredContent"] = structured
+        is_error = nested.get("isError")
+        result["isError"] = is_error if type(is_error) is bool else action.get("status") != "SUCCEEDED"
+        return result
+    if action.get("status") != "SUCCEEDED":
+        error = payload if isinstance(payload, dict) else {}
+        return _content({"error": {
+            "code": error.get("code") or "CONNECTOR_ERROR",
+            "message": error.get("message") or "The connector tool call failed."}}, failed=True)
+    return _content({"error": {"code": "INVALID_RESPONSE",
+                               "message": "The connector returned no tool result."}}, failed=True)
+
+
+def _connector_tools(workbench: Workbench) -> tuple[list[dict], dict[str, tuple[str, str]]]:
+    tools = list(TOOLS)
+    owners: dict[str, tuple[str, str]] = {}
+    taken = {tool["name"] for tool in tools}
+    for resource in workbench.resources.values():
+        if resource.kind != "connector" or resource.provider != "connector.mcp":
+            continue
+        try:
+            action = workbench.call(resource.id, "list", {})
+        except WorkbenchError:
+            print(f"MCP connector discovery skipped {resource.id}.", file=sys.stderr)
+            continue
+        if action.get("status") != "SUCCEEDED":
+            print(f"MCP connector discovery skipped {resource.id}.", file=sys.stderr)
+            continue
+        discovered = action.get("result", {}).get("tools") if isinstance(action.get("result"), dict) else None
+        if not isinstance(discovered, list):
+            continue
+        for item in discovered:
+            if not isinstance(item, dict) or item.get("allowed") is not True:
+                continue
+            native = item.get("name")
+            if not isinstance(native, str) or not native or len(native) > 128:
+                continue
+            name = native if native not in taken else f"{resource.id}__{native}"
+            if name in taken:
+                print(f"MCP connector tool {native} was skipped for a duplicate name.", file=sys.stderr)
+                continue
+            schema = item.get("inputSchema")
+            description = item.get("description")
+            tools.append({
+                "name": name,
+                "description": description if isinstance(description, str) else f"Call the {native} connector tool.",
+                "inputSchema": schema if isinstance(schema, dict) else {"type": "object"},
+            })
+            owners[name] = (resource.id, native)
+            taken.add(name)
+    return tools, owners
+
+
 class McpServer:
-    def __init__(self, workbench: Workbench):
+    def __init__(self, workbench: Workbench, *, connectors: bool = False):
         self.workbench = workbench
+        self.tools = list(TOOLS)
+        self.connector_tools: dict[str, tuple[str, str]] = {}
+        if connectors:
+            self.tools, self.connector_tools = _connector_tools(workbench)
 
     def call_tool(self, name: str, arguments: object) -> dict:
-        values = _validate(name, arguments)
+        if name in self.connector_tools:
+            if not isinstance(arguments, dict):
+                raise WorkbenchError("Tool arguments must be a JSON object.")
+            resource_id, native = self.connector_tools[name]
+            return _connector_result(self.workbench.call(
+                resource_id, "call", {"tool": native, "arguments": arguments}))
+        values = _validate(name, arguments, self.tools)
         if name == "workbench_status":
             return _content(self.workbench.describe())
         if name == "workbench_call":
@@ -112,7 +183,7 @@ class McpServer:
             elif method == "ping":
                 result = {}
             elif method == "tools/list":
-                result = {"tools": TOOLS}
+                result = {"tools": self.tools}
             elif method == "tools/call":
                 if not isinstance(params.get("name"), str):
                     return _error(identifier, -32602, "A tool name is required.")
@@ -130,10 +201,12 @@ class McpServer:
 
 
 def serve(workbench: Workbench, input_stream: TextIO | None = None,
-          output_stream: TextIO | None = None) -> None:
+          output_stream: TextIO | None = None, *, connectors: bool = False) -> None:
     source = input_stream if input_stream is not None else sys.stdin
     target = output_stream if output_stream is not None else sys.stdout
-    server = McpServer(workbench)
+    # Connector discovery runs before the protocol starts, so keep its diagnostics off stdout.
+    with redirect_stdout(sys.stderr):
+        server = McpServer(workbench, connectors=connectors)
     while True:
         line = source.readline(MAX_MESSAGE_BYTES + 1)
         if not line:

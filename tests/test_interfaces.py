@@ -53,6 +53,14 @@ class InterfaceTests(WorkspaceTestCase):
         self.assertEqual(result.stdout, "")
         self.assertIn("MCP workspace could not load", result.stderr)
 
+    def test_mcp_connectors_flag_accepts_an_empty_session(self):
+        environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
+        result = subprocess.run([sys.executable, "-m", "ai_sdlc_workbench.cli", "--workspace", str(self.root),
+                                 "mcp", "--connectors"], cwd=self.root.parent, env=environment,
+                                input="", capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, "")
+
     def test_mcp_keeps_plugin_prints_out_of_protocol_output(self):
         class Provider:
             id = "example.printing"

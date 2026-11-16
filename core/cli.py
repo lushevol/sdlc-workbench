@@ -154,7 +154,9 @@ def _parser() -> argparse.ArgumentParser:
         operation.add_argument("--checks", "--checks-file", dest="checks_file")
         if name == "preflight":
             operation.add_argument("--probe-services", action="store_true")
-    commands.add_parser("mcp", help="Serve MCP over standard input and output")
+    mcp_commands = commands.add_parser("mcp", help="Serve MCP over standard input and output")
+    mcp_commands.add_argument("--connectors", action="store_true",
+                              help="Expose granted external connector tools.")
     return parser
 
 
@@ -406,7 +408,7 @@ def main(argv: list[str] | None = None) -> int:
                 _print_json(workbench.skill_list())
         elif arguments.command == "mcp":
             from .mcp import serve
-            serve(workbench)
+            serve(workbench, connectors=arguments.connectors)
         return 0
     except WorkbenchError as error:
         if arguments.command == "mcp":

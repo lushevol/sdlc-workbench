@@ -22,6 +22,8 @@ Existing assets stay at their registered locations.
 
 For stdio MCP access, use the [shared MCP adapter](../mcp/README.md).
 The four tools expose status, operations, action records, and canonical skills.
+The Copilot harness reads the workspace-root `.mcp.json` in portable `mcpServers` format.
+Use `--connectors` to add each granted external connector tool as its own MCP tool.
 
 Native skill discovery depends on the Copilot client, version, and project configuration.
 Expose canonical files through the supported client mechanism, or read them through CLI or MCP.

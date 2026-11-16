@@ -23,6 +23,8 @@ Existing assets stay at their registered locations.
 
 For stdio MCP access, use the [shared MCP adapter](../mcp/README.md).
 The four tools expose status, operations, action records, and canonical skills.
+Use `--connectors` to add each granted external connector tool as its own MCP tool.
+This checkout registers the server and enables it by default.
 
 Native skill discovery depends on the Claude Code version and project configuration.
 Use `.claude/skills/` for native discovery, or read canonical skills through CLI or MCP.

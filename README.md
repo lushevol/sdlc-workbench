@@ -87,6 +87,8 @@ The optional `connector.mcp` provider connects agents to external engineering sy
 Manage variables in ignored `.env` at the workspace root.
 Use [.env.example](.env.example) for variable names and [the connector guide](docs/CONNECTORS.md) for installation and exact tool grants.
 Run `npm ci --ignore-scripts --no-audit --no-fund` from this source checkout for Node dependencies.
+`ai-sdlc --workspace . mcp --connectors` lists each granted connector tool as its own MCP tool.
+The project registers this server in `.mcp.json`, `.claude/settings.json`, `.codex/config.toml`, and `opencode.json`.
 
 ## Create a workspace
 
@@ -360,6 +362,8 @@ The stdio MCP interface exposes four tools:
 | `workbench_call` | Invoke one permitted operation and retain evidence. |
 | `workbench_runs` | Read action history or one action record. |
 | `workbench_skills` | List or read shared procedures. |
+
+Add `--connectors` to expose each granted external connector tool as its own MCP tool.
 
 ## Provider plugins and limits
 

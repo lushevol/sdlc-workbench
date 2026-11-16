@@ -12,12 +12,30 @@ In an MCP client, use command `ai-sdlc` with arguments `--workspace`, the absolu
 Follow that client's supported configuration mechanism.
 This directory does not install or configure a client connection.
 
+Add `--connectors` to expose each external connector tool whose catalog grant is true:
+
+```text
+ai-sdlc --workspace PATH mcp --connectors
+```
+
+Startup calls each connector's `list` operation and retains its action record.
+Calls use the existing connector `call` operation.
+Catalog grants, `.env` isolation, timeouts, response limits, and result evidence stay in force.
+An unavailable or ungranted connector is omitted; server startup continues.
+
+This source checkout registers the server and enables it by default for Claude Code, the VS Code Copilot harness, Codex, and OpenCode.
+Client trust and per-tool approval remain client decisions.
+
 | Tool | Purpose | Arguments |
 | --- | --- | --- |
 | `workbench_status` | Discover resources, operations, and schemas. | `{}` |
 | `workbench_call` | Invoke a resource operation and retain its action record. | `resource_id`, `operation`, optional `arguments` |
 | `workbench_runs` | List actions or read one action record. | Optional `limit` or `run_id` |
 | `workbench_skills` | List canonical skills or read one procedure. | Optional `skill_id` |
+
+With `--connectors`, the server also lists each granted connector tool as its own MCP tool.
+The name is the connector's native tool name.
+Discovery and calls use the existing connector provider and action records.
 
 Call `workbench_status` before selecting resource IDs and operations.
 Read each operation schema before invoking it.

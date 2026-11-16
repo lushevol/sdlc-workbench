@@ -177,6 +177,44 @@ class ConnectorProviderTests(unittest.TestCase):
         self.assertEqual(action["status"], "FAILED")
         self.assertTrue(action["result"]["result"]["isError"])
 
+    def test_mcp_default_mode_keeps_the_builtin_tool_list(self):
+        server = McpServer(self.workbench)
+        names = [tool["name"] for tool in server.tools]
+        self.assertIn("workbench_status", names)
+        self.assertNotIn("read_item", names)
+        self.assertEqual(self.workbench.runs(), [])
+
+    def test_mcp_connector_mode_exposes_only_granted_tools_and_routes_calls(self):
+        server = McpServer(self.workbench, connectors=True)
+        listed = server.handle({"jsonrpc": "2.0", "id": 1, "method": "tools/list"})
+        names = [tool["name"] for tool in listed["result"]["tools"]]
+        self.assertIn("workbench_status", names)
+        self.assertIn("read_item", names)
+        self.assertNotIn("write_item", names)
+        result = server.call_tool("read_item", {"id": 17})
+        self.assertFalse(result["isError"])
+        self.assertEqual(result["content"], [{"type": "text", "text": "observed"}])
+        call_run = next(item for item in self.workbench.runs(10) if item["operation"] == "call")
+        self.assertEqual(self.workbench.run(call_run["id"])["arguments"],
+                         {"tool": "read_item", "arguments": {"id": 17}})
+
+    def test_mcp_connector_mode_propagates_a_nested_tool_error(self):
+        server = McpServer(self.workbench, connectors=True)
+        self.scenario(response={"status": "SUCCEEDED", "result": {
+            "isError": True, "content": [{"type": "text", "text": "Item unavailable."}]}})
+        result = server.call_tool("read_item", {})
+        self.assertTrue(result["isError"])
+        self.assertEqual(result["content"], [{"type": "text", "text": "Item unavailable."}])
+
+    def test_mcp_connector_mode_skips_a_resource_without_a_list_grant(self):
+        self.configuration["resources"][0]["allowed_operations"] = ["call"]
+        self.configure()
+        server = McpServer(self.workbench, connectors=True)
+        names = [tool["name"] for tool in server.tools]
+        self.assertIn("workbench_status", names)
+        self.assertNotIn("read_item", names)
+        self.assertEqual(server.connector_tools, {})
+
     def test_cli_dispatches_connector_call_through_existing_interface(self):
         stream = io.StringIO()
         with redirect_stdout(stream):

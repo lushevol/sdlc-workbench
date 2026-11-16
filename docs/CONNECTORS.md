@@ -105,6 +105,35 @@ Wildcards do not grant other tool names.
 Resource grants do not replace the user's authorization for an external write or message.
 Keep Confluence source access read-only as required by the source catalog contract.
 
+## Expose granted connector tools as MCP tools
+
+Run the project MCP server with connector tools enabled:
+
+```sh
+ai-sdlc --workspace . mcp --connectors
+```
+
+The server lists the four Workbench tools and each connector tool whose catalog grant is true.
+Startup calls each connector's `list` operation once and retains the action record.
+It needs no service credentials and sends no service request.
+An unavailable or ungranted connector is omitted; startup continues.
+
+Tool calls use the existing `call` operation.
+`TOOL_NOT_GRANTED`, `.env` isolation, process limits, and result evidence behave as for other connector calls.
+Discovery adds one action record per connector at each client startup.
+
+This checkout registers the server and enables it by default:
+
+| Client | Configuration |
+| --- | --- |
+| Claude Code and the VS Code Copilot harness | `.mcp.json` |
+| Claude Code project approval | `.claude/settings.json` |
+| Codex | `.codex/config.toml` |
+| OpenCode | `opencode.json` |
+
+Client trust and per-tool approval remain client decisions.
+Restart the client after a connector grant or tool change.
+
 ## Analyze Elasticsearch logs through Kibana
 
 The Kibana connector supports read-only log analysis through Console proxy access.
