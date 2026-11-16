@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-release-operations
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -68,11 +68,11 @@ sources:
     Markets Operations One Change Request/page.md
   revision: sha256:a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477
   sha256: a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477
-previous_version: 2
-previous_content_sha256: e81bca3a19c3083724b84ef78b5d3b0c47546d380624043019e1d493f471f1cb
+previous_version: 3
+previous_content_sha256: ee2f113aba565e2c150b12129c8622441907d6da37be1093b3fca523a88756fc
 generated:
-  by: agent:codex
-  at: '2026-11-12T21:53:10+08:00'
+  by: agent:sol_portal_review
+  at: '2026-11-16T02:14:41.219764+00:00'
 verified: []
 classification: operations
 scope: Portal release planning, tenant capability context, configuration promotion,
@@ -98,7 +98,7 @@ open_questions:
   release readiness?
 writing_review:
   standard: ASD-STE100
-  automated_check: PASSED
+  automated_check: PENDING
   asd_review: PENDING
   reviewer: null
   reviewed_at: null
@@ -143,6 +143,14 @@ These statements describe requested readiness, without proving completed checks.
 [Release proposal, sections 4–5, lines 58–98](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L58>)
 [Checklist, lines 1–29](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L1>)
 
+### Checklist authentication conditions
+
+The unfinished checklist makes base-provided Axios requests and backend Single UI SDK validation mandatory for release.
+Its documented FMAA upload path requires the FMAA account ID to match the EMS2 ID.
+It also requires an active FMAA token.
+These conditions belong to that documented workflow, whose replacement authentication remains unresolved.
+[Checklist request validation and upload conditions, lines 12–16](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L12-L16>)
+
 ### Configuration promotion
 
 The documented flow starts with Module Map, Drawer Category, and Tile Configuration changes in Development.
@@ -178,6 +186,11 @@ They do not establish approved detailed rules, release completion, or present av
 | CDUPS Confirmation | Manage outbound confirmation documents and inbound confirmations in separate blotters. | [CDUPS request, lines 9–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/Markets Operation One Change Request - CDUPS/page.md#L9>) |
 | VPA Fix Link | Correct broken links so subsequent trade processing can continue. | [VPA request, lines 9–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/VPA Fix-link and Monitor Change Request/page.md#L9>) |
 | VPA Trade Monitor | Monitor trade status and retrieve source and transformed files. | [VPA request, lines 9–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/VPA Fix-link and Monitor Change Request/page.md#L9>) |
+
+The FSS request describes Gold Custody services in India and daily position updates sent to CSS.
+Its Domestic Disbursement description names SG and HK as planned entity launches.
+These jurisdictions qualify that request's described scope.
+[FSS requested jurisdictions and downstream position update, line 10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSS Gating, SSI, CA Domestic and Gold Custody Change Request/page.md#L10>)
 
 ### Release window proposal
 

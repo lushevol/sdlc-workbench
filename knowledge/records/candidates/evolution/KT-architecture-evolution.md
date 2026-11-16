@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-architecture-evolution
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -62,8 +62,8 @@ sources:
   revision: sha256:bdb1374f5b897c5a72ab82abc42a1cf26333315498688655b25b819dfe7099f5
   sha256: bdb1374f5b897c5a72ab82abc42a1cf26333315498688655b25b819dfe7099f5
 generated:
-  by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  by: agent:sol_portal_review
+  at: '2026-11-16T02:14:41.219764+00:00'
 verified: []
 classification: evolution
 scope: Historical component evaluation, build-tool research, notification experiments,
@@ -87,12 +87,14 @@ open_questions:
 - Which unchecked work items have accepted scope, owners, and completion evidence?
 writing_review:
   standard: ASD-STE100
-  automated_check: PASSED
+  automated_check: PENDING
   asd_review: PENDING
   reviewer: null
   reviewed_at: null
   limitations:
   - Automated checks do not check the complete approved dictionary or grammar rules.
+previous_version: 2
+previous_content_sha256: d923563193a2f6d903e73d75120dae2c481c75d5a0ab203154878a87dc02f614
 ---
 # Architecture evolution and proposal boundaries
 
@@ -159,6 +161,11 @@ Their branch and demonstration references establish experiment locations, not su
 The store draft considers tile reactions through React effects or registered callbacks.
 It declares `isRead` as a string but assigns boolean `false` in its event handler. [Store draft](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L1>); [Event handler](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L63>).
 The field contract remains unresolved and must not become a generated implementation requirement without review.
+
+The notification draft also lists simple REST calls, GraphQL subscriptions over WebSocket, and Kafka as system-design alternatives.
+Those headings coexist with the stated SSE objective.
+The source supplies no decision selecting one of those alternatives.
+[Notification objective and design alternatives, lines 68–82](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/page.md#L68-L82>)
 
 ### Notification entity and retention draft
 

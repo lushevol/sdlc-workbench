@@ -1,0 +1,830 @@
+{
+  "status": "REVIEWED_DRAFT_READY_FOR_RETENTION_WITH_LIMITS",
+  "actor": "agent:sol-auto-netting-review",
+  "semantic_reviewed_at": "2026-11-16T09:01:44.308554+08:00",
+  "native_model": "gpt-6.1-sol",
+  "native_reasoning": "medium",
+  "model_limit": "User accepts native selection. Independent runtime attestation unavailable and not claimed.",
+  "outputs": [
+    {
+      "path": ".workbench/ingestion/review-resume-20261116/uber-review/candidates/KT-uber-strategic-cash-settlement-p3.md",
+      "intended_canonical_path": "knowledge/records/candidates/interoperability/KT-uber-strategic-cash-settlement-p3.md",
+      "id": "KT-uber-strategic-cash-settlement-p3",
+      "version": 3,
+      "sha256": "eec46f812056db44fb1174a5cd81b91dfcd563e36a544802d99fa7959beecafa",
+      "declarations": 9,
+      "cited_snapshot_count": 9,
+      "state": "candidate",
+      "owner": "unknown",
+      "verified": [],
+      "prior_unverified_draft": {
+        "path": ".workbench/ingestion/luna-max-20261115/workers/merge-uber/merged/KT-uber-strategic-cash-settlement-p3.md",
+        "sha256": "734d5f72f0f12f5208d8559931cd4786c7a3a1741e19e9e8d3ad9d0ea6a57b49"
+      }
+    }
+  ],
+  "claim_register": [
+    {
+      "id": "UBER-001",
+      "title": "Snapshot and integration purpose",
+      "claim_scope": "The proposal combines trade records, cashflow data, fixing notices, and change information in protobuf snapshots.\nEach trade or cashflow transaction generates a snapshot.\nThe integration aims to improve processing and preserve historical compatibility without introducing new business requirements.",
+      "bindings": [
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            9,
+            24
+          ]
+        },
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            63,
+            75
+          ]
+        },
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            91,
+            94
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The definition and integration scope identify the snapshot contents, transaction trigger, and compatibility purpose.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-002",
+      "title": "Event and temporal limits",
+      "claim_scope": "The design permits non-atomic events and partial success.\nAn exception indicator can filter the whole message.\nIt proposes comparing cashflow differences and latest versions instead of trusting change flags.\nIt proposes timestamp and tracking-ID duplicate checks.\nA missed final message needs upstream monitoring.\nThe design defaults optional asOf and effective query times to NOW and specifies transaction and valid-time interval boundaries.",
+      "bindings": [
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            91,
+            108
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The recorded answers retain incomplete-event risks, duplicate proposals, monitoring dependency, and temporal defaults.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-003",
+      "title": "Initial entity validation",
+      "claim_scope": "The March 28 integration scope names entity FMIDs `400007847`, `401036553`, and `400991880`.\nFor this scope, `TDS3Data.cashflowCheckResult.passed=true` permits processing.\nA false value drops the whole Uber message.\nOther entities initially use a hardcoded true value.\nAdditional configuration is required before enabling those entities.",
+      "bindings": [
+        {
+          "sha256": "a9814666e10116b6f0c5fda79efff5cca1631290d13bd5d5a622c0a24f7a3fea",
+          "revision": "sha256:a9814666e10116b6f0c5fda79efff5cca1631290d13bd5d5a622c0a24f7a3fea",
+          "original_range": [
+            1,
+            15
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The upstream contract explicitly limits meaningful validation to the initial entities.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-004",
+      "title": "Common model and migration alternatives",
+      "claim_scope": "The proposed common model combines the domain model with internal fields.\nThe design chooses readable JSON transmission and generated protobuf models.\nThe bridge converts EDMI bytes to JSON and preserves the correct persistence and replay key.\nStandardization identifies cashflows, validates and stamps trades, and filters `IntentToSettle=false`.\nThe component plan retains group and group-message tables for management and UI use.\nA benefits section also says grouping logic is no longer required.\nThese statements do not establish removal of all group responsibilities.\nThe estimates retain two alternatives: common JSON processing with outbound conversion, or group conversion to SCBML.",
+      "bindings": [
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            123,
+            128
+          ]
+        },
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            166,
+            194
+          ]
+        },
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            214,
+            216
+          ]
+        },
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            236,
+            260
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The benefits, component plan, and competing estimates must remain distinct; no final migration choice is established.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-005",
+      "title": "Historical compatibility responsibilities",
+      "claim_scope": "The SSI plan adds an UBER raw-message type, stores JSON, and parses by message type.\nIt classifies SSI work as a data-model change.\nThe lifecycle plan retains historical SCBML state compatibility and converts updated inputs to JSON.\nIt proposes common domain events and SCBML generation before Razor publication.\nIt classifies lifecycle work as restructuring.\nThese classifications describe separate components.",
+      "bindings": [
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            218,
+            219
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The two table rows allocate different work to SSI and lifecycle; they do not themselves contradict each other.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-006",
+      "title": "Field scope and ownership",
+      "claim_scope": "The design identifies 122 supplemental RATAN fields.\nIts table marks fields for retention, removal, correction, or unresolved review.\nIt does not supply the complete protobuf schema.\nThe configurable-field proposal masks unnecessary fields to reduce payload size.\nWithout a black or white list, it proposes publishing the entire payload; this remains marked TBD.\nApplications maintain additional data outside the domain-model SDK.",
+      "bindings": [
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            268,
+            407
+          ]
+        },
+        {
+          "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+          "original_range": [
+            441,
+            454
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The supplemental table contains blank and unresolved entries; the filter default remains explicitly provisional.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-007",
+      "title": "Parsing and filtering proposal",
+      "claim_scope": "The optimization proposes parsing protobuf once and reusing JSON, common fields, and exchange metadata.\nIt proposes compact JSON serialization and exchange JSON reuse.\nIt assigns Uber filtering to the group service.\nThe source claim that filtering already moved does not establish rollout.",
+      "bindings": [
+        {
+          "sha256": "6b95e87e645bcc9e4875a09e465b49f1b2d3ec14e880056917a81bde73bf0470",
+          "revision": "sha256:6b95e87e645bcc9e4875a09e465b49f1b2d3ec14e880056917a81bde73bf0470",
+          "original_range": [
+            53,
+            138
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The selected optimization distinguishes desired reuse and responsibility from its unverified implementation claim.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-008",
+      "title": "Persistent retries and recovery",
+      "claim_scope": "The remediation proposes five retry attempts by default.\nThe initial delay is 15000 milliseconds, with a multiplier of two.\nRetry partitions default to three; concurrency defaults to one.\nThe DLT proposal saves inbound, group, and group-message records.\nIt compares major version and New/Withdrawal events, skips processed records, and marks eligible unprocessed records ERROR.\nThe earlier `deleteById` retention alternative is struck through.\nA separate query comparison specifies an empty-set fallback after three retries.\nERROR records remain available for recovery.",
+      "bindings": [
+        {
+          "sha256": "2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+          "revision": "sha256:2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+          "original_range": [
+            125,
+            132
+          ]
+        },
+        {
+          "sha256": "2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+          "revision": "sha256:2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+          "original_range": [
+            135,
+            178
+          ]
+        },
+        {
+          "sha256": "2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+          "revision": "sha256:2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+          "original_range": [
+            194,
+            201
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "Persistent retry settings, DLT conditions, withdrawn deletion alternative, and query fallback have distinct contracts. Reported success is not execution proof.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-009",
+      "title": "Performance objectives",
+      "claim_scope": "The selected objectives require no impact on existing SCBML processing.\nBetter Uber performance is desirable.\nThe test scope includes settlement STP and netting/unnetting.\nThis selected objective section supplies no measurable acceptance threshold.",
+      "bindings": [
+        {
+          "sha256": "3acdfbc0f3909267b615849e63a06e04f1f72c592bc64384e097e7d629de523b",
+          "revision": "sha256:3acdfbc0f3909267b615849e63a06e04f1f72c592bc64384e097e7d629de523b",
+          "original_range": [
+            1,
+            14
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "Mandatory non-regression and optional improvement differ. Measurements elsewhere on the page are excluded from this review.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-010",
+      "title": "Precious-metal handling",
+      "claim_scope": "The precious-metal design uses custodian and delivery-location fields across grouping, querying, netting, SWIFT, and rules.\nIt names `tradeRecord.Entity.Custodian_SCI_FMID` and `tradeRecord.Delivery_Location`.\nLater field lists also use `Trade.Entity` and instrument delivery-location paths.\nMurex cashflows use `Murex_Product_Strategy`.\nHistorical Stella cashflows use that field only for portfolio `PRC_ECOM_SPOT_STL`.\nNew Stella cashflows use `Trade.Entity.Custodian_SCI_FMID` and `Trade.Delivery_Location`.\nPrecious-metal currencies do not support splitting.\nThe selected 26C heading supplies no generation rule; referenced screenshots are unavailable.",
+      "bindings": [
+        {
+          "sha256": "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "revision": "sha256:176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "original_range": [
+            7,
+            19
+          ]
+        },
+        {
+          "sha256": "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "revision": "sha256:176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "original_range": [
+            23,
+            27
+          ]
+        },
+        {
+          "sha256": "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "revision": "sha256:176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "original_range": [
+            71,
+            85
+          ]
+        },
+        {
+          "sha256": "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "revision": "sha256:176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "original_range": [
+            91,
+            105
+          ]
+        },
+        {
+          "sha256": "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "revision": "sha256:176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "original_range": [
+            107,
+            121
+          ]
+        },
+        {
+          "sha256": "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "revision": "sha256:176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+          "original_range": [
+            123,
+            125
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The portfolio qualifier is explicit. Different field-path presentations and missing 26C details remain unresolved.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-011",
+      "title": "Flow segregation alternatives",
+      "claim_scope": "The segregation proposal aims to isolate country flows.\nIt retains country-topic and partition-group alternatives.\nThe partition approach changes participating producers and leaves consumers unchanged.\nScaling recalculates the allocation.\nIt requires fallback to the default partitioner for insufficient partitions, uncovered keys, or exceptions.\nPartition groups may overlap.\nCountry grouping is preferred; weighting remains unresolved.\nThese alternatives do not establish the selected Uber architecture or a demonstrated no-loss guarantee.",
+      "bindings": [
+        {
+          "sha256": "44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "revision": "sha256:44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "original_range": [
+            1,
+            14
+          ]
+        },
+        {
+          "sha256": "44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "revision": "sha256:44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "original_range": [
+            30,
+            70
+          ]
+        },
+        {
+          "sha256": "44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "revision": "sha256:44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "original_range": [
+            348,
+            359
+          ]
+        },
+        {
+          "sha256": "44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "revision": "sha256:44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+          "original_range": [
+            383,
+            407
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The design answers preserve fallback and overlap, while the grouping calculation and chosen strategy remain incomplete.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    },
+    {
+      "id": "UBER-012",
+      "title": "Historical rollout and cutover scope",
+      "claim_scope": "The March 28, 2026 technical-live plan scopes Uber to EG, NP, and SA, without FXU initially.\nIt plans FXU for April 4 and retains SCBML elsewhere.\nIt requires SCBML non-regression and existing-data compatibility.\nIt limits OpenSearch to developers and makes CES the PT default.\nThe April 4 runbook requires no message backlog and no pending groups before cutover.\nMissing cashflows can require conditional replay.\nPublisher-stop steps include withdrawn or conditional instructions.\nThe selected runbook also stops the bridge.\nThese dated plans supply no execution or deployment confirmation.",
+      "bindings": [
+        {
+          "sha256": "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "revision": "sha256:155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "original_range": [
+            7,
+            15
+          ]
+        },
+        {
+          "sha256": "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "revision": "sha256:155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "original_range": [
+            23,
+            28
+          ]
+        },
+        {
+          "sha256": "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "revision": "sha256:155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "original_range": [
+            32,
+            33
+          ]
+        },
+        {
+          "sha256": "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "revision": "sha256:155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "original_range": [
+            40,
+            40
+          ]
+        },
+        {
+          "sha256": "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "revision": "sha256:155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+          "original_range": [
+            43,
+            45
+          ]
+        },
+        {
+          "sha256": "d9cda0a943effd477895865bd974392c71f1659fcc06adb98429b5e86ca9b3bd",
+          "revision": "sha256:d9cda0a943effd477895865bd974392c71f1659fcc06adb98429b5e86ca9b3bd",
+          "original_range": [
+            17,
+            28
+          ]
+        }
+      ],
+      "assessment": "SUPPORTED_AS_SOURCE_SPECIFIC_CANDIDATE_INTENT",
+      "confidence": "high",
+      "rationale": "The selected plans define historical scope and conditional continuity duties, with unresolved scheduling/support details.",
+      "limit": "Historical selected design only. Current authority, implementation, deployment, and execution remain unverified."
+    }
+  ],
+  "source_coverage": [
+    {
+      "source_id": "SRC-dee2ecd94c45374ea1e8e0ff",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/[group]Analyzing uber msg would be deleted by wrongly in inbound table if any exception happen while Kafka topic consuming Uber msg/page.md",
+      "sha256": "2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+      "revision": "sha256:2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+      "ranges": [
+        [
+          114,
+          178
+        ],
+        [
+          194,
+          201
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "95790b26821c0434b16e61c60fc76015d9e7d31d7fd4a272004b01acae228668",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-dee2ecd94c45374ea1e8e0ff"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-1833783b243171ccca926ca8",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/[MB] Uber performance optimization/page.md",
+      "sha256": "6b95e87e645bcc9e4875a09e465b49f1b2d3ec14e880056917a81bde73bf0470",
+      "revision": "sha256:6b95e87e645bcc9e4875a09e465b49f1b2d3ec14e880056917a81bde73bf0470",
+      "ranges": [
+        [
+          53,
+          138
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "6c1bc67f581d17cfe9f21e6358729f906771d1f82b173189c79f8a35a3841347",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-1833783b243171ccca926ca8"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-ed3687d8fe600bbf1357db81",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/[Settlement processing optimization] Data flow segregation/page.md",
+      "sha256": "44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+      "revision": "sha256:44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50",
+      "ranges": [
+        [
+          1,
+          14
+        ],
+        [
+          30,
+          70
+        ],
+        [
+          348,
+          359
+        ],
+        [
+          383,
+          407
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "4978b722d6461c80e8c098f38980a1332a54bb34abcc9352fb0df3af721dbe65",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-ed3687d8fe600bbf1357db81"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-7aac4147090c3f035bcc1a40",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/RATAN - Uber Integration/Uber & FXU Technical Live Plan/page.md",
+      "sha256": "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+      "revision": "sha256:155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+      "ranges": [
+        [
+          7,
+          15
+        ],
+        [
+          23,
+          28
+        ],
+        [
+          32,
+          33
+        ],
+        [
+          40,
+          40
+        ],
+        [
+          43,
+          45
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "e5f30d99f1e644809b62912e0cf881fe4db13437f472d7d9d4e4afcbaa19e5e5",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-7aac4147090c3f035bcc1a40"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-941de2627abea25987d5ff2b",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/RATAN - Uber Integration/page.md",
+      "sha256": "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+      "revision": "sha256:d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+      "ranges": [
+        [
+          1,
+          28
+        ],
+        [
+          63,
+          81
+        ],
+        [
+          83,
+          108
+        ],
+        [
+          110,
+          128
+        ],
+        [
+          137,
+          194
+        ],
+        [
+          210,
+          226
+        ],
+        [
+          236,
+          260
+        ],
+        [
+          268,
+          407
+        ],
+        [
+          441,
+          454
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "7841b32ed0ea854924824cdc8f2683b3c173a7cd4e0e3966f6fbd3623ed08cfc",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-941de2627abea25987d5ff2b"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-45a7e5a8d18bcad2900c190c",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/RATAN - Uber Integration/EG   NP   SAU UBER Roll Out & FXU Business Go-Live Runbook on 04 04/page.md",
+      "sha256": "d9cda0a943effd477895865bd974392c71f1659fcc06adb98429b5e86ca9b3bd",
+      "revision": "sha256:d9cda0a943effd477895865bd974392c71f1659fcc06adb98429b5e86ca9b3bd",
+      "ranges": [
+        [
+          17,
+          28
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "c557ce8ff034fa0598261c00615b233b30ae2ecf71e839c6e006aed2a80d32cb",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-45a7e5a8d18bcad2900c190c"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-f816928affc47b051ef86ec3",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/RATAN - Uber Integration/PT result for UBER/page.md",
+      "sha256": "3acdfbc0f3909267b615849e63a06e04f1f72c592bc64384e097e7d629de523b",
+      "revision": "sha256:3acdfbc0f3909267b615849e63a06e04f1f72c592bc64384e097e7d629de523b",
+      "ranges": [
+        [
+          1,
+          14
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "9280c28068aba801ea722bdc0f394fe75d246a0207d4c31c3c63fd8eba938b68",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-f816928affc47b051ef86ec3"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-8155849518214f81eeb3f41c",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/RATAN - Uber Integration/UBER Precious Metals Tech Design/page.md",
+      "sha256": "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+      "revision": "sha256:176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953",
+      "ranges": [
+        [
+          7,
+          19
+        ],
+        [
+          23,
+          27
+        ],
+        [
+          71,
+          85
+        ],
+        [
+          91,
+          105
+        ],
+        [
+          107,
+          121
+        ],
+        [
+          123,
+          125
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "12944e1ade02615fb70845cc0faf44633d78e6338884f3ffef5549086efb7408",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-8155849518214f81eeb3f41c"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    },
+    {
+      "source_id": "SRC-979dfb60562d02fa5bed2399",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/RATAN - Uber Integration/Upstream Integration/page.md",
+      "sha256": "a9814666e10116b6f0c5fda79efff5cca1631290d13bd5d5a622c0a24f7a3fea",
+      "revision": "sha256:a9814666e10116b6f0c5fda79efff5cca1631290d13bd5d5a622c0a24f7a3fea",
+      "ranges": [
+        [
+          1,
+          15
+        ]
+      ],
+      "context": [],
+      "decision": "KEEP_SECTIONS",
+      "policy_sha256": "f077139beb2a84be9e7fd72ec3215b29196c0e8d524aeb12e9aeda1be131df92",
+      "selected_view_sha256": "b889f932d3c106e53b8521f5af7dd0b5f3cc65bf53993afe6561726375fd07e8",
+      "coverage": "FULL_SELECTED_RANGES",
+      "unreviewed_scope": "Excluded original-page content and missing attachments.",
+      "manifest_aliases": [
+        "SRC-979dfb60562d02fa5bed2399"
+      ],
+      "alias_limit": "Alias declarations bind identical bytes; they do not expand this reviewed identity selection."
+    }
+  ],
+  "owner_questions": [
+    {
+      "id": "Q-UBER-1",
+      "question": "Which schema, field filter, entity configuration, and effective scope are currently approved?",
+      "investigation": "Initial validation is limited to three FMIDs; other entities default true. Supplemental schema and field filtering retain TBD entries.",
+      "source_hashes": [
+        "a9814666e10116b6f0c5fda79efff5cca1631290d13bd5d5a622c0a24f7a3fea",
+        "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35"
+      ],
+      "consequence": "Current schema and validation guarantees cannot be inferred outside historical scope.",
+      "status": "UNRESOLVED_AFTER_BOUNDED_INVESTIGATION",
+      "owner": "unknown",
+      "next_action": "Coordinator batches this question for domain-owner applicability and decision evidence."
+    },
+    {
+      "id": "Q-UBER-2",
+      "question": "Which migration alternative and group responsibilities are approved?",
+      "investigation": "Benefits remove grouping logic; the component plan retains group tables and responsibilities. Estimates retain two conversion alternatives.",
+      "source_hashes": [
+        "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+        "6b95e87e645bcc9e4875a09e465b49f1b2d3ec14e880056917a81bde73bf0470"
+      ],
+      "consequence": "Do not select one flow or infer removal of the group service.",
+      "status": "UNRESOLVED_AFTER_BOUNDED_INVESTIGATION",
+      "owner": "unknown",
+      "next_action": "Coordinator batches this question for domain-owner applicability and decision evidence."
+    },
+    {
+      "id": "Q-UBER-3",
+      "question": "Which retry, DLT, duplicate, and query-fallback contracts apply by environment?",
+      "investigation": "Five message attempts and three query retries concern different operations. Deletion is withdrawn. Reported repair success lacks reviewed execution.",
+      "source_hashes": [
+        "2b72709c5368b3a40b99554891d139e7936ea683a1ada3f49e5f128152b6aed1",
+        "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35"
+      ],
+      "consequence": "Current recovery and empty-result semantics remain unconfirmed.",
+      "status": "UNRESOLVED_AFTER_BOUNDED_INVESTIGATION",
+      "owner": "unknown",
+      "next_action": "Coordinator batches this question for domain-owner applicability and decision evidence."
+    },
+    {
+      "id": "Q-UBER-4",
+      "question": "What acceptance source and workload define historical compatibility and SCBML non-regression?",
+      "investigation": "SSI and lifecycle have distinct responsibilities. The selected performance objective section has no numerical tolerance or retained execution review.",
+      "source_hashes": [
+        "d8dadc02c466ebbafefb494647d1838ff3d60823b466a0bd7b80915ebbbeed35",
+        "3acdfbc0f3909267b615849e63a06e04f1f72c592bc64384e097e7d629de523b",
+        "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772"
+      ],
+      "consequence": "Compatibility and performance acceptance cannot be inferred from design wording.",
+      "status": "UNRESOLVED_AFTER_BOUNDED_INVESTIGATION",
+      "owner": "unknown",
+      "next_action": "Coordinator batches this question for domain-owner applicability and decision evidence."
+    },
+    {
+      "id": "Q-UBER-5",
+      "question": "Which precious-metal paths and netting keys apply by source system and portfolio, and what defines 26C generation?",
+      "investigation": "Historical Stella is limited to PRC_ECOM_SPOT_STL. Paths vary between tradeRecord, Trade, and instrument lists. The 26C heading lacks rule text and images.",
+      "source_hashes": [
+        "176cf0771c92b380d06965b1348038a8ef597349f86a0ee418d6fe11df03c953"
+      ],
+      "consequence": "Avoid broader historical netting keys or invented SWIFT generation rules.",
+      "status": "UNRESOLVED_AFTER_BOUNDED_INVESTIGATION",
+      "owner": "unknown",
+      "next_action": "Coordinator batches this question for domain-owner applicability and decision evidence."
+    },
+    {
+      "id": "Q-UBER-6",
+      "question": "Which segregation alternative, partition allocation, and fallback acceptance apply?",
+      "investigation": "Country grouping is preferred; weight calculation remains open. Fallback permits overlapping groups.",
+      "source_hashes": [
+        "44984139d5477ae4dae6bdab27be835e0937a93cc4e00835e1f2fdcd13446e50"
+      ],
+      "consequence": "Isolation and no-loss behavior need a selected, approved contract.",
+      "status": "UNRESOLVED_AFTER_BOUNDED_INVESTIGATION",
+      "owner": "unknown",
+      "next_action": "Coordinator batches this question for domain-owner applicability and decision evidence."
+    },
+    {
+      "id": "Q-UBER-7",
+      "question": "Which current cutover and support authority supersedes the dated plans?",
+      "investigation": "The historical runbook contains withdrawn/conditional steps and inconsistent time labels. Technical-live scope and support questions do not prove rollout.",
+      "source_hashes": [
+        "155aeadc7dc58a689f9855947e41d18dd928906564436fe9b905d27def9c1772",
+        "d9cda0a943effd477895865bd974392c71f1659fcc06adb98429b5e86ca9b3bd"
+      ],
+      "consequence": "Do not normalize times or claim completion from planned steps.",
+      "status": "UNRESOLVED_AFTER_BOUNDED_INVESTIGATION",
+      "owner": "unknown",
+      "next_action": "Coordinator batches this question for domain-owner applicability and decision evidence."
+    }
+  ],
+  "automated_checks": [
+    "KnowledgeTopic schema passed.",
+    "Nine original snapshot hashes verified.",
+    "Current selection rows match reviewed bindings.",
+    "All claim ranges exist within assigned current selections.",
+    "All linked snapshots have every manifest alias declared.",
+    "Required body sections and candidate metadata checked.",
+    "Body and frontmatter questions match.",
+    "Source links resolve at intended canonical placement.",
+    "Final bytes hashed after semantic correction review."
+  ],
+  "integration_limit": "Coordinator owns canonical integration, dependent-output reconciliation, indexes, final checkpoint, and receipts.",
+  "publication_limit": "No human approval, business acceptance, implementation, deployment, or execution is established.",
+  "completion_limit": "No source receipt submitted. Full coverage applies only to the nine assigned selected identities.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not establish complete writing review."
+  ],
+  "source_input_bindings_path": ".workbench/ingestion/review-resume-20261116/uber-review/source-input-bindings.json",
+  "source_input_bindings_sha256": "d063300126e33cbef6c9c7766c791477c550153def3d361fdc0295b36fadb150",
+  "final_byte_review": {
+    "reviewed_sha256": "eec46f812056db44fb1174a5cd81b91dfcd563e36a544802d99fa7959beecafa",
+    "status": "SEMANTIC_CORRECTIONS_REVIEWED",
+    "actor": "agent:sol-auto-netting-review",
+    "limit": "Candidate historical intent only; ASD review pending."
+  }
+}

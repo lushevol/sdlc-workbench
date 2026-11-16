@@ -2,17 +2,1095 @@
 
 16 November 2026 (Asia/Singapore).
 
-This annex collects 1,518 question occurrences from the six draft packs, their coordinator review and integration, the CCIL and RATAN interface reviews, and the rolling worker reviews under the [living task](../01-maintenance.md).
-The register groups exact text into 980 rows and preserves each location.
+The [latest user instruction](user-batch-questions-20261116.md#exact-user-input) is to record all questions here for batch handling. Continue independent supported work while answers remain blank. The instruction supplies no domain decision.
+
+This annex collects 1,527 question occurrences from the six draft packs, their coordinator review and integration, the CCIL and RATAN interface reviews, and the rolling worker reviews under the [living task](../01-maintenance.md).
+The register groups exact text into 987 rows and preserves each location.
 The earlier task questions and source review inventory keep their own rows.
 Related wording can still refer to the same business decision.
 
-The 980-row register preserves exact question text. The separate held-review section preserves all 28 reviewer groups.
+The 987-row register preserves exact question text. The separate held-review section preserves all 28 reviewer groups.
 The coordinator will check each material decision against existing answers and applicable sources.
 Related wording can still refer to the same business decision. The held-review groups have not been deduplicated against the register.
 
 Use the **Answer** cell to provide the applicable decision, its source, and effective scope.
 You can also name the owner, identify an earlier answer, or write unknown.
+
+## Current goal gates (checkpoint 173)
+
+These three operational inputs block semantic processing or full source coverage. They are separate from the 1,527 source-review occurrences and 28 held-review groups above. Add answers in the final column.
+
+| ID | Input question | Evidence or scope | Status | Answer |
+| --- | --- | --- | --- | --- |
+| GATE-01 | Can fresh runtime preflight evidence confirm GPT-6 Luna Max with Max reasoning? | The [model gate record](user-model-availability-gate-20261116.md#outstanding-input-request) records the historical mismatch. | Superseded execution-evidence requirement for fresh native work | The [latest user answer](user-review-model-decision-20261116.md#exact-user-input) accepts explicit native selection with runtime-confirmation limits recorded; review workers use GPT-6.1 Sol / Medium. |
+| GATE-02 | Can each semantic merge provide a model-verified handoff with actual runtime and reasoning evidence? | The [model gate record](user-model-availability-gate-20261116.md#resumed-handoff-audit-direction) lists the unverified historical handoffs. | Fresh affected review required | Native selection is accepted by the [latest user answer](user-review-model-decision-20261116.md#exact-user-input). Earlier unverified drafts do not inherit fresh review; use GPT-6.1 Sol / Medium for actual reviews. |
+| GATE-03 | Can source owners provide decision evidence or missing artifacts for all 41 held selections? | See the 28 held-review groups below: 38 Cash pages and three RATAN pages. | Pending |  |
+
+## Continuation input (checkpoint 175)
+
+The [latest user instruction](user-continuation-request-20261116.md) requests continued processing with GPT-6 Luna / Max workers. Three native workers were dispatched with explicit `model=gpt-6-luna` and `reasoning_effort=max` settings. The [fresh preflight](checkpoint-174-native-runtime-preflight.json) found no exposed actual model or reasoning confirmation, including in the available request metadata. The earlier explicit runtime-confirmation requirement therefore remains unresolved. This operational question does not supply or select a business answer.
+
+| ID | Input question | Proposed options (none selected) | Consequence | Answer |
+| --- | --- | --- | --- | --- |
+| GATE-04 | May explicit native GPT-6 Luna / Max worker selection be treated as sufficient execution evidence for fresh document reviews, with the runtime-confirmation limit recorded? | Accept native model/effort selection; keep the runtime-confirmation gate and provide qualifying evidence; another answer; unknown; name a contact. | Resolved for fresh work. Prior unverified semantic drafts still require fresh affected review. | Yes: [exact user answer](user-review-model-decision-20261116.md#exact-user-input). Use GPT-6.1 Sol / Medium for reviews; investigate insufficient evidence before raising material questions. |
+
+## Reviewed owner decision bundles
+
+### CN workflow review: checkpoint 179
+
+The [fresh Sol review](checkpoint-179-cn-workflow-review.json) supports historical and proposed CN intent, with high confidence in the cited statements and low confidence in current applicability. The CN flow and status machine assign different withdrawal states. Migration notes use both nine-day and T+7 horizons, different aggregation predicates, and competing reversal controls. Demos describe expectations without retained execution results. Neither the selected sources nor the current candidates establish a current approval or precedence rule. Owner: unknown.
+
+These three bundles consolidate related existing rows, including `KDQ-d8384b64f9`, `KDQ-5f0200d4fe`, and `KDQ-7c9388fa0c`. They are not three additional independent decisions. All options below are proposed; none is selected. Historical candidate ingestion can continue while current-policy promotion remains blocked.
+
+| ID | Decision needed and consequence | Proposed options | Answer |
+| --- | --- | --- | --- |
+| CN-Q01 | Which withdrawal state model and resultant-suppression policy govern each entity, version, and effective date? Without precedence, a single current lifecycle cannot be stated. | Dated approved CN flow; dated approved state-machine rule; separate rules by scope; another answer; unknown; name a contact. |  |
+| CN-Q02 | Which reconciliation horizon, matching multiplicity, aggregation predicate, and reversal control govern migration? These choices determine matching and duplicate-payment controls. | Provide the approved scoped migration/runbook decision; retain historical alternatives only; another answer; unknown; name a contact. |  |
+| CN-Q03 | What approved current source covers demo expectations, agency rules, effective dates, confirmation, and LMS handling? Historical proposals do not establish current authority or acceptance. | Supply dated approved requirements and scope; confirm historical-only use; another answer; unknown; name a contact. |  |
+
+### Murex feed review: checkpoint 180
+
+The [fresh review](checkpoint-180-murex-feed-review.json) inspected all kept passages in eight pages. Six have complete selected-intent coverage; two retain shared specialist scope. Confidence is high for the source-specific statements and conflicts, and low for a universal current contract. The later H2 document itself calls `RLSR` both released and settled. The adaptor spells it `RSLR` and excludes SETTLED synchronization. Both DOI pages say a manual SNTR-to-INIT reset prevents automatic republishing; older recovery guidance permits automatic republishing. No inspected source establishes current precedence. Owner: unknown.
+
+These bundles consolidate related source questions rather than adding independent decisions to the earlier exact-text count. All options are proposed and no answer is selected. The current contract conclusion remains blocked; bounded historical candidate processing can continue.
+
+| ID | Decision needed and consequence | Proposed options | Answer |
+| --- | --- | --- | --- |
+| MX-Q01 | Which dated window, calendar, eligibility, and publishing rules govern each entity/migration phase? Wrong scope changes feed eligibility and schedules. | Supply approved entity/phase matrix; retain source-specific historical variants; another answer; unknown; name a contact. |  |
+| MX-Q02 | Does the external status use RLSR or RSLR, and does it mean release or settlement? Receipt, release, and settlement cannot be equated safely. | Supply approved status contract and effective scope; retain conflicting alternatives; another answer; unknown; name a contact. |  |
+| MX-Q03 | Which manual recovery sequence is authoritative, and who owns incomplete MQ/workflow recovery rows? Incompatible retry rules can stall or duplicate payments. | Supply approved runbook and ownership; retain historical recovery alternatives; another answer; unknown; name a contact. |  |
+| MX-Q04 | Which amount/date/parent-ID/version/sender mappings and validation branches define the conversion contract? Unsupported normalization can change correlation or value. | Supply approved mapping/version and missing branches; retain each source variant; another answer; unknown; name a contact. |  |
+| MX-Q05 | Which precious-metal, NDS, fixing, and STP exceptions apply, including conditional H2 exceptions? A universal rule would remove stated conditions. | Supply dated product/entity exception matrix; retain scoped proposals; another answer; unknown; name a contact. |  |
+| MX-Q06 | How must past-date reversals and multiple replacement flows be correlated? One-to-one pairing or early replacement processing can contradict documented controls. | Supply approved lifecycle/correlation rule; retain unresolved historical risks; another answer; unknown; name a contact. |  |
+| MX-Q07 | Which H2 specialist flags, retention interpretation, and post-Stella references are approved? Shared specialist contracts and migration authority remain unresolved. | Supply approved specialist/retention scope and migration decision; retain source-bound proposals; another answer; unknown; name a contact. |  |
+
+### Manual and BIC netting review: checkpoint 181
+
+The fresh review found a product-attribute grouping key in the 15 July 2024 minutes that differs from the prototype/demo key. Resultant labels and counterparty-selection wording differ. GUI/API state allowlists and release boundaries conflict; numerical and downstream contracts remain incomplete. Confidence is high for the recorded differences and low for current precedence. Owner: unknown. See the [source-backed review](checkpoint-181-manual-netting-review.json). These are bundles of existing related questions, not additional independent decisions. Proposed options remain unselected.
+
+| ID | Decision and consequence | Proposed options | Answer |
+| --- | --- | --- | --- |
+| MN-Q1 | Which BIC grouping key is effective? Cannot choose product matching restrictions for effective BIC grouping. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| MN-Q2 | Which BIC resultant mapping and selection policy applies? Cannot assert one resultant payment type, deterministic identity mapping, or post-release transition set. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| MN-Q3 | Which SCI source, entity scope, and maintenance/affirmation roles are approved? Cannot map historical profile names to current grants or assert source-contract approval. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| MN-Q4 | Which manual state allowlists and release-boundary transitions apply by version? Cannot merge these documents into one executable action or event permission rule. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| MN-Q5 | Which manual grouping and resultant fields supersede the conflicting tables? Cannot choose one grouping key, identifier limit, or resultant field map as current intent. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| MN-Q6 | What numerical controls and operational contracts complete these proposals? Do not invent operational thresholds, publication authority, transport contract, or expanded inter-entity scope. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+
+### Exceptions and Blotter review: checkpoint 182
+
+The fresh review keeps NDS REVERSAL/REBOOK separate from the IRS Cancel / Amend reason. Historical and leading Blotter matrices differ. Tag-pairing time rules, BIC fallback, unused filters and exact timezone conversion details lack an approved complete rule. Confidence is high for the bounded source statements and low for one effective cross-version contract. Owner: unknown. See the [source-backed review](checkpoint-182-exceptions-review.json). These are bundles of existing related questions, not additional independent decisions. Proposed options remain unselected.
+
+| ID | Decision and consequence | Proposed options | Answer |
+| --- | --- | --- | --- |
+| EX-Q01 | What event/identifier, time basis and day calendar govern the pairing and dated five-day tagging scope? Without the decision, tag matching cannot be asserted deterministic or current. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| EX-Q02 | Which dated product/entity scope governs the NDS and IRS post-release exception variants? Do not silently unify reason values or extend NDS no-un-net policy. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| UI-Q01 | Which dated layout and FMRP/BCS matrices govern action eligibility, including Hold, Manual Settle and specialist CCIL predicates? A single effective action/permission contract cannot be selected. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| UI-Q02 | What SCI BIC fallback and authoritative unused-filter list are approved? Do not invent BIC fallback or remove unspecified filters. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| UI-Q03 | Which DateTime fields and timezone rules does the toggle control? Cannot specify exact timezone conversion assertions. | Supply dated approved rule and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+
+### Uber integration review: checkpoint 183
+
+The reviewed proposal preserves historical portfolio restrictions, two conversion alternatives, distinct retry operations, withdrawn deletion, and conditional cutover steps. Selected performance goals provide no accepted numeric tolerance or executed result. Confidence is high for source-specific statements and low for a current universal integration contract. Owner: unknown. See the [fresh review](checkpoint-183-uber-review.json). These bundles preserve related earlier questions; no business answer is selected.
+
+| ID | Decision and consequence | Proposed options | Answer |
+| --- | --- | --- | --- |
+| Q-UBER-1 | Which schema, field filter, entity configuration, and effective scope are currently approved? Current schema and validation guarantees cannot be inferred outside historical scope. | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| Q-UBER-2 | Which migration alternative and group responsibilities are approved? Do not select one flow or infer removal of the group service. | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| Q-UBER-3 | Which retry, DLT, duplicate, and query-fallback contracts apply by environment? Current recovery and empty-result semantics remain unconfirmed. | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| Q-UBER-4 | What acceptance source and workload define historical compatibility and SCBML non-regression? Compatibility and performance acceptance cannot be inferred from design wording. | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| Q-UBER-5 | Which precious-metal paths and netting keys apply by source system and portfolio, and what defines 26C generation? Avoid broader historical netting keys or invented SWIFT generation rules. | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| Q-UBER-6 | Which segregation alternative, partition allocation, and fallback acceptance apply? Isolation and no-loss behavior need a selected, approved contract. | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| Q-UBER-7 | Which current cutover and support authority supersedes the dated plans? Do not normalize times or claim completion from planned steps. | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+
+### Cashflow identity review: checkpoint 184
+
+The review corrects the Indonesia SID/NID source locator and an unsupported current FX-matching label. It preserves different producer identities, fee/tolerance questions, and Stella concurrent-version limits. Paired Uber conflict context is unavailable in the queued selected view. Confidence is high for bounded support and low for one current matching/version contract. Owner: unknown. See the [fresh review](checkpoint-184-cashflow-identity-review.json). These bundles preserve related earlier questions; no business answer is selected.
+
+| ID | Decision and consequence | Proposed options | Answer |
+| --- | --- | --- | --- |
+| ID-IDENTITY-Q01 | Which flows, entities, and dates govern the Stella lifecycle and FX write-back rules?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q02 | Which version and event fields define duplicate handling, including the 2026 SCBML-filtering proposal?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q03 | Which Razor statuses, message ID, matching fields, tolerances, and reversal conditions govern write-back?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q04 | Does the April 2024 request to remove currency from FX matching apply to the current design?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q05 | Who sends each ACK or NACK, and which reconciliation and recovery actions apply?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q06 | Does the May 2024 Undo reversal-tag rule apply to current withdrawals from NETTED components with READY/Pending Ack, and where are its UAT assertions?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q07 | How should RATAN group cashflows when Counterparty Assignment breaks the original-trade-ID stability agreement?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q08 | Does the Indonesia SID/NID plan replace N/S plus 11 digits, and what namespace, width, capacity, country scope, and effective date apply?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q09 | What version-conflict recovery and atomicity rules govern concurrent Stella amendment, release, and netting?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+| ID-IDENTITY-Q10 | Which producer-specific identities and write-back cardinalities apply, including Murex SETTLED exclusion?  | Supply approved dated contract and scope; retain source-specific alternatives; another answer; unknown; name a contact. |  |
+
+### Connected review batches: checkpoints 185–188
+
+The reviews below consolidate existing question IDs where supplied. Regional SSI precedence is now source-supported; current authority, missing tie-breaks, incompatible contracts, source omissions and acceptance conditions remain open. Each review links exact inspected source identities and ranges. All proposed choices remain unselected; existing answer cells elsewhere in this document are preserved.
+
+| Existing or review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| KDQ-fa019a8c49 | Which version, region, effective date, and owner govern this SSI/Nostro topic? A universal rule would erase regional and version limits. | All selected sources give dated or regional intent. None supplies one current governing authority. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-f6c5e6a653 | Does source status `Release` mean `Released`; what happens when no SSI ID exists? Cannot define missing-SSI behavior or normalize status labels. | SRC-a666b8a256e9c88651c7451e L19 supplies literal labels and conditional lookup only. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-ae4e60b7e0 | Which date boundaries and cashflow population apply when a primary Nostro is created or deleted? Cannot derive inclusive dates or affected cashflows. | SRC-6b78ebc7ddb721d5b4591df5 L56 requests Start/End Dates and automatic refresh without boundaries or scope. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-21c11727dd | Which effective dates and tie-breaking rules apply when IRS and CCS SSI records overlap? Cannot select a deterministic SSI from overlapping candidates. | SRC-6b78ebc7ddb721d5b4591df5 L63 requests correct SSI/CFI and date support without tie-breaking detail. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-f6b21f48f4 | Is adding NOX approved and currently applicable; what is the governing validation list? Proposal cannot establish current validation membership. | SRC-ffc256f51159c0b5e1cf2553 L1-L3 says to add NOX; no effective list is given. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-a8f2c7244f | Which NSTP attributes are mandatory, and which target exception applies when any are missing? Cannot invent a complete control schema or error contract. | SRC-53ffa7d156a23f8789fb5ffa L60-L64 names two propagated attributes and requires a hard stop with exception. It gives no complete mandatory-field or exception contract. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-6f50e337aa | Which HK/TW checklist version applies, and where are its referenced scope images? Text alone cannot establish image scope or current approval. | SRC-1e9231a378d43046cd6e6149 L1-L62 includes two image links and mixed checklist applicability cells. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-c83d9ee9e1 | Which Prime Drop 2 checklist version is currently authoritative? Hierarchy is documented; its current applicability still needs authority. | SRC-1fb7ba38d601b0564039298a L52 explicitly states hierarchy precedence; approval and current applicability remain unstated. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-0384781ae4 | Which Prime Nostro source, settlement means, and settlement accounts are approved? No static mappings can be inferred. | SRC-1fb7ba38d601b0564039298a L36-L37 leaves the Nostro golden source TBC and static values blank. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-42d5558966 | Confirm the Korea lookup scope: does SGO-to-SGD apply only to SSI lookup, with default Nostro behavior? Must preserve distinct lookup and downstream currency scopes. | SRC-0a6dff417e9803686301f674 L4 requests SSI conversion; L5 strikes conversion out for Nostro. L55 separately requires KRO-to-KRW for payment/accounting. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-8ad3b904b1 | Which Korea settlement means are required: new values to agree, or no new means? Confirm the Nostro source and account values. Conflicting static-data intent prevents one authoritative mapping. | SRC-0a6dff417e9803686301f674 L39-L40 requests new means/accounts; L57 says no new means. Nostro source remains TBC. [Review](checkpoint-185-ssi-nostro-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| checkpoint-186-KT-platform-openfin-fdc3-design-Q1 | Which intent schema, empty-subject exception, source-tile rule, version fallback, and external-origin policy are approved? No default trust or interoperable handler guarantee follows from these examples. | The registration schema permits an empty source-tile field; the access example skips empty subjects. Version and latency acceptance details are unspecified. [Review](checkpoint-186-KT-platform-openfin-fdc3-design-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| checkpoint-186-KT-platform-openfin-fdc3-design-Q2 | Which current SSO and entitlement handoff governs Ratan/Blade users and OpenFin adoption? Do not select an authentication mechanism or current entitlement baseline from conflicting historical contexts. | The S2B silent-login description differs from the memo FMAA-token/no-login proposal. The dependency copy still names EMS2. The memo leaves user populations unresolved. [Review](checkpoint-186-KT-platform-openfin-fdc3-design-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| checkpoint-186-KT-platform-openfin-fdc3-design-Q3 | Which dated adoption scope, design-system milestone, and desktop compatibility criteria apply? Do not infer a deadline, production acceptance, or no-impact guarantee. | The design plan says year-end without a selected year. Desktop claims lack measurements and supported runtime/version evidence. [Review](checkpoint-186-KT-platform-openfin-fdc3-design-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| checkpoint-186-KT-platform-query-performance-Q1 | Which value-date behavior and page-size SLA are approved, including exactly one month and removed defaults? Observable search filtering and acceptance cannot be selected at the boundary. | The proposal says less than one month but blocks ranges greater than one month. Users can remove the default with a warning. Page-size notes propose SLA revision without a final bound. [Review](checkpoint-186-KT-platform-query-performance-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| checkpoint-186-KT-platform-query-performance-Q2 | Which batch transaction, asynchronous completion, lock-list, and Uber queue/topic topology are approved? Do not infer topology equivalence or adopt a transaction/timeout contract. | The batch draft retains restructuring and asynchronous alternatives. Queue splitting names eight queues; another page names seven topics. Current implementation assertions are unverified. [Review](checkpoint-186-KT-platform-query-performance-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| checkpoint-186-KT-platform-query-performance-Q3 | Which Kafka timeout values, interceptor registration, tracking format, and UI timing/loading contract apply? Configuration and measurements need environment-specific acceptance. | Kafka values are placeholders. Listener coverage is an objective. UI budgets are examples and config loading retains asynchronous/SSR alternatives. [Review](checkpoint-186-KT-platform-query-performance-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| checkpoint-186-KT-platform-settlement-ui-qa-draft-owner-blocked-Q1 | Which owner confirms this draft, its two-sprint reference, escalation meaning, and required checks? Do not turn the incomplete sentence into an approved release deadline. | The selected draft says fixed or hoisted at least two sprints, without identifying a release boundary or defining hoisted. [Review](checkpoint-186-KT-platform-settlement-ui-qa-draft-owner-blocked-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-data-entitlement-and-access-Q1 | Which effective authority resolves removed-versus-new business-rule roles and conflicting historical GBS country scopes? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-data-entitlement-and-access-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-data-entitlement-and-access-Q2 | Which CES application, subject, action, and data-entitlement policy governs each tile and system-only API path, including the duplicated Nostro subject? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-data-entitlement-and-access-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-data-entitlement-and-access-Q3 | Which blank role-country matrix entries are incomplete data, and which current signed permission tests supersede these historical expectations? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-data-entitlement-and-access-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-dr-operations-Q1 | Who owns the effective DR runbook and confirms current topology, schedule, infrastructure readiness, and EOD completion evidence? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-dr-operations-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-entity-and-currency-onboarding-controls-Q1 | Which dated routing, batch horizon, product support, and required-versus-not-required checklist govern each target entity? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-entity-and-currency-onboarding-controls-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-entity-and-currency-onboarding-controls-Q2 | Who approves Vietnam draft assumptions, onboarding completion criteria, and unresolved Data Entitlement responsibilities? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-entity-and-currency-onboarding-controls-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-entity-and-currency-onboarding-controls-Q3 | Which owner resolves Hefei branch-specific SSI becoming global, and supplies effective static-data ownership and reviewed release inputs? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-entity-and-currency-onboarding-controls-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-performance-and-capacity-intent-Q1 | Which effective environment, workload, time unit, percentile, latency metric, and acceptance authority govern each retained target? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-performance-and-capacity-intent-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-performance-and-capacity-intent-Q2 | Which baseline and retained execution results establish capacity and performance after the architecture change? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-performance-and-capacity-intent-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-technical-recovery-exceptions-Q1 | Who confirms the effective process revision, Impact Assessment Matrix version, and accountable approval and escalation contacts? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-technical-recovery-exceptions-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KT-ratan-uber-queue-partitioning-Q1 | Which approved asset-class queue topology, effective entity set, and routing assertions govern both filter variants? Effective operational contract remains unconfirmed. | Selected sources and available prior/canonical context examined; missing authority is not inferred. [Review](checkpoint-187-KT-ratan-uber-queue-partitioning-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-84bfe1b514 | Which owner and effective version govern the Apollo rule-response contract? Cannot establish current response schema or approval. | Selected Apollo text gives responsibilities but no approved revision. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-3e9144afb2 | Which effective SCI contract governs the daily cache and cache-miss behavior? Cannot infer stale-cache or downstream-error handling. | DQSL obtains authentication through BPSI; SCI supplies data. No version or failure contract is given. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-205f9ae45e | Which trade types and effective versions use each CDUPS confirmation route? Cannot substitute one confirmation path for all trades. | Murex, EDrisque BCS, and Blade FMRP paths differ explicitly. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-c7e093afc2 | Which UTC schedule governs the Markets UDP intraday batches, and which daylight-saving policy applies? Cannot select a deterministic global trigger schedule. | The source pairs 15:00 SGT with 06:00 UTC and 16:00 SGT with 07:00 UTC. UKT/UST equivalents are also date dependent. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-6e2e11228e | Which MDS contract version defines working days, the green-zone handling, and failed synchronization recovery? Cannot infer calendar or recovery rules. | The selected MDS text supplies a working-day schedule and separate weekend green zone without recovery behavior. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-998542367b | Which approved TIS API version implements the listed entity/status/NOX/reversal scope? Cannot claim implementation or invent an API schema. | The selected text requests automation and gives predicates, but supplies no approval or response contract. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-b80afea366 | Which RDM route and effective version apply to each reference feed? Cannot collapse all feeds into one route. | Selected RDM table distinguishes Solace, FileIT, and Kong API; its closing summary shows only FileIT. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+| KDQ-75b4b1db97 | Does any scope retain CES Data Profile-over-Data Policy precedence outside the later clarified migration? Must not reinstate a universal legacy split or invent CES role equivalence. | Legacy interface note says CES data entitlement only and EMS2 function entitlement; current SDK knowledge records later explicit migration intent. [Review](checkpoint-188-reference-control-interfaces-review.json) | Supply dated scoped decision/source; another answer; unknown; name a contact. |  |
+
+### 186-ARC-platform-cashflow-data-exposure-final-sweep
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-3ab64b11ab90 | Which versioned data-provider grammar, error codes, caller headers, and entitlement contract are approved? Do not infer unrestricted SQL, current grants, or response compatibility. | The phased interface mixes custom and standard errors and SQL-shaped requests. Different authorization descriptions occur in the SSI feed alternatives. [Review](checkpoint-186-ARC-platform-cashflow-data-exposure-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-8db2d60c1895 | Which large-volume transport, stable slicing/order, capacity acceptance, and report retention are selected? Complete and stable result delivery is unverified. | Solution D is preferred, but other transports remain. The 5000 slice fragment lacks snapshot/consistency/order details. Capacity conclusions have no reviewed execution. [Review](checkpoint-186-ARC-platform-cashflow-data-exposure-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-f53dc9bb278d | Which typed field catalog and SSI last-used/inactivity boundaries govern consumers? Avoid silently changing consumer typing or inactivity semantics. | Catalog strings and model path differences do not settle runtime types. Dormant SSI has two interface variants and no complete date/reconciliation rule. [Review](checkpoint-186-ARC-platform-cashflow-data-exposure-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-ARC-platform-cashflow-data-query
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-a02b5c994c98 | Which typed query model, mapping version, and duplicate/missing-field disposition are approved? Do not infer schema equivalence or remove unresolved fields. | Examples use differing physical/logical names and types. The table explicitly marks duplicates, unused fields, and missing instrument mappings. Optional cache/version mechanisms are not settled. [Review](checkpoint-186-ARC-platform-cashflow-data-query-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-26cbbad31c13 | Which open-details refresh interaction, entitlement/filter path, and dashboard calendar rules are approved? User actions and displayed data can differ unless these boundaries are resolved. | Notification requirements specify Y/N while the later approach mandates Refresh-only blocking. Dashboard Friday and five-business-day rules need one configured calendar. NSTP projection triggers remain incomplete. [Review](checkpoint-186-ARC-platform-cashflow-data-query-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-5138238229c7 | Which partial/full GraphQL error shape, numerical SLA, and history-retention/slimming acceptance apply? Do not infer retry, failure, or audit-preservation guarantees. | Empty values are not typed. Proposed response-time budgets are not approved. The slimming plan requires safety/compatibility checks and leaves retention authority absent. [Review](checkpoint-186-ARC-platform-cashflow-data-query-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-ARC-platform-code-review-agent-domain-scope
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-1eeb65dc51dc | Which review schedule, gate status, identity strategy, and roadmap version are approved? Do not infer merge authority, adopted credentials, or delivery commitments. | The overview proposes a mandatory gate. Milestones mention personal-token alternatives; the architecture requires managed identities. Current approval and version precedence are absent. [Review](checkpoint-186-ARC-platform-code-review-agent-domain-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-5141f23a04e1 | Which redaction, retention, scoring, and evaluation thresholds govern review output? Data handling and finding acceptance need an explicit governed contract. | The architecture requires redaction and exact prompt/response retention, while low-confidence and fuzzy-match thresholds are unspecified. [Review](checkpoint-186-ARC-platform-code-review-agent-domain-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-ARC-platform-ratan-octopus-api-domain-scope
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-d04c7a77452a | Which versioned GraphQL schema, authorization policy, and mutation contracts are currently supported? Do not infer deployed availability, mutation grants, or complete release evidence. | The introduction documents queries and credential headers, while its mutation claim has no mutation example or complete schema. The overview contains broader aspirational use cases. [Review](checkpoint-186-ARC-platform-ratan-octopus-api-domain-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-ARC-settlement-platform-p3-final-sweep
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-784e727cfcdb | Which effective service boundary, retention policy, consistency target, and shared-infrastructure layout are approved? Do not infer current deployment, infinite retention authorization, or a measurable recovery guarantee. | Historical comparison, future labels, blank retention fields, and unbounded availability demands remain mixed. Shared cluster and PSS ownership alternatives are unresolved. [Review](checkpoint-186-ARC-settlement-platform-p3-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-ARC-uber-open-search-routing-20261115-final-sweep
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-054ef83b76d2 | Which query/date-volume limits, proposed NFR budgets, and fallback/decommission exit criteria are approved? Do not silently change visible query limits or remove storage dependencies. | The OpenSearch plan replaces a time limit with volume, while another proposal limits value-date ranges. Parallel-run duration is a plan, without accepted exit checks. [Review](checkpoint-186-ARC-uber-open-search-routing-20261115-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a81570073e3e | Which versioned model routing, reconciliation/replay idempotency, external V2, and replication contracts are complete? Data-source transparency and consumer compatibility remain unverified. | The plan leaves domain-source routing and replication inputs incomplete. DLT storage/replay is proposed, without complete duplicate/consistency rules. [Review](checkpoint-186-ARC-uber-open-search-routing-20261115-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-advanced-search-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-6fc4d626ddac | Which DSL rules and examples are authoritative, including nesting counts, single-key objects, NOTIN, and sort/pagination scope? Do not compile the examples into a contract or claim semantic equivalence. | Multiple valid-labeled examples violate written rules; NOTIN changes to IN in one SQL sample. The count example mixes and/or. Sorting and OpenSearch compatibility carry mixed required/placeholder claims. [Review](checkpoint-186-KT-advanced-search-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-cashflow-group-validation-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-a875a2006ad4 | Which missing-group-flag behavior and amendment mapping/withdrawal linkage are approved? Do not infer deterministic fallback or matching semantics. | The module row mixes current-flow fallback with nested otherwise-stop wording. Best matching is marked unresolved. The POC contains an inconsistent confirmation trade ID. [Review](checkpoint-186-KT-cashflow-group-validation-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-63a678c54507 | Which validation scope, Murex linkage, and late-amendment hold control apply by version? A generalized current validation rule or protective hold cannot be assumed. | The preferred 2024 group gate distinguishes FMRP version-backward validation and Murex trade-only validation. Murex linkage/LIEN remain open; late hold is not mandatory in the source. [Review](checkpoint-186-KT-cashflow-group-validation-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-c7b36a39173a | Which H1/H2 transition dates and cancelled-component completion rules supersede the examples? Do not normalize dates or treat scenario outcomes as executed proof. | The model-switch table has inconsistent dates/day labels and illustrative counts. It gives no approved cutover binding. [Review](checkpoint-186-KT-cashflow-group-validation-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-ces-entitlement-control-20261115
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-3d42b2cba87d | Which compliance-approved policy versions, fields, precedence, and feature coverage apply? Do not invent grants or expand compliance rules. | Country examples are explicitly not final prohibitions. The initial supported fields and day-one scope leave history, group and some query APIs unresolved. The withdrawn local roles cannot map CES permissions. [Review](checkpoint-186-KT-ces-entitlement-control-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-325d5c438bb9 | Which emergency-bypass authority, cache staleness, error contract, and reconciliation transport are approved? Do not silently broaden data access or claim complete enforcement. | Normal errors fail closed; selected configuration permits privileged no-filter bypass. One-hour cache and reconciliation alternatives retain operational tradeoffs. Gateway versus service retrieval remains unresolved. [Review](checkpoint-186-KT-ces-entitlement-control-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-b895094a4059 | Which notification destination and session/buffer contract are approved? Client/server compatibility and session cleanup require a single contract. | The selected design uses psid/username variants and a later queue-prefixed subscription. The fix requires lookup-only behavior; reported after-fix metrics are not execution evidence. [Review](checkpoint-186-KT-ces-entitlement-control-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-lock-concurrency-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-57473b9fb68d | Which lock implementation, owner-validation contract, list atomicity, and idempotent result-recovery protocol are approved? Do not claim atomic business transactions or safe retries from a lock library. | Redis/Redisson alternatives and single-key versus faster-list mutual exclusion remain unresolved. Parent/child timeout consistency requires more than locking. [Review](checkpoint-186-KT-lock-concurrency-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-8781553eec25 | Which caller migration and timeout configuration preserve behavior across old/new lock versions? Source compatibility does not prove behavioral compatibility; duration-sensitive callers require inspection. | The second argument changes both meaning and milliseconds/seconds units. Source examples preserve syntax. The timeout proposal uses a one-hour connect timeout without accepted latency bounds. [Review](checkpoint-186-KT-lock-concurrency-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-platform-cashflow-processing-contracts-final-sweep
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-ffb9c27aee1f | Which versioned transition and persistence contract completes the lifecycle matrix? Do not infer a complete API permission or field-generation contract. | The matrix has blank field mappings, state-specific New behavior, and no general fallback. Related manual and holding sources use different state labels and scopes. [Review](checkpoint-186-KT-platform-cashflow-processing-contracts-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a7656fe4ceda | How should cancelled fixing notifications update flags, and which LIEN/fixing design is selected? Separate flag persistence from lifecycle movement before choosing behavior. | The fixing narrative says cancelled means do nothing; its scenario changes the displayed flag. LIEN alternatives and Pending Fixing transitions remain unresolved. [Review](checkpoint-186-KT-platform-cashflow-processing-contracts-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-c6ba46c61c1f | Which eligible currencies/cashflows, USD conversion rule, and strict threshold govern payment adjustment? Do not invent eligibility or exact-threshold acceptance. | The selected requirement says below configured USD 1 equivalent and eligible scope, without the complete conditions. Original-versus-adjusted downstream amounts are explicit. [Review](checkpoint-186-KT-platform-cashflow-processing-contracts-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-cedf1da7e50b | Which effective SSI, IRS, confirmation, mandatory-field, and maker/checker contracts apply? Current scope and complete action predicates require domain-owner confirmation. | Selected sources provide historical orchestration responsibilities, status strings, source progress labels, and a field-check placement without field names. [Review](checkpoint-186-KT-platform-cashflow-processing-contracts-final-sweep-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-platform-java-engineering-guidelines-domain-scope
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-020c9319ac46 | Which owner and effective version approve the WIP rules and repository exceptions? Do not treat source-specific guidance as current universal enforcement. | The document defines RFC obligation terms but remains WIP and self-limits coverage. No adoption or approval evidence was selected. [Review](checkpoint-186-KT-platform-java-engineering-guidelines-domain-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-c97957f40b89 | Which async-test environment, update timestamp column, and sensitive-log policy are intended? Resolve concrete contracts before implementing or enforcing these details. | Async prose uses MOCK while its example uses RANDOM_PORT. Timestamp prose and example differ. Mandatory request logging has no redaction/retention rule. [Review](checkpoint-186-KT-platform-java-engineering-guidelines-domain-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-platform-strategic-ssi-stamping
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-de2dc02be90c | What identifies a reusable trade-stamping result, and when must a repeated request restamp or persist a new record? Identity, idempotency, version selection, and persistence cannot be asserted consistently. | The draft simultaneously questions majorVersion, proposes reuse by tradeId/majorVersion, and requires stamping each repeated request. [Review](checkpoint-186-KT-platform-strategic-ssi-stamping-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a5fe6b2d659d | Which cashflow stamping placement, matching fields, failure states, and concurrency behavior are approved? A complete product-agnostic stamping contract remains owner-blocked. | Reviewed Group batching and orchestration alternatives. Matching uses an ellipsis and exception/business cases remain TODO. [Review](checkpoint-186-KT-platform-strategic-ssi-stamping-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a3049d476403 | What SSI refresh scope, time windows, ad-hoc exclusions, event ordering, and trade/cashflow impact rules are intended? Historical implementation filters cannot be promoted to approved refresh intent. | The strategic draft leaves impact-addressing headings empty. The SCBML implementation note reports six-day filters and exclusions, without establishing target policy. [Review](checkpoint-186-KT-platform-strategic-ssi-stamping-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-platform-uber-migration-contracts
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-ecb895c66326 | Which migration alternative and compatibility boundary supersede the competing JSON, SCBML, and isolated-workflow proposals? A final routing or API-removal contract cannot be asserted. | Reviewed integration options, 2.0 restructuring, and selected development-testing API mappings. No authoritative selection is supplied. [Review](checkpoint-186-KT-platform-uber-migration-contracts-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-0ca3b9ad6f15 | Which service publishes process-in events for every action, including mixed-history transactional operations and SSI refresh? Missing or duplicate workflow publication is a material compatibility boundary. | Integration and testing sources repeatedly leave NetNew, RevertToQueued, Reinstate, scheduled actions, and topic routing unresolved. [Review](checkpoint-186-KT-platform-uber-migration-contracts-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-78225f9da65b | What schema-evolution rules preserve required data and default semantics across exact protobuf and JSON versions? It does not prove universal schema compatibility or permit silent information loss. | The development-testing table reports case-specific results and broad upgrade principles without retained schema bytes or executable assertions. [Review](checkpoint-186-KT-platform-uber-migration-contracts-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-455f53f4a094 | What exact existing-caller API, response, state, timing, and regression evidence approves this migration? Reported passes and fixes cannot establish compatibility acceptance. | Selected tests and issue notes report behavior and observations, but retain no executed artifacts or complete baseline/candidate assertions. [Review](checkpoint-186-KT-platform-uber-migration-contracts-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-product-agnostic-aggregation-20261115
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-7889e21e36cc | Which aggregation placement, rule scope, schedule availability, and current source revision are approved? No universal product-agnostic coverage or final workflow can be asserted. | The detailed draft retains competing placements. Its TDSX product-support statement is source-reported, not verified capability. [Review](checkpoint-186-KT-product-agnostic-aggregation-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-d9c1f0b5622e | How must historical cashflows, released/netted rebooks, Stella writeback, and cross-system netting behave? These lifecycle boundaries remain owner-blocked. | The detailed design expressly lists these questions. The referenced scenario spreadsheet is absent from selected text. [Review](checkpoint-186-KT-product-agnostic-aggregation-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-fb852996be2e | Where must SGD-to-SGO conversion occur, and which downstream fields and consumers must observe the alias? Currency grouping, rounding, and cutoff behavior need one approved contract. | Reviewed mutually exclusive Group Management and Netting options. No selection or verified API compatibility is supplied. [Review](checkpoint-186-KT-product-agnostic-aggregation-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-rule-service-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-08868b1dc7df | Which rule design, service ownership, rule vocabulary, and API revision govern each current flow? No current common-engine contract can be asserted. | Reviewed original NSTP, reconstruction, archived overview, migration, technical design, and selection conclusion. They describe different stages. [Review](checkpoint-186-KT-rule-service-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-41dde635cc62 | What exact adapters preserve existing SCBML callers, exception semantics, entitlements, and rule-result behavior during migration? Existing consumers cannot be assumed compatible. | The archived overview proposes domain JSON conversion and v1 retirement. Migration API questions remain open. [Review](checkpoint-186-KT-rule-service-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-549c143a264c | What are the final execution-flag spelling, status enum, field omission, and version contracts? A deterministic provider contract requires corrected authoritative examples. | API examples mix NOT_EXECUTED and NOT_EXECUTION, DELETE_PEDING and DELETE_PENDING, and changed referenceRuleId/version behavior. [Review](checkpoint-186-KT-rule-service-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-8cd3b65771f6 | Which consistency, dry-run activation, cache freshness, and publication-retry guarantees are approved? Reliability and safe rule activation remain unresolved. | The archived sources identify PG/Redis consistency and DB/Kafka dual-write risk. Dry-run design lacks a complete approval contract. [Review](checkpoint-186-KT-rule-service-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-settlement-exception-workflow-20261115
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-e94b53ea4460 | Which exception workflow revision governs each business flow, including cross-cashflow approval and the 1000-item bulk proposal? Current approval scope cannot be asserted. | Reviewed the historical prohibition and the separate bulk design. No supersession authority is supplied. [Review](checkpoint-186-KT-settlement-exception-workflow-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e1022de9e8f1 | What are the batch identity field, aggregate-success meaning, authorization rules, and applicable amount comparison? A deterministic consumer contract requires these decisions. | The selected batch contract contradicts referenceId/cashflowId and contains mixed-success examples. [Review](checkpoint-186-KT-settlement-exception-workflow-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-dc1055db2d97 | Which recovery owners, alert thresholds, compensation actions, and reinstatement conditions are approved? Recovery responsibilities cannot be presented as current approved operations. | The operations matrix includes proposals and struck-through ownership. The compensation note lacks a full contract. [Review](checkpoint-186-KT-settlement-exception-workflow-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-fe8bee50d29b | Which maker/checker state behavior governs cancel-deleting rules, adhoc SSI changes during other pending exceptions, and partial failures? Ambiguous state transitions require owner confirmation. | Reviewed state examples and unresolved adhoc-SI question. Cancel-deleting example returns ADD_CONFIRMED. [Review](checkpoint-186-KT-settlement-exception-workflow-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-5ec9d534b90b | Is asynchronous Camunda task completion intended, or must completion coordinate synchronously? No approved concurrency or pool-size contract can be derived. | The performance-improvement selection contains contradictory direction and struck-through batch/index proposals. [Review](checkpoint-186-KT-settlement-exception-workflow-20261115-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-settlement-feeds-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-a175611bd150 | Which feed variant, local calendar/date boundary, retry contract, and storage schema are approved by downstream? Do not merge schedules, retries, or identifiers across consumers. | Direct EBBS and batch Aspire schedules differ. After-midnight selection is unclear. OLTP explicitly has no retry while EBBS has coded retries. Enisis adds no wire detail. [Review](checkpoint-186-KT-settlement-feeds-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-settlement-security-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-bda350485512 | Which identity, Indonesia isolation, external-user scope, and entitlement mapping contracts are approved? Do not infer authority, current rollout, or complete function/action assignments. | Historical internal-only settlement security differs in scope from broader Portal external login. The merge design contains identity/isolation objectives and incomplete mapping examples. [Review](checkpoint-186-KT-settlement-security-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e239fc139879 | How will existing token/login consumers remain compatible with the gateway merge and entitlement token transport? Backward compatibility is unresolved; endpoint removal cannot be treated as approved intended behavior. | The proposal relocates token endpoints and removes legacy login APIs without inspected caller inventory or runtime evidence. Header-size estimates are source assumptions only. [Review](checkpoint-186-KT-settlement-security-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-static-config-governance-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-87c63d9065f6 | Which onboarding architecture and configuration-store contract are approved, and for which configuration families? A single current architecture cannot be asserted. | Reviewed four onboarding options and the separate static-config alternatives. No selection authority is provided. [Review](checkpoint-186-KT-static-config-governance-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-01c11f5003e7 | Which maker/checker permissions, validations, approval boundaries, and audit retention govern each configuration family? Management API behavior cannot be treated as a complete approved contract. | Sources specify role-separated operations but do not supply final authorization or retention policy. [Review](checkpoint-186-KT-static-config-governance-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e52c9540f5de | Which pending-versus-effective-data behavior and cache freshness guarantees must existing consumers retain? Consumer compatibility and freshness require explicit acceptance. | The configuration document identifies prior-data access requirements and a proposed UI breaking change. The hook draft is incomplete for services. [Review](checkpoint-186-KT-static-config-governance-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e16be4cdbb55 | Do blacklist, low-frequency configuration, and batch onboarding fall within self-service scope? Self-service scope must remain bounded. | The onboarding source expressly leaves these questions unresolved. [Review](checkpoint-186-KT-static-config-governance-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-KT-static-data-cache-p3
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-c3d8840e5b61 | Which source synchronization, reconciliation schedule, and freshness requirements govern each settlement dataset? No current freshness guarantee can be asserted. | Reviewed SSI+, SCI, Nostro, and generic dump/notification proposals. Current approval and operational applicability are absent. [Review](checkpoint-186-KT-static-data-cache-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a4741eec6810 | What are the approved TTL, invalidation, key-collision handling, reverse-index update, and CES cache policies? Stale data and entitlement behavior remain unresolved design boundaries. | Stage-one lifecycle and CES details are incomplete. The proposal provides examples rather than a complete coherence contract. [Review](checkpoint-186-KT-static-data-cache-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a1a4a219a025 | Which Redis or Hazelcast architecture is approved for the applicable stage and environment? Historical deployment proposals cannot establish current infrastructure. | The cache-layer source contains Hazelcast deployment detail but defers it behind Redis Day1. [Review](checkpoint-186-KT-static-data-cache-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-9a13e2dca837 | When may FileIT remove source files, and what acknowledgement, retry, retention, and reconciliation conditions govern removal? File-loss and replay responsibilities require a complete approved contract. | The selected note chooses removal but does not define recovery and retention conditions. Success and acceptance statuses differ. [Review](checkpoint-186-KT-static-data-cache-p3-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 186-postgresql-diagnostic-guidance
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-35b0b66d934d | Which query-service setting and function/index contract, if any, are approved for a specific environment? Do not infer production safety, universal planner thresholds, or accepted expression-index semantics. | The source uses a 6.24GB incremental estimate and calls it safe, but does not model concurrent operators or a complete memory bound. Function immutability wording is inconsistent. [Review](checkpoint-186-postgresql-diagnostic-guidance-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-business-rule-governance
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-fcad79b7806f | Confirm the current rule approval authority, annual-review owner, and effective profiles. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-business-rule-governance-Q1`. |  [Review](checkpoint-187-KT-ratan-business-rule-governance-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-fae116c15c6e | Confirm precedence between general maker/checker control and immediate operator activation/disable. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-business-rule-governance-Q2`. |  [Review](checkpoint-187-KT-ratan-business-rule-governance-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-dated-migration-runbooks
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-f0b6f8f64b83 | Confirm archival-only applicability and current replacement controls. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-dated-migration-runbooks-Q1`. |  [Review](checkpoint-187-KT-ratan-dated-migration-runbooks-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-4d07c0447dfb | Resolve the China product list and UK execution times before any operational reuse. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-dated-migration-runbooks-Q2`. |  [Review](checkpoint-187-KT-ratan-dated-migration-runbooks-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-nostro-golden-source-proposal
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-36e7a22dfc50 | Confirm whether the NAMS→RDM proposal was approved and its effective scope. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-nostro-golden-source-proposal-Q1`. |  [Review](checkpoint-187-KT-ratan-nostro-golden-source-proposal-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-8016e65e64c7 | Resolve suspense storage, cache ownership, matching keys, and one-account-to-many-ledger rules. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-nostro-golden-source-proposal-Q2`. |  [Review](checkpoint-187-KT-ratan-nostro-golden-source-proposal-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-payment-rounding-intent
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-9ce649ff0526 | Confirm current rounding responsibility and the effective currency table. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-payment-rounding-intent-Q1`. |  [Review](checkpoint-187-KT-ratan-payment-rounding-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-0c2d970d6f6e | Resolve negative amounts, tie handling, missing currencies, and floor-versus-truncation semantics. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-payment-rounding-intent-Q2`. |  [Review](checkpoint-187-KT-ratan-payment-rounding-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-portal-onboarding-scope
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-506eaf900a61 | Which signed request revisions, tenant and Portal checks, authentication fallback policy, and separate technical/business activation evidence govern these onboarding targets? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-portal-onboarding-scope-Q1`. |  [Review](checkpoint-187-KT-ratan-portal-onboarding-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-settlement-integration-checklist-scope
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-8428349af5e3 | Which specialist rules, schemas, branch eligibility, scheduler timezone, and acceptance evidence govern each listed integration? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-settlement-integration-checklist-scope-Q1`. |  [Review](checkpoint-187-KT-ratan-settlement-integration-checklist-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-5520cdd51145 | Which effective API and permission contracts govern SSI usage and the Group Blotter/dashboard CES extension? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-settlement-integration-checklist-scope-Q2`. |  [Review](checkpoint-187-KT-ratan-settlement-integration-checklist-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-90fe32c2dc93 | Who confirms manual-entity activation and payment controls before Swift/accounting processing is enabled? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-settlement-integration-checklist-scope-Q3`. |  [Review](checkpoint-187-KT-ratan-settlement-integration-checklist-scope-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-static-maker-checker-controls
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-cfa140572864 | Confirm current static profiles and lifecycle authority. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-static-maker-checker-controls-Q1`. |  [Review](checkpoint-187-KT-ratan-static-maker-checker-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-ba4d85652f67 | Resolve the automatic-rule update contradiction for Pending Auto Netting refresh. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-static-maker-checker-controls-Q2`. |  [Review](checkpoint-187-KT-ratan-static-maker-checker-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-strategic-settlement-goals
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-72055282bd44 | Confirm the current strategic scope and accountable owner. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-strategic-settlement-goals-Q1`. |  [Review](checkpoint-187-KT-ratan-strategic-settlement-goals-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-27e487de0fb7 | Confirm effective currency/entity mappings in their owning contracts. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-strategic-settlement-goals-Q2`. |  [Review](checkpoint-187-KT-ratan-strategic-settlement-goals-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-trade-control-expansion-intent
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-0f73786dff2b | Who defines the effective C&A/Apollo error-code inventory, retry exhaustion behavior, and manual recovery ownership? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-control-expansion-intent-Q1`. |  [Review](checkpoint-187-KT-ratan-trade-control-expansion-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-fb90971dc6e3 | Which rate source, precision/tolerance, cut timezone and validation authorization define the option-expiry exception and spot-ticket controls? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-control-expansion-intent-Q2`. |  [Review](checkpoint-187-KT-ratan-trade-control-expansion-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-6674a2bf257e | Which scoped permission rule permits null-entity trades for GBS India while preserving other data-entitlement restrictions? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-control-expansion-intent-Q3`. |  [Review](checkpoint-187-KT-ratan-trade-control-expansion-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-trade-date-and-exception-audit-display
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-daa23d89e691 | Confirm current trade-date fallback and exception-audit ownership. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-date-and-exception-audit-display-Q1`. |  [Review](checkpoint-187-KT-ratan-trade-date-and-exception-audit-display-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-955c1e269d5c | Resolve State versus Status naming without inferring the answer from uninspected screenshots. Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-date-and-exception-audit-display-Q2`. |  [Review](checkpoint-187-KT-ratan-trade-date-and-exception-audit-display-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-KT-ratan-trade-migration-controls
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-db5322d80084 | Which signed PROD runbook and exact trade/cashflow mapping govern each migration scope, including NDS-generated FXD trades? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-migration-controls-Q1`. |  [Review](checkpoint-187-KT-ratan-trade-migration-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-aef9c1dab9f8 | Which reconciliation assertions, accountable reviewers, and retained results authorize lifting each NSTP control? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-migration-controls-Q2`. |  [Review](checkpoint-187-KT-ratan-trade-migration-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-b644cf2ee324 | How should the stated exceptional release of mistakenly settled Murex withdrawals be controlled and validated for the target migration? Effective operational contract remains unconfirmed. Related earlier item: `KT-ratan-trade-migration-controls-Q3`. |  [Review](checkpoint-187-KT-ratan-trade-migration-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 187-ssi-doi-successor
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-bfad384472fc | Confirm the effective DOI SSI-ID editing and maker-checker rules, including restoration of edited values. Current effective rule remains unconfirmed. Related earlier item: `KDQ-SSI-DOI-ID`. |  [Review](checkpoint-187-ssi-doi-successor-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-accounting-api-context
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-e083df213057 | Which dated accounting-job request/response version, republish-key validation, and invocation authority are approved? Cannot select a current executable API contract. Related earlier item: `KDQ-9858551c0a`. | Fresh safe view exposes two response schemas; only one is labelled previous. Version and authorization remain absent. [Review](checkpoint-188-accounting-api-context-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-amendment-release-controls
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-7e596f60c997 | Which amendment-check order and complete economic/key field sets are approved, including dedicatedChange and missing previous groups? Cannot derive a complete classifier from selected examples. Related earlier item: `KDQ-176d16efa3`. | Example tables leave check precedence open and add separate major-version and no-pair notes. [Review](checkpoint-188-amendment-release-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-22a7c44b921e | Which exact cutoff boundary restricts netting/splitting, and which READY/PendingAck actions remain allowed? Cannot interpret the timing predicate or removal of tactical control as approved. Related earlier item: `KDQ-5d6e6ae491`. | January matrices and later notes mix ten-minute restriction wording with a READY-only strategic gate. [Review](checkpoint-188-amendment-release-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-aeb5b545067a | Which reviewed version governs concurrent release, SSI refresh, confirmation, and manual actions? Cannot claim race prevention, implementation, or approved control closure. Related earlier item: `KDQ-f8f13e53c9`. | Process table contains unresolved cells; October note links uninspected approvals and code/test screenshots. [Review](checkpoint-188-amendment-release-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-entity-reference-data
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-85dd8b381e54 | Which consolidated entity fields and maintenance authority are approved, and how does LMS filter removal affect the proposed field? Cannot derive a deployed schema or resurrect an entity filter. Related earlier item: `KDQ-63cf718228`. | Entity table remains a proposal, with LMS Filter among its fields and separate optional static ideas. [Review](checkpoint-188-entity-reference-data-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-52658e5f7ebc | Who validates entity/static changes and preserves existing configuration during migration? Cannot infer authorization or safe data conversion. Related earlier item: `KDQ-3f7b049931`. | The selected proposal describes consolidation but supplies no validation or migration contract. [Review](checkpoint-188-entity-reference-data-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-422b2bc5622e | How do RDM corrections, deletions, and special-holiday precedence apply to the four-part duplicate key? Cannot infer idempotent holiday correction behavior. Related earlier item: `KDQ-86a8db8385`. | Selected design specifies a combined key and service IDs but no update/delete precedence. [Review](checkpoint-188-entity-reference-data-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-fxu-integration
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-faf307828294 | Which Blade data-access option is approved, with freshness, timeout, failure, and hard-block semantics? Cannot turn a UI route into backend control or choose direct API by inference. Related earlier item: `KDQ-6b14bf9902`. | Three access options remain unselected; the OpenFin guide supplies display only. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-84c24b9e5e4b | Which market, entity, date, and version use full-only MVP versus Phase 2 partial/reverse/early/past-due rules? Cannot merge contradictory phase validators. Related earlier item: `KDQ-d35d6b5167`. | Functional analysis separates MVP and Phase 2; response table mixes phase predicates. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-c116b3feb7cd | Which manual/automatic identifier and entity cutoff are approved? Cannot choose a universal trigger or account distinction. Related earlier item: `KDQ-7950dc059b`. | Functional analysis offers means/account labels versus a separate flag and leaves initial cutoff TBC. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-25ac55a1a9cc | Does released UTIL→GROSS withdrawal become WAITING(Reversal) or READY plus Utilization? Cannot publish one state transition. Related earlier item: `KDQ-31eff96d47`. | Phase-2 draft and full technical design specify different outcomes. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-2f484485f5af | Which ERROR inheritance and distributed-transaction proposal is approved for amendment after utilization? Potential release control remains unspecified. Related earlier item: `KDQ-5dcc2e5244`. | Full technical design proposes new-event ERROR propagation and leaves transaction edge handling open. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-67eb2118e2dd | Which version defines UTILIZED/FULLY_UTILIZED names and active partial-action rows? Cannot infer aliases or one current transition table. Related earlier item: `KDQ-0288961e60`. | Glossary differs from transition table; some partial rows are struck out and others added on 4.1. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-64a70e998ba4 | When may RATAN acknowledge utilization to FXU if eBBS later rejects accounting? Cannot equate request acceptance with accounting acceptance. Related earlier item: `KDQ-ce10b01cb2`. | Technical design explicitly lists this ACK boundary as open. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-232d98b99db5 | Which complete message version, retry counts, and recovery authorization apply to request, response, and accounting delivery? Cannot invent one retry budget or complete envelope schema. Related earlier item: `KDQ-ef3bb66e93`. | DLQ internal-error retries and PostgreSQL publication retries cover different failures; workbook remains uninspected. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-ba005f50ec41 | Which action granularity and bulk denominator are approved: cashflow or trade, with 100 of which? Cannot enforce an unambiguous batch limit. Related earlier item: `KDQ-1f63363221`. | Functional page says cashflow-level and 100 trade/cashflow; technical draft says trade-level; scenario sheet says 100 cashflows. [Review](checkpoint-188-fxu-integration-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-gateway-design-alternatives
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-4b788b4423a6 | Which gateway design replaces the deprecated merger, and which key/fallback contract preserves existing portal behavior? Cannot select topology, permissive empty-key handling, or fallback compatibility. Related earlier item: `KDQ-9384a93b2e`. | Deprecated consolidation and a separate Foundation upgrade remain distinct proposals. [Review](checkpoint-188-gateway-design-alternatives-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-indonesia-architecture
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-b14297859afe | Which dated Indonesia architecture governs isolation, GDC adaptor persistence, provisioning, and regional routing? Cannot assert one approved topology. Related earlier item: `KDQ-9384a93b2e`. | Later isolation and diagram-3 selection coexist with historical shared-data alternatives and GDC persistence. [Review](checkpoint-188-indonesia-architecture-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-2756a9929495 | Which user-group visibility matrix and drawer failure behavior are approved, including rule mismatch and caching? Cannot define complete accepted authorization behavior. Related earlier item: `KDQ-445a317cf6`. | Selected rows are partial; hide-on-outage and show-on-mismatch differ. Later CES intent also applies. [Review](checkpoint-188-indonesia-architecture-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-ac2d952b1d2a | Does the Indonesia route retain folder type, and which SID/NID prefixes and LMS filtering scope apply? Cannot establish deterministic routing, identity, or filter configuration. Related earlier item: `KDQ-210559403f`. | Integration plan leaves folder open; technical examples conflict and LMS proposals differ. [Review](checkpoint-188-indonesia-architecture-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-9ab67dde3f4a | Which UAT reporting and FMCES Indonesia-access scope is currently approved? No current acceptance or entitlement evidence. Related earlier item: `KDQ-0587493001`. | Selected scope names intended reporting and entitlement only. [Review](checkpoint-188-indonesia-architecture-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-58b1700be4c0 | Which source revision confirms regional preview/unnet routing and compatibility with existing portal consumers? Implementation gap remains task evidence; no current fix claim. Related earlier item: `KDQ-4ba09cf7f0`. | UI page reports GDC URL residual without inspected code or resolution. [Review](checkpoint-188-indonesia-architecture-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-indonesia-reference-sync
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-8a6cd7d394dd | Which RDM reconciliation, complete pagination, date conversion, and timezone rules are approved for Indonesia compensation? Cannot establish complete correction or scheduling contract. Related earlier item: `KDQ-bfa0a3c6e2`. | Fresh safe view supports EOD API choice but retains RDM-update versus RATAN insert/delete semantics and undefined IST. [Review](checkpoint-188-indonesia-reference-sync-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-becd12ff394c | Which versioned RDM endpoint syntax and environment table are approved, including the double-question-mark currency URL? Cannot normalize an executable contract. Related earlier item: `KDQ-24234ca879`. | Selected endpoint table has inconsistent query delimiter syntax. [Review](checkpoint-188-indonesia-reference-sync-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-52964aa9079a | Which rule/static synchronization contract is authoritative, including eligibility, timeout, IGNORE, and adapter compatibility? Cannot merge status semantics or prove delivery equivalence. Related earlier item: `KDQ-9384a93b2e`. | Rule-specific and generic designs differ; alternative data-share design remains unresolved. [Review](checkpoint-188-indonesia-reference-sync-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-indonesia-time-contract
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-1de9fa04263f | Which valid JVM, OS, database, and cron UTC configuration applies to each service? Cannot supply accepted executable settings. Related earlier item: `KDQ-a38deeae40`. | Source has a malformed JVM option and incomplete cron scope. [Review](checkpoint-188-indonesia-time-contract-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-7a84667580cd | What conversion and precision rules apply to each field, especially Z-suffixed inputs treated as local UTC+7? Cannot assert safe timestamp round trips. Related earlier item: `KDQ-d21b459a46`. | Selected examples reinterpret Z and drop displayed fractional precision. [Review](checkpoint-188-indonesia-time-contract-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 188-integration-review-index
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-3685c22eb964 | Which entity/account/milestone routing matrix is authoritative, with effective dates? Cannot choose one current accounting destination. Related earlier item: `KDQ-ea95a56751`. | The Keystone overview, Aspire 2025 H1 list, and eBBS 2024 H1 list differ. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-0bd203a31dd1 | Which Aspire component-withdrawal accounting rule applies to Swift Suppressed or Failed? Cannot import the eBBS component algorithm without authority. Related earlier item: `KDQ-dc74e4402a`. | Aspire explicitly requires separate component logic but does not specify it in selected ranges. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-9aa059050615 | Does Aspire `12 PM` mean noon or midnight, and which local timezone and OLA apply? Cannot fix the cutoff by inference. Related earlier item: `KDQ-c8c1dcbb7e`. | The recovery table places literal 12 PM between 23:00 and 03:00 rows. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-6778f3857717 | Is eBBS automatic retry capped at three or at least three; what authorizes manual resend? Retry and authorization contracts remain ambiguous. Related earlier item: `KDQ-27369af01f`. | The exception table says three; the technical row says minimum three with three-minute spacing. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-82887e397cc1 | How is the released resultant accounting entry selected across multiple versions? Cannot identify a deterministic parent transaction. Related earlier item: `KDQ-716b15d693`. | The component-withdrawal algorithm requests the released resultant entry but supplies no version tie-breaker. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-297559a7e738 | Does eBBS SUCCESS display precedence apply per accounting transaction or only cashflow ID? Cannot safely merge separate reversal and new-entry outcomes. Related earlier item: `KDQ-f71f76aece`. | The selected status example specifies cashflow ID only. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-9c62ab0345c3 | Is Korea OLTP intended eligibility the stated allowlist or all accounts except NOX UISUS/UIDD? New accounts have different eligibility under these alternatives. Related earlier item: `KDQ-7911026376`. | The source separately labels its broader blacklist as code behavior. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-1614821926d8 | Which TLM query parameters and inclusive time boundaries apply, and when does the interim API retire? Cannot invent query schema or declare retirement. Related earlier item: `KDQ-669a5b8a75`. | Selected scope gives SENT history, three-day maximum, and a future decommission feature only. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-b1065ba6f3f5 | Who confirms the Korea no-retry contract and manual EOD recovery ownership? No runtime execution or acceptance evidence is supplied. Related earlier item: `KDQ-fbea97b573`. | Dated answer says no retry; EOD text assigns KR OPS manual correction. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-231e87e539ea | Which consumer and effective version govern the LMS catalog exclusions after the proposed sender entity-filter removal? No selected source establishes one universally current country filter. Related earlier item: `KDQ-2e39af2cdd`. | Current candidate already separates source catalog scope from the later sender-side proposal. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-01475429db4e | Which timezone, endpoint inclusivity, batch capacity, and effective version govern each UK feed band? Cannot equate separate capacities or calendars. Related earlier item: `KDQ-87bea04f8a`. | Technical sketch gives 45,000 records and no timezone; H2 DOI describes 6,000 distant-date payments per two-hour run. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-977f03345bc0 | Which payment validation response and stable exception names are approved? Cannot select one response schema or replay action. Related earlier item: `KDQ-1001eb4636`. | Functional proposal leaves payment actions TBC and uses different file-error labels from the technical sketch. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-216716162407 | Who authorizes replay after batch NACK or timeout, and how must reconciliation finish before restart? No complete restart or duplicate-prevention contract is established. Related earlier item: `KDQ-b25e634774`. | Functional expected Murex actions remain TBC; technical sketch waits for republication. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-1b1837fe5946 | Which Uber trade tracking version, cashflow version, sequence, and fixing correlation fields form the approved completeness and confirmation contract? Cannot invent ordering, completeness recovery, or confirmation matching fields. Related earlier item: `KDQ-417dc2e04d`. | Selected analysis corrects an event-identifier proposal toward version checking but leaves field definitions and handling open. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-8da5b42220c4 | Which messaging topology and producer/replay controls meet the approved Indonesia RTO/RPO? Cannot claim lossless DR or selected middleware. Related earlier item: `KDQ-b40f37b35f`. | Zero-loss objective coexists with asynchronous replication options and conditional dual-write advice. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-3e6e7c10e1a3 | Which MirrorMaker failover/failback tests and evidence establish the accepted recovery scope? No passing DR finding. Related earlier item: `KDQ-ab088db087`. | POC matrix is blank and rehearsal TBD. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-55a7434588d9 | Which MinIO security, read/failure mode, migration rollback sequence, and per-scenario DR targets are approved? Cannot implement a safe accepted access, rollback, or recovery contract. Related earlier item: `KDQ-abee8e3109`. | Role is illustrative; unavailable-storage fallback has alternatives; backfill clears data before proposed rollback retention ends. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-67d5112bf072 | Which dated Korea accounting, confirmation, OLTP, SWIFT, and TLM contracts govern the architecture alternatives? Cannot supersede scoped accounting or tactical COMP intent with open alternatives. Related earlier item: `KDQ-e6e3c52136`. | Architecture labels NOX UIBOK as CCY while accounting scope uses KRO; confirmation bypass and strategic sync remain options; FMSGW/SAA differs from ENISIS. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-ac49cea9eb99 | Which dated Korea OLTP accounting eligibility governs: design allowlist or operating-guide exclusion? Cannot choose one current predicate. Related earlier item: `KDQ-7911026376`. | The DOI explicitly states the exclusion as an operating contract; this differs from the design allowlist. It is not merely an actual-code report. [Review](checkpoint-188-integration-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-0ee175032d50d1eb3eaac6a68ef95dcb1bdcf8940712544e6efe5e8ced7addac
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-373d1103eed7 | Which effective static rule/type mapping, Clearing_Swift_Suppress behavior, and net-over-net exceptions are approved? Resultant behavior and downstream suppression remain source-specific. | The July review strikes through fields that the main static table still includes. General net-over-net prohibition has an IRS exception. [Review](checkpoint-190-0ee175032d50d1eb3eaac6a68ef95dcb1bdcf8940712544e6efe5e8ced7addac-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e6d57ab3eb31 | Which refresh/re-entry rule governs each operation and existing cashflow state? Rule updates cannot be assigned one deterministic scope. | The main update text includes and excludes tagged Pending Auto Netting. Historical no-refresh and later flow differences remain in current auto-netting context. [Review](checkpoint-190-0ee175032d50d1eb3eaac6a68ef95dcb1bdcf8940712544e6efe5e8ced7addac-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-8e05c4a65b74 | Which current roles, editable fields, default time, and STP bypass controls are approved? The historical static contract requires effective applicability evidence. | Selected source gives Data Ops access, minute precision/default00:00, Day1 FULL_STP disablement, and unresolved catalogue/counterparty choices. [Review](checkpoint-190-0ee175032d50d1eb3eaac6a68ef95dcb1bdcf8940712544e6efe5e8ced7addac-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-day2-auto-dvp
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-c099e7033aa7 | Which country/entity scope applies, and is eligibility based on booking entity or the account country in RTA? Automatic release eligibility requires one authoritative scope. | The pilot says six countries, the scenarios seven, and open questions retain account-country versus booking-entity ambiguity. India topic treatment is also unanswered. [Review](checkpoint-190-KT-day2-auto-dvp-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-3de205d50a1e | Which calendar, payment-date rule, reference extraction, and amendment identity govern matching? Do not widen matching or assume a universal two-day calendar. | The June26 linkage adds payment-type prefixes. Older questions discuss original trade identity and narration references. Payment-date followup remains blank. [Review](checkpoint-190-KT-day2-auto-dvp-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-396b8ec9f1cd | What happens after a settled pair is amended, including major-version change and netted difference payments? Those later lifecycle expectations cannot become settled policy. | The UAT design adds settled-pair cases beyond the main requirement and contains conflicting major-version wording. No current policy answer is supplied. [Review](checkpoint-190-KT-day2-auto-dvp-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-7af1c125fd3a | What stores prior receipt evidence, deduplicates notifications, and permits replay after consumption failure? Arrival-order correctness and recovery remain incomplete. | Late-pay scenario assumes prior evidence. The source reports Razor duplicate handling but gives no approved RATAN retention or replay contract. [Review](checkpoint-190-KT-day2-auto-dvp-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-ebaed79eab74 | Which owner and effective source approve AutoDVP rules, and where are the UAT execution artifacts? No UAT pass, rollout, or current approval is established. | Selected UAT result fields are blank; attachments are unavailable. Dated confirmations supply historical design evidence only. [Review](checkpoint-190-KT-day2-auto-dvp-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-aggregation-intent
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-503faeecca31 | Which aggregation model, action/status vocabulary, and resultant netting permissions are approved? Do not merge these into one approved transition contract. | The dedicated IRS proposal uses AGGREGATED, while the product-agnostic example still uses Netted. Existing technical aggregation proposals describe additional alternatives. [Review](checkpoint-190-KT-settlement-aggregation-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-4aee200e4e3c | How do duplicate, cancelled, amended, delayed, fee, and incomplete schedules change expected count and grouping? Completion and reaggregation semantics remain incomplete. | The count example and schedule mappings omit lifecycle rules and amortization currencies. [Review](checkpoint-190-KT-settlement-aggregation-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e56b605be324 | Is manual unaggregation required, and what downstream feeds and filters must support aggregation? Downstream compatibility and operator actions require owner decisions. | The IRS proposal asks these questions and leaves TLM/LMS/CIS impacts unresolved. [Review](checkpoint-190-KT-settlement-aggregation-intent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-event-sequencing
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-178f44665b94 | Which event mappings and concurrent amendment, release, or netting ordering are approved? Do not infer a complete reachable state machine from examples. | The selected mapping is not exhaustive. Existing cashflow-identity context leaves concurrency and version ownership unresolved. [Review](checkpoint-190-KT-settlement-event-sequencing-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-69bf3f524ff5 | Are multicurrency netted resultants amended or cancelled jointly or independently? Settlement reversal and rebooking scope remains unresolved. | The selected source explicitly leaves this question open. [Review](checkpoint-190-KT-settlement-event-sequencing-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-fx-utilization-responsibilities
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-0ee78ce4b79d | What utilization eligibility, remaining-amount, accounting-date, and amendment-lock contracts are approved? Do not infer complete accounting or concurrency rules from the overview. | The selected overview separates FXU, BLADE, RATAN, and downstream accounting but leaves Day2 partial and past-due behavior proposed. [Review](checkpoint-190-KT-settlement-fx-utilization-responsibilities-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-global-rates-design-boundaries
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-2fa444982b0b | Which Global Rates scope, event contracts, golden sources, and settlement-method amendment design are approved? Keep roadmap and reported implementation separate from canonical target decisions. | The strategy combines unanswered questions, reported existing behavior, feature planning, and proposed contracts. [Review](checkpoint-190-KT-settlement-global-rates-design-boundaries-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-hold-and-manual-fail
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-8f37f4569621 | Which action checks the cashflow amount limit when leaving HOLD? Do not infer an amount-limit exemption or restriction. | The access text says Unhold checks a limit and also states the Reinstate-style exemption without a clear action binding. [Review](checkpoint-190-KT-settlement-hold-and-manual-fail-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-3e6e1499a807 | Which current roles, eligible states, and maker/checker controls govern manual fail and scheduled AutoFail? Current permissions and API eligibility need an authoritative contract. | The UI requirement is narrower than the technical matrix. Role names are documented historical scope without current authorization approval. [Review](checkpoint-190-KT-settlement-hold-and-manual-fail-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-4ade808d66fe | Which effective source and approval establish these Hold and manual-fail changes? These candidates cannot establish deployed behavior. | The sources give requirement and design rules but no current approval or effective applicability. [Review](checkpoint-190-KT-settlement-hold-and-manual-fail-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-monitoring-and-touchpoints
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-21a2fb61c715 | Which dashboard measures, cutoff definitions, drilldowns, and roadmap targets are approved for each rollout? Historical roadmap entries cannot establish current monitoring coverage or delivery. | The MIS source lists required dimensions. The touchpoint roadmap separates Day1, target state, and unresolved dependencies without effective acceptance criteria. [Review](checkpoint-190-KT-settlement-monitoring-and-touchpoints-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-non-economic-amendments
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-f43c75b0a0e5 | What approved identity mapping governs repeated non-economic amendments followed by economic amendments? Incorrect mapping can withdraw or update the wrong identity. | The examples retain settlement originals while updating active Stella identities. They do not define every repeated or concurrent amendment case. [Review](checkpoint-190-KT-settlement-non-economic-amendments-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-33b49bc84185 | Which products, feeds, and effective versions implement the six-field non-economic contract? Current applicability and downstream acceptance remain unverified. | The source documents a design and reports an Aspire/TLM no-impact confirmation. That reported confirmation is not intended behavior or execution proof. [Review](checkpoint-190-KT-settlement-non-economic-amendments-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-payment-enrichment
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-66218b16e661 | Which Nostro values must held netted and withdrawn accounting tasks use after refresh? The broader accounting refresh contract remains owner-blocked. | The first accounting scenario is answered. The separate netting/withdrawal sequence has a blank answer. [Review](checkpoint-190-KT-settlement-payment-enrichment-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-145f25c208c9 | Does ordering auto-population exclude HAU, require NOS, and use Ordering_Customer_City for country? Exact eligibility and field semantics require confirmation. | The main conditions exclude HAU while business cases omit it. NOS is struck through pending confirmation. The field mapping uses City for country. [Review](checkpoint-190-KT-settlement-payment-enrichment-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-b4b4baf1a122 | What approved SWIFT truncation and LEI ordering rules apply at field capacity? Do not invent overflow behavior or change payment content. | The LEI exception text says to ignore values beyond line2 for field70 or line4 for field72 after reserving lines1/2. It does not clearly distinguish original from final line numbering. [Review](checkpoint-190-KT-settlement-payment-enrichment-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-16b119fc1cc7 | Which current regulatory authority, SCI mappings, templates, and effective scope approve this payment enrichment? Historical draft scope cannot establish current payment policy. | The selected sources describe bounded requirements without current approval or authoritative effective dates. [Review](checkpoint-190-KT-settlement-payment-enrichment-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-processing-and-exception-controls
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-312b781da585 | Which exception matrix, authority limits, and Day1/Day2 controls govern current operation? Do not promote the historical matrix into current universal behavior. | The workflow includes tentative controls, deferred scope, and unresolved external dependencies. Status25 retains country-specific exceptions. [Review](checkpoint-190-KT-settlement-processing-and-exception-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-222b5b7c9739 | What exact last-mile economic uniqueness and override contract is approved? Duplicate protection and legitimate equal-value payments require explicit semantics. | Source34 description names five economic fields. Its example query additionally uses trade identity and selected sent-like states. [Review](checkpoint-190-KT-settlement-processing-and-exception-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-04447ad2bf54 | Which expected-count and SSI selection scopes are approved? General process summaries cannot override narrower governing conditions. | Source30 depends on schedule counts. Source31 summarizes branch-first SSI while source12 explicitly restricts changed selection by country and source. [Review](checkpoint-190-KT-settlement-processing-and-exception-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-ssi-stamping-and-selection
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-aa1ceec054bf | Which trade-to-cashflow inheritance and CDUPS publication contract is approved? Do not establish either proposal as current approved behavior. | The Uber proposal describes latest trade stamping and refresh responses. Bounded external context, SHA256 86ab80928e977ca334ba672abffcd28df869b9a01fc7b678cb63c6b846f6abd6 lines1-8, says no inheritance and no refresh/ad-hoc publication. That source was not assigned here. [Review](checkpoint-190-KT-settlement-ssi-stamping-and-selection-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-818982fe1247 | Which entities, products, and effective dates use branch-first Vostro selection? Universal branch-first selection would exceed the documented proposal. | The source names a limited changed scope and explicitly retains existing logic elsewhere. [Review](checkpoint-190-KT-settlement-ssi-stamping-and-selection-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-4aa64661c9b9 | Which exact notification matrix and trade identity apply to refresh? Eligibility and refresh identity need a deterministic owner decision. | The notification matrix distinguishes exception and verification states. Uber refresh examples alternate T2 impacted trades and T1 references. [Review](checkpoint-190-KT-settlement-ssi-stamping-and-selection-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-trade-lien-controls
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-9d78dde7d1e1 | Which LIEN amount, removal, post-release, and notification-state rules are approved? Trade updates outside the stated path need an explicit control contract. | The source defines latest-event correlation and protected netting states. It reports priority consumption of VALD/COMP notifications without proving complete removal and race handling. [Review](checkpoint-190-KT-settlement-trade-lien-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-trade-validation-and-confirmation
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-882113598235 | Which effective validation and confirmation state matrices and bypass scopes are approved? Do not collapse validation, affirmation, and confirmation into one state test. | Source19 defines source-specific states and exact bypass predicates. Source20 retains dated BAU/manual conditions and a tentative milestone. Source22 proposes product-specific release conditions. [Review](checkpoint-190-KT-settlement-trade-validation-and-confirmation-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-04782fe01b6c | What prevents release of version1 while version2 remains in the Group Blotter? The selected sources do not define the requested cross-version release control. | Source21 contains only a To Be Enriched placeholder. The source19 example allows an earlier validated cashflow to proceed while cancellation waits. [Review](checkpoint-190-KT-settlement-trade-validation-and-confirmation-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-c5d0f81141b1 | Which special-product STP decisions and legal or reconciliation prerequisites are approved? Those branches cannot be treated as approved release rules. | The decommission table leaves several internal, inter-entity, Islamic, negative-affirmation, netting, and clearing conditions open. [Review](checkpoint-190-KT-settlement-trade-validation-and-confirmation-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-day2-cashflow-splitting
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-e10a19720ea5 | Resolve effective manual-split scope for generic/IRS resultants and exact unreleased withdrawal parent/child states. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-cashflow-splitting-Q1`. |  [Review](checkpoint-191-KT-day2-cashflow-splitting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-2f70d1d511ce | Confirm released-child reversal accounting and safe operator actions. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-cashflow-splitting-Q2`. |  [Review](checkpoint-191-KT-day2-cashflow-splitting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-3ed7f4366911 | Confirm SWIFT_SUPPRESSED unsplit eligibility and threshold disable/delete contract. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-cashflow-splitting-Q3`. |  [Review](checkpoint-191-KT-day2-cashflow-splitting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a3f25655de72 | Provide the complete bounded distribution algorithm, selected static, TechFail result/comment and SI-retention rule. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-cashflow-splitting-Q4`. |  [Review](checkpoint-191-KT-day2-cashflow-splitting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-day2-cross-border-debit
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-da38a01f019b | Confirm current cross-debit/Flip priority and settlement-means/account predicate. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-cross-border-debit-Q1`. |  [Review](checkpoint-191-KT-day2-cross-border-debit.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-d87d2e1f5a5c | Confirm maintained legal-entity BIC mapping, field58 account rule and LMS impact. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-cross-border-debit-Q2`. |  [Review](checkpoint-191-KT-day2-cross-border-debit.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-day2-fmsgw-deletion-settlement
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-3b62e5252a59 | Confirm effective source authority and applicable gateways/message types. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-fmsgw-deletion-settlement-Q1`. |  [Review](checkpoint-191-KT-day2-fmsgw-deletion-settlement.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-7d7c85a57ab4 | Confirm ordering/idempotency when one COV response is delayed or later changes. Effective operational contract remains unconfirmed. Related earlier item: `KT-day2-fmsgw-deletion-settlement-Q2`. |  [Review](checkpoint-191-KT-day2-fmsgw-deletion-settlement.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-settlement-auto-netting
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-f8ac8670248b | Confirm effective authority for all dated Day1/Day2 calendar, refresh, priority and late-arrival variants. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-auto-netting-Q1`. |  [Review](checkpoint-191-KT-settlement-auto-netting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-3fc7c0198472 | Resolve PendingAutoNetting update refresh contradiction and exact STP/affirmation-removal scope. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-auto-netting-Q2`. |  [Review](checkpoint-191-KT-settlement-auto-netting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-a1cfa61431c2 | Resolve rebook exclusions, one-side-released interentity behavior and trade-match-rule feasibility. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-auto-netting-Q3`. |  [Review](checkpoint-191-KT-settlement-auto-netting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-eff215f1effc | Confirm exact clearing entity/counterparty scope and suppress-rule precedence without assuming current deployment. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-auto-netting-Q4`. |  [Review](checkpoint-191-KT-settlement-auto-netting.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-settlement-ssi-form-validation
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-8ce5094090fc | Resolve all question-mark field limits/formats and supplied regex differences. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-form-validation-Q1`. |  [Review](checkpoint-191-KT-settlement-ssi-form-validation.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-5fbec59d6dc9 | Confirm NOS versus Nostro normalization, message-type and current Swift dictionary applicability. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-form-validation-Q2`. |  [Review](checkpoint-191-KT-settlement-ssi-form-validation.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-314929630038 | Confirm effective Dubai purpose taxonomies/defaults and region scope. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-form-validation-Q3`. |  [Review](checkpoint-191-KT-settlement-ssi-form-validation.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-56a1e88cfff2 | Resolve the conflicting initial READY adhoc transitions and checker rejection semantics. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-form-validation-Q4`. |  [Review](checkpoint-191-KT-settlement-ssi-form-validation.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-settlement-ssi-stamping-and-selection
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-82cdf19e633f | Confirm current regional selection authority, CFI path and effective source precedence. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-stamping-and-selection-Q1`. |  [Review](checkpoint-191-KT-settlement-ssi-stamping-and-selection.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-795a4934482e | Resolve conflicting PartyA/PartyB sell-side missing-Nostro results. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-stamping-and-selection-Q2`. |  [Review](checkpoint-191-KT-settlement-ssi-stamping-and-selection.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-ef4feadae55a | Resolve CDUPS notification wording, exact transport/response contract and currency-pair fallback/replay. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-stamping-and-selection-Q3`. |  [Review](checkpoint-191-KT-settlement-ssi-stamping-and-selection.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-4431f3841826 | Resolve blank/both-bound date filters, date timezone and old-SSI deletion behavior. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-stamping-and-selection-Q4`. |  [Review](checkpoint-191-KT-settlement-ssi-stamping-and-selection.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-b2e01ea4089c | Confirm payment-exception direction changes and complete maker/checker editability table. Effective operational contract remains unconfirmed. Related earlier item: `KT-settlement-ssi-stamping-and-selection-Q5`. |  [Review](checkpoint-191-KT-settlement-ssi-stamping-and-selection.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-affirmation-controls
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-61a678595559 | Which dated publication filters, mandatory fields, schedules, and AI-review controls govern email affirmation? Cannot define one current publication/acceptance contract. Related earlier item: `KDQ-e4089deafe`. | Broad status/configuration scenarios coexist with dated exclusions. Counterparty is marked mandatory but may be blank for net resultants. Islamic scope and sender are unresolved. [Review](checkpoint-192-affirmation-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-d64175b4c93c | Which trade event maps to which Trade_State, and what downstream STP action follows the affirmation predicate? Cannot infer automatic release or map email success to confirmation. Related earlier item: `KDQ-a911d63bc2`. | The trade note names three input pairs and an NSTP predicate without target state values or dispatch linkage. [Review](checkpoint-192-affirmation-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-bcs-strategic-context
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-7fcc2b406a5b | Which dated BCS-to-strategic mapping preserves SSI/LMS behavior, user profile, and Equity Instrument Reference/Parent Trade Instrument fields? Cannot compose a complete preserving migration contract from actual-state comparisons. Related earlier item: `KDQ-db19e554ad`. | Selected comparison asks strategic SCBML consumption via Stella but gives no target contract for the BCS-enriched fields. Other cells describe current differences. [Review](checkpoint-192-bcs-strategic-context-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-high-value-payment-controls
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-a25e798555cd | Which effective HVP profile limits, identity type, and complete lastUser update rules govern each action? Cannot define a complete authorization/header contract. Related earlier item: `KDQ-2a2f8eb636`. | Tables use FMID/PSID/bank ID labels and blank actor cells. Comment does not define reset behavior. BCS resultant actor is missing. [Review](checkpoint-192-high-value-payment-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-3c30f8ddeed7 | Which approved header schema and service API version apply, and which FMRP affirmation-limit option is selected? Cannot assert provider/caller compatibility or accepted affirmation behavior. Related earlier item: `KDQ-523e26d357`. | Technical header prefix differs from functional field names. FMRP affirmation retains two alternatives. [Review](checkpoint-192-high-value-payment-controls-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-hkcs-hau-settlement
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-503abbe07c43 | Which effective HAU static values resolve the two Nostro/SWIFT BIC spellings, cutoff/calendar setup, DVP indicator, and MT605-versus-MT692 cancellation item? Cannot normalize message routing, cancellation scope, or static values without authority. Related earlier item: `KDQ-f4bc7e1b1d`. | Business requirement supplies dated HKD-calendar and MT692 rules; onboarding retains XAU-copy and MT605 TODO wording. Nostro and receiver BIC strings differ. [Review](checkpoint-192-hkcs-hau-settlement-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-inter-entity-netting
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-55e9c9b26f0b | Which phase-one branch pairs, reciprocal mapping static, USD threshold, and deterministic resultant counterparty selection are approved? Cannot establish reproducible scope or resultant identity. Related earlier item: `KDQ-492d176abd`. | Changed requirement names a threshold and phased pairs; mapping examples and random component selection do not settle a current static contract. [Review](checkpoint-192-inter-entity-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e9a67560da0d | Which exact linked release boundary and manual-withdrawal state transitions govern inter-entity un-net? Cannot reduce release to a simple Released status check. Related earlier item: `KDQ-7f1208deec`. | Option 2 includes READY/Pending Ack and SPLIT variants. Narrative says released, and manual handling has distinct DEAD/CANCELLED outcomes. [Review](checkpoint-192-inter-entity-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-6a189e9a63de | Which internal identifier, exception bypass, and auto-affirmation policy govern Murex STP and linked netting? Cannot invent blanket exception bypass. Related earlier item: `KDQ-a2f354f72f`. | Separate MX-only bypass request lacks a predicate; netting text expects full STP but retains auto-affirmation removal as dependency. [Review](checkpoint-192-inter-entity-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-manual-entity-settlement
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-52d5f6054f5e | Which dated entity/static matrix governs cutoff attachments, SSI hierarchy, country MX eligibility, and SLATE downstream treatment? Cannot declare all country configurations or message routing approved. Related earlier item: `KDQ-1ab120fcba`. | Cutoff attachments are absent; checklist rows remain No?; Kenya bifurcation uses SCBLTZ; Uganda conversion remains pending. [Review](checkpoint-192-manual-entity-settlement-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-079680090252 | Which effective Vietnam USD VCB and field-53/MX customization requirements apply to each message family? Cannot infer one current Vietnam payment or message contract. Related earlier item: `KDQ-11d2231b79`. | Analysis has conflicting no-SWIFT/NOS-pay notes and separate later exclusions. [Review](checkpoint-192-manual-entity-settlement-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-manual-rounding
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-aa1eb2e01815 | Which scoped accounting amount and TLM reconciliation rule apply to manual rounding? Cannot apply either design universally. Related earlier item: `KDQ-3c5dcbca99`. | Current payment adjustment topic preserves Day2 updated accounting versus Korea original accounting. No authority unifies them. [Review](checkpoint-192-manual-rounding-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+### 190-KT-settlement-clearing-and-swap-agent-boundaries
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-71e9ea7cd5ff | Which clearing indicator or alternative NSTP rule is approved and validated against nonclearing trades? Do not assume clearing payments are safely stopped in current operation. | The source presents potential mitigations, not an adopted solution. [Review](checkpoint-190-KT-settlement-clearing-and-swap-agent-boundaries-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-81fe76af449e | Which Swap Agent principal, netting, and dummy-identity contracts supersede the earlier proposal? Keep dated scopes and identity inconsistencies explicit. | Source41 says no netting; source42 requires manual netting of interim flows. Current Day2 canonical adds later selected-client principal and release-blocker proposals. [Review](checkpoint-190-KT-settlement-clearing-and-swap-agent-boundaries-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-korea-payment-routing
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-9bc886c19a4a | Which Korea interface versions and routing filters are approved, including NOX versus NOS and acknowledgement-triggered states? Do not apply a manual-payment no-accounting rule to the ENISIS or OLTP routes. | The selected ENISIS and TIS sections describe different routes. Source50 is an onboarding checklist with unanswered dependencies. [Review](checkpoint-190-KT-settlement-korea-payment-routing-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-0eb0ea202276 | Which validated rounding, currency, accounting, and language contracts complete Korea onboarding? Checklist entries do not establish complete regional acceptance. | The checklist says keep without decimal but leaves many integration and product questions open. [Review](checkpoint-190-KT-settlement-korea-payment-routing-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-payment-amount-adjustment
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-0f165a6acaf9 | Which rejection, unsplit, withdrawal, and repeated-adjustment state contract is approved? Do not implement the contradictory test scenario as intended behavior. | The written split-resultant prohibition and closed answer conflict with one unexecuted scenario. State-table rejection rows require precise retained-value interpretation. [Review](checkpoint-190-KT-settlement-payment-amount-adjustment-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-b6544e95e922 | What exchange-rate source, valuation instant, precision, and UAT owner establish the strict USD1 limit? Threshold enforcement and acceptance remain incomplete. | The requirement gives a USD range example and strict inequality but leaves UAT signoff and real samples open. [Review](checkpoint-190-KT-settlement-payment-amount-adjustment-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-KT-settlement-regional-swift-customization
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-c658affa9f88 | Which regional customization versions and complete field-level contracts are authoritative? The matrix cannot establish deployed mappings or resolve conflicting dedicated requirements. | The matrix mixes proposed descriptions and source-code pointers. Egypt withdrawal FMID differs from the new-event FMID. UK predicates and paths are incomplete. India scope differs from the dedicated LEI proposal. [Review](checkpoint-190-KT-settlement-regional-swift-customization-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 190-netting-validation-source-review
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-a8a2fd1b437f | Which resultant schema, identity length, and type-specific inheritance mapping is approved? Retain the current qualified comparison rather than introducing an independent competing schema. | Full selected source53 includes the historical field table and its12/16 contradiction. Current manual-netting canonical already records that conflict and later API differences. [Review](checkpoint-190-netting-validation-source-review-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-settlement-trade-control-utilities
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-fa0b04d339bf | Which C&A scope, PV rules, and output workflow were approved? Current operational applicability remains unknown |  [Review](checkpoint-191-KT-settlement-trade-control-utilities.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-83816db469d6 | Does the C&A batch schedule use GMT or UKT for its second batch? Current operational applicability remains unknown |  [Review](checkpoint-191-KT-settlement-trade-control-utilities.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-db7a58d54f94 | Which exact predicates govern FX replication to Razor? Current operational applicability remains unknown |  [Review](checkpoint-191-KT-settlement-trade-control-utilities.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-9b863bf0b8d1 | Which fixing tolerance, source selection, and timezone govern option expiry? Current operational applicability remains unknown |  [Review](checkpoint-191-KT-settlement-trade-control-utilities.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-ddeda381ce3a | Who reviewed and approved the trade-validation rules and publication status? Current operational applicability remains unknown |  [Review](checkpoint-191-KT-settlement-trade-control-utilities.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-interest-nds-netting
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-50d1550633eb | Which IRS source variant is authoritative for each scope? Cannot treat them as aliases or a unified effective rule. Related earlier item: `KDQ-9511672705`. | Parent and child are distinct snapshots. They differ in examples and resultant states; neither establishes supersession. [Review](checkpoint-192-interest-nds-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-10299ced8f2b | Should an IRS auto-net resultant be WAITING or VERIFIED, and which checks permit that state? Cannot select a release-ready state. Related earlier item: `KDQ-036248d4f1`. | Parent example uses WAITING; child uses VERIFIED. Post-settlement examples separately retain WAITING exceptions. [Review](checkpoint-192-interest-nds-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e3f9b2cd32de | Does expected count use cashflow ID/value date or schedule date/currency? Cannot invent schedule completeness handling. Related earlier item: `KDQ-49cf85ee9f`. | Selected IRS views retain ID/date counting plus a separate FMRP schedule-date exception. Missing-leg wording is ambiguous. [Review](checkpoint-192-interest-nds-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-e2eeddc9f16d | Which file ordering, retry, and late-arrival policies govern fixing flags? No delivery reliability contract follows from the examples. Related earlier item: `KDQ-8cfadd6df9`. | UK/DE X/Y/N branches and eligible waiting exceptions are explicit; recovery and duplicate policies are incomplete. [Review](checkpoint-192-interest-nds-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-6df763ed906b | Which calendar and time zone define the NDS three-business-date scan? Cannot derive exact job population. Related earlier item: `KDQ-6770c55ad3`. | NDS says today through today plus two business days without naming calendar or zone. [Review](checkpoint-192-interest-nds-netting-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-nostro-centralization-rfi
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-e5b5759e5da6 | Which SSI+ query/event schemas, refresh population, and historical-ID migration rules govern centralization? Cannot infer a complete replacing contract. Related earlier item: `KDQ-9afac8fdaf`. | Selected centralization proposal leaves message mappings, extra events, and prior IDs unresolved. [Review](checkpoint-192-nostro-centralization-rfi-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-d5d25fd82739 | Which RFI fallback, SI mismatch, scope, uniqueness, and migration rules govern? Owner must resolve competing source-specific alternatives before universal use. Related earlier item: `KDQ-f8b69a6be1`. | Functional source uses ordinary fallback and SI mismatch. Technical Q8/Q11 conflict; technical Q28/Q31 conflict on migration. [Review](checkpoint-192-nostro-centralization-rfi-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-72073141b835 | Which effective accounting/static refresh and deduplication rules apply? Cannot infer idempotent refresh or accounting acceptance. Related earlier item: `KDQ-08b65ee5de`. | Centralization includes accounting query and notifications; duplicate and historic linkage semantics are not complete. [Review](checkpoint-192-nostro-centralization-rfi-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-query-validation
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-7947a5f74142 | Which validation scope, operators, and messages govern quick search and custom filters? Cannot infer an unrestricted DSL bypass or new substate approval. Related earlier item: `KDQ-702252ac48`. | Selected view gives mandatory value date/entity-or-counterparty, original-ID bypass, and limited operators. Advanced-search DSL is separate. [Review](checkpoint-192-query-validation-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-self-service-onboarding
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-88286f0c0346 | Which configuration architecture governs the temporary currency mapping and final static-service ownership? Cannot claim one completed target migration. Related earlier item: `KDQ-5eedd8ca27`. | Main design prefers static-service; FAQ temporarily selects group-service currency mapping before later migration. [Review](checkpoint-192-self-service-onboarding-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-f9fdc2876d83 | Can the API design be provided as a schema-only view with representative placeholders? No example identifiers or observed history are promoted. Related earlier item: `KDQ-ce26fce650`. | Endpoint and field names reviewed; identifier-bearing response/history examples were excluded from canonical use. [Review](checkpoint-192-self-service-onboarding-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-1f2dce92bad4 | Can the FAQ retain decisions without static database row values? Canonical contains no static account configuration. Related earlier item: `KDQ-353c6ed28b`. | Decision text reviewed; account and database-row literals excluded from candidate. [Review](checkpoint-192-self-service-onboarding-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-ssi-validation-selection
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-767ff8d42ecf | Which accepted exception state machine and API version govern SSI auto-stamping? Cannot infer a universal exception lifecycle. Related earlier item: `KDQ-7f8639e07a`. | Selected view lists PRE_ADHOC_ERROR generation and closure but no complete concurrency or idempotency contract. [Review](checkpoint-192-ssi-validation-selection-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-1cb54b4d8773 | Which null-SSI and 70/72 display/persistence semantics govern? Cannot equate display fields or invent values for existing null flags. Related earlier item: `KDQ-a189ea2e60`. | Selection preserves stored SSI ID for 70/72, yet UI shows an empty SSI ID and a Reference ID. Existing DOI topic covers matching edit rules only. [Review](checkpoint-192-ssi-validation-selection-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-swap-agent
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-e0e776a580ee | Which client, payment-type, and source scope governs the Swap Agent enhancement? Cannot expand all payment types or clients. Related earlier item: `KDQ-d33e2b5bb4`. | Old Coupon/MTM rules and selected-client enhancement have distinct predicates; unchecked payment list is not approval. [Review](checkpoint-192-swap-agent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-47092818ff0b | Which indicator source and missing-indicator treatment govern selected clients? Cannot infer a suppression bypass. Related earlier item: `KDQ-b3f9557fc8`. | Murex strategy and Stella SwapAgentID differ; no accepted missing-value fallback is supplied. [Review](checkpoint-192-swap-agent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-88174ac094b9 | Which authority resolves scheduling, suppression, and hard-blocker interaction? Cannot establish release eligibility. Related earlier item: `KDQ-c397490819`. | Preserved separate existing hard-blocker clause; this review covers only the two assigned functional views. [Review](checkpoint-192-swap-agent-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+### 191-KT-day2-auto-netting-service-design-source-17-18
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-5bc81ae415f2 | Which owner approves this proposed service boundary and exact API/event schema for the effective architecture? Current adoption and contract authority remain unconfirmed. |  [Review](checkpoint-191-KT-day2-auto-netting-service-design-source-17-18.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 191-KT-settlement-cashflow-blotter-actions-source-27
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-551796198863 | Which FMRP and BCS action matrices govern each entity and effective date, including Hold and Manual Settle eligibility? One current action eligibility contract cannot be selected. |  [Review](checkpoint-191-KT-settlement-cashflow-blotter-actions-source-27.review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-auto-netting-service
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-18396e1eafee | Which scheduler syntax, cadence, timezone, and SingleCashflow contract are approved? Cannot select an executable scheduler or complete downstream indicator schema. Related earlier item: `KDQ-f0823c4067`. | Technical prose says every15minutes but shows 0 */15 * * *. Indicator naming varies between SettleAsSingle and SingleCashflow; XPath is pending. [Review](checkpoint-192-auto-netting-service-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-36daa3e04e4b | Which calendar, shifter, single-flow, locking, and retry contract apply? Cannot claim safe scheduler execution from static design. Related earlier item: `KDQ-1d2224fdf5`. | Design supplies grouping/job-time comparisons and locking but lacks complete concurrency/recovery and calendar rules. [Review](checkpoint-192-auto-netting-service-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-1c46a3e59b78 | Which identity, ordering, race, and retry rules govern amendment-task removal? Cannot infer which amendment version remains eligible or how retries recover. Related earlier item: `KDQ-6897896491`. | The short Auto Netting design orders collect tasks, remove amendment cashflows, then net. It supplies no removal predicate or transaction boundary. [Review](checkpoint-192-auto-netting-service-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-cashflow-grouping
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-e36d8a2f4977 | Which source version and owner govern SCBML and Uber grouping? Cannot claim reviewed/current grouping authority. Related earlier item: `KDQ-18f3ca6087`. | Selected grouping page has an author/date but no reviewer, review date, or published status. Current group-validation topic preserves separate technical gates. [Review](checkpoint-192-cashflow-grouping-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+| RQ-49fea15f5b4b | Which parent validation and predecessor-message ordering rules govern each source? Cannot combine the producer paths into one lookup contract. Related earlier item: `KDQ-e31f1f7906`. | SCBML uses trade state and TDS3 parent validation; Uber uses validated message version without query. Completeness still waits for predecessor consumption. [Review](checkpoint-192-cashflow-grouping-review.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
+
+
+### 192-functional-lane-3-review-index
+
+The linked review records the inspected source scope and its limits. These are unresolved refinements of the earlier questions; current authority and owner remain unconfirmed. No proposed answer is selected.
+
+| Review ID | Decision and consequence | Investigated evidence | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| RQ-55b369a586d1 | What deterministic order controls first-component product and SI fields? Cannot derive deterministic resultant metadata. Related earlier item: `KDQ-55319cab87`. | Selected generation mapping repeatedly selects the first component; no ordering rule is supplied. [Review](checkpoint-192-functional-lane-3-review-index.json) | Supply a dated approved source and scope; retain the documented alternatives pending decision; another answer; unknown; name a contact. |  |
 
 ## Captured inputs
 
@@ -30,6 +1108,7 @@ Day 2 adds one coordinator HVP question and four questions from integration revi
 The RATAN interface review adds one transport question after comparing selected Murex KR and ENISIS pages.
 The prior rolling review adds four owner questions. The current scan adds 17 exact question texts from 20 owner-input reviews.
 The checkpoint 166 resumption review adds 54 occurrences across 53 exact phrasings from 62 review rows. No phrasing duplicates an existing row.
+The post-checkpoint 168 no-change audit adds nine occurrences across seven new exact phrasings from 26 unreceipted source review rows. Twenty-one rows have current reviewed-output hashes; five lack reviewed-output hashes. The worker runtime is not independently verified.
 One incomplete review row has a question object without question text. The 28 held-page groups are listed separately. All answers remain blank.
 
 The scan captures explicit questions and answerable requests from claim fields and question sections.
@@ -990,10 +2069,24 @@ These four questions came from three accepted `owner_input` reviews. The source 
 | KDQ-e95f07c684 | Which LIEN approach is selected, and what action and next state apply to WAITING plus Pending Fixing? | [SRC-ab86b9eeab3b4d41be7a356b, selected lines 23–39](../../../.workbench/ingestion/luna-max-20261115/workers/platform-03/review.jsonl#L18) |  |
 | KDQ-3650c233cb | Which listed LIEN service changes are approved for the selected approach? | [SRC-ab86b9eeab3b4d41be7a356b, selected lines 48–54](../../../.workbench/ingestion/luna-max-20261115/workers/platform-03/review.jsonl#L18) |  |
 
+## Questions from unreceipted no-change reviews (post-checkpoint 168 audit)
+
+These exact questions come from 26 `ready_no_change` rows without matching processing receipts. The review runtime is not independently verified. These entries preserve the questions only; they do not validate the associated semantic findings. Answers remain blank.
+
+| ID | Question or requested decision | Review evidence | Answer |
+| --- | --- | --- | --- |
+| KDQ-abd23ab4c7 | The selected test input has no expected output or observable assertion. | [SRC-b2023effe894e03d89711227, selected lines 38-40](../../../.workbench/ingestion/luna-max-20261115/workers/operations-04/review.jsonl#L11) |  |
+| KDQ-97ddd338fb | The authoritative MT605 ordering-customer versus agent mapping remains unknown. | [SRC-d9f68ca3c8c66ed29e447830, selected lines 3-4](../../../.workbench/ingestion/luna-max-20261115/workers/workflows-01/review.jsonl#L4) |  |
+| KDQ-90528cba8b | Were either listed interface approved and taken live, and which contract revision governs each? | [SRC-4f49a0ce4737f9a97a5c8e01, selected lines 6-11](../../../.workbench/ingestion/luna-max-20261115/workers/integrations-04/review.jsonl#L11) |  |
+| KDQ-69519fc781 | Which applications still use the described subject-driven UI configuration and FMAA authentication path? | [SRC-685d6ab1526b7f46182dc8e1, selected lines 9-30](../../../.workbench/ingestion/luna-max-20261115/workers/integrations-04/review.jsonl#L17) |  |
+| KDQ-6897896491 | What amendment identity, ordering, race handling, and retry rules govern task removal? | [SRC-0c1c483c2c7477846703250f, selected lines 1-5](../../../.workbench/ingestion/luna-max-20261115/workers/netting-04/review.jsonl#L6) |  |
+| KDQ-6255eb8350 | Which effective policy controls calendar and late-arrival handling? | [SRC-2f4b6bf32c16634d9c64d22c, selected lines 34-38](../../../.workbench/ingestion/luna-max-20261115/workers/day2-02/review.jsonl#L1), [SRC-163a12a8e4008ce48ce0b8f6, selected lines 34-38](../../../.workbench/ingestion/luna-max-20261115/workers/day2-02/review.jsonl#L2) |  |
+| KDQ-082bc5ea36 | What is the approved order for status updates and resultant generation, and how should a resultant be unnetted? | [SRC-b856e0bfc6b6ff7370ab832d, selected lines 139-145](../../../.workbench/ingestion/luna-max-20261115/workers/day2-02/review.jsonl#L13), [SRC-a694d15c35f82d2ecb199b4b, selected lines 139-145](../../../.workbench/ingestion/luna-max-20261115/workers/day2-02/review.jsonl#L14) |  |
+
 ## Held-page review groups (checkpoint 166)
 
 The hold reviewers returned 28 original groups across 41 pages. None was resolved by existing safe task evidence.
-Keep this count separate from the 910 KDQ rows above. The group wording has not been deduplicated against those rows.
+Keep this count separate from the 987 KDQ rows above. The group wording has not been deduplicated against those rows.
 The reviewers supplied existing KDQ IDs where known. Unmapped IDs require coordinator reconciliation; all answers remain blank.
 
 | Group | Consolidated question or request | Held source IDs | Related KDQ IDs | Review evidence | Answer |

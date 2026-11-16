@@ -1,41 +1,48 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 10
+version: 11
 owner: RATAN team
 governance_state: candidate
 status: draft
 sources:
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control
-    and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control
+    and Implement Refresh Token Version 0/page.md
   revision: sha256:ea697bdb2fc3ee5adf8bcfe67a38ac4df756efc189a729e664c194dff4ce91ed
   sha256: ea697bdb2fc3ee5adf8bcfe67a38ac4df756efc189a729e664c194dff4ce91ed
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control
-    and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control
+    and Implement Refresh Token Version 1/page.md
   revision: sha256:66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7
   sha256: 66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post
-    Trade Portal Entra Migration - Phase 1 - UI SSO/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md
   revision: sha256:d035c6cb7803bb6b1011befc428e125bf4e1c466dcf845e0a359a5a7e947dd5d
   sha256: d035c6cb7803bb6b1011befc428e125bf4e1c466dcf845e0a359a5a7e947dd5d
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post
-    Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI
+    SSO Entra Design/page.md
   revision: sha256:e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee
   sha256: e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post
-    Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra
+    SSO Prod Guide/page.md
   revision: sha256:0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957
   sha256: 0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post
-    Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra
+    SSO Non Prod Verification/page.md
   revision: sha256:37b2b6ced13197b54ee429535d8716cc63bb3fff87212f5d3418781c6d9687b0
   sha256: 37b2b6ced13197b54ee429535d8716cc63bb3fff87212f5d3418781c6d9687b0
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post
-    Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase
+    2 - service account/page.md
   revision: sha256:1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd
   sha256: 1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin
-    Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist
+    Template/Reference of FMAA API/page.md
   revision: sha256:2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9
   sha256: 2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9
 - resource: conversation:ui-test-coverage-20261022:UI-Q-002
@@ -44,12 +51,12 @@ sources:
 - resource: conversation:ui-test-coverage-20261022:UI-Q-002-scope
   revision: user-answer-20261022-1
   sha256: 9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal
-    Principles (Draft)/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Post Trade Portal Principles (Draft)/page.md
   revision: sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
   sha256: 7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and
-    Document/Tile Security Control - EMS2/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md
   revision: sha256:c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613
   sha256: c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613
 - resource: conversation:ui-test-coverage-20261022:UI-Q-002-owner
@@ -87,7 +94,11 @@ sources:
   sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
 tile_empty_subject_policy:
   owner: portal team
-  environments: [local, test, UAT, production]
+  environments:
+  - local
+  - test
+  - UAT
+  - production
   configured_entity_count: 1
   configured_subject_count: 0
   decision: allow tile visibility and launch through the entity check
@@ -95,18 +106,22 @@ tile_empty_subject_policy:
   approval: pending
 tile_empty_entity_policy:
   owner: portal team
-  environments: [local, test, UAT, production]
+  environments:
+  - local
+  - test
+  - UAT
+  - production
   basis: user-reported
   approval: pending
 portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 9
-previous_content_sha256: f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb
+previous_version: 10
+previous_content_sha256: 50d3f4e1c81827de892b13112e3bf4e5d6c558cc9bed8b48073e9dff8155b2ee
 generated:
-  by: agent:codex
-  at: '2026-11-12T21:27:34+08:00'
+  by: agent:sol_portal_review
+  at: '2026-11-16T02:14:41.219764+00:00'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
@@ -114,8 +129,8 @@ scope: Portal user authentication, session design, and the documented Entra migr
 summary: The RATAN team owns and reviews portal policy under ICS bank security policy.
   Portal entry requires entitlement for a registered application entity. The user
   set idle and absolute session ceilings of 15 and 60 minutes and prohibited OneMFA
-  fallback. The stated logout ideal revokes all portal sessions for the user
-  immediately and leaves identity-provider sessions intact.
+  fallback. The stated logout ideal revokes all portal sessions for the user immediately
+  and leaves identity-provider sessions intact.
 related:
 - KT-sdk-and-entitlements
 - KT-admin-and-onboarding
@@ -133,7 +148,7 @@ open_questions:
 - Which documented FMAA flows and validity settings remain intended requirements?
 writing_review:
   standard: ASD-STE100
-  automated_check: PASSED
+  automated_check: PENDING
   asd_review: PENDING
   reviewer: null
   reviewed_at: null
@@ -233,7 +248,7 @@ The earlier rule-specific answer assigns the portal team responsibility across l
 The Entra design describes a browser redirect followed by an authorization-code exchange through the BFF.
 The BFF builds user information, retrieves EMS2 entitlements, and issues authentication and entitlement tokens.
 The historical design retained OneMFA fallback and described a separate username/password path.
-[Entra design, lines 7–31, 40–68](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
+[Entra design, lines 7–31, 40–68](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L7-L68>)
 
 The current user-stated portal SSO policy uses Entra and prohibits OneMFA fallback.
 The November clarification supersedes the pilot fallback rule.
@@ -254,8 +269,8 @@ The phase 1 scope separates authentication from authorization.
 It includes UI SSO migration.
 It excludes EMS2 replacement, portal session management, and tenant-onboarding authentication.
 Machine-to-machine authentication has a separate migration document with unresolved central dependencies.
-[Entra phase 1, lines 15–21, 48–57](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md>)
-[Service-account migration, lines 1–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md>)
+[Entra phase 1, lines 15–21, 48–57](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md#L15-L57>)
+[Service-account migration, lines 1–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md#L1-L10>)
 
 ### Session concepts and intended lifecycle
 
@@ -264,47 +279,47 @@ An idle timeout limits inactivity.
 An absolute timeout limits the interval since authentication.
 A refresh token supports another authentication interval without repeating the initial SSO journey.
 These are documented concepts, rather than a confirmed runtime contract.
-[Session version 0, lines 1–9, 19–24, 38–65](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md>)
-[Session version 1, lines 102–193](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>)
+[Session version 0, lines 1–9, 19–24, 38–65](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md#L1-L65>)
+[Session version 1, lines 102–193](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md#L102-L193>)
 
 Version 0 states limits below 60 minutes for absolute timeout and below 15 minutes for idle timeout.
 Its examples use a 15-minute access token and a 24-hour refresh token.
 It proposes an inactivity warning, session extension, single-device login, and reused-token rejection.
 Those examples do not resolve the strict-limit wording or current implementation.
-[Session version 0, lines 1–9, 19–24, 38–65](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md>)
+[Session version 0, lines 1–9, 19–24, 38–65](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md#L1-L65>)
 
 Version 1 proposes `exp = iat + 15 minutes` for idle timeout.
 It relates absolute timeout to `auth_time` and a 60-minute `max_age` interval.
 Its proposed flow obtains a refresh token before access-token expiry.
 A later relogin exchanges the refresh token for another access token.
 It places single-device login and token-blacklist work on a backlog.
-[Session version 1, lines 102–193](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>)
+[Session version 1, lines 102–193](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md#L102-L193>)
 
 Version 1 contains both 105-minute and 225-minute refresh-token durations in the same calculation.
 Its absolute-timeout discussion also proposes changing `auth_time` during continued activity.
 These statements cannot define a single reliable timing rule without review.
-[Session version 1, lines 102–193](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>)
+[Session version 1, lines 102–193](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md#L102-L193>)
 
 Version 1 also states that refresh tokens have no absolute timeout because they lack `auth_time` and `max_age`.
 This is a proposed source statement alongside competing duration and `auth_time` rules, rather than accepted policy.
-[Session version 1, lines 133–164](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>)
+[Session version 1, lines 133–164](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md#L133-L164>)
 
 ### Entra onboarding and user profile
 
 The non-production guide requires a development AD account, Authenticator registration, and RATAN AD-group membership.
 It asks teams to check successful login, user information, and expected tile visibility.
 Its FAQ associates missing entitlements with tile access and EMS2 configuration.
-[Non-production verification guide, lines 5–56, 58–126](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md>)
+[Non-production verification guide, lines 5–56, 58–126](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md#L5-L126>)
 
 The production guide specifies the intended pilot-user authentication journey.
 It describes Windows Hello or Authenticator authentication and an Entra session of one hour.
 That provider-session statement does not settle the portal refresh-token lifetime.
-[Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
+[Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L1-L101>)
 
 The production guide warns that AD profile values differ from OUD values.
 It identifies changed surname formatting, country codes, and missing locale values.
 Downstream audit or application logic can therefore require profile-field review during migration.
-[Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
+[Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L1-L101>)
 
 ### Historical machine-to-machine authentication
 
@@ -313,7 +328,15 @@ It separates service-account onboarding from bank-ID onboarding.
 It describes OUD-managed accounts authenticated through FMAA.
 It states 17-year validity for service accounts and seven-day validity for bank IDs.
 Those historical values do not establish approved portal-session limits or current token policy.
-[Historical FMAA reference, lines 11–13, 24–30, 36–50](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md>)
+[Historical FMAA reference, lines 11–13, 24–30, 36–50](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L11-L50>)
+
+### Historical introspection parameter meanings
+
+The FMAA example requires `app_id` for audit and does not validate it against OUD.
+When supplied, `user_id` is checked against token ownership claims.
+Without `user_id`, the example validates signature and expiry without checking the token owner.
+These historical reference semantics supply no current Portal authentication requirement.
+[Historical FMAA introspection example, line 13](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L13>)
 
 ## Connections
 
@@ -339,8 +362,8 @@ Implementation and execution comparisons remain in the independent task gap reco
 
 The historical production guide describes both temporary and persistent activation.
 Those statements apply to the former Entra pilot. The November answer prohibits OneMFA fallback for the current SSO policy.
-[Entra design, lines 7–31, 40–68](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md>)
-[Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md>)
+[Entra design, lines 7–31, 40–68](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L7-L68>)
+[Production pilot guide, lines 1–2, 12–46, 48–86, 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L1-L101>)
 
 ## Open questions
 
@@ -351,8 +374,8 @@ Owner: RATAN team. Next action: obtain the applicable policy text and revision.
 Which exact timeout settings and token lifetimes apply by environment?
 The earlier designs propose different token lifetimes.
 Owner: RATAN team. Next action: confirm any approved environment-specific settings.
-[Session version 0](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md>)
-[Session version 1](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>)
+[Session version 0](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md#L1-L73>)
+[Session version 1](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md#L1-L193>)
 
 Which authorized conditions initiate portal logout when the access token has expired?
 The user supplied the ideal revocation scope and timing. The answer leaves initiation with an expired access token unresolved.
@@ -366,7 +389,7 @@ Which documented FMAA flows and validity settings remain intended requirements?
 The historical reference supplies exceptional validity examples.
 Consequence: copying those values into a target rule requires authoritative policy evidence.
 Owner: unknown authentication owner. Next action: confirm the intended provider contract and validity limits for each supported flow.
-[Historical FMAA reference](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md>)
+[Historical FMAA reference](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L1-L54>)
 
 The [renewal requirement](../requirements/REQ-active-session-renewal.md#intended-scope) holds the canonical target criteria.
 The independent [gap record](../../../../tasks/portal-background-session-20261019/09-intent-reality-gaps.md) holds actual behavior and evidence limitations.

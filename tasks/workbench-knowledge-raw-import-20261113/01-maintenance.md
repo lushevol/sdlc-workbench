@@ -1,18 +1,150 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 168.** Raw filtering covers all 1,073 present pages. Both collections verify with zero findings and 41 held pages.
+> **Checkpoint 201: canonical integration complete for the reviewed batches.** All 117 records remain candidate/draft; zero are published. Scoped final checks pass with zero findings. Source-completion reconciliation and wiki maintenance continue. All investigated questions stay in the [single editable document](evidence/canonical-draft-questions-20261115.md).
+
+## Current stage: source receipts and derived wiki
+
+The [Portal finalization](evidence/checkpoint-201-portal-integration-finalization.json) seals three additive successors. The [last corrections](evidence/checkpoint-200-final-corrections-finalization.json) seal source-supported query intent, lifecycle limits and reviewed whitespace changes. All old audits and protected snapshots remain preserved.
+
+Fresh plans queue 434 Cash, 71 RATAN, 80 Portal and 41 historical Settlement identities: 626 total. These include reopened dependency bindings and duplicate historical content. They do not count independent unread documents. Forty-four identities are held: 39 Cash, three RATAN, one Portal and one historical Settlement. One new Cash hold preserves the ambiguous QA draft.
+
+Actual review covers 120 platform, 75 operations, 72 integration and 149 functional identities, plus 80 Portal outcomes. These review counts do not establish accepted source completion. Receipt reconciliation uses current final output closures.
+
+Two GPT-6 Luna / Max document threads are drafting summaries for 93 newly bound wiki inputs. The wiki currently retains 24 bindings. Drafts need GPT-6.1 Sol / Medium review before integration. Publication, current policy authority, execution and owner answers remain separate.
+
+The [replacement project guide](evidence/user-project-guide-replacement-20261116.md) requires scoped commits after passing stages. Required checks and this stage's commit are being completed before further canonical changes.
+
+## Continuation checkpoint 193: remaining domain topics sealed
+
+The [third domain-batch finalization](evidence/checkpoint-193-domain-batch-3-finalization.json) seals 20 further reviewed platform, operations and integration candidates with zero findings or deferred findings. All 79 canonical records remain candidate/draft. Functional reviews continue under checkpoints 190–192; source-receipt and wiki reconciliation follow when overlapping candidate changes settle.
+
+## Continuation checkpoint 189: second domain batch sealed
+
+The [finalization](evidence/checkpoint-189-domain-batch-2-finalization.json) binds 22 new candidates and two reviewed successors: identity/write-back v3 and SSI/Nostro v4. Exact reviewed bytes, preparation and 24 current immutable candidate events agree. The [rejected audit drafts and correction](evidence/checkpoint-189-audit-draft-correction.json) preserve an authoring error before acceptance; earlier accepted audit history remains unchanged.
+
+Reviewed platform, operations and integration candidates still await the next serial batch. Functional completions are retained immediately under checkpoints 190–192. Source-completion receipts require final affected-closure reconciliation; semantic review counts are not accepted source completions. The wiki still requires refresh after canonical integration. Source-policy answers, owner identities, current authority, publication approval and execution remain unestablished.
+
+> **Checkpoint 187 first domain batch sealed; broader review continues.** There are 37 sealed canonical candidate/draft records and zero publications. The seven-record batch passes with zero findings. Source-completion closure reconciliation and wiki maintenance remain pending. Reviews use GPT-6.1 Sol / Medium; document processing uses GPT-6 Luna / Max under the [accepted native-selection limit](evidence/user-review-model-decision-20261116.md). All questions stay in the existing annex for [batch handling](evidence/user-batch-questions-20261116.md).
+
+## Continuation checkpoint 187: seven domain topics sealed
+
+The [first domain-batch finalization](evidence/checkpoint-187-first-domain-batch-finalization.json) seals SSI/Nostro, OpenFin/FDC3, technical recovery, DR, performance/capacity intent, data access, and queue partitioning. [Structural corrections](evidence/checkpoint-187-operations-structural-corrections-review.json) restore required headings without changing prior claim meaning. The [performance correction](evidence/checkpoint-187-performance-intent-correction-review.json) retains source-supported test targets and workload assumptions, while [reported observations](evidence/checkpoint-187-performance-reported-observations.md) remain independent task evidence. Preparation and the final seal pass with zero findings and deferred findings.
+
+Broader platform, operations, and integrations workers continue independently. Completed reviews are retained under checkpoints 186–188 before further work. More domain candidates and specialist deltas await serial integration; no source-policy answer, current authority, execution proof or publication approval has been inferred. The central question annex now includes the fresh investigated refinements, preserving existing blank answers and IDs.
+
+## Continuation checkpoints 184–188: connected review and relevance checks
+
+The [Uber/identity finalization](evidence/checkpoint-184-uber-identity-finalization.json) seals Uber v3 and identity/write-back v2 with zero findings. Their source receipts require affected-closure reconciliation. The [SSI/Nostro review](evidence/checkpoint-185-ssi-nostro-review.json) corrects the documented Prime UK precedence and preserves regional/producer limits. It refines existing question IDs in the central annex.
+
+Broader platform, operations and integration reviews are running against fresh plan-bound views. Completed topic reviews are retained immediately under checkpoints 186–188. Generic Java conventions, code-review automation, Octopus aggregation, and PostgreSQL diagnostics have no canonical domain output; their exact source reviews remain evidence. The isolated QA sentence remains owner-blocked without a thin canonical record. Selection-relevance recommendations are retained for a coordinated reassessment; protected snapshots are preserved.
+
+Seven domain outputs are staged for the next batch: SSI/Nostro, OpenFin/FDC3, technical recovery, DR, performance/capacity, data access, and queue partitioning. The [prepare failure](evidence/checkpoint-187-operations-structure-findings.json) identifies missing required body headings in five operations records. The reviewer is correcting their private final bytes and repeating affected review. No final events or seal exist for this batch yet. Other completed domain reviews remain private pending serial integration.
+
+## Continuation checkpoint 182: manual, BIC, exceptions and Blotter sealed
+
+The [combined finalization](evidence/checkpoint-182-manual-exceptions-finalization.json) seals two new netting candidates, one new Cashflow Blotter candidate, and amendment-exception version 2. The [alias correction review](evidence/checkpoint-182-exceptions-alias-correction-review.json) added two exact historical declarations with unchanged business body. The repeated preparation and final sealed check pass with zero findings/deferred findings. Four truthful candidate events preserve previous history; none promotes publication.
+
+The [Uber review](evidence/checkpoint-183-uber-review.json) is retained for the next integration. Source-receipt closure reconciliation is deferred until these overlapping candidates settle. The current broad-review plans show 426 Cash, 71 RATAN, 80 Portal and 41 historical Settlement queued identities (618 total), plus 43 held identities. These fresh counts include reopened dependency/index bindings and do not mean 618 new unread documents. Additional integration and reviewed receipt refreshes can change them.
+
+The coordinator is preparing fresh plan-bound source views for broader review of the prior isolated packs. Partial-topic sources and owner-policy questions remain open. The derived wiki still has 24 bindings; canonical integration does not update it automatically.
+
+## Continuation checkpoint 179: CN workflow candidate integrated
+
+The [latest user instruction](evidence/user-batch-questions-20261116.md) keeps all questions in the existing annex for batch handling. No individual domain question is answered. Continue independent supported work and preserve blank answer fields.
+
+The [fresh semantic review](evidence/checkpoint-179-cn-workflow-review.json) supports the exact [CN workflow candidate](../../knowledge/records/candidates/settlement/KT-settlement-cn-workflow.md). The [finalization checkpoint](evidence/checkpoint-179-cn-workflow-finalization.json) binds its final bytes, immutable candidate event, and passed seal with zero findings. All six assigned selected-intent sources received [completion receipts](evidence/checkpoint-179-cn-source-completion-with-index.json). The first attempt [was rejected](evidence/checkpoint-179-cn-source-completion.json) because the changed navigation index was absent from the output list; no partial receipts were written. The corrected list includes the sealed index.
+
+The larger status-machine page remains partial context and stays queued. [Three owner-decision bundles](evidence/canonical-draft-questions-20261115.md#cn-workflow-review-checkpoint-179) consolidate lifecycle precedence, migration controls, and current authority. No answer is selected. The completion result reports 404 remaining pages in that saved Cash plan; a fresh plan must account for expanded dependency closures before reporting current total queues.
+
+The [Murex feed review](evidence/checkpoint-180-murex-feed-review.json) is complete and retained. Its six fully covered selected sources and two partial shared-topic sources remain distinct. The candidate is now [integrated and sealed](evidence/checkpoint-180-murex-feed-finalization.json) with zero findings, and [six source completions](evidence/checkpoint-180-murex-source-completion.json) were accepted. There are 26 canonical candidate/draft records at this sealed checkpoint. Dependency expansion and subsequent index changes can reopen prior receipts; saved-plan remaining counts are not a fresh whole-collection status.
+
+The [manual/BIC review](evidence/checkpoint-181-manual-netting-review.json) and [exceptions/Blotter review](evidence/checkpoint-182-exceptions-review.json) are retained. Their four exact reviewed outputs are staged locally, but the [prepare check](evidence/checkpoint-182-preparation-alias-findings.json) found two missing historical source aliases in the amendment successor. Fresh affected metadata review is correcting those declarations. No final events or seal have been written for this batch. Eleven owner-question bundles were added to the existing annex for the user's batch handling.
+
+## Continuation checkpoint 178: model decision resolved and source correction sealed
+
+The [exact user answer](evidence/user-review-model-decision-20261116.md) supersedes the runtime-confirmation blocker for fresh native work. Earlier model-unverified drafts still require fresh affected review. Three active lanes use the requested roles: Sol / Medium reviews and Luna / Max document processing.
+
+The auto-netting record is now candidate version 2 with eight added retained-source declarations and unchanged business text. The [fresh Sol review](evidence/checkpoint-178-auto-netting-review.json) supports nine dated claim groups and preserves unresolved effective-policy questions. The [finalization record](evidence/checkpoint-178-auto-netting-finalization.json) binds the final candidate, preparation, new immutable correction event, and passed final seal. All 39 source-declaration findings are cleared. This does not publish the record or approve a current policy.
+
+The metadata-only hash change reopened 44 prior receipts through dependency bindings (31 Cash, 13 RATAN). The [lineage review](evidence/checkpoint-178-lineage-review.json) and [compact case bindings](evidence/checkpoint-178-lineage-case-bindings.json) confirm unchanged source selections and output closures, with the auto-netting metadata hash as the sole dependency delta. The [Cash completion](evidence/checkpoint-178-cash-lineage-completion.json) refreshes 31 reviewed no-change receipts; the [RATAN completion](evidence/checkpoint-178-ratan-lineage-completion.json) refreshes all 13. The latest queues return to 410 Cash and 58 RATAN pages. These are refreshed prior completions, not 44 newly processed pages.
+
+The [CN workflow review](evidence/checkpoint-179-cn-workflow-review.json) supports an explicitly qualified candidate covering six selected source pages, with the wider lifecycle page retained as partial context. Integration and its sealed checkpoint are next. Murex and manual-netting reviews use GPT-6.1 Sol / Medium; SSI/Nostro processing uses GPT-6 Luna / Max. Current policy conflicts and publication remain unresolved.
+
+> **Checkpoint 177: blocked on GATE-04.** Source decisions cover 1,032 pages in the latest imports; their 41 held pages remain unresolved. All 1,073 pages are present.
 >
-> Fresh plans queue 433 Cash and 64 RATAN pages. They hold 41 and list 535 unchanged pages.
+> Five additional no-change receipts were accepted: four Cash and one RATAN. Fresh plans queue 410 Cash and 58 RATAN pages (468 total). New views can be generated when semantic work resumes.
 >
-> Processing ledgers contain 36 Cash and 17 RATAN receipts. All seven coordinator-reviewed no-change outcomes already have receipts.
+> Both verifiers report `NEEDS_REVIEW`, zero findings, and zero missing pages. Cash has 38 held pages; RATAN has three.
 >
-> The question annex records 1,518 occurrences across 980 exact-text rows. It lists 28 held groups separately.
+> Ledgers contain 56 Cash and 23 RATAN receipts. Candidate bytes remain unchanged.
 >
-> All resumed semantic merge drafts are model-unverified. No candidate integration or wiki semantic maintenance is authorized.
+> The question annex records 1,527 occurrences across 987 rows, 28 held-review groups, three earlier goal gates, and the new native-worker evidence question GATE-04.
 >
-> The current gate and exact blocker path are recorded in [checkpoint 168](evidence/checkpoint-168-model-gate.json).
+> Semantic integration awaits the GATE-04 model-evidence decision. Full source coverage also needs owner evidence for held pages. Three native workers used explicit GPT-6 Luna / Max selection; actual runtime confirmation was unavailable.
+>
+> The scoped harness still reports 39 source-declaration findings in an unchanged candidate. A checked proposal supplies the eight missing reference tuples; it remains unapplied. No final seal ran.
+>
+> Workspace validation is `VALID` for 26 documents. The final link check passed 2,571 local links across three files. Protected source, audit, and governed-document hashes match the continuation baseline. `git diff --check` passed.
+>
+> See [checkpoint 177](evidence/checkpoint-177-continuation-summary.json) and [GATE-04](evidence/canonical-draft-questions-20261115.md#continuation-input-checkpoint-175).
+
+## Continuation checkpoint 177: exact stopping point
+
+The [continued work](evidence/user-continuation-request-20261116.md) completed five additional no-change receipts and restored the historical 55-page Settlement inbox. The declaration correction is concrete and retained as an unapplied eight-tuple diff. The [final checkpoint](evidence/checkpoint-177-continuation-summary.json) records the exact current plans, receipt results, protected hashes, recovery, checks, and resume path. The [historical/current source map](evidence/checkpoint-177-historical-current-source-map.json) preserves the 54 identical pages and one changed source without conflating their collection identities.
+
+**Current stage:** the latest imports have 468 canonical-processing pages and 41 held pages. Across all four prepared document collections, planning has 589 queued source-page identities and 43 held identities; duplicate source content and historical revisions remain distinct. All 24 canonical records remain drafts; the 19 wiki scopes still await affected review or maintenance.
+
+**Completed checks:** workspace validation passes for 26 documents. The scoped prepare harness still fails on the same 39 undeclared-source findings in one unchanged candidate; final sealing did not run. All captured protected raw-file, audit-file, and governed-document hashes match the pre-edit continuation baseline. Receipt reuse and historical inbox recovery supply no semantic correctness, publication, or business-execution claim.
+
+**Required input:** answer [GATE-04](evidence/canonical-draft-questions-20261115.md#continuation-input-checkpoint-175): accept explicit native GPT-6 Luna / Max selection as sufficient for fresh reviews while recording unavailable independent runtime confirmation, or keep the prior requirement and provide qualifying runtime evidence. No option is selected. This question follows the [earlier explicit user gate](evidence/user-model-availability-gate-20261116.md#preflight-mismatch-direction); it is not an inferred skill approval requirement.
+
+**Resume condition and next action:** after the model-evidence decision is resolved, use fresh native worker reviews for the affected semantic scope, finish the source-declaration correction with required final-byte review/audit and passing preparation/final seal, regenerate current plan-bound filtered views, and process independent queued source groups through `ingest-knowledge`. Continue held-page investigation through `resolve-knowledge-questions`; source/domain owners remain unknown. Use `llm-wiki` only for settled canonical inputs, and keep required human publication review separate. Prior unverified semantic merge drafts do not gain verification from the new dispatch.
+
+## Continuation checkpoint 175: no-change reuse in progress
+
+The [latest continuation](evidence/user-continuation-request-20261116.md) authorizes further processing with GPT-6 Luna / Max workers. Three isolated native workers were dispatched with those explicit settings for preflight and deterministic proposals. The [retained preflight](evidence/checkpoint-174-native-runtime-preflight.json) reports that actual runtime/model/reasoning fields are unavailable, so the existing semantic integration gate remains pending.
+
+The [Cash completion result](evidence/checkpoint-175-cash-nochange-completion.json) accepted four additional no-change results with empty starting output closures. Exact prior review rows and current input bindings are [retained once](evidence/checkpoint-175-nochange-review.json). Two additional results with nonempty output closures remain deferred because their outputs overlap a pending semantic merge. No new semantic decision or model-verification claim was made.
+
+The [RATAN completion result](evidence/checkpoint-175-ratan-nochange-completion.json) accepted one further no-change result with an empty starting output closure. The post-completion queue is now 468 pages: 410 Cash and 58 RATAN. All 41 held pages remain unresolved. These five receipts reuse recorded review and do not claim canonical coverage for outputs that do not exist.
+
+## Continuation checkpoint 176: historical inbox recovered
+
+The absent `settlement-netting` inbox was reconstructed from its 55 exact retained snapshots using independent regular working copies. The [recovery manifest](evidence/checkpoint-176-legacy-inbox-recovery.json) preserves each source ID, original path, snapshot, SHA-256, and byte count. The ignored runtime copies total 806,546 bytes. No source identity, selection decision, protected snapshot, or manifest record changed. This is recovery of the retained historical revision, not a new external export or proof of current applicability.
+
+Metadata comparison found 54 exact-byte counterparts in the newer Cash export. One page has a different current hash; its historical bytes were preserved without substituting the newer content. No semantic source rebind was performed.
+
+Fresh verification now reports zero findings and zero missing pages for this older collection; its one held selection remains unresolved. The 110 export-presence findings are cleared. Fresh planning queues 41 canonical-processing pages and one held page, with 13 unchanged omissions. Together with the older Portal queue, the workspace has 589 queued source-page identities (468 latest imports + 80 Portal + 41 historical Settlement) and 43 held identities. These are collection-level identities and can include duplicate content; they are not counts of independent business decisions.
+
+The metadata-only [source-declaration proposal](evidence/checkpoint-177-source-declaration-proposal.json) and [exact frontmatter diff](evidence/checkpoint-177-source-declaration-frontmatter.diff) are retained for review. Eight distinct missing source tuples across five snapshots account for all 39 findings. The proposed patch passes its parse/binding checks and `git apply --check`; it has not been applied. Source meaning, version, lifecycle, prior audit, and candidate bytes remain unchanged. Applying it still requires the existing gate, affected review, preparation, required current audit evidence, and the final sealed check.
+
+## Progress status check: 16 November 2026
+
+Requested in [the preserved user input](evidence/user-progress-request-20261116.md). This was a read-only lifecycle assessment at checkout `40f1d7d6b` with existing local changes. Source selections, canonical records, audit events, processing receipts, and wiki content were not changed.
+
+**Current position:** checkpoint 173 remains the latest ingestion checkpoint. Fresh local plans reproduce its 414 Cash and 59 RATAN processing pages and 41 held selections. Both source verifiers have zero findings and zero missing pages. The two receipt ledgers, question annex, and auto-netting candidate still match checkpoint 173 hashes. The 559 unchanged plan entries include omitted evidence-only and excluded pages; they are not a count of fully ingested intent pages.
+
+| Dimension | Current inspected result |
+| --- | --- |
+| Latest two exports | 1,073 present pages; 1,032 non-held selection decisions; 41 holds. |
+| Latest canonical work | 473 queued pages; 52 Cash and 22 RATAN receipt entries. Receipt entries alone do not establish current whole-collection completion. |
+| Canonical governance, workspace-wide | 24 records, all candidate/draft; all verifier lists empty; no approval or publication events. Twenty-two records have unknown owners. |
+| Deterministic checks | Workspace validation: VALID, 26 documents. Fresh scoped preparation: FAILED, the same 39 undeclared-source findings in the unchanged auto-netting candidate. Final sealed check: NOT_RUN. |
+| Derived wiki, workspace-wide | 24 canonical bindings and 24 historical completion entries; structural verification passes. Fresh whole-candidate plan: five unchanged, 18 dependency-scope repair reviews, one recipe change. Nineteen inputs need scoped review or maintenance; zero pending attempts. |
+| Older Portal collection | 85 retained pages, one hold, 80 pages queued as `not_completed`. Existing semantic work needs reconciliation against current completion requirements before repeating it. |
+| Older Settlement collection | All 55 retained snapshots exist, but configured incoming export directory `knowledge/evidence/incoming/settlement-netting` is absent. Fresh planning queues all 55 for input-presence review; verification reports 55 `input_presence_changed` and 55 `input_missing` findings. This is an export-location/reuse issue; retained snapshots remain available. |
+
+Ignored diagnostic reports: [fresh integrity preparation](../../.workbench/ingestion/status-audit-knowledge-progress-20261116/prepared.json), [older collection checks](../../.workbench/ingestion/status-audit-knowledge-progress-20261116/legacy-source-checks.json), and [whole-candidate wiki plan](../../.workbench/wiki/status-audit-20261116-knowledge-progress.json).
+
+**Immediate next action:** the runtime operator/coordinator must satisfy the existing [model evidence gate](evidence/user-model-availability-gate-20261116.md). The recorded worker preflight reports `deepseek-v4-flash`; qualifying GPT-6 Luna Max / Max reasoning evidence and verified semantic handoffs remain absent. This status request does not relax that user constraint.
+
+After that gate clears, the coordinator can correct the auto-netting source declarations, obtain passing preparation and final sealed checks, and resume the 473-page canonical queue using current filtered views. Source/domain owners, currently unmapped, can independently supply evidence for the 41 held pages through the [28 held-review groups](evidence/canonical-draft-questions-20261115.md#held-page-review-groups-checkpoint-166). Older collection receipt/export reconciliation also remains necessary for a workspace-wide completion claim. Review the 19 affected wiki scopes after their canonical inputs are settled; retain the five unchanged scopes. Publication still requires applicable final-byte review and human approval.
+
+Confidence is high for the inspected counts, hashes, local check outcomes, and recorded gates. This assessment does not establish semantic correctness, business acceptance, publication, or live implementation behavior. The question annex remains a working register of 987 exact-text rows from 1,527 occurrences, with no answers recorded; owner-level question consolidation remains pending.
 
 ## Request and scope
+
+- Continuation on 16 November 2026: [exact user input](evidence/user-continuation-request-20261116.md). Continue until a material user-input dependency; use GPT-6 Luna with Max reasoning for parallel document batches. Native worker preflight and independent deterministic recovery checks are in progress. Existing model and publication gates remain in force.
 
 - Date: 13 November 2026 (Asia/Singapore).
 - User, in this Codex chat:
@@ -3997,4 +4129,200 @@ limitations:
   - Model labels copied into handoffs do not prove the actual runtime model.
   - Source verification remains NEEDS_REVIEW for 41 held pages.
   - Worker reports and candidate drafts do not establish receipts, publication, or business execution.
+```
+
+## Continuation note: completion closure audit
+
+Date: 16 November 2026 (Asia/Singapore).
+
+I resumed from checkpoint 168. The user-requested goal remains active.
+
+The saved Cash batch contains 16 `no_change` rows. The saved RATAN batch contains five. Both batches match their saved plan IDs.
+
+The first Cash `sources complete` attempt returned `Review every affected canonical output, including former and newly discovered dependents.` It wrote no receipt.
+
+The runtime closure requires 20 unique candidate outputs across these 21 rows. The prepared batches omitted 112 Cash output references and 19 RATAN references. All required candidate hashes still match each plan baseline.
+
+The question annex records 1,527 question occurrences across 987 exact-text rows. All answers remain blank. The source plans queue 497 pages and hold 41 selections.
+
+**Current stage:** raw source filtering is complete for all 1,073 present pages. Deterministic no-change receipt batches are under closure repair.
+
+**Current blocker:** semantic merges, candidate integration, and wiki semantic maintenance remain held by the model-availability gate. The required GPT-6 Luna Max preflight is not present.
+
+**Next action:** add the required dependent output paths to each no-change result. Complete Cash and RATAN sequentially, then replan both collections.
+
+```yaml
+standard: ASD-STE100
+automated_check: FAILED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The first Cash completion attempt rejected incomplete output closure and wrote no receipt.
+  - Matching output hashes do not authenticate worker runtime or prove business behavior.
+  - The 41 held selections and semantic model gate remain unresolved.
+```
+
+## Continuation checkpoint 169: Cash no-change receipts ([evidence](evidence/checkpoint-169-cash-nochange-receipts.json))
+
+Date: 16 November 2026 (Asia/Singapore).
+
+Cash `sources complete` accepted all 16 reviewed `no_change` rows under plan `0e2bf881e2890ee2f6614e273cf6d56b4bef52fc33500169e55288e601a0d231`.
+
+The [Cash receipt ledger](../../knowledge/evidence/processing/cash-settlement-home-page.json) now records those results. Completion returned `PARTIAL`, with 417 processing pages and 38 review items remaining.
+
+The prepared rows include the full affected-output closure. The runtime checked output hashes against the saved plan baseline. No canonical bytes changed.
+
+RATAN still has five prepared no-change rows. Its plan queues 64 processing pages and three review items. The question annex still has 1,527 occurrences across 987 exact-text rows. Answers remain blank.
+
+**Current stage:** Cash no-change receipts are recorded. RATAN deterministic completion is next.
+
+**Current blocker:** semantic merges, candidate integration, and wiki semantic maintenance remain held by the model-availability gate. Forty-one source selections also remain held.
+
+**Next action:** complete RATAN's five no-change rows, then replan both collections and save the new queue counts.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Cash processing remains partial, with 417 queued pages and 38 review items.
+  - Worker model runtime remains unverified; no semantic merge was performed.
+  - Command success does not establish publication approval or business behavior.
+```
+
+## Continuation checkpoint 170: RATAN no-change receipts ([evidence](evidence/checkpoint-170-ratan-nochange-receipts.json))
+
+Date: 16 November 2026 (Asia/Singapore).
+
+RATAN `sources complete` accepted all five reviewed `no_change` rows under plan `70489f99ac43198623f6f856d98d7880bbb8181e285f8cb8da0135d96c7fa880`.
+
+The [RATAN receipt ledger](../../knowledge/evidence/processing/ratan-51358.json) now records those results. Completion returned `PARTIAL`, with 59 processing pages and three review items remaining.
+
+Across both collections, 21 no-change receipts are now recorded. Their required candidate outputs matched the plan baselines. No canonical candidate bytes changed.
+
+The saved plans now account for 476 processing pages and 41 review items. Forty-one held selections remain separate from completed receipts. The question annex still records 1,527 occurrences across 987 exact-text rows.
+
+**Current stage:** both deterministic receipt batches are complete. Fresh planning is required before further source work.
+
+**Current blocker:** semantic merges, candidate integration, and wiki semantic maintenance remain held by the model-availability gate. The required runtime preflight is still missing.
+
+**Next action:** create fresh plans for Cash and RATAN, inspect the new queues, and continue only work allowed by the recorded gate.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Completion returned PARTIAL for both collections.
+  - Worker runtime remains unverified; no semantic merge was performed.
+  - Held sources and unanswered questions remain unresolved.
+```
+
+## Continuation checkpoint 171: fresh post-receipt plans ([evidence](evidence/checkpoint-171-post-receipt-plans.json))
+
+Date: 16 November 2026 (Asia/Singapore).
+
+Fresh plans were saved in [the coordinator resume directory](../../.workbench/ingestion/coordinator-resume-20261116-03/). Cash plan `daf9cc104b435e2c5b8a55d2a11a36b6547d9d3e9faec74826fe4527ab68f4de` queues 417 pages, reviews 38, and marks 429 unchanged.
+
+RATAN plan `374bd3ca19187aa9c56783fc4ea0ce64e3f1ef6958cff7f8527f1fc20109e07e` queues 59 pages, reviews three, and marks 127 unchanged.
+
+Both plan-bound views were created. Cash selects 417 pages and omits 467. RATAN selects 59 and omits 130. The [view manifests](../../.workbench/ingestion/coordinator-resume-20261116-03/) bind each view to its plan and source hashes.
+
+Both source verifiers return `NEEDS_REVIEW`, with zero findings and zero missing pages. Cash has 38 held selections. RATAN has three. Their 41 held pages still need owner evidence or missing artifacts.
+
+The processing ledgers now contain 52 Cash and 22 RATAN receipts. This continuation added 21 `no_change` receipts. Their required outputs match the saved baselines; no canonical candidate bytes changed.
+
+The [question annex](evidence/canonical-draft-questions-20261115.md) records 1,527 occurrences across 987 exact-text rows. The 28 held-review groups remain separate. Every answer is blank.
+
+**Current stage:** source filtering and deterministic receipt work are complete for this continuation. Canonical processing still has 476 pages queued.
+
+**Current blocker:** semantic work requires a fresh runtime preflight showing GPT-6 Luna Max with Max reasoning and model-verified handoffs for every merge. The 41 held selections also need owner evidence.
+
+**Next action:** provide the runtime evidence listed in the [model gate request](evidence/user-model-availability-gate-20261116.md#outstanding-input-request). Then resume semantic review on the current filtered views. Resolve held selections from the question annex as evidence becomes available.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Source verification remains NEEDS_REVIEW for 41 held selections.
+  - Worker runtime remains unverified; no semantic merge or candidate integration was performed.
+  - Receipts do not establish publication approval or business behavior.
+```
+
+## Continuation checkpoint 172: integrity findings and input gate ([evidence](evidence/checkpoint-172-integrity-blocker.json))
+
+Date: 16 November 2026 (Asia/Singapore).
+
+The scoped [integrity harness report](../../.workbench/ingestion/nochange-receipts-20261116-01/prepared.json) returned `FAILED`. It checked 20 affected candidate records and reported 39 `linked_source_not_declared` findings in [KT-settlement-auto-netting](../../knowledge/records/candidates/settlement/KT-settlement-auto-netting.md).
+
+The harness reports zero changed governed documents and zero new audit events. All 20 selected outputs match the saved baseline. No canonical bytes changed in this continuation. The findings existed in the unchanged candidate.
+
+The [workspace validation](evidence/checkpoint-172-workspace-validation.json) returned `VALID` for 26 documents with zero findings. The [task link check](evidence/checkpoint-172-link-check.json) passed 2,546 local links across three Markdown files. `git diff --check` passed. The source verifier statuses remain `NEEDS_REVIEW`: 38 Cash holds and three RATAN holds, with no missing pages or binding findings.
+
+The question annex contains 987 unique question IDs. It has zero answered rows and lists 28 held-review groups. All source questions remain open.
+
+**Current stage:** filtering and deterministic no-change receipts are complete for this continuation. Fresh views cover 417 Cash and 59 RATAN queued pages. The plans queue 476 pages and 41 held selections.
+
+**Current blocker:** the runtime preflight does not meet the requested model gate. The scoped harness also found 39 missing source declarations in one unchanged candidate. The final sealed check did not run because preparation failed.
+
+**Input needed:** provide fresh preflight evidence for GPT-6 Luna Max with Max reasoning, plus model-verified handoffs for every semantic merge. Owner evidence or missing artifacts are also needed for the 41 held selections.
+
+**Next action:** keep semantic changes pending until the [requested runtime evidence](evidence/user-model-availability-gate-20261116.md#outstanding-input-request) arrives. Then review the recorded integrity findings and resume the current source queues.
+
+```yaml
+standard: ASD-STE100
+automated_check: FAILED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - The scoped prepare harness failed on 39 source declaration findings.
+  - The final sealed harness check did not run.
+  - Workspace validation passed but does not check source declaration completeness.
+  - Runtime model verification, owner input, publication, and business behavior remain unverified.
+```
+
+## Continuation checkpoint 173: refreshed plans and exact stopping point ([evidence](evidence/checkpoint-173-source-plan-views.json))
+
+Date: 16 November 2026 (Asia/Singapore).
+
+I continued from checkpoint 172. The goal is now blocked on the recorded user inputs.
+
+Fresh plans bind to the current Cash and RATAN processing receipts. Cash plan `aed4c58638bc3123fbacc2d02d3b5a20f930aa83e25706d9ab32912906722506` has 414 pages to process, 38 held pages, and 432 unchanged pages. RATAN plan `374bd3ca19187aa9c56783fc4ea0ce64e3f1ef6958cff7f8527f1fc20109e07e` has 59 pages to process, three held pages, and 127 unchanged pages.
+
+Both fresh plan-bound views were created from the complete plan wrappers. The Cash view selects 414 pages and omits 470. The RATAN view selects 59 pages and omits 130. Their manifests bind to the current selection and policy hashes.
+
+Source verification remains `NEEDS_REVIEW` for both collections. It reports zero findings and zero missing pages. The 41 held selections remain unresolved: 38 Cash and three RATAN.
+
+Three refreshed Cash `no_change` receipts were accepted under the prior plan. Their output hashes match their starting hashes. The ledgers contain 52 Cash and 22 RATAN receipt rows. No candidate bytes changed for these three receipts.
+
+The question annex contains 1,527 source-review question occurrences across 987 exact-text rows, plus 28 held-review groups. It now lists three current operational inputs in one place. Every answer remains blank.
+
+**Current stage:** source decisions cover 1,032 present pages. Current canonical plans queue 473 pages and 41 held selections. Fresh partial views are available for both process queues.
+
+**Current blocker:** the recorded preflight reports `deepseek-v4-flash`, not GPT-6 Luna Max with Max reasoning. Every semantic merge handoff remains unverified. Owner evidence or missing artifacts are also needed for the 41 held selections. The scoped harness still has 39 `linked_source_not_declared` findings in the unchanged `KT-settlement-auto-netting.md`; its final sealed check did not run. Correcting its source tuples changes a candidate, so the recorded model gate keeps that edit pending.
+
+**Input needed:** provide fresh runtime evidence and model-verified handoffs, then resolve the held-page questions in the annex. No semantic update, candidate integration, or wiki semantic maintenance was performed in this continuation.
+
+**Next action:** after the model evidence arrives, correct the candidate source tuples from the retained manifest, rerun preparation and the sealed check, then refresh plans. Resume semantic processing only with model-verified handoffs. Reassess held selections when owner evidence or missing artifacts arrive.
+
+```yaml
+standard: ASD-STE100
+automated_check: FAILED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Source verification remains NEEDS_REVIEW for 41 held selections.
+  - The scoped prepare harness failed on 39 source declaration findings.
+  - The final sealed harness check did not run.
+  - Runtime model verification, owner input, publication, and business behavior remain unverified.
 ```

@@ -9,6 +9,10 @@ These skills guide agents. They do not add a workflow runner or an automatic app
 ## Lifecycle coordination and next actions
 
 Use [manage-knowledge-lifecycle](../.agents/skills/manage-knowledge-lifecycle/SKILL.md) at workflow entry, resumption, status review and handoff.
+
+The current [Portal and Settlement intake](../tasks/workbench-knowledge-raw-import-20261113/01-maintenance.md) records checked progress and remaining work.
+Its [single editable question document](../tasks/workbench-knowledge-raw-import-20261113/evidence/canonical-draft-questions-20261115.md) collects investigated decisions for batch handling.
+Candidate review, source completion, wiki freshness, and human publication remain separate stages.
 It inspects current source queues, processing receipts, canonical reviews/audit, and wiki bindings before selecting existing major-step skills.
 It reports source coverage, canonical processing, governance, publication, wiki freshness and requested business verification separately.
 Each material next action names its evidence, owner, required input, selected skill and completion condition.

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "actor": "agent:codex:sol-functional-lane-3-review",
+  "semantic_reviewed_at": "2026-11-16T02:11:37.720368+00:00",
+  "status": "14_COMPLETE_ORIGINALS_REVIEWED_PROPOSED_DECISIONS_ONLY",
+  "topic_count": 5,
+  "source_count": 14,
+  "decision_counts": {
+    "EXCLUDE": 7,
+    "HOLD": 1,
+    "EVIDENCE_ONLY": 5,
+    "KEEP_SECTIONS": 1
+  },
+  "reports": [
+    {
+      "topic": "code-review-automation",
+      "path": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/code-review-automation-review.json",
+      "sha256": "9dc052c43cea4c97542b6945c7bdeb6a9dedb95e1aa5077cade1ae25e15bc2d4",
+      "decisions": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/code-review-automation-decisions.proposed.json",
+      "decisions_sha256": "4815ce3b9f85d38df1fbe1f147b54713f3cfcbc58a52c5ec28d631adf1ee3ce8"
+    },
+    {
+      "topic": "octopus",
+      "path": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/octopus-review.json",
+      "sha256": "643751b3c2e90c1cae3933a750e646acffc6ad9829d93ffa11af942a600e42d7",
+      "decisions": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/octopus-decisions.proposed.json",
+      "decisions_sha256": "8e96008d4cf6c16c6a0c63a4db9e1964213ead6255b8379f9aa06f8a3a8e82a3"
+    },
+    {
+      "topic": "java",
+      "path": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/java-review.json",
+      "sha256": "5f6d5a2d8ac9675e8f3b14de2a3d1df8dc93017a2241d7fa58ac3e22f3cc173a",
+      "decisions": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/java-decisions.proposed.json",
+      "decisions_sha256": "c1905d2b32051eed8714fd8016632416d6fa0703c1d12de8afccc36868cbf2bf"
+    },
+    {
+      "topic": "qa",
+      "path": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/qa-review.json",
+      "sha256": "3155c3cd2699f9acac10d9982b7153f16b1bf82cd2d8e144006e746f3afbe518",
+      "decisions": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/qa-decisions.proposed.json",
+      "decisions_sha256": "80a9e7e8c06997633b6dbb5df66fac5d770a5d838f451fbd7de0baa0210b7fe8"
+    },
+    {
+      "topic": "postgresql",
+      "path": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/postgresql-review.json",
+      "sha256": "df53d900fdd3a137fc08a580e683314ab1aaf497a8d8a5835715b9d4a0aaf8d5",
+      "decisions": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/postgresql-decisions.proposed.json",
+      "decisions_sha256": "0add0ad4ecf66d65ee2aac938ba87cc069857a0dbea080f8811beb6eec2e8187"
+    }
+  ],
+  "retained_domain_delta": {
+    "report": ".workbench/ingestion/review-resume-20261116/functional-lane-3-review/postgresql-query-proposal-reconciliation.json",
+    "sha256": "6181fd5a65a1b91ebda42640ebfeb7aaf8394e16a417924b97a2eea6ff8deb47"
+  },
+  "central_question_register": "tasks/workbench-knowledge-raw-import-20261113/evidence/canonical-draft-questions-20261115.md",
+  "owner_questions": [
+    {
+      "existing_id": "KDQ-6fd7c4bd16",
+      "question": "Which environments approve query-service memory/index changes?",
+      "owner": "unknown"
+    },
+    {
+      "question": "Which owner confirms QA draft timing reference and escalation meaning?",
+      "owner": "unknown",
+      "reuse": "Existing checkpoint186 QA question. Root preserves central register identity."
+    }
+  ],
+  "next_action": "Root applies proposed decisions, verifies, replans and generates current scoped views. QA stays held.",
+  "command_specs": [
+    {
+      "topic": "code-review-automation",
+      "commands": [
+        ".venv/bin/ai-sdlc --workspace . sources select --source cash-settlement-home-page --decisions .workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/code-review-automation-decisions.proposed.json",
+        ".venv/bin/ai-sdlc --workspace . sources verify --source cash-settlement-home-page",
+        ".venv/bin/ai-sdlc --workspace . sources plan --source cash-settlement-home-page --recipe canonical-v1"
+      ]
+    },
+    {
+      "topic": "octopus",
+      "commands": [
+        ".venv/bin/ai-sdlc --workspace . sources select --source cash-settlement-home-page --decisions .workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/octopus-decisions.proposed.json",
+        ".venv/bin/ai-sdlc --workspace . sources verify --source cash-settlement-home-page",
+        ".venv/bin/ai-sdlc --workspace . sources plan --source cash-settlement-home-page --recipe canonical-v1"
+      ]
+    },
+    {
+      "topic": "java",
+      "commands": [
+        ".venv/bin/ai-sdlc --workspace . sources select --source cash-settlement-home-page --decisions .workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/java-decisions.proposed.json",
+        ".venv/bin/ai-sdlc --workspace . sources verify --source cash-settlement-home-page",
+        ".venv/bin/ai-sdlc --workspace . sources plan --source cash-settlement-home-page --recipe canonical-v1"
+      ]
+    },
+    {
+      "topic": "qa",
+      "commands": [
+        ".venv/bin/ai-sdlc --workspace . sources select --source cash-settlement-home-page --decisions .workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/qa-decisions.proposed.json",
+        ".venv/bin/ai-sdlc --workspace . sources verify --source cash-settlement-home-page",
+        ".venv/bin/ai-sdlc --workspace . sources plan --source cash-settlement-home-page --recipe canonical-v1"
+      ]
+    },
+    {
+      "topic": "postgresql",
+      "commands": [
+        ".venv/bin/ai-sdlc --workspace . sources select --source cash-settlement-home-page --decisions .workbench/ingestion/review-resume-20261116/functional-lane-3-review/platform-relevance/postgresql-decisions.proposed.json",
+        ".venv/bin/ai-sdlc --workspace . sources verify --source cash-settlement-home-page",
+        ".venv/bin/ai-sdlc --workspace . sources plan --source cash-settlement-home-page --recipe canonical-v1"
+      ]
+    }
+  ],
+  "checks": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "actual_checks": [
+      "Full original SHA256 values match assignment",
+      "Cited physical ranges exist",
+      "Proposed paths/hashes match assignment",
+      "Proposed kept ranges exist"
+    ],
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ]
+  },
+  "limits": [
+    "Commands are proposed and were not run. Collection verification can remain NEEDS_REVIEW due to held pages.",
+    "Root must inspect former dependents before completing excluded sources. Original snapshots remain protected."
+  ]
+}
