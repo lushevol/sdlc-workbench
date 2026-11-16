@@ -1,6 +1,6 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 219: 136 source receipts accepted.** There are 117 candidate records and two navigation files. Zero records are published. Current plans queue 490 identities and hold 44 identities. Active wiki finalization remains incomplete. Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
+> **Checkpoint 222: source receipts accepted and candidate wiki refreshed.** There are 117 candidate records and two navigation files. Zero records are published. Current plans queue 488 identities and hold 44 identities. The derived wiki has 117 completion receipts. Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
 
 ## Current stage: source receipts and derived wiki
 
@@ -13,12 +13,12 @@ It seals cache, static configuration, feeds, validation, monitoring and advanced
 The [interface finalization](evidence/checkpoint-216-reference-interfaces-finalization.json) seals the reviewed reference-interface successor.
 These changes preserve prior supported body content and explicit source conflicts.
 
-All 93 new wiki summaries have private Sol reviews.
-All 24 existing summaries and 37 existing concepts also have private reviews.
-Four new Product pages and four new concepts have reviewed proposals.
-Final assembly must reconcile seven changed canonical inputs and active-relative links.
-Thirty-nine existing entity pages, six saved explorations and the combined index require final review.
-Active wiki provenance still has 24 bindings. No expanded wiki completion is claimed.
+The [wiki finalization](evidence/checkpoint-219-wiki-finalization.json) covers all 117 candidate records.
+Its 208 reviewed outputs include 117 summaries, 41 concepts, 43 entities, six explorations and the index.
+All 117 completion receipts match current sources. No pending attempt remains.
+Independent finalizer checks confirmed zero structural findings and an unchanged 117-record plan.
+The subsequent staged diff found eleven extra blank lines. The wiki owner is repairing their final-byte receipts before commit.
+These results establish candidate-to-wiki freshness at that check. They supply no publication approval or passing business execution.
 
 The [Portal correction batch](evidence/checkpoint-209-portal-full-source-corrections-finalization.json) seals nine successors with zero findings.
 The [80-source proposal](evidence/checkpoint-207-portal-collection-completion-proposal.json) records 44 supported cases and 36 corrected source outcomes.
@@ -30,15 +30,19 @@ The handoff hashes, reviewed output hashes and four current plan baselines match
 The [legacy catalog review](evidence/checkpoint-217-ratan-legacy-catalog-closure.json) preserves historical entitlement context.
 Its [reviewed context](evidence/legacy-entitlement-catalog-context-20261116.md) supplies no current provider or profile precedence decision.
 
-The current four-collection plans queue 490 identities: Cash 393, RATAN 57, Portal zero and historical Settlement 40.
+The current four-collection plans queue 488 identities: Cash 393, RATAN 55, Portal zero and historical Settlement 40.
+The [glossary review](evidence/checkpoint-221-nostro-terminology-review.json) and [capacity review](evidence/checkpoint-222-capacity-source-review.json) each received an accepted no-change receipt.
+Capacity observations already exist in task evidence. The candidate preserves distinct workload assumptions and response targets.
+The [wiki question reconciliation](evidence/checkpoint-220-wiki-question-reconciliation.json) maps 108 proposals to existing decision topics.
+Three portal refinements preserve blank answers. All earlier annex content and answers remain unchanged.
 They include reopened dependencies and historical duplicate identities. They do not count independent unread documents.
 Forty-four identities remain held: Cash 39, RATAN three, Portal one and historical Settlement one.
 Held-source investigation continues. Available selected intent requires processing before an owner blocker can be claimed.
 
-The current working estimate is one to two active hours for wiki assembly and remaining page review.
-Source reconciliation and final checks may require another two to four active hours.
-These estimates remain uncertain while available source conditions continue producing corrections.
+Source processing continues through current plan-bound views and actual review of affected records.
+The remaining duration is uncertain. Source scope ranges from short definitions to large documents with multiple topics.
 Human decisions and publication approval have no estimated completion time.
+Completion requires accepted current receipts, reviewed held-source dispositions and a wiki refresh after any further canonical changes.
 
 Three review threads use GPT-6.1 Sol / Medium under the [accepted native-selection limit](evidence/user-review-model-decision-20261116.md).
 Earlier document authors used GPT-6 Luna / Max. Independent runtime attestation remains unavailable.
@@ -46,7 +50,8 @@ Questions follow the [batch-handling instruction](evidence/user-batch-questions-
 
 The [preservation repair](evidence/checkpoint-204-preservation-repairs-finalization.json) retains Day 2 rounding beside Korea intent.
 Their accounting rules remain distinct. Reported observations remain in [independent task evidence](evidence/portal-reported-observations-20261116.md).
-Canonical work is committed through `569df08fb`. The current sealed correction stage awaits its scoped commit.
+Canonical corrections and 136 source receipts are committed in `f316da4bb`.
+The separately verified wiki stage awaits its scoped commit.
 
 ## Continuation checkpoint 193: remaining domain topics sealed
 

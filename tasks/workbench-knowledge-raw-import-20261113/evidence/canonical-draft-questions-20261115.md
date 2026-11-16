@@ -18,6 +18,45 @@ Related wording can still refer to the same business decision. The held-review g
 Use the **Answer** cell to provide the applicable decision, its source, and effective scope.
 You can also name the owner, identify an earlier answer, or write unknown.
 
+## Reviewed wiki question reconciliation: checkpoint 220
+
+The wiki reviews proposed 103 summary questions and five domain questions.
+The [reconciliation](checkpoint-220-wiki-question-reconciliation.json) maps each proposal to existing decision bundles below.
+These proposals repeat existing decisions. They add no business answer or approval.
+Existing IDs and answer cells remain unchanged. Source and decision owners remain unknown unless an exact answer identifies them.
+
+Use the existing answer cells in these topic groups:
+
+| Decision group | Summary proposal positions | Existing editable bundles |
+| --- | --- | --- |
+| Murex, CN and integration contracts | 1–10, 77–79 | [Murex](#murex-feed-review-checkpoint-180), [CN](#cn-workflow-review-checkpoint-179), [accounting and UK feed](#188-integration-review-index), [Uber](#uber-integration-review-checkpoint-183) |
+| Onboarding, migration and access | 3–4, 15–18, 25–26, 37–38, 87–88, 97–98 | [Onboarding and access](#connected-review-batches-checkpoints-185188), [migration](#187-kt-ratan-trade-migration-controls), [trade controls](#187-kt-ratan-trade-control-expansion-intent), [runbooks](#187-kt-ratan-dated-migration-runbooks), [strategy](#187-kt-ratan-strategic-settlement-goals) |
+| Lifecycle, splitting and failure | 11–14, 31–32, 39–42, 80–82, 91–92, 95–96 | [Lifecycle](#186-kt-platform-cashflow-processing-contracts-final-sweep), [splitting](#191-kt-day2-cashflow-splitting), [failure](#workflows), [processing](#190-kt-settlement-processing-and-exception-controls), [amendment](#188-amendment-release-controls), [Hold](#190-kt-settlement-hold-and-manual-fail), [non-economic changes](#190-kt-settlement-non-economic-amendments), [sequencing](#190-kt-settlement-event-sequencing) |
+| SSI, Nostro and reference data | 19–22, 27–30, 43–45, 70–76 | [Orchestration](#186-kt-platform-cashflow-processing-contracts-final-sweep), [regional SSI](#connected-review-batches-checkpoints-185188), [Nostro/RFI](#192-nostro-centralization-rfi), [Indonesia](#188-indonesia-reference-sync), [form validation](#191-kt-settlement-ssi-form-validation), [strategic stamping](#186-kt-platform-strategic-ssi-stamping), [receive selection](#192-ssi-validation-selection), [golden source](#187-kt-ratan-nostro-golden-source-proposal) |
+| Netting and payment routes | 23–24, 35–36, 52–60, 67–69, 89–90 | [Manual/BIC](#manual-and-bic-netting-review-checkpoint-181), [inter-entity](#192-inter-entity-netting), [AutoDVP](#190-kt-day2-auto-dvp), [HKCS/HAU](#192-hkcs-hau-settlement), [static controls](#190-0ee175032d50d1eb3eaac6a68ef95dcb1bdcf8940712544e6efe5e8ced7addac), [aggregation](#186-kt-product-agnostic-aggregation-20261115), [cross-debit](#191-kt-day2-cross-border-debit) |
+| Group validation, feeds and Uber migration | 33–34, 46–51 | [Group validation](#186-kt-cashflow-group-validation-p3), [Uber migration](#186-kt-platform-uber-migration-contracts), [feeds](#186-kt-settlement-feeds-p3) |
+| Locking, cache and query | 61–66, 83–85, 93–94 | [Locking](#186-kt-lock-concurrency-p3), [cache](#186-kt-static-data-cache-p3), [OpenSearch](#186-arc-uber-open-search-routing-20261115-final-sweep), [advanced query](#186-kt-advanced-search-p3) |
+| Recovery, display and monitoring | 86, 99–103 | [Recovery and queue topology](#connected-review-batches-checkpoints-185188), [display](#187-kt-ratan-trade-date-and-exception-audit-display), [monitoring](#190-kt-settlement-monitoring-and-touchpoints) |
+
+The five domain proposals reuse Murex, cashflow identity, Uber, accounting, and netting bundles.
+Their original wording and source identities remain in the reconciliation evidence.
+Proposal positions are evidence locators. They are not new question IDs or independent-decision counts.
+
+### Portal policy and release refinements
+
+The [12 November answer](../../ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input) already establishes timeout ceilings and policy ownership.
+It also prohibits OneMFA fallback. Do not ask those answered questions again.
+The [session candidate](../../../knowledge/records/candidates/requirements/REQ-active-session-renewal.md#intended-scope) still requires the applicable ICS revision.
+The [release candidate](../../../knowledge/records/candidates/operations/KT-release-operations.md#configuration-promotion) preserves unresolved replacement authentication and release-policy alternatives.
+
+| ID | Decision needed and consequence | Owner | Proposed options | Answer |
+| --- | --- | --- | --- | --- |
+| WQ-PORTAL-SESSION-01 | Which ICS revision, exact timeout settings and token lifetimes govern idle recovery? Executable acceptance requires these remaining settings. | RATAN team, from the exact user answer | Supply the applicable revision and settings within the answered ceilings; identify existing evidence; another answer; unknown; name a contact. |  |
+| WQ-PORTAL-UPLOAD-01 | Which authentication contract replaces FMAA for recurring configuration uploads and machine access? The decommissioning warning leaves continuity unresolved. Related IDs: KDQ-897ac19676 and KDQ-69519fc781. | unknown | Supply the approved replacement contract and scope; identify an existing answer; another answer; unknown; name a contact. |  |
+| WQ-PORTAL-RELEASE-01 | Which release duration and urgent-confirmation rule govern each environment? The source gives conflicting duration and confirmation conditions. | unknown | Supply the approved scoped rule; retain historical alternatives; another answer; unknown; name a contact. |  |
+
+These refinements require no immediate chat answer. Continue independent source processing while their answer cells remain blank.
+
 ## Historical goal gates and their current dispositions (checkpoint 173)
 
 These earlier inputs distinguish resolved model selection from outstanding source evidence. Current collection plans contain 44 held identities. They are separate from the 1,527 source-review occurrences and 28 held-review groups above. Add answers in the final column.
