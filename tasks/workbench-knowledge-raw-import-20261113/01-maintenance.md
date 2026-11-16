@@ -1,8 +1,31 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 225: shared receipt scopes reconciled.** There are 117 candidate records and two navigation files. Zero records are published. Current plans queue 465 identities and hold 44 identities. Three canonical successors require a further wiki refresh. Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
+> **Diagnostic: conversion is partial.** Current output-linked receipts cover 139/622 selected identities (22.35%). Complete semantic coverage is UNKNOWN. There are 117 candidates and zero publications.
+>
+> Fresh checks confirm 117 current wiki inputs and 208 matching outputs. Six reviewed wiki paths remain uncommitted. Current plans queue 465 identities and hold 44 identities.
+>
+> See the [diagnostic report](evidence/conversion-diagnostic-20261117.md) and [metric payload](evidence/conversion-diagnostic-20261117.json). Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
 
-## Current stage: source receipts and derived wiki
+The [comprehensive diagnostic request](evidence/user-comprehensive-diagnostic-20261117.md) audits conversion rates, coverage and current evidence. Diagnostic findings do not authorize semantic repairs.
+
+## Current stage: diagnostic complete; conversion remains partial
+
+The diagnostic found two selected draft omissions behind accepted zero-output receipts.
+It also found three current-byte audit gaps and five missing explicit original semantic-review locators.
+The source sample covers 19 originals. The canonical/wiki sample covers selected clauses across 16 records.
+Neither sample establishes a whole-corpus semantic percentage. No conversion repairs or publication occurred.
+
+The [current wiki audit](evidence/conversion-diagnostic-20261117-workflow-canonical-wiki-audit.md) resolves the stale handoff.
+Checkpoint 224 refreshed all three affected summaries. The fresh plan reports 117 unchanged inputs.
+The source status's two-stale-input claim and this record's earlier three-refresh claim are obsolete.
+The verified refresh remains uncommitted in six wiki paths. The diagnostic commit excludes those paths.
+
+The [workflow review](evidence/conversion-diagnostic-20261117-workflow-review.md) separates idle gaps, private proposals and accepted receipts.
+The reviewed question tables contain 310 unanswered bundle rows. Existing answers and IDs remain unchanged.
+No reliable completion ETA is available. Agents can continue independent supported work after the diagnostic pause.
+The immediate next action is an authorized review of the two omitted draft-intent cases.
+
+## Current conversion evidence: source receipts and derived wiki
 
 The [current progress request](evidence/user-status-request-latest-20261116.md) asks for completed work, remaining work and an updated duration.
 The [Pi orchestration direction](evidence/user-pi-orchestration-20261116.md) assigns processing to separate Pi workers.
@@ -54,9 +77,10 @@ The [wiki question reconciliation](evidence/checkpoint-220-wiki-question-reconci
 Three portal refinements preserve blank answers. All earlier annex content and answers remain unchanged.
 They include reopened dependencies and historical duplicate identities. They do not count independent unread documents.
 Forty-four identities remain held: Cash 39, RATAN three, Portal one and historical Settlement one.
-Held-source investigation continues. Available selected intent requires processing before an owner blocker can be claimed.
+Held-source investigation remains incomplete. Available selected intent requires processing before an owner blocker can be claimed.
 
-Source processing continues through current plan-bound views and actual review of affected records.
+Conversion workers are paused, waiting or holding private proposals during the diagnostic.
+Further processing requires current plan-bound views and actual review of affected records.
 The remaining duration is uncertain. Source scope ranges from short definitions to large documents with multiple topics.
 Human decisions and publication approval have no estimated completion time.
 Completion requires accepted current receipts, reviewed held-source dispositions and a wiki refresh after any further canonical changes.
@@ -70,7 +94,8 @@ Their accounting rules remain distinct. Reported observations remain in [indepen
 Canonical corrections and 136 source receipts are committed in `f316da4bb`.
 Question reconciliation and two no-change receipts are committed in `9e60eedd5`.
 The verified wiki stage is committed in `9984897f6`. The controls stage is committed in `39d471247`.
-The catalog and shared-receipt stage awaits its scoped commit.
+The catalog and shared-receipt stage is committed in `f535f0196`.
+The later verified three-summary wiki refresh remains a separate uncommitted stage.
 
 ## Continuation checkpoint 193: remaining domain topics sealed
 
