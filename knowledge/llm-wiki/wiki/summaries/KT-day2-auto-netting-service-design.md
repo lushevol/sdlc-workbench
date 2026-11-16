@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-day2-auto-netting-service-design.md"
 ---
 
-> Derived from [candidate record version 1](../../../records/candidates/architecture/KT-day2-auto-netting-service-design.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [candidate record version 2](../../../records/candidates/architecture/KT-day2-auto-netting-service-design.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Auto-netting service and rule lifecycle
 
@@ -29,3 +29,7 @@ The proposed ordering of status changes and resultant generation also remains un
 - [[concepts/auto-netting-rule-selection]] and [[concepts/auto-netting-scheduling]] provide related context.
 
 The candidate owner is unknown. Review its [evidence limits](../../../records/candidates/architecture/KT-day2-auto-netting-service-design.md#evidence-limits) and [open questions](../../../records/candidates/architecture/KT-day2-auto-netting-service-design.md#open-questions) before relying on the proposal.
+
+### Execution and ordering details
+
+The technical proposal locks eligible groups and nets groups larger than one at or after job time. A singleton follows SettleAsSingle back to QUEUED and receives a Single Cashflow NSTP exception. Before job time, the proposal does nothing. The named XPath and the prose-versus-cron schedule remain unresolved. Amendment ordering removes amendment cashflows from collected tasks before auto-netting, without defining races or retries. [Lifecycle predicates](../../../records/candidates/architecture/KT-day2-auto-netting-service-design.md#l3-auto-tech-02--lifecycle-execution-predicates). [Amendment ordering](../../../records/candidates/architecture/KT-day2-auto-netting-service-design.md#l3-auto-tech-03--amendment-task-ordering).

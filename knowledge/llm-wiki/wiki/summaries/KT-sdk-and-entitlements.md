@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-sdk-and-entitlements.md"
 ---
 
-> Derived from [KT-sdk-and-entitlements, version 10](../../../records/candidates/security/KT-sdk-and-entitlements.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-sdk-and-entitlements, version 11](../../../records/candidates/security/KT-sdk-and-entitlements.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # SDK and Entitlements
 
@@ -67,3 +67,13 @@ Logout has a separate target of immediately revoking all of the user's portal se
 
 ## Related pages
 Authentication and sessions, admin and onboarding, the registered SDK source copy `single-ui-auth-sdk`, the contracts `single-ui-sdk-jwt-validation`, `single-ui-sdk-request-context`, `single-ui-sdk-entitlement-lookup`, the authentication runtime baseline, and the active session renewal requirement provide related context. See also [[concepts/portal-entry-and-tile-authorization]] and [[entities/fmo-post-trade-portal]].
+
+## Precise historical configuration and input contracts
+
+SDK 1.0.0 user-login-max-duration uses ISO-8601 duration syntax. Empty/null disables that documented timeout. Version 1.1.1 removes the property. These historical configuration rules do not change the current user-stated session ceilings. [Version 1.0.0 timeout](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-version-100-absolute-timeout).
+
+Version 1.1.4 requires the pub certificate property. Java 8 explicitly distinguishes production/non-production certificates, and both guides distinguish environment-specific EMS2 hosts. Optional userRolesEndpoint defaults to /ems2/rest/account/%s. Optional entitlementEndpoint defaults to /ems2/rest/entitlements/entitlementList. Optional entityList identifies application EMS2 entities. These remain version-specific configuration contracts. [Precise 1.1.4 contracts](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-version-114-precise-contracts).
+
+The direct lookup example obtains userId from userInfo extracted through Single-UI-Authorization. The separate entitlement-token example receives its token in the request body and validates it before extracting entitlements. Missing screenshots establish no additional inspected contract. [Input handoff](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-entitlement-input-handoff).
+
+The overview requests direct retrieval in the same format previously supplied through JWT. That compatibility intent needs exact returned schemas and consumer evidence before a parity claim. [Format preservation](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-format-preservation).

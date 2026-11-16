@@ -1,0 +1,1 @@
+../../records/candidates/operations/KT-ratan-settlement-integration-checklist-scope.md

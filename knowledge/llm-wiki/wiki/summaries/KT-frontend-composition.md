@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-frontend-composition.md"
 ---
 
-> Derived from [KT-frontend-composition, version 4](../../../records/candidates/architecture/KT-frontend-composition.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-frontend-composition, version 5](../../../records/candidates/architecture/KT-frontend-composition.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Frontend composition and application ownership
 
@@ -91,3 +91,9 @@ The source manifest identifies local bytes but not original page revisions or co
 - [[entities/mfe-ratan-container]]
 - [[entities/mfe-cashflow-blotter]]
 - [[entities/api-gateway]]
+
+## Historical token propagation and tenant operations
+
+The historical development principle requires Single-UI-Authorization JWT propagation and PEM certificate sharing by the microfrontend team. Application teams validate JWTs through the linked SDK guidance. These interface responsibilities retain their historical scope. The current architecture clarification separately identifies request-interceptor exceptions. [Historical responsibilities](../../../records/candidates/architecture/KT-frontend-composition.md#historical-jwt-propagation-responsibilities).
+
+Internal packaging includes dependency, vulnerability, licensing, version, and release management. Backend encapsulation assigns security, error handling, resilience, audit, and compliance to tenants. Tenant teams retain production support, fallback, rollback, and user-impact responsibilities. The source assigns no direct external-runtime hosting or management to Portal. Authority and exception approval remain unconfirmed. [Tenant operational responsibilities](../../../records/candidates/architecture/KT-frontend-composition.md#tenant-dependency-operational-responsibilities).

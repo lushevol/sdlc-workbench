@@ -1,0 +1,1 @@
+../../records/candidates/architecture/ARC-settlement-platform-p3.md

@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-settlement-beneficiary-bic-netting.md

@@ -32,14 +32,14 @@ The source materials record the following facts.
 The documented proposal has two paths.
 
 1. Incremental path. Keep the existing Webpack builds in service and migrate selected applications to Rspack. Validate loading, HMR, and asset paths in a pilot before broad rollout.
-2. Greenfield path. Use Vite for new or simpler applications where SystemJS compatibility is not a constraint.
+2. Greenfield research path. Consider Vite for new or simpler applications, subject to the relevant SystemJS and portal-loading compatibility contract.
 
 The proposal places the pilot before the rollout. The pilot is a proposed control, not an executed result.
 
 ## Migration constraints
 
 - Runtime module resolution. SystemJS compatibility governs whether a new bundler output loads inside the portal shell. See [[entities/mfe-root-config]] and [[entities/mfe-base]].
-- Shared dependencies. Shared React and MUI versions must stay consistent across tiles during a mixed-tooling period. See [[concepts/shared-dependency-governance]].
+- Shared dependencies. Shared React and MUI compatibility needs reviewed version contracts during a mixed-tooling period. See [[concepts/shared-dependency-governance]].
 - Mixed tooling. Webpack, Rspack, and Vite builds can coexist only if the loading contract stays stable.
 - Long-term boundary change. Removing SystemJS is a composition change, not a tooling change. It requires coordination with tile owners and onboarding steps. See [[concepts/frontend-onboarding]].
 

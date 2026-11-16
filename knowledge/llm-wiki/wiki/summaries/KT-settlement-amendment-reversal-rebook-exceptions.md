@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-settlement-amendment-reversal-rebook-exceptions.md"
 ---
 
-> Derived from [candidate record version 1](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [candidate record version 2](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Released amendment reversal and rebook exceptions
 
@@ -19,4 +19,12 @@ The source says there is no direct link between the original and replacement cas
 - [[summaries/KT-settlement-cpn-netting|CPN netting]] covers separate released-resultant reversal scenarios.
 - [[summaries/KT-settlement-auto-netting|Auto-netting]] and [[summaries/KT-settlement-payment-amount-adjustment|Payment adjustment]] provide related context.
 
-The source does not define the binding event and identifier, exception states, or owner. Approval, implementation, and deployment remain unverified. See the candidate's [evidence limits](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#evidence-limits) and [open questions](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#open-questions).
+The primary amendment source does not define the binding event and identifier, exception states, or owner. Approval, implementation, and deployment remain unverified. See the candidate's [evidence limits](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#evidence-limits) and [open questions](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#open-questions).
+
+### Product-specific post-release variants
+
+The NDS proposal separates before-release auto-un-netting from after-release manual REVERSAL and REBOOK handling. It disallows un-netting in the stated released NDS scenario. A separate IRS post-settlement example uses Cancel / Amend after payment release and manual netting. These examples do not establish one universal exception reason or correlation key. [NDS boundary](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#nds-post-release-scope-boundary). [IRS example](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#separate-irs-post-settlement-example).
+
+### Dated tagging and correlation limits
+
+A 23 May 2026 pre-CAB entry changes rebook tagging from within 10 days to 5 days for the same trade ID. Calendar type, boundaries, approval, and effective rollout remain unresolved. The event-reason dictionary names Reversal and Rebook but supplies no pairing rule. These source positions cannot establish a current five-day rule. [Dated tagging entry](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#dated-pre-cab-rebook-tagging-entry). [Event reason](../../../records/candidates/settlement/KT-settlement-amendment-reversal-rebook-exceptions.md#cashflow-event-reason-field).

@@ -1,0 +1,1 @@
+../../records/candidates/operations/KT-ratan-nostro-golden-source-proposal.md

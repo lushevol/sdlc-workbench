@@ -21,7 +21,7 @@ Each mechanism answers a different question:
 - Idle timeout — has the user stopped interacting?
 - Absolute timeout — how long has passed since the user last proved identity?
 - Refresh token — can the session continue without a full SSO round trip?
-- Access token — is this specific request still authorized?
+- Access token — can this request authenticate with this credential?
 
 Conflating them produces policies that either expire active users or silently extend sessions past their intended bound. The [[concepts/session-activity-renewal]] requirement depends on this separation: eligible activity supports renewal within the absolute deadline, including across initial refresh expiry while access remains valid.
 
@@ -94,3 +94,7 @@ Owner: RATAN team for portal policy. Review the applicable ICS revision and the 
 ## Evidence limits
 
 The source documents carry local byte revisions but no confirmed original page revisions or approval authority, which limits their use as current security policy. Implementation and execution comparisons live in a separate gap record outside this concept.
+
+## Additional historical interaction examples
+
+Version 0 proposes warning at 10 minutes, expired wording at 15 minutes, and forced logout after 24 hours. Version 1 assumes a 25-second pre-expiry request margin and depicts logout at 14:00. These values remain historical proposals with unresolved current applicability. They create no exception to current 15/60-minute ceilings or a fixed activity cadence. [Version 0 interaction](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-session-version-0-interaction-detail). [Version 1 flow](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-session-version-1-pre-expiry-flow).

@@ -80,3 +80,6 @@ The notification draft references experiments and absent demonstration materials
 - [[concepts/microfrontend-layering]] — tile and container boundaries that determine where a subscription lives.
 - [[entities/fmo-post-trade-portal]] — the portal that would host the service.
 - [[entities/graphql]], [[entities/spring-boot]], [[entities/react]] — technologies used in the experiments.
+## Additional draft alternatives and fields
+
+REST calls, GraphQL/WebSocket subscriptions, and Kafka also appear as alternatives alongside the SSE objective. The source selects no final protocol. Store fields include string identifiers, topic, message, payload, and container/module/tile. Muted and isShown are Boolean, while the isRead type conflict remains unresolved. Open In New Tile is proposed for new or updated records. [Notification alternatives](../../../records/candidates/evolution/KT-architecture-evolution.md#notification-experiments). [Store draft](../../../records/candidates/evolution/KT-architecture-evolution.md#notification-store-draft-contract).

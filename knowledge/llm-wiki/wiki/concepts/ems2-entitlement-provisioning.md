@@ -38,7 +38,7 @@ The manual also requires different maker and checker users for those catalog cha
 
 A tile record can link to one or more EMS2 entities and to role subjects. At launch time the portal checks the user against that configuration. This is the mechanism behind [[concepts/portal-entry-and-tile-authorization]] and the [[concepts/portal-tile-workspace-model]].
 
-A recorded user clarification handles one narrow case. When a tile's subject setting is empty, the portal permits tile visibility and launch through one configured entity, if the user first satisfies portal-entry requirements and holds entitlement for that entity. The owner of this decision is the [[entities/portal-team]], and it applies to local, test, UAT, and production. The decision is pending approval. It resolves the single-entity, empty-subject scope only. It selects no multiple-entity matching rule and no SSDR delegation option.
+A recorded user clarification handles one narrow case. When a tile's subject setting is empty, the portal permits tile visibility and launch through one configured entity, if the user first satisfies portal-entry requirements and holds entitlement for that entity. The owner of this decision is the [[entities/portal-team]], and it applies to local, test, UAT, and production. Human publication review remains pending. It resolves the single-entity, empty-subject scope only. It selects no multiple-entity matching rule and no SSDR delegation option.
 
 The provisional SSDR discussion records other alternatives: multiple tile entities, optional subject checks for selected tenants, adding missing EMS2 assignments, and delegating authorization to SSDR. The temporary guest-access proposal is struck through. The discussion states that the portal does not implement entitlement control outside existing systems such as EMS2. None of these alternatives is an approved or deployed rule.
 
@@ -78,7 +78,7 @@ For response metadata, EMS3 entities expose CES entitlement names through `roleL
 
 ## Boundary with authentication
 
-EMS2 provisioning answers what a user may do. It does not answer who the user is. Login, session handling, and cross-application token handling belong to [[concepts/single-ui-sdk-authentication]] and [[concepts/cross-application-authentication-handoff]]. [[concepts/entitlement-retrieval]] covers how a running application reads the provisioned data.
+EMS2 provisioning answers what a user may do. It does not answer who the user is. [[summaries/KT-authentication-and-sessions]] owns login and session-policy context. [[concepts/single-ui-sdk-authentication]] covers downstream JWT validation. [[concepts/cross-application-authentication-handoff]] covers the separate handoff example. [[concepts/entitlement-retrieval]] covers how a running application reads the provisioned data.
 
 ## Evidence limits
 

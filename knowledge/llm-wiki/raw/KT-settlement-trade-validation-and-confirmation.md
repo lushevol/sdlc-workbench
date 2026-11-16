@@ -1,0 +1,1 @@
+../../records/candidates/settlement/KT-settlement-trade-validation-and-confirmation.md

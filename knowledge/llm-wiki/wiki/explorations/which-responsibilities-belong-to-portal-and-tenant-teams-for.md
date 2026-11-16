@@ -2,6 +2,8 @@
 query: "Which responsibilities belong to Portal and tenant teams for routing, release, validation, and rollback?"
 ---
 
+> **Current review qualification — 16 November 2026.** Current release candidate v5 retains the proposal with unconfirmed present authority. Unconfirmed approval does not establish rejection. Only the Admin Module checklist is explicitly under construction. The tenant team owns configuration repositories, change requests, work items, and pipelines under the historical promotion flow. It also owns new-upstream disaster-recovery checks under the unfinished checklist. These statements establish no deployment, operation, or acceptance. [Current canonical scope](../../../records/candidates/operations/KT-release-operations.md#configuration-promotion-ownership-and-authentication).
+
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
 > Review qualification — 12 November 2026: The [current canonical release topic](../../../records/candidates/operations/KT-release-operations.md) leaves the release proposal's present authority and human approval unconfirmed. The saved answer's word "unapproved" does not establish a negative approval decision. The Admin Module release checklist is explicitly under construction; that status does not apply to every source in the proposal. The responsibility split below remains documented proposal context, without current authority or execution proof.

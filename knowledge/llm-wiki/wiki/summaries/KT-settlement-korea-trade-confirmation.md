@@ -19,3 +19,7 @@ The candidate records no approved transport, deployment, or execution evidence.
 
 - [[summaries/KT-settlement-payment-amount-adjustment|Korea payment amount adjustment]] records a separate set of migration decisions.
 - [[summaries/KT-settlement-group-blotter-controls|Group Blotter controls]] covers downstream cashflow selection and processing predicates.
+
+## Cancellation and diagnostic boundaries
+
+For an unconfirmed original trade, the recorded cancel-and-reissue answer cancels the old cashflow. The replacement waits for its own COMP. The mapping copies MXML validation level COMP to SCBML substate and validation action to transaction type. The missing-confirmation procedure searches RATAN for received COMP. An empty search result establishes no received COMP in that search scope. It supplies no current transport or execution proof. [Confirmation gate](../../../records/candidates/settlement/KT-settlement-korea-trade-confirmation.md#confirmation-gate). [Mapping and diagnosis](../../../records/candidates/settlement/KT-settlement-korea-trade-confirmation.md#mapping-and-retained-message).

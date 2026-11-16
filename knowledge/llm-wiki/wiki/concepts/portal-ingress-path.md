@@ -50,7 +50,7 @@ Resolving these requires the rendered deployment configuration and the original 
 ## Related
 
 - [[concepts/microfrontend-layering]] — the client-side composition served over this path
-- [[concepts/identity-provider-delegation]] — authentication that occurs after ingress
+- [[concepts/identity-provider-delegation]] — the separate delegated-provider authentication boundary
 - [[entities/fmo-post-trade-portal]] — the portal served by this path
 - [[entities/nginx]], [[entities/api-gateway]], [[entities/single-ui-bff]] — the stages above
 

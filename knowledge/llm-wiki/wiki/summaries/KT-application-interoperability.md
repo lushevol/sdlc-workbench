@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-application-interoperability.md"
 ---
 
-> Derived from [KT-application-interoperability, version 2](../../../records/candidates/interoperability/KT-application-interoperability.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-application-interoperability, version 4](../../../records/candidates/interoperability/KT-application-interoperability.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal application interoperability and OpenFin context
 
@@ -43,7 +43,7 @@ The example contract uses application channel `fmchannel`. Listener names includ
 
 The POC describes provider authentication followed by application launches that pass a provider token in URL parameters. It presents this as a way to avoid another login prompt. The document simplifies the provider UI for the POC and says a real provider should run hidden after authentication. No production authentication design, security approval, or token-handling verification was inspected.
 
-The technical-issue page reports that two [[entities/fdc3]] libraries did not exchange broadcast messages in its POC. It reports intent errors with one library and successful intent handling with the other. Its workaround uses `fdc3-2.1` for broadcast and `openfin-fdc3` for intents. This is a reported POC observation, not a supported compatibility guarantee.
+The technical-issue page reports that two [[entities/fdc3]] libraries did not exchange broadcast messages in its POC. It reports intent errors with one library and successful intent handling with the other. Its workaround uses `fdc3-2.1` for broadcast and `openfin-fdc3` for intents. This is a reported POC observation, not a supported compatibility guarantee. [Retained reported POC evidence](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-openfin-poc-compatibility-observations).
 
 The later briefing limits its stated business scope to application rendering and interoperability. Third-party integrations and native adapters are outside that stated plan. It distinguishes the Runtime from the Runtime Version Manager, and it records `stable-v41` as its runtime strategy. It also separates production identity verification, blotter onboarding, and business user onboarding as distinct milestones. Its month-based timelines omit the year, and its approval and prioritization claims have no supplied attachments or completed execution records.
 
@@ -74,3 +74,11 @@ Local hashes identify supplied document bytes. Original revisions, approval evid
 - [[entities/mfe-cashflow-blotter]]
 - [[entities/portal-team]]
 - [[entities/single-ui-bff]]
+
+## Additional historical desktop and dispatch scope
+
+FDC3 use cases also describe desktop-agent metadata and application/application-instance metadata retrieval. Each platform view has a separate JavaScript context from its window. The source describes moving views between windows without refreshing or destroying that context. These are platform descriptions, without inspected runtime isolation or movement tests. [Metadata use cases](../../../records/candidates/interoperability/KT-application-interoperability.md#historical-fdc3-metadata-use-cases). [View context](../../../records/candidates/interoperability/KT-application-interoperability.md#desktop-view-context-description).
+
+The historical example uses context broadcast with a URL to open a new Portal window. It uses raiseIntent with fmchannel.fmoportal and container/module/tile identifiers to open workspace tabs in existing platform views. Separate context and intent handlers are permitted in a real implementation. These examples require an agreed versioned production contract. [Historical dispatch behavior](../../../records/candidates/interoperability/KT-application-interoperability.md#historical-fdc3-dispatch-behavior).
+
+The first technical phase targets production user identification without PSS support or impact to existing browser-launched MO1 applications. This scoped objective supplies no deployment or passing compatibility evidence. [Technical-phase condition](../../../records/candidates/interoperability/KT-application-interoperability.md#historical-technical-phase-scope-condition).

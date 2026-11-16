@@ -54,3 +54,9 @@ No desktop agent, provider, application, or compatibility test ran during ingest
 - [[concepts/portal-entry-and-tile-authorization]]
 
 See also: [[summaries/KT-architecture-evolution]]
+
+## Historical transport-to-behavior mapping
+
+The example uses context broadcast with a URL to open a new Portal window. It uses `raiseIntent` with `fmchannel.fmoportal` and container/module/tile identifiers to open a workspace tab in all existing platform views. A real implementation may separate context and intent handlers. These remain example associations pending an agreed production contract.
+
+[KT-application-interoperability — historical-fdc3-dispatch-behavior](../../../records/candidates/interoperability/KT-application-interoperability.md#historical-fdc3-dispatch-behavior)

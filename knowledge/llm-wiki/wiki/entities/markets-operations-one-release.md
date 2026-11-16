@@ -78,3 +78,12 @@ Deployment guidance is unresolved. An older frontend deployment guide describes 
 | Technical and business dates lack completion evidence | Planned dates mistaken for delivered capability | Link deployment, validation, and activation records |
 | Pending or struck-through request evidence | Target dates cannot establish readiness | Retain configuration, connectivity, sign-off, and UVT evidence per gate |
 | Conflicting deployment guides | Teams could apply unsuitable procedure | Identify the active pipeline and environment controls |
+
+
+## Further source scoped readiness conditions
+
+The unfinished checklist requests review of each production release with RATAN before preparation. It assigns disaster-recovery checks for a new upstream host to the tenant team, without portal load-balancer responsibility. Its documented upload path requires matching FMAA and EMS2 account IDs and an active FMAA token. These predicates establish no completed checks or replacement authentication plan.
+
+The historical flow assigns configuration repositories, change requests, ADO work items, and pipelines to tenant teams. Its client-credential upload instructions confer no credential-access or deployment authorization.
+
+[KT-release-operations — checklist-authentication-conditions](../../../records/candidates/operations/KT-release-operations.md#checklist-authentication-conditions)

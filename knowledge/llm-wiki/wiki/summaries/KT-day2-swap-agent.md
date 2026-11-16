@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-day2-swap-agent.md"
 ---
 
-> Derived from [candidate record version 1](../../../records/candidates/settlement/KT-day2-swap-agent.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [candidate record version 2](../../../records/candidates/settlement/KT-day2-swap-agent.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Swap Agent netting and release controls
 
@@ -19,5 +19,12 @@ A separate selected design proposes a hard blocker against releasing SWAP_AGENT 
 
 - [[summaries/KT-settlement-auto-netting|Scheduled auto-netting]] covers rule selection and scheduled processing.
 - [[summaries/KT-settlement-lms-feed|LMS feed]] records downstream feed and suppression proposals.
+- [[summaries/KT-settlement-clearing-and-swap-agent-boundaries|Clearing and Swap Agent boundaries]] records separate historical payment and accounting proposals.
 
 Owner, client scope, effective date, current implementation, and deployment remain unverified. The candidate preserves its [open applicability and blocker questions](../../../records/candidates/settlement/KT-day2-swap-agent.md#open-questions).
+
+### Distinct payment-type and selected-client rules
+
+The Day 2 rule keeps Coupon and Interim MTM separate. The selected-client enhancement instead permits cross-payment-type and cross-producer netting. It proposes SwapAgentNetting above SALMTM priority at VD 01:00 GMT. Suppressed singletons and resultants remain scoped proposals. Other clients keep the older SAL rules. [Selected-client conditions](../../../records/candidates/settlement/KT-day2-swap-agent.md#l3-swap-02--selected-client-enhancement).
+
+The selected-client proposal uses Murex strategy `SWAP_AGENT` or Stella `SwapAgentID`. It proposes no currency filter. An unchecked payment-type list supplies no approval for every entry. Suppressed cashflows do not feed LMS. The release-blocker trigger, exit, and ordering remain unresolved. [Existing rules](../../../records/candidates/settlement/KT-day2-swap-agent.md#l3-swap-01--existing-payment-type-rules). [Selected scope](../../../records/candidates/settlement/KT-day2-swap-agent.md#l3-swap-02--selected-client-enhancement).

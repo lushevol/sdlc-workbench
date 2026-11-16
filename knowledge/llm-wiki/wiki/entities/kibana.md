@@ -50,3 +50,10 @@ No dashboard was opened, queried, or verified during ingestion. The documentatio
 - [[concepts/frontend-performance]] — frontend measurement intent that is distinct from usage analytics.
 - [[concepts/mfe-cache-strategy]] — cache behavior documented alongside these observability materials.
 - [[summaries/KT-observability-and-performance]] — the source summary for this page.
+
+
+## Historical dashboard event detail
+
+The authentication dashboard distinguishes normal login, SSO login, extension, refresh-token re-login, and logout. Other views count drawer tile opening, workspace selection and addition/removal, and Find versus New Tile clicks. Further comparisons cover Extend versus Logout, Normal versus SSO Login, and theme switching. These reported views establish no current reader grants or event completeness.
+
+[KT-observability-and-performance — dashboard-event-categories](../../../records/candidates/observability/KT-observability-and-performance.md#dashboard-event-categories)

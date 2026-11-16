@@ -1,0 +1,1 @@
+../../records/candidates/operations/KT-ratan-static-maker-checker-controls.md

@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/INT-KT-regional-recovery-and-payload-storage.md

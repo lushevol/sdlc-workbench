@@ -1,0 +1,1 @@
+../../records/candidates/settlement/KT-day2-hkcs-hau-settlement.md

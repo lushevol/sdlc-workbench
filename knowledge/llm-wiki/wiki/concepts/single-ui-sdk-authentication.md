@@ -94,3 +94,7 @@ See also: [[summaries/KT-admin-and-onboarding]]
 See also: [[summaries/REQ-active-session-renewal]]
 
 See also: [[summaries/KT-authentication-and-sessions]]
+
+## Additional historical configuration precision
+
+Version 1.0.0 uses ISO-8601 duration syntax and disables its documented absolute timeout for empty/null values. Version 1.1.1 removes that property. The current session ceilings retain their separate user authority. Version 1.1.4 requires pub and distinguishes environment-specific certificate/host configuration. These guide contracts require exact consumer-version evidence. [Historical timeout](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-version-100-absolute-timeout). [Precise 1.1.4 contracts](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-version-114-precise-contracts).

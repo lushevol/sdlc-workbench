@@ -1,0 +1,1 @@
+../../records/candidates/performance/KT-platform-query-performance.md

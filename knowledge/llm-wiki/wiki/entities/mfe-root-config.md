@@ -41,7 +41,7 @@ Because the root configuration publishes shared module names, a change to that c
 
 This entity is documented in [[summaries/ARC-portal-service-relationships]], which records a user clarification dated 22 October 2026, and in [[summaries/KT-frontend-composition]], which consolidates the documented microfrontend design.
 
-The clarification supplies the responsibility model, while selected local declarations — including the layout and root bootstrap — were inspected and hashed by the source review. The record does not establish an effective deployment, DNS forwarding, gateway routes, or authenticated architecture ownership. The inspected repositories have no independent Git history, so the hashes identify inspected files without an upstream commit.
+The clarification supplies the responsibility model, while selected local declarations — including the layout and root bootstrap — were inspected and hashed by the source review. The record does not establish an effective deployment, DNS forwarding, gateway routes, or authenticated architecture ownership. The retained review records root-config commit `83091d85beff5306ca0cd643955d8ea6ed0a2d93`. Four other copies lack independent Git history: RATAN Container, Cashflow Blotter, RATAN Auth Server, and Nginx. Their file hashes identify content without upstream commits.
 
 No live requests, browser behavior, or business tests were executed for this review. The root config's role is therefore reported architecture supported by local file inspection, not runtime verification. The exact repository revision that implements the current root configuration and import map remains unconfirmed.
 

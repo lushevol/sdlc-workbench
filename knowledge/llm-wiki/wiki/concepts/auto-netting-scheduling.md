@@ -21,3 +21,9 @@ These differences are unresolved; the applicable policy needs confirmation for e
 ## Scope
 
 This concept describes scheduling aspects of the candidate scheduled cash settlement auto-netting workflow. It does not establish approved production policy or cover other netting workflows.
+
+## Timing granularity and named scopes
+
+Day 2 static supports minute precision with a 00:00 default. That default supplies no universal production execution time. Named clearing proposals use VD 01:00 GMT for HKEX/ECLIPS and VD 12:00 GMT for LCH. TAIFEX/CITIC remain IRS-only. Exact populated entity/counterparty scope still needs owner confirmation. [Static timing](../../../records/candidates/settlement/KT-settlement-auto-netting.md#day2-static-control-details). [Named clearing schedules](../../../records/candidates/settlement/KT-settlement-auto-netting.md#named-clearing-rule-proposal).
+
+The later calendar discussion accepts holidays in a source-reported response and proposes manual netting before holiday leave. It allows release date to precede auto-netting date. Its configurable withdrawal/new re-netting or manual-queue options conflict with the 16 May 2025 Day 2 decision. No general calendar or late-arrival precedence is established. [Calendar discussion](../../../records/candidates/settlement/KT-settlement-auto-netting.md#calendar-and-late-arrival-discussion).

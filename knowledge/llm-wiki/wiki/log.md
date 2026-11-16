@@ -190,3 +190,31 @@ Summary SHA-256: `975e23127fd2c7fdb9dd29a12620e08e6458b55dbf047f3aaf91f625b61792
 
 The reviewed receipt is `.workbench/wiki/ratan-interfaces-20261115-run01/review.json`. The review preserved the distinct source-described flows, the unresolved SFTP versus FM Solace route, and the candidate status.
 Existing LMS, Korea COMP, identity, and auto-netting summaries remain unchanged. No candidate was published.
+
+## [2026-11-16] ingest | Reviewed candidate wiki integration
+
+Current-session `llm-wiki-agent` maintenance integrated 117 candidate records through the Workbench bridge.
+The reviewed scope contains 117 summaries, 41 concepts, 43 entities, six explorations, and the existing index.
+Both canonical alias directories contain 117 relative links.
+The recipe is `ade-luna-max-sol-medium-v1`.
+
+The private receipt is `.workbench/wiki/resume-20261116/finalizer-review-receipt-v2.json`.
+The retained evidence is `tasks/workbench-knowledge-raw-import-20261113/evidence/checkpoint-219-wiki-finalization.json`.
+These files identify source hashes, reviewed output hashes, claim dispositions, actual reviewers, and recovery material.
+Prior shared output owners remain recorded.
+
+Draft authoring used Luna Max; scoped semantic reviews used GPT-6.1 Sol medium.
+Pi finalization used native `magpie auto/gpt-6.1-sol` with medium thinking.
+Native selection was accepted; independent runtime attestation remains unavailable.
+The finalizer reviewed one additive Swap Agent navigation link and repaired the dependency scope.
+No prior claim was removed by that repair.
+
+The bridge recorded completion for all 117 sources with no pending attempts.
+Verification reported zero findings across all six structural categories.
+The fresh whole-candidate plan reported 117 unchanged records and no queued work.
+Canonical validation reported 119 valid documents with no findings.
+
+Historical details, source conflicts, candidate qualifications, and unresolved questions remain explicit.
+The new Cash Settlement RATAN Product remains distinct from the legacy RATAN Organization.
+Candidate integration supplies no publication, acceptance, deployment, or business execution approval.
+Complete ASD writing review remains pending.

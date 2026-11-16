@@ -39,7 +39,7 @@ That version pin has no effective date or supersession record in the source. Its
 
 The standalone [[entities/react]] template reuses [[entities/mfe-base]] components through import-map registration. Its no-install statement concerns consuming those components; the template still installs its own dependencies. Current template and shared-component compatibility require separate inspection.
 
-Component-library choice is a related shared standard. The library comparison evaluates [[entities/mui]], [[entities/ant-design]], and [[entities/ag-grid]] using GitHub statistics dated 5 July 2023. The conceptual-design draft retains placeholders and an approval link to an unrelated ClickHouse design, so it does not establish an accepted component standard or purchasing decision. See [[concepts/component-library-selection]].
+Component-library choice is a related shared standard. The library comparison evaluates [[entities/mui]], [[entities/ant-design]], and [[entities/ag-grid]] using GitHub statistics dated 5 July 2023. The conceptual-design draft retains placeholders and an approval link to a ClickHouse design with unexplained relevance, so it does not establish an accepted component standard or purchasing decision. See [[concepts/component-library-selection]].
 
 The build-tool research adds a further boundary question. Its longer-term suggestion to move away from SystemJS would change the platform loading boundary beyond a bundler substitution. That is a shared-interface change requiring explicit governance and an accepted migration path, not only a tooling preference. See [[concepts/build-tool-migration]].
 
@@ -88,3 +88,7 @@ See also: [[summaries/KT-observability-and-performance]]
 See also: [[summaries/KT-release-operations]]
 
 See also: [[summaries/KT-ces-migration-parity]]
+
+## Tenant operational responsibility scope
+
+The supplementary principle assigns dependency management, vulnerability scanning, licensing review, version control, and release governance to internal packaging. Backend encapsulation assigns tenant security, errors, resilience, audit, and compliance. Tenants retain implementation, approval, support, fallback, rollback, and user-impact responsibilities. Effective exception approval remains unconfirmed. [Tenant dependency responsibilities](../../../records/candidates/architecture/KT-frontend-composition.md#tenant-dependency-operational-responsibilities).

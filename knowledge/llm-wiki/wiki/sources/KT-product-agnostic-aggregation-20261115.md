@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-product-agnostic-aggregation-20261115.md

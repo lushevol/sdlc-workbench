@@ -69,3 +69,6 @@ The later briefing separates production identity verification, blotter onboardin
 - [[concepts/application-ownership]]
 - [[entities/fdc3]]
 - [[entities/openfin]]
+## Retained compatibility-observation provenance
+
+The reported POC library outcomes and workaround retain their task evidence and missing-execution limits. [Reported OpenFin POC compatibility](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-openfin-poc-compatibility-observations).

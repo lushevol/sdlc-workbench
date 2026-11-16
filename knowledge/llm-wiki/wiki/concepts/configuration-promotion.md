@@ -10,7 +10,7 @@ description: "Moving Portal catalog and tile configuration from Development to U
 
 ## Definition
 
-Configuration promotion is the controlled movement of Portal catalog and tile records from Development into UAT and Production. The records include Module Map entries, Drawer Categories, and Tile Configuration. Promotion makes tenant tiles visible in the Portal workspace, so it connects catalog definition to [[concepts/portal-entry-and-tile-authorization]].
+Configuration promotion is the controlled movement of Portal catalog and tile records from Development into UAT and Production. The records include Module Map entries, Drawer Categories, and Tile Configuration. Promotion supplies catalog configuration used by Portal tile visibility and launch checks. It connects catalog definition with [[concepts/portal-entry-and-tile-authorization]].
 
 ## Documented flow
 
@@ -29,7 +29,7 @@ This page describes the documented procedure. The ingestion inspected no upload 
 
 ## Dependencies and risks
 
-The release checklist flags planned [[entities/fmaa]] decommissioning. That warning creates an unresolved dependency for the documented promotion workflow. A replacement authentication mechanism is not identified in the supplied materials. This dependency differs from runtime [[concepts/identity-provider-delegation]], which concerns user sign-in rather than pipeline authentication.
+The release checklist flags planned [[entities/fmaa]] decommissioning. That warning creates an unresolved dependency for the documented promotion workflow. A replacement authentication mechanism is not identified in the supplied materials. The pipeline FMAA contract has its own scope within [[concepts/identity-provider-delegation]], which also covers user sign-in and provider boundaries.
 
 Later uploads also depend on network access from the tenant environment to the Portal Admin service. The production checklist recommends Portal connections through tenant [[entities/nginx]] or load balancers. Tenant teams then control internal server and port changes behind that boundary. These are separate checks; a successful configuration upload alone does not establish business readiness.
 
@@ -58,3 +58,6 @@ The flow comes from the Admin Module release guide and the unfinished release ch
 | No upload execution evidence is retained. | A completed upload cannot be proven. | Retain pipeline logs and validation results per environment. |
 
 See [[summaries/KT-release-operations]] for the full source summary.
+## Additional ownership and authentication conditions
+
+The historical flow assigns tenant repositories, UAT/production change requests, ADO work items, and pipelines to the tenant. It requires environment-specific FMAA/OUD service accounts and validates client-credential JWTs before CSV processing. The checklist also requires matching FMAA/EMS2 IDs and an active token. These instructions supply no credential-access or deployment authorization. [Promotion ownership](../../../records/candidates/operations/KT-release-operations.md#configuration-promotion-ownership-and-authentication). [Checklist authentication](../../../records/candidates/operations/KT-release-operations.md#checklist-authentication-conditions).

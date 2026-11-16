@@ -17,9 +17,9 @@ Component library selection is the evaluation and decision process for adopting 
 Tiles are composed as separately built microfrontends and share runtime dependencies through [[entities/systemjs]] module resolution and [[entities/single-spa]] lifecycle management. A component library adopted by more than one tile therefore becomes a cross-tile contract, not a local implementation detail:
 
 - Themes and design tokens must be shared consistently rather than duplicated per tile.
-- A library depends on [[entities/react]], so version alignment affects the shared dependency surface.
+- The Portal [[entities/react]] integration adds a version-compatibility boundary to shared component selection.
 - Bundling and loading behavior interacts with [[concepts/build-tool-migration]] and [[concepts/shared-dependency-governance]].
-- Licensing terms apply to every tile that ships the library.
+- The source comparison includes licensing. Effective terms and packaging require the applicable accepted decision.
 
 ## Documented evaluation
 

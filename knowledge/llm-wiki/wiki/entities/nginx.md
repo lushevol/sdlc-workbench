@@ -67,3 +67,11 @@ The wider Ansible repository and any rendered deployment were unavailable. Conse
 See also: [[summaries/KT-frontend-composition]], [[summaries/KT-portal-purpose]], [[summaries/KT-admin-and-onboarding]], [[summaries/KT-release-operations]]
 
 See also: [[summaries/KT-observability-and-performance]]
+
+## Draft defaults remain source scoped
+
+The routing draft gives server-port default 80 and load-balancing default `least_conn`. Its WebSocket timeout field shows default 60 and describes disconnection at timeout. It shows 100M as an example body limit. Units and effective settings require the applicable configuration contract.
+
+The historical scan note concerns direct retrieval of non-sensitive static files before sign-in. It permits neither directory listing nor bypassing portal-entry or API authorization.
+
+[KT-admin-and-onboarding — draft-proxy-defaults-and-behavior](../../../records/candidates/operations/KT-admin-and-onboarding.md#draft-proxy-defaults-and-behavior) [KT-frontend-composition — roles-in-composition](../../../records/candidates/architecture/KT-frontend-composition.md#roles-in-composition)

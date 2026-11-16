@@ -1,0 +1,1 @@
+../../records/candidates/security/KT-ces-entitlement-control-20261115.md

@@ -16,7 +16,7 @@ This rule was introduced by the user's provider-union clarification of 9 Novembe
 
 ## Why a union was needed
 
-During per-tile migration, some tiles still admit through EMS2 while others already use CES. Upper applications and shared containers call a single functional permission check. Replacing the provider wholesale would have forced caller changes; keeping only the EMS2 provider would have hidden CES grants. The union keeps the functional check stable across the transition while [[concepts/per-tile-provider-selection]] governs which provider admits each tile.
+The migration intent supports EMS2 and CES tile-admission choices while preserving the existing shared permission API. The mapped grant union accepts either provider and logs its source. [[concepts/per-tile-provider-selection]] retains the separate tile-admission rule.
 
 ## Behavior
 

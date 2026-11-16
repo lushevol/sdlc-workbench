@@ -132,7 +132,7 @@ The analytics material in [[summaries/KT-observability-and-performance]] places 
 
 ## Open questions
 
-- Effective deployment, DNS, and active upstreams are unconfirmed; the repository copy has no independent Git history, so file hashes identify inspected files without an upstream commit.
+- Effective deployment, DNS, and active upstreams remain unconfirmed. The retained architecture review records BFF commit `834b4155232222347220e47139a502ee43a9cbdf` with a clean worktree. Four other copies lack independent Git history; that limit does not apply to this BFF snapshot.
 - Which downstream application backends adopt and enable the shared SDK, and which requests they protect, remain unconfirmed. The retained architecture does not establish a universal SDK hop in front of the BFF.
 - The health-management responsibility needs clarification before endpoint-level analysis.
 - Which admin endpoints the BFF actually serves, and where the input conversions and the `un-verified` to verified state change occur, is not mapped.

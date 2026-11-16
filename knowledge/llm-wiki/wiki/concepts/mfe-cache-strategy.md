@@ -36,7 +36,7 @@ The strategy assumes a layered composition where each layer has its own entry po
 - Which deployed cache settings and asset naming rules implement the documented strategy?
 - Does the entry file revalidate correctly through every proxy and server in the path?
 - Users need a refresh or logout, so the strategy does not give silent background updates.
-- The guide gives no measured effect on load time.
+- The guide reports lazy-load request time changing from 300 ms to 5 ms, without retained measurement captures or current verification.
 
 ## Related pages
 
@@ -48,3 +48,8 @@ The strategy assumes a layered composition where each layer has its own entry po
 
 
 See also: [[summaries/KT-release-operations]]
+## Reported timing and refresh branches
+
+The 300 ms to 5 ms statement is a source-reported observation. It supplies no current performance guarantee. The original guide preserves this value and leaves its implementation section empty. [Reported cache timing](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L21>).
+
+Refresh checks base, application-container, and tile entry files. Unchanged tile entry reuses chunks; changed entry requires new subsequent files. Latest assets still require loading time. MP3/MP4 remain outside the table's stated cache policy. [Cache refresh branches](../../../records/candidates/observability/KT-observability-and-performance.md#cache-reuse-and-refresh-branches).

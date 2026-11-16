@@ -76,3 +76,12 @@ See also: [[summaries/REQ-active-session-renewal]]
 See also: [[summaries/KT-authentication-and-sessions]]
 
 See also: [[summaries/KT-ces-migration-parity]]
+
+
+## Historical configuration precision
+
+Version 1.0.0 uses ISO-8601 `user-login-max-duration`; empty or null disables that documented timeout. Version 1.1.1 removes it. These settings do not modify the current user-stated session ceilings.
+
+Version 1.1.4 requires `pub` and distinguishes production from non-production certificates and EMS2 hosts. Optional `userRolesEndpoint` defaults to `/ems2/rest/account/%s`; `entitlementEndpoint` defaults to `/ems2/rest/entitlements/entitlementList`. Optional `entityList` identifies application entities. Exact consumer configuration remains unverified.
+
+[KT-sdk-and-entitlements — sdk-version-114-precise-contracts](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-version-114-precise-contracts) [KT-sdk-and-entitlements — sdk-version-100-absolute-timeout](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-version-100-absolute-timeout)

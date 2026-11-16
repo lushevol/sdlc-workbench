@@ -107,3 +107,10 @@ See also: [[summaries/KT-portal-purpose]]
 See also: [[summaries/KT-application-interoperability]]
 
 See also: [[summaries/REQ-active-session-renewal]]
+
+
+## Further tenant operational boundaries
+
+The unfinished checklist assigns disaster-recovery checking for new upstream hosts to tenants, without portal load-balancer responsibility. The promotion flow assigns configuration repositories, change requests, ADO work items, and pipelines to tenant teams. These source-scoped statements do not identify the Portal Team as operator of every readiness input.
+
+[KT-release-operations — configuration-promotion-ownership-and-authentication](../../../records/candidates/operations/KT-release-operations.md#configuration-promotion-ownership-and-authentication)

@@ -64,3 +64,7 @@ A capacity claim should be backed by dated execution records that include worklo
 - [[concepts/mfe-cache-strategy]]
 - [[concepts/interaction-analytics]]
 - [[concepts/application-ownership]]
+
+## Retained measurement provenance
+
+The historical FCP/LCP figures retain their reported scope and absent-capture qualification. [May 2023 observations](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#may-2023-reported-rendering-measurements). The UAT workload and results retain separate reported scope. [UAT throughput observations](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-uat-throughput-workload-and-results).

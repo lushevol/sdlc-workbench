@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-portal-purpose.md"
 ---
 
-> Derived from [KT-portal-purpose, version 2](../../../records/candidates/background/KT-portal-purpose.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-portal-purpose, version 3](../../../records/candidates/background/KT-portal-purpose.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal Purpose and Capability Map — Summary
 
@@ -87,3 +87,7 @@ The described flow is one entry, authentication, tile selection, and multiple wo
 - [[entities/mfe-base]]
 - [[entities/mfe-root-config]]
 - [[entities/portal-team]]
+
+## Illustrative source inventory
+
+The introduction names Trade Blotter, Cashflow Blotter, Exception Blotter, Rules Engine, FlowZero for Ratan, Confirmation, and Download Report. These examples supply no complete or current application catalog. [Illustrative source application inventory](../../../records/candidates/background/KT-portal-purpose.md#illustrative-source-application-inventory).

@@ -71,3 +71,9 @@ This is a candidate requirement describing *intended target behavior* for portal
 - [[entities/single-ui-sdk]]
 - [[entities/entra]]
 - [[entities/ratan-auth-server]]
+
+## Historical comparison provenance
+
+The independent gap record preserves earlier implementations, case setups, observations, and limits. Its four-hour comparison addresses an earlier requirement. The current 15-minute idle and 60-minute absolute ceilings govern new acceptance work. Historical 100 ms, 15-second, and 30-second fixtures remain preserved without establishing current cadence requirements. [Intent-to-reality gap record](../../../../tasks/portal-background-session-20261019/09-intent-reality-gaps.md).
+
+The earlier credential rationale distinguishes unusable credentials from replacement supported by valid access. Current AC-4 requires renewal after initial refresh-credential expiry while access remains valid, within the absolute deadline. The source frontmatter separately retains the cross-origin integration-evidence limit. These qualifications keep activity renewal and manual refresh recovery within their applicable credential conditions. [Earlier credential rationale](../../../../tasks/portal-background-session-20261019/evidence/release-knowledge-sync-20261101/predecessors/REQ-active-session-renewal.md#rationale). [Current acceptance criteria](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).

@@ -31,7 +31,7 @@ Phase 1 of the migration covers UI SSO only. It excludes EMS2 replacement, porta
 [Service-account migration, lines 1–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md>)
 
 ## Non-production checks
-The non-production verification guide requires a development AD account, Authenticator registration, and RATAN AD-group membership. It asks teams to check successful login, user information, and expected tile visibility. It does not name a profile-field comparison step.
+The non-production verification guide requires a development AD account, Authenticator registration, and RATAN AD-group membership. It asks teams to check successful login, user information, and expected tile visibility. Its checks also cover services relying on profile fields, while the complete downstream field contract remains open.
 [Non-production verification guide, lines 5–56, 58–126](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md>)
 
 ## Evidence limits
@@ -43,7 +43,7 @@ The non-production verification guide requires a development AD account, Authent
 ## Related topics
 - [[summaries/KT-authentication-and-sessions]] holds the consolidated authentication and session material, including this warning.
 - [[concepts/identity-provider-delegation]] covers which provider authenticates the user and which component exchanges the code.
-- [[concepts/single-ui-sdk-authentication]] covers how the frontend consumes authentication and user state.
+- [[concepts/single-ui-sdk-authentication]] covers downstream Spring request validation and userInfo context.
 - [[concepts/entitlement-retrieval]] covers the separate EMS2 entitlement lookup that follows authentication.
 - [[concepts/portal-entry-and-tile-authorization]] covers how user and entitlement data gate portal entry and tile visibility.
 - [[concepts/cross-application-authentication-handoff]] covers how identity context passes between applications.

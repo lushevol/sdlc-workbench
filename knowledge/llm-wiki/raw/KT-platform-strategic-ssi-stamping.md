@@ -1,0 +1,1 @@
+../../records/candidates/settlement/KT-platform-strategic-ssi-stamping.md

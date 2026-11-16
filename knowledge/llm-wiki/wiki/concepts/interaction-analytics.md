@@ -89,3 +89,7 @@ The dashboards described for this data are hosted in [[entities/kibana]]. The do
 - Which retention clock and expiry treatment apply to the three-month PROD period?
 - Which analytics model reconciles producer, transport, storage, and dashboard schemas?
 - Which owner confirms production dashboard access and event completeness?
+
+## Additional source field conditions
+
+Both interfaces require container and tile. Name, value, and custom attributes are optional strings. The transport requires key and event, with optional singleUIAuthorization. Each invocation of six component-event functions calls the documented analytics endpoint. These conditions retain the unresolved 20-versus-10 capacity difference and unconfirmed current authority. [Source field contract](../../../records/candidates/observability/KT-observability-and-performance.md#analytics-source-field-contract).

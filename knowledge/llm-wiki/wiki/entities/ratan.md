@@ -49,3 +49,10 @@ Additional points:
 - [[concepts/per-tile-provider-selection]] — per-tile admission through EMS2 or CES
 - [[summaries/KT-ces-migration-parity]] — source scope for these facts
 - [[summaries/KT-sdk-and-entitlements]] — the related EMS2-to-CES entity-name migration intent
+
+
+## Identity boundary
+
+This Organization page retains the legacy team/display identity used in the CES mapping. Cash settlement product knowledge has a separate Product entity, `cash-settlement-ratan`. The shared name supplies no evidence that the organizational label and product have identical scope.
+
+[KT-ces-migration-parity — ces-entity-role-and-application-fields](../../../records/candidates/security/KT-ces-migration-parity.md#ces-entity-role-and-application-fields)

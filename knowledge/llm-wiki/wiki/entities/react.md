@@ -43,3 +43,9 @@ React is the JavaScript UI library used as the rendering foundation for the port
 See also: [[summaries/KT-portal-purpose]]
 
 See also: [[summaries/KT-architecture-evolution]]
+
+## Source scoped component safeguards
+
+The development guideline calls for component error boundaries and prefers lazy tile loading where possible. These instructions retain their historical source context and establish no verified error containment or current platform version.
+
+[KT-frontend-composition — development-guidance-and-performance-boundaries](../../../records/candidates/architecture/KT-frontend-composition.md#development-guidance-and-performance-boundaries)

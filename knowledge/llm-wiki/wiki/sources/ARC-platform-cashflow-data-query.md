@@ -1,0 +1,1 @@
+../../../records/candidates/architecture/ARC-platform-cashflow-data-query.md

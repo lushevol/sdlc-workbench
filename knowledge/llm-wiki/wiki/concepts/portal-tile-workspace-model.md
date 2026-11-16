@@ -15,7 +15,7 @@ The portal tile and workspace model is the user-facing composition pattern descr
 | Element | Role in the model |
 | --- | --- |
 | Entry | A common application entry point for post-trade users. |
-| Identity | SSO, MFA, and session renewal before workspace use. |
+| Identity | SSO, MFA, and session renewal in the stated entry-and-identity capability. |
 | Tile | An application view that a user opens in a workspace. |
 | Workspace | A user area that holds opened tiles; the documented flow supports multiple workspaces. |
 | Container | An application-owned module or the shared base that supplies common context. The role must be made explicit. |
@@ -80,3 +80,8 @@ This is a documented model, not evidence of deployed or tested coverage. The por
 See also: [[summaries/KT-architecture-evolution]]
 
 See also: [[summaries/KT-release-operations]]
+## Historical dispatch associations and observation provenance
+
+The example context broadcast opens a new Portal window using a URL. Its raiseIntent path opens workspace tabs in existing platform views. These associations remain historical examples with an unresolved production contract. [Dispatch behavior](../../../records/candidates/interoperability/KT-application-interoperability.md#historical-fdc3-dispatch-behavior).
+
+Reported library outcomes and the workaround retain their original task evidence. [POC compatibility observations](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-openfin-poc-compatibility-observations).

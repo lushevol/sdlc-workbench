@@ -60,7 +60,7 @@ The supplied text does not fully specify rollback, activation propagation, or co
 
 The flow states that the service validates an [[entities/fmaa]] JWT before it processes CSV files. The first bulk insert into UAT and Production uses a separate BFF release. Later uploads depend on tenant connectivity to the Admin service. This describes the documented procedure; no upload execution was inspected during ingestion.
 
-Two dependencies remain open. The release checklist flags planned FMAA decommissioning, which would affect both the upload authentication and the review workflow. The checklist also remains under construction, so the governing prerequisites are unconfirmed. The retained CSV repository becomes the effective version history of the catalog outside the portal audit tables, and it must agree with the portal records.
+Two dependencies remain open. The release checklist flags planned FMAA decommissioning, which creates an upload-authentication dependency with an unresolved effect on the separate admin review workflow. The checklist also remains under construction, so the governing prerequisites are unconfirmed. The tenant repository retains exported CSV configuration for promotion. Its consistency with runtime catalog records and audit tables needs separate verification.
 
 A successful upload proves neither tile reachability nor business readiness. [[concepts/tenant-production-readiness]] requires separate connectivity, security, and acceptance evidence.
 
@@ -78,11 +78,11 @@ These definitions are retained design material. They do not confirm a deployed s
 
 ## Relationship to routing
 
-A tile can become visible and launchable only when its container is reachable. [[concepts/portal-ingress-path]] and [[entities/nginx]] describe the proxy route that serves the frontend assets and the application API. The onboarding intake collects the upstream name, host, port, route path, rewrite rule, protocol, environment, timeout values, and custom headers. The catalog record and the proxy route must agree.
+Functional launch requires a reachable container. Visibility and authorization retain their separate configured entitlement decisions. [[concepts/portal-ingress-path]] and [[entities/nginx]] describe the proxy route that serves the frontend assets and the application API. The onboarding intake collects the upstream name, host, port, route path, rewrite rule, protocol, environment, timeout values, and custom headers. The catalog record and the proxy route must agree.
 
 ## Empty-subject tile policy
 
-One explicit user clarification permits tile visibility and launch through a single configured EMS2 entity when the tile subject setting is empty. The user must still satisfy the portal-entry requirements and hold entitlement for that entity. The [[entities/portal-team]] owns this decision for local, test, UAT, and production. Approval is pending. The decision covers only the single-entity, empty-subject scope. It selects no multiple-entity matching rule and no SSDR delegation option.
+One explicit user clarification permits tile visibility and launch through a single configured EMS2 entity when the tile subject setting is empty. The user must still satisfy the portal-entry requirements and hold entitlement for that entity. The [[entities/portal-team]] owns this decision for local, test, UAT, and production. Human publication review remains pending. The decision covers only the single-entity, empty-subject scope. It selects no multiple-entity matching rule and no SSDR delegation option.
 
 ## Open questions
 
@@ -110,3 +110,7 @@ The admin overview and the schema draft are proposals. The user manual gives pro
 - [[concepts/tenant-production-readiness]]
 - [[entities/admin-module]]
 - [[entities/fmaa]]
+
+## Retained SQL provenance
+
+Catalog keys, foreign keys, audit tables, and Flyway baseline configuration retain their source-inspection scope. Their task record establishes no deployed schema or executed migration. [Retained SQL configuration observations](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-sql-configuration-observations).

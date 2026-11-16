@@ -2,6 +2,8 @@
 query: "What are the Portal frontend composition layers and ownership boundaries among root config, base, container, feature, module, and tile?"
 ---
 
+> **Current review qualification — 16 November 2026.** The current frontend canonical record is version 5. The saved answer retains its earlier source-version labels. Single-SPA registration of only the shell does not prove absent container/tile import-map entries. The records do not equate the microfrontend team with Portal Team or allocate every root/interface approval. They supply no assigned notification tier owner and no proof that actual event delivery lacks an owner. [Current canonical scope](../../../records/candidates/architecture/KT-frontend-composition.md#current-four-layer-clarification).
+
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
 > Review qualification — 12 November 2026: This saved answer reflects frontend-composition v3; [the current canonical record is v4](../../../records/candidates/architecture/KT-frontend-composition.md). The four-layer model remains candidate architecture. The source roles do not establish that the microfrontend team and Portal Team are the same organization, or identify every root/interface approver. The inspected root registers only MFE Base; that declaration does not establish absent container/tile import-map entries. The notification materials assign no tier owner in the supplied model; they do not prove that cross-tile event delivery has no actual owner. Read the original synthesis below with these limits and the [current architecture record](../../../records/candidates/architecture/ARC-portal-service-relationships.md).

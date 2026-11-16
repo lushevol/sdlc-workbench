@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-authentication-and-sessions.md"
 ---
 
-> Derived from [KT-authentication-and-sessions, version 10](../../../records/candidates/security/KT-authentication-and-sessions.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-authentication-and-sessions, version 12](../../../records/candidates/security/KT-authentication-and-sessions.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Authentication and sessions
 
@@ -67,3 +67,19 @@ Links: [[entities/portal-team]], [[concepts/token-lifecycle-and-timeout-policy]]
 - [[entities/fmo-post-trade-portal]]
 - [[entities/single-ui-sdk]]
 - [[entities/admin-module]]
+
+## Historical provider protocol and migration conditions
+
+The historical FMAA introspection example requires app_id for audit without validating it against OUD. Supplied user_id is checked against token ownership. Omitting user_id leaves signature/expiry validation without owner checking. Introspection returns user_id, active, token_type, app_id, and expires_in; active uses string examples. HTTP 401 represents the source's authentication failure example. These are reference semantics without a current Portal requirement. [Parameter meanings](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-introspection-parameter-meanings). [Protocol detail](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-protocol-detail).
+
+The service-account migration list proposes AD accounts, attributes, rotation, requestor token acquisition, and provider validation. SPN onboarding remains a question. Its report says central replacement was unfinished on 10 April, with year unconfirmed. That report supplies no current dependency status. [Migration task list](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-service-account-migration-task-list).
+
+Non-production guidance restricts scbdev development accounts and manual RATAN group membership. Windows Hello is production-only in that guide; non-production uses Authenticator and OTP. The production pilot plans 23 May technical activation, 20 June business activation, and decommission after September. Its temporary-versus-persistent yes/no flag behavior conflicts. Every historical OneMFA fallback branch is superseded by the current no-fallback intent. [Non-production guide](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-non-production-login-details). [Pilot activation](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-production-pilot-activation-and-profiles).
+
+The historical BFF design separates /v2/sso/login and /v3/sso/login routing. It exchanges Entra authorization codes with a signed RSA client assertion, x5t thumbprint, and token-endpoint audience. Secure key/certificate storage and rotation are design requirements. Expected locale conflicts with the pilot's missing-locale observation. Its historical routing fallbacks retain their superseded status. [Routing and assertions](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-entra-routing-and-assertion-contracts).
+
+Phase 1 historical gates require QA before technical release, tenant regression/sign-off before default switch, and production-issue conditions before decommission. Its old March/April/June/August schedule supplies no completed rollout. [Phase 1 boundaries and gates](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-phase-1-migration-boundaries-and-prerequisites).
+
+## Historical interaction timing remains qualified
+
+Version 0 proposes a warning after 10 minutes, expired wording after 15 minutes, refresh-header replacement, and forced logout after 24 hours. It also proposes debounced activity requests and reused-refresh-token rejection. Version 1 assumes a 25-second pre-expiry request margin and depicts logout at 14:00. These are historical proposal values. They establish no current cadence, safety margin, or exception to the 15/60-minute ceilings. [Version 0 interaction](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-session-version-0-interaction-detail). [Version 1 pre-expiry flow](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-session-version-1-pre-expiry-flow).

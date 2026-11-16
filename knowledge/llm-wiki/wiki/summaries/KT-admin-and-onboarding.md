@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-admin-and-onboarding.md"
 ---
 
-> Derived from [KT-admin-and-onboarding, version 4](../../../records/candidates/operations/KT-admin-and-onboarding.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-admin-and-onboarding, version 6](../../../records/candidates/operations/KT-admin-and-onboarding.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Admin and onboarding — Summary
 
@@ -39,7 +39,7 @@ The NGINX draft collects upstream name, host, port, route path, rewrite rule, pr
 
 ### Empty-subject tile clarification
 
-The explicit user clarification permits tile visibility and launch through one configured EMS2 entity when the tile's subject setting is empty. The user must still satisfy portal-entry requirements and hold entitlement for that entity. The owner and scope answer identifies [[entities/portal-team]] across local, test, UAT, and production. This decision has approval pending. It resolves only the single-entity, empty-subject scope; it does not select a multiple-entity matching rule or an SSDR delegation option. The measurable result is defined in [UI-EMPTY-SUBJECT-AC-001](../../../records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). See [[concepts/portal-entry-and-tile-authorization]].
+The explicit user clarification permits tile visibility and launch through one configured EMS2 entity when the tile's subject setting is empty. The user must still satisfy portal-entry requirements and hold entitlement for that entity. The owner and scope answer identifies [[entities/portal-team]] across local, test, UAT, and production. Human publication review remains pending. It resolves only the single-entity, empty-subject scope; it does not select a multiple-entity matching rule or an SSDR delegation option. The measurable result is defined in [UI-EMPTY-SUBJECT-AC-001](../../../records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). See [[concepts/portal-entry-and-tile-authorization]].
 
 ### SSDR alternatives
 
@@ -75,3 +75,15 @@ The admin overview and schema are proposals; the user manual is procedural. Thei
 - [[entities/single-ui-sdk]]
 - [[entities/mfe-root-config]]
 - [[entities/systemjs]]
+
+## Historical schema, manual, and proxy detail
+
+The draft schema uses numeric category/tile/authorization IDs and string EMS2 role/subject/entity fields. It assigns category-role control and tile drawer-visibility predicates. Disabled is Boolean; isTemplate is String in this draft. Current deployed types remain unconfirmed. [Draft access predicates](../../../records/candidates/operations/KT-admin-and-onboarding.md#draft-admin-schema-access-predicates).
+
+The manual lists /importmap, /category, and /tile under FMO PORTAL ADMIN. Its historical READ-WRITE matrix names RATAN_ADMIN, SSI_ADMIN, FSS_ADMIN, STAMP_ADMIN, LOANIQ_ADMIN, and SSDR_ADMIN. These entries select no current cross-tenant write or verification policy. It also requires technical drawer/import-map knowledge, Is Template and Email Support fields, and API-appended slashes for module/tile paths. Its active endpoint is /api/auth/v1/fmo/admin/importmap/active. [Historical manual](../../../records/candidates/operations/KT-admin-and-onboarding.md#historical-manual-field-and-permission-detail).
+
+The overview's one POST_TRADE entity and one-role-per-user constraint describe a historical team-maintenance proposal. Its many-entities alternative is struck through. These alternatives create no current write policy or CES scalar-role mapping. [Historical role alternatives](../../../records/candidates/operations/KT-admin-and-onboarding.md#historical-admin-role-alternatives).
+
+The proxy draft defaults server port to 80 and load balancing to least_conn. Its WebSocket timeout shows 60, with expiry disconnecting the connection. It gives 100M as an illustrative body limit. Units and effective settings need the applicable configuration contract. [Draft proxy defaults](../../../records/candidates/operations/KT-admin-and-onboarding.md#draft-proxy-defaults-and-behavior).
+
+Retained SQL definitions and firewall-register observations keep their task provenance and deployment limits. [SQL configuration observations](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-sql-configuration-observations). [Firewall context](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-firewall-register-context).

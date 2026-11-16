@@ -48,3 +48,11 @@ No connectivity check, configuration upload, deployment, or UAT validation ran d
 - Which record proves DDR technical deployment, and which proves business UAT sign-off?
 - Which configuration, connectivity, or sign-off evidence closes the pending connectivity item?
 - Which Portal tile or route entry represents DDR, and where is it retained?
+
+## Historical request profile and planning precision
+
+The request adds the reporting tile under the existing FSS Services container. Country codes are AE, BD, BH, BW, CI, CN, GH, HK, ID, IN, KE, LK, MU, MY, NG, OM, PH, PK, QA, SA, SG, TZ, UG, VN, ZA, ZM, and GL.
+
+Each entity uses `FSS_UI_RF_` plus the country code CC. Roles use `FSS_UI_RF_CC_` plus MASTER, MAKER, CHECKER, PSS_USER, or BUSINESS_USER. The request gives 700 total users, 200 new users, and 20 maximum concurrent users. These are requested profiles and planning counts, without current grants, usage, or deployment proof.
+
+[KT-release-operations — ddr-request-scope-and-profiles](../../../records/candidates/operations/KT-release-operations.md#ddr-request-scope-and-profiles)

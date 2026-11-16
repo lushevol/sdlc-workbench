@@ -16,8 +16,9 @@ These changes preserve prior supported body content and explicit source conflict
 The [wiki finalization](evidence/checkpoint-219-wiki-finalization.json) covers all 117 candidate records.
 Its 208 reviewed outputs include 117 summaries, 41 concepts, 43 entities, six explorations and the index.
 All 117 completion receipts match current sources. No pending attempt remains.
-Independent finalizer checks confirmed zero structural findings and an unchanged 117-record plan.
-The subsequent staged diff found eleven extra blank lines. The wiki owner is repairing their final-byte receipts before commit.
+The staged diff found eleven extra blank lines. The [bounded repair](evidence/checkpoint-219-wiki-format-repair.json) preserves that failure and corrects those bytes.
+The wiki owner refreshed all 117 receipts under `pi-sol-medium-review-v2`.
+Independent verification confirms zero structural findings and an unchanged 117-record plan after repair.
 These results establish candidate-to-wiki freshness at that check. They supply no publication approval or passing business execution.
 
 The [Portal correction batch](evidence/checkpoint-209-portal-full-source-corrections-finalization.json) seals nine successors with zero findings.

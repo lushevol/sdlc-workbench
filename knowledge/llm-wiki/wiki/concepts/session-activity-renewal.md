@@ -19,7 +19,7 @@ Eligible activity reduces repeated sign-in within the permitted session window. 
 ## Mechanics
 
 1. **Activity capture** — pointer, keyboard, and scroll events are observed in the portal document.
-2. **Renewal** — eligible activity triggers renewal of the access credential before it expires, typically coalesced/throttled rather than fired per event.
+2. **Renewal** — eligible activity supports successful renewal when due, before access expiry and the absolute deadline. The criterion selects no throttle or debounce policy.
 3. **Idle expiry** — the session reaches idle expiry within 15 minutes of its last eligible activity.
 4. **Refresh-based recovery** — before the absolute deadline, the candidate retains recovery with a usable refresh token. RATAN review needs to confirm how the applicable ICS policy treats this recovery.
 5. **Renewal across initial refresh expiry** — if the initial refresh credential expires while access remains valid, eligible activity can support subsequent renewal before the absolute deadline.
@@ -36,7 +36,7 @@ The candidate requirement [[summaries/REQ-active-session-renewal]] defines nine 
 ## Boundaries and cautions
 
 - Version 9 prescribes no fixed activity cadence or renewal interval. The earlier timing fixtures and four-hour criterion are historical. Exact configured deadlines and individual token lifetimes remain open.
-- Activity inside cross-origin embedded applications is out of scope; that requires separate integration evidence, which matters for composed portals built from independently deployed frontends.
+- Activity inside cross-origin embedded applications requires separate integration evidence under the canonical review limit. This qualification supplies no blanket prohibition on integrating those events.
 - Expired or revoked credentials cannot authorize renewal. Recovery without a usable credential and provider outages remain outside these criteria.
 - Cancellation handling and request coalescing have no approved criterion in the source requirement; their disposition belongs to an implementation gap record, not to the behavioral intent.
 

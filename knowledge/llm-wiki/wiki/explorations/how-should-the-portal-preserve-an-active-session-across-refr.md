@@ -2,6 +2,8 @@
 query: "How should the Portal preserve an active session across refresh-token expiry, and what manual recovery is required after a rejected renewal?"
 ---
 
+> **Current review qualification — 16 November 2026.** The preserved answer below is historical requirement v7 material. Current candidate v9 has RATAN ownership, 15-minute idle and 60-minute absolute ceilings. Its criteria prescribe neither a fixed activity cadence nor a rotation mechanism. The old four-hour scenario and mandatory refresh-rotation conclusion cannot define current acceptance. They remain historical test/design statements. Manual retry requires a usable refresh token and remaining absolute-session time. Publication review and the applicable ICS revision remain pending. [Current canonical scope](../../../records/candidates/requirements/REQ-active-session-renewal.md#description).
+
 > Derived candidate/draft knowledge; publication review remains pending. [Canonical source bindings](../../source-manifest.json).
 
 > **Historical exploration.** The answer below reflects requirement v7. The 12 November clarification supersedes its unlimited-renewal and four-hour statements. Current requirement v9 sets a 15-minute idle ceiling and a 60-minute absolute ceiling from portal authentication. It removes the unsupported 100 ms activity cadence, 15-second observation window, and 30-second remaining-time setup from AC-1 through AC-3; these figures below are historical. Renewal across initial refresh expiry and eligible manual recovery apply within the absolute deadline. See the [current candidate criteria](../../../records/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) and [[summaries/REQ-active-session-renewal]].

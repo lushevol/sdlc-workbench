@@ -8,7 +8,7 @@ description: "Candidate release-window scheduling and ownership proposal, with u
 
 # Release Window Governance
 
-Release window governance describes how the supplied release proposal schedules Portal changes, freezes their scope, and coordinates Portal and tenant responsibilities. [[summaries/KT-release-operations]] v3 retains the historical proposal and its unresolved applicability.
+Release window governance describes how the supplied release proposal schedules Portal changes, freezes their scope, and coordinates Portal and tenant responsibilities. [[summaries/KT-release-operations]] v5 retains the historical proposal and its unresolved applicability.
 
 ## Proposed scheduling rules
 

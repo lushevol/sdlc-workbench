@@ -38,3 +38,12 @@ Portal teams execute Portal releases and routing rollback; tenant teams validate
 No configuration upload, pipeline run, or rollback was executed during ingestion. Local hashes identify the supplied bytes only; original page revisions and human approval remain unconfirmed.
 
 See also: [[summaries/KT-authentication-and-sessions]]
+
+
+## Historical manual and checklist precision
+
+The manual lists `/importmap`, `/category`, and `/tile` subjects under `FMO PORTAL ADMIN`. Its historical READ-WRITE matrix names RATAN_ADMIN, SSI_ADMIN, FSS_ADMIN, STAMP_ADMIN, LOANIQ_ADMIN, and SSDR_ADMIN. These entries select no current cross-tenant write or verification policy.
+
+The active import-map endpoint is `/api/auth/v1/fmo/admin/importmap/active`. The API appends `/` to submitted module and tile paths. Tile creation also includes `Is Template?` and `Email Support`. The unfinished checklist requires two maker/checker test accounts and uses deactivation for deletion requests.
+
+[KT-admin-and-onboarding — historical-manual-field-and-permission-detail](../../../records/candidates/operations/KT-admin-and-onboarding.md#historical-manual-field-and-permission-detail) [KT-release-operations — unfinished-checklist-operational-predicates](../../../records/candidates/operations/KT-release-operations.md#unfinished-checklist-operational-predicates)

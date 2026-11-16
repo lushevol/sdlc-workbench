@@ -28,3 +28,11 @@ The September flow description characterizes single cashflows as exception cases
 ## Source limits
 
 This concept is based on one source document, [[summaries/KT-settlement-auto-netting]]. The document consolidates candidate requirements and flow descriptions; it does not establish an approved, universally effective policy. In particular, confirm the single-cashflow outcome for each applicable netting type and configuration.
+
+## Dated outcomes and proposed affirmation changes
+
+Day 1 scenarios make components NETTED and resultants WAITING/PendingException/PendingOperator. Manual un-net marks the resultant DEAD and restores components to WAITING/PendingException. A component withdrawal before scheduled netting removes that component while the remaining group waits. These scenario expectations supply no passing execution. They retain their Day 1 scope beside the Day 2 unmatched-single rule. [Day 1 outcomes](../../../records/candidates/settlement/KT-settlement-auto-netting.md#day1-event-expectations).
+
+The affirmation-removal enhancement distinguishes Interentity, Other, CCS, Clearing, and gross flows. Specified resultants become Unaffirmed with PendingAffirmation. Same-trade match can close that exception in stated branches, while different-trade components need Operations approval. Clearing remains SwiftSuppressed while Unaffirmed. Interentity gross stays unchanged, and IRS remains separate and unaffected. Mandatory manual-net affirmation removal remains undecided. [Affirmation proposal](../../../records/candidates/settlement/KT-settlement-auto-netting.md#proposed-affirmation-removal).
+
+Named clearing netting proposals allow IRS aggregation with other matching cashflows for LCH/HKEX/ECLIPS. TAIFEX/CITIC remain IRS-only. Existing SwiftSuppressed flows are unchanged. These explicit product and client scopes do not expand the Bilateral execution key into a universal grouping rule. [Clearing grouping scope](../../../records/candidates/settlement/KT-settlement-auto-netting.md#named-clearing-rule-proposal).

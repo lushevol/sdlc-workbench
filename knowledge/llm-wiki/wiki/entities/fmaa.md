@@ -52,6 +52,14 @@ The name FMAA is not expanded in the supplied copy, and no architecture, sequenc
 - What does FMAA stand for, and which team owns it today?
 - Which replacement mechanism will validate configuration uploads after decommissioning?
 - Does the decommissioning affect Development, UAT, and Production on the same schedule?
-- Is the FMAA token check required for every upload, or only for the initial bulk insert path?
+- Which replacement authentication contract governs recurring uploads after FMAA decommissioning? The documented first bulk insert uses a separate BFF release.
 - Do the client-credential, service-account, and bank-ID flows remain intended requirements, and which validity limits apply to each?
 - Does any target provider contract replace the historical FMAA machine-to-machine flows?
+
+## Historical introspection contract
+
+The reference requires `app_id` for audit without validating it against OUD. Supplied `user_id` is checked against token ownership claims. Without `user_id`, the example validates signature and expiry without checking token ownership.
+
+Successful introspection returns `user_id`, `active`, `token_type`, `app_id`, and `expires_in`; examples encode `active` as strings. Failure examples distinguish signature failure, token expiry, and owner mismatch. These historical semantics supply no current Portal authentication requirement.
+
+[KT-authentication-and-sessions — historical-introspection-parameter-meanings](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-introspection-parameter-meanings) [KT-authentication-and-sessions — historical-machine-to-machine-protocol-detail](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-protocol-detail)

@@ -92,3 +92,12 @@ Effective Entra deployment, tenant mapping, and go-live completion remain unveri
 - [[summaries/KT-authentication-and-sessions]]
 - [[summaries/KT-sdk-and-entitlements]]
 - [[summaries/REQ-active-session-renewal]]
+
+
+## Historical contract precision
+
+The historical BFF design distinguishes `POST /v2/sso/login` from `POST /v3/sso/login`. Blank code selects OUD username/password; code with blank `iss` and `client_id` selects Entra exchange. Its OneMFA routing remains historical and is superseded by the current no-fallback rule.
+
+The design uses an RSA client assertion with `x5t`, token-endpoint audience, and certificate/private-key rotation requirements. Expected profile claims include locale, while the production guide reports missing locale. These source contracts require provider and consumer verification before reuse.
+
+[KT-authentication-and-sessions — historical-entra-routing-and-assertion-contracts](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-entra-routing-and-assertion-contracts)

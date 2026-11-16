@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-settlement-global-rates-design-boundaries.md

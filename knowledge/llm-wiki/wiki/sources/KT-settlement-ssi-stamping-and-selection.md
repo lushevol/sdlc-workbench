@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-settlement-ssi-stamping-and-selection.md

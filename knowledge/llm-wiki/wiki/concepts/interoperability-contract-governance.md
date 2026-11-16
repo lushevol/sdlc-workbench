@@ -52,3 +52,6 @@ Governance should therefore record, per environment, which features are delivere
 Which intent names, context schemas, and versions form the approved contract is unresolved. Which caller/provider context contracts and readiness gates apply to each feature is unresolved. Which tests establish cross-library and cross-application interoperability is unresolved. The supplied registry does not establish an approved OpenFin contract, and the connections to the [[entities/fmo-post-trade-portal]] and the [[entities/portal-team]] do not prove that those assets implement the example messages.
 
 See also: [[summaries/KT-release-operations]]
+## Retained compatibility-observation provenance
+
+The reported POC library outcomes and workaround retain their task evidence and missing-execution limits. [Reported OpenFin POC compatibility](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-openfin-poc-compatibility-observations).

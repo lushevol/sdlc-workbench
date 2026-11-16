@@ -1,0 +1,1 @@
+../../../records/candidates/query/KT-day2-query-validation.md

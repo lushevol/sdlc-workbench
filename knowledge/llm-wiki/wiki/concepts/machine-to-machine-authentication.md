@@ -10,7 +10,7 @@ description: "How non-human callers authenticate via client credentials, service
 
 ## Definition
 
-Machine-to-machine (M2M) authentication is how non-human callers — services, scheduled jobs, and integration components — prove their identity to portal APIs without a user present. It is the counterpart to interactive user login: instead of a browser redirect and an authorization-code exchange, a caller presents its own credentials, typically client credentials tied to a provisioned service account. Callers receive tokens that applications validate the same way they validate user tokens, but the identity that the token represents is an application or service rather than a person.
+Machine-to-machine (M2M) authentication is how non-human callers — services, scheduled jobs, and integration components — prove their identity to portal APIs without a user present. It is the counterpart to interactive user login: instead of a browser redirect and an authorization-code exchange, a caller presents its own credentials, typically client credentials tied to a provisioned service account. The historical reference passes a machine token to a secure service for FMAA introspection. Its provider protocol retains a separate contract from Portal user-token SDK validation.
 
 ## Position within the authentication landscape
 
@@ -25,9 +25,9 @@ The historical [[entities/fmaa]] reference describes the documented M2M model:
 - **Client-credential authentication.** Callers authenticate with client credentials issued to them, rather than with a user's credentials.
 - **Separate onboarding paths.** The reference gives separate procedures for service-account onboarding and bank-ID onboarding.
 - **OUD-managed accounts.** The historical reference describes accounts managed in OUD and authenticated through FMAA. Current directory ownership remains unconfirmed.
-- **Generated-token validity.** The historical reference states generated-token validity of 17 years for service accounts and seven days for bank IDs.
+- **Historical validity values.** The reference states 17-year validity for service accounts and seven-day validity for bank IDs. Their intended applicability and provider contract remain unresolved.
 
-These historical generated-token examples define no password or client-secret rotation interval. The applicable provider contract, validity limits, and rotation policy require authoritative confirmation. See the [canonical historical M2M limits](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-authentication).
+These historical validity examples define no password or client-secret rotation interval. The applicable provider contract, validity limits, and rotation policy require authoritative confirmation. See the [canonical historical M2M limits](../../../records/candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-authentication).
 
 ## Evidence limits
 
@@ -55,8 +55,8 @@ The source records unresolved central dependencies for the service-account phase
 ## Relationship to adjacent concepts
 
 - [[concepts/identity-provider-delegation]] — how the portal delegates authentication to an external provider; the M2M path is a separate delegation surface.
-- [[concepts/single-ui-sdk-authentication]] — the interactive counterpart, covering browser login for the UI.
-- [[concepts/cross-application-authentication-handoff]] — token passing between applications, which applies to both user and service tokens.
+- [[concepts/single-ui-sdk-authentication]] — downstream Spring application validation of Portal user JWTs.
+- [[concepts/cross-application-authentication-handoff]] — the separate Portal/OpenFin user-token handoff example.
 - [[concepts/portal-entry-and-tile-authorization]] — the user-facing outcome that M2M flows do not participate in.
 - [[entities/entra]] and [[entities/ratan-auth-server]] — the provider and server contexts within which the M2M target must eventually be stated.
 

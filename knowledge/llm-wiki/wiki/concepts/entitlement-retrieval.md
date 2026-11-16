@@ -119,3 +119,7 @@ See also: [[summaries/KT-admin-and-onboarding]]
 See also: [[summaries/KT-release-operations]]
 
 See also: [[summaries/KT-authentication-and-sessions]]
+
+## Historical retrieval inputs and defaults
+
+The direct example extracts userId from userInfo built from Single-UI-Authorization. Its separate entitlement-token example receives the token in the request body and validates it before extraction. Version 1.1.4 defaults userRolesEndpoint to /ems2/rest/account/%s and entitlementEndpoint to /ems2/rest/entitlements/entitlementList. Optional entityList scopes application EMS2 retrieval. These remain historical versioned contracts with unresolved current consumer adoption. [Input handoff](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-entitlement-input-handoff). [Precise defaults](../../../records/candidates/security/KT-sdk-and-entitlements.md#sdk-version-114-precise-contracts).

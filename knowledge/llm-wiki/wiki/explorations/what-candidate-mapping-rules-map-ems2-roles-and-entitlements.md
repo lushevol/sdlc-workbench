@@ -2,6 +2,8 @@
 query: "What candidate mapping rules map EMS2 roles and entitlements to CES permissions, and what parity limits remain unresolved?"
 ---
 
+> **Current review qualification — 16 November 2026.** The current CES parity candidate remains version 6. Only roleList and applicationId are new; name and applicationName remain existing fields with distinct meanings. Scalar role projection, applicable data restrictions, CES-only management scope, and per-API mapping remain unresolved. The saved answer prioritizes role multiplicity as synthesis; the canonical topic does not rank it above every other acceptance gap. Missing evidence proves neither equal permissions nor a failed migration. [Current canonical scope](../../../records/candidates/security/KT-ces-migration-parity.md#open-questions).
+
 > Review qualification, 12 November 2026: Only `roleList` and `applicationId` are new additive fields. `name` and `applicationName` are existing fields retained with the clarified CES authorization name and legacy team/display label. Apply this qualification to the additive-fields sentence in the saved synthesis below. [Current canonical entity-field meanings](../../../records/candidates/security/KT-ces-migration-parity.md#ces-entity-role-and-application-fields).
 
 

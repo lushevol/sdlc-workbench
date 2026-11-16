@@ -32,7 +32,7 @@ The portal model treats a tile as an application view that a user opens in a wor
 
 **Empty subject configuration.** When a tile has one configured EMS2 entity and zero configured subjects, the portal shows the tile and authorizes launch provided the user satisfies the portal-entry rule and holds entitlement for that single entity. The visible tile count and launch authorization count must each equal one. Multiple-entity matching remains outside this clarification. [UI-EMPTY-SUBJECT-AC-001](../../../records/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001)
 
-The admin material records the same counts for this case: one configured entity, zero configured subjects. It adds that the tile subject setting must be empty, and that the user must still satisfy portal-entry requirements and hold entitlement for that entity. It records the decision as pending approval.
+The admin material records the same counts for this case: one configured entity, zero configured subjects. It adds that the tile subject setting must be empty, and that the user must still satisfy portal-entry requirements and hold entitlement for that entity. Human publication review remains pending.
 
 **Configured subject.** The historical draft principles require matching both the configured EMS2 entity and subject when a tile requires a subject. The SSDR discussion records the same draft condition. [Historical configured-subject rule](../../../records/candidates/security/KT-sdk-and-entitlements.md#historical-configured-subject-rule)
 

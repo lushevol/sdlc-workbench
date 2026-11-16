@@ -1,0 +1,1 @@
+../../records/candidates/settlement/INT-KT-fxu-integration-contract.md

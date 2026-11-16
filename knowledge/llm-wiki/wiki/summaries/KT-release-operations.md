@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-release-operations.md"
 ---
 
-> Derived from [KT-release-operations, version 3](../../../records/candidates/operations/KT-release-operations.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-release-operations, version 5](../../../records/candidates/operations/KT-release-operations.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal release operations — Summary
 
@@ -80,3 +80,17 @@ Local hashes identify supplied bytes; original page revisions, current authority
 - [[entities/api-gateway]]
 - [[entities/mfe-base]]
 - [[entities/single-spa]]
+
+## Additional source-scoped release conditions
+
+The unfinished checklist makes base-provided Axios and backend SDK validation mandatory in its documented release workflow. Its FMAA upload path requires matching FMAA account and EMS2 IDs plus an active token. The replacement authentication dependency remains unresolved. [Checklist authentication](../../../records/candidates/operations/KT-release-operations.md#checklist-authentication-conditions).
+
+The checklist requests first-onboarding module, new-category drawer, and per-tile metadata records. It requires at least two maker/checker test accounts, uses deactivation for deletion requests, and checks entitled versus unentitled visibility. Its RATAN_CASHFLOW_BLOTTER action requirement remains a specific example. The historical account path distinguishes non-production Hashicorp from production OUD, with scheduled production vault onboarding. Dark and light themes remain documented checklist scope. [Operational predicates](../../../records/candidates/operations/KT-release-operations.md#unfinished-checklist-operational-predicates).
+
+Each tenant owns configuration, repositories, production/UAT change requests, ADO work items, and pipelines under the promotion guide. The historical flow requires environment-specific FMAA/OUD service accounts and uses client-credential JWTs. These instructions supply no credential-access or deployment authorization. [Promotion ownership](../../../records/candidates/operations/KT-release-operations.md#configuration-promotion-ownership-and-authentication).
+
+Cash Projection requests 10 total, 10 new, and 5 concurrent users. FSS requests total/new/concurrent counts of 10/10/5 for Funds Gating and Gold Custody. Domestic Disbursement requests 25/10/10; SSI requests 11/11/5. Collateral uses existing users with no numeric count. Domestic messages follow EBBS credit and go to SeCCuRe. Gold Custody names India and daily CSS positions. These are request-specific scope and planning values. [Cash Projection request](../../../records/candidates/operations/KT-release-operations.md#cash-projection-request-scope). [FSS profiles and counts](../../../records/candidates/operations/KT-release-operations.md#fss-request-scope-and-profiles). [Requested jurisdictions](../../../records/candidates/operations/KT-release-operations.md#tenant-capabilities-described-in-requests).
+
+DDR requests 700 total, 200 new, and 20 concurrent users under the FSS Services container. Its listed country codes define the requested entity scope. Entities use FSS_UI_RF_ plus country code. MASTER, MAKER, CHECKER, PSS_USER, and BUSINESS_USER share the corresponding country prefix. These are requested profiles without current grant, usage, or deployment evidence. [DDR requested scope](../../../records/candidates/operations/KT-release-operations.md#ddr-request-scope-and-profiles).
+
+The older deployment guide targets desktop/mobile browsers, mobile WebViews, and OpenFin with latest-version frontend deployment. It calls Production blue and Pilot green, sharing a backend. These are historical delivery assumptions. [Artifact delivery assumptions](../../../records/candidates/operations/KT-release-operations.md#historical-frontend-artifact-delivery-assumptions).

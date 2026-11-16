@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-observability-and-performance.md"
 ---
 
-> Derived from [KT-observability-and-performance, version 3](../../../records/candidates/observability/KT-observability-and-performance.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-observability-and-performance, version 5](../../../records/candidates/observability/KT-observability-and-performance.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Portal observability, performance, and cache behavior
 
@@ -91,3 +91,15 @@ Local hashes identify supplied document bytes without establishing original auth
 - [[entities/single-ui-sdk]]
 - [[entities/nginx]]
 - [[entities/ems2]]
+
+## Retained observation provenance and source conditions
+
+The historical rendering values retain their task evidence and absent-capture qualification. [May 2023 reported measurements](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#may-2023-reported-rendering-measurements). The UAT workload and results retain their separate reported scope. [Reported UAT throughput](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-uat-throughput-workload-and-results).
+
+Both event interfaces require container and tile. Name, value, and custom attributes are optional strings. The transport also requires component key and event, with optional singleUIAuthorization. Each invocation of the six component-event functions calls the documented analytics API. The 20-versus-10 attribute discrepancy remains unresolved. [Source field contract](../../../records/candidates/observability/KT-observability-and-performance.md#analytics-source-field-contract).
+
+The May 2023 draft also targets 24x7 availability, HTTPS, and error-free latest-Edge interaction. Each of six page flows has a one-minute operation and 100 percent use-case share. Login starts with zero prior logins and workspaces. Home has one automatic login and zero workspaces. Each blotter has one automatic login and one workspace. These are draft workload declarations. [Historical workload](../../../records/candidates/observability/KT-observability-and-performance.md#historical-draft-workload-conditions).
+
+The cache refresh checks base, application-container, and tile entry files. An unchanged tile entry reuses cached chunks. Changed entries reference new subsequent files and require fetching them. Current UI assets still require loading time. MP3/MP4 remain outside the expiry table's stated cache policy. [Cache branches](../../../records/candidates/observability/KT-observability-and-performance.md#cache-reuse-and-refresh-branches).
+
+Dashboard categories distinguish normal login, SSO, session extension, refresh-token re-login, logout, and authentication errors. Further views cover tile/workspace activity, Find/New Tile, Extend/Logout, login choice, and themes. These source-reported views establish usage vocabulary with unresolved authorized-reader rules. [Dashboard categories](../../../records/candidates/observability/KT-observability-and-performance.md#dashboard-event-categories).

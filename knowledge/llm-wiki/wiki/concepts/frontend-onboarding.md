@@ -42,7 +42,7 @@ An unfinished checklist widens the readiness set: SDK validation, shared fronten
 
 Onboarding should also separate technical onboarding from business activation. The release calendar keeps Portal release dates apart from tenant release dates and lists separate Entra technical and business go-live entries. The DDR request states that business UAT sign-off follows technical go-live, and the request template explicitly allows Portal deployment before application deployment. A calendar entry or a target date therefore does not prove a completed deployment or accepted capability.
 
-Tenant requests expose how often that evidence is incomplete. The [[entities/cdups]] request leaves UAT sign-off, user profiles, user counts, and UVT details unprovided. The [[entities/ddr]] request records pending connectivity and separates technical sign-off from business validation. Several [[entities/vpa]] evidence references are struck through. Withdrawn or missing references cannot close the corresponding gate.
+Tenant requests provide examples of incomplete readiness evidence. The [[entities/cdups]] request leaves UAT sign-off, user profiles, user counts, and UVT details unprovided. The [[entities/ddr]] request records pending connectivity and separates technical sign-off from business validation. Several [[entities/vpa]] evidence references are struck through. Withdrawn or missing references cannot close the corresponding gate.
 
 ## Registration, verification, and activation
 
@@ -72,7 +72,7 @@ The microfrontend team owns shared backend availability and reviews changes to s
 
 Registration defines which entities may reach a tile, but the authorization vocabulary comes from [[concepts/ems2-entitlement-provisioning]]: an entity, its actions, its roles, and its subjects are created first, then actions are assigned to role-and-subject combinations. Onboarding therefore spans routing, authentication, authorization data, and UI registration rather than UI code alone.
 
-One explicit user clarification covers tiles whose subject setting is empty. Such a tile may be visible and launched through a single configured entity, provided the user satisfies portal-entry requirements and holds entitlement for that entity. The `portal team` owns this decision across local, test, UAT, and production, and approval is still pending. The clarification resolves only the single-entity, empty-subject scope; it selects no multiple-entity matching rule and no delegation option. See [[concepts/portal-entry-and-tile-authorization]].
+One explicit user clarification covers tiles whose subject setting is empty. Such a tile may be visible and launched through a single configured entity, provided the user satisfies portal-entry requirements and holds entitlement for that entity. The `portal team` owns this decision across local, test, UAT, and production, and human publication review remains pending. The clarification resolves only the single-entity, empty-subject scope; it selects no multiple-entity matching rule and no delegation option. See [[concepts/portal-entry-and-tile-authorization]].
 
 The SSDR onboarding discussion records further alternatives for tenants whose report and download users hold different entity assignments: multiple tile entities, optional subject checks per tenant, adding missing EMS2 assignments, or delegating authorization to SSDR. Under those proposals an empty subject would skip validation — which the clarification above addresses only for the single-entity case. The temporary guest-access approach is struck through, and the discussion states that the portal does not implement entitlement control outside existing systems such as EMS2. None of these alternatives establishes an approved bypass or a deployed permission rule.
 
@@ -112,7 +112,7 @@ The [[entities/flyway]] page retains SQL that defines import-map records with un
 
 The onboarding procedure is documented, but the supplied copy depends on missing archives and screenshots for the getting-started guide, so the full local setup cannot be reproduced from the text alone. The admin overview and the schema draft are proposals, while the user manual is procedural; combining them cannot establish that the proposed controls became production behavior. The admin EMS2 page refers to absent entitlement spreadsheets and change attachments, and the user manual depends on screenshots missing from this copy.
 
-The guideline names an older React version without an effective date or supersession record, so it cannot establish the current platform baseline. Diagrams, emails, and example projects cited by the release and deployment guides are absent from the supplied set. The firewall register has no verified reachability, and no migration, proxy change, upload, deployment, or rollback was executed during ingestion. Named owners and effective approvals are not recorded, and the current runtime implementation is not confirmed.
+The guideline names an older React version without an effective date or supersession record, so it cannot establish the current platform baseline. Diagrams, emails, and example projects cited by the release and deployment guides are absent from the supplied set. The firewall register has no verified reachability, and no migration, proxy change, upload, deployment, or rollback was executed during ingestion. Current accountable personal identities and effective approvals remain unconfirmed. Documented roles and user-reported ownership remain recorded. Runtime implementation remains unconfirmed.
 
 ## Open questions
 
@@ -156,3 +156,9 @@ The guideline names an older React version without an effective date or superses
 See also: [[summaries/KT-portal-purpose]]
 
 See also: [[summaries/KT-architecture-evolution]]
+
+## Additional source-scoped onboarding details
+
+The standalone template states that it includes Jest configuration. Its missing archive prevents current runnable-template verification. Versioned guidance also calls for component error boundaries and lazy tile loading where possible. These remain source-scoped instructions. [Standalone pattern](../../../records/candidates/architecture/KT-frontend-composition.md#standalone-react-integration-pattern). [Development guidance](../../../records/candidates/architecture/KT-frontend-composition.md#development-guidance-and-performance-boundaries).
+
+Catalog SQL and firewall observations retain their task provenance and deployment limits. [SQL observations](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-sql-configuration-observations). [Firewall register context](../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-firewall-register-context).

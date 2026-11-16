@@ -16,7 +16,7 @@ This rule comes from the CES migration parity knowledge topic, recorded as user 
 
 ## Why it matters
 
-The EMS2-to-CES migration is a change of authorization concept (role → entitlement, entity → application, subject → feature), not a single cutover event. A big-bang migration would require every tile, every shared container API, and every upper application to be compatible at the same moment. Per-tile selection reduces that risk by allowing incremental, independently reversible migration.
+The EMS2-to-CES migration is a change of authorization concept (role → entitlement, entity → application, subject → feature), not a single cutover event. A big-bang migration would require every tile, every shared container API, and every upper application to be compatible at the same moment. Per-tile selection supports incremental migration. Reversal and rollback behavior require separate contract and execution evidence.
 
 ## How selection works
 

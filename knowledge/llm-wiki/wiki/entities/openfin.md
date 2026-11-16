@@ -70,3 +70,11 @@ This entity page should be revised when an accepted requirement, design record, 
 - [[concepts/portal-tile-workspace-model]] — the tile and workspace hosting model that a desktop-container decision would affect.
 - [[concepts/application-ownership]] — the ownership questions that an unassigned or unapproved product raises.
 - [[concepts/tenant-production-readiness]] — the broader readiness model that distinguishes technical from business activation.
+
+## Further historical view and phase boundaries
+
+Each described platform view has a JavaScript context separate from its window and no DOM representation inside that window. The description permits movement between windows without refreshing or destroying that context. No isolation or movement test was performed here.
+
+The first technical phase targets production user identification without PSS support or impact to existing browser-launched MO1 applications. These remain historical scope conditions, with no completed-phase evidence.
+
+[KT-application-interoperability — desktop-view-context-description](../../../records/candidates/interoperability/KT-application-interoperability.md#desktop-view-context-description) [KT-application-interoperability — historical-technical-phase-scope-condition](../../../records/candidates/interoperability/KT-application-interoperability.md#historical-technical-phase-scope-condition)

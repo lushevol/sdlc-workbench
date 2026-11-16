@@ -58,7 +58,7 @@ The release-operations material adds one concrete, procedure-level anchor for th
 
 The authentication topic adds the historical shape of that delegate. The FMAA reference describes client-credential authentication for machine-to-machine callers, separates service-account onboarding from bank-ID onboarding, and describes OUD-managed accounts authenticated through FMAA, with 17-year validity for service accounts and seven-day validity for bank IDs. Those values are historical examples and do not establish current token policy; see [[concepts/machine-to-machine-authentication]].
 
-That same release material also records a **planned FMAA decommissioning** in the Admin Module release checklist. The checklist remains under construction, so the decommissioning statement is a warning rather than a plan with a replacement. For delegation this creates an unresolved dependency: the documented configuration promotion procedure and the documented authentication delegate cannot both persist unchanged. See [[concepts/configuration-promotion]] and [[concepts/tenant-production-readiness]].
+That same release material also records a **planned FMAA decommissioning** in the Admin Module release checklist. The checklist remains under construction, so the decommissioning statement is a warning rather than a plan with a replacement. For delegation this creates an unresolved dependency. If decommissioning occurs, the affected promotion workflow requires an agreed replacement authentication contract. See [[concepts/configuration-promotion]] and [[concepts/tenant-production-readiness]].
 
 The evidence remains procedural and documentary. No upload, token validation, or FMAA call ran during ingestion, and the checklist cites no replacement provider.
 
@@ -74,7 +74,7 @@ Five qualifications bound this concept:
 
 ## Position in the request chain
 
-Delegation sits behind request admission, not in front of it. The reported path runs from a common public domain through [[entities/nginx]] and the [[entities/api-gateway]] to the portal backend; only then does delegated authentication occur. Because gateway implementation is unavailable and the Nginx templates contain direct proxy exceptions alongside gateway routes, universal gateway traversal cannot be established. See [[concepts/portal-ingress-path]] and [[concepts/portal-entry-and-tile-authorization]].
+The reported transport path runs from a common public domain through [[entities/nginx]] and the [[entities/api-gateway]] to backend services. The supplied sources leave precise admission and delegated-authentication ordering unresolved. Because gateway implementation is unavailable and the Nginx templates contain direct proxy exceptions alongside gateway routes, universal gateway traversal cannot be established. See [[concepts/portal-ingress-path]] and [[concepts/portal-entry-and-tile-authorization]].
 
 Once identity is established, the token contract carries it onward: the shared frontend interceptor sends `Single-UI-Authorization`, and the [[entities/single-ui-sdk]] validates supported requests in application backends and supplies request attributes. That validation layer is adjacent to, but distinct from, provider delegation itself — see [[concepts/single-ui-sdk-authentication]].
 

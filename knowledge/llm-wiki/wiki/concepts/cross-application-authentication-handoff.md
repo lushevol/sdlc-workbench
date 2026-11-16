@@ -30,7 +30,7 @@ This is an example technique, not an approved design. The source explicitly leav
 
 ## Open risks
 
-- **Token exposure.** A token in a URL can be captured in logs, history, referrers, or window titles. The source raises this as unresolved without prescribing a transport.
+- **Token exposure.** Logs, history, referrers, and window titles are inferred exposure considerations for URL-carried tokens. The source leaves production transport and trust boundaries unresolved.
 - **Trust boundary.** It is not documented which component validates the token at each launch, or whether each target application re-validates it.
 - **Hidden-provider assumption.** Running the provider invisibly assumes a prior session already exists; the fallback when it does not is undocumented.
 - **Environment drift.** The proof of concept and the later briefing describe different phases, and no source confirms what is deployed in each environment.

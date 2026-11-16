@@ -1,0 +1,1 @@
+../../records/candidates/settlement/INT-KT-regional-gateway-design-alternatives.md

@@ -27,3 +27,9 @@ The Day 2 requirement lists refresh behavior for rule creation, update, and disa
 - Which rule changes refresh existing evaluation, and can reinstated or un-netted cashflows re-enter?
 
 For the source distinctions and evidence limits, see [[summaries/KT-settlement-auto-netting]].
+
+## Source-scoped static and refresh controls
+
+The Day 2 type list orders SALMTM, SALCoupon, ClearingSwiftSuppress, CCIL, BIC, and Bilateral. Selection still uses configured priority and latest creation within one type. This list supplies no universal priority for other netting workflows. CCIL and BIC static require their documented method or flag conditions. Booking-entity-only creation hard-blocks. Missing booking entity warns about all-location scope. Missing blank/null netting-ID filtering also warns. [Static predicates](../../../records/candidates/settlement/KT-settlement-auto-netting.md#day2-static-control-details). [Type scope](../../../records/candidates/settlement/KT-settlement-auto-netting.md#refresh-and-type-scope).
+
+Creation, disabling, and updates have different refresh populations. Creation excludes PendingAutoNetting, while disable refreshes only tagged WAITING/PendingAutoNetting. The update wording both includes and excludes that state. Its no-refresh alternative remains unresolved. Day 1 instead limits changes to new cashflows and leaves queued items to Operations. These differences do not establish one current refresh policy. [Refresh branches](../../../records/candidates/settlement/KT-settlement-auto-netting.md#refresh-and-type-scope). [Day 1 boundary](../../../records/candidates/settlement/KT-settlement-auto-netting.md#day1-differences-preserved).

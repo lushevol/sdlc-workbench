@@ -5,7 +5,7 @@ doc_type: short
 full_text: "sources/KT-architecture-evolution.md"
 ---
 
-> Derived from [KT-architecture-evolution, version 2](../../../records/candidates/evolution/KT-architecture-evolution.md), candidate/draft. [Source bindings](../../source-manifest.json).
+> Derived from [KT-architecture-evolution, version 4](../../../records/candidates/evolution/KT-architecture-evolution.md), candidate/draft. [Source bindings](../../source-manifest.json).
 
 # Architecture Evolution and Proposal Boundaries — Summary
 
@@ -18,7 +18,7 @@ The document is a knowledge topic that organizes several independent UI and plat
 ### Component-library evaluation
 - Compares [[entities/mui]], [[entities/ant-design]], and [[entities/ag-grid]] using GitHub statistics dated 5 July 2023, plus components, styling, and licensing criteria.
 - The Ant Design note focuses on forms, feedback components, and layout differences.
-- The conceptual-design draft still contains placeholders and unresolved rationale. Its review and decision tables do not prove approval, and its approval link points to an unrelated ClickHouse design.
+- The conceptual-design draft still contains placeholders and unresolved rationale. Its review and decision tables do not prove approval, and its approval link points to a ClickHouse design with unexplained relevance.
 - Implication: historical comparison cannot establish current library capability or an accepted purchasing decision. See [[concepts/component-library-selection]].
 
 ### Composition as a migration constraint
@@ -88,3 +88,9 @@ The source manifest identifies local bytes but not original page revisions or co
 - [[entities/ems2]]
 - [[entities/ces]]
 - [[entities/fdc3]]
+
+## Retained notification and sizing proposals
+
+The notification draft also lists REST calls, GraphQL/WebSocket subscriptions, and Kafka alternatives beside its SSE objective. No selected protocol is established. Its store proposes string fields for identity, topic, message, payload, and container/module/tile. It declares isRead as string despite boolean assignment. Muted and isShown are booleans. Open In New Tile and React effects/application callbacks remain draft alternatives. [Notification experiments](../../../records/candidates/evolution/KT-architecture-evolution.md#notification-experiments). [Store contract](../../../records/candidates/evolution/KT-architecture-evolution.md#notification-store-draft-contract).
+
+The dated proposal expects FSS offboarding and CDUPS/SSDR onboarding in 2026. It names PTS, FM SWIFTGATEWAY, MARS, and others from 2027. Its SKE auth-service row groups applications with 16 CPU, 32 GB memory, 100 GB storage, and four VMs. Nginx has 4 CPU, literal 8BG memory, and four VMs. The database has 8 CPU, 64 GB memory, 500 GB storage, and four VMs. Other service sizing cells remain blank. Shared-versus-per-service interpretation and the 8BG unit remain unresolved. These values establish no approved capacity or deployed topology. [Specific proposal scope](../../../records/candidates/evolution/KT-architecture-evolution.md#specific-2026-and-2027-proposal-scope).
