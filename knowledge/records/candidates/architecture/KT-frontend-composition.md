@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-frontend-composition
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -53,11 +53,11 @@ sources:
 - resource: evidence/knowledge/sources/user-clarifications/architecture-20261022/source-review.json
   revision: sha256:aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
   sha256: aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
-previous_version: 3
-previous_content_sha256: c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718
+previous_version: 4
+previous_content_sha256: 9baf336269fb0dc1b21fab05d5ca5d53bb2e2c338f235d5b8733db163ccc39d9
 generated:
-  by: agent:codex
-  at: '2026-11-12T21:53:10+08:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: architecture
 scope: The documented microfrontend design, shared UI boundaries, and application
@@ -87,7 +87,7 @@ writing_review:
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
+  - Automated checks do not establish complete writing review.
 ---
 # Frontend composition and application ownership
 
@@ -208,6 +208,25 @@ It describes internal packaging and tenant-owned backend encapsulation as implem
 Tenant teams retain security, licensing, vulnerability, support, resilience, and rollback responsibilities.
 These are source-stated rules with unconfirmed authority and effective applicability.
 [Dependency principle, lines 3–10, 23–54](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md#L3>).
+
+### Historical JWT propagation responsibilities
+
+The historical development principle requires the frontend to attach JWTs through `Single-UI-Authorization` for every API call.
+It assigns public-key PEM certificate sharing to the microfrontend team.
+Application teams use that certificate for JWT validation and follow the linked SDK guidance.
+
+These are source-stated interface responsibilities. Current implementation and accepted certificate distribution require separate evidence.
+[Selected source lines 2–6](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md#L2-L6>)
+
+### Tenant dependency operational responsibilities
+
+The internal-packaging option includes dependency management, vulnerability scanning, licensing review, version control, and release governance.
+The backend-encapsulation option assigns security, error handling, resilience, audit, and compliance to the tenant backend.
+Portal supplies no direct hosting, calling, or management of external runtime dependencies on behalf of tenants.
+
+Tenant teams retain implementation effort, dependency approval, production support, fallback, rollback, and user-impact responsibilities.
+These statements retain the supplementary source rule. Effective applicability and exception approval remain unconfirmed.
+[Selected source lines 1–54](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md#L1-L54>)
 
 ## Connections
 

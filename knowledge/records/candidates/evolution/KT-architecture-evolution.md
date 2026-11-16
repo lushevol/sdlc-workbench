@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-architecture-evolution
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -62,8 +62,8 @@ sources:
   revision: sha256:bdb1374f5b897c5a72ab82abc42a1cf26333315498688655b25b819dfe7099f5
   sha256: bdb1374f5b897c5a72ab82abc42a1cf26333315498688655b25b819dfe7099f5
 generated:
-  by: agent:sol_portal_review
-  at: '2026-11-16T02:14:41.219764+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: evolution
 scope: Historical component evaluation, build-tool research, notification experiments,
@@ -87,14 +87,14 @@ open_questions:
 - Which unchecked work items have accepted scope, owners, and completion evidence?
 writing_review:
   standard: ASD-STE100
-  automated_check: PENDING
+  automated_check: PASSED
   asd_review: PENDING
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
-previous_version: 2
-previous_content_sha256: d923563193a2f6d903e73d75120dae2c481c75d5a0ab203154878a87dc02f614
+  - Automated checks do not establish complete writing review.
+previous_version: 3
+previous_content_sha256: 23c09cd281988fad5654663b3dd1375c99108bf7b0dc4c5744e9b648da301fd9
 ---
 # Architecture evolution and proposal boundaries
 
@@ -197,6 +197,30 @@ It also proposes moving properties into services and removing account-and-passwo
 The list supplies proposed work, without completion records, migration order, or accepted scope.
 Its wording cannot establish current platform versions or enabled login methods.
 [Unchecked work list, lines 1–4](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operation One TODO List/page.md#L1>).
+
+### Notification store draft contract
+
+The store draft declares string id, user_id, topic, isRead, message, payload, container, module and tile.
+It declares muted and isShown as booleans. The existing isRead assignment conflict remains unresolved.
+The source proposes Open In New Tile for new or updated records.
+
+Alternatives use React.useEffect on notification.payload or registered application callbacks.
+These are draft alternatives and source-specific field declarations. They establish no accepted schema, callback ordering or delivered behavior.
+[Selected source lines 1–13](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L1-L13>) [Selected source lines 36–44](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L36-L44>) [Selected source lines 61–61](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md#L61>)
+
+### Specific 2026 and 2027 proposal scope
+
+The proposal expects FSS offboarding and CDUPS/SSDR onboarding in 2026, with PTS, FM SWIFTGATEWAY, MARS and other applications from 2027.
+It refines chatbot and NLP workflows across tiles, activity telemetry, a user-based realtime notification bus, persona remaining-work dashboards and OpenFin.
+It also proposes datacenter migration. These remain prospective source declarations with unconfirmed current scope.
+
+The SKE auth-service row groups applications with 16 CPU, 32 GB memory, 100 GB storage and four VMs.
+The tile-management, telemetry and AI service rows omit their individual sizing cells. The Webserver/UI row also omits sizing.
+The Nginx row gives 4 CPU, 8BG memory, no storage value and four VMs. The database row gives 8 CPU, 64 GB memory, 500 GB storage and four VMs.
+
+The source spells the Nginx memory unit 8BG. It does not establish whether application sizing is shared or per service.
+These proposed values establish no approved capacity, bill of materials or deployment topology.
+[Selected source lines 3–18](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3-L18>) [Selected source lines 58–70](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L58-L70>)
 
 ## Connections
 

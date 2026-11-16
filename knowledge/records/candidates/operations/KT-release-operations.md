@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-release-operations
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -68,11 +68,11 @@ sources:
     Markets Operations One Change Request/page.md
   revision: sha256:a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477
   sha256: a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477
-previous_version: 3
-previous_content_sha256: ee2f113aba565e2c150b12129c8622441907d6da37be1093b3fca523a88756fc
+previous_version: 4
+previous_content_sha256: aa0bfd33df35ac0ca2c1479bb1c9d9cc7ceed536a948e80bf43a373c2231fb1f
 generated:
-  by: agent:sol_portal_review
-  at: '2026-11-16T02:14:41.219764+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: operations
 scope: Portal release planning, tenant capability context, configuration promotion,
@@ -98,12 +98,12 @@ open_questions:
   release readiness?
 writing_review:
   standard: ASD-STE100
-  automated_check: PENDING
+  automated_check: PASSED
   asd_review: PENDING
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
+  - Automated checks do not establish complete writing review.
 ---
 # Portal release and tenant operation boundaries
 
@@ -256,6 +256,68 @@ Its browser reachability check asks that the sign-in page be visible before auth
 [Production checklist, lines 30–32](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Production Release and Tenant on-boarding Checklist/page.md#L30-L32>).
 These are distinct checks; successful configuration upload alone does not establish business readiness.
 [Production checklist, sections at lines 16, 22, 30, 40, and 71](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Production Release and Tenant on-boarding Checklist/page.md#L16>)
+
+### Unfinished checklist operational predicates
+
+The checklist requests a module for first onboarding, a drawer for a new category, and one metadata record per tile.
+It requires operation grants for at least two maker/checker test accounts and directs deletion requests to use deactivation.
+Its Development checks cover tile visibility, clicking, permission correctness, name, icon and functional behavior.
+
+Its checks require entitled users to open and view a tile. Users without entitlement must have no visible tile.
+Its example requires at least one action under RATAN_CASHFLOW_BLOTTER for the cited role. This is source-scoped checklist guidance.
+The historical account path tests non-production Hashicorp and creates corresponding production OUD accounts. Production vault onboarding requires a scheduled change.
+
+It asks teams to implement both dark and light themes. The current accepted scope still requires the governing release procedure.
+[Selected source lines 9–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L9-L10>) [Selected source lines 12–13](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L12-L13>) [Selected source lines 16–18](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L16-L18>) [Selected source lines 19–20](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L19-L20>)
+
+### Configuration promotion ownership and authentication
+
+Each tenant owns its configuration repository and maintains tile configuration across Development, UAT and Production.
+The flow assigns production and UAT change requests, ADO work items and pipelines to the tenant team.
+It requires application service accounts in FMAA/OUD for both non-production and production, with optional password-vault integration.
+
+The historical flow obtains FMAA JWTs through the client-credential grant using Basic-encoded service-account credentials.
+The upload service validates that JWT before processing CSV. These historical instructions confer no credential-access or deployment authorization.
+[Selected source lines 5–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L5-L10>) [Selected source lines 15–15](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L15>) [Selected source lines 17–24](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L17-L24>)
+
+### Cash Projection request scope
+
+The Cash Projection request adds a tile to an existing interface. Its stated target is 10 total users, 10 new users and 5 maximum concurrent users.
+These are request-specific planning values. They establish no current usage, authorization grant or capacity measurement.
+[Selected source lines 9–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSS DS Cash Projection Change Request/page.md#L9-L10>) [Selected source lines 17–17](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSS DS Cash Projection Change Request/page.md#L17>)
+
+### FSS request scope and profiles
+
+The FSS request adds tiles to existing interfaces. Its domestic flow generates MT566 after EBBS credit and sends messages to SeCCuRe.
+Its collateral examples cover credit lines, trading margins and loans secured by SCB-custodied digital assets.
+The listed entities include FSSFM_GATING_TXN_HK, FSSFM_GATING_REF_HK, SSI, CA_DOMESTIC_SG, CA_DOMESTIC_HK, CA_DOMESTIC_CN, CA_DOMESTIC_IN and GOLD_CUSTODY_IN.
+
+Its general roles include MASTER, MAKER, CHECKER, PSS USER and BUSINESS USER. Gold Custody lists MAKER, CHECKER and VIEWER.
+Its collateral profile names FSSDA_CLM_AE. These entries define requested profiles, without establishing current grants or role equivalence.
+Requested total/new/concurrent users are 10/10/5 for Funds Gating, 10/10/5 for Gold Custody, 25/10/10 for Domestic Disbursement, and 11/11/5 for SSI.
+
+Collateral uses existing users without a numerical count. These values retain the historical request scope.
+[Selected source lines 9–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSS Gating, SSI, CA Domestic and Gold Custody Change Request/page.md#L9-L10>) [Selected source lines 17–18](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSS Gating, SSI, CA Domestic and Gold Custody Change Request/page.md#L17-L18>)
+
+### DDR request scope and profiles
+
+The DDR request adds its reporting tile under the existing FSS Services container.
+Its requested country codes are `AE, BD, BH, BW, CI, CN, GH, HK, ID, IN, KE, LK, MU, MY`.
+The remaining codes are `NG, OM, PH, PK, QA, SA, SG, TZ, UG, VN, ZA, ZM, GL`.
+
+Each entity uses the `FSS_UI_RF_` prefix.
+For each listed country code CC, its role pattern is FSS_UI_RF_CC_MASTER, MAKER, CHECKER, PSS_USER and BUSINESS_USER.
+The suffixes share the FSS_UI_RF_CC_ prefix. The request gives 700 total users, 200 new users and 20 maximum concurrent users.
+
+These are requested profiles and planning counts, without current grant, usage or deployment evidence.
+[Selected source lines 3–5](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L3-L5>) [Selected source lines 14–15](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md#L14-L15>)
+
+### Historical frontend artifact delivery assumptions
+
+The older guide serves JavaScript, CSS, images and JSON as static frontend artifacts.
+It targets desktop browsers, mobile browsers, mobile WebViews and OpenFin. Its proposal deploys only the latest frontend version.
+Its blue-green mapping calls Production blue and Pilot green, with both using the same backend.
+[Selected source lines 3–9](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-Frontend Deployment/page.md#L3-L9>) [Selected source lines 41–51](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-Frontend Deployment/page.md#L41-L51>)
 
 ## Connections
 

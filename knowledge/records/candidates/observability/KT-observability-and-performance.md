@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-observability-and-performance
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -49,11 +49,42 @@ sources:
 - resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
   revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
   sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
-previous_version: 3
-previous_content_sha256: 71a09442cb1060453c06c48aadd4783ca9a189abfefaea123f29e8900fd56bf0
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Drafts/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Entra Migration/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/MO1 AI/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/On Boarding Records/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Technical Design and Document/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/MFE Architecture
+    Design Diagrams/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+- resource: knowledge/raw/confluence/FM TPT UI Guild/UI Library Comparations/Draft/page.md
+  revision: sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  sha256: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+previous_version: 4
+previous_content_sha256: 9fae66b4fd31d65d21810e25b4ed8854a0d643b91be44293663c4ae42a6a2169
 generated:
-  by: agent:sol_portal_review
-  at: '2026-11-16T02:33:10.687737+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: observability
 scope: Portal interaction analytics, current API performance intent, historical performance
@@ -83,7 +114,7 @@ writing_review:
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
+  - Automated checks do not establish complete writing review.
 ---
 # Portal observability, performance, and cache behavior
 
@@ -219,6 +250,43 @@ Users still need logout or page refresh to obtain updated UI code.
 The guide explicitly excludes a first-load improvement.
 These are documented design rules; current response headers and build naming remain unverified.
 [Cache strategy, introduction, limitations, and expiry table, lines 1–43](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1>)
+
+### Dashboard event categories
+
+The authentication dashboard distinguishes normal login, SSO login, session extension, refresh-token re-login, and logout.
+Its error companion exposes errors and `traceId`. The guide describes raw-data downloads for further analysis.
+Other dashboards count drawer tile opening, workspace selection, workspace addition/removal, and Find versus New Tile clicks.
+
+The remaining comparisons cover Extend versus Logout, Normal versus SSO Login, and theme switching.
+These source-reported views describe usage and adoption questions. Current authorized data-reader rules require the applicable policy.
+[Selected source lines 15–25](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L15-L25>) [Selected source lines 29–33](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L29-L33>) [Selected source lines 37–41](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L37-L41>) [Selected source lines 47–51](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L47-L51>) [Selected source lines 57–61](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L57-L61>) [Selected source lines 67–71](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L67-L71>) [Selected source lines 77–81](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L77-L81>) [Selected source lines 87–91](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L87-L91>) [Selected source lines 97–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L97-L101>)
+
+### Analytics source field contract
+
+Both shown event data interfaces require `container` and `tile`. Their `name`, `value`, and custom attributes are optional strings.
+The transport interface also requires component `key` and `event`, and declares optional `singleUIAuthorization` for user identification.
+The design states that every invocation of its six component-event functions calls `/api/analytics/v1/fmo/print?extend=false`.
+
+The shown 20-field versus 10-field custom-attribute discrepancy remains unresolved. These declarations supply source-specific schema intent.
+[Selected source lines 1–115](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L1-L115>) [Selected source lines 222–222](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L222>) [Selected source lines 226–228](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L226-L228>)
+
+### Historical draft workload conditions
+
+The May 2023 draft additionally targets 24x7 availability, HTTPS, and error-free interaction in the latest Edge browser.
+Its workload table gives each of six page flows a one-minute operation and 100 percent use-case share.
+The login-page row has zero prior logins and zero workspaces. The home-page row has one automatic login and zero workspaces.
+
+Each blotter row has one automatic login and one workspace. These are historical draft workload declarations.
+[Selected source lines 48–58](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L48-L58>) [Selected source lines 68–89](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L68-L89>) [Selected source lines 188–201](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L188-L201>)
+
+### Cache reuse and refresh branches
+
+The described refresh checks the base, application-container, and tile entry files. An unchanged tile entry reuses cached chunks.
+A changed entry should reference new subsequent files, which are fetched again. Entry loading still requires waiting for current UI assets.
+The expiry table leaves MP3/MP4 media outside its stated cache policy.
+
+Reported timing improvements remain observations and supply no measured current performance guarantee.
+[Selected source lines 1–45](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L1-L45>)
 
 ## Connections
 

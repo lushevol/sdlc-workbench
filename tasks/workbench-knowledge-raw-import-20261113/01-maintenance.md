@@ -1,8 +1,12 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 204: preservation repairs sealed.** All 117 records remain candidate/draft; zero are published. Scoped final checks pass with zero findings. Source-completion reconciliation and wiki maintenance continue. All investigated questions stay in the [single editable document](evidence/canonical-draft-questions-20261115.md).
+> **Checkpoint 209: Portal source conditions integrated and sealed.** All 117 records remain candidate/draft; zero are published. Scoped final checks pass with zero findings. Source-completion reconciliation and wiki maintenance continue. All investigated questions stay in the [single editable document](evidence/canonical-draft-questions-20261115.md).
 
 ## Current stage: source receipts and derived wiki
+
+The [Portal correction batch](evidence/checkpoint-209-portal-full-source-corrections-finalization.json) seals nine body-preserving successors with zero findings. The [80-source proposal](evidence/checkpoint-207-portal-collection-completion-proposal.json) records 44 supported closure cases and 36 corrected source outcomes. Their source-completion receipts await settled output closures. Fresh Cash source review continues.
+
+The 47-summary wiki lane has completed private Sol review. Twelve existing Settlement summaries and three concepts also have private reviews. The remaining new-summary lane continues. Active wiki provenance still has 24 bindings.
 
 The [latest continuation](evidence/user-resume-20261116.md) resumes from saved checkpoints after interruption.
 

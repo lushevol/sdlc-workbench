@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-admin-and-onboarding
-version: 5
+version: 6
 owner: unknown
 governance_state: candidate
 status: draft
@@ -67,8 +67,8 @@ sources:
 - resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
   revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
   sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
-previous_version: 4
-previous_content_sha256: 46e4737da0b665101ed1f9c24c010e06bd80338ec81ce7d442ceb65063ba1be9
+previous_version: 5
+previous_content_sha256: b6f3c2d55027cc91c7a4f687ea762b061634f3edc91640a2ddbb954517b1f26e
 tile_empty_subject_policy:
   owner: portal team
   environments:
@@ -82,8 +82,8 @@ tile_empty_subject_policy:
   basis: explicit-user-clarification
   approval: pending
 generated:
-  by: agent:sol_portal_review
-  at: '2026-11-16T02:33:10.687737+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: operations
 scope: Portal tenant onboarding, application catalog administration, and documented
@@ -117,7 +117,7 @@ writing_review:
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
+  - Automated checks do not establish complete writing review.
 ---
 # Admin and onboarding
 
@@ -295,6 +295,49 @@ The temporary guest-access approach is struck through.
 The discussion states that the portal does not implement entitlement control outside existing systems such as EMS2.
 These recorded alternatives do not establish an approved bypass, selected solution, or deployed permission rule.
 [SSDR alternatives and boundary, lines 42–69](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md>)
+
+### Draft admin schema access predicates
+
+The category draft uses numeric `category_id` and string `ems2_role`, with the latter controlling that category and child records.
+The tile draft uses numeric `tile_id` and `category_id`. Its string `ems2_subject` describes drawer visibility.
+The authorization draft uses numeric `authorization_id` and `tile_id`, with string `ems2_entity` for drawer visibility.
+
+Each draft entity includes a Boolean disabled flag and creator/updater strings with date fields.
+Tile display and route fields are strings, including `isTemplate` in this draft. The current deployed type remains unconfirmed.
+The screen draft requires the Admin Module EMS2 entity and subject to see its admin tiles.
+[Selected source lines 1–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Table Schema and Screen Draft/page.md#L1-L101>)
+
+### Historical manual field and permission detail
+
+The manual lists `FMO PORTAL ADMIN` subjects `/importmap`, `/category`, and `/tile`.
+Its matrix gives READ-WRITE to RATAN_ADMIN, SSI_ADMIN, FSS_ADMIN, STAMP_ADMIN, LOANIQ_ADMIN, and SSDR_ADMIN for those subjects.
+Those historical entries select no current cross-tenant write or verification policy. The manual requires technical understanding of drawer and import-map files.
+
+Verification is enabled for an `un-verified` record. Deactivation is enabled for a `verified` record.
+Different maker and checker users receive their team role, and each admin function records changes in its own audit-history table.
+Tile creation also includes `Is Template?` and `Email Support`, and the API appends `/` to submitted module and tile paths.
+
+The named active import-map endpoint is `/api/auth/v1/fmo/admin/importmap/active`.
+[Selected source lines 1–233](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L1-L233>)
+
+### Historical admin role alternatives
+
+The overview proposes one `POST_TRADE` EMS2 entity with team-specific roles, including all-record, team-write, and team-read examples.
+It states a historical constraint of one role per user within an EMS2 entity. That proposal therefore permits maintaining one team.
+Its many-entities alternative, permitting multiple-team maintenance, is struck through.
+
+These proposed alternatives supply no accepted current write policy or new EMS2 compatibility assumption.
+[Selected source lines 7–37](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L7-L37>)
+
+### Draft proxy defaults and behavior
+
+The routing draft gives an upstream server-port default of 80 and load-balancing default `least_conn`.
+Its WebSocket request-timeout field shows default 60 and says timeout expiry disconnects the WebSocket connection.
+The draft shows 100M as an example body limit. It includes HTTP/HTTPS protocol, path matching, path rewrite and upstream alias linkage.
+
+The WebSocket example supplies upgrade headers and connect/send/read timeouts. Its intake also permits a custom request header.
+These are draft configuration semantics and illustrative values. Units and effective settings need the applicable configuration contract.
+[Selected source lines 3–20](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md#L3-L20>) [Selected source lines 33–46](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md#L33-L46>)
 
 ## Connections
 

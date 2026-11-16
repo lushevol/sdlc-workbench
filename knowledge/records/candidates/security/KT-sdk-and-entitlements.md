@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 10
+version: 11
 owner: unknown
 governance_state: candidate
 status: draft
@@ -53,7 +53,8 @@ sources:
 - resource: conversation:ui-test-coverage-20261022:UI-Q-002-scope
   revision: user-answer-20261022-1
   sha256: 9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Post Trade Portal Principles (Draft)/page.md
   revision: sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
   sha256: 7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
 - resource: conversation:ui-test-coverage-20261022:UI-Q-002-owner
@@ -74,8 +75,8 @@ sources:
 - resource: conversation:ui-test-coverage-20261022:empty-subject-owner-scope
   revision: user-answer-20261022-1
   sha256: a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR
-    On Board Discussion/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/On Boarding Records/SSDR On Board Discussion/page.md
   revision: sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
   sha256: 3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
 - resource: conversation:ces-entitlement-migration-20261102:field-equivalence-20261030
@@ -103,7 +104,11 @@ ces_entity_name_migration:
   role_equivalence: unconfirmed
 tile_empty_subject_policy:
   owner: portal team
-  environments: [local, test, UAT, production]
+  environments:
+  - local
+  - test
+  - UAT
+  - production
   configured_entity_count: 1
   configured_subject_count: 0
   decision: allow tile visibility and launch through the entity check
@@ -111,28 +116,34 @@ tile_empty_subject_policy:
   approval: pending
 tile_empty_entity_policy:
   owner: portal team
-  environments: [local, test, UAT, production]
+  environments:
+  - local
+  - test
+  - UAT
+  - production
   basis: user-reported
   approval: pending
 portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 9
-previous_content_sha256: 4223923f926c5d83314b0a148b7a5eddf1999faf4000a2f8ec004ad0f7a354aa
+previous_version: 10
+previous_content_sha256: fc10da8551d653583e63f80f5dfac4e2afda5146b67de5c882611d880ba18a85
 generated:
-  by: agent:codex
-  at: '2026-11-12T21:53:10+08:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented
   application authorization boundaries.
-summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
-  The SDK exposes entitlements. Application permission enforcement remains separate.
-  Portal tile validation runs at login, page reload, and idle-session extension.
-  Permission revocation applies on next UI login and after the applicable Auth Server Redis cache expires for API calls.
-  The user confirms X_RATANONE became RATAN_ENTITLEMENT_RULE during CES migration.
-  SDK 3.0.0 migration must preserve the old contract where possible and use caller-provided FMAA tokens.
+summary: User-stated intent denies portal entry without a registered application entity
+  entitlement in all portal environments. The SDK exposes entitlements. Application
+  permission enforcement remains separate. Portal tile validation runs at login, page
+  reload, and idle-session extension. Permission revocation applies on next UI login
+  and after the applicable Auth Server Redis cache expires for API calls. The user
+  confirms X_RATANONE became RATAN_ENTITLEMENT_RULE during CES migration. SDK 3.0.0
+  migration must preserve the old contract where possible and use caller-provided
+  FMAA tokens.
 related:
 - KT-authentication-and-sessions
 - KT-admin-and-onboarding
@@ -145,10 +156,13 @@ related:
 - REQ-active-session-renewal
 open_questions:
 - Does any listed entity suffice when a tile has multiple configured EMS2 entities?
-- What evidence confirms portal-team authority and approval across the user-stated environments?
-- What evidence confirms portal-team approval and deployed enforcement of the empty-entity tile rule?
+- What evidence confirms portal-team authority and approval across the user-stated
+  environments?
+- What evidence confirms portal-team approval and deployed enforcement of the empty-entity
+  tile rule?
 - Which SDK artifact and configuration apply to each downstream service?
-- Which supported CES data preserves each legacy role-specific grant for SDK 3.0.0 compatibility?
+- Which supported CES data preserves each legacy role-specific grant for SDK 3.0.0
+  compatibility?
 - Which failure-handling contract should SDK 3.0.0 callers use?
 - What trusted control replaces JWT validation on excluded paths or configured skip
   headers?
@@ -163,7 +177,7 @@ writing_review:
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
+  - Automated checks do not establish complete writing review.
 ---
 # SDK and entitlements
 
@@ -542,6 +556,36 @@ The SDK overview recommends entitlement caching and mentions NGINX stickiness fo
 It announces removal of EMS2 details from authentication JWTs in DEV on August 30, 2024.
 That announcement cannot establish the present DEV state or any production state.
 [SDK overview, lines 1–15](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md>)
+
+### SDK version 1.0.0 absolute timeout
+
+The 1.0.0 `user-login-max-duration` property uses ISO-8601 duration syntax.
+An empty or null value disables that documented absolute timeout.
+Version 1.1.1 removes this property. These historical configuration rules do not modify the current user-stated session ceilings.
+[Selected source lines 1–3](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.0.0/page.md#L1-L3>) [Selected source lines 34–51](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.0.0/page.md#L34-L51>) [Selected source lines 83–84](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.0.0/page.md#L83-L84>)
+
+### SDK version 1.1.4 precise contracts
+
+The `pub` public-certificate property is mandatory. The Java 8 guide explicitly distinguishes production and non-production certificate values.
+Both guides distinguish production and non-production EMS2 hosts.
+The optional `userRolesEndpoint` defaults to `/ems2/rest/account/%s`.
+
+The optional `entitlementEndpoint` defaults to `/ems2/rest/entitlements/entitlementList`.
+The optional `entityList` identifies EMS2 entities for the application. These are historical SDK configuration contracts.
+[Selected source lines 1–16](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/page.md#L1-L16>) [Selected source lines 49–59](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/page.md#L49-L59>) [Selected source lines 81–86](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/page.md#L81-L86>) [Selected source lines 1–16](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 8/page.md#L1-L16>) [Selected source lines 49–59](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 8/page.md#L49-L59>) [Selected source lines 87–92](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 8/page.md#L87-L92>)
+
+### SDK entitlement input handoff
+
+The direct-lookup example obtains `userId` from `userInfo`, which is extracted from the `Single-UI-Authorization` request header.
+The entitlement-token example passes the separate token from the request body.
+The token extraction method validates that token before returning entitlements. Missing screenshots provide no additional inspected code contract.
+[Selected source lines 7–14](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md#L7-L14>) [Selected source lines 16–28](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md#L16-L28>) [Selected source lines 42–54](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md#L42-L54>)
+
+### SDK format preservation
+
+The SDK overview proposes direct entitlement retrieval in the same format previously supplied through the JWT.
+This is historical migration compatibility intent. Actual returned schemas and consumer parity require exact provider and caller evidence.
+[Selected source lines 1–3](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md#L1-L3>) [Selected source lines 15–15](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md#L15>)
 
 ## Connections
 

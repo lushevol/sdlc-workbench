@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-portal-purpose
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -28,8 +28,8 @@ sources:
   revision: sha256:572dffb64891e80af50f57d5cc2e34fe8ffb3d92751b779d25b5b8b84b999cf7
   sha256: 572dffb64891e80af50f57d5cc2e34fe8ffb3d92751b779d25b5b8b84b999cf7
 generated:
-  by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: background
 scope: The supplied portal and UI platform materials, including draft principles and
@@ -56,7 +56,9 @@ writing_review:
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
+  - Automated checks do not establish complete writing review.
+previous_version: 2
+previous_content_sha256: 23954bd195f209b50824b49a91db5824a1d22025270cea3426d08af73488cbde
 ---
 # Portal purpose and capability map
 
@@ -133,6 +135,12 @@ The deployment proposal names onboarding changes, workflow AI, telemetry, and in
 It also lists notification, dashboards, and OpenFin as refining requirements.
 Its target service list describes a proposed decomposition. [Deployment proposal](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3>).
 These targets must remain distinct from the capability inventory and current implementation.
+
+### Illustrative source application inventory
+
+The introduction names Trade Blotter, Cashflow Blotter, Exception Blotter, Rules Engine, FlowZero for Ratan, Confirmation and Download Report as examples.
+These names form an illustrative source inventory. They establish no complete or current application catalog.
+[Selected source lines 5–7](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md#L5-L7>)
 
 ## Connections
 

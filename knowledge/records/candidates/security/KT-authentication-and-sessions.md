@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 11
+version: 12
 owner: RATAN team
 governance_state: candidate
 status: draft
@@ -117,11 +117,11 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 10
-previous_content_sha256: 50d3f4e1c81827de892b13112e3bf4e5d6c558cc9bed8b48073e9dff8155b2ee
+previous_version: 11
+previous_content_sha256: f39634f084ee8385c5d1ae1a8ff141396caa4ba842d8f3652f8a2dcdeaaa3897
 generated:
-  by: agent:sol_portal_review
-  at: '2026-11-16T02:14:41.219764+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
@@ -148,12 +148,12 @@ open_questions:
 - Which documented FMAA flows and validity settings remain intended requirements?
 writing_review:
   standard: ASD-STE100
-  automated_check: PENDING
+  automated_check: PASSED
   asd_review: PENDING
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
+  - Automated checks do not establish complete writing review.
 ---
 # Authentication and sessions
 
@@ -337,6 +337,99 @@ When supplied, `user_id` is checked against token ownership claims.
 Without `user_id`, the example validates signature and expiry without checking the token owner.
 These historical reference semantics supply no current Portal authentication requirement.
 [Historical FMAA introspection example, line 13](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L13>)
+
+### Historical machine-to-machine protocol detail
+
+The reference uses OAuth2 `client_credentials` with Basic-encoded service-account credentials against FMAA. OUD authentication success returns an access-token JWT.
+Its failure example returns HTTP 401 with an Unauthorized/password-validation failure response.
+The machine passes the token to its secure service. That service calls FMAA introspection with token and identifier parameters.
+
+The reference describes FMAA validation through JWKS. Successful introspection returns user_id, active, token_type, app_id, and expires_in.
+Its failure cases distinguish signature verification, token expiry, and token-owner mismatch. The examples encode active as string values.
+These are historical reference contracts. No credentials, token values, source-example lifetime, or HTTP tooling option becomes current policy.
+[Selected source lines 11–14](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L11-L14>) [Selected source lines 24–30](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L24-L30>) [Selected source lines 50–50](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md#L50>)
+
+### Historical service-account migration task list
+
+The separate migration list proposes AD-account creation and extension-attribute updates, with SPN onboarding recorded as a question.
+It also lists Hashicorp rotation integration, Entra token retrieval for requestors, and Entra token validation for service providers.
+The source reports that central FMAA replacement remained unfinished on 10 April. Its year is unconfirmed in that statement.
+
+Calls using FMAA authentication and EMS2 authorization consequently remained pending in that report. Current dependency status requires separate evidence.
+[Selected source lines 1–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md#L1-L10>)
+
+### Historical non-production login details
+
+The non-production guide restricts login to development accounts in the scbdev domain and requires manual RATAN AD-group membership.
+It says Windows Hello works only in production. Its non-production procedure selects another account, then uses Authenticator and OTP.
+Its checks cover successful login, expected basic information, expected tile visibility, and services relying on profile fields.
+
+The FAQ checks tile entitlement and EMS2 configuration for missing entitlements, and Authenticator registration for incomplete sign-in.
+It directs users who selected production credentials to use the development account instead. These remain guide-specific instructions.
+[Selected source lines 22–31](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md#L22-L31>) [Selected source lines 39–42](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md#L39-L42>) [Selected source lines 58–103](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md#L58-L103>) [Selected source lines 107–126](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md#L107-L126>)
+
+### Historical production pilot activation and profiles
+
+The guide targets pilot users after its May 2026 technical go-live. It says other users should retain their existing BAU experience.
+Its historical table names 23 May technical activation, 20 June business activation, and OneMFA decommission after September.
+At technical activation, normal users retain OneMFA while pilots enable Entra. Business activation moves the normal entry to Entra.
+
+The historical fallback uses `ENABLE_ENTRA_SSO=no`. Current user policy prohibits this fallback.
+The pilot flag `ENABLE_ENTRA_SSO=yes` is described as temporary after browser or PC restart in the phase table.
+The later pilot section says the first flagged visit makes Entra the default without another flag. This conflict remains unresolved.
+
+Existing Entra sign-in can bypass another prompt. Windows 11 defaults to Windows Hello, with Authenticator offered when that is unavailable.
+The profile comparison retains firstName, fullName, emailId and userId while changing surname formatting and country representation and removing locale.
+Its title row supplies no declared comparison. The guide advises dedicated entitlement control and review of downstream audit-field dependencies.
+[Selected source lines 1–34](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L1-L34>) [Selected source lines 40–46](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L40-L46>) [Selected source lines 48–70](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L48-L70>) [Selected source lines 95–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md#L95-L101>)
+
+### Historical Entra routing and assertion contracts
+
+The historical BFF design uses `POST /v2/sso/login` for OneMFA/OUD and `POST /v3/sso/login` for Entra.
+Blank code selects OUD username/password. Present code with blank iss and client_id selects Entra exchange.
+Other historical SSO requests select OneMFA. This fallback is superseded by the current user-stated SSO policy.
+
+Post-authentication processing builds profile and EMS2 entitlements, issues both token families, logs analytics and clears the session cookie.
+Declared outputs also include drawer data. External dependencies comprise Entra, EMS2 and LDAP.
+The design uses a signed RSA client assertion with certificate thumbprint in x5t and the token-endpoint URL in its audience.
+
+It requires secure private-key/certificate storage and rotation. It lists client IDs, tenant, endpoints, key paths, redirect, scopes and timeouts as configuration.
+The exchange sends client_id, client_assertion_type, client_assertion, grant_type, scope, code and redirect_uri. It decodes id_token for profile data.
+Expected claims are name, given_name, family_name, email, locale and country. The source assumes Entra accepts its x5t assertion.
+
+These remain documented design assumptions. The production profile guide reports missing locale, which limits any implied uniform profile contract.
+[Selected source lines 9–68](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md#L9-L68>)
+
+### Historical phase 1 migration boundaries and prerequisites
+
+The phase 1 assessment targets UI SSO migration from OneMFA to Entra. It places non-production credential migration from OUD to OpenDJ elsewhere.
+It places EMS2-to-EMS3 authorization, FMAA tenant-onboarding authentication and self-managed session changes outside phase 1.
+Its historical schedule names March non-production work, April technical release, June default switch, and August full decommission.
+
+Technical release requires completed QA verification. The default switch requires tenant regression and sign-off plus no unresolved production issues.
+Full decommission requires no reported production issue. Those prerequisites remain historical planning intent, without proof of completion.
+Its older fallback phases conflict with the current no-OneMFA-fallback clarification, which governs current intended SSO behavior.
+[Selected source lines 11–21](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md#L11-L21>) [Selected source lines 35–46](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md#L35-L46>) [Selected source lines 48–57](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md#L48-L57>)
+
+### Historical session version 0 interaction detail
+
+Version 0 proposes an idle warning after 10 minutes with Keep Working, Logout and a countdown.
+At 15 minutes of continued inactivity, the dialog changes to session-expired wording with Extend Session and Logout.
+It proposes debounced activity calls to `/api/auth/v1/sso/refresh` using the single-ui-authorization request header.
+
+The response supplies a replacement token in that header. The UI replaces its stored token and resets its 15-minute interval.
+The proposal stores refresh tokens at client and server, with server-side security control. Detected reuse denies the session and redirects to MFA.
+It also proposes a forced logout after 24 hours. These historical proposals retain their conflicts with current absolute and idle session ceilings.
+[Selected source lines 1–9](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md#L1-L9>) [Selected source lines 15–24](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md#L15-L24>) [Selected source lines 30–65](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 0/page.md#L30-L65>)
+
+### Historical session version 1 pre-expiry flow
+
+Version 1 discusses user sessions only. It assumes 25 seconds suffice for `/api/auth/refreshtoken` before access-token expiry.
+While that refresh token remains valid, Extend calls `/api/auth/relogin` and creates another access token with new auth_time.
+Its example automatically logs out the user when the depicted refresh interval ends at 14:00.
+
+The 105-minute/225-minute calculation conflicts remain explicit. The proposal supplies no accepted safety margin or current absolute-timeout exception.
+[Selected source lines 1–14](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md#L1-L14>) [Selected source lines 102–171](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md#L102-L171>)
 
 ## Connections
 

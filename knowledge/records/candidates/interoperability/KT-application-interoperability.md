@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-application-interoperability
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -29,8 +29,8 @@ sources:
   revision: sha256:71c8c3952ed4d36f3b6f1ec5b099aa3edf5a11bc13993f28c1d064d5ddaab978
   sha256: 71c8c3952ed4d36f3b6f1ec5b099aa3edf5a11bc13993f28c1d064d5ddaab978
 generated:
-  by: agent:sol_portal_review
-  at: '2026-11-16T02:33:10.687737+00:00'
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
 verified: []
 classification: interoperability
 scope: Portal-mediated tile navigation, caller/provider cooperation, OpenFin architecture,
@@ -61,9 +61,9 @@ writing_review:
   reviewer: null
   reviewed_at: null
   limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
-previous_version: 2
-previous_content_sha256: 1d8d5c0135a4fe71ae2623e9e14266750e30d0e524981f59a008556da9bf8756
+  - Automated checks do not establish complete writing review.
+previous_version: 3
+previous_content_sha256: 046e1d561c41bede8e099a0daccf7fabea75286828a399debcb66645b3d54ea6
 ---
 # Portal application interoperability and OpenFin context
 
@@ -170,6 +170,36 @@ The month-based timelines provide no year in that table.
 The briefing records approval and prioritization claims, without supplied approval attachments or completed execution records.
 This topic therefore preserves them as reported claims and plans.
 [Briefing, approval claims, business cases, and phases, lines 135–163](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L135>)
+
+### Historical FDC3 metadata use cases
+
+The overview also lists retrieving desktop-agent metadata and referring to applications or application instances to retrieve their metadata.
+These are described FDC3 use-case categories. They establish no implemented Portal feature or reviewed external-standard conformance.
+[Selected source lines 1–40](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/1. Overview/page.md#L1-L40>)
+
+### Desktop view context description
+
+The getting-started description gives each platform view a JavaScript context separate from its window.
+A view has no DOM representation within that window.
+The described design permits moving a view between windows without refreshing or destroying its context.
+
+These are supplied desktop-platform descriptions. No runtime isolation or movement test was performed.
+[Selected source lines 1–28](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/2. Getting Started/page.md#L1-L28>)
+
+### Historical FDC3 dispatch behavior
+
+The example table uses context broadcast with a URL to open a new Portal window.
+It uses `raiseIntent` with `fmchannel.fmoportal` and container, module, and tile identifiers for existing platform views.
+That path describes opening a workspace tab in all existing platform views.
+
+The example permits separate context and intent handlers in a real implementation.
+These transport-to-behavior associations remain historical example intent, pending an agreed versioned production contract.
+[Selected source lines 1–11](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L1-L11>)
+
+### Historical technical-phase scope condition
+
+Its first technical phase targets production user identification without PSS support or impact to existing browser-launched MO1 applications.
+[Selected source lines 32–34](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L32-L34>) [Selected source lines 111–125](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L111-L125>) [Selected source lines 147–155](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L147-L155>) [Selected source lines 161–161](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L161>) [Selected source lines 165–169](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L165-L169>)
 
 ## Connections
 
