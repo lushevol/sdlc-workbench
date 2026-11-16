@@ -1,7 +1,9 @@
 ---
 type: KnowledgeTopic
 id: INT-KT-ratan-cashflow-settlement-interfaces
-version: 1
+version: 2
+previous_version: 1
+previous_content_sha256: 25e797a8845a09a4f78798115b686fb3b79e7c51e301467090bb8b8b1d4cbec5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -43,8 +45,8 @@ sources:
   revision: sha256:192581fc3b234f890bc2396d68b7360e61710fb134698c2ed96a26c9c7c16baf
   sha256: 192581fc3b234f890bc2396d68b7360e61710fb134698c2ed96a26c9c7c16baf
 generated:
-  by: agent:codex
-  at: '2026-11-15T22:55:29+08:00'
+  by: agent:pi-source-finalizer
+  at: '2026-11-16T13:45:08.213721+00:00'
 verified: []
 classification: settlement
 scope: The selected RATAN cashflow, settlement, payment-accounting, and SSI interface descriptions in this source batch.
@@ -62,11 +64,11 @@ open_questions:
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
-  asd_review: PASSED
-  reviewer: agent:codex
-  reviewed_at: '2026-11-15T22:56:16+08:00'
+  asd_review: PENDING
+  reviewer: null
+  reviewed_at: null
   limitations:
-  - Writing review does not establish source authority, current applicability, approval, or execution.
+  - Automated checks do not establish complete writing review.
 ---
 
 # RATAN cashflow and settlement interfaces
@@ -120,7 +122,7 @@ Each source has a separate scope and unresolved authority limits.
 
   Batch names include `YYYYMMDD`, sequence `XXX`, and payment count `ZZZZ`. The ending file is `FMRP_Murex_Payments_YYYYMMDD_END.csv`. Murex sends it daily, even without batch processing. [Batch file markers](../../../evidence/sources/sha256/bcdd139231ee996d3664313cc3c74c382810d7037fd04fdca2980bccae83d91a.md#L37-L43)
 
-  Murex cannot regenerate a batch after processing issues. It holds transfers until RATAN returns ACK or NACK. The file patterns are `FMRP_Murex_Payments_YYYYMMDD_XXX_Ack.csv` and `FMRP_Murex_Payments_YYYYMMDD_XXX_Nack.csv`. A missing response for 30 minutes holds the process for Murex PSS investigation. [Murex response conditions](../../../evidence/sources/sha256/bcdd139231ee996d3664313cc3c74c382810d7037fd04fdca2980bccae83d91a.md#L98-L112)
+  The source says Murex cannot automatically regenerate a batch after processing issues. Murex waits for RATAN's batch ACK before the next batch. A NACK requires Murex PSS investigation. The file patterns are `FMRP_Murex_Payments_YYYYMMDD_XXX_Ack.csv` and `FMRP_Murex_Payments_YYYYMMDD_XXX_Nack.csv`. A missing response for 30 minutes holds the process for Murex PSS investigation. [Murex response conditions](../../../evidence/sources/sha256/bcdd139231ee996d3664313cc3c74c382810d7037fd04fdca2980bccae83d91a.md#L98-L112)
 
 - **Korea Murex payment path:** The Murex KR page describes MT and MxML input through MQ. RATAN converts them to MX and sends them to ENISIS over SFTP. The page also describes COMP status for payment STP. [Murex KR flow](../../../evidence/sources/sha256/1d0f8b241659e360f31d955a218a358ab662c172686fee3092b3a09a3c974936.md#L9-L13)
 
@@ -150,6 +152,62 @@ Each source has a separate scope and unresolved authority limits.
 - **SSI+:** RATAN matches records using booking entity, counterparty code, currency, and CFI code. It attaches SSI data to cashflows and calls the SSI+ API in real time. SSI+ sends record-change notifications through Solace. [SSI matching and update flow](../../../evidence/sources/sha256/b6c7feb19f34aafa9178c93595b6297a96b9e3bb20aa6cb0756174f3cff936ec.md#L7-L15) [SSI API and notification channels](../../../evidence/sources/sha256/b6c7feb19f34aafa9178c93595b6297a96b9e3bb20aa6cb0756174f3cff936ec.md#L56-L60)
 
   The page assigns API and notification monitoring to SSI+ PSS. It assigns Solace subscription monitoring to RATAN PSS. It describes outage notices and response-time escalation; current ownership is unconfirmed. [SSI support procedure](../../../evidence/sources/sha256/b6c7feb19f34aafa9178c93595b6297a96b9e3bb20aa6cb0756174f3cff936ec.md#L56-L60)
+
+### Additional source-specific interface conditions
+
+The EBBS table retains these literal code and country/location groups:
+
+| Source code group | Source country/location text |
+| --- | --- |
+| `CN, MY, IN, SG` | `China, Malaysia, India, Singapore` |
+| `UK, DE` | `United Kingdom, Germany` |
+| `MU, AE, ID, PH, US, JP, ZA, HK, EG, NP, SA` | `MAURITIUS,DUBAI,JAKARTA,MANILA,NEWYORK,TOKYO,JOBURG,DIFC,PHILIP FCU, Hong Kong, Egypt, Nepal, Saudi` |
+
+The last row has different numbers of codes and names. It supplies no reliable position-based mapping.
+The page places the real-time JSON accounting objective within FMRP 2024 H1. It establishes no current rollout.
+
+[Selected EBBS description and scope](../../../evidence/sources/sha256/4123aceb92ef466be4758e11db873589b4f3e9622a4f1ac58a28ed3bd8d81483.md#L9-L23)
+
+The ENISIS page assigns ENISIS the gateway responsibility for forwarding received messages to the SWIFT network.
+Its FM Solace route and MT210 conversion exception remain separate from the Murex-KR page's SFTP route.
+The selected material does not resolve that transport conflict.
+
+[Selected ENISIS responsibilities](../../../evidence/sources/sha256/a7c48470a31afa6b04d49ab9f306c8bc285cda1d29ae968a2c8b9742173f2ec0.md#L9-L18)
+
+The FMSGW catalog classifies both MT and MX settlement messages as real-time feeds through Solace.
+Its separate MT and MX country lists remain unchanged above.
+
+[Selected FMSGW feed classes](../../../evidence/sources/sha256/232860caf94e82f0651a7424384f85d6bff51906522c35e82e33f221490a515a.md#L9-L20)
+
+The Murex batch source illustrates sequence values `001,002,003…010` within a day.
+It uses payment count `ZZZZ` for reconciliation and sends the END file even when no batch was processed.
+The next-batch condition is ACK. A NACK or a 30-minute missing-response timeout requires the source-described investigation.
+These statements do not establish an approved replay or automatic-regeneration contract.
+
+[Selected Murex markers](../../../evidence/sources/sha256/bcdd139231ee996d3664313cc3c74c382810d7037fd04fdca2980bccae83d91a.md#L37-L43)
+[Selected Murex response conditions](../../../evidence/sources/sha256/bcdd139231ee996d3664313cc3c74c382810d7037fd04fdca2980bccae83d91a.md#L98-L112)
+
+The FXU interface sends `FullUtilize` requests for accounting through Solace, with request and response topics and queues.
+The return path runs from RATAN through Solace to FXU. This source supplies no complete response schema or acknowledgement guarantee.
+
+[Selected FXU exchange](../../../evidence/sources/sha256/466c2b9b5f99556b638b48e172a3a1e80e940f5a4fee05127fbcdb967eef8ccb.md#L9-L27)
+
+The Razor page describes the payment-status path as `MX-FXCASH -> Ratan` for the BCS settlement flow.
+Its exclusions, status values, `SCBML V4.0` format and literal `2M` size limit remain as stated above.
+The source does not define the size unit or establish a general direction for every catalog entry.
+
+[Selected Razor payment-status path](../../../evidence/sources/sha256/b29b8ceb98aec1bc887770342d9d29f98572aad4e4c4e89cec3444ff4afd6738.md#L32-L42)
+
+The SSI+ page calls SSI `Standard Settlement Instruction` and assigns central SSI maintenance to SSI+.
+Record updates, additions and deletions trigger SSI notifications through Solace.
+The API route is a real-time call to the SSI+ ES cluster.
+The page assigns SSI+ PSS notification and API availability monitoring, including agreed response time.
+SSI+ PSS must inform RATAN PSS about planned downtime outside greenzone and unexpected outages.
+RATAN PSS monitors Solace subscriptions and contacts SSI+ PSS when committed API response time is breached.
+These are source-described responsibilities. Current contacts, service levels and applicability remain unconfirmed.
+
+[Selected SSI description](../../../evidence/sources/sha256/b6c7feb19f34aafa9178c93595b6297a96b9e3bb20aa6cb0756174f3cff936ec.md#L7-L25)
+[Selected support duties](../../../evidence/sources/sha256/b6c7feb19f34aafa9178c93595b6297a96b9e3bb20aa6cb0756174f3cff936ec.md#L56-L60)
 
 ## Connections
 

@@ -1,6 +1,6 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 223: RATAN controls corrected and sealed.** There are 117 candidate records and two navigation files. Zero records are published. Current plans queue 477 identities and hold 44 identities. Eleven additional reviewed source receipts are accepted. Two changed canonical records require a further wiki refresh. Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
+> **Checkpoint 225: shared receipt scopes reconciled.** There are 117 candidate records and two navigation files. Zero records are published. Current plans queue 465 identities and hold 44 identities. Three canonical successors require a further wiki refresh. Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
 
 ## Current stage: source receipts and derived wiki
 
@@ -18,6 +18,16 @@ It restores selected pipeline predicates, lookup duties, C&A timing rows and his
 All prior body lines and source declarations remain preserved. Existing policy conflicts remain unresolved.
 The [completion result](evidence/checkpoint-223-ratan-controls-source-completion.json) accepts eleven reviewed source identities.
 The wiki owner received the exact semantic delta for the two changed records.
+The [interface catalog finalization](evidence/checkpoint-224-interface-catalog-finalization.json) seals a third successor with zero findings.
+Its [review](evidence/checkpoint-224-interface-catalog-final-review.json) retains source-specific gateway, SSI and support duties.
+It also corrects the Murex next-batch prerequisite to ACK. NACK requires investigation; automatic replay remains unestablished.
+The [source completion](evidence/checkpoint-224-interface-source-completion.json) accepts twelve interface identities.
+
+The catalog change reopened 103 earlier receipts through shared dependencies.
+The [actual delta review](evidence/checkpoint-225-shared-output-closure-review.json) confirms unchanged source, selection, policy, context and recipe bindings.
+Output and dependency memberships also remain unchanged. The three changed records have current reviews and sealed checkpoints.
+The [receipt refresh](evidence/checkpoint-225-source-completions.json) accepts all 103 reconciled identities.
+These refreshes do not count as 103 newly read source documents.
 
 The [wiki finalization](evidence/checkpoint-219-wiki-finalization.json) previously covered all 117 candidate records.
 Its 208 reviewed outputs include 117 summaries, 41 concepts, 43 entities, six explorations and the index.
@@ -37,7 +47,7 @@ The handoff hashes, reviewed output hashes and four current plan baselines match
 The [legacy catalog review](evidence/checkpoint-217-ratan-legacy-catalog-closure.json) preserves historical entitlement context.
 Its [reviewed context](evidence/legacy-entitlement-catalog-context-20261116.md) supplies no current provider or profile precedence decision.
 
-The [current four-collection plans](evidence/checkpoint-223-current-plans.json) queue 477 identities: Cash 393, RATAN 44, Portal zero and historical Settlement 40.
+The [current four-collection plans](evidence/checkpoint-225-current-plans.json) queue 465 identities: Cash 393, RATAN 32, Portal zero and historical Settlement 40.
 The [glossary review](evidence/checkpoint-221-nostro-terminology-review.json) and [capacity review](evidence/checkpoint-222-capacity-source-review.json) each received an accepted no-change receipt.
 Capacity observations already exist in task evidence. The candidate preserves distinct workload assumptions and response targets.
 The [wiki question reconciliation](evidence/checkpoint-220-wiki-question-reconciliation.json) maps 108 proposals to existing decision topics.
@@ -59,7 +69,8 @@ The [preservation repair](evidence/checkpoint-204-preservation-repairs-finalizat
 Their accounting rules remain distinct. Reported observations remain in [independent task evidence](evidence/portal-reported-observations-20261116.md).
 Canonical corrections and 136 source receipts are committed in `f316da4bb`.
 Question reconciliation and two no-change receipts are committed in `9e60eedd5`.
-The verified wiki stage is committed in `9984897f6`. The later controls stage awaits its scoped commit.
+The verified wiki stage is committed in `9984897f6`. The controls stage is committed in `39d471247`.
+The catalog and shared-receipt stage awaits its scoped commit.
 
 ## Continuation checkpoint 193: remaining domain topics sealed
 
