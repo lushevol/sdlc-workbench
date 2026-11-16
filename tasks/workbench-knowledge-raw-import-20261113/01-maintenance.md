@@ -1,6 +1,6 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 222: source receipts accepted and candidate wiki refreshed.** There are 117 candidate records and two navigation files. Zero records are published. Current plans queue 488 identities and hold 44 identities. The derived wiki has 117 completion receipts. Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
+> **Checkpoint 223: RATAN controls corrected and sealed.** There are 117 candidate records and two navigation files. Zero records are published. Current plans queue 477 identities and hold 44 identities. Eleven additional reviewed source receipts are accepted. Two changed canonical records require a further wiki refresh. Questions remain in the [single editable document](evidence/canonical-draft-questions-20261115.md).
 
 ## Current stage: source receipts and derived wiki
 
@@ -13,7 +13,13 @@ It seals cache, static configuration, feeds, validation, monitoring and advanced
 The [interface finalization](evidence/checkpoint-216-reference-interfaces-finalization.json) seals the reviewed reference-interface successor.
 These changes preserve prior supported body content and explicit source conflicts.
 
-The [wiki finalization](evidence/checkpoint-219-wiki-finalization.json) covers all 117 candidate records.
+The [RATAN controls finalization](evidence/checkpoint-223-ratan-controls-finalization.json) seals two additive successors with zero findings.
+It restores selected pipeline predicates, lookup duties, C&A timing rows and historical replication scope.
+All prior body lines and source declarations remain preserved. Existing policy conflicts remain unresolved.
+The [completion result](evidence/checkpoint-223-ratan-controls-source-completion.json) accepts eleven reviewed source identities.
+The wiki owner received the exact semantic delta for the two changed records.
+
+The [wiki finalization](evidence/checkpoint-219-wiki-finalization.json) previously covered all 117 candidate records.
 Its 208 reviewed outputs include 117 summaries, 41 concepts, 43 entities, six explorations and the index.
 All 117 completion receipts match current sources. No pending attempt remains.
 The staged diff found eleven extra blank lines. The [bounded repair](evidence/checkpoint-219-wiki-format-repair.json) preserves that failure and corrects those bytes.
@@ -31,7 +37,7 @@ The handoff hashes, reviewed output hashes and four current plan baselines match
 The [legacy catalog review](evidence/checkpoint-217-ratan-legacy-catalog-closure.json) preserves historical entitlement context.
 Its [reviewed context](evidence/legacy-entitlement-catalog-context-20261116.md) supplies no current provider or profile precedence decision.
 
-The current four-collection plans queue 488 identities: Cash 393, RATAN 55, Portal zero and historical Settlement 40.
+The [current four-collection plans](evidence/checkpoint-223-current-plans.json) queue 477 identities: Cash 393, RATAN 44, Portal zero and historical Settlement 40.
 The [glossary review](evidence/checkpoint-221-nostro-terminology-review.json) and [capacity review](evidence/checkpoint-222-capacity-source-review.json) each received an accepted no-change receipt.
 Capacity observations already exist in task evidence. The candidate preserves distinct workload assumptions and response targets.
 The [wiki question reconciliation](evidence/checkpoint-220-wiki-question-reconciliation.json) maps 108 proposals to existing decision topics.
@@ -52,7 +58,8 @@ Questions follow the [batch-handling instruction](evidence/user-batch-questions-
 The [preservation repair](evidence/checkpoint-204-preservation-repairs-finalization.json) retains Day 2 rounding beside Korea intent.
 Their accounting rules remain distinct. Reported observations remain in [independent task evidence](evidence/portal-reported-observations-20261116.md).
 Canonical corrections and 136 source receipts are committed in `f316da4bb`.
-The separately verified wiki stage awaits its scoped commit.
+Question reconciliation and two no-change receipts are committed in `9e60eedd5`.
+The verified wiki stage is committed in `9984897f6`. The later controls stage awaits its scoped commit.
 
 ## Continuation checkpoint 193: remaining domain topics sealed
 

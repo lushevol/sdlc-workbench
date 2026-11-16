@@ -2,7 +2,9 @@
 {
   "type": "KnowledgeTopic",
   "id": "KT-settlement-trade-control-utilities",
-  "version": 1,
+  "version": 2,
+  "previous_version": 1,
+  "previous_content_sha256": "67af7cdca3bdff833eaa24951a93047704aac762c3a5d316aa5a41aeb97bddc5",
   "owner": "unknown",
   "governance_state": "candidate",
   "status": "draft",
@@ -37,8 +39,8 @@
     }
   ],
   "generated": {
-    "by": "agent:codex/sol_cn_workflow_review",
-    "at": "2026-11-16T01:54:24.358660+00:00"
+    "by": "agent:pi-source-finalizer",
+    "at": "2026-11-16T13:37:43Z"
   },
   "verified": [],
   "classification": "settlement",
@@ -58,7 +60,7 @@
   "reviewer": null,
   "reviewed_at": null,
   "limitations": [
-    "This isolated candidate has not completed schema validation or human publication review.",
+    "Structural validation does not establish human publication approval.",
     "The selected pages describe proposals; they do not establish current approval, implementation, or deployment."
   ]
 }
@@ -126,6 +128,42 @@ When a rule matches, it closes the prior-version exception and creates one for t
 The result appears in the exception blotter.
 The review table is blank; its instruction says to set status to Published after review.
 [Selected source, original lines 3–17](../../../../knowledge/evidence/sources/sha256/2f4fe2c7f6677d661043b2a9b5b5e3f034a894e40d53435ebdd2f93436dbad55.md#L3-L17)
+
+### Selected C&A scope and literal expected timings
+
+The source includes removal of the last market operation, called undo, within cancellation and amendment scope.
+It frames the control as review of booking changes, genuineness and associated P&L impact to reduce fraudulent-trade risk.
+MVP1 identifies `SOURCE_SYSTEM=SABRE` and this literal business hierarchy:
+
+`|Group|Corporate and Institutional Banking|Financial Markets|Financial Markets excluding XVA|Macro Trading|Rates|EM Rates|EM Rates - Greater China`
+
+The selected timing table gives these expected values:
+
+| Batch | Expected feed to OVV | Expected exception generation |
+| --- | --- | --- |
+| Batch 1 | T 03:00 PM SGT, shown as 6:00AM UTC | T 04:00 PM SGT, shown as 7:00AM UTC |
+| Batch 2 | T 03:00 PM UKT, shown as 2:00PM UTC | T 04:00 PM UKT, shown as 3:00PM UTC |
+| Batch 3 | T 03:00 PM UST, shown as 6:00PM UTC | T 04:00 PM UST, shown as 7:00PM UTC |
+| Batch EOD | T+1 00:00AM UTC | T+1 01:00AM UTC, for previous-version trade PV |
+
+The SGT-to-UTC pairs are inconsistent. UKT/UST scope and seasonal clock rules remain unconfirmed.
+The MRB paragraph separately says SGT, GMT and UST. It also requires effective timestamps on sub-trade PV feeds.
+RATAN EOD exposes the OVV view to RATAN ONE and DQSL. DQSL also receives a new C&A T0 PV view.
+RATAN ONE joins TDS3 trades with PV, then applies filters, aggregation and seven Middle Office control rules.
+UI versus report output and available user actions remain open.
+These timing rows are historical expectations. They establish no executed schedule or current service guarantee.
+
+[Selected C&A scope](../../../../knowledge/evidence/sources/sha256/c1d5374d6d690b605cfa0962e33d6ed19c06e80903fe859e9630791cf22de4b9.md#L9-L16)
+[Selected responsibilities and timing rows](../../../../knowledge/evidence/sources/sha256/c1d5374d6d690b605cfa0962e33d6ed19c06e80903fe859e9630791cf22de4b9.md#L26-L41)
+
+### Historical FX replication boundary
+
+The source describes pre-FMRP replication of Rates-desk Murex FX cash trades into Razor Non-Standard Portfolios, for settlement only.
+It proposes continued Razor settlement responsibilities under FMRP, with real-time eligibility filtering before replication.
+Only trades satisfying the rules proceed downstream. The exact predicates remain unavailable in the selected ranges.
+Historical NSP placement does not establish a universally current portfolio or eligibility contract.
+
+[Selected FX replication boundary](../../../../knowledge/evidence/sources/sha256/2780da890b2c1794723fddb105599400435ee131c917cff877687cb6ee03fc8f.md#L9-L15)
 
 ## Connections
 
