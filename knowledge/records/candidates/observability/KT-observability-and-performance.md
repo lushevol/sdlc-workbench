@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-observability-and-performance
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -49,17 +49,17 @@ sources:
 - resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
   revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
   sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
-previous_version: 2
-previous_content_sha256: c23c2cac937ba81bb8187f5514d99a51f34cd632ea1dd129e078e7137ab1850f
+previous_version: 3
+previous_content_sha256: 71a09442cb1060453c06c48aadd4783ca9a189abfefaea123f29e8900fd56bf0
 generated:
-  by: agent:codex
-  at: '2026-11-12T21:27:34+08:00'
+  by: agent:sol_portal_review
+  at: '2026-11-16T02:33:10.687737+00:00'
 verified: []
 classification: observability
 scope: Portal interaction analytics, current API performance intent, historical performance
   materials, and documented frontend cache strategy.
-summary: The API loading limit is five seconds. Portal analytics support CPO review of
-  business product usage. The PROD retention period is three months.
+summary: The API loading limit is five seconds. Portal analytics support CPO review
+  of business product usage. The PROD retention period is three months.
 related:
 - KT-portal-purpose
 - KT-frontend-composition
@@ -69,10 +69,12 @@ related:
 - single-ui-analytics-proxy
 - single-ui-workspace-composition
 open_questions:
-- What API scope, timing boundaries, and workload apply when measuring the loading limit?
+- What API scope, timing boundaries, and workload apply when measuring the loading
+  limit?
 - Which analytics schema defines the accepted custom attribute contract?
 - Which deployed cache settings and asset naming rules implement the documented strategy?
-- Which analytics fields and readers are permitted, and what rules apply to identifiable values?
+- Which analytics fields and readers are permitted, and what rules apply to identifiable
+  values?
 - Which retention clock and expiry treatment apply to PROD user activity data?
 writing_review:
   standard: ASD-STE100
@@ -196,20 +198,11 @@ Its tools include browser performance monitoring and Lighthouse.
 The plan assumes supporting APIs remain available and sufficiently responsive.
 [May 2023 document, NFR, scenarios, and tools, lines 68–89 and 188–226](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L68>)
 
-The draft reports login FCP 0.8 seconds and LCP 1.3 seconds.
-It reports home FCP 0.9 seconds and LCP 1.3 seconds.
-The underlying screenshots and measurement captures are absent from this supplied copy.
-These reported values cannot establish present performance or capacity.
-[May 2023 document, result tables, lines 230–256](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L230>)
+[Retained reported observations](<../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#may-2023-reported-rendering-measurements>).
 
 ### Service throughput and capacity boundaries
 
-The UAT throughput page describes 500 users, a 250-second ramp-up, and five iterations.
-It reports 17,500 successful requests and a maximum response time of 2,023 milliseconds.
-That maximum concerns `/api/auth/v2/sso/validate` in the reported test.
-The source links a JMeter plan and result archive that are absent from this supplied copy.
-The summary alone does not establish current production capacity or verified business behavior.
-[UAT throughput, workload and result summary, lines 11–42](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Throughput Testing in UAT/page.md#L11>)
+[Retained reported observations](<../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-uat-throughput-workload-and-results>).
 
 The newer deployment page reports user estimates and additional performance figures.
 It also describes expected future onboarding and architecture changes.

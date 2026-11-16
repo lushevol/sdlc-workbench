@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-admin-and-onboarding
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -67,19 +67,23 @@ sources:
 - resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
   revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
   sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
-previous_version: 3
-previous_content_sha256: 9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869
+previous_version: 4
+previous_content_sha256: 46e4737da0b665101ed1f9c24c010e06bd80338ec81ce7d442ceb65063ba1be9
 tile_empty_subject_policy:
   owner: portal team
-  environments: [local, test, UAT, production]
+  environments:
+  - local
+  - test
+  - UAT
+  - production
   configured_entity_count: 1
   configured_subject_count: 0
   decision: allow tile visibility and launch through the entity check
   basis: explicit-user-clarification
   approval: pending
 generated:
-  by: agent:codex
-  at: '2026-11-12T21:27:34+08:00'
+  by: agent:sol_portal_review
+  at: '2026-11-16T02:33:10.687737+00:00'
 verified: []
 classification: operations
 scope: Portal tenant onboarding, application catalog administration, and documented
@@ -98,11 +102,14 @@ related:
 - single-ui-category-tile-admin
 open_questions:
 - Which onboarding and admin procedures apply to the current environment?
-- Which write and verification permissions apply across tenants for maker and checker users?
-- Which catalog fields are tile-specific metadata, and which tenant-level records may be shared?
+- Which write and verification permissions apply across tenants for maker and checker
+  users?
+- Which catalog fields are tile-specific metadata, and which tenant-level records
+  may be shared?
 - Which release controls apply to configuration changes made through self-service?
 - Which source revisions and environment checks establish the deployed catalog schema?
-- Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
+- Which SSDR entitlement option and multiple-entity matching rule apply to the current
+  tenant configuration?
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
@@ -203,12 +210,7 @@ The supplied text does not fully specify rollback, activation propagation, or co
 
 ### Historical persistence relationships
 
-The Flyway page configures a schema-history table and enables migration baselining from version zero.
-Its SQL defines import-map records with unique keys and categories with unique labels.
-Tile records reference both category and import-map records through foreign keys.
-Separate import-map, category, and tile audit tables preserve the design's change-history vocabulary.
-These relationships describe retained SQL, rather than a confirmed deployed schema or executed migration.
-[Flyway configuration and schema, lines 16–24, 77–220](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Flywaydb/page.md>)
+[Retained reported observations](<../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-sql-configuration-observations>).
 
 ### Draft routing intake and operational context
 
@@ -223,10 +225,7 @@ Its manual-deployment discussion identifies configuration testing and rollback a
 Those proposals require an applicable operating procedure before use.
 [NGINX environment discussion, lines 48–61](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md>)
 
-The retained firewall register supplies operational connectivity context for tenant onboarding.
-Its addresses and contact details remain in the original material.
-Current network approvals and reachability were not verified.
-[Firewall operational register, lines 1–8](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Firewall Configurations/page.md>)
+[Retained reported observations](<../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-firewall-register-context>).
 
 ### Portal administrator reads and tile metadata references
 

@@ -4,7 +4,9 @@
 
 The [latest user instruction](user-batch-questions-20261116.md#exact-user-input) is to record all questions here for batch handling. Continue independent supported work while answers remain blank. The instruction supplies no domain decision.
 
-This annex collects 1,527 question occurrences from the six draft packs, their coordinator review and integration, the CCIL and RATAN interface reviews, and the rolling worker reviews under the [living task](../01-maintenance.md).
+Start with the **Reviewed owner decision bundles** below. They group investigated decisions beside their source explanations. Earlier exact-text rows preserve history and can overlap these bundles. No blank answer selects a business policy.
+
+The baseline annex collected 1,527 question occurrences from the six draft packs, their coordinator review and integration, the CCIL and RATAN interface reviews, and the rolling worker reviews under the [living task](../01-maintenance.md).
 The register groups exact text into 987 rows and preserves each location.
 The earlier task questions and source review inventory keep their own rows.
 Related wording can still refer to the same business decision.
@@ -16,9 +18,9 @@ Related wording can still refer to the same business decision. The held-review g
 Use the **Answer** cell to provide the applicable decision, its source, and effective scope.
 You can also name the owner, identify an earlier answer, or write unknown.
 
-## Current goal gates (checkpoint 173)
+## Historical goal gates and their current dispositions (checkpoint 173)
 
-These three operational inputs block semantic processing or full source coverage. They are separate from the 1,527 source-review occurrences and 28 held-review groups above. Add answers in the final column.
+These earlier inputs distinguish resolved model selection from outstanding source evidence. Current collection plans contain 44 held identities. They are separate from the 1,527 source-review occurrences and 28 held-review groups above. Add answers in the final column.
 
 | ID | Input question | Evidence or scope | Status | Answer |
 | --- | --- | --- | --- | --- |

@@ -1,8 +1,14 @@
 # Cash Settlement and RATAN knowledge intake
 
-> **Checkpoint 201: canonical integration complete for the reviewed batches.** All 117 records remain candidate/draft; zero are published. Scoped final checks pass with zero findings. Source-completion reconciliation and wiki maintenance continue. All investigated questions stay in the [single editable document](evidence/canonical-draft-questions-20261115.md).
+> **Checkpoint 204: preservation repairs sealed.** All 117 records remain candidate/draft; zero are published. Scoped final checks pass with zero findings. Source-completion reconciliation and wiki maintenance continue. All investigated questions stay in the [single editable document](evidence/canonical-draft-questions-20261115.md).
 
 ## Current stage: source receipts and derived wiki
+
+The [latest continuation](evidence/user-resume-20261116.md) resumes from saved checkpoints after interruption.
+
+The [preservation repair](evidence/checkpoint-204-preservation-repairs-finalization.json) restores Day 2 rounding beside the Korea proposal. Their accounting rules remain distinct. The [successor-body review](evidence/checkpoint-204-baseline-successor-body-retention-review.json) found no other unrelated intent loss. Five reported-observation blocks now live in [independent task evidence](evidence/portal-reported-observations-20261116.md), with exact facts preserved. Four successor events and the final seal pass with zero findings.
+
+The prior canonical stage is committed as `65c90aa9f`. Source and wiki work remain active.
 
 The [Portal finalization](evidence/checkpoint-201-portal-integration-finalization.json) seals three additive successors. The [last corrections](evidence/checkpoint-200-final-corrections-finalization.json) seal source-supported query intent, lifecycle limits and reviewed whitespace changes. All old audits and protected snapshots remain preserved.
 

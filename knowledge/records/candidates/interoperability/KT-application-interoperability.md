@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-application-interoperability
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -29,8 +29,8 @@ sources:
   revision: sha256:71c8c3952ed4d36f3b6f1ec5b099aa3edf5a11bc13993f28c1d064d5ddaab978
   sha256: 71c8c3952ed4d36f3b6f1ec5b099aa3edf5a11bc13993f28c1d064d5ddaab978
 generated:
-  by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  by: agent:sol_portal_review
+  at: '2026-11-16T02:33:10.687737+00:00'
 verified: []
 classification: interoperability
 scope: Portal-mediated tile navigation, caller/provider cooperation, OpenFin architecture,
@@ -62,6 +62,8 @@ writing_review:
   reviewed_at: null
   limitations:
   - Automated checks do not check the complete approved dictionary or grammar rules.
+previous_version: 2
+previous_content_sha256: 1d8d5c0135a4fe71ae2623e9e14266750e30d0e524981f59a008556da9bf8756
 ---
 # Portal application interoperability and OpenFin context
 
@@ -157,13 +159,7 @@ No production authentication design, security approval, or token-handling verifi
 
 ### Compatibility observations
 
-The technical issue page reports that two FDC3 libraries did not exchange broadcast messages in its POC.
-It reports intent errors with one library and successful intent handling with the other.
-Its workaround uses `fdc3-2.1` for broadcast and `openfin-fdc3` for intents.
-These are reported POC observations, without current reproduction or a supported compatibility guarantee.
-The referenced screenshots and source archives are absent from this supplied copy.
-[Technical issue, observations and workaround, lines 1–29](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/5. Technical Issue/page.md#L1>)
-[Getting Started, source archives, lines 30–36](<../../../evidence/sources/confluence/FM TPT UI Guild/OpenFin/2. Getting Started/page.md#L30>)
+[Retained reported observations](<../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#reported-openfin-poc-compatibility-observations>).
 
 ### Adoption and release phases
 
