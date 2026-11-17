@@ -32,7 +32,7 @@ CANONICAL_SKILL_IDS = (
     "extract-knowledge-claims", "compose-knowledge-records", "retrieve-knowledge-evidence",
     "assess-knowledge-applicability", "review-knowledge-claims", "resolve-knowledge-questions",
     "prepare-knowledge-transition", "record-knowledge-audit", "check-knowledge-integrity",
-    "evaluate-knowledge-retrieval", "classify-knowledge-change", "bind-wiki-sources",
+    "evaluate-knowledge-retrieval", "evaluate-harness", "classify-knowledge-change", "bind-wiki-sources",
     "maintain-wiki-content", "finalize-wiki-update", "check-wiki-health",
     "manage-knowledge-lifecycle",
 )

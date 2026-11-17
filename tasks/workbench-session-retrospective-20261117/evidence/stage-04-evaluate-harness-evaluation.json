@@ -1,0 +1,45 @@
+{
+  "stage": "01-evaluate-harness",
+  "status": "PASSED",
+  "files": {
+    ".agents/skills/evaluate-harness/SKILL.md": "412ca762729e5d42b0fb5cb74d59066990d7ecbfc952330fd7665b0d7d673334",
+    ".agents/skills/evaluate-harness/references/trials.md": "5470d24298d7695cae61d6f292de08144aa1630ec76bdbeefff71165820230dc",
+    ".agents/skills/evaluate-harness/agents/openai.yaml": "f9ba9720b5ad77e67628b1d3a0b208552783998cadcda64498a0904e87d18fae",
+    "scaffold.json": "929485cd3cfe92d0f6edc96a9097dd79863fc35118a78b85f80b0e378c9bc7f1",
+    "README.md": "e0262dcae2e5facbcdd9756e4acf2581493526fe1bd9e3d2fc373939920f8a3a",
+    "tests/test_workspace_layout.py": "9e00e407f0135b7a250e2078cbfc99f5d6bda4d8cfbf2d9643c7ce9f42d0e6f2"
+  },
+  "checks": [
+    {
+      "criterion": "Skill defines isolated paired trials, respondent blindness, independent assessment, and retained evidence",
+      "result": "PASSED",
+      "evidence": "Ephemeral structural protocol check"
+    },
+    {
+      "criterion": "Trial manifest contains hashes, settings, permitted actions, criteria, outcomes and limits",
+      "result": "PASSED",
+      "evidence": "Ephemeral manifest-field check"
+    },
+    {
+      "criterion": "Existing fixture preparer works with the supplied skill root",
+      "result": "PASSED",
+      "evidence": "tests.skill_evaluation.prepare(current-results): synthetic fixture and evaluation-input.json created"
+    },
+    {
+      "criterion": "Source, alias and initialized-workspace distribution checks pass",
+      "result": "PASSED",
+      "evidence": "PYTHONPATH=. .venv/bin/python -m unittest tests.test_workspace_layout -v: 23/23"
+    },
+    {
+      "criterion": "Changed files are clean and no runtime dependency or model runner was added",
+      "result": "PASSED",
+      "evidence": "git diff --check; instruction-only skill inspection"
+    }
+  ],
+  "runner": "Independent design audit plus local protocol and packaging checks",
+  "limits": [
+    "No model was executed; respondent/assessor separation was checked structurally and through fixture preparation.",
+    "Synthetic fixture preparation does not establish business behavior or general model reliability.",
+    "Native client discovery and external environment execution remain untested."
+  ]
+}
