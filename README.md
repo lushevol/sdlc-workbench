@@ -327,7 +327,7 @@ Both routes preserve canonical source links and hashes. No route creates a secon
 Run local source and wiki plans before semantic work. Reviewed unchanged inputs skip repeated processing.
 Use [incremental source processing](.agents/skills/ingest-knowledge/references/source-preparation.md#plan-incremental-canonical-work)
 and [wiki completion receipts](.agents/skills/llm-wiki/references/workflows.md#reviewed-completion-receipts) for commands and reuse limits.
-See [installation and engine selection](docs/SETUP.md#openkb-primary-wiki) for authentication, graph output, and offline installation.
+See [installation and engine selection](docs/SETUP.md#knowledge-wiki-engine-selection) for authentication, graph output, and offline installation.
 Engine selection controls semantic work. Local OpenKB verification and visualization work in either mode without provider credentials.
 
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.

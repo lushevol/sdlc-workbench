@@ -2,11 +2,11 @@
 
 > **The strongest opportunity is reliable completion across existing tools.** Your history repeatedly requests trustworthy outcomes, visible progress, and less supervision.
 > **Review requirements before choosing skill enhancements.** The latest table covers the full retained input set and maps existing responsibilities.
-> Recommendations remain proposals. Infrastructure implementation and acceptance remain outside this review.
+> The approved skill enhancement sequence is complete. Each changed stage has a retained evaluation; distribution checks are recorded below.
 
 The [requirements table and skill map](07-requirements-and-skills.md) are the current joint-review surface.
 The [earlier optimization plan](06-optimization-plan.md) remains a provisional implementation proposal.
-Review requirements and ownership together before selecting enhancements or adopting numerical targets.
+The approved changes below implement the supported parts of that plan. Numerical targets remain measurement proposals.
 
 ### Enhancement authorization, 17 November 2026
 
@@ -19,6 +19,21 @@ dapproved, go till all enhancement done, evaluate each before go next
 Authorized scope: implement the approved skill enhancements, evaluate each completed stage before proceeding, and finish with distribution and evidence checks.
 Use the requirements table as the scope boundary. Preserve unrelated worktree changes.
 Stop a stage when its evaluation is incomplete or worse than the baseline. Runtime or business-repository changes require a demonstrated mechanical gap and their own affected checks.
+
+### Enhancement completion, 17 November 2026
+
+The approved shared-skill improvements completed in sequence:
+
+| Stage | Result | Evidence and commit |
+| --- | --- | --- |
+| Lifecycle reconciliation and recovery | PASSED | [stage 01 evaluation](evidence/stage-01-lifecycle-evaluation.json), `412abbd0e` |
+| Source-to-output accounting | PASSED | [stage 02 evaluation](evidence/stage-02-ingestion-evaluation.json), `bf5058ff5` |
+| Runtime rejection of incomplete `no_change` receipts | PASSED | [stage 02 runtime evaluation](evidence/stage-02r-runtime-evaluation.json), `bf0f10a09` |
+| Question decision grouping | PASSED | [stage 03 evaluation](evidence/stage-03-question-grouping-evaluation.json), `af8f2af75` |
+| Semantic preservation and reader usefulness | PASSED | [stage 05 evaluation](evidence/stage-05-semantic-evaluation.json), `79a730aa1` |
+| Repeatable harness evaluation protocol | PASSED | [harness evaluation](evidence/stage-04-evaluate-harness-evaluation.json), `30dc0b30f` |
+
+The [final distribution evaluation](evidence/stage-06-distribution-evaluation.json) records 1,078 passing tests with two documented skips, wheel and source-distribution hashes, the initialized-workspace smoke check, 332 resolved local links, and `VALID` workspace validation.
 
 ## Exact user input
 
@@ -239,15 +254,14 @@ These measures are proposals. This retrospective establishes neither improvement
 
 ## Scope, documentation, and next action
 
-Only this task's review artifacts changed. No infrastructure, business code, knowledge records, wiki content, or private configuration changed.
+The shared skill and supporting documentation changes listed in the completion table changed. No business code, knowledge records, wiki content, or private configuration changed for this enhancement sequence.
 Existing unrelated worktree changes remain outside this task.
 Assessed current documents: [principles](../../PRINCIPLE.md), [architecture](../../ARCHITECTURE.md), [workspace design](../../docs/WORKSPACE_DESIGN.md), lifecycle and hook guides.
-Their current contracts remain unchanged because the infrastructure priorities are proposals.
+Their current contracts remain unchanged except for the additive skill guidance and distribution registration listed above.
 Keep this retrospective under its owning task; no new enduring documentation responsibility was created.
 
-Next action: jointly review the four-area requirements table and mapped responsibilities before selecting enhancements.
-The earlier plan's five-skill shortlist and quantitative targets remain provisional.
-This table review establishes no new business clarification, publication, or deployment decision.
+Next action: use `evaluate-harness` for the next selected skill or workflow change, with a pinned baseline, candidate, fixture, and independent assessment.
+The completed trials are bounded evidence. They do not establish general model reliability, business acceptance, publication, deployment, or production behavior.
 
 ## Checks and writing review
 
@@ -259,7 +273,7 @@ Their findings corrected the revised plan before commitment.
 The [revised plan checks](evidence/plan-document-checks.json) cover the current task documents.
 The [requirements table checks](evidence/requirements-table-checks.json) additionally verify row, input, and existing-skill accounting.
 Independent table reviews checked semantic scope and skill ownership. They retained consumer-usage and minimal-schema qualifications for migration.
-No skill implementation, behavioral trial, runtime test, live integration, business execution, or complete ASD writing review ran.
+The stage evaluations and final distribution checks are recorded above. No full model-based semantic trial, live integration, business execution, or complete ASD writing review ran.
 
 ```yaml
 standard: ASD-STE100
