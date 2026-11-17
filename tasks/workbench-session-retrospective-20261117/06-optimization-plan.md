@@ -2,7 +2,10 @@
 
 > **Improve existing skill decisions before expanding runtime infrastructure.** Strengthen source accounting, recovery, question handling, and semantic assessment.
 > **Add one distinct skill: `evaluate-harness`.** It compares workflow behavior across skill revisions using isolated trials and independent assessment.
-> This is an unapplied plan. Targets are proposed. The next step is a bounded baseline; implementation owner: unknown.
+> This is an unapplied plan. Targets are proposed. The next step is requirements review; implementation owner: unknown.
+
+The [requirements table and skill map](07-requirements-and-skills.md) now govern the next review step.
+Review those requirements together before selecting enhancements or adopting this plan's numerical targets.
 
 ## Direction and evidence
 

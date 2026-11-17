@@ -1,11 +1,12 @@
 # Monthly session retrospective
 
 > **The strongest opportunity is reliable completion across existing tools.** Your history repeatedly requests trustworthy outcomes, visible progress, and less supervision.
-> **Prioritize shared skills and measured behavior.** Strengthen five existing skill owners and propose one distinct harness-evaluation skill.
+> **Review requirements before choosing skill enhancements.** The latest table covers the full retained input set and maps existing responsibilities.
 > Recommendations remain proposals. Infrastructure implementation and acceptance remain outside this review.
 
-The [revised optimization plan](06-optimization-plan.md) defines seven skill-first stages, exact file targets, outcomes, and quantitative criteria.
-Planning is complete. The optimization targets remain proposed until baseline measurement and authorized implementation.
+The [requirements table and skill map](07-requirements-and-skills.md) are the current joint-review surface.
+The [earlier optimization plan](06-optimization-plan.md) remains a provisional implementation proposal.
+Review requirements and ownership together before selecting enhancements or adopting numerical targets.
 
 ## Exact user input
 
@@ -48,7 +49,30 @@ Prefer existing skill owners. Propose a new skill only for a distinct, demonstra
 Runtime additions in the earlier plan become conditional on skill evaluation exposing a mechanical gap.
 The current deliverable remains the requested concrete plan, revised around this direction.
 
-Review window: 17 October through 17 November 2026, Asia/Singapore, through this request.
+### Requirements-table clarification, 17 November 2026
+
+Source: Current Codex conversation. Exact user input:
+
+```text
+The proposal you gave isn't visual enough.
+
+Take all the past inputs you've organized for me and put them into a table that covers four areas:
+
+1. The problems behind them
+2. The results I want to achieve
+3. My preferences
+4. What I focus on
+
+Let's organize our requirements into this table first, and then map those requirements to the skills. From there, we can go through them together and figure out how to enhance those skills to meet our needs.
+```
+
+Current scope: consolidate organized inputs into a four-area requirements table, then map requirements to existing skill owners.
+The [review table](07-requirements-and-skills.md) accounts for all 49 retained excerpts across 22 requirement themes.
+Review requirements together before selecting enhancements. Prior implementation stages and numerical targets remain proposals.
+Keep source-backed preferences separate from inferred problems and outcomes. Do not treat proposed skill changes as confirmed requirements.
+
+Historical review window: 17 October through the original retrospective request on 17 November 2026, Asia/Singapore.
+Later planning and table requests are retained separately above; they do not change the frozen historical inventory.
 The review covered 408 retained user inputs across 102 conversations. This includes 407 historical inputs and this request.
 It also reviewed the latest available assistant summaries for 100 conversations and relevant current repository documents.
 
@@ -144,7 +168,9 @@ It explicitly warns that overlapping rows do not equal independent decisions.
 It also separates receipt refreshes from newly reviewed originals and rejects their use as a completion ETA.
 These are inspected saved findings. This retrospective did not rerun their tests or semantic samples.
 
-## Proposed skill priorities
+## Earlier proposed skill priorities
+
+These priorities remain a proposal. The latest request places requirements review before selecting skill enhancements.
 
 The latest clarification makes shared skills the primary optimization surface.
 The [concrete plan](06-optimization-plan.md#specific-work-and-file-ownership) specifies steps, files, expected outcomes, and measurements.
@@ -207,9 +233,9 @@ Assessed current documents: [principles](../../PRINCIPLE.md), [architecture](../
 Their current contracts remain unchanged because the infrastructure priorities are proposals.
 Keep this retrospective under its owning task; no new enduring documentation responsibility was created.
 
-Next action: select the first measurable workflow outcome and define its bounded completion evidence.
-This review needs no new business clarification, publication, or deployment decision.
-The plan starts with Stage 0's behavioral baseline, then evaluation ownership and targeted improvements to existing skills.
+Next action: jointly review the four-area requirements table and mapped responsibilities before selecting enhancements.
+The earlier plan's five-skill shortlist and quantitative targets remain provisional.
+This table review establishes no new business clarification, publication, or deployment decision.
 
 ## Checks and writing review
 
@@ -219,6 +245,8 @@ An independent agent review reconciled counts and checked proposal boundaries. I
 Two independent read-only skill audits checked ownership, portability, coverage denominators, reader responsibilities, and baseline comparability.
 Their findings corrected the revised plan before commitment.
 The [revised plan checks](evidence/plan-document-checks.json) cover the current task documents.
+The [requirements table checks](evidence/requirements-table-checks.json) additionally verify row, input, and existing-skill accounting.
+Independent table reviews checked semantic scope and skill ownership. They retained consumer-usage and minimal-schema qualifications for migration.
 No skill implementation, behavioral trial, runtime test, live integration, business execution, or complete ASD writing review ran.
 
 ```yaml
