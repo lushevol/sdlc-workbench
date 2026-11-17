@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 15
+version: 16
 status: draft
 owner: unknown
-source_refs: [USER-PROVIDER-UNION-20261109, USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-PROVIDER-UNION-20261109, USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -21,6 +21,11 @@ writing_review:
 ---
 
 # CES migration coverage cases
+
+> **New function entitlement value cases require discussion before execution.**
+> Action: review the [new cases](#function-entitlement-value-tests) and [open questions](10-change-review-function-entitlement.md#unknowns-and-blockers).
+> Consequence: response bindings and historical account exceptions still affect execution.
+> Owner: unknown. Evidence: [17 November request](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
 
 > **Additive BFF metadata does not resolve the existing scalar role contract.**
 > Action: verify the [BFF field cases](#bff-entity-field-extension) and retain multiple-role policy as unresolved.
@@ -496,6 +501,9 @@ Any later live migration evidence requires its own environment and extraction id
 
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
+| USER-FUNCTION-20261117 | [Exact value-test request](evidence/function-entitlement-20261117/user-input.md#exact-user-input) | 2026-11-17 | Hash in [current validation](evidence/function-entitlement-20261117/validation.json). | User-stated scope; reported CES agreement, no live verification. |
+| USER-FUNCTION-ANSWERS-20261117 | [Exact discussion answers](evidence/function-entitlement-20261117/user-clarifications.md) | 2026-11-17 | Hash in [current validation](evidence/function-entitlement-20261117/validation.json). | One functional profile, incompatible-assignment rejection, general-account classes, and both timing checks. |
+| USER-FUNCTION-TIMING-20261117 | [Exact timing answer](evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) | 2026-11-17 | Hash in [current validation](evidence/function-entitlement-20261117/validation.json). | Five-second test target; CES NFR unconfirmed. |
 | USER-SPRING-VERIFIER-20261104 | [Exact Spring request](evidence/spring-verifier-20261104/user-input.md#exact-user-input) | user-request-20261104-spring-verifier | `bb3fafbb2b9f3e9770a5f47ee711aa1bc48ce35813f21e13b0523297286d3c5f` | User-defined verification scope; no company access or migration acceptance supplied. |
 | USER-DETAILED-REPORT-20261103 | [Exact reporting request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input) | user-request-20261103-detailed-report | SHA-256 in the [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). | User-defined report scope; existing supplied-response boundary applies. |
 | USER-EMS2-ENV-20261103 | [Exact extension request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input) | user-request-20261103-environment-coverage | SHA-256 in the [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | User-defined tooling scope; mock execution only in this session. |
@@ -1555,3 +1563,443 @@ Assertions: [actual-source comparison probe](evidence/frontend-minimize-20261106
 Execution: [captured comparison](evidence/frontend-minimize-20261106/upper-launch-probe.json).
 A passing characterization means the observed difference matches these assertions. It does not establish compatibility conformance.
 No inspected production caller invokes this exact modal launch. Current deployment reachability remains unverified.
+
+## Function entitlement value tests
+
+Definition version: 1. Test level: proposed CES API functional integration. Execution: `NOT_RUN` for every new case.
+Owner: unknown. Automation bindings and direct executable assertions: unavailable for every new case.
+The [17 November input](evidence/function-entitlement-20261117/user-input.md#exact-user-input) supplies the first six cases.
+The remaining cases are proposals for discussion. The [stage record](10-change-review-function-entitlement.md) owns questions and source limits.
+The [user answers](evidence/function-entitlement-20261117/user-clarifications.md) require one profile, incompatible-assignment rejection, and both timing checks.
+The [timing answer](evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) sets a five-second test target; the CES NFR remains unconfirmed.
+Historical cases above retain their original expected results and execution boundaries.
+
+### Function entitlement traceability
+
+The updated [candidate rule](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#current-functional-profile-value-rule) retains the clarified intent.
+Its criteria remain candidate intent, with publication and execution separate.
+
+| Candidate criterion | Direct case definitions |
+| --- | --- |
+| [FUNC-PROFILE-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-001) | [TC-FUNC-001](#tc-func-001), [TC-FUNC-002](#tc-func-002), [TC-FUNC-006](#tc-func-006), [TC-FUNC-013](#tc-func-013) |
+| [FUNC-PROFILE-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-002) | [TC-FUNC-003](#tc-func-003), [TC-FUNC-004](#tc-func-004), [TC-FUNC-005](#tc-func-005), [TC-FUNC-011](#tc-func-011), [TC-FUNC-014](#tc-func-014) |
+| [FUNC-PROFILE-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-003) | [TC-FUNC-006](#tc-func-006), including occupied and empty accounts |
+| [FUNC-PROFILE-AC-004](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-004) | [TC-FUNC-012](#tc-func-012), plus the common lifecycle timing assertions |
+| [FUNC-PROFILE-AC-005](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-005) | [TC-FUNC-012](#tc-func-012), plus the common lifecycle timing assertions |
+
+Additional isolation and repeated-assignment cases remain test proposals, not independently approved domain policies.
+
+| Requested behavior or proposal | Canonical case | Value assertion |
+| --- | --- | --- |
+| User case 1: current human profiles | [TC-FUNC-001](#tc-func-001) | Exact X_RATANONE assignment names for every scoped account. |
+| User case 2: general accounts | [TC-FUNC-002](#tc-func-002) | Exact corresponding RATAN_FUNC profile. |
+| User case 3: role switch | [TC-FUNC-003](#tc-func-003) | New profile present; previous profile absent. |
+| User case 4: first onboarding | [TC-FUNC-004](#tc-func-004) | Empty becomes the assigned functional profile. |
+| User case 5: offboarding | [TC-FUNC-005](#tc-func-005) | Removing the last functional profile produces empty. |
+| User case 6: account separation | [TC-FUNC-006](#tc-func-006) | Reject incompatible assignments in both directions; preserve the original value. |
+| Proposed: data-only account | [TC-FUNC-007](#tc-func-007) | Data profiles do not supply a functional value. |
+| Proposed: data-profile independence | [TC-FUNC-008](#tc-func-008) | Functional value stays unchanged after a data-only change. |
+| Proposed: application isolation | [TC-FUNC-009](#tc-func-009) | Another application's roles do not enter this field. |
+| Proposed: account isolation | [TC-FUNC-010](#tc-func-010) | Changing account A leaves account B unchanged. |
+| Proposed: re-onboarding | [TC-FUNC-011](#tc-func-011) | Profile becomes empty and then returns exactly. |
+| Proposed: repeated reads | [TC-FUNC-012](#tc-func-012) | Reads after the agreed boundary never restore the old profile. |
+| Proposed: exact names and attribution | [TC-FUNC-013](#tc-func-013) | Names preserve case and scope; equal grants cannot substitute role identity. |
+| Proposed: general-account lifecycle | [TC-FUNC-014](#tc-func-014) | General accounts follow their own profile changes and offboarding. |
+| Proposed: unchanged assignment | [TC-FUNC-015](#tc-func-015) | Reapplying the same profile retains exactly that single profile. |
+
+### Function entitlement setup and comparison rules
+
+| Term or fixture | Definition and evidence |
+| --- | --- |
+| Target application | CES ITAM ID `51358`, application `RATAN_ENTITLEMENT_RULE`, corresponding to EMS2 `X_RATANONE`. |
+| Query | Retrieve that account's effective CES entitlement response through the confirmed release endpoint. |
+| Existing endpoint candidate | `/fmces/v1/entitlement/app/51358/RATAN_ENTITLEMENT_RULE/user/{userId}`; new-field support remains unconfirmed. |
+| Observed value | Only `function_entitlement` from the target account and application response. Exact new-field location remains unknown. |
+| Exact profile comparison | Compare one assigned profile name with the independent expected assignment. Require zero missing and zero extra names. |
+| Empty | The CES-agreed value meaning no functional profile. Its concrete value remains unresolved in [FUNC-Q5](10-change-review-function-entitlement.md#unknowns-and-blockers). |
+| Immediate change check | Send the first query without intentional delay after receiving CES change confirmation. Require its new profile value. |
+| Propagation check | Start a monotonic clock when the tester receives CES confirmation. Observe the required new value within five seconds. |
+| Five-second authority | User-selected test target, not a confirmed CES NFR. The confirmation receipt is the test clock convention. |
+| Human fixture `human-a` | Isolated authorized test account. Start with exactly one approved X_RATANONE profile and no RATAN_FUNC profile. |
+| General fixture `general-a` | Isolated authorized Generic, System, or Service account. Exercise all three classes with their approved RATAN_FUNC profiles. |
+| Control `human-b` | Separate account whose approved profile stays unchanged throughout account-isolation tests. |
+| Role names | Use exact workbook names, such as FMO_RO, NON_FMO_RO, SYS_RO, and SYS_OPS, after current applicability review. |
+| Environment | Record CES environment, build, matrix hashes, account type, before/after assignments, and response timestamps. |
+| Isolation and cleanup | Use authorized test accounts; restore their exact pre-test assignments through the approved provisioning procedure. |
+
+The [workbook inspection](evidence/function-entitlement-20261117/source-inspection.json) supplies source hashes and cell locators.
+Expected values must not be inferred from the API field under test or flattened effective grants.
+No JSON schema, datatype, required-field, or complete-response assertion is included.
+Exactly one functional profile is allowed per assigned account. More than one profile is a value failure.
+Do not invent trimming, case folding, aliases, profile priorities, or comma-joined values.
+An unavailable response is unassessed. It is never evidence of an empty profile.
+All lifecycle cases check the immediate read and five-second target separately.
+A later correct value cannot erase an incorrect immediate value.
+If the first acquisition fails, report immediate comparison as unassessed. Do not substitute a successful retry for that result.
+For propagation measurement, query immediately and poll every 250 milliseconds until the expected value appears or five seconds elapse.
+The polling interval is a test convention. Record actual request and response times to expose measurement resolution.
+Each completed execution must retain its own actual result before the next case starts.
+Fixtures named below describe setup requirements; no account mutation has occurred.
+
+### TC-FUNC-001
+
+Purpose: verify every current human assignment and every approved X_RATANONE profile.
+Intent: [user case 1](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
+Run a full account census, plus an authorized fixture for approved roles without current accounts.
+Keep unresolved matrix rows in the denominator as unassessed; do not drop or pass them.
+
+```gherkin
+Feature: Return the exact human functional profile
+  @TC-FUNC-001
+  Scenario: Every scoped human account matches the approved security matrix
+    Given the approved X_RATANONE matrix defines each scoped human account's functional profile
+    And the independently confirmed CES assignments match those approved assignments
+    When the tester queries every scoped human account
+    Then each function_entitlement equals that account's complete approved functional profile content
+    And the number of missing expected profile names equals 0
+    And the number of additional profile names equals 0
+```
+
+Report defined roles, exercised roles, total accounts, assessed accounts, unresolved accounts, and mismatches separately.
+The retained workbook has 23 definitions and 691 assignments; it does not establish today's approved population.
+The EMS2_ADMIN catalog gap and Generic row require the [exception decision](10-change-review-function-entitlement.md#unknowns-and-blockers).
+
+### TC-FUNC-002
+
+Purpose: cover the full general-account population, including both approved RATAN_FUNC roles.
+Intent: [user case 2](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Return the corresponding general-account profile
+  @TC-FUNC-002
+  Scenario: General accounts match their RATAN_FUNC rows
+    Given the approved RATAN_FUNC matrix assigns each scoped general account its functional profile
+    And the account classes and historical exceptions have an agreed disposition
+    When the tester queries every scoped general account
+    Then each function_entitlement equals that account's exact approved RATAN_FUNC profile
+    And approved SYS_RO and SYS_OPS definitions are both exercised
+    And the number of returned X_RATANONE human profile names equals 0
+```
+
+Use a controlled fixture when an approved role has no current assignment. Do not alter a production account to fill coverage.
+
+### TC-FUNC-003
+
+Purpose: verify role replacement, including a confirmed privilege downgrade.
+Intent: [user case 3](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
+Select two approved profiles. Claim a downgrade only when an independent permission review establishes that relationship.
+
+```gherkin
+Feature: Replace a user's functional profile
+  @TC-FUNC-003
+  Scenario: A completed role switch removes the previous profile
+    Given human-a has only approved functional profile FMO_RO
+    And function_entitlement equals FMO_RO
+    When CES completes the approved replacement of FMO_RO with NON_FMO_RO
+    And the tester queries human-a immediately after CES confirms the change
+    Then function_entitlement equals NON_FMO_RO
+    And function_entitlement identifies zero profiles named exactly FMO_RO
+```
+
+Repeat in the reverse direction. These example names do not establish which role has higher privilege.
+
+### TC-FUNC-004
+
+Purpose: verify first-time onboarding without a previous X_RATANONE profile.
+Intent: [user case 4](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Populate the first functional profile
+  @TC-FUNC-004
+  Scenario: Onboarding changes an empty value to the assigned profile
+    Given human-a has no functional profile in CES
+    And a successful CES query returns the agreed empty function_entitlement value
+    When CES completes approved onboarding of human-a to FMO_RO
+    And the tester queries human-a immediately after CES confirms the change
+    Then function_entitlement equals FMO_RO
+```
+
+### TC-FUNC-005
+
+Purpose: verify removal of the last functional profile while other CES entitlements remain.
+Intent: [user case 5](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Clear the last functional profile
+  @TC-FUNC-005
+  Scenario: Offboarding clears the functional value despite retained data access
+    Given human-a has only functional profile FMO_RO
+    And human-a also has approved data profile Global
+    When CES completes removal of human-a's FMO_RO assignment
+    And the tester queries human-a immediately after CES confirms the change
+    Then function_entitlement equals the agreed empty value
+    And function_entitlement identifies zero profiles named exactly FMO_RO
+    And function_entitlement identifies zero profiles named exactly Global
+```
+
+Multiple simultaneous functional profiles violate the confirmed single-profile rule.
+
+### TC-FUNC-006
+
+Purpose: verify CES rejects incompatible profiles and preserves the original returned value.
+Intent: [user case 6](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Keep human and general-account profile values separate
+  @TC-FUNC-006
+  Scenario: A human account returns only its human functional profile
+    Given human-a is a confirmed human account with approved X_RATANONE profile FMO_RO
+    When the tester queries human-a
+    Then function_entitlement equals FMO_RO
+    And function_entitlement contains zero RATAN_FUNC profile names
+
+  Scenario: A general account returns only its general-account profile
+    Given general-a is a confirmed general account with approved RATAN_FUNC profile SYS_RO
+    When the tester queries general-a
+    Then function_entitlement equals SYS_RO
+    And function_entitlement contains zero X_RATANONE human profile names
+
+  Scenario: CES rejects adding a general-account profile to a human account
+    Given human-a is a confirmed human account with only approved profile FMO_RO
+    When the authorized tester requests assignment of RATAN_FUNC profile SYS_RO to human-a
+    Then CES reports that the incompatible assignment was rejected
+    When the tester queries human-a
+    Then function_entitlement equals FMO_RO
+    And function_entitlement contains zero RATAN_FUNC profile names
+
+  Scenario: CES rejects adding a human profile to a general account
+    Given general-a is a confirmed general account with only approved profile SYS_RO
+    When the authorized tester requests assignment of X_RATANONE profile FMO_RO to general-a
+    Then CES reports that the incompatible assignment was rejected
+    When the tester queries general-a
+    Then function_entitlement equals SYS_RO
+    And function_entitlement contains zero X_RATANONE human profile names
+
+  Scenario: CES rejects a general-account profile as a human account's first profile
+    Given human-a is a confirmed human account without any functional profile
+    When the authorized tester requests assignment of RATAN_FUNC profile SYS_RO to human-a
+    Then CES reports that the incompatible assignment was rejected
+    When the tester queries human-a
+    Then function_entitlement equals the agreed empty value
+
+  Scenario: CES rejects a human profile as a general account's first profile
+    Given general-a is a confirmed general account without any functional profile
+    When the authorized tester requests assignment of X_RATANONE profile FMO_RO to general-a
+    Then CES reports that the incompatible assignment was rejected
+    When the tester queries general-a
+    Then function_entitlement equals the agreed empty value
+```
+
+Apply the read-only output assertions to every scoped account.
+Run provisioning rejection attempts only against the authorized controlled fixtures.
+Repeat the general-account direction for Generic, System, and Service fixtures.
+Empty fixtures isolate account-class enforcement from the separate one-profile limit.
+The [explicit answer](evidence/function-entitlement-20261117/user-clarifications.md#func-q2-exact-question-and-answer) authorizes rejection case definitions.
+No HTTP status or rejection message is invented. Bind the actual CES provisioning rejection observation before automation.
+Only controlled, authorized test-account operations may execute these scenarios.
+
+### TC-FUNC-007
+
+Proposal: an existing account with only data or common grants has no functional profile.
+Basis: [requested profile scope](evidence/function-entitlement-20261117/user-input.md#exact-user-input); confirm common-role classification.
+
+```gherkin
+Feature: Exclude data and common roles from functional profile selection
+  @TC-FUNC-007
+  Scenario: A data-only account retains an empty functional value
+    Given human-a has approved data profile Global and no functional profile
+    And any common grant is independently classified as nonfunctional
+    When the tester queries human-a
+    Then function_entitlement equals the agreed empty value
+    And function_entitlement contains zero data or nonfunctional common role names
+```
+
+### TC-FUNC-008
+
+Proposal: data-profile changes cannot replace a functional profile.
+Basis: the [separate functional and data concepts](03-output-mapping.md#authentication-and-authorization).
+
+```gherkin
+Feature: Keep functional values independent from data-profile changes
+  @TC-FUNC-008
+  Scenario: A data-only update preserves the human functional profile
+    Given human-a has only functional profile FMO_RO and data profile Global
+    When CES completes an approved data-profile-only change for human-a
+    And the tester queries human-a immediately after CES confirms the change
+    Then function_entitlement equals FMO_RO
+    And function_entitlement contains zero old or new data-profile names
+```
+
+### TC-FUNC-009
+
+Proposal: another application's role cannot populate RATAN's functional value.
+Basis: the [confirmed application identity](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#confirmed-correspondence).
+
+```gherkin
+Feature: Keep functional values within the target application
+  @TC-FUNC-009
+  Scenario: Another application changes without changing the RATAN profile
+    Given human-a has only FMO_RO in the target application's functional assignments
+    And human-a has a separate approved role in another application
+    When CES completes an approved role change only in that other application
+    And the tester queries human-a for the target application
+    Then function_entitlement equals FMO_RO
+    And function_entitlement contains zero role names sourced only from the other application
+```
+
+Repeat with no target-application functional assignment. Its value must remain empty.
+
+### TC-FUNC-010
+
+Proposal: changing one account cannot contaminate another account's returned value.
+
+```gherkin
+Feature: Keep functional profile values bound to each account
+  @TC-FUNC-010
+  Scenario: Interleaved account reads preserve independent values
+    Given human-a has only FMO_RO and human-b has only NON_FMO_RO
+    When CES completes removal of human-a's last functional assignment
+    And the tester queries human-a immediately after CES confirms the change
+    Then human-a's function_entitlement equals the agreed empty value
+    When the tester queries human-b
+    Then human-b's function_entitlement equals NON_FMO_RO
+    When the tester queries human-a again
+    Then human-a's function_entitlement equals the agreed empty value
+```
+
+Repeat with concurrent reads to expose shared response or cache state. Assert values per requested account.
+
+### TC-FUNC-011
+
+Proposal: offboarding and re-onboarding restore the correct value without old assignments.
+
+```gherkin
+Feature: Restore a functional profile after re-onboarding
+  @TC-FUNC-011
+  Scenario: A complete offboard and re-onboard cycle restores the exact profile
+    Given human-a has only approved functional profile FMO_RO
+    When CES completes removal of that profile
+    And the tester queries human-a immediately after CES confirms the change
+    Then function_entitlement equals the agreed empty value
+    When CES completes approved re-onboarding of human-a to FMO_RO
+    And the tester queries human-a immediately after CES confirms the new change
+    Then function_entitlement equals FMO_RO
+```
+
+### TC-FUNC-012
+
+Proposal: completed role changes appear immediately and remain visible on repeated reads.
+The [latest timing answer](evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) sets the propagation target at five seconds.
+Use a five-second observation interval after the propagation deadline to check repeated reads.
+That interval is a test design convention, not an additional CES NFR.
+
+```gherkin
+Feature: Retain the current functional value after propagation
+  @TC-FUNC-012
+  Scenario: The first read reflects the confirmed assignment change
+    Given human-a has only FMO_RO and its function_entitlement equals FMO_RO
+    When CES confirms replacement of FMO_RO with NON_FMO_RO
+    And the tester sends the first entitlement query immediately after that confirmation
+    Then the response to that first query has function_entitlement equal to NON_FMO_RO
+    And that response identifies zero profiles named exactly FMO_RO
+
+  Scenario: The new value appears within the five-second test target
+    Given the test clock starts when the tester receives CES change confirmation
+    When CES confirms replacement of human-a's FMO_RO assignment with NON_FMO_RO
+    And the tester queries human-a immediately and every 250 milliseconds for at most five seconds
+    Then function_entitlement equals NON_FMO_RO within five seconds of confirmation receipt
+    And the measured propagation duration is at most 5 seconds
+
+  Scenario: Repeated reads never restore the replaced profile
+    Given CES has completed replacing human-a's FMO_RO assignment with NON_FMO_RO
+    And five seconds have elapsed since confirmation receipt
+    And no later assignment change occurs during the next five seconds
+    When the tester queries human-a every 250 milliseconds during those next five seconds
+    Then every successful response's function_entitlement equals NON_FMO_RO
+    And zero successful responses identify the exact profile FMO_RO
+```
+
+Measure raw CES reads here. Browser, BFF, token, and session caches need separate integration scope.
+Zero assessed responses cannot produce a pass. Record failed acquisitions and unassessed value comparisons separately.
+
+### TC-FUNC-013
+
+Proposal: profile identity follows assigned names rather than inferred effective permission unions.
+
+```gherkin
+Feature: Preserve exact functional profile identity
+  @TC-FUNC-013
+  Scenario: Every exercised profile retains its exact approved name
+    Given each fixture account has exactly one approved functional profile from its matrix
+    When the tester queries each fixture account
+    Then each function_entitlement equals the assigned matrix name character for character
+    And zero values substitute feature names, data-profile names, aliases, or joined unrelated roles
+
+  Scenario: Equal permission content cannot substitute another profile name
+    Given approved test profiles profile-a and profile-b have identical effective permissions
+    And human-a has only profile-a while human-b has only profile-b
+    When the tester queries both accounts
+    Then human-a's function_entitlement equals profile-a
+    And human-b's function_entitlement equals profile-b
+```
+
+The second scenario requires two approved fixtures with that relationship. Do not invent production roles or alter production grants.
+
+### TC-FUNC-014
+
+Proposal: verify lifecycle updates for general accounts, independently of human accounts.
+Basis: [user cases 2 through 5](evidence/function-entitlement-20261117/user-input.md#exact-user-input), extended to the general-account class.
+
+```gherkin
+Feature: Update and clear the general-account functional profile
+  @TC-FUNC-014
+  Scenario: A general-account role change and offboarding update the value
+    Given general-a has only approved RATAN_FUNC profile SYS_RO
+    When CES completes approved replacement of SYS_RO with SYS_OPS
+    And the tester queries general-a immediately after CES confirms the change
+    Then function_entitlement equals SYS_OPS
+    And function_entitlement identifies zero profiles named exactly SYS_RO
+    When CES completes removal of general-a's last RATAN_FUNC profile
+    And the tester queries general-a immediately after CES confirms the new change
+    Then function_entitlement equals the agreed empty value
+```
+
+Also apply the first-onboarding case to an authorized general-account fixture without an initial RATAN_FUNC profile.
+
+### TC-FUNC-015
+
+Proposal: reapplying the current assignment cannot duplicate or replace its single functional profile.
+Basis: [confirmed single-profile rule](evidence/function-entitlement-20261117/user-clarifications.md#func-q1-exact-question-and-answer).
+
+```gherkin
+Feature: Preserve one profile when the same assignment is repeated
+  @TC-FUNC-015
+  Scenario: The same assignment leaves the exact functional value unchanged
+    Given human-a has only approved functional profile FMO_RO
+    When the authorized tester reapplies human-a's current FMO_RO assignment through CES
+    And the tester queries human-a after CES completes or rejects the redundant request
+    Then function_entitlement equals exactly the single profile FMO_RO
+    And function_entitlement contains zero additional profile names
+```
+
+The provisioning outcome can be unchanged or redundant-request rejection. Both must preserve the original value.
+
+### Function entitlement execution binding
+
+```yaml
+definition_version: 1
+execution_status: NOT_RUN
+repository_id: null
+repository_revision: null
+test_revision: null
+assertion_locations: []
+environment_identity: null
+execution_id: null
+actual_results: null
+retained_execution_refs: []
+```
+
+The new [source inspection](evidence/function-entitlement-20261117/source-inspection.json) records workbook hashes and historical exceptions.
+The [stage questions](10-change-review-function-entitlement.md#unknowns-and-blockers) retain resolved answers, response gaps, exceptions, and owners.
+The [document checks](evidence/function-entitlement-20261117/validation.json) validate the saved specification only.
+They do not establish a passing CES value or current production assignment.

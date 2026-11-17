@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-ces-migration-parity
-version: 6
+version: 7
 owner: unknown
 governance_state: candidate
 status: draft
@@ -24,24 +24,35 @@ sources:
 - resource: conversation:ces-entitlement-migration-20261102:provider-union-20261109
   revision: user-clarification-20261109-1
   sha256: 8c72705ccf11915baf40f2de503343c09ca7681c79f7780f23a75c019e01b57d
-previous_version: 5
-previous_content_sha256: 4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5
-previous_revision: 0047479bec4c29edf0dd9d9a484020998a6c523d
+- resource: conversation:ces-entitlement-migration-20261102:function-entitlement-request-20261117
+  revision: sha256:3d6f86c6b26be7f75a5ac0fc2e2d77f529c7c4ad6bd7d2d37c183c9835eb1293
+  sha256: 3d6f86c6b26be7f75a5ac0fc2e2d77f529c7c4ad6bd7d2d37c183c9835eb1293
+- resource: conversation:ces-entitlement-migration-20261102:function-entitlement-clarifications-20261117
+  revision: sha256:512f8f281cdc872f2f398f93a7a1a2d318e4fdffe71e25d0d2fee733be6bb6b0
+  sha256: 512f8f281cdc872f2f398f93a7a1a2d318e4fdffe71e25d0d2fee733be6bb6b0
+- resource: conversation:ces-entitlement-migration-20261102:function-entitlement-timing-20261117
+  revision: sha256:d4c77b89c9184612658472b6060fc1e38ba73377101d8f364f076d74e98df83e
+  sha256: d4c77b89c9184612658472b6060fc1e38ba73377101d8f364f076d74e98df83e
+previous_version: 6
+previous_content_sha256: 759e0220294b3a312ea4b3cca8d1e455f5dcd27ab18187059754b47bc4bd6718
+previous_revision: 0620f12083a6f1df08130b7d8091cb90b633ada8
 generated:
   by: agent:codex
-  at: '2026-11-09T15:49:06.049328+00:00'
+  at: '2026-11-17T08:15:59.160570+00:00'
 verified: []
 classification: security
-scope: Intended permission preservation, frontend compatibility, independent tile migration, and comparison scope for EMS2 to CES.
-summary: Preserve upper-application APIs. Select tile admission per provider. Allow mapped EMS2 or CES grants through hasPermission and log their source.
+scope: Intended permission preservation, frontend compatibility, tile migration, account scope, and functional-profile values for EMS2 to CES.
+summary: Preserve upper-application APIs and mapped permissions. Return one account-appropriate functional profile. Reject incompatible assignments. Keep consumer ownership unresolved.
 related:
 - KT-sdk-and-entitlements
 - CES-MIGRATION
 open_questions:
 - Which authoritative source defines the complete legacy data field and value restrictions for each profile?
 - Which reviewed scope identifies CES-only management permissions outside the migrated business permissions?
-- How must multiple CES roles map to existing upper-application role contracts and role-dependent business rules?
+- How must general CES memberships and function_entitlement map to each existing caller role contract and role-dependent business rule?
 - Which approved mappings define compatibility for each upper-application API and its CES permission inputs?
+- Which exact API value represents no functional profile?
+- Which propagation NFR and clock origin will CES approve beyond the selected five-second test target?
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
@@ -64,6 +75,9 @@ The [BFF field request](../../../../tasks/ces-entitlement-migration-20261102/evi
 The [application identity clarification](../../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) separates the legacy team label from CES application identity.
 The [provider-union clarification](../../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json) applies from 9 November 2026.
 It permits existing `hasPermission(code)` calls to accept mapped EMS2 or CES grants, with provider-source logs.
+The [function-entitlement request](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-input.md#exact-user-input) adds value-test intent from 17 November 2026.
+The [returned answers](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-clarifications.md) define functional-profile cardinality and account-type separation.
+The [timing answer](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) selects a five-second test target; CES NFR remains unconfirmed.
 The owning [migration task](../../../../tasks/ces-entitlement-migration-20261102/01-intake.md#current-task-state) retains source observations, implementation, and execution evidence separately.
 
 ## Summary
@@ -74,12 +88,18 @@ Two supplied account examples do not limit the required account population.
 FMO Portal Admin has a separate, lower-priority non-production comparison under the user's clarification.
 Preserve upper-application APIs where possible while selecting tile admission through its configured provider.
 Allow mapped EMS2 or CES grants through existing `hasPermission(code)` calls.
+
 Log the provider used without requiring an additional caller scope parameter.
 Do not require one batch migration of every tile.
 Treat role multiplicity as an explicit compatibility concern, separate from mapped feature/action permission meaning.
 Expose CES entitlement names through `roleList` and the corresponding application identifier through `applicationId`.
 These fields do not select a scalar role for existing callers.
+
 Keep CES role-owned writes pending until an ownership rule is agreed.
+Return the account's one assigned functional profile, or no profile when none is assigned.
+Reject user/general profile assignments in both incompatible directions.
+General accounts include Generic, System, and Service accounts.
+Check the immediate first read separately from the selected five-second propagation target.
 
 ## Documented knowledge
 
@@ -130,12 +150,159 @@ Do not add FMO's non-production content to production coverage denominators.
 Retain the [dated clarification](../../../evidence/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input) when applying this exception.
 Future production scope requires a sourced update.
 
+### Current functional-profile value rule
+
+The [request](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-input.md#exact-user-input) and [answers](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-clarifications.md) govern this value scope from 17 November 2026.
+The API field is `function_entitlement`.
+For an assigned account, it returns exactly one functional profile.
+A user account's profile must match its assigned `X_RATANONE` security-matrix row.
+A general account's profile must match its assigned `RATAN_FUNC` security-matrix row.
+
+General accounts include `Generic`, `System`, and `Service` accounts.
+Cover every applicable current matrix role across the account population.
+This does not require every matrix role in one account's response.
+
+An account without a functional assignment has no functional profile value.
+Onboarding changes that empty value to the assigned profile.
+Switching profiles replaces the old profile with the new profile.
+Offboarding removes the profile and restores the empty value.
+The exact empty API representation remains unresolved.
+No default profile, arbitrary CES entitlement, data profile, or combined permission set supplies a missing functional profile.
+
+CES must reject incompatible assignments in both directions.
+A user account cannot receive a general-account profile.
+A general account cannot receive a user profile.
+Rejection must preserve the original functional value.
+A valid account cannot hold two simultaneous functional profiles.
+
+Other CES entitlement names can remain multiple; they do not become multiple functional profiles.
+
+The [timing answer](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) selects five seconds as a test target.
+CES has not confirmed that NFR.
+The test clock starts when CES confirms the assignment change.
+
+This clock origin is a measurement convention, not a confirmed CES contract.
+Check the first API read after that confirmation and the five-second target separately.
+Later correctness cannot erase an incorrect immediate read.
+
+This rule defines functional-profile meaning, not API schema validation.
+It does not approve scalar projections into existing callers or resolve saved-view and filter ownership.
+Existing CES role-owned writes remain pending under their separate ownership decision.
+
+#### FUNC-PROFILE-AC-001
+
+Return the assigned matrix profile for each supported account type.
+
+```gherkin
+Feature: Return the account's assigned functional profile
+  Scenario Outline: Match the corresponding account-type matrix
+    Given a <account_type> account has one valid functional assignment
+    And its assigned profile is defined by its row in <matrix>
+    When CES returns that account's entitlement response
+    Then function_entitlement equals that assigned profile
+    And the number of returned functional profiles equals 1
+    And the number of unrelated functional profile names equals 0
+
+    Examples:
+      | account_type | matrix     |
+      | User         | X_RATANONE |
+      | Generic      | RATAN_FUNC |
+      | System       | RATAN_FUNC |
+      | Service      | RATAN_FUNC |
+```
+
+Measure: one assigned profile and zero unrelated profiles for every applicable matrix account.
+These rows define account classes. They do not limit the account population.
+
+#### FUNC-PROFILE-AC-002
+
+Reflect confirmed onboarding, profile replacement, and offboarding.
+
+```gherkin
+Feature: Reflect the functional-profile assignment lifecycle
+  Scenario Outline: Return the expected value after a confirmed assignment change
+    Given an account has functional value <before>
+    When CES confirms the valid change <change>
+    And the account's function entitlement is checked at each selected timing boundary
+    Then function_entitlement has semantic value <after>
+    And the number of functional profile names never exceeds 1
+    And the number of mismatches against the expected assignment equals 0
+
+    Examples:
+      | before     | change            | after      |
+      | no profile | onboard profile A | profile A  |
+      | profile A  | replace A with B  | profile B  |
+      | profile A  | offboard A        | no profile |
+```
+
+Measure: zero assignment-value mismatches and at most one functional profile at each checked boundary.
+`no profile` denotes absence of a profile. Its literal API representation remains unresolved.
+
+#### FUNC-PROFILE-AC-003
+
+Reject incompatible assignments while preserving the current profile.
+
+```gherkin
+Feature: Separate user and general functional profiles
+  Scenario Outline: Reject a profile assigned to the wrong account type
+    Given a <account_type> account has its valid original functional value
+    When CES receives an assignment of an incompatible <profile_type> profile
+    Then CES rejects that assignment
+    And the number of applied incompatible assignments equals 0
+    And function_entitlement still equals the original functional value
+
+    Examples:
+      | account_type | profile_type    |
+      | User         | general account |
+      | Generic      | user            |
+      | System       | user            |
+      | Service      | user            |
+```
+
+Measure: zero incompatible assignments and zero changes to the original functional value after rejection.
+The source does not prescribe an HTTP status or error schema.
+
+#### FUNC-PROFILE-AC-004
+
+Check the immediate first read independently.
+
+```gherkin
+Feature: Check immediate functional-profile correctness
+  Scenario: Read the new functional value immediately after confirmation
+    Given CES confirms an account's valid functional-assignment change
+    When the first entitlement API read follows that confirmation
+    Then function_entitlement equals the new expected functional value
+    And the number of immediate value mismatches equals 0
+```
+
+Measure: zero mismatches on the first read after CES confirmation.
+A later correct read cannot convert an incorrect first read into a pass.
+
+#### FUNC-PROFILE-AC-005
+
+Measure the selected five-second propagation target separately.
+
+```gherkin
+Feature: Measure the selected functional-profile propagation target
+  Scenario: Observe the expected value within the test target
+    Given CES confirms an account's valid functional-assignment change
+    And that confirmation defines the test clock origin
+    When entitlement API reads observe the new expected functional value
+    Then the first correct value is observed within 5 seconds of that confirmation
+    And the propagation-target result is recorded separately from the immediate-read result
+```
+
+Measure: at most five seconds from CES confirmation to the first observed correct value.
+Five seconds is the user-selected test target. It is not a CES-confirmed NFR or measured guarantee.
+The clock origin remains a test convention until CES confirms its contract.
+
 ### Frontend compatibility and per-tile migration
 
 The [frontend decision](../../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input) prioritizes compatibility with existing upper-application APIs.
 Apply this objective to `mfe-base` and shared container APIs.
 Preserve established caller contracts where possible. Adapt provider-specific identities and permission data internally.
-The user identifies non-unique roles as the known compatibility gap.
+The 6 November clarification identifies non-unique CES roles as a compatibility gap.
+The later functional-profile rule limits functional profiles, not all CES memberships.
 This statement does not establish that every other API is compatible.
 Keep each unresolved mapping visible before claiming complete compatibility.
 
@@ -151,7 +318,8 @@ It covers CES saved-view and filter writes that require one owner role.
 Keep these CES write paths unavailable until an ownership rule is agreed.
 Do not select a primary CES role or submit comma-joined role names as a scalar owner.
 Preserve existing EMS2 role-owned write behavior.
-This interim rule does not define CES query visibility, role-query rules, or multiple-role exclusion policy.
+This interim rule does not define CES query visibility, role-query rules, or general role exclusion policy.
+The later functional-profile rule adds account-type separation without resolving these ownership semantics.
 
 #### FE-ROLE-WRITE-AC-001
 
@@ -394,7 +562,11 @@ The FMO exception does not verify its current launch or provisioning state.
 The frontend clarification supplies intended behavior, not complete compatibility or an approved scalar role mapping.
 The BFF field decision defines target metadata. It does not establish implemented, tested, or deployed response behavior.
 The identity clarification defines this RATAN mapping. It does not establish a complete cross-application team-label catalog.
-The ownership decision defers CES role-owned writes. It does not define CES ownership, query, or exclusion semantics.
+The ownership decision defers CES role-owned writes. It does not define CES ownership, query, or general role exclusion semantics.
+The functional-profile clarification defines one account-appropriate profile and incompatible-assignment rejection.
+It does not establish API implementation, current assignments, caller projection, or saved-item ownership.
+The five-second propagation target lacks CES NFR confirmation. Its clock origin is a test convention.
+The exact empty value remains unresolved. Immediate and propagation-target results remain separate.
 The provider-union clarification changes permission-check intent. It does not prove implementation or deployed log collection.
 Its expectation about returned legacy entities remains an implementation question, separate from this intended rule.
 No human review, knowledge publication, migration acceptance, or deployment approval is recorded.
@@ -405,5 +577,7 @@ No human review, knowledge publication, migration acceptance, or deployment appr
 | --- | --- | --- | --- |
 | Which source defines legacy data field and value restrictions? | Complete data-scope equality remains unassessed without that source. | unknown | Bind each legacy profile to authoritative restriction definitions. |
 | Which CES-only management grants fall outside migration scope? | Additional grants need an explicit classification before equal-content acceptance. | unknown | Record the reviewed business scope and its source. |
-| How must multiple CES roles map to existing caller role contracts? | CES role-owned writes remain pending; other role semantics lack an accepted mapping. | unknown | Define each role-dependent contract before enabling the affected CES behavior. |
+| How must general CES memberships and function_entitlement map to existing caller role contracts? | CES role-owned writes remain pending; caller projections lack an accepted mapping. | unknown | Define each role-dependent contract before enabling the affected CES behavior. |
 | Which reviewed mappings cover each upper-application API? | Full compatibility cannot follow from the user objective alone. | unknown | Define the application, feature, action, and caller contract mapping before acceptance. |
+| Which exact API value represents no functional profile? | Empty-value assertions need a defined literal result. | unknown | Confirm the empty representation without adding schema tests. |
+| Which propagation NFR and clock origin will CES approve? | Five seconds remains a test target with a provisional clock convention. | unknown | Confirm the CES contract while retaining separate immediate and target results. |

@@ -11,6 +11,22 @@ writing_review:
 
 # CES migration evidence index
 
+> **Function entitlement cases use one profile and a five-second test target.**
+> Action: review the [cases](../06-test-cases.md#function-entitlement-value-tests) and classify historical assignment exceptions.
+> Consequence: source exceptions and response bindings limit execution. Owner: unknown.
+> Evidence: [latest stage](../10-change-review-function-entitlement.md) and [timing answer](function-entitlement-20261117/user-timing-target.md#exact-answer).
+
+## Function entitlement discussion, 17 November 2026
+
+- [Exact initial request](function-entitlement-20261117/user-input.md#exact-user-input).
+- [Exact discussion answers](function-entitlement-20261117/user-clarifications.md).
+- [Five-second test target](function-entitlement-20261117/user-timing-target.md#exact-answer); CES NFR remains unconfirmed.
+- [Current stage and questions](../10-change-review-function-entitlement.md#unknowns-and-blockers).
+- [Canonical value cases](../06-test-cases.md#function-entitlement-value-tests); API schema validation excluded.
+- [Workbook hashes, counts, and exception cells](function-entitlement-20261117/source-inspection.json).
+- [Candidate reconciliation](function-entitlement-20261117/knowledge-reconciliation.json).
+- [Actual document checks](function-entitlement-20261117/validation.json); business tests remain `NOT_RUN`.
+
 > **Preserve upper-application APIs and migrate tiles independently.**
 > Action: adapt shared internals for each selected provider. Resolve role multiplicity separately.
 > Consequence: batch cutover and mandatory consumer rewrites would contradict the latest user decisions.
