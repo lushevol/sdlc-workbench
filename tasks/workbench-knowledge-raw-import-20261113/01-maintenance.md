@@ -10,6 +10,10 @@ The [comprehensive diagnostic request](evidence/user-comprehensive-diagnostic-20
 
 The [Git-only machine handoff](evidence/knowledge-conversion-git-only-handoff-20261117.md) records the tracked continuation boundary. Git preserves retained source snapshots and receipts. It does not preserve ignored incoming exports or temporary worker state.
 
+The [destination blocker diagnosis](evidence/git-only-resume-blocker-20261117.md) corrects an omitted runtime dependency in that handoff.
+All 1,213 bound snapshots are tracked and hash-valid. Missing ignored inboxes send 1,128 bindings into review and block views.
+Isolated reconstruction restores processing queues and views without refresh. Destination recovery remains unexecuted here.
+
 ## Current stage: diagnostic complete; conversion remains partial
 
 The diagnostic found two selected draft omissions behind accepted zero-output receipts.

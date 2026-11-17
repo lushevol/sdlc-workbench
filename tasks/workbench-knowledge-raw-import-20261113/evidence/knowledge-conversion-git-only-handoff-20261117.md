@@ -9,6 +9,8 @@ Read `AGENTS.md`, this handoff, and the linked diagnostic before editing.
 
 Work only on the four registered source collections and their owning task evidence.
 Use retained snapshots under `knowledge/evidence/sources/` as the existing source.
+First check the [confirmed inbox-presence blocker and tested recovery](git-only-resume-blocker-20261117.md).
+This runtime also requires the registered input inventory. Reconstruct absent ignored inboxes from verified retained snapshots before planning.
 Create fresh plans and fresh plan-bound views because `.workbench/` is not transferred by Git.
 
 Run the following checks before semantic work:
@@ -137,7 +139,10 @@ Do not report a missing source only because `incoming/` is empty.
 For existing work, resolve the source from the manifest entry and its retained `snapshot` path.
 Report a source as missing only when the required retained snapshot or manifest binding is absent.
 
-Git-only continuation supports existing conversion queues.
+Git-only continuation supports existing conversion queues after reconstructing absent ignored input inventories.
+The current runtime treats an absent inbox as changed page presence, even when retained sources remain intact.
+Follow the [bounded recovery](git-only-resume-blocker-20261117.md#tested-recovery-for-the-destination-ai) before running plans or views.
+Recover all `present: true` paths, including excluded and held pages. Keep existing omissions and tracked state unchanged.
 It cannot refresh a collection from a newer export unless that export is supplied separately.
 Do not commit the complete incoming export merely to bypass this boundary.
 
