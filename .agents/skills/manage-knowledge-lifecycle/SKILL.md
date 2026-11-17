@@ -45,6 +45,26 @@ Use `unknown`, `stale`, `partial`, `pending`, or `NOT_RUN` when evidence require
 A passed validator cannot establish semantic correctness. Wiki freshness cannot establish publication or deployed behavior.
 A scoped unchanged wiki plan establishes only its selected scope; it cannot establish whole-wiki completion.
 
+### Reconcile progress before choosing the next action
+
+When saved prose, receipts, and current outputs disagree, report the disagreement before summarizing progress.
+Reopen the current identity sets and compare them explicitly:
+
+| Evidence | Decision use |
+| --- | --- |
+| Selected source identities | Requested denominator and scope. |
+| Reviewed processing receipts | Declared processing disposition, not semantic completeness. |
+| Output-linked identities | Source-to-output coverage. |
+| Justified `no_change` identities | Covered without new bytes only when the receipt cites existing coverage or a documented contextual/redundant reason. |
+| Held, missing, or omitted selected identities | Pending or limited scope. Keep them in the requested denominator; separate only identities explicitly declared out of scope. |
+
+Do not let a fresh receipt, unchanged wiki binding, or progress paragraph override a missing selected identity.
+Use the artifact with the current source and output hashes, and name the conflicting claim and locator.
+
+For an interrupted workflow, inspect the last checkpoint, accepted case evidence, unfinished case or draft, saved answers, and explicit owned paths.
+Select the next authorized unit from that evidence. Never repeat an accepted case merely because a later summary is stale.
+Keep requested worker settings separate from observed dispatch identity and execution evidence.
+
 ## Select the next action
 
 Choose the earliest unmet prerequisite **for the requested outcome**, with separate actions for independent scopes.

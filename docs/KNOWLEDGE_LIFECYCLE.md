@@ -9,6 +9,7 @@ These skills guide agents. They do not add a workflow runner or an automatic app
 ## Lifecycle coordination and next actions
 
 Use [manage-knowledge-lifecycle](../.agents/skills/manage-knowledge-lifecycle/SKILL.md) at workflow entry, resumption, status review and handoff.
+When progress prose, receipts, and outputs disagree, reconcile selected identities, reviewed receipts, output links, justified `no_change`, and held or missing scope before reporting completion. Selected identities without a justified output disposition remain pending.
 
 The current [Portal and Settlement intake](../tasks/workbench-knowledge-raw-import-20261113/01-maintenance.md) records checked progress and remaining work.
 Its [single editable question document](../tasks/workbench-knowledge-raw-import-20261113/evidence/canonical-draft-questions-20261115.md) collects investigated decisions for batch handling.
