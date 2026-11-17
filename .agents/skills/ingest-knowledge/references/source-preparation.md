@@ -197,6 +197,17 @@ Run [the final sealed harness check](workflow.md#harness-commands) after applica
 List all affected outputs, including preserved dependents required by the plan.
 Include dependents discovered after creating or linking new records. Completion rejects unreviewed expansion of the affected scope.
 `no_change` preserves starting output bytes and records why the new selected evidence leaves canonical knowledge unchanged.
+Before using `no_change`, retain a small source-to-output accounting note for each material selected clause:
+
+| Clause disposition | Required evidence |
+| --- | --- |
+| Existing coverage | Canonical record path and exact section or predicate that already preserves the meaning. |
+| Context or redundancy | Reason the clause adds no canonical intent, with its source range and applicable scope. |
+| Pending or unresolved | Source range, missing evidence or authority, consequence, and next action. |
+
+An output-free receipt without one of these dispositions remains a declared receipt with incomplete semantic coverage.
+Keep the selected identity pending in coverage counts until its material clauses are covered, explicitly justified as context/redundancy, or explicitly excluded by reviewed scope.
+Do not force a new canonical record to improve a count.
 Use `excluded` for reviewed omissions and `missing_reviewed` for reviewed missing-source consequences when queued.
 Missing sources do not revoke requirements automatically.
 

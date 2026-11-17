@@ -48,6 +48,12 @@ Business implementation, external access, execution, and publication retain thei
     Bind updated outputs to the passed sealed final checkpoint. Preserve supported no-change outputs without rewriting them.
     Incomplete sources remain queued; rerun the local planner before another semantic attempt.
 
+Before accepting a selected source with no new canonical output, perform source-to-output accounting.
+For each material selected clause, point to an existing canonical section, record a justified contextual or redundant disposition,
+or leave the clause pending or unresolved. A `no_change` receipt without this accounting is a declared processing result, not completed semantic coverage.
+Keep selected but omitted identities in the requested denominator. Separate only explicitly excluded or out-of-scope identities.
+Do not create a new record merely to make a redundant or contextual source appear converted.
+
 Read each selected operation's inputs and completion conditions before invoking it.
 Reuse current checkable outputs; do not repeat a mutation just to satisfy a step list.
 If the harness is unavailable, report `NOT_RUN` and the manual checks performed.
