@@ -8,6 +8,8 @@
 
 The [comprehensive diagnostic request](evidence/user-comprehensive-diagnostic-20261117.md) audits conversion rates, coverage and current evidence. Diagnostic findings do not authorize semantic repairs.
 
+The [Git-only machine handoff](evidence/knowledge-conversion-git-only-handoff-20261117.md) records the tracked continuation boundary. Git preserves retained source snapshots and receipts. It does not preserve ignored incoming exports or temporary worker state.
+
 ## Current stage: diagnostic complete; conversion remains partial
 
 The diagnostic found two selected draft omissions behind accepted zero-output receipts.
