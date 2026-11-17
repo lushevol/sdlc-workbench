@@ -19,6 +19,11 @@ Use [the knowledge contract](../../../knowledge/README.md) and shipped templates
 5. Compare intended meaning with proposed wording. Identify unsupported additions, omitted conditions, contradictions, and unreviewed scope.
 6. Make changed requirements measurable through sourced Gherkin conditions, actions, observable results, and explicit assertions.
 
+For omission-prone edits, work backwards from the inspected source as well as forwards from the proposed output.
+List each material source predicate, its destination claim or canonical section, and its disposition (`preserved`, `qualified`, `superseded`, `withdrawn`, or `unresolved`).
+Require an exact source locator and a reason for every disposition. Keep selected predicates with no destination pending until their meaning is reviewed.
+Do not treat a changed hash, valid schema, or unchanged summary as proof that all material predicates survived.
+
 A link establishes a destination, not semantic support. Filename patterns and symbol names cannot establish meaning.
 An omitted rule does not establish its prohibition. Code can answer implementation questions while leaving policy unresolved.
 Keep an intended rule unchanged when code differs or a fix restores conformance. Record actual differences in independent task gaps.

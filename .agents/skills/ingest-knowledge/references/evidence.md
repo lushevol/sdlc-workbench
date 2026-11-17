@@ -43,6 +43,19 @@ Keep unresolved conflicting statements with their separate dates, revisions, and
 Code can resolve an implementation question while leaving intended policy unresolved.
 A source that omits a retry rule does not establish that retries are forbidden.
 
+## Source-to-output predicate worksheet
+
+Use this reverse mapping when a source, candidate, wiki page, or answer changes in a way that can remove meaning.
+It complements the claim worksheet; it does not require a row for every sentence.
+
+| Predicate ID | Exact source locator | Material predicate | Destination claim or section | Disposition | Support and limit |
+| --- | --- | --- | --- | --- | --- |
+| P-1 | Revision, hash, and range. | Condition, exception, actor, limit, or outcome. | Path and exact heading or `none`. | `preserved`, `qualified`, `superseded`, `withdrawn`, or `unresolved`. | Why the disposition follows and what remains unknown. |
+
+Every material predicate needs a row. A `none` destination requires a supported context/redundancy reason or an unresolved next action.
+Keep an unresolved predicate visible. Do not count it as converted, answered, published, or verified.
+Review removed numerical and behavioural facts against retained snapshots, implementation evidence, test cases, and execution results.
+
 ## Feature worksheet
 
 Use this worksheet when the task asks how a feature works.

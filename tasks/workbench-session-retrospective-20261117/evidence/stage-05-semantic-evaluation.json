@@ -1,0 +1,47 @@
+{
+  "stage": "05-semantic-preservation-and-reader-usefulness",
+  "status": "PASSED",
+  "skills": {
+    "review-knowledge-claims/SKILL.md": "22308cfa3e55259a63b8e6c00f301f491b777e29c9a4177437366a54ed9b799b",
+    "evaluate-knowledge-retrieval/SKILL.md": "d30025147139aa7446007544e93bc233570aa7b4f171eb321933e3b60133774b",
+    "ingest-knowledge/references/evidence.md": "e2e3e819aa88a8725236d91ec1f24f3dfdf8fa6a75e99b677d0379a6b1f9ec35"
+  },
+  "checks": [
+    {
+      "criterion": "Reverse source-to-output worksheet has exact locator, predicate, destination, disposition and support fields",
+      "result": "PASSED",
+      "evidence": "Independent structural assessment"
+    },
+    {
+      "criterion": "Four synthetic predicates are preserved, qualified, context-only, or unresolved without losing scope",
+      "result": "PASSED",
+      "evidence": "Independent synthetic source/output matrix; 4/4 accounted"
+    },
+    {
+      "criterion": "Reader review separates factual fidelity from completeness, organization, qualification visibility and action clarity",
+      "result": "PASSED",
+      "evidence": "Independent paired-reader assessment"
+    },
+    {
+      "criterion": "No invented findings or missed critical predicates in the candidate example",
+      "result": "PASSED",
+      "evidence": "Independent paired-reader assessment; 0 invented, 0 missed"
+    },
+    {
+      "criterion": "Focused knowledge/layout regressions remain green",
+      "result": "PASSED",
+      "evidence": ".venv/bin/python -m unittest tests.test_knowledge_layout tests.test_knowledge_governance -v: 31/31; workspace layout: 23/23"
+    },
+    {
+      "criterion": "Changed documentation has no whitespace or relative-link errors",
+      "result": "PASSED",
+      "evidence": "Independent regression audit: git diff --check and link resolution"
+    }
+  ],
+  "runner": "Independent semantic evaluator and independent regression auditor",
+  "limits": [
+    "Documentation-only guidance; no model execution or semantic grading service ran.",
+    "The full 24-predicate corpus and all scheduled reader repetitions were not executed.",
+    "The guidance does not itself establish business behavior, publication, or deployment."
+  ]
+}

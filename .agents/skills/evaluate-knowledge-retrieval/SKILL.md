@@ -8,6 +8,7 @@ description: Check whether a knowledge answer covers the question and whether it
 Input: the original question and scope, draft answer, claim register, inspected evidence, and applicability assessment.
 Use this for query answers and independent checks of ingestion or governance retrieval.
 Keep the evaluation read-only. It grants no publication, model compilation, or record-change permission.
+The evaluator reviews a supplied draft answer. Use `query-knowledge` or the requested reader workflow to produce that draft; do not treat this skill as the answer generator.
 
 ## Check the answer against its evidence
 
@@ -22,6 +23,11 @@ Keep the evaluation read-only. It grants no publication, model compilation, or r
    A bounded search with no match establishes only that result within the searched scope.
 6. Use the [confidence rubric](../../../tasks/README.md#investigate-before-asking) for each investigated answer.
    Base confidence on direct support, authority, freshness, contradictions, and material evidence gaps.
+
+For a fixed reader-question set, compare every final answer with the expected source predicates.
+Report factual fidelity separately from completeness, organization, visible qualifications, and action clarity.
+Count missed critical predicates and invented findings independently; a polished unsupported answer remains a factual failure.
+Use the same questions, sources, applicability, and draft boundaries for paired evaluations.
 
 ## Return a checkable result
 
