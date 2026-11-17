@@ -1,324 +1,299 @@
-# Workbench optimization plan
+# Workbench skill optimization plan
 
-> **Optimize dependable completion and reduce supervision.** Extend existing source status, recovery pointers, question reconciliation, and evaluation tools.
-> **Implement in measured stages.** Freeze a baseline first. Retain changes only when outcomes improve without losing meaning or evidence.
-> This is an unapplied plan. Numeric targets are proposals, not current results or whole-system guarantees.
+> **Improve existing skill decisions before expanding runtime infrastructure.** Strengthen source accounting, recovery, question handling, and semantic assessment.
+> **Add one distinct skill: `evaluate-harness`.** It compares workflow behavior across skill revisions using isolated trials and independent assessment.
+> This is an unapplied plan. Targets are proposed. The next step is a bounded baseline; implementation owner: unknown.
 
-## Direction, scope, and starting evidence
+## Direction and evidence
 
-Authority: [exact planning request](01-maintenance.md#planning-follow-up-17-november-2026).
-Source checkout inspected: `9cf70cc7a4abaf81dd81bb9c475b362dfc4dbfca`, with unrelated local changes recorded in the retrospective.
-Implementation must recheck revisions and preserve unrelated changes before editing.
+Authority: [planning request](01-maintenance.md#planning-follow-up-17-november-2026) and [skills-first clarification](01-maintenance.md#skills-first-clarification-17-november-2026).
+Current source inspection includes checkout `d8e4f43e2046eb79b412475a012c62fb105bcb33` and the recorded unrelated local changes.
+Recheck revisions and file ownership before implementation.
 
-The primary outcome is fewer user interventions between a stated goal and a trustworthy result.
-Secondary outcomes are accurate status, reliable recovery, preserved meaning, lower repeated processing cost, and practical portability.
+The intended outcome is fewer interventions between a stated goal and a trustworthy, checkable result.
+Optimize decisions and observable behavior. More instructions, files, receipts, or skill invocations are not success measures.
 The [retrospective](01-maintenance.md#explicit-preferences) supplies the preference evidence.
 
-Preserve the single Python runtime, installed package name, existing engine lifecycles, and independent repository ownership.
-Use task records and current receipts as authorities. Add no parallel status database, question store, or background runner.
-Keep plain workspace discovery `status` compatible. Keep domain intent, conformance, publication, and deployment decisions separate.
-No dependency additions are planned.
+Existing skills already require investigation, scoped continuation, checkpoints, claim classification, and evidence-backed handoffs.
+Avoid repeating those rules across every entrypoint. Add a decision aid only where a realistic trial exposes its value.
+Keep essential routing in `SKILL.md`. Put substantial conditional methods in existing references.
 
-Technical implementation owner: unassigned Workbench maintainer. Semantic assessment owner: unassigned independent reviewer.
-Human business acceptance and publication owners remain those recorded in the selected business task.
+The [saved diagnostic](../workbench-knowledge-raw-import-20261113/evidence/conversion-diagnostic-20261117.md) found two selected draft omissions behind accepted zero-output receipts.
+It also distinguishes fresh wiki bindings from complete source conversion.
+The [workflow review](../workbench-knowledge-raw-import-20261113/evidence/conversion-diagnostic-20261117-workflow-review.md#questions-and-available-work) reports 310 blank question rows, with overlapping decisions.
+These saved findings justify targeted cases. They do not establish a current whole-corpus failure rate.
 
-## Sequence and completion conditions
+Preserve the single Python runtime, existing lifecycle controls, independent repositories, and portable shared skills.
+Use existing task records, questions, receipts, and review evidence. Add no parallel state store or model service.
+No new dependency is planned. Business corrections remain in their owning tasks and authorization scopes.
 
-Stage 0 precedes implementation. Stages 1, 2, and 4 can then use separate file ownership.
-Stage 3 evaluates semantic safeguards. Stage 5 measures reuse. Stage 6 integrates the complete workflow and installed distribution.
-Coordinate shared edits to `core/cli.py`, lifecycle guidance, and final packaging through one writer.
-Commit each verified stage separately. Restore or revise a stage when its comparison shows a regression.
+Implementation role: Workbench maintainer; named owner: unknown.
+Assessment role: independent agent or reviewer; record the actual identity and limits for each assessment.
+Business review, publication, and deployment owners retain their existing authority.
 
-### Stage 0 — Freeze the baseline and success criteria
+## Specific work and file ownership
 
-Direction: Measure actual effort and quality before expanding infrastructure.
+| Priority | Optimization direction and specific change | Files to modify | Expected outcome | Proposed measurement |
+| --- | --- | --- | --- | --- |
+| 0 | Freeze realistic requests, source expectations, and baseline behavior before changing skills. | Existing evaluation catalogs and this task's evidence. | A defensible before/after comparison. | Seven existing cases plus six targeted cases; all inputs and criteria pinned. |
+| 1 | Add `evaluate-harness` for experiment design, isolated trials, independent assessment, and comparison. | New skill, its conditional reference, discovery metadata, alias, and packaging registration. | A reusable owner for evaluating the harness itself. | An independent worker can follow the protocol; every scored result has retained evidence. |
+| 2 | Strengthen `ingest-knowledge` source-to-output accounting, especially legitimate versus unsupported `no_change`. | Ingestion entrypoint and existing source-preparation reference. | Selected substantive intent cannot disappear behind a successful receipt. | Both seeded omissions detected; valid redundancy accepted; 24 predicates accounted for. |
+| 3 | Tighten `manage-knowledge-lifecycle` reconciliation of disagreeing progress evidence and interrupted work. | Lifecycle entrypoint and existing lifecycle guide. | Accurate status and the next authorized action survive a fresh session. | Zero repeated accepted cases; zero saved answers requested again. |
+| 4 | Improve `resolve-knowledge-questions` decision grouping and blocker scope. | Question-resolution entrypoint and existing question guide. | Fewer redundant questions without losing authority or context. | All 12 entries accounted for; zero invalid merges or overwritten answers. |
+| 5 | Improve `review-knowledge-claims` and `evaluate-knowledge-retrieval` with source-based completeness and reader trials. | Both entrypoints and the existing evidence worksheet. | Semantic omissions and unsupported sufficiency claims become observable. | 24/24 predicates accounted for; zero unsupported critical claims; no quality regression. |
+| 6 | Verify distribution, discovery, and one engineering workflow using the same evaluation discipline. | Existing layout tests and current discovery/setup sections where affected. | Improvements remain usable outside this source checkout. | Correct installed artifacts; all regression criteria pass; target limits stated. |
 
-1. Select eight retained source documents: two from each of the four current knowledge collections.
-2. Include conditions, exceptions, conflicts, draft intent, cross-topic dependencies, and the diagnosed zero-output cases where applicable.
-3. Define 24 atomic predicates and 12 questions from those exact sources. Label applicable claim classes and expected uncertainty.
-4. Record each source hash, locator, candidate version, wiki output, recipe, reviewer, and permitted operation.
-5. Run three baseline cohort-workflow trials using pinned skills, selected models, reasoning, fixtures, and concurrency.
-6. Record time, actual token usage when available, user interventions, unsupported claims, and repeated work.
-7. Pin one engineering baseline/candidate case with available assertions and execution prerequisites for Stage 6.
-8. Run its baseline assessment before workflow changes when prerequisites permit. Otherwise, report engineering metrics as absolute values only.
+These are five existing skill owners and one new skill. Conditional changes require observed failures, not blanket rewrites.
+
+## Stage 0 — Establish the behavioral baseline
+
+Direction: Translate historical corrections into reproducible tasks before prescribing additional instructions.
+
+1. Retain the seven existing synthetic cases as engineering, evidence, scope, and readiness regression coverage.
+2. Add the six cases below to [tests/skill-evaluation-cases.json](../../tests/skill-evaluation-cases.json).
+3. Add source-grounded criteria to [tests/skill-evaluation-rubric.json](../../tests/skill-evaluation-rubric.json).
+4. Select eight source documents: two per current collection, including the diagnosed omissions when available.
+5. Freeze 24 material predicates and 12 reader questions from their exact revisions. Record conditions, exceptions, and expected uncertainty.
+6. Create synthetic equivalents where isolation or privacy requires them. Mark synthetic records and their evidence limits.
+7. Use [tests/skill_evaluation.py](../../tests/skill_evaluation.py) with separate skill roots and new external directories.
+8. Run baseline screening before editing target skills. Record actual failures, successful existing behavior, cost, and missing observations.
+
+| New case | Evaluated skills | Observable decision |
+| --- | --- | --- |
+| `lifecycle-accounting` | `manage-knowledge-lifecycle` | Distinguish source coverage, zero-output receipts, wiki freshness, publication, and stale progress prose. |
+| `interrupted-handoff` | `manage-knowledge-lifecycle`, `ingest-knowledge` | Reopen accepted work, distinguish an unfinished draft, and perform the next authorized unit. |
+| `source-dispositions` | `ingest-knowledge`, `prepare-knowledge-sources` | Reject two substantive omissions while accepting justified unchanged coverage or contextual material. |
+| `semantic-preservation` | `review-knowledge-claims`, `maintain-wiki-content` | Preserve numerical qualifications and dated observations in their correct evidence class and location. |
+| `decision-grouping` | `resolve-knowledge-questions` | Reuse saved answers and group equivalent decisions without merging different scopes or authorities. |
+| `reader-usefulness` | Unchanged `query-knowledge` answering; `evaluate-knowledge-retrieval` review | Review paired drafts, correct supported findings, and check 12 final answers against 24 source predicates. |
+
+Case names are proposed additions. They are not currently executable catalog entries.
+Existing [evaluation instructions](../../tests/README.md#evaluate-skill-decisions) already separate respondent inputs from assessor criteria.
+The preparer already supports `--skills-root`. No helper code change is currently justified.
+
+Files created during execution: task-scoped `evidence/optimization-baseline.json` and `evidence/optimization-scorecard.json`.
+Each manifest links canonical responses, artifacts, assessments, input hashes, and actual settings. Retain each payload once.
+Update [tests/README.md](../../tests/README.md#evaluate-skill-decisions) with the additional cases and comparison protocol.
+
+Expected outcome: Known failures and successful counterexamples have explicit, reproducible denominators.
+Exit criterion: All 13 cases have frozen inputs and assessor criteria before target-skill changes begin.
+
+## Stage 1 — Add a narrowly scoped evaluation skill
+
+Direction: Make behavioral evaluation reusable across knowledge, engineering, setup, and future skill changes.
+
+1. Create `evaluate-harness` with a precise description for evaluating agent workflows and skill revisions.
+2. Accept a bounded task, raw fixture assets, candidate and baseline skills, permitted actions, and evaluation criteria.
+3. Keep the respondent blind to the rubric, suspected failure, intended answer, and prior conclusions.
+4. Give a separate assessor the raw sources, rubric, observed response, artifacts, and action evidence.
+5. Record criterion outcomes as `PASSED`, `FAILED`, or `NOT_ASSESSED`, with exact evidence.
+6. Compare quality, scope compliance, recovery, side effects, and effort. Preserve adverse results before changing guidance.
+7. Support user-supplied fixtures in generated workspaces. Reuse the source preparer only when its files are available.
+8. Forward-test the new protocol through an independent worker on one omission case and one valid no-change counterexample.
+
+New files:
+
+- `.agents/skills/evaluate-harness/SKILL.md`: purpose, discovery boundary, inputs, routing, and completion evidence.
+- `.agents/skills/evaluate-harness/references/trials.md`: isolation, paired comparisons, assessor separation, and scorecard fields.
+- `.agents/skills/evaluate-harness/agents/openai.yaml`: consistent discovery metadata.
+- `.claude/skills/evaluate-harness`: relative discovery alias.
+
+Existing files to modify:
+
+- [scaffold.json](../../scaffold.json): add the alias mapping. Shared skill directories are already included.
+- [tests/test_workspace_layout.py](../../tests/test_workspace_layout.py): register the canonical ID and verify installed copies.
+- [README.md](../../README.md): add the evaluation skill to existing shared-skill discovery guidance.
+- [tests/README.md](../../tests/README.md#evaluate-skill-decisions): document optional source-checkout preparation.
+
+The new skill evaluates repeated workflow decisions and artifacts.
+[Retrieval evaluation](../../.agents/skills/evaluate-knowledge-retrieval/SKILL.md) continues to assess individual knowledge answers.
+[Implementation verification](../../.agents/skills/verify-implementation/SKILL.md) continues to assess implementation and execution evidence.
+[Document validation](../../.agents/skills/validate-sdlc-documents/SKILL.md) retains document-contract checks.
+
+Expected outcome: One discoverable evaluation workflow works with supplied assets and existing tools.
+Exit criteria: Both forward trials retain checkable results. Respondent contexts contain no assessor rubric.
+No installed instruction requires the omitted source `tests/` directory.
+This adds no automatic model runner, semantic grading service, or new approval gate.
+
+## Stage 2 — Strengthen source accounting in ingestion
+
+Direction: Make a zero-output judgment explain selected intent, rather than treating unchanged bytes as sufficient evidence.
+
+1. Before completing a selected source, compare its material clauses with actual canonical sections and unresolved scope.
+2. For `no_change`, cite existing coverage or explain why the selected content needs no canonical intent output.
+3. Preserve draft intent with its draft status. Unresolved authority can limit publication without erasing supported selected intent.
+4. Leave incomplete substantive scope pending. Do not force new records for redundant or contextual sources.
+5. Use the existing review note and task evidence for accounting. Keep receipt schemas and lifecycle state unchanged.
+6. Replan after accepted work. Count output-linked, justified zero-output, held, missing, and excluded identities separately.
+
+Files to modify:
+
+- [ingest-knowledge/SKILL.md](../../.agents/skills/ingest-knowledge/SKILL.md): add the decision point before `sources complete`.
+- [source-preparation.md](../../.agents/skills/ingest-knowledge/references/source-preparation.md#record-canonical-processing-completion): add contrasting no-change examples and required supporting evidence.
+
+Keep source preparation responsible for selection and hash-bound views. Keep canonical coverage decisions with ingestion and claim review.
+The [preparation skill](../../.agents/skills/prepare-knowledge-sources/SKILL.md) needs no duplicate canonical-review procedure.
+
+Expected outcome: Unsupported zero-output completion becomes a visible omission; valid unchanged work remains reusable.
+Proposed acceptance: Detect both seeded omissions in every repeated trial. Accept the valid no-change counterexample without unnecessary record edits.
+Every reviewed predicate has a supported output, a justified no-output disposition, or an explicit unresolved status.
+Accounting for an unresolved predicate does not count as completed conversion.
+
+## Stage 3 — Improve lifecycle reconciliation and recovery
+
+Direction: Give the coordinator a compact method for resolving contradictory progress evidence and recovering the next unit.
+
+1. Add an example where wiki receipts are fresh while selected source coverage remains incomplete.
+2. Compare identity sets and output evidence before repeating a saved completion claim.
+   Keep selected but omitted identities in the requested denominator as pending. Separate explicitly excluded or out-of-scope identities.
+3. On interruption, reopen the existing checkpoint, accepted artifacts, saved answers, unfinished draft, and explicit owned paths.
+4. Resume the next authorized unit. Keep a held decision local to its affected scope.
+5. Distinguish requested worker settings from observed dispatch settings. Keep unknown dispatch identity explicit.
+6. Update the existing living record during execution. A status-only request remains read-only.
+
+Files to modify:
+
+- [manage-knowledge-lifecycle/SKILL.md](../../.agents/skills/manage-knowledge-lifecycle/SKILL.md): one reconciliation example and a concise recovery decision aid.
+- [docs/KNOWLEDGE_LIFECYCLE.md](../../docs/KNOWLEDGE_LIFECYCLE.md#lifecycle-coordination-and-next-actions): integrate the measured method into current coordination guidance.
+
+Expected outcome: The next useful action follows retained evidence, including after a fresh session starts.
+Proposed acceptance: Correctly distinguish every supplied lifecycle dimension in three candidate trials.
+Repeat zero accepted cases. Ask for zero saved answers. Preserve unfinished drafts and unrelated edits.
+Measure recovery time to the first useful action and to the next accepted checkpoint separately.
+Provisional target: median first-action recovery within five minutes on the bounded fixture.
+
+## Stage 4 — Reduce question burden without losing distinctions
+
+Direction: Present distinct consequential decisions, while preserving original questions and answer authority.
+
+1. Investigate each unresolved item using available sources before grouping or asking.
+2. Group questions only when the same decision resolves them under matching authority, actor, environment, and version.
+3. Keep original IDs, exact answers, source links, affected records, and separate conflicting scopes.
+4. Distinguish missing investigation, owner intent, publication review, execution evidence, and deferred work.
+5. Present grouped decisions in the existing editable document, with consequence, owner or `unknown`, and next action.
+6. Propagate returned answers through existing record updates and reconciliation. Continue independent authorized work.
+
+Files to modify:
+
+- [resolve-knowledge-questions/SKILL.md](../../.agents/skills/resolve-knowledge-questions/SKILL.md): grouping criteria and differing-scope counterexample.
+- [docs/QUESTION_RECONCILIATION.md](../../docs/QUESTION_RECONCILIATION.md): explain semantic grouping beside existing reference checks.
+
+Reuse [core/question_reconciliation.py](../../core/question_reconciliation.py). Its reference status does not establish answered intent.
+An absent machine Status field does not prove an unanswered question. Unsupported table formats remain an explicit checker limit.
+
+Expected outcome: A smaller, defensible decision queue preserves all original information.
+Proposed acceptance: Account for all 12 fixture entries. Permit zero invalid merges, answer overwrites, or repeated answered questions.
+Measure unresolved distinct decisions and user review time. Do not report row reduction as question resolution.
+
+## Stage 5 — Evaluate meaning and reader usefulness
+
+Direction: Make semantic review compare source expectations with output, including facts that disappeared during editing.
+
+1. Extend the existing claim worksheet with reverse source-to-output accounting for material changed or omitted predicates.
+2. Use that method for omission-prone changes and source-disposition review, rather than every sentence in every task.
+3. Use unchanged `query-knowledge` to draft answers for the 12 reader questions. Freeze the same drafts within each paired trial.
+4. Use baseline or candidate retrieval-evaluation guidance to review those drafts independently. Permit only supported corrections; retain drafts, reviews, and final answers.
+5. Assess final answers against exact sources and applicable versions. Separate factual fidelity from completeness, organization, qualification visibility, and action clarity.
+6. Include a detailed unsupported answer and a shorter supported counterexample. Count correct findings, missed omissions, and invented findings separately.
+7. Preserve legitimate policy corrections and qualified implementation/test observations in their correct locations.
+8. Tighten wiki maintenance only if its targeted trial exposes a decision gap beyond the existing claim-removal controls.
+
+Files to modify:
+
+- [review-knowledge-claims/SKILL.md](../../.agents/skills/review-knowledge-claims/SKILL.md): route omission-prone reviews to the existing worksheet.
+- [evidence.md](../../.agents/skills/ingest-knowledge/references/evidence.md#claim-worksheet): add source predicate, destination/disposition, and unresolved-scope fields.
+- [evaluate-knowledge-retrieval/SKILL.md](../../.agents/skills/evaluate-knowledge-retrieval/SKILL.md): add repeatable reader-question comparison with factual and usability results separated.
+- Conditional: [maintain-wiki-content/SKILL.md](../../.agents/skills/maintain-wiki-content/SKILL.md), only for demonstrated failures after existing guards apply.
+
+Expected outcome: Reviews detect lost meaning even when hashes, schemas, receipts, and prose appearance look satisfactory.
+Proposed acceptance: All 24 predicates receive correct dispositions in each repeated reader trial.
+Require zero unsupported critical claims, invented approvals, or inferred live execution.
+Every claimed completed answer must preserve its applicable conditions. Unresolved predicates remain visible.
+No usability dimension may fall below the matched baseline. A factual failure cannot be offset by presentation scores.
+
+## Stage 6 — Validate distribution and an engineering transfer case
+
+Direction: Prove the revised skills remain portable and useful beyond the knowledge pilot.
+
+1. Validate changed skills, references, descriptions, and discovery metadata. Run the skill creator's `quick_validate.py` where available.
+2. Use the existing source-distribution, wheel, external-installation, and workspace-initialization checks.
+3. Verify the new skill, references, aliases or copy fallback, empty catalogs, and absence of runtime source/project history.
+4. Evaluate supplied fixtures using the installed skills root. Do not copy the source test suite into generated workspaces.
+5. Regenerate any selected matching-platform offline bundle because shared-skill fingerprints change.
+6. Run the seven engineering regression cases against baseline and candidate skill sets.
+7. Select one authorized real engineering assessment with exact revisions, consumer contracts, assertions, and retained execution where available.
+8. Capture a same-case baseline before claiming engineering efficiency gains. Otherwise, report absolute observations only.
+9. Exercise a selected real client/environment when available. Record unavailable clients and environments as untested.
 
 Files:
 
-- Update the baseline table below and the existing [maintenance record](01-maintenance.md) with actual execution references.
-- Create task-scoped `evidence/optimization-baseline.json` and `evidence/optimization-scorecard.json` during execution.
-- Retain canonical run payloads once. Store their paths and hashes in those two manifests.
+- [tests/test_workspace_layout.py](../../tests/test_workspace_layout.py): extend existing distribution assertions only where coverage is missing.
+- [README.md](../../README.md) and [docs/KNOWLEDGE_LIFECYCLE.md](../../docs/KNOWLEDGE_LIFECYCLE.md): integrate current discovery and workflow changes.
+- Conditional: [docs/SETUP.md](../../docs/SETUP.md) and [docs/DEPENDENCIES.md](../../docs/DEPENDENCIES.md), for changed bundle or observed setup instructions.
+- The selected engineering task's existing assessment and evidence records; select their paths before execution.
 
-Expected outcome: A reproducible before/after comparison with explicit denominators and task-specific completion evidence.
+Expected outcome: Installed skill behavior preserves useful engineering decisions and independent checkout ownership.
+Proposed acceptance: All existing regression criteria pass; every required installed artifact matches its declared source bytes.
+Prohibited generated-workspace artifacts: zero. Unexpected offline acquisition attempts: zero.
+Native dispatch counts remain separate from adapter fixture results. Business failures remain failures despite harness evaluation success.
 
-Proposed acceptance: All eight documents, 24 predicates, and 12 questions have exact locators and reviewed expectations.
-Record unavailable model usage as UNKNOWN. Input bytes may be reported separately; they are not token measurements.
-An unavailable engineering environment limits that pilot; it does not block independent harness work.
+## Quantifiable measurement protocol
 
-| Baseline | Current evidence | Stage 0 measurement |
+Screen all 13 cases once per variant. Preserve quality failures as baseline observations.
+Repeat the six targeted cases twice more for both frozen variants when execution remains safe.
+The complete scheduled comparison comprises 50 case-level trials and their independent assessments.
+The reader workflow produces 72 final answers across three trials and two variants. Drafting and specialized review add agent calls.
+Count all drafting, review, correction, and assessment effort. Protocol forward-tests, retries, and real-environment pilots add further cost.
+Stop execution that exceeds the trial's permitted actions. Retain the failure and mark unfinished criteria unassessed.
+Revise a failed candidate under a new version. Keep earlier adverse results and distinguish reruns from scheduled repetitions.
+Report every attempt, variant, and executed denominator. Never select only favorable repetitions.
+Unmatched or interrupted comparisons support descriptive results only; do not claim matched medians or percentage gains.
+
+Keep fixture content, execution limits, model, reasoning, concurrency, and assessor criteria comparable across variants.
+Record observed settings or `UNKNOWN`. Keep assessors independent of the author and blind to variant labels where practical.
+Pin checkout revisions and hash loaded references, scripts, and metadata. The preparer currently hashes selected skill Markdown only.
+Fixture Git IDs and absolute paths can differ. Compare source content and normalized contracts, rather than manifest byte equality.
+Report individual outcomes and medians. Three trials support a bounded pilot conclusion, not statistical reliability.
+
+| Metric | Calculation | Proposed target |
 | --- | --- | --- |
-| Source conversion | The inspected diagnostic reports 139/622 output-linked identities. Complete semantic coverage remains UNKNOWN. | Freeze selected source membership, receipts, and output hashes. Recompute current counts before use. |
-| Review quality | The retrospective identifies lost qualifications and challenged sufficiency judgments. No bounded benchmark score exists. | Assess the 24 predicates and 12 questions with exact source support. |
-| Supervision and recovery | Repeated status and continuation requests establish friction. Comparable effort measurements remain unavailable. | Record three cohort-workflow trials, interventions, and interruption timestamps. |
-| Latency and processing cost | No comparable measurements were established by the retrospective. | Record machine, workload, elapsed time, tokens when available, and accepted distinct outcomes. |
-
-### Stage 1 — Make current progress accurate and inexpensive
-
-Direction: Expose trustworthy source status and combine existing lifecycle facts in one current task summary.
-
-Current evidence: [plan_sources()](../../core/ingestion/incremental.py#L304) writes baseline files.
-Its [queue calculation](../../core/ingestion/incremental.py#L263) also counts some excluded pages as unchanged.
-Therefore, unchanged counts must not be presented as completed knowledge conversion.
-
-Steps:
-
-1. Extract shared classification from `_capture()` and `_queues()` without changing existing plan results.
-2. Add `source_status(root, source_id, recipe)` in the same runtime module.
-3. Report present kept identities, current output-linked receipts, current zero-output receipts, selection review, held items, and processing reasons.
-4. Mark missing preparation, stale bindings, and concurrent changes explicitly. Include capture time, scope, recipe, and source bindings.
-5. Add the proposed `ai-sdlc sources status --source ID --recipe ID` route.
-6. Reuse wiki `update_plan()` with its exact recipe. Do not call compilation or select an external provider for status.
-7. Recheck component bindings after source/wiki inspection. Report concurrent changes as incomplete before updating the existing task header.
-8. Show source processing, semantic review, wiki freshness, publication, blockers, and next action as separate facts.
-
-The coordinator retains exact supporting receipt links in that task header. This update is separate from status inspection itself.
-
-Files to modify:
-
-- [core/ingestion/incremental.py](../../core/ingestion/incremental.py): shared classification and public status helper.
-- [core/cli.py](../../core/cli.py): additive source-status parser and dispatch.
-- [tests/test_incremental_ingestion.py](../../tests/test_incremental_ingestion.py): denominators, zero-output separation, invalidation, and no durable writes.
-- [tests/test_source_preparation_cli.py](../../tests/test_source_preparation_cli.py): command routing, recipe handling, and structured errors.
-- [manage-knowledge-lifecycle/SKILL.md](../../.agents/skills/manage-knowledge-lifecycle/SKILL.md): use the source result and existing wiki plan.
-- [docs/KNOWLEDGE_LIFECYCLE.md](../../docs/KNOWLEDGE_LIFECYCLE.md): explain current metrics and their limits.
-
-Reuse [wiki update_plan()](../../.agents/skills/llm-wiki/scripts/wiki.py#L364). Change its implementation only if the no-durable-write check finds a defect.
-Leave `Workbench.describe()` and existing workspace discovery contracts unchanged.
-
-Expected outcome: One understandable progress summary, backed by current calculations rather than manually reconstructed counts.
-
-Proposed acceptance:
-
-- Exact expected classification for every synthetic identity; zero excluded identities counted as converted.
-- Zero durable changes to plans, receipts, sources, records, audits, or wiki content during status inspection.
-- Concurrent component changes produce an incomplete diagnosis, never an unsupported coherent-snapshot claim.
-- Measure 20 warm status calls on a fixed 1,000-source, 200-record fixture. Provisional p95 target: five seconds or less.
-- Record cold latency separately. Keep timing benchmarks outside timing-sensitive unit-test assertions.
-
-Transient lock creation is allowed by the existing lock contract. Cross-lifecycle inspection is not one atomic transaction.
-
-### Stage 2 — Make interruption recovery explicit and testable
-
-Direction: Recover accepted work and the next authorized action without requiring the user to repeat context.
-
-Current evidence: [run_hook()](../../core/hooks.py#L261) retains session-scoped results but shows only a generic record pointer at startup.
-Existing task [checkpoint rules](../README.md#save-case-evidence-and-resume-checkpoints) already define the durable recovery record.
-
-Steps:
-
-1. Add `inspect_scope(root, client, session)` using existing identity, scope, loading, and fingerprint helpers.
-2. Return bound paths, missing inputs, recorded check status, and CURRENT/STALE/NOT_CHECKED freshness.
-3. Add the proposed `ai-sdlc hooks inspect --client CLIENT --session SESSION` route.
-4. Include the last recorded ACTION_REQUIRED in startup advice. Label its freshness unchecked until inspection.
-5. Keep document contents out of native startup context. Link the existing living record instead.
-6. Recover a new session by inspecting the explicitly named old session, reopening its checkpoint, and rebinding existing scope pointers.
-7. Verify actual dispatch and the next accepted checkpoint. Requested model settings alone do not prove execution identity.
-
-Files to modify:
-
-- [core/hooks.py](../../core/hooks.py): inspection helper and bounded startup advice.
-- [core/cli.py](../../core/cli.py): inspect parser and dispatch.
-- [tests/test_hooks.py](../../tests/test_hooks.py): inspection, stale results, missing scope, isolation, and failure visibility.
-- [tests/test_interfaces.py](../../tests/test_interfaces.py): additive CLI behavior and malformed arguments.
-- [docs/HOOKS.md](../../docs/HOOKS.md): same-session inspection and explicit cross-session rebinding.
-- [manage-knowledge-lifecycle/SKILL.md](../../.agents/skills/manage-knowledge-lifecycle/SKILL.md): checkpoint-first recovery.
-
-Expected outcome: Recovery exposes unfinished work without inventing a scheduler or selecting tasks from dirty files.
-
-Proposed acceptance:
-
-- Eight recovery cases across three adapters: unbound, recorded failure, changed watch, missing input, relocation, malformed state, same-session recovery, new-session rebinding.
-- Correct scope and diagnosis in all 24 combinations; zero inspection writes or validator dispatches.
-- Three controlled interruptions of the selected task; zero repeated accepted cases and zero requests to restate saved answers.
-- Provisional median recovery target: five minutes from fresh-session entry to the first useful authorized action.
-- Record time to the next accepted checkpoint separately. Do not substitute a written recovery plan for resumed work.
-
-### Stage 3 — Detect lost meaning and unsupported quality judgments
-
-Direction: Test semantic preservation and reader usefulness beyond valid hashes and receipt declarations.
-
-Current evidence: [wiki review checks](../../.agents/skills/llm-wiki/scripts/wiki.py#L895) validate claim-review declarations.
-The [evaluation helper](../../tests/skill_evaluation.py) already prepares isolated inputs and supports installed workspace skills.
-Its [review procedure](../../tests/README.md#evaluate-skill-decisions) keeps assessor criteria outside the evaluated agent's context.
-
-Steps:
-
-1. Add three cases: lost behavioral qualification, misleading zero-output completion, and a detailed but unsupported answer.
-2. Define expected findings in the existing assessor rubric. Keep rubric criteria out of answering-agent inputs.
-3. Run the frozen 12-question, 24-predicate cohort before and after the proposed workflow changes.
-4. Use three independent question trials per workflow: 72 total answers across baseline and candidate.
-5. Have an independent reviewer inspect source support, omissions, claim classification, conflicts, and useful organization.
-6. Preserve adverse examples and correction reasons. Revise shared guidance only where failures justify a change.
-7. Compare the diagnosed zero-output cases with actual source clauses and candidate coverage.
-
-Files to modify:
-
-- [tests/skill-evaluation-cases.json](../../tests/skill-evaluation-cases.json): three adversarial cases and source fixtures.
-- [tests/skill-evaluation-rubric.json](../../tests/skill-evaluation-rubric.json): independent semantic criteria.
-- [tests/README.md](../../tests/README.md): trial protocol, denominators, and reporting limits.
-- Conditional: [evaluate-knowledge-retrieval/SKILL.md](../../.agents/skills/evaluate-knowledge-retrieval/SKILL.md) and [review-knowledge-claims/SKILL.md](../../.agents/skills/review-knowledge-claims/SKILL.md), for observed procedural gaps.
-
-Reuse the existing evaluator and claim-removal controls. No new semantic grading service is planned.
-Keep legitimate zero-output `no_change` receipts supported. Review omission evidence before proposing a narrower runtime completion contract.
-Actual business-record corrections belong to their owning task and governance scope.
-
-Expected outcome: Quality comparisons identify missing meaning and unsupported claims even when structural checks pass.
-
-Proposed acceptance: All 24 material predicates remain correctly represented or explicitly accounted for in each candidate trial.
-Detect all three seeded faults in all three trials. Permit zero unsupported critical claims or invented publication/execution claims.
-Score fidelity and organization separately. Success establishes only this bounded benchmark.
-Question trials measure answer quality. Cohort-workflow trials separately measure coordination, recovery, and processing effort.
-
-### Stage 4 — Turn existing questions into an actionable attention view
-
-Direction: Reduce repeated questions and distinguish agent investigation from required human decisions.
-
-Current evidence: [reconcile_questions()](../../core/question_reconciliation.py#L12) already handles multiple documents and answer propagation.
-REFERENCES_COMPLETE deliberately concerns references. It does not establish that questions have been answered.
-
-Steps:
-
-1. Add exact source anchors and authored owner/next-action fields to reconciled rows where available.
-2. Derive an `attention` array and explicit status counts from existing rows and findings.
-3. Preserve unknown status. An absent Status line does not establish an unanswered question.
-4. Keep existing top-level status, exit semantics, IDs, answer hashes, and `verification: NOT_VERIFIED`.
-5. Have the coordinator separate source investigation, human policy decisions, publication review, and deferred work.
-6. Group related decisions through semantic review in the existing question document. Preserve original questions and user answers.
-7. Explicitly disclose unsupported table formats. Do not claim the heading-based checker has parsed all 310 bundle rows.
-
-Files to modify:
-
-- [core/question_reconciliation.py](../../core/question_reconciliation.py): additive attention fields and conservative authored-field extraction.
-- [tests/test_question_reconciliation.py](../../tests/test_question_reconciliation.py): unknown statuses, existing answers, source anchors, and stale consumers.
-- [docs/QUESTION_RECONCILIATION.md](../../docs/QUESTION_RECONCILIATION.md): attention categories and unchanged reference-status meaning.
-- [resolve-knowledge-questions/SKILL.md](../../.agents/skills/resolve-knowledge-questions/SKILL.md): investigate attention items before asking.
-- [manage-knowledge-lifecycle/SKILL.md](../../.agents/skills/manage-knowledge-lifecycle/SKILL.md): scoped blockers and consolidated decisions.
-
-Expected outcome: A compact attention view points to existing authoritative answers and leaves independent work available.
-
-Proposed acceptance: Correctly account for 12 reviewed test entries, including answered, unknown, deferred, duplicate, stale, and evidence-follow-up cases.
-Zero already-answered questions are sent back to the user in three pilot trials.
-Every human-decision item names its consequence and source, plus an owner or explicit unknown.
-Measure compression using reviewed distinct decisions, not raw question-row counts.
-
-### Stage 5 — Verify incremental savings and control new evidence growth
-
-Direction: Spend model effort on changed work and retain one canonical evidence payload.
-
-Steps:
-
-1. Run unchanged, one-source-change, and shared-dependency-change variants of the frozen cohort.
-2. Record new original review, dependency reconciliation, reused work, and receipt refreshes separately.
-3. Compare expected affected closure with actual semantic work and output changes.
-4. Measure input tokens, elapsed active work, and newly retained bytes for equal-quality accepted outcomes.
-5. Reuse current outputs and payload references. Keep failures, original snapshots, audit history, and recovery evidence.
-6. Change invalidation or payload handling only when the comparison demonstrates unnecessary work.
-
-Conditional implementation files:
-
-- [core/ingestion/incremental.py](../../core/ingestion/incremental.py) and [tests/test_incremental_ingestion.py](../../tests/test_incremental_ingestion.py): proven over-invalidation or missed dependencies.
-- [wiki.py](../../.agents/skills/llm-wiki/scripts/wiki.py) and [tests/test_openkb_workflow.py](../../tests/test_openkb_workflow.py): proven repeated compilation or incorrect reuse.
-- [core/evidence/README.md](../../core/evidence/README.md) and [tasks/README.md](../README.md): only if measured payload duplication reveals a missing rule.
-
-Existing reuse may already satisfy this stage. Passing measurements can close it without code changes.
-
-Expected outcome: Less repeated reading and evidence duplication without weakening review or provenance.
-
-Proposed acceptance:
-
-- Unchanged eligible inputs trigger zero semantic processing and zero new completion events in all three repetitions.
-- Changed runs process the reviewed affected closure; zero omitted necessary dependents.
-- Every retained evidence reference resolves to the intended hash. No historical evidence deletion is included.
-- Candidate quality must meet Stage 3 before cost savings count.
-- If baseline redundant semantic work exists, target a 30% reduction in input tokens per accepted distinct outcome.
-- If the baseline already has zero redundant work, preserve it. Do not invent a savings percentage.
-
-### Stage 6 — Prove the combined workflow and installed adoption
-
-Direction: Demonstrate useful engineering results and practical operation outside the source checkout.
-
-Engineering pilot:
-
-1. Recheck the selected portal case's source revisions, expected behavior, assertions, consumer scope, environment, and authorization.
-2. Use one existing review index and the existing assurance commands.
-3. Compare the same relevant case at baseline and candidate where execution is available.
-4. Report all three coverage mappings, passing execution separately, user impact, residual gaps, and the next decision.
-5. Compare interventions and decision time with Stage 0's engineering assessment. Without that baseline, report absolute metrics only.
-
-Files updated during the authorized pilot:
-
-- Existing [portal coverage record](../portal-background-session-20261019/09-coverage.md) and [renewal execution record](../portal-background-session-20261019/08-test-execution-renewal.md), if that scope is selected.
-- The selected task's existing review index and canonical case definitions only when reviewed findings require updates.
-- Conditional: [docs/BEHAVIOR_REVIEW.md](../../docs/BEHAVIOR_REVIEW.md) for a demonstrated procedural gap.
-
-Reuse [core/review_index.py](../../core/review_index.py) and [core/review_coverage.py](../../core/review_coverage.py). No new coverage engine is planned.
-Diagnostic completion requires accurate accounting; a discovered business failure remains a failure.
-
-Installed adoption pilot:
-
-1. Extend the existing source-distribution, wheel, external-installation, and workspace-initialization test.
-2. Exercise installed source status, hook inspection, and evaluator skill inputs outside this checkout.
-3. Confirm portable paths, empty catalogs, preserved native upstream files, and excluded runtime/project history.
-4. Rebuild matching-platform offline bundles after packaged skills change. Use existing bounded acquisition and validation.
-5. Run one independent-system workflow in the intended company environment.
-6. Observe actual start/stop dispatch for each available selected client. Record unavailable clients as untested.
-7. Update setup and dependency limits from observed target results.
-
-Files to modify:
-
-- [tests/test_workspace_layout.py](../../tests/test_workspace_layout.py): extend the existing external installation pipeline.
-- [docs/SETUP.md](../../docs/SETUP.md) and [docs/DEPENDENCIES.md](../../docs/DEPENDENCIES.md): observed setup, bundle, and target limits.
-- Conditional: [scaffold.json](../../scaffold.json), [core/workspace.py](../../core/workspace.py), [core/bootstrap.py](../../core/bootstrap.py), or [core/offline.py](../../core/offline.py), only for demonstrated distribution defects.
-
-Expected outcome: One complete decision workflow works through the installed package and selected real client/environment.
-
-Proposed acceptance:
-
-- Every selected AC, changed behavior, assertion, and required execution combination is accounted for, with unknowns explicit.
-- All applicable candidate unit tests pass; no skipped failures or weakened assertions.
-- Required installed artifacts match their declared hashes: 100%. Prohibited generated-workspace artifacts: zero.
-- Offline installation makes zero unexpected acquisition attempts.
-- Report actual native dispatches as observed clients divided by selected clients. Do not replace target evidence with adapter fixtures.
-- Provisional knowledge-workflow target: 50% fewer avoidable user interventions than matched baseline trials, with no semantic-quality regression.
-- Apply an engineering improvement percentage only when the same-case baseline assessment exists.
-
-## Measurement definitions
-
-Use the same cohort, revisions, environment, model settings, and concurrency for paired comparisons.
-Run three knowledge-workflow trials and three question trials per variant. The latency metric uses 20 timing samples.
-Report the engineering pilot's actual trial count. Do not borrow its baseline from the knowledge cohort.
-Report individual values and medians. Small samples establish a pilot result, not broad statistical reliability.
-
-| Metric | Calculation and evidence | Proposed criterion |
-| --- | --- | --- |
-| Avoidable supervision | Count prompts needed to repeat saved context, restart accepted work, correct status, or reconcile duplicate outputs. Exclude new business decisions. | Candidate median at most 50% of baseline; report absolute counts when baseline is zero. |
-| Progress correctness | Correctly classified synthetic identities / frozen synthetic identities. Compare source membership and hashes, not counts alone. | 100%; zero excluded identities counted as converted. |
-| Recovery | Minutes from fresh entry to first useful authorized action; also record time to next accepted checkpoint. | Median at most five minutes; zero repeated accepted cases. |
-| Predicate preservation | Correctly retained or explicitly justified predicates / 24 reviewed predicates. Report every disposition. | 24/24 per trial; zero unsupported critical claims. |
-| Seeded-fault detection | Correctly identified seeded failures / three seeded cases, per trial. | 3/3 in each of three trials. |
-| Question handling | Correct attention classifications / 12 reviewed entries; count repeated requests for existing answers. | 12/12; zero repeated answered questions. |
-| Reader usefulness | Independent assessor scores completeness, organization, qualification visibility, and action clarity from 0–2 each. | No dimension below baseline; factual criteria remain separate. |
-| Status latency | `perf_counter` around source status; nearest-rank p95 over 20 warm calls. Record machine and corpus. | Provisional p95 at most five seconds; cold latency reported separately. |
-| Processing efficiency | Input tokens / accepted distinct reviewed outcomes. Separate refreshed receipts, reused work, wall time, and active work. | 30% reduction only where redundant baseline work exists and quality passes. |
-| Evidence integrity | Hash-valid references / all referenced retained payloads; record newly added bytes and repeated payload bytes separately. | 100% references valid; one canonical copy of each newly reused payload. |
-| Engineering traceability | Separate AC-to-assertion, AC-to-implementation, changed-behavior-to-assertion, and current passing-execution fractions. | 100% inventory accounting; no unsupported equivalence or passing claim. |
-
-Zero denominators produce NOT_APPLICABLE or UNKNOWN with a reason. They never produce an automatic 100% score.
-Do not combine semantic quality, execution status, publication, and deployment into one opaque percentage.
-
-## Verification and delivery
-
-For each stage, run focused tests for the changed interface and compare preserved command behavior.
-At runtime/distribution completion, run the repository-required checks from the standalone source checkout:
+| Behavioral correctness | Passed criteria / all applicable frozen criteria; show failures and unassessed items separately. | All critical criteria pass; no existing regression criterion fails. |
+| Source accounting | Correct represented, justified no-output, or explicitly unresolved predicates / 24 reviewed predicates. | 24/24 accounted for; unresolved scope excluded from completed conversion. |
+| Seeded omissions | Correctly identified omissions / two known omissions in `source-dispositions`. | 2/2 in each of three candidate trials; valid no-change counterexample also accepted. |
+| Semantic fidelity | Unsupported critical claims, lost applicable conditions, and incorrect claim classes per trial. | Zero; presentation quality cannot compensate. |
+| Retrieval review accuracy | Correct findings / frozen material draft defects; missed defects and invented findings reported separately. | Detect every critical defect; zero invented defects against the supported counterexample. |
+| Question handling | Correct dispositions / 12 frozen entries; invalid merges, overwritten answers, and repeated answered questions. | 12/12; zero destructive or redundant handling. |
+| Recovery | Minutes to first useful action; minutes to accepted checkpoint; repeated accepted cases. | First-action median at most five minutes; zero repeated accepted cases. |
+| Avoidable supervision | Prompts to repeat saved context, correct progress, or restart accepted work. Exclude new business decisions. | Provisional 50% fewer than matched baseline; report counts when baseline is zero. |
+| Reader usefulness | Independent 0–2 scores for completeness, organization, qualification visibility, and action clarity. | No dimension below baseline; factual criteria reported separately. |
+| Processing effort | Actual input tokens and active minutes / accepted distinct outcomes of the same type. | Provisional 30% token reduction only where redundant baseline work exists and quality passes. |
+| Scope and integrity | Unauthorized side effects; hash-valid references / all retained referenced payloads. | Zero scope violations; 100% valid references; preserve adverse evidence. |
+| Portability | Passing installed artifacts and observed client invocations / explicitly selected artifacts and clients. | Complete artifact accounting; unavailable native clients remain untested. |
+
+Zero denominators produce `NOT_APPLICABLE` or `UNKNOWN` with reasons. They never produce an automatic perfect score.
+Input bytes are not tokens. Receipt refreshes, unchanged reuse, and new accepted semantic work remain separate measures.
+Measure entrypoint bytes and actually loaded context before/after. Reduce duplicated guidance only when behavior and references remain correct.
+
+## Conditional runtime follow-up
+
+The earlier runtime-oriented proposal remains in commit `cd0d56ea2`. Its implementation is deferred behind the skill trials.
+A failed agent decision first belongs to the relevant skill. A missing deterministic capability can justify a separate runtime change.
+
+| Demonstrated mechanical gap | Candidate files, only if needed |
+| --- | --- |
+| Current source state cannot be inspected accurately without durable planning writes. | [core/ingestion/incremental.py](../../core/ingestion/incremental.py), [core/cli.py](../../core/cli.py), and existing ingestion/CLI tests. |
+| Explicit bound-session state cannot be inspected for recovery. | [core/hooks.py](../../core/hooks.py), CLI dispatch, and existing hook/interface tests. |
+| Existing question output cannot expose required authored fields. | [core/question_reconciliation.py](../../core/question_reconciliation.py) and its existing tests. |
+| Correctly supplied dependencies still cause unnecessary repeated processing. | Existing ingestion or wiki invalidation helper and focused regression tests. |
+
+Require a reproducible trigger, affected consumer, and expected result before selecting these changes.
+Reuse existing helpers and contracts. Add no scheduler or parallel lifecycle store.
+
+## Verification, delivery, and current limits
+
+Implement one measured change group at a time. Preserve unrelated edits and use one writer for shared catalogs and guides.
+Run focused checks for each changed interface. Review descriptions and references as well as frontmatter.
+At skill distribution completion, run the repository-required commands from the standalone source checkout:
 
 ```sh
 python -m unittest discover -s tests -v
@@ -327,20 +302,14 @@ ai-sdlc --workspace PATH validate
 ```
 
 Replace `PATH` with the selected workspace. Validate the externally initialized workspace as well.
-Run installed-workspace and matching offline checks after shared skills change.
-Measure native company-environment execution separately. Missing access remains an explicit limit, not an application failure.
-Update existing current guides, review the complete staged diff, and commit the verified stage.
+Commit each verified stage after explicit staging and staged-diff review. Revise changes that worsen matched outcomes.
 
-## Plan verification and limits
-
-Only the plan and owning task record change during this planning request.
-Existing runtime functions, callers, relevant tests, skills, packaging, and guides received source inspection.
-Targeted peer feedback identified a missing engineering baseline. The revised plan requires that baseline before engineering improvement percentages.
-The [plan document checks](evidence/plan-document-checks.json) verify local links, inventory counts, retained-input hashes, and selected prose limits.
-No candidate optimization, business verification, native dispatch, token benchmark, or target-platform pilot ran.
-The source inspection fixes implementation targets; Stage 0 must establish measured baselines before performance claims.
-The main risks are inconsistent cross-lifecycle captures, incomplete semantic relationships, and unavailable independent review or target environments.
-Use explicit partial results and existing recovery controls when those risks occur.
+Only this task's plan, maintenance record, and document-check evidence change during the current planning request.
+Two independent read-only audits checked ownership, portability, denominators, reader responsibilities, and baseline comparability.
+Their findings corrected the plan before commitment.
+The [plan document checks](evidence/plan-document-checks.json) cover local links, input bindings, counts, and selected prose limits.
+No skill optimization, behavioral trial, token benchmark, business execution, or target-platform pilot has run under this plan.
+Baselines, named owners, actual evaluation cost, and real-environment access remain to be established.
 
 ```yaml
 standard: ASD-STE100
