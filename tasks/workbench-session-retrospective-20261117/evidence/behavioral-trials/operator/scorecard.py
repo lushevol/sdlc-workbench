@@ -16,7 +16,8 @@ order = ["lifecycle-accounting", "interrupted-handoff", "source-dispositions", "
          "semantic-preservation", "reader-usefulness", "known-policy", "current-results",
          "regression-comparison", "failure-assertion", "review-scope", "setup-readiness", "deployment-parity"]
 for case_id in order:
-    expected = [item for item in schedule["trials"] if item["case_id"] == case_id]
+    proposed = [item for item in schedule["trials"] if item["case_id"] == case_id]
+    expected = [item for item in proposed if item.get("required", True)]
     completed = [item for item in assessments if item["case_id"] == case_id]
     variants = {}
     for variant in ["baseline", "candidate"]:
@@ -27,6 +28,8 @@ for case_id in order:
                              "scope_integrity": dict(collections.Counter(item["scope_integrity"]["outcome"] for item in results)),
                              "assessments": [str(Path(next(t["root"] for t in expected if t["id"] == item["trial_id"])) / "assessment.json") for item in results]}
     stages.append({"case_id": case_id, "complete": len(completed) == len(expected),
+                   "proposed_trials": len(proposed), "required_trials": len(expected),
+                   "optional_not_executed_trials": len([item for item in proposed if item["status"] == "NOT_EXECUTED_OPTIONAL"]),
                    "material_candidate_failure": any(item["material_candidate_failure"] for item in completed),
                    "variants": variants})
 
@@ -36,12 +39,19 @@ scorecard = {
     "schedule": str(ROOT / "schedule.json"), "baseline_commit": schedule["baseline_commit"],
     "candidate_commit": schedule["candidate_commit"], "candidate_local_changes": schedule["candidate_local_changes"],
     "catalog_sha256": schedule["catalog_sha256"], "rubric_sha256": schedule["rubric_sha256"],
-    "expected_trials": len(schedule["trials"]), "assessed_trials": len(assessments),
+    "expected_trials": schedule.get("required_trials", len(schedule["trials"])),
+    "proposed_trials": len(schedule["trials"]), "required_trials": schedule.get("required_trials", len(schedule["trials"])),
+    "optional_not_executed_trials": len([item for item in schedule["trials"] if item["status"] == "NOT_EXECUTED_OPTIONAL"]),
+    "assessed_trials": len(assessments), "scope_correction": schedule.get("scope_correction"),
     "stages": stages,
+    "assessor_method": {"independent_of_respondents": True, "variant_blind": False,
+                        "respondents_received_oracle_or_prior_results": False,
+                        "basis": "Coordinator assessed different agents against pinned source predicates and retained actual outputs."},
     "factual_findings": [{"trial_id": item["trial_id"], **item.get("factual_findings", {})} for item in assessments],
     "reader_dimensions": [{"trial_id": item["trial_id"], **item.get("usefulness", {})} for item in reader],
     "reader_final_answer_accounting": {
-        "expected_responses": 6, "questions_per_response": 12, "expected_final_answers": 72,
+        "expected_responses": 2, "questions_per_response": 12, "expected_final_answers": 24,
+        "proposed_responses": 6, "proposed_final_answers": 72, "optional_prepared_answers_not_executed": 48,
         "assessed_responses": len(reader),
         "present_final_answers": sum(item.get("reader_final_answers", {}).get("present", 0) for item in reader),
         "supported_final_answers": sum(item.get("reader_final_answers", {}).get("supported", 0) for item in reader),
@@ -55,10 +65,11 @@ scorecard = {
     "effort": {"input_tokens": "UNKNOWN", "output_tokens": "UNKNOWN", "active_minutes": "UNKNOWN", "savings": "NOT_ASSESSED",
                "basis": "Retained respondent action logs supply observed command and timing evidence only."},
     "limits": ["Synthetic fixtures support only the stated scope.",
+               "The independent assessor knew variant labels. Respondents received neutral inputs without oracle or prior results.",
                "Actual model, reasoning, client and token usage were not independently exposed.",
                "No general reliability or percentage savings conclusion is supported.",
                "Tool completion, semantic assessment, business verification and human authorization remain distinct."]
 }
 (ROOT / "scorecard.json").write_text(json.dumps(scorecard, indent=2) + "\n")
-print(json.dumps({"assessed_trials": len(assessments), "expected_trials": len(schedule["trials"]),
+print(json.dumps({"assessed_trials": len(assessments), "required_trials": schedule.get("required_trials", len(schedule["trials"])), "proposed_trials": len(schedule["trials"]),
                   "material_candidate_failures": [item["trial_id"] for item in assessments if item["material_candidate_failure"]]}))

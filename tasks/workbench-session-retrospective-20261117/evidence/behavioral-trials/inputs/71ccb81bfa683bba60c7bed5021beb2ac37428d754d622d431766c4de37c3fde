@@ -1,0 +1,26 @@
+# Reader questions
+
+Q-01: What activity extends a Portal session, is any fixed active duration specified, what remains unresolved about browser suspension, and what is established about production adoption?
+
+Q-02: What happened in the local observation, and is its timing a policy limit?
+
+Q-03: What cutoff applies, including holiday and after-cutoff treatment?
+
+Q-04: How must payment retry, duplicate references, and late-arrival retention work?
+
+Q-05: How do multiple roles determine an action grant?
+
+Q-06: What happens without a matching grant?
+
+Q-07: How must omitted and empty drawers behave during migration?
+
+Q-08: Can the replacement identifier and upper callers be assumed compatible?
+
+Q-09: What is known about local and UAT expiry settings?
+
+Q-10: Can the candidate be described as deployed?
+
+Q-11: What evidence may be cleaned up, and on what basis?
+
+Q-12: Where must meaningful failures be retained, and does hash equality permit deletion?
+

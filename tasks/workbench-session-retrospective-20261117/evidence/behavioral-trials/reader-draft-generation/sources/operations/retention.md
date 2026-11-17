@@ -1,7 +1,1 @@
-# Evidence retention instruction
-
-Recorded maintainer instruction, 30 October 2026.
-
-Review consumers and provenance before deleting historical payloads.
-Retain meaningful failed traces and link one canonical payload instead of duplicating it.
-Equal hashes alone do not authorize deletion. The historical consumer inventory remains incomplete.
+../../../inputs/cce786feee9068aa4b924701c77b63052a5c2083afa385893332805b790cd574

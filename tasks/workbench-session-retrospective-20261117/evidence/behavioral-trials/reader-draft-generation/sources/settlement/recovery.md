@@ -1,7 +1,1 @@
-# Payment recovery
-
-Draft target behavior, 10 November 2026.
-
-A rejected payment can be retried with its original payment reference.
-Repeating an accepted reference must not create a second payment.
-Late-arrival retention duration is unresolved; the document provides no default.
+../../../inputs/7873d7ffc27ae5a9631fafa8c2a2e99618558082b4906a4699b716eb0e8e4db6

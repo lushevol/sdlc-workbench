@@ -69,10 +69,24 @@ Live agent handles confirmed both states before resumption. Completed trials wer
 The [oracle amendment](evidence/semantic-oracle-amendment.json) corrects one reader question and evidence-class expectations before affected stages.
 The [independent recheck](evidence/semantic-oracle-recheck.json) passed. Source text and prior assessments remain unchanged.
 
-The [behavioral scorecard](evidence/optimization-scorecard.json) now retains eighteen assessed trials across lifecycle, recovery, and source disposition.
+The [behavioral scorecard](evidence/optimization-scorecard.json) now retains twenty-four assessed trials across five completed stages.
 All candidate criteria passed. Baseline source disposition missed one exact-clause citation criterion in its first repetition.
 Both variants found both omissions and preserved justified unchanged and contextual results in all three repetitions.
-Decision grouping, semantic preservation, reader usefulness, and engineering transfer remain in progress or pending.
+Both candidate grouping trials preserved all twelve entries and passed eight criteria.
+Both baseline grouping trials missed explicit unknown-status and coordination-total accounting.
+Both semantic-review variants accounted for all twenty-four predicates and rejected four unsupported wiki claims.
+Both preserved qualified historical numeric and timing observations. This fixture establishes no factual advantage between variants.
+Reader usefulness and engineering transfer remain in progress or pending.
+
+### Evaluation scope correction, 18 November 2026
+
+The fixed fifty-trial gate came from the assistant's provisional pilot design.
+The exact approval requires enhancement evaluation and distribution checks. The requirements table leaves numerical pilot targets optional.
+An independent authority review confirmed this distinction from the recorded request and requirements table.
+The corrected schedule completes all thirteen distinct cases, twenty-four predicates, twelve reader questions, and seven engineering comparisons.
+It retains forty required trials, one draft-generation operation, and installed-workspace verification.
+Ten unstarted optional repetitions remain recorded as `NOT_EXECUTED_OPTIONAL`, with their prepared inputs preserved.
+The reader comparison supplies twenty-four actual answers. The optional design contained forty-eight further proposed answers.
 
 ## Exact user input
 
@@ -312,7 +326,8 @@ Their findings corrected the revised plan before commitment.
 The [revised plan checks](evidence/plan-document-checks.json) cover the current task documents.
 The [requirements table checks](evidence/requirements-table-checks.json) additionally verify row, input, and existing-skill accounting.
 Independent table reviews checked semantic scope and skill ownership. They retained consumer-usage and minimal-schema qualifications for migration.
-The stage evaluations and final distribution checks are recorded above. No full model-based semantic trial, live integration, business execution, or complete ASD writing review ran.
+The stage evaluations and distribution checks are recorded above. Independent model-based evaluations remain underway.
+Native client dispatch, live integration, business execution, and complete ASD writing review remain untested.
 
 ```yaml
 standard: ASD-STE100

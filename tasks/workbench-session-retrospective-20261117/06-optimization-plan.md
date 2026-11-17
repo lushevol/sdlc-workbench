@@ -246,10 +246,14 @@ Native dispatch counts remain separate from adapter fixture results. Business fa
 
 ## Quantifiable measurement protocol
 
-Screen all 13 cases once per variant. Preserve quality failures as baseline observations.
-Repeat the six targeted cases twice more for both frozen variants when execution remains safe.
-The complete scheduled comparison comprises 50 case-level trials and their independent assessments.
-The reader workflow produces 72 final answers across three trials and two variants. Drafting and specialized review add agent calls.
+Screen all 13 distinct cases with baseline and candidate skills. Preserve quality failures as baseline observations.
+The original pilot design proposed three repetitions, fifty trials, and seventy-two reader answers.
+The requirements table leaves numerical pilot targets optional. Approval requires meaningful evaluation of every enhancement and distribution checks.
+The execution schedule now includes forty required trials, retaining all completed and active repetitions.
+These cover every distinct case, all twenty-four predicates, and twelve questions in each reader variant.
+The reader comparison produces twenty-four actual final answers. Ten prepared optional repetitions account for forty-eight additional proposed answers.
+Those optional repetitions remain recorded as `NOT_EXECUTED_OPTIONAL`. Their inputs and original schedule remain retained.
+Draft generation and installed-workspace verification remain additional required operations.
 Count all drafting, review, correction, and assessment effort. Protocol forward-tests, retries, and real-environment pilots add further cost.
 Stop execution that exceeds the trial's permitted actions. Retain the failure and mark unfinished criteria unassessed.
 Revise a failed candidate under a new version. Keep earlier adverse results and distinguish reruns from scheduled repetitions.
@@ -311,12 +315,13 @@ ai-sdlc --workspace PATH validate
 Replace `PATH` with the selected workspace. Validate the externally initialized workspace as well.
 Commit each verified stage after explicit staging and staged-diff review. Revise changes that worsen matched outcomes.
 
-Only this task's plan, maintenance record, and document-check evidence change during the current planning request.
+The original planning request changed task documents only. The later approval authorized the implementation and evaluation recorded above.
 Two independent read-only audits checked ownership, portability, denominators, reader responsibilities, and baseline comparability.
 Their findings corrected the plan before commitment.
 The [plan document checks](evidence/plan-document-checks.json) cover local links, input bindings, counts, and selected prose limits.
 The earlier structural examples did not complete the planned behavioral comparison.
-The completion audit now runs fifty isolated trials with independent assessment before each next enhancement stage.
+The completion audit requires every distinct case and enhancement to receive independent assessment before the next enhancement stage.
+Forty scheduled trials retain completed work and cover the required outcomes. Numerical pilot repetition targets remain optional.
 The earlier instruction chronology cannot be reconstructed. The retained baseline uses exact pre-enhancement skill bytes for retrospective comparison.
 Token savings remain unmeasured when actual usage is unavailable. Synthetic trials establish no business execution or production behavior.
 

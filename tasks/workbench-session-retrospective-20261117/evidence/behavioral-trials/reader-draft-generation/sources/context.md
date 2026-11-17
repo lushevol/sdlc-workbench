@@ -1,3 +1,1 @@
-# Meeting navigation
-
-This meeting agenda repeats the existing Portal Activity candidate verbatim. It introduces no new conditions, exceptions, or target behavior.
+../../inputs/c22959f0afa460d3ab28c82054719a714013081a2bc27f9ec450e27a714f1031
