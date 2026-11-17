@@ -33,7 +33,7 @@ The approved shared-skill improvements completed in sequence:
 | Semantic preservation and reader usefulness | PASSED | [stage 05 evaluation](evidence/stage-05-semantic-evaluation.json), `79a730aa1` |
 | Repeatable harness evaluation protocol | PASSED | [harness evaluation](evidence/stage-04-evaluate-harness-evaluation.json), `30dc0b30f` |
 
-The [final distribution evaluation](evidence/stage-06-distribution-evaluation.json) records 1,078 passing tests with two documented skips, wheel and source-distribution hashes, the initialized-workspace smoke check, 336 resolved local links, and `VALID` workspace validation.
+The [final distribution evaluation](evidence/stage-06-distribution-evaluation.json) records 1,078 passing tests with two documented skips, wheel and source-distribution hashes, the initialized-workspace smoke check, 351 resolved local links across six documents, and `VALID` workspace validation.
 
 ## Exact user input
 
