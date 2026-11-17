@@ -173,7 +173,7 @@ workbench/
 │   │   ├── decisions/              # Published domain decisions.
 │   │   └── repository-profiles/     # Business repository responsibilities and contracts.
 │   ├── evidence/                   # Supporting sources, provenance, and governance.
-│   │   ├── incoming/               # Ignored replaceable exports, grouped by collection.
+│   │   ├── incoming/               # Replaceable exports; project allowlists can support Git-only transfer.
 │   │   ├── sources/                # Unchanged original source snapshots.
 │   │   ├── selections/             # Source hashes, exact ranges, and reviewed filter decisions.
 │   │   ├── processing/             # Reviewed canonical processing receipts.
@@ -269,7 +269,9 @@ Business-system technical explanations qualify when they describe domain behavio
 New workspaces use this consolidated layout. The shared runtime also supports existing workspaces with canonical records directly under `knowledge/` and their manifest at `evidence/knowledge/manifest.yaml` until explicit migration.
 Resolve the layout from its unique active source manifest. Reject both manifest locations present, and reject a consolidated manifest without `knowledge/records/`; never combine trees or silently fall back from an incomplete migration.
 
-`knowledge/evidence/incoming/COLLECTION/` accepts complete replaceable exports and remains ignored.
+`knowledge/evidence/incoming/COLLECTION/` accepts complete replaceable exports and stays ignored by default.
+A project can allowlist named registered collections for Git-only transfer when the owner authorizes that boundary.
+Keep temporary imports and local configuration ignored. Preserve exact source bytes and retained provenance independently.
 `knowledge/evidence/sources/` preserves domain source snapshots before interpretation.
 Incoming files and retained originals use separate lifecycles within the same evidence area.
 Task-owned investigation captures and source excerpts stay in `tasks/<task-id>/evidence/`.

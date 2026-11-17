@@ -1,0 +1,19 @@
+# Manual Split
+
+to support he user case that client expects SCB to split the cashflow amount and settle with different vostro/nostro SI.
+
+1. ops manual split gross cashflow 1. system generate child with the original amount by default 2. system limit the decimal according to the predefined rounding logic for each ccy. 3. user input lower amount, system will automatically calculate the balance to generate the 2nd cashflow 4. there will be validation to check user input is between 0 and available balance 5. considering the business use case is to settle the split child cashflow with different SI, that will be easier for user to pick up SI when perform split. there is an optional button for user to look up si 6. after split done, click "Split Cashflow with Affirmation", there will be popup requesting user to set affirmation info and confirm the split ![image-2025-9-25_23-4-16.png](attachments/image-2025-9-25_23-4-16.png)
+2. Split Result: 1. parent cashflow moved to SPLIT status 2. child cashflow generated and are in WAITING status with "Split Cashflow" Exception 3. User is able to use Spliting Id field to find both parent and child cashflow ![image-2025-9-25_23-7-40.png](attachments/image-2025-9-25_23-7-40.png)
+3. Ops Un-Split the cashflow amount 1. if user found issue after the split, they can select the cashflow and perform un-split if cashflow are in eligible status (QUEUED,WAITING,FAILED, HOLD, READY(NA), CASHFLOW_SUPPRESSED) ![image-2025-9-25_23-9-47.png](attachments/image-2025-9-25_23-9-47.png)
+4. Un-Split Result 1. Parent cashflow moved to WAITING status with Un-Split exception 2. Child cashflow moved to DEAD status 3. Splitting Id removed from the cashflow ![image-2025-9-25_23-13-35.png](attachments/image-2025-9-25_23-13-35.png)
+5. Ops amend split amount 1. sometimes, ops have released some child cashflow but notice the amount is incorrect for the rest, user can amend the amount If at least 2 child cashflow are in WAITING status 2. only the amount of WAITING cashflow can be updated 3. user need to make sure the total amount of all child cashflow are equal to the original cashflow ![image-2025-9-25_23-20-25.png](attachments/image-2025-9-25_23-20-25.png) ![image-2025-9-25_23-21-22.png](attachments/image-2025-9-25_23-21-22.png)
+6. Split Amend Result 1. Parent cashflow will not be impacted, still in SPLIT status 2. child cashflow amount updated to the new value and hold in WAITING status with an extra "Split Amend" exception ![image-2025-9-25_23-27-14.png](attachments/image-2025-9-25_23-27-14.png)
+7. Withdrawal Event Handling 1. If child cashflow have not been released from Ratan, withdrawal event will be moved to SPLIT status, child cashflow will be cancelled 2. if any child cashflow have been released from Ratan, withdrawal event will be moved to SPLIT status, child cashflow not released will be directly cancelled, child cashflow released will with corresponding withdrawal event hold in NSTP pending user action
+
+# Auto Distribution Process
+
+Some nostro agent may have threshold for the cashflow amount can be processed. If any cashflow exceed the threshold, system will split the cashflow to lower amount at release cut off time and directly generate swift and accounting for each child to downstream.
+
+1. Nostro Threshold Static 1. add a new blotter to manage related static, data ops have access to create/update/delete. Other users only have read only view. 2. currency is mandatory, booking entity, nostro agent bic are optional ![image-2025-9-26_9-46-9.png](attachments/image-2025-9-26_9-46-9.png)
+2. TRY cashflow exceeded threshold
+3. withdrawal event after distribution （for gross/net resultant）

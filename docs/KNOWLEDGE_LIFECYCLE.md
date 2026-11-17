@@ -70,7 +70,7 @@ Release synchronization classifies changes and reuses only the affected operatio
 
 | Stage | Storage | Reuse and invalidation |
 | --- | --- | --- |
-| Complete export | Ignored `knowledge/evidence/incoming/COLLECTION/` | Replace with the next complete export. |
+| Complete export | `knowledge/evidence/incoming/COLLECTION/`; ignored by default, with explicit project allowlists | Replace with the next complete export; refresh and review changed bindings. |
 | Retained originals | `knowledge/evidence/sources/` and `knowledge/evidence/manifest.yaml` | Preserve bytes and earlier revisions; append changed sources. |
 | Source decisions | `knowledge/evidence/selections/` | Bind page hashes, ranges, policy, and governing context. Reassess changed bindings, including exclusions. |
 | Canonical processing receipts | `knowledge/evidence/processing/` | Bind reviewed outcomes to source selections, recipe, prior outputs, and checked current hashes. |
@@ -81,6 +81,8 @@ Release synchronization classifies changes and reuses only the affected operatio
 | Derived pages | `knowledge/llm-wiki/wiki/` | Maintain affected summaries, concepts, entities, contradictions, and index through the selected engine. |
 
 Missing source pages preserve history. They do not authorize downstream deletion.
+For Git-only transfer, verify that the recorded input directories are tracked or reconstruct their registered inventory before planning.
+Tracking exports preserves input availability. It does not grant selection, semantic completion, or publication approval.
 The shared `knowledge/` parent does not combine these lifecycle states or make evidence and wiki pages canonical records.
 Filtered views support ingestion; canonical citations still identify original retained revisions and exact source sections.
 No additional top-level raw archive or copied filtered source tree is required.

@@ -1,0 +1,14 @@
+# Accounting Requirement
+
+- On Value Date: By EOD Ratan need to send the 'FAILED' cashflows to Razor for accounting generation, Razor will rely on the cashflow status 'FAILED' to bypass the swift generation.
+- Post Failed: Most probably on VD+1 onward. 1. If there's no trade amendment/cancellation, ops will re-process the cashflow and update the 'Swift Payment Date' and send the cashflow to Razor for swift generation only. Cashflow status will be 'READY' then Razor can proceed the swfit generation. 2. Trade Amendment/Cancelation: When the latest cashflow events sent to Razor, Reversal&New or Reversal accounting entries required.
+
+# User Cases
+
+- Normal cases | Action | Sent to Razor | System date | Cashflow ID | Cashflow Event | Cashflow Status | Currency | Amount | Value Date | Accounting Date | Accounting Entry | Swift Value Date | Swift Generation | minorVersionDescription | | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | | Failed on VD | Y | 8th May | C101 | New | FAILED | USD | 100 | 8th May | 8th May | Y | | N | | | Re-Process on VD+1 | Y | 9th May | C101 | New | READY | USD | 100 | 8th May | | Y(Reversal &New) | 9th May | Y | Failed Re-Process |
+- Trade amendment post accounting EOD | Action | Sent to Razor | System date | Cashflow ID | Cashflow Event | Cashflow Status | Currency | Amount | Value Date | Accounting Date | Accounting Entry | Swift Value Date | Swift Generation | minorVersionDescription | | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | | Failed on VD | Y | 8th May | C101 | New | FAILED | USD | 100 | 8th May | 8th May | Y | | N | | | Trade Amendment post accounting EOD | Y | 9th May | C101 | Amendment | READY | USD | 200 | 8th May | | Y(Reversal & New) | | Y | |
+- Failed multi times. | Action | Sent to Razor | System date | Cashflow ID | Cashflow Event | Cashflow Status | Currency | Amount | Value Date | Accounting Date | Accounting Entry | Swift Value Date | Swift Generation | minorVersionDescription | | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | | Failed on VD | Y | 8th May | C101 | New | FAILED | USD | 100 | 8th May | 8th May | Y | | N | | | Trade Amendment on VD+1 | N | 9th May | C101 | Amendment | WAITING | USD | 200 | 8th May | | | | | | | Failed again on VD+1 | Y | 9th May | C101 | Amendment | FAILED | USD | 200 | 8th May | | Y(Reversal & New) | | N | | | Re-Process on VD+2 | Y | 10th May | C101 | Amendment | READY | USD | 200 | 8th May | | N | 10th May | Y | |
+- Past Value date booking
+- FAILED + Trade cancellation
+- FAILED on Netting Resultant cashflows
+- Settled on VD, trade amendment on VD+1 and Failed

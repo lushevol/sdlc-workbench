@@ -12,7 +12,8 @@ This stage preserves evidence and selects inputs. Canonical meaning and publicat
 ## Inputs
 
 Use the selected workspace, registered collection ID, complete export, applicable filter policy, and governing context.
-Keep replaceable exports in ignored `knowledge/evidence/incoming/COLLECTION/`.
+Keep replaceable exports in `knowledge/evidence/incoming/COLLECTION/`.
+These paths are ignored by default; a project may allowlist an owner-approved registered collection for Git-only continuation.
 Retain originals under `knowledge/evidence/sources/`; do not introduce another top-level raw directory.
 Review-only requests inspect these inputs without importing or changing selections.
 

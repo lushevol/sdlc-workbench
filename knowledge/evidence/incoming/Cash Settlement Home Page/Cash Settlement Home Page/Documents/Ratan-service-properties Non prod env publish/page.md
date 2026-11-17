@@ -1,0 +1,1 @@
+Like [Mock SSI For Staging Env - Derivative Strategy Projects - Confluence](https://confluence.global.standardchartered.com/display/DSP/Mock+SSI+For+Staging+Env), whether need restart service depends.

@@ -1,0 +1,7 @@
+# [u](https://confluence.global.standardchartered.com/display/DSP/bau-withdrawal_new)ser-e2e-test-case
+
+| case | Test | Result Report Link | Over Time Charts | Statistics | Errors |
+| --- | --- | --- | --- | --- | --- |
+| <u>*user-e2e-test-case*</u> | 1X 2025-12-26 10:50:00 ~ 2025-12-26 11:50:00 | [Apache JMeter Dashboard](https://uklvadrtn006a.pi.dev.net:8081/performance-test/1766717371407/report/index.html) | ![image-2026-1-22_11-42-6.png](attachments/image-2026-1-22_11-42-6.png) | ![image-2026-1-22_11-43-3.png](attachments/image-2026-1-22_11-43-3.png) | ![image-2026-1-22_11-43-19.png](attachments/image-2026-1-22_11-43-19.png) |
+| 2X 2025-12-26 14:35:00 ~ 2025-12-26 15:35:00 | [Apache JMeter Dashboard](https://uklvadrtn006a.pi.dev.net:8081/performance-test/1766730912453/report/index.html) | ![image-2026-1-22_11-45-56.png](attachments/image-2026-1-22_11-45-56.png) | ![image-2026-1-22_11-46-32.png](attachments/image-2026-1-22_11-46-32.png) | ![image-2026-1-22_11-47-3.png](attachments/image-2026-1-22_11-47-3.png) |
+| 4X 2025-12-26 16:25:00 ~ 2025-12-26 17:25:00 | [Apache JMeter Dashboard](https://uklvadrtn006a.pi.dev.net:8081/performance-test/1766737508164/report/index.html) | ![image-2026-1-22_11-48-24.png](attachments/image-2026-1-22_11-48-24.png) | ![image-2026-1-22_11-48-57.png](attachments/image-2026-1-22_11-48-57.png) | ![image-2026-1-22_11-49-24.png](attachments/image-2026-1-22_11-49-24.png) |

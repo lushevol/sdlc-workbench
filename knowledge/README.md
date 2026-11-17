@@ -48,6 +48,8 @@ The [ingestion skill](../.agents/skills/ingest-knowledge/SKILL.md) supports revi
 
 Use complete raw export → filtered source view → canonical knowledge → derived wiki.
 The [source preparation procedure](../.agents/skills/ingest-knowledge/references/source-preparation.md) preserves originals and records inspected selections.
+Imports stay ignored by default. A project's `.gitignore` can allowlist owner-approved collections for Git-only continuation.
+Tracked exports remain replaceable inputs. Retained snapshots, source identities, selections, and governance remain separate.
 Filtered views remain in ignored working storage outside canonical records. Their inclusion decisions do not approve the selected rules.
 
 Each selection and generated link binds the original source page's SHA-256, revision, location, and exact ranges.

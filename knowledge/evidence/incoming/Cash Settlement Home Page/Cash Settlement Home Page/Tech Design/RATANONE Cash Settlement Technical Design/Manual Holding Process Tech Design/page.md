@@ -1,0 +1,9 @@
+## Background
+
+| | ~~Additional attribute in cashflow~~ | ~~Using exception~~ | Selected one, use main status |
+| --- | --- | --- | --- |
+| Solution | 1. **Create a new attribute in cashflow model, "isHeld", boolean** 2. **Lifecycle service to provide the ability of switching it on/off** 3. **Query service to support the fields query** 4. **UI to add the fields in blotter, and highlight it in the details page** 5. **Release holding check to be adjusted with the logic: apart from seeing whether queued cutoff passed, also need to check the new attribute** | 1. **Create a checker only exception on manual hold action** 2. **Camunda to support achoc exception creation** 3. **UI to highlight in the details page on the exception** | 1. Hold will block all the in progress operations 1. Pending Exception (pending operator/verification) 2. Pending Netting 3. Ready 4. Queued 5. Projected 2. Unhold will revert back to the original status, to eliminate the duplicated work |
+| PROs | 1. Holding process is independent with exception handling | 1. Less change on the services 2. No entity structure change | |
+| CONs | 1. A bit complicated, more services need to be adjusted 2. Entity structure change | 1. Coupled the holding with exception handling, if a user want all exceptions to be fixed, but still be held, it cannot be done 2. Behavior cannot be standardized 1. On Waiting status, hold means 1. exception +1 2. status no change 2. On Ready status, hold means 1. exception +1 2. status move back to Waiting/pending verification | |
+
+Detailed architecture, please see [RATANONE Cash Settlement Technical Design - Derivative Strategy Projects - Confluence (standardchartered.com)](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=2560471970)

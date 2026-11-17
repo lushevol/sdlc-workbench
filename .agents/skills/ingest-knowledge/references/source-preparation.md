@@ -9,7 +9,8 @@ They preserve sources and apply inspected selections. They do not classify meani
 
 ## Processing stages
 
-1. **Complete raw export:** accept the whole collection in ignored `knowledge/evidence/incoming/COLLECTION/`.
+1. **Complete raw export:** accept the whole collection in `knowledge/evidence/incoming/COLLECTION/`.
+   The path is ignored by default; a project may allowlist an owner-approved registered collection for Git-only continuation.
 2. **Filtered source view:** retain source revisions, record selections, and generate exact excerpts or source links when needed.
 3. **Canonical knowledge:** reconcile intent across selected sources through the ingestion and governance procedures.
 4. **Derived wiki:** compile canonical records through the [wiki bridge](../../llm-wiki/SKILL.md).

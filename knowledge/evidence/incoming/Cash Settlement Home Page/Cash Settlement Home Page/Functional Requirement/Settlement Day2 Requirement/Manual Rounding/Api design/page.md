@@ -1,0 +1,7 @@
+# 1. api list
+
+| | method | url | request | response | comment |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `POST` | /v1/camunda/task/bulk/AmendRounding | { "action": "**AmendRounding**", "comment": "1", "cashflows": [ { "cashflowId": "M00000049915", "businessVersion": "0", "cashflowVersion": "0", "minorVersion": "5", "amendAmount": "100.01", "currency": "USD", } ] } | { "status": 200, "errorCode": "200", "errorMessage": "SUCCESS" } or { "status": 500, "errorCode": "100500001", "errorMessage": "Connection refused: /10.198.199.166:25057", "metadata": null } | **maker **manual change rounding |
+| 2 | `POST` | /v1/camunda/task/bulk/AmendRounding | { "action": "**Approve**", "comment": "2", "cashflows": [ { "cashflowId": "M00000049915", "businessVersion": "0", "cashflowVersion": "0", "minorVersion": "6" } ] } | { "status": 200, "errorCode": "200", "errorMessage": "SUCCESS" } or { "status": 500, "errorCode": "100500001", "errorMessage": "Connection refused: /10.198.199.166:25057", "metadata": null } | checker approve |
+| 3 | `POST` | /v1/camunda/task/bulk/AmendRounding | { "action": "**Reject**", "comment": "2", "cashflows": [ { "cashflowId": "M00000049915", "businessVersion": "0", "cashflowVersion": "0", "minorVersion": "6" } ] } | { "status": 200, "errorCode": "200", "errorMessage": "SUCCESS" } or { "status": 500, "errorCode": "100500001", "errorMessage": "Connection refused: /10.198.199.166:25057", "metadata": null } | checker reject |

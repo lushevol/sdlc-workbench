@@ -9,8 +9,9 @@ Read `AGENTS.md`, this handoff, and the linked diagnostic before editing.
 
 Work only on the four registered source collections and their owning task evidence.
 Use retained snapshots under `knowledge/evidence/sources/` as the existing source.
-First check the [confirmed inbox-presence blocker and tested recovery](git-only-resume-blocker-20261117.md).
-This runtime also requires the registered input inventory. Reconstruct absent ignored inboxes from verified retained snapshots before planning.
+This branch now tracks the three registered incoming exports under the [authorized tracking change](incoming-git-tracking-20261117.md).
+Pull that change before planning. The runtime still requires these input directories alongside retained snapshots.
+For older transfers without these exports, use the [historical blocker and recovery](git-only-resume-blocker-20261117.md).
 Create fresh plans and fresh plan-bound views because `.workbench/` is not transferred by Git.
 
 Run the following checks before semantic work:
@@ -90,6 +91,7 @@ Git contains the retained conversion inputs and records:
 
 - `knowledge/evidence/manifest.yaml` with source identities, revisions, hashes, and snapshot paths.
 - `knowledge/evidence/sources/` with 1,035 tracked retained source files.
+- The three registered incoming exports: Cash Settlement (884 pages), RATAN (189), and Settlement netting (55).
 - `knowledge/evidence/selections/` with selection decisions and source bindings.
 - `knowledge/evidence/processing/` with current processing receipts.
 - `knowledge/evidence/audit/` with immutable governance events.
@@ -109,42 +111,41 @@ Recreate them on the destination.
 
 ## The incoming folder
 
-`knowledge/evidence/incoming/` is intentionally ignored.
-It stores replaceable complete exports before source refresh.
-It is not the retained source of record.
+Incoming exports stay ignored by default. This branch explicitly tracks three registered collections for Git-only continuation.
+The [tracking decision](incoming-git-tracking-20261117.md) records the exact authorized scope and verification.
+These folders remain replaceable complete exports before source refresh. Retained snapshots remain the source of record.
 
 Confirm the boundary on the destination:
 
 ```sh
-git check-ignore -v knowledge/evidence/incoming/
-git ls-files knowledge/evidence/incoming
+git ls-files knowledge/evidence/incoming | wc -l
 git ls-files knowledge/evidence/sources | wc -l
 ```
 
-The second command should return no paths.
-The third command should report the retained snapshot inventory.
+The first command should report 1,128 tracked export files at this checkpoint.
+The second command reports the separate retained snapshot inventory.
 
-The current local inbox contains:
+The tracked inbox roots are:
 
 ```text
-knowledge/evidence/incoming/Cash Settlement Home Page/Cash Settlement Home Page/page.md
-knowledge/evidence/incoming/RATAN - 51358/RATAN - 51358/page.md
+knowledge/evidence/incoming/Cash Settlement Home Page/
+knowledge/evidence/incoming/RATAN - 51358/
+knowledge/evidence/incoming/settlement-netting/
 ```
 
-Those bytes do not move with Git.
-The manifest instead points to retained snapshots under `knowledge/evidence/sources/`.
-The agent on the destination therefore knows the existing source through the manifest, snapshots, and selections.
+Git transfers these exports and the retained snapshots referenced by the manifest.
+Portal's recorded input root, `knowledge/evidence/sources/confluence/`, is already tracked.
+Other incoming collections, temporary imports, `.env`, and runtime state remain ignored.
 
 Do not report a missing source only because `incoming/` is empty.
 For existing work, resolve the source from the manifest entry and its retained `snapshot` path.
 Report a source as missing only when the required retained snapshot or manifest binding is absent.
 
-Git-only continuation supports existing conversion queues after reconstructing absent ignored input inventories.
-The current runtime treats an absent inbox as changed page presence, even when retained sources remain intact.
-Follow the [bounded recovery](git-only-resume-blocker-20261117.md#tested-recovery-for-the-destination-ai) before running plans or views.
-Recover all `present: true` paths, including excluded and held pages. Keep existing omissions and tracked state unchanged.
-It cannot refresh a collection from a newer export unless that export is supplied separately.
-Do not commit the complete incoming export merely to bypass this boundary.
+Git-only continuation supports the registered queues when these tracked input inventories match their selection bindings.
+The runtime still treats an absent inbox as changed page presence, even when retained sources remain intact.
+If the expected folders are absent, first confirm that the destination pulled this tracking change.
+For older transfers, follow the [bounded recovery](git-only-resume-blocker-20261117.md#tested-recovery-for-the-destination-ai).
+Newer exports require their own source refresh and selection review. Tracking alone cannot establish their freshness or semantic coverage.
 
 Never use `knowledge/evidence/sources/` as the `sources refresh --input` directory.
 Do not run `sources refresh` because `incoming/` is absent.
@@ -264,7 +265,8 @@ git diff --cached --check
 git status --short
 ```
 
-The staged set must contain no `.workbench/`, `.venv/`, `.env`, `knowledge/evidence/incoming/`, or unrelated paths.
+The staged set must contain no `.workbench/`, `.venv/`, `.env`, unrelated imports, or unrelated paths.
+Export updates are limited to the three allowlisted roots and require source refresh and binding checks when bytes change.
 Use one scoped commit per completed wave.
 Push only when the current user explicitly authorizes that push.
 
@@ -307,8 +309,8 @@ asd_review: PENDING
 reviewer: null
 reviewed_at: null
 limitations:
-  - Git-only transfer omits ignored incoming exports and temporary worker state.
-  - Existing retained snapshots support continuation, but newer exports need separate transfer.
+  - Git-only transfer includes the three allowlisted exports and omits other imports and temporary worker state.
+  - Newer exports require refresh and review of changed source bindings.
   - Complete semantic conversion remains unknown.
   - Human publication approval remains pending.
 ```

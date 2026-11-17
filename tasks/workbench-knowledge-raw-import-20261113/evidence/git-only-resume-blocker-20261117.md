@@ -5,6 +5,13 @@
 
 Date: 17 November 2026 (Asia/Singapore).
 
+## Subsequent resolution
+
+The user authorized [tracking the three registered exports](incoming-git-tracking-20261117.md).
+The updated handoff now transfers those input directories through Git.
+The investigation below preserves the original absent-inbox failure and reconstruction alternative for older transfers.
+The runtime's freshness guards remain unchanged.
+
 ## Exact user input
 
 ```text
@@ -25,6 +32,7 @@ Runtime risk: none from inspection. A future freshness correction must preserve 
 
 ## Screenshot observation
 
+The following records the pre-tracking state that produced the screenshot.
 The other agent reports 1,213 registered bindings with existing, matching retained snapshots.
 It reports missing export folders for Cash Settlement (884), RATAN (189), and Settlement netting (55).
 Those three collections total 1,128 bindings. The screenshot reports `input_presence_changed` and rejected filtered views.
@@ -86,6 +94,7 @@ An explicit retained-snapshot mode would be a separate runtime change; this diag
 ## Executed checks and limits
 
 The [retained reproduction](git-only-resume-blocker-20261117.json) records ten passing assertions using the existing source preparation fixture.
+The current branch resolves this failure by tracking the three registered exports; see the [clean Git export replay](incoming-git-clean-export-20261117.json).
 
 - Present inbox: verification reports `READY`; two sources enter processing and render successfully.
 - Absent inbox: both sources return to review; zero sources enter processing; view creation fails as stale.
