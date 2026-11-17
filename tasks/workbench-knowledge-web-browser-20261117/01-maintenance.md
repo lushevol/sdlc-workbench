@@ -34,6 +34,14 @@ Source: User replies to the current session's questions, 17 November 2026.
 
 These answers confirm local hosting and collection scope. They do not authorize coding.
 
+### Architecture explanation follow-up
+
+Source: User message in the current Codex session, 17 November 2026.
+
+> explain your architecture design and tech stacks
+
+The response explains the proposed stack and request flow. Implementation remains outside the authorized scope.
+
 ## Boundaries and source state
 
 - Base revision: `8dc410f9896c4b610e2a960252c6c9c9a589c146`.
@@ -152,12 +160,14 @@ The following command is proposed and does not exist yet:
 ai-sdlc --workspace PATH knowledge serve --port 8765 --open
 ```
 
-Use a purpose-built standard-library HTTP handler for the local, read-only service.
-Bundle a small HTML, CSS, and JavaScript interface with maintained rendering and sanitizing libraries.
-Evaluate Markdown-it, DOMPurify, and Mermaid during implementation; exact versions remain undecided.
+Use `ThreadingHTTPServer` with a purpose-built request handler for the local, read-only service.
+Bundle semantic HTML, CSS Grid, and vanilla JavaScript modules for the interface.
+Recommend markdown-it, DOMPurify, and Mermaid for rendering, sanitizing, and diagrams; exact versions remain undecided.
 Do not write another Markdown parser.
 Serve bundled assets locally. Browsing needs no model credentials or external asset requests.
 Node may prepare shipped assets, but users should need only the installed Python runtime and a browser.
+Python returns document text and metadata. The browser owns the single Markdown rendering pipeline.
+Sanitize rendered HTML and Mermaid SVG. Use strict Mermaid settings.
 
 Keep implementation under `core/` and retain the installed package name `ai_sdlc_workbench`.
 Ship runtime and static assets through the wheel. Generated workspaces receive guides and content structures only.
@@ -166,7 +176,11 @@ Preserve its conflict errors instead of merging ambiguous roots.
 
 Build an in-memory catalog of approved documents and relationships.
 Read document bodies lazily and rescan changed, added, or removed entries on refresh.
-Use hashes for current document identity and existing provenance comparisons.
+Full-text search reads searchable body text once, at startup or first search.
+Keep searchable text in memory and rebuild changed entries on refresh.
+Use collection and logical path, or source ID, for stable document identity.
+Keep revision and content hash separate. Hashes support content fingerprints and provenance comparisons.
+Publish refreshed catalog and search snapshots together. Concurrent requests must not observe a partial refresh.
 Keep any optional cache replaceable and outside canonical knowledge.
 Do not create a database service or copy the knowledge tree.
 
