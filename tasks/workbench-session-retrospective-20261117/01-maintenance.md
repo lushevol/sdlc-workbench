@@ -8,6 +8,18 @@ The [requirements table and skill map](07-requirements-and-skills.md) are the cu
 The [earlier optimization plan](06-optimization-plan.md) remains a provisional implementation proposal.
 Review requirements and ownership together before selecting enhancements or adopting numerical targets.
 
+### Enhancement authorization, 17 November 2026
+
+Source: Current Codex conversation. Exact user input:
+
+```text
+dapproved, go till all enhancement done, evaluate each before go next
+```
+
+Authorized scope: implement the approved skill enhancements, evaluate each completed stage before proceeding, and finish with distribution and evidence checks.
+Use the requirements table as the scope boundary. Preserve unrelated worktree changes.
+Stop a stage when its evaluation is incomplete or worse than the baseline. Runtime or business-repository changes require a demonstrated mechanical gap and their own affected checks.
+
 ## Exact user input
 
 Source: Current Codex conversation. Date: 17 November 2026, Asia/Singapore.
