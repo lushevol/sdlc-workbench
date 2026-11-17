@@ -1,10 +1,10 @@
 # Monthly session retrospective
 
 > **The strongest opportunity is reliable completion across existing tools.** Your history repeatedly requests trustworthy outcomes, visible progress, and less supervision.
-> **Prioritize shared skills and measured behavior.** Strengthen five existing skill owners and propose one distinct harness-evaluation skill.
+> **Use existing controls before adding infrastructure.** The proposed next step is one measured workflow, including interruption recovery and semantic checks.
 > Recommendations remain proposals. Infrastructure implementation and acceptance remain outside this review.
 
-The [revised optimization plan](06-optimization-plan.md) defines seven skill-first stages, exact file targets, outcomes, and quantitative criteria.
+The [concrete optimization plan](06-optimization-plan.md) now defines seven stages, exact file targets, expected outcomes, and quantitative criteria.
 Planning is complete. The optimization targets remain proposed until baseline measurement and authorized implementation.
 
 ## Exact user input
@@ -34,19 +34,6 @@ Please provide your plan for optimizing this projects. This must include:
 Authorized scope: Inspect existing implementation and produce a concrete optimization plan. Runtime implementation remains proposed.
 The [optimization plan](06-optimization-plan.md) records sequence, exact file targets, expected outcomes, and measurement methods.
 The user's subsequent `go on` messages continue this planning scope. They supply no missing business answer or publication decision.
-
-### Skills-first clarification, 17 November 2026
-
-Source: Current Codex conversation. Exact user input:
-
-```text
-I'd prefer you to optimize the existing skills, or even add new ones to expand this harness and make it more robust.
-```
-
-This clarification changes the plan's primary optimization surface to shared skills and their existing evaluation workflow.
-Prefer existing skill owners. Propose a new skill only for a distinct, demonstrated responsibility.
-Runtime additions in the earlier plan become conditional on skill evaluation exposing a mechanical gap.
-The current deliverable remains the requested concrete plan, revised around this direction.
 
 Review window: 17 October through 17 November 2026, Asia/Singapore, through this request.
 The review covered 408 retained user inputs across 102 conversations. This includes 407 historical inputs and this request.
@@ -144,30 +131,25 @@ It explicitly warns that overlapping rows do not equal independent decisions.
 It also separates receipt refreshes from newly reviewed originals and rejects their use as a completion ETA.
 These are inspected saved findings. This retrospective did not rerun their tests or semantic samples.
 
-## Proposed skill priorities
+## Proposed infrastructure priorities
 
-The latest clarification makes shared skills the primary optimization surface.
-The [concrete plan](06-optimization-plan.md#specific-work-and-file-ownership) specifies steps, files, expected outcomes, and measurements.
-Accountable implementation owners remain unknown. Runtime additions require demonstrated mechanical gaps after skill trials.
+These proposals reuse existing records, commands, and lifecycle controls. They do not create another status database or mandatory document set.
+Accountable implementation owners are unknown. The next action is selection and scoping, followed by separately authorized implementation.
 
-| Order | Proposed improvement | Observable evidence of success |
+| Order | Smallest useful improvement | Observable evidence of success |
 | --- | --- | --- |
-| 1 | Extend existing behavioral evaluations before changing skill guidance. | Six targeted cases expose actual failures alongside the seven existing regression cases. |
-| 2 | Add `evaluate-harness` for repeatable workflow comparisons. | Isolated respondents and independent assessors produce evidence-backed before/after results. |
-| 3 | Strengthen ingestion source-to-output accounting. | Detect substantive omissions behind zero-output receipts while retaining legitimate no-change outcomes. |
-| 4 | Tighten lifecycle reconciliation and interrupted handoffs. | A fresh session resumes the next authorized unit without repeating accepted work or saved answers. |
-| 5 | Group existing questions into distinct consequential decisions. | Preserve IDs, exact answers, authority, and differing scope; continue independent work. |
-| 6 | Improve source-based semantic review and reader evaluation. | Detect lost qualifications and unsupported quality judgments despite passing structural checks. |
-| 7 | Verify installed distribution and engineering transfer. | Shared skills work outside the checkout; existing engineering and scope criteria still pass. |
+| 1 | Generate one compact current view from existing task records, plans, receipts, and wiki bindings. | Show completed scope, remaining outcome, accepted distinct work, blockers, source changes, and actual next action. Detect disagreement with saved prose. |
+| 2 | Test interruption recovery using existing checkpoints and coordinator handoffs. | A fresh session resumes the next unfinished unit without repeating accepted work or asking answered questions. Distinguish requested settings from observed dispatch. |
+| 3 | Evaluate semantic preservation through representative source clauses and reader questions. Reuse existing claim/removal reviews. | Detect omitted conditions, unjustified zero-output dispositions, unsupported answers, and degraded wiki detail despite passing structural checks. |
+| 4 | Present existing question IDs as a reviewed decision queue. | Group shared decisions, show consequences and affected work, preserve original answers, and continue work outside each blocker. |
+| 5 | Exercise one complete engineering case through existing assurance tools. | Trace sourced intent through consumer impact, direct assertions, matching execution, and a decision with explicit residual gaps. |
+| 6 | Prove portability with another system and the intended company environment. | Demonstrate installation, configured access, client invocation, recovery, and a useful workflow. Record unavailable platforms and integrations. |
 
-Most general safeguards already exist. Target decision aids rather than repeating them across all skill files.
-The five existing owners are ingestion, lifecycle coordination, question resolution, claim review, and retrieval evaluation.
-Prepare-source and wiki-maintenance skills retain their responsibilities. Change them only when targeted trials expose additional gaps.
-The new evaluation skill must work with supplied assets because generated workspaces omit source runtime tests.
-
-Use existing [incremental plans and receipts](../../docs/KNOWLEDGE_LIFECYCLE.md#incremental-execution) and [question reconciliation](../../docs/QUESTION_RECONCILIATION.md).
-The earlier runtime-oriented proposal remains preserved in commit `cd0d56ea2`.
-No runtime, new skill, or existing skill change has been implemented under this planning scope.
+Start with a bounded knowledge-conversion cohort because current evidence exposes the failure modes.
+Use a cohort with reviewed source dispositions, candidate outputs, wiki outputs, and existing questions.
+Measure one interruption and restart. Then repeat the method on one representative portal change.
+Reuse [incremental plans and receipts](../../docs/KNOWLEDGE_LIFECYCLE.md#incremental-execution) and [question reconciliation](../../docs/QUESTION_RECONCILIATION.md).
+Assess outcomes before considering a new durable workflow runner, which the [architecture](../../ARCHITECTURE.md) still describes as planned work.
 
 ## Questions the history points toward
 
@@ -209,17 +191,14 @@ Keep this retrospective under its owning task; no new enduring documentation res
 
 Next action: select the first measurable workflow outcome and define its bounded completion evidence.
 This review needs no new business clarification, publication, or deployment decision.
-The plan starts with Stage 0's behavioral baseline, then evaluation ownership and targeted improvements to existing skills.
+The plan recommends starting with Stage 0's bounded baseline, then accurate status and recovery.
 
 ## Checks and writing review
 
 The [document checks](evidence/document-checks.json) verify local links, heading fragments, inventory counts, selected-input hashes, and selected prose limits.
 The [initial result](evidence/document-checks-initial.json) retains one sentence-length failure. The revised sentence passed the repeated check.
 An independent agent review reconciled counts and checked proposal boundaries. It identified the intent/reality preference, which the final draft includes.
-Two independent read-only skill audits checked ownership, portability, coverage denominators, reader responsibilities, and baseline comparability.
-Their findings corrected the revised plan before commitment.
-The [revised plan checks](evidence/plan-document-checks.json) cover the current task documents.
-No skill implementation, behavioral trial, runtime test, live integration, business execution, or complete ASD writing review ran.
+No runtime, live integration, business execution, or complete ASD writing review ran.
 
 ```yaml
 standard: ASD-STE100
