@@ -80,7 +80,8 @@ class WorkspacePackagingTests(unittest.TestCase):
         command.ensure_finalized()
         command.get_data_files()
         assets = {str(Path(directory) / name) for _, directory, _, names in command.data_files for name in names}
-        expected = {str(path) for pattern in ("schemas/*.json", "skills/*.md")
+        expected = {str(path) for pattern in ("schemas/*.json", "skills/*.md", "knowledge_web/static/*.html",
+                                              "knowledge_web/static/*.js", "knowledge_web/static/*.css")
                     for path in (source / "core").glob(pattern)}
         self.assertEqual(assets, expected)
 

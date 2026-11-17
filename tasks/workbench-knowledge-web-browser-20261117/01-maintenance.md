@@ -13,7 +13,7 @@
 
 Date: 17 November 2026.
 Scope: Workbench maintenance; investigation and implementation discussion only.
-Status: Investigation complete. Proposed design remains open for discussion. Implementation is not authorized.
+Status: POC implemented. Production hardening and final UX decisions remain open.
 
 ## Exact user input
 
@@ -40,7 +40,16 @@ Source: User message in the current Codex session, 17 November 2026.
 
 > explain your architecture design and tech stacks
 
-The response explains the proposed stack and request flow. Implementation remains outside the authorized scope.
+The response explained the proposed stack and request flow before implementation authorization.
+
+### POC implementation authorization
+
+Source: User message in the current Codex session, 17 November 2026.
+
+> make a poc for preview
+
+This authorizes a local preview implementation within the confirmed local hosting and collection scope.
+It does not authorize publication, deployment, editing, ingestion, governance transitions, or external messages.
 
 ## Boundaries and source state
 
@@ -49,7 +58,7 @@ The response explains the proposed stack and request flow. Implementation remain
 - Other local changes include `core/connectors/yarn.lock` and untracked `core/release-report/`.
 - Preserve these changes. Read current local sources and identify relevant revision limits.
 - Authorized work includes inspection, proposal documentation, and discussion.
-- No implementation, knowledge transition, wiki refresh, deployment, or external messages are authorized.
+- No knowledge transition, wiki refresh, deployment, or external messages are authorized.
 - Expected consumers are local users who browse the selected workspace's knowledge and linked documentation.
 - Main design risks are lost formatting, misleading authority labels, stale navigation, and excessive filesystem exposure.
 - This documentation-only stage has low change risk. The proposed service has moderate implementation risk at rendering and file-access boundaries.
@@ -233,6 +242,36 @@ The user selected local access and knowledge with linked documentation and evide
 The [exact answers](#user-scope-answers) govern those boundaries.
 The proposed reader layout, rendering approach, and implementation sequence remain for discussion.
 
+### POC implementation
+
+Implemented the local command:
+
+```sh
+PYTHONPATH=. .venv/bin/python -m ai_sdlc_workbench --workspace . knowledge serve --port 8765 --open
+```
+
+The preview binds to loopback and exposes read-only `GET` routes for health, navigation, refresh, search, and document content.
+It discovers canonical records, derived wiki pages, current documentation, knowledge evidence, and manifest-linked task snapshots.
+It rejects unknown document keys, arbitrary filesystem reads, mutation methods, non-loopback hosts, symlink files, and excluded workspace directories.
+The browser provides collection navigation, search, rendered Markdown preview, raw-source mode, metadata, headings, SHA-256 display, breadcrumbs, and copy-link controls.
+The POC uses a small bundled Markdown subset renderer in vanilla JavaScript because the current checkout has no Markdown renderer dependency.
+Mermaid rendering, full CommonMark compatibility, image serving, and production sanitization remain follow-up work.
+
+Changed implementation files:
+
+- [Knowledge preview server](../../core/knowledge_web/server.py)
+- [Preview page](../../core/knowledge_web/static/index.html)
+- [Preview behavior](../../core/knowledge_web/static/app.js)
+- [Preview styling](../../core/knowledge_web/static/styles.css)
+- [CLI registration](../../core/cli.py)
+- [Wheel package data](../../pyproject.toml)
+- [Source distribution manifest](../../MANIFEST.in)
+- [Focused POC checks](../../tests/test_knowledge_web.py)
+
+The live local catalog contained 123 records, 210 wiki pages, 23 current-document pages, and 3,872 evidence pages.
+The task-evidence collection uses only manifest-linked snapshots; it does not recursively expose every task artifact.
+The current process was launched at `http://localhost:8765` for visual preview.
+
 ### Implementation sequence after authorization
 
 1. Discuss the proposed layout and source-format fidelity within the confirmed scope.
@@ -264,7 +303,10 @@ Inventories reflect local bytes during this assessment. Concurrent later changes
 Workspace discovery succeeded through `.venv/bin/ai-sdlc --workspace . status`.
 The bare `ai-sdlc` command was unavailable on the current shell PATH.
 No installation change was needed for investigation.
-No runtime or browser tests apply to this investigation-only stage.
+The focused preview suite passed: four tests covering catalog parsing, collection counts, search snippets, HTTP document reads, refresh, mutation rejection, and unknown-key rejection.
+The wheel build passed and contained the server plus all three static assets.
+The live HTTP smoke passed for health, navigation, search, root HTML, and asset responses.
+The live Chrome preview rendered the three-column layout and document metadata.
 Final document checks passed for 26 local links, their heading fragments, balanced fences, and three source checkpoint hashes.
 The staged diff review checks whitespace and confirms this task remains the only staged change.
 
@@ -279,4 +321,6 @@ reviewer: null
 reviewed_at: null
 limitations:
   - Automated checks do not establish complete writing review.
+  - The POC renderer is a bounded Markdown subset and does not prove full source-format fidelity.
+  - The local preview was visually checked in Chrome only; production accessibility and cross-browser coverage remain pending.
 ```

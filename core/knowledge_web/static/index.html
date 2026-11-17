@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workbench Knowledge Preview</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark">K</span><div><strong>Knowledge preview</strong><small>AI SDLC Workbench</small></div></div>
+    <label class="search"><span class="sr-only">Search</span><input id="search" type="search" placeholder="Search records, wiki, docs and evidence"><kbd>/</kbd></label>
+    <div class="actions"><select id="scope" aria-label="Search collection"><option value="">All collections</option></select><button id="refresh">Refresh</button></div>
+  </header>
+  <main class="shell">
+    <aside class="sidebar left" aria-label="Collections"><div class="panel-title"><span>Browse</span><span id="count" class="muted"></span></div><div id="collections"></div></aside>
+    <section class="reader" aria-live="polite">
+      <div id="welcome" class="welcome"><div class="welcome-icon">✦</div><h1>Browse the workspace knowledge</h1><p>Choose a document from the left or search across the selected collections.</p><div class="welcome-grid"><div><b>Records</b><span>Canonical intent and draft status</span></div><div><b>Wiki</b><span>Derived summaries and concepts</span></div><div><b>Evidence</b><span>Sources, selections and task links</span></div></div></div>
+      <article id="article" class="article hidden"></article>
+    </section>
+    <aside class="sidebar right" aria-label="Document details"><div class="panel-title">Document details</div><div id="details" class="details muted">Select a document to see its metadata and table of contents.</div></aside>
+  </main>
+  <div id="search-panel" class="search-panel hidden"><div class="panel-title"><span>Search results</span><button id="close-search">Close</button></div><div id="results"></div></div>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

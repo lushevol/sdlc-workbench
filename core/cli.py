@@ -21,6 +21,12 @@ def _parser() -> argparse.ArgumentParser:
     initialize.add_argument("path", nargs="?")
     initialize.add_argument("--name", default="My SDLC workspace")
     commands.add_parser("status", help="Describe the workspace")
+    knowledge = commands.add_parser("knowledge", help="Browse workspace knowledge")
+    knowledge_commands = knowledge.add_subparsers(dest="knowledge_command", required=True)
+    serve = knowledge_commands.add_parser("serve", help="Serve a local read-only knowledge preview")
+    serve.add_argument("--host", default="127.0.0.1", help="Loopback host only")
+    serve.add_argument("--port", type=int, default=8765)
+    serve.add_argument("--open", action="store_true", help="Open the preview in the default browser")
     doctor = commands.add_parser("doctor", help="Report local readiness and missing setup without external access")
     doctor.add_argument("--profile", choices=("core", "all"), default="all")
     commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
@@ -380,6 +386,9 @@ def main(argv: list[str] | None = None) -> int:
                 return build_graph(options)
             except (ValueError, subprocess.CalledProcessError) as error:
                 raise WorkbenchError("Graph generation failed. Inspect diagnostics; the previous snapshot remains available.") from error
+        if arguments.command == "knowledge":
+            from .knowledge_web import serve
+            return serve(arguments.workspace, host=arguments.host, port=arguments.port, open_browser=arguments.open)
         workbench = Workbench(arguments.workspace)
         if arguments.command in {"status", "resources", "plugins"}:
             description = workbench.describe()
