@@ -20,9 +20,25 @@ Use durable question and record updates below only within existing authorization
 5. Put short topic narratives beside their questions. Explain the consequence, responsible owner, and decision needed.
 6. Provide clearly proposed options and an editable answer field. Permit another answer, unknown, or a named contact.
 
+When several rows may represent one decision, group them only after investigation.
+Use one decision group when authority, actor, environment, version, and intended outcome match.
+Keep rows separate when any of those fields differ, when evidence conflicts, or when one answer would not resolve every consequence.
+Retain every original question ID, source link, answer scope, affected record, and owner inside the group.
+Label the group as a coordination aid; it does not replace the source questions or their reconciliation entries.
+Count distinct decisions separately from raw question rows.
+
 Do not preselect a business answer or replace a recorded answer. Ask only questions available investigation cannot resolve confidently.
 Hand over the editable document for asynchronous completion. Resume affected ingestion when returned answers and continuation are requested.
 Preserve unanswered questions. A continuation request supplies no missing business answer or publication approval.
+
+For the handoff, show the original rows and a compact decision view together:
+
+| Decision group | Source question IDs | Shared scope | Different scope or conflict | Consequence and owner |
+| --- | --- | --- | --- | --- |
+| DG-1 | KQ-1, KQ-4 | Same authority, actor, environment, and version. | `none` or explain the difference. | Affected records, decision consequence, and owner. |
+
+Do not mark a grouped row answered because a related row has an answer.
+An absent machine `Status` field remains `UNKNOWN` until the question content and evidence support another state.
 
 ## Apply returned answers
 

@@ -43,6 +43,17 @@ Unanswered policy remains unanswered.
 Missing consumer declarations keep the scope unknown.
 All results retain `verification: NOT_VERIFIED`.
 
+## Group related decisions without losing question identity
+
+A living document may show a compact decision group beside its original question rows.
+Group rows only when authority, actor, environment, version, and intended outcome match.
+Keep rows separate when one of those fields differs, evidence conflicts, or one answer cannot resolve every consequence.
+Retain every original question ID, answer scope, source link, consumer, and owner.
+The group is a review aid. It does not replace a question heading or change the reconciliation manifest.
+
+Report the number of distinct decision groups separately from the number of question rows.
+Do not infer an answered status from a related row or from an absent `Status` field.
+
 ```yaml
 standard: ASD-STE100
 automated_check: PASSED
