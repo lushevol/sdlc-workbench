@@ -2,10 +2,10 @@
 
 > **Improve existing skill decisions before expanding runtime infrastructure.** Strengthen source accounting, recovery, question handling, and semantic assessment.
 > **Add one distinct skill: `evaluate-harness`.** It compares workflow behavior across skill revisions using isolated trials and independent assessment.
-> This is an unapplied plan. Targets are proposed. The next step is requirements review; implementation owner: unknown.
+> This plan is now an implementation record. The selected skill changes passed bounded evaluations and distribution checks. The larger pilot targets remain optional follow-up measurements.
 
-The [requirements table and skill map](07-requirements-and-skills.md) now govern the next review step.
-Review those requirements together before selecting enhancements or adopting this plan's numerical targets.
+The [requirements table and skill map](07-requirements-and-skills.md) defined the approved scope.
+The [maintenance record](01-maintenance.md#enhancement-completion-17-november-2026) links each completed stage and its evaluation.
 
 ## Direction and evidence
 
@@ -70,7 +70,7 @@ Direction: Translate historical corrections into reproducible tasks before presc
 | `decision-grouping` | `resolve-knowledge-questions` | Reuse saved answers and group equivalent decisions without merging different scopes or authorities. |
 | `reader-usefulness` | Unchanged `query-knowledge` answering; `evaluate-knowledge-retrieval` review | Review paired drafts, correct supported findings, and check 12 final answers against 24 source predicates. |
 
-Case names are proposed additions. They are not currently executable catalog entries.
+The six case names remain evaluation design references. They are not all executable catalog entries.
 Existing [evaluation instructions](../../tests/README.md#evaluate-skill-decisions) already separate respondent inputs from assessor criteria.
 The preparer already supports `--skills-root`. No helper code change is currently justified.
 
@@ -311,8 +311,8 @@ Only this task's plan, maintenance record, and document-check evidence change du
 Two independent read-only audits checked ownership, portability, denominators, reader responsibilities, and baseline comparability.
 Their findings corrected the plan before commitment.
 The [plan document checks](evidence/plan-document-checks.json) cover local links, input bindings, counts, and selected prose limits.
-No skill optimization, behavioral trial, token benchmark, business execution, or target-platform pilot has run under this plan.
-Baselines, named owners, actual evaluation cost, and real-environment access remain to be established.
+The selected skill optimizations ran bounded structural and synthetic trials. The full 13-case schedule, three-repeat 24-predicate corpus, token benchmark, business execution, and target-platform pilot did not run.
+The completed stage evidence records actual checks, limits, and hashes. Future measurements need a named owner, a pinned model/client, and a matched baseline before percentage claims.
 
 ```yaml
 standard: ASD-STE100

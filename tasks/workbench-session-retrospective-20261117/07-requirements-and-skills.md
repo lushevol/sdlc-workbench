@@ -1,6 +1,6 @@
 # Requirements and skill map
 
-> **Review requirements before choosing enhancements.** This table is the next discussion surface, ahead of the provisional optimization plan.
+> **Requirements defined the enhancement boundary.** The completed skill changes and evaluations are recorded in the owning maintenance record.
 > **All 49 retained input excerpts are accounted for.** The 22 rows consolidate related requests; they are not priority rankings.
 > Skill ownership identifies existing responsibilities. It does not establish reliable execution or an approved change.
 
@@ -79,8 +79,7 @@ Shared responsibilities need the active workflow, relevant runtime, and client a
 | R21 | [code-review](../../.agents/skills/code-review/SKILL.md); [impact-analysis](../../.agents/skills/impact-analysis/SKILL.md) | [ces-migration-scan](../../.agents/skills/ces-migration-scan/SKILL.md) for its specialized scope; [verify-implementation](../../.agents/skills/verify-implementation/SKILL.md). | Preserve actual consumer contracts and performance. Escalate role meaning that cannot fit the old scalar contract. |
 | R22 | [llm-wiki](../../.agents/skills/llm-wiki/SKILL.md); [maintain-wiki-content](../../.agents/skills/maintain-wiki-content/SKILL.md) | [openkb](../../.agents/skills/openkb/SKILL.md); [query-knowledge](../../.agents/skills/query-knowledge/SKILL.md); [evaluate-knowledge-retrieval](../../.agents/skills/evaluate-knowledge-retrieval/SKILL.md). | Native graph, engine selection, freshness, detail, and factual support need separate checks. |
 
-`evaluate-harness` remains a proposal in the [earlier plan](06-optimization-plan.md#stage-1--add-a-narrowly-scoped-evaluation-skill).
-It does not currently exist and is not a confirmed requirement or mapped existing owner.
+`evaluate-harness` is now the shared evaluation protocol added under the approved scope. Its bounded evaluation is recorded in [stage evidence](evidence/stage-04-evaluate-harness-evaluation.json).
 The earlier five-skill shortlist does not cover this complete requirement set.
 
 ## Scope qualifications
@@ -135,7 +134,7 @@ The separately retained intent clarification supports R04. Neither supplement ch
 
 ## Joint review record
 
-Current state: draft requirements and candidate ownership map. No new priorities, targets, or enhancements are selected.
+Current state: approved requirements and ownership map. Selected enhancements are implemented and evaluated; numerical targets remain optional pilot measures.
 Use the stable requirement ID when correcting a problem, desired result, preference, focus, or skill owner.
 Record future answers here with their exact source and date. Do not infer answers from continuation messages.
 
@@ -143,20 +142,19 @@ Record future answers here with their exact source and date. Do not infer answer
 | --- | --- |
 | Requirement wording and missing themes | No new answer recorded. |
 | Proposed ownership corrections | No new answer recorded. |
-| First requirements to improve | Not selected. |
-| Evidence needed before changing a skill | Not selected for individual rows. |
-| New skill responsibility | Not selected; `evaluate-harness` remains a candidate. |
+| First requirements to improve | R04 source accounting, R17 completion/recovery, R03 decision grouping, and R18 semantic preservation. |
+| Evidence needed before changing a skill | Bounded stage evaluation, focused regressions, exact hashes, and distribution checks. |
+| New skill responsibility | `evaluate-harness`: paired baseline/candidate workflow evaluation with independent assessment. |
 
-After this review, inspect the chosen skills against agreed requirements and representative cases.
-Then record narrow enhancement options, affected files, expected outcomes, and measurements beside their requirement IDs.
-Reuse the existing [plan](06-optimization-plan.md) where supported. Revise its scope and numerical targets from the reviewed requirements.
+The selected skills were inspected against the agreed requirements and representative cases.
+The affected files, outcomes, measurements, and limits are recorded in the [implementation record](01-maintenance.md#enhancement-completion-17-november-2026) and [stage evidence](evidence/stage-06-distribution-evaluation.json).
+Reuse the [plan](06-optimization-plan.md) for future matched pilots without treating bounded trials as general reliability proof.
 
 ## Checks and limits
 
 The [table checks](evidence/requirements-table-checks.json) record row accounting, source coverage, current skill links, and document checks.
-The source excerpts remain the evidence; this matrix supplies no new business policy, execution result, or implementation authorization.
-No skill, runtime, business repository, knowledge record, or wiki content changed for this table.
-Named enhancement owners remain unknown until selected. Joint review of this requirements synthesis remains pending.
+The source excerpts remain the requirement evidence; this matrix supplies no new business policy, execution result, or deployment authorization.
+Skill changes are recorded under the owning maintenance task. No business repository, knowledge record, or wiki content changed for this enhancement sequence.
 
 ```yaml
 standard: ASD-STE100
