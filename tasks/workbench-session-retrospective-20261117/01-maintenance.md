@@ -61,6 +61,14 @@ The restricted attempt failed at loopback socket binding. The authorized loopbac
 The [skill bindings](evidence/skill-snapshot-bindings.json) retain baseline and candidate helper, metadata, and instruction hashes.
 The [behavioral checkpoint](evidence/behavioral-trials/index.json) saves completed cases immediately. It does not imply completion of pending trials.
 
+### Evaluation recovery, 18 November 2026
+
+The coordinator stopped at a usage limit after twelve assessed trials.
+Its baseline source-disposition respondent completed. The candidate respondent stopped without a completed output.
+Live agent handles confirmed both states before resumption. Completed trials were preserved.
+The [oracle amendment](evidence/semantic-oracle-amendment.json) corrects one reader question and evidence-class expectations before affected stages.
+The [independent recheck](evidence/semantic-oracle-recheck.json) passed. Source text and prior assessments remain unchanged.
+
 ## Exact user input
 
 Source: Current Codex conversation. Date: 17 November 2026, Asia/Singapore.
