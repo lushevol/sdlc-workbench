@@ -85,17 +85,22 @@ def _review(value, *, require_accounting=False):
         accounting = value["source_to_output"]
         if (not isinstance(accounting, list) or not accounting
                 or any(not isinstance(item, dict) or set(item) != {"source_range", "disposition", "target", "reason"}
-                       or not _text(item["source_range"]) or item["disposition"] not in _SOURCE_OUTPUT_DISPOSITIONS
+                       or not _text(item["source_range"]) or not isinstance(item["disposition"], str)
+                       or item["disposition"] not in _SOURCE_OUTPUT_DISPOSITIONS
                        or not _text(item["target"]) or not _text(item["reason"])
                        for item in accounting)):
             raise WorkbenchError("Source-to-output accounting needs source range, disposition, target, and reason.")
     return value
 
 
-def _accounting_complete(review):
+def _accounting_complete(review, outputs=()):
     accounting = review.get("source_to_output") if isinstance(review, dict) else None
     return isinstance(accounting, list) and bool(accounting) and all(
         item.get("disposition") != "pending_or_unresolved" for item in accounting
+    ) and all(
+        bool(item["target"].partition("#")[2]) and item["target"].partition("#")[0] in outputs
+        and not _navigation(item["target"].partition("#")[0])
+        for item in accounting if item["disposition"] == "existing_coverage"
     )
 
 
@@ -150,8 +155,8 @@ def _receipts(root, source_id, manifest):
         if any(binding["dependencies"].get(path) != digest for path, digest in receipt["outputs"].items()
                if not _navigation(path)):
             raise WorkbenchError("Successful-processing fingerprints must include every domain output hash.")
-        _review(receipt["review"], require_accounting=(receipt["disposition"] == "no_change"
-                                                        and "source_to_output" in receipt["review"]))
+        # Legacy reviews without accounting remain readable and are queued below.
+        _review(receipt["review"])
         checkpoint = receipt["checkpoint"]
         if checkpoint is not None and (not isinstance(checkpoint, dict) or set(checkpoint) != {"final", "prepared"}
                 or any(not isinstance(binding, dict) or set(binding) != {"path", "sha256"}
@@ -301,7 +306,7 @@ def _queues(root, state, recipe):
         fingerprint = _fingerprint(_input_binding(root, row, state["index"]["policy"], recipe, dependencies))
         changed_outputs = prior and any(state["canonical_hashes"].get(name) != digest
                                        for name, digest in prior["outputs"].items() if not _navigation(name))
-        accounting_missing = prior and prior["disposition"] == "no_change" and not _accounting_complete(prior["review"])
+        accounting_missing = prior and prior["disposition"] == "no_change" and not _accounting_complete(prior["review"], prior["outputs"])
         if prior and prior["fingerprint"] == fingerprint and not changed_outputs and not accounting_missing:
             unchanged += 1
             continue
@@ -462,8 +467,8 @@ def complete_sources(root: Path, source_id: str, plan_path: str, results_path: s
                     or disposition == "excluded" and row["decision"] not in {"EXCLUDE", "EVIDENCE_ONLY"}):
                 raise WorkbenchError("Completion dispositions must agree with source presence and the reviewed selection.")
             review = _review(result["review"], require_accounting=(disposition == "no_change"))
-            if disposition == "no_change" and not _accounting_complete(review):
-                raise WorkbenchError("A no-change completion cannot clear a source with pending semantic clauses.")
+            if disposition == "no_change" and not _accounting_complete(review, result["outputs"]):
+                raise WorkbenchError("No-change coverage needs reviewed output paths with section locators and no pending semantic clauses.")
             outputs = {path: _digest(_read(_canonical_path(root, path))) for path in sorted(result["outputs"])}
             affected, dependencies = _scope(state, row, outputs)
             required_outputs = set(item["starting_outputs"]) | set(affected)

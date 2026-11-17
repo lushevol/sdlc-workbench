@@ -6,6 +6,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import re
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -186,6 +187,115 @@ class IncrementalIngestionTests(unittest.TestCase):
             self.complete(plan, path, pending)
         self.assertFalse((self.root / "evidence/knowledge/processing/docs.json").exists())
         self.assertEqual(len(self.plan()[0]["process_queue"]), 1)
+
+    def test_malformed_accounting_and_receipt_reviews_return_structured_errors(self):
+        """Malformed review fields must fail without a Python type error or receipt write."""
+        from ai_sdlc_workbench.cli import main
+
+        self.page()
+        self.refresh()
+        self.select()
+        plan, path = self.plan()
+        for disposition in ([], {}, None):
+            result = self.result(source_to_output=[{
+                "source_range": "L1", "disposition": disposition,
+                "target": "none", "reason": "Malformed input must not clear this source.",
+            }])
+            with self.subTest(disposition=disposition), self.assertRaises(WorkbenchError):
+                self.complete(plan, path, result)
+        receipt_path = self.root / "evidence/knowledge/processing/docs.json"
+        self.assertFalse(receipt_path.exists())
+        self.complete(plan, path, self.result())
+        valid = json.loads(receipt_path.read_text())
+        for review in (None, [], "invalid", 1):
+            value = deepcopy(valid)
+            value["receipts"]["page.md"]["review"] = review
+            receipt_path.write_text(json.dumps(value))
+            output = io.StringIO()
+            with self.subTest(review=review), redirect_stdout(output):
+                code = main(["--workspace", str(self.root), "sources", "plan", "--source", "docs"])
+                self.assertEqual(code, 1)
+                self.assertIn("error", json.loads(output.getvalue()))
+
+    def test_existing_coverage_is_bound_to_reviewed_outputs_and_requeues_on_change(self):
+        """A no-change target must be reviewed and hash-bound before its source can skip work."""
+        self.page()
+        self.page("other.md", "A related requirement.\n")
+        self.refresh()
+        self.select()
+        self.select("other.md")
+        record = self.record(source="other.md")
+        plan, path = self.plan()
+        for target in (record + "#request-validation", "knowledge/candidates/missing.md#scope", "none"):
+            result = self.result(source_to_output=[{
+                "source_range": "L1", "disposition": "existing_coverage",
+                "target": target, "reason": "The target must be an inspected bound output.",
+            }])
+            with self.subTest(target=target), self.assertRaisesRegex(WorkbenchError, "coverage"):
+                self.complete(plan, path, result)
+        navigation = self.result(outputs=["knowledge/README.md"], source_to_output=[{
+            "source_range": "L1", "disposition": "existing_coverage", "target": "knowledge/README.md#scope",
+            "reason": "Navigation is not a domain record and cannot carry the coverage binding.",
+        }])
+        with self.assertRaisesRegex(WorkbenchError, "coverage"):
+            self.complete(plan, path, navigation)
+        receipt_path = self.root / "evidence/knowledge/processing/docs.json"
+        self.assertFalse(receipt_path.exists())
+        covered = self.result(outputs=[record], source_to_output=[{
+            "source_range": "L1", "disposition": "existing_coverage",
+            "target": record + "#request-validation", "reason": "The unchanged record preserves the selected intent.",
+        }])
+        self.assertEqual(self.complete(plan, path, covered, self.result(path="other.md", outputs=[record]))["status"], "COMPLETED")
+        receipts = json.loads(receipt_path.read_text())["receipts"]
+        self.assertIn(record, receipts["page.md"]["outputs"])
+        self.assertEqual(self.plan()[0]["counts"]["unchanged"], 2)
+        target = self.root / record
+        original = target.read_bytes()
+        target.write_bytes(original + b"\nA changed condition.\n")
+        self.assertEqual({item["path"] for item in self.plan()[0]["process_queue"]}, {"page.md", "other.md"})
+        target.unlink()
+        self.assertEqual({item["path"] for item in self.plan()[0]["process_queue"]}, {"page.md", "other.md"})
+
+    def test_legacy_unbound_coverage_receipt_is_requeued_without_mutating_history(self):
+        """Prior unbound claims remain readable but cannot skip source review."""
+        self.page()
+        self.refresh()
+        self.select()
+        plan, path = self.plan()
+        self.complete(plan, path, self.result())
+        receipt_path = self.root / "evidence/knowledge/processing/docs.json"
+        receipt = json.loads(receipt_path.read_text())
+        receipt["receipts"]["page.md"]["review"]["source_to_output"] = [{
+            "source_range": "L1", "disposition": "existing_coverage",
+            "target": "knowledge/candidates/absent.md#scope", "reason": "Legacy unbound citation.",
+        }]
+        receipt_path.write_text(json.dumps(receipt))
+        before = receipt_path.read_bytes()
+        replanned = self.plan()[0]
+        self.assertEqual([item["path"] for item in replanned["process_queue"]], ["page.md"])
+        self.assertIn("source_to_output_accounting_missing", replanned["process_queue"][0]["reasons"])
+        self.assertEqual(before, receipt_path.read_bytes())
+
+    def test_documented_no_change_result_is_accepted_and_reusable(self):
+        """The shipped JSON example works after replacing its illustrative values with inspected evidence."""
+        guide = Path(__file__).resolve().parents[1] / ".agents/skills/ingest-knowledge/references/source-preparation.md"
+        section = guide.read_text().split("## Record canonical processing completion", 1)[1]
+        example = next(json.loads(block) for block in re.findall(r"```json\n(.*?)\n```", section, re.S)
+                       if '"disposition": "no_change"' in block)
+        self.page()
+        self.refresh()
+        self.select()
+        record = self.record()
+        plan, path = self.plan()
+        example.update(path="page.md", outputs=[record])
+        example["review"].update(actor="agent:documentation-test", note="Inspected L1 and Request validation; both deny invalid requests.")
+        example["review"]["source_to_output"][0].update(
+            source_range="L1", target=record + "#request-validation",
+            reason="The unchanged Request validation section preserves the denial rule.")
+        first = self.complete(plan, path, example)
+        self.assertEqual(first["status"], "COMPLETED")
+        self.assertEqual(self.complete(plan, path, example)["written"], 0)
+        self.assertEqual(self.plan()[0]["counts"]["unchanged"], 1)
 
     def test_partial_completion_preserves_unfinished_work_and_rejects_conflicting_retry(self):
         """Given two pending pages, when only one completes, then the other remains retryable and success cannot be overwritten."""

@@ -208,6 +208,45 @@ Before using `no_change`, retain a small source-to-output accounting note for ea
 An output-free receipt without one of these dispositions remains a declared receipt with incomplete semantic coverage.
 Keep the selected identity pending in coverage counts until its material clauses are covered, explicitly justified as context/redundancy, or explicitly excluded by reviewed scope.
 Do not force a new canonical record to improve a count.
+
+New `no_change` results require the `review.source_to_output` array. Each row has exactly these fields:
+
+- `source_range`: the inspected original line range, such as `L12-L19`.
+- `disposition`: `existing_coverage`, `context_or_redundancy`, or `pending_or_unresolved`.
+- `target`: the workspace-relative canonical path and section, or `none` for context or unresolved scope.
+- `reason`: the actual review reasoning, including applicable qualifications.
+
+Include each `existing_coverage` target in `outputs`, even when its bytes remain unchanged.
+The existing output hashes and dependency checks bind those paths. Changed or missing targets require another review.
+Unbound legacy coverage remains queued. Historical receipts remain readable and unchanged.
+The runtime checks declarations and bindings; the reviewer checks source support, section meaning, and completeness.
+A pending clause cannot clear a source through `no_change`. Leave it queued and record its next action.
+
+This result illustrates existing coverage. Replace the path, source range, identity, and reasoning with inspected evidence:
+
+```json
+{
+  "path": "design/page.md",
+  "disposition": "no_change",
+  "outputs": ["knowledge/records/candidates/security/access.md"],
+  "review": {
+    "actor": "ACTUAL_REVIEWER",
+    "reviewed_at": "2026-11-17T00:00:00Z",
+    "note": "REPLACE_WITH_ACTUAL_REVIEW_SCOPE",
+    "source_to_output": [
+      {
+        "source_range": "L1-L4",
+        "disposition": "existing_coverage",
+        "target": "knowledge/records/candidates/security/access.md#access-rule",
+        "reason": "REPLACE_WITH_THE_INSPECTED_RULE_AND_ITS_CONDITIONS"
+      }
+    ]
+  }
+}
+```
+
+For contextual material, `outputs` may be empty. Use `context_or_redundancy`, `target: "none"`, and a sourced reason.
+An unchanged source with new or omitted substantive intent cannot use that contextual disposition.
 Use `excluded` for reviewed omissions and `missing_reviewed` for reviewed missing-source consequences when queued.
 Missing sources do not revoke requirements automatically.
 
