@@ -218,3 +218,26 @@ Historical details, source conflicts, candidate qualifications, and unresolved q
 The new Cash Settlement RATAN Product remains distinct from the legacy RATAN Organization.
 Candidate integration supplies no publication, acceptance, deployment, or business execution approval.
 Complete ASD writing review remains pending.
+
+## [2026-11-16] review | Three sealed candidate deltas, checkpoint 224
+
+Pi Sol Medium reviewed three version 2 canonical deltas and 51 prior/current dependency pages.
+The updated summaries cover processing/exception controls, trade-control utilities, and the cashflow/settlement interface catalog.
+All other reviewed output bytes reuse their current exact-hash semantic reviews.
+Shared output owners and source-specific alternatives remain recorded.
+
+The processing summary adds named precheck duties, producer fixing predicates, SSI responsibilities, and release/last-mile conditions.
+The trade-control summary retains literal expected timing rows, clock conflicts, undo scope, and historical NSP-only replication.
+The interface summary preserves transport alternatives and corrects next-batch progression to require ACK.
+NACK requires investigation. The separate UK candidate retains its own scoped Ack/Nack wording.
+
+The recipe remains `pi-sol-medium-review-v2`.
+Current semantic authoring and review ran in Pi with supplied GPT-6.1 Sol Medium native selection.
+Earlier Luna Max authorship and Sol Medium reviews remain in their original retained evidence.
+Independent runtime model attestation remains unavailable.
+
+The bridge recorded completion after rechecking the current notice and all 117 source hashes.
+Verification reports zero findings across six structural categories.
+The fresh whole-candidate plan reports 117 unchanged records and no queued work.
+Evidence: `tasks/workbench-knowledge-raw-import-20261113/evidence/checkpoint-224-wiki-finalization.json`.
+No canonical record was edited or published. Complete ASD writing review remains pending.
