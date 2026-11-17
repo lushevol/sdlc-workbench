@@ -4,6 +4,9 @@
 > **Use existing controls before adding infrastructure.** The proposed next step is one measured workflow, including interruption recovery and semantic checks.
 > Recommendations remain proposals. Infrastructure implementation and acceptance remain outside this review.
 
+The [concrete optimization plan](06-optimization-plan.md) now defines seven stages, exact file targets, expected outcomes, and quantitative criteria.
+Planning is complete. The optimization targets remain proposed until baseline measurement and authorized implementation.
+
 ## Exact user input
 
 Source: Current Codex conversation. Date: 17 November 2026, Asia/Singapore.
@@ -13,6 +16,24 @@ Please review all my Codex sessions and inputs in this repo over the past month.
 ```
 
 ## Scope and method
+
+### Planning follow-up, 17 November 2026
+
+Source: Current Codex conversation. Exact user input:
+
+```text
+Please provide your plan for optimizing this projects. This must include:
+
+1. Very specific steps
+2. Optimization direction
+3. Files to be modified
+4. Expected outcomes
+5. Quantifiable measurement methods
+```
+
+Authorized scope: Inspect existing implementation and produce a concrete optimization plan. Runtime implementation remains proposed.
+The [optimization plan](06-optimization-plan.md) records sequence, exact file targets, expected outcomes, and measurement methods.
+The user's subsequent `go on` messages continue this planning scope. They supply no missing business answer or publication decision.
 
 Review window: 17 October through 17 November 2026, Asia/Singapore, through this request.
 The review covered 408 retained user inputs across 102 conversations. This includes 407 historical inputs and this request.
@@ -170,6 +191,7 @@ Keep this retrospective under its owning task; no new enduring documentation res
 
 Next action: select the first measurable workflow outcome and define its bounded completion evidence.
 This review needs no new business clarification, publication, or deployment decision.
+The plan recommends starting with Stage 0's bounded baseline, then accurate status and recovery.
 
 ## Checks and writing review
 
