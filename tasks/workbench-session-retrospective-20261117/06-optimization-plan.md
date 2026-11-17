@@ -2,10 +2,10 @@
 
 > **Improve existing skill decisions before expanding runtime infrastructure.** Strengthen source accounting, recovery, question handling, and semantic assessment.
 > **Add one distinct skill: `evaluate-harness`.** It compares workflow behavior across skill revisions using isolated trials and independent assessment.
-> This plan is now an implementation record. The selected skill changes passed bounded evaluations and distribution checks. The larger pilot targets remain optional follow-up measurements.
+> Implementation is under completion audit. Bounded checks passed, but the planned behavioral comparison still needs retained respondent and assessor evidence.
 
 The [requirements table and skill map](07-requirements-and-skills.md) defined the approved scope.
-The [maintenance record](01-maintenance.md#enhancement-completion-17-november-2026) links each completed stage and its evaluation.
+The [maintenance record](01-maintenance.md#completion-audit-continuation-17-november-2026) records the missing evaluation work and current corrections.
 
 ## Direction and evidence
 
@@ -70,7 +70,11 @@ Direction: Translate historical corrections into reproducible tasks before presc
 | `decision-grouping` | `resolve-knowledge-questions` | Reuse saved answers and group equivalent decisions without merging different scopes or authorities. |
 | `reader-usefulness` | Unchanged `query-knowledge` answering; `evaluate-knowledge-retrieval` review | Review paired drafts, correct supported findings, and check 12 final answers against 24 source predicates. |
 
-The six case names remain evaluation design references. They are not all executable catalog entries.
+All six cases now exist in the executable catalog, alongside the seven engineering cases.
+The corrected corpus contains eight synthetic documents across four collections and twenty-four assessor-only predicates.
+It retains twelve reader questions, a real unfinished draft, saved answers, and neutral source requests.
+The [rejected draft](evidence/rejected-fixture-draft.json) was superseded before respondent execution.
+The [baseline manifest](evidence/optimization-baseline.json) records exact catalog and rubric hashes.
 Existing [evaluation instructions](../../tests/README.md#evaluate-skill-decisions) already separate respondent inputs from assessor criteria.
 The preparer already supports `--skills-root`. No helper code change is currently justified.
 
@@ -311,8 +315,10 @@ Only this task's plan, maintenance record, and document-check evidence change du
 Two independent read-only audits checked ownership, portability, denominators, reader responsibilities, and baseline comparability.
 Their findings corrected the plan before commitment.
 The [plan document checks](evidence/plan-document-checks.json) cover local links, input bindings, counts, and selected prose limits.
-The selected skill optimizations ran bounded structural and synthetic trials. The full 13-case schedule, three-repeat 24-predicate corpus, token benchmark, business execution, and target-platform pilot did not run.
-The completed stage evidence records actual checks, limits, and hashes. Future measurements need a named owner, a pinned model/client, and a matched baseline before percentage claims.
+The earlier structural examples did not complete the planned behavioral comparison.
+The completion audit now runs fifty isolated trials with independent assessment before each next enhancement stage.
+The earlier instruction chronology cannot be reconstructed. The retained baseline uses exact pre-enhancement skill bytes for retrospective comparison.
+Token savings remain unmeasured when actual usage is unavailable. Synthetic trials establish no business execution or production behavior.
 
 ```yaml
 standard: ASD-STE100

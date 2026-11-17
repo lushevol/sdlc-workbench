@@ -54,6 +54,13 @@ The original adverse evidence remains under [the runtime audit](evidence/runtime
 The corrected fixture catalog now has thirteen cases, eight source documents, twenty-four predicates, and twelve reader questions.
 The original leading fixture and twenty-six unexecuted preparations remain accounted for as `NOT_EXECUTED`.
 
+The [current distribution check](evidence/stage-06-distribution-correction.json) uses clean source commit `286651f2d`, without unrelated local files.
+All 220 shipped skill files match. Six generated catalogs are empty, with zero prohibited workspace artifacts.
+The full suite ran 1,082 tests: 1,080 passed and two optional connector tests were skipped.
+The restricted attempt failed at loopback socket binding. The authorized loopback rerun passed without changing tests.
+The [skill bindings](evidence/skill-snapshot-bindings.json) retain baseline and candidate helper, metadata, and instruction hashes.
+The [behavioral checkpoint](evidence/behavioral-trials/index.json) saves completed cases immediately. It does not imply completion of pending trials.
+
 ## Exact user input
 
 Source: Current Codex conversation. Date: 17 November 2026, Asia/Singapore.
