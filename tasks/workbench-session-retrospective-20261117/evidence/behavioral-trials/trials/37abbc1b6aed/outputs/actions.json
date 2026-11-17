@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "case_id": "lifecycle-accounting",
+  "synthetic": true,
+  "start_utc": "2026-11-17 12:07:00 UTC",
+  "end_utc": "2026-11-17 12:09:11 UTC",
+  "timing_note": "Start is the first observed clock reading after opening the evaluation request. End is recorded immediately before saving this final log.",
+  "observed": {
+    "model": "UNKNOWN",
+    "reasoning": "UNKNOWN",
+    "client": "UNKNOWN"
+  },
+  "requested_worker_from_checkpoint": {
+    "model": "luna",
+    "reasoning": "max",
+    "observed_dispatch": null
+  },
+  "files_read": [
+    "evaluation-input.json",
+    "drafts/answer-a.md",
+    "drafts/answer-b.md",
+    "knowledge/records/access.md",
+    "knowledge/records/operations.md",
+    "knowledge/records/portal.md",
+    "knowledge/records/settlement.md",
+    "questions.md",
+    "repo/revision.txt",
+    "selection.json",
+    "sources/access/grants.md",
+    "sources/access/migration.md",
+    "sources/context.md",
+    "sources/operations/retention.md",
+    "sources/operations/runtime.md",
+    "sources/portal/activity.md",
+    "sources/portal/observation.md",
+    "sources/settlement/cutoff.md",
+    "sources/settlement/recovery.md",
+    "tasks/checkpoint.json",
+    "tasks/gaps.md",
+    "tasks/progress.md",
+    "tasks/questions.md",
+    "tasks/recovery-draft.md",
+    "wiki/proposed.md",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+    "outputs/response.md"
+  ],
+  "files_written": [
+    "outputs/response.md",
+    "outputs/actions.json"
+  ],
+  "input_root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/37abbc1b6aed",
+  "commands_actually_run": [
+    {
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/37abbc1b6aed/evaluation-input.json",
+      "exit_code": 0
+    },
+    {
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/37abbc1b6aed')\nspec = json.loads((root / 'evaluation-input.json').read_text())\nfor name in spec['input_files_sha256']:\n    print('\\n### FILE ' + name)\n    print((root / name).read_text())\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport hashlib\nimport json\nfrom pathlib import Path\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/37abbc1b6aed')\nspec = json.loads((root / 'evaluation-input.json').read_text())\nchecks = []\nfor name, expected in spec['input_files_sha256'].items():\n    observed = hashlib.sha256((root / name).read_bytes()).hexdigest()\n    checks.append({'path': name, 'matches': observed == expected})\nfor name, expected in spec['skill_inputs_sha256'].items():\n    observed = hashlib.sha256(Path(name).read_bytes()).hexdigest()\n    checks.append({'path': name, 'matches': observed == expected})\nprint(json.dumps(checks, indent=2))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport hashlib\nimport json\nimport re\nfrom pathlib import Path\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/37abbc1b6aed')\nspec = json.loads((root / 'evaluation-input.json').read_text())\nfor name, expected in spec['input_files_sha256'].items():\n    assert hashlib.sha256((root / name).read_bytes()).hexdigest() == expected, name\nfor name, expected in spec['skill_inputs_sha256'].items():\n    assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == expected, name\nresponse = root / 'outputs/response.md'\ncontent = response.read_text()\nlinks = re.findall(r'\\]\\(([^)]+)\\)', content)\nfor target in links:\n    assert (response.parent / target.split('#', 1)[0]).is_file(), target\nassert 'asd_review: PENDING' in content\nassert 'automated_check: PASSED' in content\nprint(json.dumps({'fixture_hashes_matched': len(spec['input_files_sha256']), 'skill_hashes_matched': len(spec['skill_inputs_sha256']), 'response_links_checked': len(links), 'input_changes': False}))\nPY",
+      "exit_code": 0
+    }
+  ],
+  "other_tool_actions": [
+    {
+      "tool": "clock__curr_time",
+      "purpose": "Observe UTC timestamps"
+    },
+    {
+      "tool": "apply_patch",
+      "path": "outputs/response.md",
+      "purpose": "Create the requested status and add observed-dispatch limits"
+    },
+    {
+      "tool": "apply_patch",
+      "path": "outputs/actions.json",
+      "purpose": "Create this action log"
+    }
+  ],
+  "checks_observed": {
+    "fixture_hashes_matched": 24,
+    "skill_hashes_matched": 1,
+    "response_links_checked": 24,
+    "input_changes": false,
+    "runtime_lifecycle_validators": "NOT_RUN",
+    "business_execution": "NOT_RUN",
+    "publication": "NOT_RUN",
+    "network_operations": "NOT_RUN"
+  },
+  "limitations": [
+    "Synthetic inputs establish fixture status only.",
+    "No observed runtime model, reasoning setting, or client was exposed.",
+    "No self-grading was performed."
+  ]
+}

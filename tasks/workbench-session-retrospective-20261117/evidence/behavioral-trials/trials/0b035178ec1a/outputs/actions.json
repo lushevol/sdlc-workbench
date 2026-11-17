@@ -1,0 +1,532 @@
+{
+  "schema_version": 1,
+  "case_id": "lifecycle-accounting",
+  "fixture_root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a",
+  "prompt_source": "evaluation-input.json",
+  "authorization": {
+    "input_access": "read-only",
+    "authorized_writes": [
+      "outputs/response.md",
+      "outputs/actions.json"
+    ],
+    "network_calls": false,
+    "business_transitions": false
+  },
+  "settings": {
+    "current_model": "UNKNOWN",
+    "current_reasoning": "UNKNOWN",
+    "current_client": "UNKNOWN",
+    "observed_role": "collaboration sub-agent respondent",
+    "checkpoint_requested_worker": {
+      "model": "luna",
+      "reasoning": "max"
+    },
+    "checkpoint_observed_dispatch": null,
+    "note": "Checkpoint requests do not establish actual model, reasoning, client, or dispatch settings."
+  },
+  "timing": {
+    "first_tool_timestamp_utc": "UNKNOWN",
+    "first_observed_utc": "2026-11-17T12:12:02.677820+00:00",
+    "precise_full_task_elapsed_seconds": "UNKNOWN",
+    "last_observed_utc": "2026-11-17T12:15:28.118717+00:00",
+    "observed_interval_seconds": 205.440897
+  },
+  "actions": [
+    {
+      "id": 1,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a/evaluation-input.json",
+      "timestamp_utc": "UNKNOWN",
+      "wall_time_seconds": 8.75e-06,
+      "files_read": [
+        "evaluation-input.json"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "3b0a1f",
+        "summary": "Read prompt, selected skill, boundaries, and allowed input inventory."
+      }
+    },
+    {
+      "id": 2,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+      "timestamp_utc": "UNKNOWN",
+      "wall_time_seconds": 9.791e-06,
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md"
+      ],
+      "files_written": [],
+      "parallel_group": "skill-and-context",
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "43a719",
+        "summary": "Loaded selected lifecycle skill."
+      }
+    },
+    {
+      "id": 3,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime, timezone\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a')\nprint('observed_at=' + datetime.now(timezone.utc).isoformat())\nfor name in ['selection.json','sources/context.md','tasks/checkpoint.json','tasks/progress.md']:\n    print('\\nFILE ' + name)\n    print((root / name).read_text())\nPY",
+      "timestamp_utc": "2026-11-17T12:12:02.677820+00:00",
+      "wall_time_seconds": 8.959e-06,
+      "files_read": [
+        "selection.json",
+        "sources/context.md",
+        "tasks/checkpoint.json",
+        "tasks/progress.md"
+      ],
+      "files_written": [],
+      "parallel_group": "skill-and-context",
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "3e1db6",
+        "summary": "Read selected identities, receipt declarations, resume checkpoint, and conflicting saved completion claim."
+      }
+    },
+    {
+      "id": 4,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime, timezone\nimport hashlib\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a')\nprint('observed_at=' + datetime.now(timezone.utc).isoformat())\nfiles = ['sources/portal/activity.md','sources/settlement/recovery.md','sources/access/grants.md','knowledge/records/portal.md','knowledge/records/settlement.md','knowledge/records/access.md','knowledge/records/operations.md','tasks/recovery-draft.md','tasks/questions.md','tasks/gaps.md','questions.md','wiki/proposed.md','drafts/answer-a.md','drafts/answer-b.md','repo/revision.txt']\nfor name in files:\n    payload = (root / name).read_bytes()\n    print('\\nFILE ' + name + ' SHA256 ' + hashlib.sha256(payload).hexdigest())\n    for number, line in enumerate(payload.decode().splitlines(), 1):\n        print(str(number) + ' ' + line)\nPY",
+      "timestamp_utc": "2026-11-17T12:12:19.573331+00:00",
+      "wall_time_seconds": 9.042e-06,
+      "files_read": [
+        "sources/portal/activity.md",
+        "sources/settlement/recovery.md",
+        "sources/access/grants.md",
+        "knowledge/records/portal.md",
+        "knowledge/records/settlement.md",
+        "knowledge/records/access.md",
+        "knowledge/records/operations.md",
+        "tasks/recovery-draft.md",
+        "tasks/questions.md",
+        "tasks/gaps.md",
+        "questions.md",
+        "wiki/proposed.md",
+        "drafts/answer-a.md",
+        "drafts/answer-b.md",
+        "repo/revision.txt"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "d466d3",
+        "summary": "Inspected current sources, canonical outputs, drafts, saved answers, and proposed wiki. Observed missing recovery and denial coverage."
+      }
+    },
+    {
+      "id": 5,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime, timezone\nimport hashlib, json\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a')\nprint('observed_at=' + datetime.now(timezone.utc).isoformat())\nfor name in ['sources/portal/observation.md','sources/settlement/cutoff.md','sources/access/migration.md','sources/operations/runtime.md','sources/operations/retention.md']:\n    payload = (root / name).read_bytes()\n    print('\\nFILE ' + name + ' SHA256 ' + hashlib.sha256(payload).hexdigest())\n    for number, line in enumerate(payload.decode().splitlines(), 1):\n        print(str(number) + ' ' + line)\ndata = json.loads((root / 'evaluation-input.json').read_text())\nchecks = []\nfor name, expected in data['input_files_sha256'].items():\n    actual = hashlib.sha256((root / name).read_bytes()).hexdigest()\n    checks.append({'file': name, 'matches': actual == expected})\nfor name, expected in data['skill_inputs_sha256'].items():\n    actual = hashlib.sha256(Path(name).read_bytes()).hexdigest()\n    checks.append({'file': name, 'matches': actual == expected})\nprint('\\nSHA256_VERIFICATION ' + json.dumps(checks))\nPY",
+      "timestamp_utc": "2026-11-17T12:12:44.348386+00:00",
+      "wall_time_seconds": 8.958e-06,
+      "files_read": [
+        "evaluation-input.json",
+        "drafts/answer-a.md",
+        "drafts/answer-b.md",
+        "knowledge/records/access.md",
+        "knowledge/records/operations.md",
+        "knowledge/records/portal.md",
+        "knowledge/records/settlement.md",
+        "questions.md",
+        "repo/revision.txt",
+        "selection.json",
+        "sources/access/grants.md",
+        "sources/access/migration.md",
+        "sources/context.md",
+        "sources/operations/retention.md",
+        "sources/operations/runtime.md",
+        "sources/portal/activity.md",
+        "sources/portal/observation.md",
+        "sources/settlement/cutoff.md",
+        "sources/settlement/recovery.md",
+        "tasks/checkpoint.json",
+        "tasks/gaps.md",
+        "tasks/progress.md",
+        "tasks/questions.md",
+        "tasks/recovery-draft.md",
+        "wiki/proposed.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "07b4d7",
+        "summary": "Verified context behind conflicting prose. All 24 listed input hashes and the selected skill hash matched."
+      }
+    },
+    {
+      "id": 6,
+      "tool": "functions.exec -> tools.exec_command",
+      "command_argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+        "-c",
+        "from pathlib import Path\nfrom datetime import datetime, timezone\nimport hashlib, json, re, sys, time\nstarted = time.monotonic()\npayload = json.loads(\"{\\\"response\\\":\\\"# Knowledge workflow status\\\\n\\\\n**Canonical processing is partial.** The saved \u201call four selected sources are complete\u201d summary conflicts with current evidence. Resume the payment-recovery draft when execution is authorized. Preserve accepted Portal and context work. [Progress](../tasks/progress.md) \u00b7 [Checkpoint](../tasks/checkpoint.json)\\\\n\\\\n## Selected-source accounting\\\\n\\\\nAll four selected-source hashes match current files. Four reviewed `no_change` declarations do not establish complete coverage. [Selection](../selection.json)\\\\n\\\\n| Selected identity | Current evidence | Disposition |\\\\n| --- | --- | --- |\\\\n| `portal/activity.md` | Accepted. Receipt links the matching Portal Activity candidate. | Supported existing coverage |\\\\n| `context.md` | Accepted. Receipt explains redundant navigation context. | Justified contextual no-change |\\\\n| `settlement/recovery.md` | Receipt lacks outputs or justification. Canonical record expressly lacks recovery. Saved draft omits material clauses. | Unfinished |\\\\n| `access/grants.md` | Receipt lacks outputs or justification. Candidate omits denial without a matching action grant. | Held for canonical review |\\\\n\\\\nOne selected identity has an output link. One additional identity has justified contextual no-change. **Two of four identities have supported dispositions.** Both remaining identities stay within the denominator. [Portal](../knowledge/records/portal.md) \u00b7 [Settlement](../knowledge/records/settlement.md) \u00b7 [Access](../knowledge/records/access.md) \u00b7 [Recovery draft](../tasks/recovery-draft.md)\\\\n\\\\n## Stage and attention\\\\n\\\\n- **Sources.** Supplied bindings are current. Whole-collection coverage is unknown. The selection contains synthetic declarations, rather than runtime receipts. [Selection](../selection.json)\\\\n- **Canonical processing.** Resume original-reference retry, accepted-reference duplicate prevention, and explicitly unresolved late-arrival retention. No retention default exists. Owner is unknown. Route through `ingest-knowledge`. Completion requires source-complete candidate coverage and reviewed, output-bound processing evidence. [Recovery source](../sources/settlement/recovery.md) \u00b7 [Checkpoint](../tasks/checkpoint.json)\\\\n- **Independent access work.** Review the missing denial clause through `ingest-knowledge`. Owner is unknown. The held scope needs canonical review. A human policy answer is unnecessary for retaining this supplied draft rule. Completion requires coverage of the denial clause. [Grant source](../sources/access/grants.md) \u00b7 [Checkpoint](../tasks/checkpoint.json)\\\\n- **Intent and governance.** Records remain candidates. Final-byte reviews, immutable audit evidence, and sealed changed-output checkpoints are unavailable. Publication lacks human approval. Route through `govern-knowledge` after candidate reconciliation. Reviewer identity is unknown. Completion requires actual final-byte review and applicable approval evidence. [Selection](../selection.json)\\\\n- **Wiki.** The fresh-input filename list lacks reviewed completion IDs and input/output hash evidence. The proposed excerpt contradicts supplied intent on production duration, cutoff, scalar roles, and trace deletion. Route through `llm-wiki` after canonical reconciliation. Owner is unknown. Completion requires corrected, reviewed outputs and verified bindings. [Proposed excerpt](../wiki/proposed.md) \u00b7 [Activity](../sources/portal/activity.md) \u00b7 [Cutoff](../sources/settlement/cutoff.md) \u00b7 [Grants](../sources/access/grants.md) \u00b7 [Retention](../sources/operations/retention.md)\\\\n- **Implementation and deployment.** Historical local execution used a controlled clock and stub issuer. The 5,000 ms delay establishes implementation timing. UAT issuer configuration and clock offset remain unknown. Deployment completion and owner remain unknown. [Observation](../sources/portal/observation.md) \u00b7 [Environment](../sources/operations/runtime.md)\\\\n\\\\nRetain saved answers KQ-01, KQ-10, and KQ-11 within their exact scopes. Open questions include touch/synthetic inputs, suspension recovery, publication, and late-arrival retention. The retention decision belongs to `owner:settlement`. It can remain unresolved while known recovery clauses receive review. [Living questions](../tasks/questions.md) \u00b7 [Activity](../sources/portal/activity.md)\\\\n\\\\nDraft A introduces unsupported seven-day retention, permissive missing-grant behavior, and a UAT configuration conclusion. Draft B preserves those three evidence limits. Neither draft replaces canonical processing evidence. [Draft A](../drafts/answer-a.md) \u00b7 [Draft B](../drafts/answer-b.md)\\\\n\\\\nConfidence is high for this fixture accounting. All 24 supplied input hashes and the selected skill hash matched. Report links were checked. Workflow commands and new behavior execution were `NOT_RUN`. This read-only assessment changed only the two requested outputs. Synthetic evidence establishes no business behavior.\\\\n\\\\n```yaml\\\\nstandard: ASD-STE100\\\\nautomated_check: PASSED\\\\nasd_review: PENDING\\\\nreviewer: null\\\\nreviewed_at: null\\\\nlimitations:\\\\n  - Automated checks do not establish complete writing review.\\\\n```\\\\n\\\",\\\"seed\\\":{\\\"schema_version\\\":1,\\\"case_id\\\":\\\"lifecycle-accounting\\\",\\\"fixture_root\\\":\\\"/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a\\\",\\\"prompt_source\\\":\\\"evaluation-input.json\\\",\\\"authorization\\\":{\\\"input_access\\\":\\\"read-only\\\",\\\"authorized_writes\\\":[\\\"outputs/response.md\\\",\\\"outputs/actions.json\\\"],\\\"network_calls\\\":false,\\\"business_transitions\\\":false},\\\"settings\\\":{\\\"current_model\\\":\\\"UNKNOWN\\\",\\\"current_reasoning\\\":\\\"UNKNOWN\\\",\\\"current_client\\\":\\\"UNKNOWN\\\",\\\"observed_role\\\":\\\"collaboration sub-agent respondent\\\",\\\"checkpoint_requested_worker\\\":{\\\"model\\\":\\\"luna\\\",\\\"reasoning\\\":\\\"max\\\"},\\\"checkpoint_observed_dispatch\\\":null,\\\"note\\\":\\\"Checkpoint requests do not establish actual model, reasoning, client, or dispatch settings.\\\"},\\\"timing\\\":{\\\"first_tool_timestamp_utc\\\":\\\"UNKNOWN\\\",\\\"first_observed_utc\\\":\\\"2026-11-17T12:12:02.677820+00:00\\\",\\\"precise_full_task_elapsed_seconds\\\":\\\"UNKNOWN\\\"},\\\"actions\\\":[{\\\"id\\\":1,\\\"tool\\\":\\\"functions.exec -> tools.exec_command\\\",\\\"command\\\":\\\"cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a/evaluation-input.json\\\",\\\"timestamp_utc\\\":\\\"UNKNOWN\\\",\\\"wall_time_seconds\\\":0.00000875,\\\"files_read\\\":[\\\"evaluation-input.json\\\"],\\\"files_written\\\":[],\\\"result\\\":{\\\"exit_code\\\":0,\\\"chunk_id\\\":\\\"3b0a1f\\\",\\\"summary\\\":\\\"Read prompt, selected skill, boundaries, and allowed input inventory.\\\"}},{\\\"id\\\":2,\\\"tool\\\":\\\"functions.exec -> tools.exec_command\\\",\\\"command\\\":\\\"cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md\\\",\\\"timestamp_utc\\\":\\\"UNKNOWN\\\",\\\"wall_time_seconds\\\":0.000009791,\\\"files_read\\\":[\\\"/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md\\\"],\\\"files_written\\\":[],\\\"parallel_group\\\":\\\"skill-and-context\\\",\\\"result\\\":{\\\"exit_code\\\":0,\\\"chunk_id\\\":\\\"43a719\\\",\\\"summary\\\":\\\"Loaded selected lifecycle skill.\\\"}},{\\\"id\\\":3,\\\"tool\\\":\\\"functions.exec -> tools.exec_command\\\",\\\"command\\\":\\\"python3 - <<'PY'\\\\nfrom pathlib import Path\\\\nfrom datetime import datetime, timezone\\\\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a')\\\\nprint('observed_at=' + datetime.now(timezone.utc).isoformat())\\\\nfor name in ['selection.json','sources/context.md','tasks/checkpoint.json','tasks/progress.md']:\\\\n    print('\\\\\\\\nFILE ' + name)\\\\n    print((root / name).read_text())\\\\nPY\\\",\\\"timestamp_utc\\\":\\\"2026-11-17T12:12:02.677820+00:00\\\",\\\"wall_time_seconds\\\":0.000008959,\\\"files_read\\\":[\\\"selection.json\\\",\\\"sources/context.md\\\",\\\"tasks/checkpoint.json\\\",\\\"tasks/progress.md\\\"],\\\"files_written\\\":[],\\\"parallel_group\\\":\\\"skill-and-context\\\",\\\"result\\\":{\\\"exit_code\\\":0,\\\"chunk_id\\\":\\\"3e1db6\\\",\\\"summary\\\":\\\"Read selected identities, receipt declarations, resume checkpoint, and conflicting saved completion claim.\\\"}},{\\\"id\\\":4,\\\"tool\\\":\\\"functions.exec -> tools.exec_command\\\",\\\"command\\\":\\\"python3 - <<'PY'\\\\nfrom pathlib import Path\\\\nfrom datetime import datetime, timezone\\\\nimport hashlib\\\\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a')\\\\nprint('observed_at=' + datetime.now(timezone.utc).isoformat())\\\\nfiles = ['sources/portal/activity.md','sources/settlement/recovery.md','sources/access/grants.md','knowledge/records/portal.md','knowledge/records/settlement.md','knowledge/records/access.md','knowledge/records/operations.md','tasks/recovery-draft.md','tasks/questions.md','tasks/gaps.md','questions.md','wiki/proposed.md','drafts/answer-a.md','drafts/answer-b.md','repo/revision.txt']\\\\nfor name in files:\\\\n    payload = (root / name).read_bytes()\\\\n    print('\\\\\\\\nFILE ' + name + ' SHA256 ' + hashlib.sha256(payload).hexdigest())\\\\n    for number, line in enumerate(payload.decode().splitlines(), 1):\\\\n        print(str(number) + ' ' + line)\\\\nPY\\\",\\\"timestamp_utc\\\":\\\"2026-11-17T12:12:19.573331+00:00\\\",\\\"wall_time_seconds\\\":0.000009042,\\\"files_read\\\":[\\\"sources/portal/activity.md\\\",\\\"sources/settlement/recovery.md\\\",\\\"sources/access/grants.md\\\",\\\"knowledge/records/portal.md\\\",\\\"knowledge/records/settlement.md\\\",\\\"knowledge/records/access.md\\\",\\\"knowledge/records/operations.md\\\",\\\"tasks/recovery-draft.md\\\",\\\"tasks/questions.md\\\",\\\"tasks/gaps.md\\\",\\\"questions.md\\\",\\\"wiki/proposed.md\\\",\\\"drafts/answer-a.md\\\",\\\"drafts/answer-b.md\\\",\\\"repo/revision.txt\\\"],\\\"files_written\\\":[],\\\"result\\\":{\\\"exit_code\\\":0,\\\"chunk_id\\\":\\\"d466d3\\\",\\\"summary\\\":\\\"Inspected current sources, canonical outputs, drafts, saved answers, and proposed wiki. Observed missing recovery and denial coverage.\\\"}},{\\\"id\\\":5,\\\"tool\\\":\\\"functions.exec -> tools.exec_command\\\",\\\"command\\\":\\\"python3 - <<'PY'\\\\nfrom pathlib import Path\\\\nfrom datetime import datetime, timezone\\\\nimport hashlib, json\\\\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a')\\\\nprint('observed_at=' + datetime.now(timezone.utc).isoformat())\\\\nfor name in ['sources/portal/observation.md','sources/settlement/cutoff.md','sources/access/migration.md','sources/operations/runtime.md','sources/operations/retention.md']:\\\\n    payload = (root / name).read_bytes()\\\\n    print('\\\\\\\\nFILE ' + name + ' SHA256 ' + hashlib.sha256(payload).hexdigest())\\\\n    for number, line in enumerate(payload.decode().splitlines(), 1):\\\\n        print(str(number) + ' ' + line)\\\\ndata = json.loads((root / 'evaluation-input.json').read_text())\\\\nchecks = []\\\\nfor name, expected in data['input_files_sha256'].items():\\\\n    actual = hashlib.sha256((root / name).read_bytes()).hexdigest()\\\\n    checks.append({'file': name, 'matches': actual == expected})\\\\nfor name, expected in data['skill_inputs_sha256'].items():\\\\n    actual = hashlib.sha256(Path(name).read_bytes()).hexdigest()\\\\n    checks.append({'file': name, 'matches': actual == expected})\\\\nprint('\\\\\\\\nSHA256_VERIFICATION ' + json.dumps(checks))\\\\nPY\\\",\\\"timestamp_utc\\\":\\\"2026-11-17T12:12:44.348386+00:00\\\",\\\"wall_time_seconds\\\":0.000008958,\\\"files_read\\\":[\\\"sources/portal/observation.md\\\",\\\"sources/settlement/cutoff.md\\\",\\\"sources/access/migration.md\\\",\\\"sources/operations/runtime.md\\\",\\\"sources/operations/retention.md\\\",\\\"evaluation-input.json\\\",\\\"ALL_24_LISTED_INPUTS_FOR_HASH_VERIFICATION\\\",\\\"/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md\\\"],\\\"files_written\\\":[],\\\"result\\\":{\\\"exit_code\\\":0,\\\"chunk_id\\\":\\\"07b4d7\\\",\\\"summary\\\":\\\"Verified context behind conflicting prose. All 24 listed input hashes and the selected skill hash matched.\\\"}}],\\\"attempts_preserved\\\":true,\\\"material_failures\\\":[],\\\"semantic_grading_performed\\\":false,\\\"external_model_or_api_runner_used\\\":false,\\\"workflow_operations_run\\\":[]}}\")\nroot = Path(\"/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a\")\nnow = lambda: datetime.now(timezone.utc).isoformat()\ndata = json.loads((root / 'evaluation-input.json').read_text())\ninput_checks = []\nfor name, expected in data['input_files_sha256'].items():\n    actual = hashlib.sha256((root / name).read_bytes()).hexdigest()\n    input_checks.append({'file': name, 'expected_sha256': expected, 'actual_sha256': actual, 'matches': actual == expected})\nskill_checks = []\nfor name, expected in data['skill_inputs_sha256'].items():\n    actual = hashlib.sha256(Path(name).read_bytes()).hexdigest()\n    skill_checks.append({'file': name, 'expected_sha256': expected, 'actual_sha256': actual, 'matches': actual == expected})\nassert all(item['matches'] for item in input_checks + skill_checks)\nout = root / 'outputs'\nout.mkdir(exist_ok=True)\nresponse_path = out / 'response.md'\nwritten = response_path.write_text(payload['response'])\nassert response_path.read_text() == payload['response']\nlinks = re.findall(r'\\]\\(([^)]+)\\)', payload['response'])\nlink_checks = []\nfor target in links:\n    destination = (out / target.split('#')[0]).resolve()\n    assert destination.is_file(), target\n    assert destination.is_relative_to(root.resolve()), target\n    link_checks.append({'target': target, 'exists': True})\nactions = payload['seed']\nactions['input_prompt'] = data['prompt']\nactions['files_read'] = ['evaluation-input.json'] + list(data['input_files_sha256']) + list(data['skill_inputs_sha256']) + ['outputs/response.md', 'outputs/actions.json']\nactions['files_written'] = ['outputs/response.md', 'outputs/actions.json']\nactions['actions'][4]['files_read'] = ['evaluation-input.json'] + list(data['input_files_sha256']) + list(data['skill_inputs_sha256'])\nactions['input_hash_verification'] = input_checks\nactions['skill_hash_verification'] = skill_checks\nactions['report_link_verification'] = link_checks\nactions['response_sha256'] = hashlib.sha256(response_path.read_bytes()).hexdigest()\nactions['actions'].append({\n    'id': 6,\n    'tool': 'functions.exec -> tools.exec_command',\n    'command_argv': sys.orig_argv,\n    'timestamp_utc': now(),\n    'files_read': ['evaluation-input.json'] + list(data['input_files_sha256']) + list(data['skill_inputs_sha256']) + ['outputs/response.md', 'outputs/actions.json'],\n    'files_written': ['outputs/response.md', 'outputs/actions.json'],\n    'result': {'input_hash_matches': len(input_checks), 'skill_hash_matches': len(skill_checks), 'response_readback': 'MATCH', 'report_links': 'ALL_EXIST', 'response_characters_written': written, 'action_log_json_readback': 'VALID'},\n    'elapsed_to_output_preparation_seconds': time.monotonic() - started\n})\nactions['timing']['last_observed_utc'] = now()\nfirst = datetime.fromisoformat(actions['timing']['first_observed_utc'])\nactions['timing']['observed_interval_seconds'] = (datetime.fromisoformat(actions['timing']['last_observed_utc']) - first).total_seconds()\nlog_path = out / 'actions.json'\nlog_path.write_text(json.dumps(actions, indent=2) + '\\n')\nassert json.loads(log_path.read_text()) == actions\nprint(json.dumps({'result':'outputs written and read back','response':'outputs/response.md','actions':'outputs/actions.json','input_hash_matches':len(input_checks),'skill_hash_matches':len(skill_checks),'links_verified':len(link_checks),'observed_at_utc':now(),'writer_elapsed_seconds':time.monotonic()-started}))\n"
+      ],
+      "timestamp_utc": "2026-11-17T12:15:02.311910+00:00",
+      "files_read": [
+        "evaluation-input.json",
+        "drafts/answer-a.md",
+        "drafts/answer-b.md",
+        "knowledge/records/access.md",
+        "knowledge/records/operations.md",
+        "knowledge/records/portal.md",
+        "knowledge/records/settlement.md",
+        "questions.md",
+        "repo/revision.txt",
+        "selection.json",
+        "sources/access/grants.md",
+        "sources/access/migration.md",
+        "sources/context.md",
+        "sources/operations/retention.md",
+        "sources/operations/runtime.md",
+        "sources/portal/activity.md",
+        "sources/portal/observation.md",
+        "sources/settlement/cutoff.md",
+        "sources/settlement/recovery.md",
+        "tasks/checkpoint.json",
+        "tasks/gaps.md",
+        "tasks/progress.md",
+        "tasks/questions.md",
+        "tasks/recovery-draft.md",
+        "wiki/proposed.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+        "outputs/response.md",
+        "outputs/actions.json"
+      ],
+      "files_written": [
+        "outputs/response.md",
+        "outputs/actions.json"
+      ],
+      "result": {
+        "input_hash_matches": 24,
+        "skill_hash_matches": 1,
+        "response_readback": "MATCH",
+        "report_links": "ALL_EXIST",
+        "response_characters_written": 5089,
+        "action_log_json_readback": "VALID"
+      },
+      "elapsed_to_output_preparation_seconds": 0.004334749886766076
+    },
+    {
+      "id": 7,
+      "tool": "functions.exec -> tools.exec_command",
+      "command_argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+        "-c",
+        "from pathlib import Path\nfrom datetime import datetime, timezone\nimport hashlib, json, sys, time\nstarted = time.monotonic()\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a')\nresponse_path = root / 'outputs/response.md'\nlog_path = root / 'outputs/actions.json'\nbefore = response_path.read_text()\nold = 'The selection contains synthetic declarations, rather than runtime receipts.'\nnew = 'The selection supplies synthetic declarations. Runtime receipts are unavailable.'\nassert old in before\nafter = before.replace(old, new)\nresponse_path.write_text(after)\nassert response_path.read_text() == after\nactions = json.loads(log_path.read_text())\nactions['actions'].append({\n    'id': 7,\n    'tool': 'functions.exec -> tools.exec_command',\n    'command_argv': sys.orig_argv,\n    'timestamp_utc': datetime.now(timezone.utc).isoformat(),\n    'files_read': ['outputs/response.md', 'outputs/actions.json'],\n    'files_written': ['outputs/response.md', 'outputs/actions.json'],\n    'result': {\n        'summary': 'Rephrased the synthetic-declaration sentence to follow the supplied writing guidance.',\n        'previous_response_sha256': hashlib.sha256(before.encode()).hexdigest(),\n        'current_response_sha256': hashlib.sha256(after.encode()).hexdigest(),\n        'response_readback': 'MATCH',\n        'action_log_json_readback': 'VALID'\n    },\n    'elapsed_to_output_preparation_seconds': time.monotonic() - started\n})\nactions['response_sha256'] = hashlib.sha256(after.encode()).hexdigest()\nactions['timing']['last_observed_utc'] = datetime.now(timezone.utc).isoformat()\nactions['timing']['observed_interval_seconds'] = (datetime.fromisoformat(actions['timing']['last_observed_utc']) - datetime.fromisoformat(actions['timing']['first_observed_utc'])).total_seconds()\nlog_path.write_text(json.dumps(actions, indent=2) + '\\n')\nassert json.loads(log_path.read_text()) == actions\nprint(json.dumps({'result': 'report wording corrected and action log retained', 'observed_at_utc': datetime.now(timezone.utc).isoformat(), 'elapsed_seconds': time.monotonic() - started}))\n"
+      ],
+      "timestamp_utc": "2026-11-17T12:15:28.118614+00:00",
+      "files_read": [
+        "outputs/response.md",
+        "outputs/actions.json"
+      ],
+      "files_written": [
+        "outputs/response.md",
+        "outputs/actions.json"
+      ],
+      "result": {
+        "summary": "Rephrased the synthetic-declaration sentence to follow the supplied writing guidance.",
+        "previous_response_sha256": "cab5f85d52108216b978b128b8086f8ea7d6d1be8305c18d2351cf847d8ff04d",
+        "current_response_sha256": "94749ae4badaea5e8e0f331b85ad726bad435bb0b943b8de35ccc212b5328ab2",
+        "response_readback": "MATCH",
+        "action_log_json_readback": "VALID"
+      },
+      "elapsed_to_output_preparation_seconds": 0.0006912080571055412
+    }
+  ],
+  "attempts_preserved": true,
+  "material_failures": [],
+  "semantic_grading_performed": false,
+  "external_model_or_api_runner_used": false,
+  "workflow_operations_run": [],
+  "input_prompt": "In /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0b035178ec1a, Tell me where this knowledge workflow stands and what needs attention, using the supplied sources and saved progress. Retain a concise status at outputs/response.md. This status request is read-only for all inputs. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
+  "files_read": [
+    "evaluation-input.json",
+    "drafts/answer-a.md",
+    "drafts/answer-b.md",
+    "knowledge/records/access.md",
+    "knowledge/records/operations.md",
+    "knowledge/records/portal.md",
+    "knowledge/records/settlement.md",
+    "questions.md",
+    "repo/revision.txt",
+    "selection.json",
+    "sources/access/grants.md",
+    "sources/access/migration.md",
+    "sources/context.md",
+    "sources/operations/retention.md",
+    "sources/operations/runtime.md",
+    "sources/portal/activity.md",
+    "sources/portal/observation.md",
+    "sources/settlement/cutoff.md",
+    "sources/settlement/recovery.md",
+    "tasks/checkpoint.json",
+    "tasks/gaps.md",
+    "tasks/progress.md",
+    "tasks/questions.md",
+    "tasks/recovery-draft.md",
+    "wiki/proposed.md",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+    "outputs/response.md",
+    "outputs/actions.json"
+  ],
+  "files_written": [
+    "outputs/response.md",
+    "outputs/actions.json"
+  ],
+  "input_hash_verification": [
+    {
+      "file": "drafts/answer-a.md",
+      "expected_sha256": "43bfa504a82e82a174f9142e56a5b5c17de559034480b4f29c1607969d7ce16f",
+      "actual_sha256": "43bfa504a82e82a174f9142e56a5b5c17de559034480b4f29c1607969d7ce16f",
+      "matches": true
+    },
+    {
+      "file": "drafts/answer-b.md",
+      "expected_sha256": "961acf9b2695bad07cb8612d69772ea54a82abfe1dbd9c81a36fb026b02503b0",
+      "actual_sha256": "961acf9b2695bad07cb8612d69772ea54a82abfe1dbd9c81a36fb026b02503b0",
+      "matches": true
+    },
+    {
+      "file": "knowledge/records/access.md",
+      "expected_sha256": "44dda0bb11582a685678cb22059a07394f3823d1199ddd37d057c9cd4656bc73",
+      "actual_sha256": "44dda0bb11582a685678cb22059a07394f3823d1199ddd37d057c9cd4656bc73",
+      "matches": true
+    },
+    {
+      "file": "knowledge/records/operations.md",
+      "expected_sha256": "4c4db0facc8a14b6b8817272bbb7afadb380643cc8ebc9585335156d362c12a2",
+      "actual_sha256": "4c4db0facc8a14b6b8817272bbb7afadb380643cc8ebc9585335156d362c12a2",
+      "matches": true
+    },
+    {
+      "file": "knowledge/records/portal.md",
+      "expected_sha256": "d0f432185cb07637f5cdb6531f386535aac7cd8aa8d04417fc4260859d812d7f",
+      "actual_sha256": "d0f432185cb07637f5cdb6531f386535aac7cd8aa8d04417fc4260859d812d7f",
+      "matches": true
+    },
+    {
+      "file": "knowledge/records/settlement.md",
+      "expected_sha256": "9dad2430b9de12df13b193c2145d92dc638cedd5f1d12376cc2f16feffb871fb",
+      "actual_sha256": "9dad2430b9de12df13b193c2145d92dc638cedd5f1d12376cc2f16feffb871fb",
+      "matches": true
+    },
+    {
+      "file": "questions.md",
+      "expected_sha256": "26217593e2b671c5f627d4db4d298659339945db0a79f711b5e9b5e2c231de42",
+      "actual_sha256": "26217593e2b671c5f627d4db4d298659339945db0a79f711b5e9b5e2c231de42",
+      "matches": true
+    },
+    {
+      "file": "repo/revision.txt",
+      "expected_sha256": "b68c3a955d4430ca037b450e5c9b62e235cb9276fa77ddc9f8908ce68fd1b9f3",
+      "actual_sha256": "b68c3a955d4430ca037b450e5c9b62e235cb9276fa77ddc9f8908ce68fd1b9f3",
+      "matches": true
+    },
+    {
+      "file": "selection.json",
+      "expected_sha256": "57eb23e64c0b89aa2d4bb529767eb23563dae74ddb7aeeed90efb59703aceb55",
+      "actual_sha256": "57eb23e64c0b89aa2d4bb529767eb23563dae74ddb7aeeed90efb59703aceb55",
+      "matches": true
+    },
+    {
+      "file": "sources/access/grants.md",
+      "expected_sha256": "c6fd5728e9254ead6e161621637de1d9293c3ba0c87fab184836ed26e42fb833",
+      "actual_sha256": "c6fd5728e9254ead6e161621637de1d9293c3ba0c87fab184836ed26e42fb833",
+      "matches": true
+    },
+    {
+      "file": "sources/access/migration.md",
+      "expected_sha256": "ed3eec1fddb50b9c274e57504beee2beb38d32e3df97e8841474fdc8ba841582",
+      "actual_sha256": "ed3eec1fddb50b9c274e57504beee2beb38d32e3df97e8841474fdc8ba841582",
+      "matches": true
+    },
+    {
+      "file": "sources/context.md",
+      "expected_sha256": "c22959f0afa460d3ab28c82054719a714013081a2bc27f9ec450e27a714f1031",
+      "actual_sha256": "c22959f0afa460d3ab28c82054719a714013081a2bc27f9ec450e27a714f1031",
+      "matches": true
+    },
+    {
+      "file": "sources/operations/retention.md",
+      "expected_sha256": "cce786feee9068aa4b924701c77b63052a5c2083afa385893332805b790cd574",
+      "actual_sha256": "cce786feee9068aa4b924701c77b63052a5c2083afa385893332805b790cd574",
+      "matches": true
+    },
+    {
+      "file": "sources/operations/runtime.md",
+      "expected_sha256": "2afa0ea96678a1c031456d6da1f3453ca33dab1c03ebce7568e9fcff6c6aa397",
+      "actual_sha256": "2afa0ea96678a1c031456d6da1f3453ca33dab1c03ebce7568e9fcff6c6aa397",
+      "matches": true
+    },
+    {
+      "file": "sources/portal/activity.md",
+      "expected_sha256": "584404867d329bdcf7e7cc596e196b14d3fa0228fe9649a94d37a83624785c24",
+      "actual_sha256": "584404867d329bdcf7e7cc596e196b14d3fa0228fe9649a94d37a83624785c24",
+      "matches": true
+    },
+    {
+      "file": "sources/portal/observation.md",
+      "expected_sha256": "cf8429472ac69752a878619fed615307829f55af52081dfc129b1a72012d2520",
+      "actual_sha256": "cf8429472ac69752a878619fed615307829f55af52081dfc129b1a72012d2520",
+      "matches": true
+    },
+    {
+      "file": "sources/settlement/cutoff.md",
+      "expected_sha256": "aaef4a4467652a75c6b5a25583846d49de6356eba5f8a35244f5da4d3f1e5c69",
+      "actual_sha256": "aaef4a4467652a75c6b5a25583846d49de6356eba5f8a35244f5da4d3f1e5c69",
+      "matches": true
+    },
+    {
+      "file": "sources/settlement/recovery.md",
+      "expected_sha256": "7873d7ffc27ae5a9631fafa8c2a2e99618558082b4906a4699b716eb0e8e4db6",
+      "actual_sha256": "7873d7ffc27ae5a9631fafa8c2a2e99618558082b4906a4699b716eb0e8e4db6",
+      "matches": true
+    },
+    {
+      "file": "tasks/checkpoint.json",
+      "expected_sha256": "b975afa9db2bb73964ca13b0975610af45ddefe100b53095db2b92fd575be570",
+      "actual_sha256": "b975afa9db2bb73964ca13b0975610af45ddefe100b53095db2b92fd575be570",
+      "matches": true
+    },
+    {
+      "file": "tasks/gaps.md",
+      "expected_sha256": "11eaed47f990ac13e7d09b2e218c2bdaef5fee318d60e91d789972330f4ef7b8",
+      "actual_sha256": "11eaed47f990ac13e7d09b2e218c2bdaef5fee318d60e91d789972330f4ef7b8",
+      "matches": true
+    },
+    {
+      "file": "tasks/progress.md",
+      "expected_sha256": "bf79068e9506e45674214b64a3dc699c1cf0d137d34697721345b48fc8f6544f",
+      "actual_sha256": "bf79068e9506e45674214b64a3dc699c1cf0d137d34697721345b48fc8f6544f",
+      "matches": true
+    },
+    {
+      "file": "tasks/questions.md",
+      "expected_sha256": "c6d5bf3445e1ba5f4e39a68a827a326cfd43d0b4b69b98d0725f9eb585d28ff6",
+      "actual_sha256": "c6d5bf3445e1ba5f4e39a68a827a326cfd43d0b4b69b98d0725f9eb585d28ff6",
+      "matches": true
+    },
+    {
+      "file": "tasks/recovery-draft.md",
+      "expected_sha256": "3259589177e45211ff95542be72f2147a125a3d390cb935778f91f9e75f43bd6",
+      "actual_sha256": "3259589177e45211ff95542be72f2147a125a3d390cb935778f91f9e75f43bd6",
+      "matches": true
+    },
+    {
+      "file": "wiki/proposed.md",
+      "expected_sha256": "a239dcb3dac3ff6526fbf6008e52362ca3fd7d0fd1c85affec92363aa1a03ba4",
+      "actual_sha256": "a239dcb3dac3ff6526fbf6008e52362ca3fd7d0fd1c85affec92363aa1a03ba4",
+      "matches": true
+    }
+  ],
+  "skill_hash_verification": [
+    {
+      "file": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+      "expected_sha256": "1875de9aed9b3d0c7d60cff1cfb632a28fb88bafdcf77c4ae7684591db11dc70",
+      "actual_sha256": "1875de9aed9b3d0c7d60cff1cfb632a28fb88bafdcf77c4ae7684591db11dc70",
+      "matches": true
+    }
+  ],
+  "report_link_verification": [
+    {
+      "target": "../tasks/progress.md",
+      "exists": true
+    },
+    {
+      "target": "../tasks/checkpoint.json",
+      "exists": true
+    },
+    {
+      "target": "../selection.json",
+      "exists": true
+    },
+    {
+      "target": "../knowledge/records/portal.md",
+      "exists": true
+    },
+    {
+      "target": "../knowledge/records/settlement.md",
+      "exists": true
+    },
+    {
+      "target": "../knowledge/records/access.md",
+      "exists": true
+    },
+    {
+      "target": "../tasks/recovery-draft.md",
+      "exists": true
+    },
+    {
+      "target": "../selection.json",
+      "exists": true
+    },
+    {
+      "target": "../sources/settlement/recovery.md",
+      "exists": true
+    },
+    {
+      "target": "../tasks/checkpoint.json",
+      "exists": true
+    },
+    {
+      "target": "../sources/access/grants.md",
+      "exists": true
+    },
+    {
+      "target": "../tasks/checkpoint.json",
+      "exists": true
+    },
+    {
+      "target": "../selection.json",
+      "exists": true
+    },
+    {
+      "target": "../wiki/proposed.md",
+      "exists": true
+    },
+    {
+      "target": "../sources/portal/activity.md",
+      "exists": true
+    },
+    {
+      "target": "../sources/settlement/cutoff.md",
+      "exists": true
+    },
+    {
+      "target": "../sources/access/grants.md",
+      "exists": true
+    },
+    {
+      "target": "../sources/operations/retention.md",
+      "exists": true
+    },
+    {
+      "target": "../sources/portal/observation.md",
+      "exists": true
+    },
+    {
+      "target": "../sources/operations/runtime.md",
+      "exists": true
+    },
+    {
+      "target": "../tasks/questions.md",
+      "exists": true
+    },
+    {
+      "target": "../sources/portal/activity.md",
+      "exists": true
+    },
+    {
+      "target": "../drafts/answer-a.md",
+      "exists": true
+    },
+    {
+      "target": "../drafts/answer-b.md",
+      "exists": true
+    }
+  ],
+  "response_sha256": "94749ae4badaea5e8e0f331b85ad726bad435bb0b943b8de35ccc212b5328ab2"
+}

@@ -69,6 +69,11 @@ Live agent handles confirmed both states before resumption. Completed trials wer
 The [oracle amendment](evidence/semantic-oracle-amendment.json) corrects one reader question and evidence-class expectations before affected stages.
 The [independent recheck](evidence/semantic-oracle-recheck.json) passed. Source text and prior assessments remain unchanged.
 
+The [behavioral scorecard](evidence/optimization-scorecard.json) now retains eighteen assessed trials across lifecycle, recovery, and source disposition.
+All candidate criteria passed. Baseline source disposition missed one exact-clause citation criterion in its first repetition.
+Both variants found both omissions and preserved justified unchanged and contextual results in all three repetitions.
+Decision grouping, semantic preservation, reader usefulness, and engineering transfer remain in progress or pending.
+
 ## Exact user input
 
 Source: Current Codex conversation. Date: 17 November 2026, Asia/Singapore.

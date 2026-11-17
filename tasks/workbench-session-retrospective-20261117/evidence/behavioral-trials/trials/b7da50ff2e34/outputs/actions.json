@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "case_id": "lifecycle-accounting",
+  "fixture_root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/b7da50ff2e34",
+  "synthetic": true,
+  "scope": "Read-only status assessment using listed fixture inputs and the selected skill; named output writes only.",
+  "settings": {
+    "requested_worker": {
+      "model": "luna",
+      "reasoning": "max",
+      "source": "tasks/checkpoint.json"
+    },
+    "saved_observed_dispatch": null,
+    "observed_model": "UNKNOWN",
+    "observed_reasoning": "UNKNOWN",
+    "observed_client": "UNKNOWN",
+    "model_api_runner_used": false
+  },
+  "time_evidence": {
+    "first_tool_timestamp_utc": "UNKNOWN",
+    "first_instrumented_read_utc": "2026-11-17T12:16:01.562835+00:00",
+    "log_write_started_utc": "2026-11-17T12:18:33.751681+00:00",
+    "clock_source": "Python datetime.now(timezone.utc) where instrumented; reported tool wall time for earlier calls."
+  },
+  "actions": [
+    {
+      "sequence": 1,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/b7da50ff2e34/evaluation-input.json",
+      "reads": [
+        "evaluation-input.json"
+      ],
+      "writes": [],
+      "reported_tool_wall_time_seconds": 0.1,
+      "reported_command_wall_time_seconds": 6.125e-06,
+      "exit_code": 0,
+      "result": "Read exact prompt, boundaries, selected skill, listed inputs and declared hashes."
+    },
+    {
+      "sequence": 2,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+      "reads": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/manage-knowledge-lifecycle/SKILL.md"
+      ],
+      "writes": [],
+      "reported_tool_wall_time_seconds": 0.1,
+      "reported_command_wall_time_seconds": 1.0083e-05,
+      "exit_code": 0,
+      "result": "Read selected manage-knowledge-lifecycle skill. No linked unlisted resources were opened."
+    },
+    {
+      "sequence": 3,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 -",
+      "execution_form": "Python source supplied through a quoted shell here-document.",
+      "reads": [
+        "evaluation-input.json",
+        "drafts/answer-a.md",
+        "drafts/answer-b.md",
+        "knowledge/records/access.md",
+        "knowledge/records/operations.md",
+        "knowledge/records/portal.md",
+        "knowledge/records/settlement.md",
+        "questions.md",
+        "repo/revision.txt",
+        "selection.json",
+        "sources/access/grants.md",
+        "sources/access/migration.md",
+        "sources/context.md",
+        "sources/operations/retention.md",
+        "sources/operations/runtime.md",
+        "sources/portal/activity.md",
+        "sources/portal/observation.md",
+        "sources/settlement/cutoff.md",
+        "sources/settlement/recovery.md",
+        "tasks/checkpoint.json",
+        "tasks/gaps.md",
+        "tasks/progress.md",
+        "tasks/questions.md",
+        "tasks/recovery-draft.md",
+        "wiki/proposed.md"
+      ],
+      "writes": [],
+      "started_utc": "2026-11-17T12:16:01.562835+00:00",
+      "finished_utc": "2026-11-17T12:16:01.567316+00:00",
+      "actual_script_elapsed_seconds": 0.004479042021557689,
+      "reported_tool_wall_time_seconds": 0.1,
+      "exit_code": 0,
+      "operations": [
+        "Load the input_files_sha256 map from evaluation-input.json.",
+        "Read each listed file as bytes, calculate SHA-256, compare the declaration, and print numbered content."
+      ],
+      "result": "Read all 24 listed inputs; all 24 hashes matched."
+    },
+    {
+      "sequence": 4,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 -",
+      "execution_form": "Python source and report text supplied through a quoted shell here-document.",
+      "reads": [
+        "evaluation-input.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/manage-knowledge-lifecycle/SKILL.md"
+      ],
+      "writes": [
+        "outputs/",
+        "outputs/response.md"
+      ],
+      "finished_utc": "2026-11-17T12:17:18.144169+00:00",
+      "actual_script_elapsed_seconds": 0.0005576659459620714,
+      "reported_tool_wall_time_seconds": 0.1,
+      "exit_code": 0,
+      "operations": [
+        "Verify selected skill SHA-256 against its declaration.",
+        "Create the named output directory if needed.",
+        "Write the initial response."
+      ],
+      "result": {
+        "skill_hash_match": true,
+        "response_bytes": 7396,
+        "response_sha256": "92909741f74e6bc30df721a0e194a7ae75697035010a22ab9e9fbebe866e0702"
+      }
+    },
+    {
+      "sequence": 5,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 -",
+      "execution_form": "Python source supplied through a quoted shell here-document.",
+      "reads": [
+        "outputs/response.md",
+        "evaluation-input.json",
+        "drafts/answer-a.md",
+        "drafts/answer-b.md",
+        "knowledge/records/access.md",
+        "knowledge/records/operations.md",
+        "knowledge/records/portal.md",
+        "knowledge/records/settlement.md",
+        "questions.md",
+        "repo/revision.txt",
+        "selection.json",
+        "sources/access/grants.md",
+        "sources/access/migration.md",
+        "sources/context.md",
+        "sources/operations/retention.md",
+        "sources/operations/runtime.md",
+        "sources/portal/activity.md",
+        "sources/portal/observation.md",
+        "sources/settlement/cutoff.md",
+        "sources/settlement/recovery.md",
+        "tasks/checkpoint.json",
+        "tasks/gaps.md",
+        "tasks/progress.md",
+        "tasks/questions.md",
+        "tasks/recovery-draft.md",
+        "wiki/proposed.md"
+      ],
+      "metadata_checks": [
+        "29 response local-link targets exist."
+      ],
+      "writes": [
+        "outputs/response.md"
+      ],
+      "finished_utc": "2026-11-17T12:17:44.452333+00:00",
+      "actual_script_elapsed_seconds": 0.004367625107988715,
+      "reported_tool_wall_time_seconds": 0.1,
+      "exit_code": 0,
+      "operations": [
+        "Revise the final next-action item to allow qualified candidate wiki summaries before publication.",
+        "Recheck all 24 input hashes.",
+        "Check 29 local link targets, report metadata and code-fence pairing."
+      ],
+      "result": {
+        "listed_input_hashes": "PASSED",
+        "response_local_links": "PASSED",
+        "metadata_and_fences": "PASSED",
+        "response_words": 882,
+        "response_bytes": 7473,
+        "response_sha256": "ec10d93d4d39cb1ed6929b2d503f87251f12affade0ddc0c0f43858d9c0816c1"
+      }
+    },
+    {
+      "sequence": 6,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 -",
+      "execution_form": "Python source supplied through a quoted shell here-document.",
+      "reads": [
+        "evaluation-input.json",
+        "outputs/response.md",
+        "outputs/actions.json"
+      ],
+      "writes": [
+        "outputs/actions.json"
+      ],
+      "started_utc": "2026-11-17T12:18:33.751681+00:00",
+      "operations": [
+        "Construct this action log from observed tool calls and results.",
+        "Hash the response.",
+        "Write and reopen the JSON log, checking its structure."
+      ],
+      "result": "Writing and JSON read-back validation occur in this command."
+    }
+  ],
+  "files_read": [
+    "evaluation-input.json",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/manage-knowledge-lifecycle/SKILL.md",
+    "drafts/answer-a.md",
+    "drafts/answer-b.md",
+    "knowledge/records/access.md",
+    "knowledge/records/operations.md",
+    "knowledge/records/portal.md",
+    "knowledge/records/settlement.md",
+    "questions.md",
+    "repo/revision.txt",
+    "selection.json",
+    "sources/access/grants.md",
+    "sources/access/migration.md",
+    "sources/context.md",
+    "sources/operations/retention.md",
+    "sources/operations/runtime.md",
+    "sources/portal/activity.md",
+    "sources/portal/observation.md",
+    "sources/settlement/cutoff.md",
+    "sources/settlement/recovery.md",
+    "tasks/checkpoint.json",
+    "tasks/gaps.md",
+    "tasks/progress.md",
+    "tasks/questions.md",
+    "tasks/recovery-draft.md",
+    "wiki/proposed.md",
+    "outputs/response.md",
+    "outputs/actions.json"
+  ],
+  "files_written": [
+    "outputs/response.md",
+    "outputs/actions.json"
+  ],
+  "input_verification": {
+    "files": 24,
+    "sha256_matches": 24,
+    "skill_sha256_matches": 1,
+    "hashes": {
+      "drafts/answer-a.md": "43bfa504a82e82a174f9142e56a5b5c17de559034480b4f29c1607969d7ce16f",
+      "drafts/answer-b.md": "961acf9b2695bad07cb8612d69772ea54a82abfe1dbd9c81a36fb026b02503b0",
+      "knowledge/records/access.md": "44dda0bb11582a685678cb22059a07394f3823d1199ddd37d057c9cd4656bc73",
+      "knowledge/records/operations.md": "4c4db0facc8a14b6b8817272bbb7afadb380643cc8ebc9585335156d362c12a2",
+      "knowledge/records/portal.md": "d0f432185cb07637f5cdb6531f386535aac7cd8aa8d04417fc4260859d812d7f",
+      "knowledge/records/settlement.md": "9dad2430b9de12df13b193c2145d92dc638cedd5f1d12376cc2f16feffb871fb",
+      "questions.md": "26217593e2b671c5f627d4db4d298659339945db0a79f711b5e9b5e2c231de42",
+      "repo/revision.txt": "b68c3a955d4430ca037b450e5c9b62e235cb9276fa77ddc9f8908ce68fd1b9f3",
+      "selection.json": "57eb23e64c0b89aa2d4bb529767eb23563dae74ddb7aeeed90efb59703aceb55",
+      "sources/access/grants.md": "c6fd5728e9254ead6e161621637de1d9293c3ba0c87fab184836ed26e42fb833",
+      "sources/access/migration.md": "ed3eec1fddb50b9c274e57504beee2beb38d32e3df97e8841474fdc8ba841582",
+      "sources/context.md": "c22959f0afa460d3ab28c82054719a714013081a2bc27f9ec450e27a714f1031",
+      "sources/operations/retention.md": "cce786feee9068aa4b924701c77b63052a5c2083afa385893332805b790cd574",
+      "sources/operations/runtime.md": "2afa0ea96678a1c031456d6da1f3453ca33dab1c03ebce7568e9fcff6c6aa397",
+      "sources/portal/activity.md": "584404867d329bdcf7e7cc596e196b14d3fa0228fe9649a94d37a83624785c24",
+      "sources/portal/observation.md": "cf8429472ac69752a878619fed615307829f55af52081dfc129b1a72012d2520",
+      "sources/settlement/cutoff.md": "aaef4a4467652a75c6b5a25583846d49de6356eba5f8a35244f5da4d3f1e5c69",
+      "sources/settlement/recovery.md": "7873d7ffc27ae5a9631fafa8c2a2e99618558082b4906a4699b716eb0e8e4db6",
+      "tasks/checkpoint.json": "b975afa9db2bb73964ca13b0975610af45ddefe100b53095db2b92fd575be570",
+      "tasks/gaps.md": "11eaed47f990ac13e7d09b2e218c2bdaef5fee318d60e91d789972330f4ef7b8",
+      "tasks/progress.md": "bf79068e9506e45674214b64a3dc699c1cf0d137d34697721345b48fc8f6544f",
+      "tasks/questions.md": "c6d5bf3445e1ba5f4e39a68a827a326cfd43d0b4b69b98d0725f9eb585d28ff6",
+      "tasks/recovery-draft.md": "3259589177e45211ff95542be72f2147a125a3d390cb935778f91f9e75f43bd6",
+      "wiki/proposed.md": "a239dcb3dac3ff6526fbf6008e52362ca3fd7d0fd1c85affec92363aa1a03ba4"
+    }
+  },
+  "outputs": {
+    "response.md": {
+      "sha256": "ec10d93d4d39cb1ed6929b2d503f87251f12affade0ddc0c0f43858d9c0816c1"
+    },
+    "actions.json": {
+      "self_hash": "OMITTED to avoid self-reference"
+    }
+  },
+  "attempts_preserved": [
+    {
+      "attempt": 1,
+      "result": "Initial status written.",
+      "response_sha256": "92909741f74e6bc30df721a0e194a7ae75697035010a22ab9e9fbebe866e0702"
+    },
+    {
+      "attempt": 2,
+      "result": "Next-action wording revised and final output checks passed.",
+      "response_sha256": "ec10d93d4d39cb1ed6929b2d503f87251f12affade0ddc0c0f43858d9c0816c1"
+    }
+  ],
+  "material_failures": [],
+  "boundaries": {
+    "unlisted_fixture_inputs_read": false,
+    "parent_directory_listing": false,
+    "other_respondent_outputs_read": false,
+    "network_calls": false,
+    "business_transitions": false,
+    "subagents_spawned": false,
+    "input_files_modified": false
+  },
+  "limits": [
+    "The fixture is synthetic.",
+    "Saved model and reasoning requests do not establish observed execution settings.",
+    "Hash and link checks do not establish semantic correctness, publication approval, deployed behavior, or complete ASD writing review.",
+    "Exact tool invocation source remains in the tool transcript; Python interpreter commands and executed operations are retained here without duplicating report payloads."
+  ]
+}
