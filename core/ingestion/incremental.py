@@ -29,6 +29,7 @@ _DECISIONS = _KEPT | {"EXCLUDE", "EVIDENCE_ONLY"}
 _INPUT_KEYS = {"source", "present", "decision", "ranges", "selected_sha256", "policy",
                "selection_policy_sha256", "context", "topic", "intent_status", "recipe", "dependencies"}
 _DISPOSITIONS = {"updated", "no_change", "excluded", "missing_reviewed"}
+_SOURCE_OUTPUT_DISPOSITIONS = {"existing_coverage", "context_or_redundancy", "pending_or_unresolved"}
 _LIMITS = [
     "Affected scope follows declared source citations and canonical Markdown links; missing relationships require bounded topic discovery.",
     "Source hashes, review declarations, and deterministic checkpoints do not authenticate an actor or grant publication approval.",
@@ -71,12 +72,31 @@ def _hashes(root, value, *, missing=False):
     return value
 
 
-def _review(value):
-    if (not isinstance(value, dict) or set(value) != {"actor", "reviewed_at", "note"}
+def _review(value, *, require_accounting=False):
+    base = {"actor", "reviewed_at", "note"}
+    if (not isinstance(value, dict) or not base <= set(value)
+            or set(value) - base - {"source_to_output"}
             or not _text(value["actor"]) or not _text(value["note"])):
         raise WorkbenchError("Record the actual review actor, timestamp, and supporting note.")
     _timestamp(value["reviewed_at"])
+    if require_accounting and "source_to_output" not in value:
+        raise WorkbenchError("A no-change review requires source-to-output accounting.")
+    if "source_to_output" in value:
+        accounting = value["source_to_output"]
+        if (not isinstance(accounting, list) or not accounting
+                or any(not isinstance(item, dict) or set(item) != {"source_range", "disposition", "target", "reason"}
+                       or not _text(item["source_range"]) or item["disposition"] not in _SOURCE_OUTPUT_DISPOSITIONS
+                       or not _text(item["target"]) or not _text(item["reason"])
+                       for item in accounting)):
+            raise WorkbenchError("Source-to-output accounting needs source range, disposition, target, and reason.")
     return value
+
+
+def _accounting_complete(review):
+    accounting = review.get("source_to_output") if isinstance(review, dict) else None
+    return isinstance(accounting, list) and bool(accounting) and all(
+        item.get("disposition") != "pending_or_unresolved" for item in accounting
+    )
 
 
 def _receipts(root, source_id, manifest):
@@ -130,7 +150,8 @@ def _receipts(root, source_id, manifest):
         if any(binding["dependencies"].get(path) != digest for path, digest in receipt["outputs"].items()
                if not _navigation(path)):
             raise WorkbenchError("Successful-processing fingerprints must include every domain output hash.")
-        _review(receipt["review"])
+        _review(receipt["review"], require_accounting=(receipt["disposition"] == "no_change"
+                                                        and "source_to_output" in receipt["review"]))
         checkpoint = receipt["checkpoint"]
         if checkpoint is not None and (not isinstance(checkpoint, dict) or set(checkpoint) != {"final", "prepared"}
                 or any(not isinstance(binding, dict) or set(binding) != {"path", "sha256"}
@@ -280,7 +301,8 @@ def _queues(root, state, recipe):
         fingerprint = _fingerprint(_input_binding(root, row, state["index"]["policy"], recipe, dependencies))
         changed_outputs = prior and any(state["canonical_hashes"].get(name) != digest
                                        for name, digest in prior["outputs"].items() if not _navigation(name))
-        if prior and prior["fingerprint"] == fingerprint and not changed_outputs:
+        accounting_missing = prior and prior["disposition"] == "no_change" and not _accounting_complete(prior["review"])
+        if prior and prior["fingerprint"] == fingerprint and not changed_outputs and not accounting_missing:
             unchanged += 1
             continue
         if (row["present"] and row["decision"] not in _KEPT and not affected
@@ -288,6 +310,8 @@ def _queues(root, state, recipe):
             unchanged += 1
             continue
         reasons = ["not_completed" if prior is None else "inputs_or_dependencies_changed"]
+        if accounting_missing:
+            reasons.append("source_to_output_accounting_missing")
         if not row["present"]:
             reasons.append("input_missing")
         if changed_outputs:
@@ -437,7 +461,9 @@ def complete_sources(root: Path, source_id: str, plan_path: str, results_path: s
             if ((not row["present"]) != (disposition == "missing_reviewed")
                     or disposition == "excluded" and row["decision"] not in {"EXCLUDE", "EVIDENCE_ONLY"}):
                 raise WorkbenchError("Completion dispositions must agree with source presence and the reviewed selection.")
-            review = _review(result["review"])
+            review = _review(result["review"], require_accounting=(disposition == "no_change"))
+            if disposition == "no_change" and not _accounting_complete(review):
+                raise WorkbenchError("A no-change completion cannot clear a source with pending semantic clauses.")
             outputs = {path: _digest(_read(_canonical_path(root, path))) for path in sorted(result["outputs"])}
             affected, dependencies = _scope(state, row, outputs)
             required_outputs = set(item["starting_outputs"]) | set(affected)

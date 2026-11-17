@@ -71,10 +71,15 @@ class IncrementalIngestionTests(unittest.TestCase):
         value = plan_sources(self.root, "docs", recipe)
         return value, self.save(value, "source-plan")
 
-    def result(self, path="page.md", disposition="no_change", outputs=(), checkpoint=None):
+    def result(self, path="page.md", disposition="no_change", outputs=(), checkpoint=None, source_to_output=None):
+        if source_to_output is None and disposition == "no_change":
+            source_to_output = [{"source_range": "L1", "disposition": "context_or_redundancy",
+                                 "target": "none", "reason": "The selected fixture repeats existing context."}]
         value = {"path": path, "disposition": disposition, "outputs": list(outputs),
                  "review": {"actor": "agent:fixture", "reviewed_at": "2026-11-12T00:00:00Z",
                             "note": "Inspected retained source and applicable intent; the disposition is supported."}}
+        if source_to_output is not None:
+            value["review"]["source_to_output"] = source_to_output
         if checkpoint is not None:
             value["checkpoint"] = checkpoint
         return value
@@ -164,6 +169,23 @@ class IncrementalIngestionTests(unittest.TestCase):
         self.assertEqual(after["counts"]["unchanged"], 1)
         changed_recipe, _ = self.plan("canonical-v2")
         self.assertEqual(len(changed_recipe["process_queue"]), 1)
+
+    def test_no_change_requires_complete_source_to_output_accounting(self):
+        """Given selected source clauses, when no-change accounting is missing or pending, then the queue remains retryable."""
+        self.page()
+        self.refresh()
+        self.select()
+        plan, path = self.plan()
+        missing = self.result()
+        missing["review"].pop("source_to_output")
+        with self.assertRaisesRegex(WorkbenchError, "source-to-output"):
+            self.complete(plan, path, missing)
+        pending = self.result(source_to_output=[{"source_range": "L1", "disposition": "pending_or_unresolved",
+                                                "target": "none", "reason": "The selected rule lacks an authority."}])
+        with self.assertRaisesRegex(WorkbenchError, "pending semantic"):
+            self.complete(plan, path, pending)
+        self.assertFalse((self.root / "evidence/knowledge/processing/docs.json").exists())
+        self.assertEqual(len(self.plan()[0]["process_queue"]), 1)
 
     def test_partial_completion_preserves_unfinished_work_and_rejects_conflicting_retry(self):
         """Given two pending pages, when only one completes, then the other remains retryable and success cannot be overwritten."""

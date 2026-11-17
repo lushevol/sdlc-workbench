@@ -190,7 +190,9 @@ class SourcePreparationCLITests(unittest.TestCase):
         results_path.write_text(json.dumps({"schema_version": 1, "source_id": self.collection,
             "plan_id": plan["plan_id"], "results": [{"path": "page.md", "disposition": "no_change",
                 "outputs": [], "review": {"actor": "fixture-reviewer", "reviewed_at": "2026-11-12T00:00:00Z",
-                    "note": "Fixture review found no supported candidate beyond existing context."}}]}))
+                    "note": "Fixture review found no supported candidate beyond existing context.",
+                    "source_to_output": [{"source_range": "L1", "disposition": "context_or_redundancy",
+                        "target": "none", "reason": "The fixture repeats existing context."}]}}]}))
         code, completed = self.invoke("complete", "--plan", ".workbench/plan.json", "--results", ".workbench/results.json")
         self.assertEqual(code, 0, completed)
         self.refresh()

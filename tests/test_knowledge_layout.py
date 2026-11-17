@@ -113,7 +113,10 @@ class ConsolidatedKnowledgeTests(_LayoutFixture):
         result = {"path": "page.md", "disposition": "no_change",
                   "outputs": [record.relative_to(self.root).as_posix()],
                   "review": {"actor": "agent:fixture", "reviewed_at": "2026-11-13T00:00:00Z",
-                             "note": "Inspected source and unchanged canonical output."}}
+                             "note": "Inspected source and unchanged canonical output.",
+                             "source_to_output": [{"source_range": "L1", "disposition": "existing_coverage",
+                                 "target": "knowledge/records/candidates/policy.md#request-validation",
+                                 "reason": "The existing candidate preserves the selected rule."}]}}
         self.write(".workbench/completion.json", json.dumps({"schema_version": 1, "source_id": "docs",
             "plan_id": plan["plan_id"], "results": [result]}))
         completed = complete_sources(self.root, "docs", ".workbench/source-plan.json", ".workbench/completion.json")

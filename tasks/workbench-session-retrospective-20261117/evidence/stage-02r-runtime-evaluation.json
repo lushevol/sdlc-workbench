@@ -1,0 +1,44 @@
+{
+  "stage": "02r-no-change-runtime-enforcement",
+  "status": "PASSED",
+  "files": {
+    "core/ingestion/incremental.py": "310bc217e5b8e59826eb68bc13aff16f31f246101f6374fc990050d887a76577",
+    "tests/test_incremental_ingestion.py": "e03b26f1d9a13f0d4a094f73092a4f7a052f9b4fd0444354be7f5e3a8703263a",
+    "tests/test_source_preparation_cli.py": "8a33659e849aa74eba1b0ae3b2f8fac8b1d46c4d8c71f882102324431ea745cc",
+    "tests/test_knowledge_layout.py": "c2647b106e3c1fddc832ea1fddaae3e93edbedb87685d7f557f18fd0908df873"
+  },
+  "checks": [
+    {
+      "criterion": "Missing source-to-output accounting is rejected",
+      "result": "PASSED",
+      "evidence": "test_no_change_requires_complete_source_to_output_accounting"
+    },
+    {
+      "criterion": "Pending semantic clause is rejected before receipt creation",
+      "result": "PASSED",
+      "evidence": "test_no_change_requires_complete_source_to_output_accounting"
+    },
+    {
+      "criterion": "Queue remains processable after rejected completion",
+      "result": "PASSED",
+      "evidence": "test_no_change_requires_complete_source_to_output_accounting"
+    },
+    {
+      "criterion": "Valid context/redundancy no_change remains idempotent",
+      "result": "PASSED",
+      "evidence": "test_supported_no_change_is_idempotent_and_skips_unchanged_semantic_work"
+    },
+    {
+      "criterion": "Focused ingestion/layout regression suite",
+      "result": "PASSED",
+      "evidence": "32 tests OK"
+    }
+  ],
+  "command": ".venv/bin/python -m unittest tests.test_incremental_ingestion tests.test_source_preparation_cli tests.test_knowledge_layout -v",
+  "runner": "Independent read-only agent plus focused local suite",
+  "limits": [
+    "Accounting validates receipt declarations and does not prove semantic correctness; section-level semantic reuse remains deferred.",
+    "The repository virtual environment is required because bare python3 lacks PyYAML."
+  ],
+  "repo_files_changed": false
+}
