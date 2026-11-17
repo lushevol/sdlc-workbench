@@ -6,8 +6,7 @@ owner: unknown
 governance_state: candidate
 status: draft
 sources:
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Tech Design/RATANONE Cash Settlement Technical Design/Product Agnostic Aggregation
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/RATANONE Cash Settlement Technical Design/Product Agnostic Aggregation
     Design.md
   revision: sha256:be292a5b56d53663ae9e5215759e851be1a358fa1357be3c874db7967b63e513
   sha256: be292a5b56d53663ae9e5215759e851be1a358fa1357be3c874db7967b63e513

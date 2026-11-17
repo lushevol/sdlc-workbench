@@ -7,9 +7,8 @@ governance_state: candidate
 status: draft
 verified: []
 sources:
-- id: SRC-efa956e6321accca77b8a997
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Inter Entity Netting.md
+- id: SRC-e1af56d2e0ac39bf0c1c6379
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Inter Entity Netting.md
   revision: sha256:90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
   sha256: 90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
 - id: SRC-0a94ec69d2a9600fc7f74202
@@ -22,9 +21,8 @@ sources:
     Requirement/Settlement Day2 Requirement/Inter Entity Netting.md
   revision: sha256:90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
   sha256: 90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
-- id: SRC-970643402ece9c270a4559ca
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Inter Entity Netting/Inter
+- id: SRC-e3e68022dd0582aa76ec1d0b
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Inter Entity Netting/Inter
     Entity Netting Design.md
   revision: sha256:b4ba316c4bae3b58965a9b29431698cb218d2c9c264e110a8bd7a2aab0653cdb
   sha256: b4ba316c4bae3b58965a9b29431698cb218d2c9c264e110a8bd7a2aab0653cdb

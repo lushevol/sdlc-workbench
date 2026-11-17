@@ -8,27 +8,27 @@
   "status": "draft",
   "sources": [
     {
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/page.md",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/page.md",
       "revision": "sha256:639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708",
       "sha256": "639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708"
     },
     {
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/attachments/netting-function-flow-page-source-v20260911.md",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/attachments/netting-function-flow-page-source-v20260911.md",
       "revision": "sha256:c98ed22769a19102e766f3dbdff3aa41ee52eef7426bef708f083a166b79d396",
       "sha256": "c98ed22769a19102e766f3dbdff3aa41ee52eef7426bef708f083a166b79d396"
     },
     {
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md",
       "revision": "sha256:a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62",
       "sha256": "a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62"
     },
     {
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Cashflow Auto Netting- 2024.md",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Cashflow Auto Netting- 2024.md",
       "revision": "sha256:34c4b38c172ef7151e4940b986c9ad8bf4acb7844cb35adce1a058043cb3dab7",
       "sha256": "34c4b38c172ef7151e4940b986c9ad8bf4acb7844cb35adce1a058043cb3dab7"
     },
     {
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto Netting Datetime Calculation.md",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto Netting Datetime Calculation.md",
       "revision": "sha256:cc523d1571fd9c92465da0edb1f8bffd6e5854e1ade01eb91823eaaaa8dc06f8",
       "sha256": "cc523d1571fd9c92465da0edb1f8bffd6e5854e1ade01eb91823eaaaa8dc06f8"
     },
@@ -73,43 +73,43 @@
       "sha256": "cc523d1571fd9c92465da0edb1f8bffd6e5854e1ade01eb91823eaaaa8dc06f8"
     },
     {
-      "id": "SRC-cb45c41c26cf011ca039b457",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Cashflow Auto Netting- 2024.md",
+      "id": "SRC-fcfbec3206183f2596fd8e64",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Cashflow Auto Netting- 2024.md",
       "revision": "sha256:34c4b38c172ef7151e4940b986c9ad8bf4acb7844cb35adce1a058043cb3dab7",
       "sha256": "34c4b38c172ef7151e4940b986c9ad8bf4acb7844cb35adce1a058043cb3dab7",
       "snapshot": "knowledge/evidence/sources/sha256/34c4b38c172ef7151e4940b986c9ad8bf4acb7844cb35adce1a058043cb3dab7.md"
     },
     {
-      "id": "SRC-98c9e8022a37aec45e991a03",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto Netting Datetime Calculation.md",
+      "id": "SRC-2f4b6bf32c16634d9c64d22c",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto Netting Datetime Calculation.md",
       "revision": "sha256:cc523d1571fd9c92465da0edb1f8bffd6e5854e1ade01eb91823eaaaa8dc06f8",
       "sha256": "cc523d1571fd9c92465da0edb1f8bffd6e5854e1ade01eb91823eaaaa8dc06f8",
       "snapshot": "knowledge/evidence/sources/sha256/cc523d1571fd9c92465da0edb1f8bffd6e5854e1ade01eb91823eaaaa8dc06f8.md"
     },
     {
-      "id": "SRC-d95781ab41817ed21aadbdef",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto Netting for TAIFEX CITIC LCH HKEX ECLIPS.md",
+      "id": "SRC-6fd92d49562c13975b9a022c",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto Netting for TAIFEX CITIC LCH HKEX ECLIPS.md",
       "revision": "sha256:2ba9c000e20156cddeb4ef9ba97290dcda5d344a2424d71fbe6ea72a7cf8784f",
       "sha256": "2ba9c000e20156cddeb4ef9ba97290dcda5d344a2424d71fbe6ea72a7cf8784f",
       "snapshot": "knowledge/evidence/sources/sha256/2ba9c000e20156cddeb4ef9ba97290dcda5d344a2424d71fbe6ea72a7cf8784f.md"
     },
     {
-      "id": "SRC-929f652b082b72958edef69c",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Enhancement on Auto Netting.md",
+      "id": "SRC-b6f4bcf8f323ca3d4e736f75",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Enhancement on Auto Netting.md",
       "revision": "sha256:aa5657a9955a0f2164ea5fd621511eb53a221b5571af5f929a82a081ab41648f",
       "sha256": "aa5657a9955a0f2164ea5fd621511eb53a221b5571af5f929a82a081ab41648f",
       "snapshot": "knowledge/evidence/sources/sha256/aa5657a9955a0f2164ea5fd621511eb53a221b5571af5f929a82a081ab41648f.md"
     },
     {
-      "id": "SRC-c4770c8a15ad90816b583ca6",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Remove Auto Affirmation from Auto Netting.md",
+      "id": "SRC-94ccf2f8a703c0d51b56d902",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Remove Auto Affirmation from Auto Netting.md",
       "revision": "sha256:1145e3e65e637b1d016b13528c4d5cd9d84fe05f6fb60b9800a1878f1265a037",
       "sha256": "1145e3e65e637b1d016b13528c4d5cd9d84fe05f6fb60b9800a1878f1265a037",
       "snapshot": "knowledge/evidence/sources/sha256/1145e3e65e637b1d016b13528c4d5cd9d84fe05f6fb60b9800a1878f1265a037.md"
     },
     {
-      "id": "SRC-71cd464f825d09f382f7447a",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md",
+      "id": "SRC-f60ce93b6f07953e1d958df3",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md",
       "revision": "sha256:a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62",
       "sha256": "a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62",
       "snapshot": "knowledge/evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md"
@@ -199,15 +199,15 @@
       "snapshot": "knowledge/evidence/sources/sha256/a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62.md"
     },
     {
-      "id": "SRC-63362fefee4e9182e2de4b4c",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/attachments/netting-function-flow-page-source-v20260911.md",
+      "id": "SRC-7c08399cbecec86efbc0c378",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/attachments/netting-function-flow-page-source-v20260911.md",
       "revision": "sha256:c98ed22769a19102e766f3dbdff3aa41ee52eef7426bef708f083a166b79d396",
       "sha256": "c98ed22769a19102e766f3dbdff3aa41ee52eef7426bef708f083a166b79d396",
       "snapshot": "knowledge/evidence/sources/sha256/c98ed22769a19102e766f3dbdff3aa41ee52eef7426bef708f083a166b79d396.md"
     },
     {
-      "id": "SRC-06123c2ea88162240e019ca1",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/page.md",
+      "id": "SRC-52ea4b749f13dcd53145646b",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/page.md",
       "revision": "sha256:639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708",
       "sha256": "639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708",
       "snapshot": "knowledge/evidence/sources/sha256/639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708.md"

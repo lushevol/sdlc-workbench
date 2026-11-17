@@ -81,46 +81,46 @@ sources:
     Entity Netting.md
   revision: sha256:90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
   sha256: 90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Auto
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Auto
     Un-Net - Trade market event.md
   revision: sha256:6d56c7cc606a191b14df8e179efd23418d3b234bd84b5bdb94467e83e65140bd
   sha256: 6d56c7cc606a191b14df8e179efd23418d3b234bd84b5bdb94467e83e65140bd
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Business
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Business
     User Case/01 Bilateral Netting.md
   revision: sha256:5741b0761ce3bf82ca1c56c7aa040d3cf22380aa0ff8527739edb4506585ecb3
   sha256: 5741b0761ce3bf82ca1c56c7aa040d3cf22380aa0ff8527739edb4506585ecb3
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
     Function Flow/attachments/netting-function-flow-page-source-v20260911.md
   revision: sha256:c98ed22769a19102e766f3dbdff3aa41ee52eef7426bef708f083a166b79d396
   sha256: c98ed22769a19102e766f3dbdff3aa41ee52eef7426bef708f083a166b79d396
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
     Function Flow/page.md
   revision: sha256:639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708
   sha256: 639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
     Rules Static Data.md
   revision: sha256:c7f80d113b96e3f56e352a249f6303f3f8b4666a14b6e9847200b2e7e6042bc2
   sha256: c7f80d113b96e3f56e352a249f6303f3f8b4666a14b6e9847200b2e7e6042bc2
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
     Service - GUI & API intergration.md
   revision: sha256:88f99202a018ce56e4c173be3026561afc7342bc035ef97eb298491436682e24
   sha256: 88f99202a018ce56e4c173be3026561afc7342bc035ef97eb298491436682e24
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting
     Story Board.md
   revision: sha256:b314c8238f20cf6e0cbd8785a67542df2988320cd28060c9f0d68b5ff344d0de
   sha256: b314c8238f20cf6e0cbd8785a67542df2988320cd28060c9f0d68b5ff344d0de
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Settlement
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Settlement
     Netting Validation Generation.md
   revision: sha256:606468b11cbea1fd4f1533e6ca1682f414d413e629086eaa7360a61d34560a61
   sha256: 606468b11cbea1fd4f1533e6ca1682f414d413e629086eaa7360a61d34560a61
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting.md
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting.md
   revision: sha256:1adad50db2a36e93f4a54bd1820f840131094d501981592cff6359bcd44402fe
   sha256: 1adad50db2a36e93f4a54bd1820f840131094d501981592cff6359bcd44402fe
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Settlement
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement
     Day2 Requirement/Inter Entity Netting.md
   revision: sha256:90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
   sha256: 90d7977d8db99e77ed17a2a211ecdcb9553b5de021d787f6f121bee28c2dd89e
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Tech Design/Netting Service
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Netting Service
     Design.md
   revision: sha256:9606311cb2754d8850f89970b1a6032aaa297fb7a2f25c463fafde18eb2f594a
   sha256: 9606311cb2754d8850f89970b1a6032aaa297fb7a2f25c463fafde18eb2f594a

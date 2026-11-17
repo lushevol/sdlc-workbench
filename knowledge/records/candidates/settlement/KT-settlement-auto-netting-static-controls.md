@@ -6,8 +6,7 @@ owner: unknown
 governance_state: candidate
 status: draft
 sources:
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting.md
   revision: sha256:a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62
   sha256: a877fc303ccf2ad4a8a209d7a40faaa2dfa5f522eaba917726aa79b0e1433b62
 - resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional

@@ -50,15 +50,15 @@
       "snapshot": "knowledge/evidence/sources/sha256/f24f6fc56692530ae5dc41c589df84cc3eabf90213d0761fe315f5308b22c69d.md"
     },
     {
-      "id": "SRC-4e9732528edbf3bc8a80dc89",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/NDS Auto Netting.md",
+      "id": "SRC-b92254f37d821df4383ad248",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/NDS Auto Netting.md",
       "revision": "sha256:1092be71ca370ec5f35b86e18375c1305305197e53fe4f95543a5bd20363c03d",
       "sha256": "1092be71ca370ec5f35b86e18375c1305305197e53fe4f95543a5bd20363c03d",
       "snapshot": "knowledge/evidence/sources/sha256/1092be71ca370ec5f35b86e18375c1305305197e53fe4f95543a5bd20363c03d.md"
     },
     {
-      "id": "SRC-06123c2ea88162240e019ca1",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/page.md",
+      "id": "SRC-52ea4b749f13dcd53145646b",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Function Flow/page.md",
       "revision": "sha256:639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708",
       "sha256": "639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708",
       "snapshot": "knowledge/evidence/sources/sha256/639c9cb073bbf7501c7b6a8dc4e0be3c34683ab4cbc4357c2d798ef579b46708.md"

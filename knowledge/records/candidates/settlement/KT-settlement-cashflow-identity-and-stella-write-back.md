@@ -6,9 +6,8 @@ owner: unknown
 governance_state: candidate
 status: draft
 sources:
-- id: SRC-2cbf7fc108fb93685f3ea1ca
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Tech Design/2026 Design/Cash Settlement Platform Architecture - Indonesia/Netting
+- id: SRC-345ef2e038c3dbbea1745b71
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/2026 Design/Cash Settlement Platform Architecture - Indonesia/Netting
     Spliting ID prefix.md
   revision: sha256:e444261e3322a425fe830da406e50bb5496f895b468e4becc64d8d77924817ab
   sha256: e444261e3322a425fe830da406e50bb5496f895b468e4becc64d8d77924817ab

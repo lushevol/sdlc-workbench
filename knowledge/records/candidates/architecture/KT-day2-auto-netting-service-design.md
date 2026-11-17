@@ -18,9 +18,8 @@ sources:
     Design/page.md
   revision: sha256:57531aed05a519cfba3274a57e4f89529e38abd2068f34737ebd37e5720b9102
   sha256: 57531aed05a519cfba3274a57e4f89529e38abd2068f34737ebd37e5720b9102
-- id: SRC-2f8174c6b82710efd3882562
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto
+- id: SRC-728e9f456bbdc27bad60be7f
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Auto
     Netting Technical Design.md
   revision: sha256:57531aed05a519cfba3274a57e4f89529e38abd2068f34737ebd37e5720b9102
   sha256: 57531aed05a519cfba3274a57e4f89529e38abd2068f34737ebd37e5720b9102
@@ -36,9 +35,8 @@ sources:
     & Status Move Process/page.md
   revision: sha256:24f4d0930773aae8ab1320998becf5b575941e8a58677116b6c26e0c1e1c98e0
   sha256: 24f4d0930773aae8ab1320998becf5b575941e8a58677116b6c26e0c1e1c98e0
-- id: SRC-66e20fc8b6ed049100ff590b
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Refactor
+- id: SRC-96d49e9df333e28f36ce80d4
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Refactor
     Netting & Status Move Process.md
   revision: sha256:24f4d0930773aae8ab1320998becf5b575941e8a58677116b6c26e0c1e1c98e0
   sha256: 24f4d0930773aae8ab1320998becf5b575941e8a58677116b6c26e0c1e1c98e0
@@ -54,9 +52,8 @@ sources:
     Process/page.md
   revision: sha256:cbd81e8c0f004b1932bf44c444bf679e0c75a75b0effc95676a7cafe149d541a
   sha256: cbd81e8c0f004b1932bf44c444bf679e0c75a75b0effc95676a7cafe149d541a
-- id: SRC-33fe500beb5368bae4a68aed
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Refactor
+- id: SRC-b856e0bfc6b6ff7370ab832d
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/Refactor
     Netting Process.md
   revision: sha256:cbd81e8c0f004b1932bf44c444bf679e0c75a75b0effc95676a7cafe149d541a
   sha256: cbd81e8c0f004b1932bf44c444bf679e0c75a75b0effc95676a7cafe149d541a
@@ -70,15 +67,13 @@ sources:
     Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/rule engine rule_action_event：/page.md
   revision: sha256:979919a988ccd522420dc0b8d8fad9745f9b8fdd05960148b4620ccd71fee14d
   sha256: 979919a988ccd522420dc0b8d8fad9745f9b8fdd05960148b4620ccd71fee14d
-- id: SRC-858ba0f0fa2d6afd923d6ff7
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/rule
+- id: SRC-6d80375fb0abeea7286469d1
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Auto Netting/rule
     engine rule_action_event：.md
   revision: sha256:979919a988ccd522420dc0b8d8fad9745f9b8fdd05960148b4620ccd71fee14d
   sha256: 979919a988ccd522420dc0b8d8fad9745f9b8fdd05960148b4620ccd71fee14d
-- id: SRC-bdfce641ca63e8f27177fb90
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Tech Design/Cash Settlement Auto Netting TechDesign.md
+- id: SRC-400b80e5243d8857da8d51d8
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Cash Settlement Auto Netting TechDesign.md
   revision: sha256:a10b9cda4bf1ef536534b1f532665f841aecb5931a16ce0e81a758e56ecbf593
   sha256: a10b9cda4bf1ef536534b1f532665f841aecb5931a16ce0e81a758e56ecbf593
 - id: SRC-f9a0d97c6a04a9964cf593e6
@@ -91,9 +86,8 @@ sources:
     Settlement Auto Netting TechDesign.md
   revision: sha256:a10b9cda4bf1ef536534b1f532665f841aecb5931a16ce0e81a758e56ecbf593
   sha256: a10b9cda4bf1ef536534b1f532665f841aecb5931a16ce0e81a758e56ecbf593
-- id: SRC-8dd7e684f615af9f25459bab
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Tech Design/Netting Service Design/Auto Netting design.md
+- id: SRC-3ff2b6b308c70208a7f6fcfc
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/Netting Service Design/Auto Netting design.md
   revision: sha256:85b80a9d3bcdb970132fbb250f920b96f0ba6999d8ed03536d2e0e37fa4a4e6c
   sha256: 85b80a9d3bcdb970132fbb250f920b96f0ba6999d8ed03536d2e0e37fa4a4e6c
 - id: SRC-0c1c483c2c7477846703250f

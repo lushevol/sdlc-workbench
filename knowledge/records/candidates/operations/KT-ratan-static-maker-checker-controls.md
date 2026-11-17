@@ -8,15 +8,15 @@
   "status": "draft",
   "sources": [
     {
-      "id": "SRC-0a283e023f601a7925c74a0a",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Ratan One Processing Guide (DOI)/BIC Netting Static.md",
+      "id": "SRC-bbc41c132d0678876db3412a",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Ratan One Processing Guide (DOI)/BIC Netting Static.md",
       "revision": "sha256:16eb218eb7fa00dcc2177a16d55cc9fd909ca25ee01a3724ecf719ee23d2dbc8",
       "sha256": "16eb218eb7fa00dcc2177a16d55cc9fd909ca25ee01a3724ecf719ee23d2dbc8",
       "snapshot": "knowledge/evidence/sources/sha256/16eb218eb7fa00dcc2177a16d55cc9fd909ca25ee01a3724ecf719ee23d2dbc8.md"
     },
     {
-      "id": "SRC-c4509b939f9d7a64a8cfc3d8",
-      "resource": "source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Ratan One Processing Guide (DOI)/Netting and Nostro Static.md",
+      "id": "SRC-917c954ef25e83205850f91f",
+      "resource": "source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Ratan One Processing Guide (DOI)/Netting and Nostro Static.md",
       "revision": "sha256:83f5b2eef84f34815286027f8f7e570fb4c14dce2c4ba8578da604e6d09b9375",
       "sha256": "83f5b2eef84f34815286027f8f7e570fb4c14dce2c4ba8578da604e6d09b9375",
       "snapshot": "knowledge/evidence/sources/sha256/83f5b2eef84f34815286027f8f7e570fb4c14dce2c4ba8578da604e6d09b9375.md"

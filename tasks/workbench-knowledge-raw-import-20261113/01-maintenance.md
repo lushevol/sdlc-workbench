@@ -4418,3 +4418,53 @@ limitations:
   - The final sealed harness check did not run.
   - Runtime model verification, owner input, publication, and business behavior remain unverified.
 ```
+
+## Checkpoint 225: settlement-netting duplicate consolidation (17 November 2026)
+
+The duplicate audit compared 55 `settlement-netting` documents with 884 Cash Settlement documents. It found 54 byte-identical duplicates and one older CCIL revision. The Cash CCIL revision adds a Stella CCIL test case and five attachment references. The full 55-entry alias map is in [the deduplication evidence](evidence/settlement-netting-dedup-20261117.json).
+
+The `settlement-netting` selection now excludes all 55 entries with explicit counterpart mappings. `sources verify` returns `READY`. The fresh source plan has 55 unchanged items, zero process items, and zero review items. Retained incoming bytes, snapshots, manifest rows, prior receipts, and audit history remain preserved.
+
+Fourteen draft candidate records now bind to `source:cash-settlement-home-page/...`. These changes replace source identities and resources while preserving source revisions and knowledge body text. Workspace validation returns `VALID`. The settlement processing ledger records the reviewed exclusion.
+
+The affected wiki plan contains 14 changed canonical records and 89 unique dependent outputs. The fallback `llm-wiki-agent` compile produced an agent handoff because no model URL or token is configured. At this checkpoint, no wiki output or source-manifest binding had advanced; checkpoint 226 records the later provenance-only review.
+
+**Current stage:** source consolidation and candidate rebinding are complete for the inspected byte-overlap scope. Canonical records remain draft/candidate. Derived wiki provenance review is recorded in checkpoint 226; semantic regeneration was not run.
+
+**Blockers:** owner authority for the Cash Settlement canonical status is unknown. The older-versus-newer CCIL revision and five added attachments need owner disposition. Runtime model attestation for the requested GPT-6.1 Sol medium review is unavailable. These questions are recorded in [the question annex](evidence/canonical-draft-questions-20261115.md#settlement-netting-consolidation-questions-checkpoint-225).
+
+**Next action:** obtain the two owner answers, then inspect or disposition the CCIL attachments. Publication and production behavior remain separate gates.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Similarity proves byte overlap, not authority, approval, or effective applicability.
+  - The CCIL attachment bytes are unavailable.
+  - Wiki compilation did not run without model credentials.
+  - Candidate and wiki state do not establish publication or business execution.
+```
+
+## Checkpoint 226: provenance-only wiki rebind (17 November 2026)
+
+The coordinator reviewed the 14 remapped candidate records and all 89 planned wiki outputs. Every candidate diff changes source identity or resource metadata only. Every affected wiki output exists and remains byte-identical to its pre-remap hash. The Cash Settlement selection excludes the added 25 August Stella observations and unavailable image-bearing attachments.
+
+The scoped [tracked rebind report](evidence/settlement-netting-wiki-rebind-20261117.md) records the 14 source hashes and 89 output hashes. Its full ignored receipt advanced the source hashes in the wiki manifest and registry. Prior claim-level completion and output ownership evidence was restored after the receipt write. `wiki.py verify` passes, and the post-repair plan reports 14 unchanged records with no queue.
+
+This records derived provenance freshness only. It does not establish Cash Settlement authority, CCIL supersession, attachment completeness, publication approval, or business execution. The requested review model could not be independently attested in this runtime.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Runtime model attestation is unavailable.
+  - Owner authority and CCIL attachment disposition remain open.
+  - Semantic wiki compilation did not run without model credentials.
+  - Candidate and wiki state do not establish publication or business execution.
+```

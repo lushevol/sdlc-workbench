@@ -30,15 +30,15 @@ sources:
     Case/03 Beneficiary BIC Netting/page.md
   revision: sha256:88191dbdf57f27dd63de4fa6c5d2006b4283fc533826f0dee623426c80fad8e9
   sha256: 88191dbdf57f27dd63de4fa6c5d2006b4283fc533826f0dee623426c80fad8e9
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Beneficiary
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Beneficiary
     BIC Netting/Beneficiary BIC Netting Demo.md
   revision: sha256:f9a862207bd017ab0d329975bffa3b9ca9b92603a867a9bcebc8e8c56d2475a4
   sha256: f9a862207bd017ab0d329975bffa3b9ca9b92603a867a9bcebc8e8c56d2475a4
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Beneficiary
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Beneficiary
     BIC Netting.md
   revision: sha256:9d71b3560ee2400e9bc35283507101ca99de6d4cf1fb5f126f293ee9837cde62
   sha256: 9d71b3560ee2400e9bc35283507101ca99de6d4cf1fb5f126f293ee9837cde62
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/Business
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Business
     User Case/03 Beneficiary BIC Netting.md
   revision: sha256:88191dbdf57f27dd63de4fa6c5d2006b4283fc533826f0dee623426c80fad8e9
   sha256: 88191dbdf57f27dd63de4fa6c5d2006b4283fc533826f0dee623426c80fad8e9

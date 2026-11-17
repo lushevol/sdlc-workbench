@@ -7,9 +7,8 @@ governance_state: candidate
 status: draft
 verified: []
 sources:
-- id: SRC-5dee32f05ce117b49aec32d7
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Netting/IRS Fix Leg & Floating leg payment handling.md
+- id: SRC-9241449744a79d41134acf6c
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/IRS Fix Leg & Floating leg payment handling.md
   revision: sha256:4041381744e47a709d66526f630e08673e48cfe6657592ba1a7e7b302db120cd
   sha256: 4041381744e47a709d66526f630e08673e48cfe6657592ba1a7e7b302db120cd
 - id: SRC-9241449744a79d41134acf6c
@@ -22,9 +21,8 @@ sources:
     Requirement/Netting/IRS Fix Leg & Floating leg payment handling/page.md
   revision: sha256:f24f6fc56692530ae5dc41c589df84cc3eabf90213d0761fe315f5308b22c69d
   sha256: f24f6fc56692530ae5dc41c589df84cc3eabf90213d0761fe315f5308b22c69d
-- id: SRC-4e9732528edbf3bc8a80dc89
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Netting/NDS Auto Netting.md
+- id: SRC-b92254f37d821df4383ad248
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/NDS Auto Netting.md
   revision: sha256:1092be71ca370ec5f35b86e18375c1305305197e53fe4f95543a5bd20363c03d
   sha256: 1092be71ca370ec5f35b86e18375c1305305197e53fe4f95543a5bd20363c03d
 - id: SRC-fb926c5c667e80bbfae2d99f

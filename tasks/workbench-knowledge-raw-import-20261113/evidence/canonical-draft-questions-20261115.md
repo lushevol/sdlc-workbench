@@ -2253,6 +2253,15 @@ The incomplete review row for `SRC-b0a283bdf4fa57b4b335e816` has a `questions` e
 | --- | --- | --- | --- | --- |
 | SRC-b0a283bdf4fa57b4b335e816 | [review row 60](../../../.workbench/ingestion/luna-max-20261115/workers/resume-rejections/review.jsonl#L60) | 120-134 | `questions[0].question` | `incomplete` |
 
+## Settlement-netting consolidation questions (checkpoint 225)
+
+The duplicate audit found 54 exact duplicates and one older CCIL revision. The current selection and candidate remap preserve both source identities, but authority and attachment disposition remain unresolved. Answers remain blank.
+
+| ID | Question or requested decision | Review evidence | Answer |
+| --- | --- | --- | --- |
+| NKD-20261117-AUTHORITY | Confirm that `source:cash-settlement-home-page` is the canonical current collection for settlement-netting intent, including the effective date, owner, and whether the older settlement-netting snapshot remains historical-only. | [Deduplication report](settlement-netting-dedup-20261117.md); [Sol review](../../../.workbench/duplicate-netting-20261117/sol-review/review.md) |  |
+| NKD-20261117-CCIL-REVISION | Confirm whether the Cash Settlement CCIL revision and its added Stella CCIL test case supersede the older settlement-netting revision. Recover or disposition the five added attachment references and confirm their intended semantic status. | [Similarity audit](../../../.workbench/duplicate-netting-20261117/similarity/similarity-report.md); [CCIL source](../../../knowledge/evidence/sources/sha256/a2ce9ca6a14777d7d688410c3c2c6b19caedf6f8a202f84c4253da78a93736a1.md) |  |
+
 ## Writing and automated checks
 
 ```yaml

@@ -14,8 +14,8 @@ sources:
   resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/CPN Business Scenario/page.md
   revision: sha256:007a5034111e9dfccb1fb02bc25f06e1af45c1f1c727a4fb94acc89ab8fb70cf
   sha256: 007a5034111e9dfccb1fb02bc25f06e1af45c1f1c727a4fb94acc89ab8fb70cf
-- id: SRC-1d38a411947fac07a0f30f7c
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/CPN Business Scenario.md
+- id: SRC-0afd5f6c09f83a9f3e58ca68
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/CPN Business Scenario.md
   revision: sha256:007a5034111e9dfccb1fb02bc25f06e1af45c1f1c727a4fb94acc89ab8fb70cf
   sha256: 007a5034111e9dfccb1fb02bc25f06e1af45c1f1c727a4fb94acc89ab8fb70cf
 - id: SRC-34814f70109c8256a8b7e131
@@ -26,8 +26,8 @@ sources:
   resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/CPN Tech Design - Draft for now/page.md
   revision: sha256:93f28349f407c671d4b99aa65395a7a7c11f318c793cfb203a8ab9153fd6534f
   sha256: 93f28349f407c671d4b99aa65395a7a7c11f318c793cfb203a8ab9153fd6534f
-- id: SRC-dd63a6adce0cb8ee0d8332dc
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home Page/Functional Requirement/Netting/CPN Tech Design - Draft for now.md
+- id: SRC-34814f70109c8256a8b7e131
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/CPN Tech Design - Draft for now.md
   revision: sha256:93f28349f407c671d4b99aa65395a7a7c11f318c793cfb203a8ab9153fd6534f
   sha256: 93f28349f407c671d4b99aa65395a7a7c11f318c793cfb203a8ab9153fd6534f
 generated:

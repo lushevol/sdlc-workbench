@@ -6,13 +6,11 @@ owner: unknown
 governance_state: candidate
 status: draft
 sources:
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Netting/Product Agnostic model to identify all cashflows
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Product Agnostic model to identify all cashflows
     for a specific value date to support Auto Aggregation.md
   revision: sha256:5cdf7e3744ca545ec918245a46afd026058f5f6de33f6cfe0f6c632b28e69518
   sha256: 5cdf7e3744ca545ec918245a46afd026058f5f6de33f6cfe0f6c632b28e69518
-- resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Aggregation.md
+- resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Settlement Day2 Requirement/Cashflow Aggregation.md
   revision: sha256:a2e5add76324239925327225cafff754f10573c681a9be54188794adb9bb47df
   sha256: a2e5add76324239925327225cafff754f10573c681a9be54188794adb9bb47df
 - resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional

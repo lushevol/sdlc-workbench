@@ -21,9 +21,8 @@ sources:
     Requirement/Netting/Business User Case/02 CCIL Netting/page.md
   revision: sha256:e03e964bdf2adc695771ca3e066d3fe899f6823f4ccf6a864e5f53d24010e506
   sha256: e03e964bdf2adc695771ca3e066d3fe899f6823f4ccf6a864e5f53d24010e506
-- id: SRC-83752d4f8891392fb5d5d81a
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Netting/Business User Case/02 CCIL Netting.md
+- id: SRC-5f68d1e47d5b2c04e8639c17
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Business User Case/02 CCIL Netting.md
   revision: sha256:e03e964bdf2adc695771ca3e066d3fe899f6823f4ccf6a864e5f53d24010e506
   sha256: e03e964bdf2adc695771ca3e066d3fe899f6823f4ccf6a864e5f53d24010e506
 - id: SRC-2ed473c923bd76833481326f
@@ -36,9 +35,8 @@ sources:
     Netting Design/page.md
   revision: sha256:246312dc39ff8687020ca048e6b01e19c992164d70b2a8b1c2d720bd83e8135f
   sha256: 246312dc39ff8687020ca048e6b01e19c992164d70b2a8b1c2d720bd83e8135f
-- id: SRC-a5bac081fa53386d1cebeb7d
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Tech Design/CCIL Netting Design.md
+- id: SRC-2ed473c923bd76833481326f
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Tech Design/CCIL Netting Design.md
   revision: sha256:246312dc39ff8687020ca048e6b01e19c992164d70b2a8b1c2d720bd83e8135f
   sha256: 246312dc39ff8687020ca048e6b01e19c992164d70b2a8b1c2d720bd83e8135f
 - id: SRC-36e628fbb28fa91eae5735d7
@@ -51,9 +49,8 @@ sources:
     Service - GUI & API intergration.md
   revision: sha256:88f99202a018ce56e4c173be3026561afc7342bc035ef97eb298491436682e24
   sha256: 88f99202a018ce56e4c173be3026561afc7342bc035ef97eb298491436682e24
-- id: SRC-47997ab448281d8fdb1ba7a4
-  resource: source:settlement-netting/Cash Settlement Home Page/Cash Settlement Home
-    Page/Functional Requirement/Netting/Netting Service - GUI & API intergration.md
+- id: SRC-426393fda3ed4becdfc99390
+  resource: source:cash-settlement-home-page/Cash Settlement Home Page/Functional Requirement/Netting/Netting Service - GUI & API intergration.md
   revision: sha256:88f99202a018ce56e4c173be3026561afc7342bc035ef97eb298491436682e24
   sha256: 88f99202a018ce56e4c173be3026561afc7342bc035ef97eb298491436682e24
 - id: SRC-337472978edf74a738f8a7c4
