@@ -2,7 +2,7 @@
 
 > **The strongest opportunity is reliable completion across existing tools.** Your history repeatedly requests trustworthy outcomes, visible progress, and less supervision.
 > **Review requirements before choosing skill enhancements.** The latest table covers the full retained input set and maps existing responsibilities.
-> The approved skill enhancement sequence is complete. Each changed stage has a retained evaluation; distribution checks are recorded below.
+> Skill changes are implemented. Completion remains under audit because earlier evaluations covered only bounded structural examples.
 
 The [requirements table and skill map](07-requirements-and-skills.md) are the current joint-review surface.
 The [earlier optimization plan](06-optimization-plan.md) remains a provisional implementation proposal.
@@ -13,7 +13,7 @@ The approved changes below implement the supported parts of that plan. Numerical
 Source: Current Codex conversation. Exact user input:
 
 ```text
-dapproved, go till all enhancement done, evaluate each before go next
+approved, go till all enhancement done, evaluate each before go next
 ```
 
 Authorized scope: implement the approved skill enhancements, evaluate each completed stage before proceeding, and finish with distribution and evidence checks.
@@ -22,7 +22,7 @@ Stop a stage when its evaluation is incomplete or worse than the baseline. Runti
 
 ### Enhancement completion, 17 November 2026
 
-The approved shared-skill improvements completed in sequence:
+The following changes have bounded stage checks. These checks do not establish the full planned behavioral comparison.
 
 | Stage | Result | Evidence and commit |
 | --- | --- | --- |
@@ -34,6 +34,25 @@ The approved shared-skill improvements completed in sequence:
 | Repeatable harness evaluation protocol | PASSED | [harness evaluation](evidence/stage-04-evaluate-harness-evaluation.json), `30dc0b30f` |
 
 The [final distribution evaluation](evidence/stage-06-distribution-evaluation.json) records 1,078 passing tests with two documented skips, wheel and source-distribution hashes, the initialized-workspace smoke check, 351 resolved local links across six documents, and `VALID` workspace validation.
+
+### Completion audit continuation, 17 November 2026
+
+Source: Current Codex conversation. Exact user input:
+
+```text
+go on
+```
+
+This continues the approved enhancement scope and its evaluation requirements.
+The audit found missing executable targeted cases, retained trial outputs, and independent behavioral assessments.
+The earlier completion claim was premature. Preserve the earlier evidence and add the missing checks before closing this task.
+Use one coordinator for catalog and report writes. Preserve unrelated worktree changes.
+
+The runtime audit found unbound coverage targets, malformed-review crashes, and missing completion JSON instructions.
+The [correction evaluation](evidence/stage-02r-accounting-correction.json) records the fixes and independent checks.
+The original adverse evidence remains under [the runtime audit](evidence/runtime-accounting-audit/review.md).
+The corrected fixture catalog now has thirteen cases, eight source documents, twenty-four predicates, and twelve reader questions.
+The original leading fixture and twenty-six unexecuted preparations remain accounted for as `NOT_EXECUTED`.
 
 ## Exact user input
 

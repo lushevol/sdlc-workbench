@@ -54,8 +54,11 @@ Next action: require a current consumer and observable assertion for each new te
 Use these evaluations when changing task summaries, behavior comparisons, setup readiness, or deployment evidence procedures.
 Use [evaluate-harness](../.agents/skills/evaluate-harness/SKILL.md) for paired baseline/candidate workflow trials and independent scorecards.
 Their current consumer is the maintainer of those shared skills.
-The [case catalog](skill-evaluation-cases.json) contains seven synthetic requests derived from repeated user corrections.
-It covers known answers, stale results, regression attribution, misleading passing assertions, review scope, setup readiness, and deployment evidence.
+The [case catalog](skill-evaluation-cases.json) contains thirteen synthetic requests derived from repeated user corrections.
+Seven cover known answers, stale results, regression attribution, assertions, review scope, setup readiness, and deployment evidence.
+Six cover lifecycle accounting, interrupted handoffs, source dispositions, semantic preservation, decision grouping, and reader usefulness.
+The knowledge fixture retains eight documents across four collections, twelve questions, and exact saved answers.
+The assessor rubric contains twenty-four source predicates and expected dispositions. Keep it outside respondent context.
 Synthetic records represent evaluation inputs. They establish no actual business policy, approval, or execution.
 
 Prepare one case in a new external directory:
@@ -84,3 +87,7 @@ Retain consequential failures and scope violations. Refine guidance only when ob
 Keep deterministic preparation checks separate from semantic assessment and ASD writing review.
 Passing these cases does not establish general skill reliability or business behavior verification.
 No automatic replay schedule, model dependency, or semantic grader is installed.
+
+For comparisons, choose neutral trial and skill-root names. Keep variant mapping in the coordinator's evidence only.
+Freeze the rubric before execution. Preserve each respondent output and independent assessment before starting the next enhancement stage.
+Report scheduled, executed, failed, and unassessed trials separately. Preparation alone cannot establish a passing behavioral result.

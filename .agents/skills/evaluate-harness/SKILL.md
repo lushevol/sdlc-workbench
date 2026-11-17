@@ -41,6 +41,7 @@ Preserve adverse results and rerun evidence. A revised candidate receives a new 
 ## Complete the trial
 
 Return a scorecard with the fixture and skill hashes, variant, settings, criteria, outcomes, evidence links, limits, and next action.
+Use the [trial manifest fields](references/trials.md) when retaining a paired comparison.
 Report denominators and zero-denominator reasons. Separate tool completion, semantic review, business verification, and human authorization.
 State when the assessor was not independent or when a requested client, model, or environment was unavailable.
 
