@@ -17,10 +17,10 @@ cd0d56ea2b30dc70c46251824cc792f9ba6ed6c4
 ```
 
 The conversion diagnostic is committed in the history at `af3f978405776c9d63c8664176d1164676a9904c`.
-The current worktree also contains six reviewed wiki files with uncommitted changes.
-Commit those six files before transfer if the destination must reproduce their current bytes.
+This handoff is committed at `86e7588b07b706b7c0d4c5a20d466b080dc2ea4a`.
+The six reviewed wiki refresh files are committed at `56cd8196c7f8541698b58c724cc86986523d980b`.
 
-Do not commit unrelated changes.
+Do not transfer unrelated changes.
 The observed unrelated changes include `core/connectors/yarn.lock`, `core/release-report/`, and `tasks/workbench-ado-skills-assessment-20261113/`.
 
 ## What Git contains
