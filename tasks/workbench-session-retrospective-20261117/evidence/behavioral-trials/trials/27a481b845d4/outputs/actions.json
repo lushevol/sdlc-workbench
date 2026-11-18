@@ -1,0 +1,544 @@
+{
+  "schema_version": 1,
+  "case_id": "regression-comparison",
+  "synthetic": true,
+  "repository": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/27a481b845d4/repo",
+  "review_mode": "range",
+  "base_revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+  "candidate_revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+  "timing": {
+    "initial_read_at": "UNKNOWN",
+    "first_recorded_inspection_at": "2026-11-18T04:40:17.972201+00:00",
+    "checks_started_at": "2026-11-18T04:41:28.802244+00:00",
+    "checks_finished_at": "2026-11-18T04:41:29.000918+00:00",
+    "report_saved_at": "2026-11-18T04:42:15.306690+00:00",
+    "completed_at": "2026-11-18T04:42:47.712315+00:00"
+  },
+  "observed_settings": {
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "git": "git version 2.54.0",
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "clock": "host UTC",
+    "test_clock_control": "none",
+    "python_bytecode": "disabled with -B and PYTHONDONTWRITEBYTECODE=1",
+    "network_calls": "none",
+    "deployment_settings": "UNKNOWN",
+    "browser_or_client_configuration": "UNKNOWN",
+    "production_reachability": "UNKNOWN",
+    "model_execution_settings": "UNKNOWN"
+  },
+  "commands": [
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/27a481b845d4/evaluation-input.json",
+      "exit_code": 0,
+      "result": "Read task scope, revision pair, allowed inputs and limits."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/SKILL.md",
+      "exit_code": 0,
+      "result": "Read selected code-review skill."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 inline read of requirements.md, review-request.md, test-cases.md",
+      "exit_code": 0,
+      "result": "Both requirements apply to both revisions. Repository changes, new tests, task creation and external calls are outside scope."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "git status --short && git diff --stat d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389 && git diff d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/27a481b845d4/repo",
+      "exit_code": 0,
+      "result": "Clean worktree. One changed line in service.py, wait becomes logout for refresh_pending."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 inline read of selected skill assets/review-report.template.md, references/review-checklist.md, references/validation.md",
+      "exit_code": 0,
+      "result": "Read reporting, semantic checks and baseline comparison guidance."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 inline inspection using git --version, python3 --version, rg --files --hidden -g !.git, git rev-parse, git ls-tree -r --name-only, git show REV:PATH, git status --porcelain=v1",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/27a481b845d4/repo",
+      "exit_code": 0,
+      "result": "Both commits contain only service.py and test_characterization.py. Full source and test assertions inspected before execution. No repository-local instructions or configuration files are supplied."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 -B inline authoring of review.md and update of outputs/actions.json",
+      "exit_code": 0,
+      "result": "Saved concise review with one introduced P2 finding, inherited retry gap, side-by-side cases, contradictory test evidence and execution limits."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 -B inline checks of report sections/placeholders/local links, all supplied input hashes, git status --porcelain=v1, git rev-parse HEAD, git diff --no-ext-diff --binary BASE CANDIDATE, case/suite consistency and fixture caches",
+      "exit_code": 0,
+      "result": "33 structural and identity checks passed. Repository remains unchanged. Updated report automated_check to PASSED; asd_review remains PENDING."
+    }
+  ],
+  "input_hashes": {
+    "evaluation-input.json": "e7ff235b5b7fd13c75638fd7f2353f31867a3d1b26f31d534c6bc46af7d3207b",
+    "requirements.md": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+    "review-request.md": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+    "test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881"
+  },
+  "selected_skill_hashes": {
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/SKILL.md": {
+      "expected": "23715ea12ce1fb9c8af9c78d54027209c1fca0d90017882360c3ca94b66ac6c1",
+      "actual": "23715ea12ce1fb9c8af9c78d54027209c1fca0d90017882360c3ca94b66ac6c1",
+      "match": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/assets/review-report.template.md": {
+      "expected": "4c6a9184c48aee7f429474132b363343f50fe44a9978af7d86d400f1ca7cebff",
+      "actual": "4c6a9184c48aee7f429474132b363343f50fe44a9978af7d86d400f1ca7cebff",
+      "match": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/references/helpers.md": {
+      "expected": "90d849743756f8040fca85ed54baf710d82c201c43bd654a01558d57848f8223",
+      "actual": "90d849743756f8040fca85ed54baf710d82c201c43bd654a01558d57848f8223",
+      "match": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/references/integrations.md": {
+      "expected": "b1f4adea7c016f2ab15ff93fbdedd30f1ec947d2ea76f2c1afba6f386c9121ae",
+      "actual": "b1f4adea7c016f2ab15ff93fbdedd30f1ec947d2ea76f2c1afba6f386c9121ae",
+      "match": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/references/language-checks.md": {
+      "expected": "937ab6affdc1f9d4458c920831ad39e2e2552085ace136cf060794987dac41bf",
+      "actual": "937ab6affdc1f9d4458c920831ad39e2e2552085ace136cf060794987dac41bf",
+      "match": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/references/review-checklist.md": {
+      "expected": "11009b1d82fd51323801bda361083fc389ff46d0bb136d650887209186ec9eb0",
+      "actual": "11009b1d82fd51323801bda361083fc389ff46d0bb136d650887209186ec9eb0",
+      "match": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/references/review-schema.md": {
+      "expected": "78025c1544cf876d530ad2f44022ec26db745ee1f269738300ae46f69cb286d8",
+      "actual": "78025c1544cf876d530ad2f44022ec26db745ee1f269738300ae46f69cb286d8",
+      "match": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/code-review/references/validation.md": {
+      "expected": "a41bfaf25bbd6da2d6db79e2f9eccf03fb8e32cdadf81cf81e54054685dbc2f9",
+      "actual": "a41bfaf25bbd6da2d6db79e2f9eccf03fb8e32cdadf81cf81e54054685dbc2f9",
+      "match": true
+    }
+  },
+  "sources": {
+    "d9417ed17a50516fdca3a85478245cf3bafa40ee": {
+      "service.py": {
+        "sha256": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+        "content": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"wait\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n"
+      },
+      "test_characterization.py": {
+        "sha256": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+        "content": "import unittest\nfrom service import renewal_action\n\nclass CurrentBehavior(unittest.TestCase):\n    def test_rejection_logs_out(self):\n        self.assertEqual(renewal_action(refresh_failed=True), \"logout\")\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      }
+    },
+    "037a1e6c0c2c9d0316fa5882f38417330ec48389": {
+      "service.py": {
+        "sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+        "content": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"logout\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n"
+      },
+      "test_characterization.py": {
+        "sha256": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+        "content": "import unittest\nfrom service import renewal_action\n\nclass CurrentBehavior(unittest.TestCase):\n    def test_rejection_logs_out(self):\n        self.assertEqual(renewal_action(refresh_failed=True), \"logout\")\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      }
+    }
+  },
+  "change_fingerprint": {
+    "algorithm": "sha256",
+    "command": "git diff --no-ext-diff --binary d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389",
+    "sha256": "fa3c61c26461a8f4396610a2dfbed9fbdd74cc4cc7f2e0d3dedb5a9ff5018ffe",
+    "patch": "diff --git a/service.py b/service.py\nindex c29a597..97e7813 100644\n--- a/service.py\n+++ b/service.py\n@@ -1,6 +1,6 @@\n def renewal_action(refresh_pending=False, refresh_failed=False):\n     if refresh_pending:\n-        return \"wait\"\n+        return \"logout\"\n     if refresh_failed:\n         return \"logout\"\n     return \"active\"\n"
+  },
+  "test_runs": [
+    {
+      "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+      "side": "base",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/wb-renewal-review-5p4h33ao/base",
+      "started_at": "2026-11-18T04:41:28.852791+00:00",
+      "finished_at": "2026-11-18T04:41:28.885133+00:00",
+      "duration_seconds": 0.0323400420602411,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "status": "PASSED",
+      "assertion": "test_characterization.py:6 expects logout for refresh_failed=True",
+      "requirement_conformance": "The assertion contradicts TC-RETRY. TC-PENDING is absent."
+    },
+    {
+      "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "side": "candidate",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/wb-renewal-review-5p4h33ao/candidate",
+      "started_at": "2026-11-18T04:41:28.895059+00:00",
+      "finished_at": "2026-11-18T04:41:28.923180+00:00",
+      "duration_seconds": 0.02811887487769127,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "status": "PASSED",
+      "assertion": "test_characterization.py:6 expects logout for refresh_failed=True",
+      "requirement_conformance": "The assertion contradicts TC-RETRY. TC-PENDING is absent."
+    }
+  ],
+  "case_results": [
+    {
+      "case_id": "TC-PENDING",
+      "definition": "test-cases.md#tc-pending",
+      "inputs": {
+        "refresh_pending": true,
+        "refresh_failed": false
+      },
+      "expected_action": "wait",
+      "expected_no_logout": true,
+      "results": [
+        {
+          "side": "base",
+          "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "-c",
+            "import json; from service import renewal_action; print(json.dumps({\"action\":renewal_action(**{'refresh_pending': True, 'refresh_failed': False})}))"
+          ],
+          "cwd": "/private/tmp/wb-renewal-review-5p4h33ao/base",
+          "started_at": "2026-11-18T04:41:28.923431+00:00",
+          "finished_at": "2026-11-18T04:41:28.939118+00:00",
+          "duration_seconds": 0.015690499916672707,
+          "exit_code": 0,
+          "stdout": "{\"action\": \"wait\"}\n",
+          "stderr": "",
+          "observed_action": "wait",
+          "action_matches_expected": true,
+          "no_logout_satisfied": true,
+          "evidence_class": "observed function return value"
+        },
+        {
+          "side": "candidate",
+          "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "-c",
+            "import json; from service import renewal_action; print(json.dumps({\"action\":renewal_action(**{'refresh_pending': True, 'refresh_failed': False})}))"
+          ],
+          "cwd": "/private/tmp/wb-renewal-review-5p4h33ao/candidate",
+          "started_at": "2026-11-18T04:41:28.939133+00:00",
+          "finished_at": "2026-11-18T04:41:28.954333+00:00",
+          "duration_seconds": 0.015214583138003945,
+          "exit_code": 0,
+          "stdout": "{\"action\": \"logout\"}\n",
+          "stderr": "",
+          "observed_action": "logout",
+          "action_matches_expected": false,
+          "no_logout_satisfied": false,
+          "evidence_class": "observed function return value"
+        }
+      ],
+      "method": "Direct invocation of existing API for supplied case. No test files generated.",
+      "classification": "introduced regression"
+    },
+    {
+      "case_id": "TC-RETRY",
+      "definition": "test-cases.md#tc-retry",
+      "inputs": {
+        "refresh_pending": false,
+        "refresh_failed": true
+      },
+      "expected_action": "retry",
+      "expected_no_logout": true,
+      "results": [
+        {
+          "side": "base",
+          "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "-c",
+            "import json; from service import renewal_action; print(json.dumps({\"action\":renewal_action(**{'refresh_pending': False, 'refresh_failed': True})}))"
+          ],
+          "cwd": "/private/tmp/wb-renewal-review-5p4h33ao/base",
+          "started_at": "2026-11-18T04:41:28.954607+00:00",
+          "finished_at": "2026-11-18T04:41:28.970129+00:00",
+          "duration_seconds": 0.015538000036031008,
+          "exit_code": 0,
+          "stdout": "{\"action\": \"logout\"}\n",
+          "stderr": "",
+          "observed_action": "logout",
+          "action_matches_expected": false,
+          "no_logout_satisfied": false,
+          "evidence_class": "observed function return value"
+        },
+        {
+          "side": "candidate",
+          "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "-c",
+            "import json; from service import renewal_action; print(json.dumps({\"action\":renewal_action(**{'refresh_pending': False, 'refresh_failed': True})}))"
+          ],
+          "cwd": "/private/tmp/wb-renewal-review-5p4h33ao/candidate",
+          "started_at": "2026-11-18T04:41:28.970155+00:00",
+          "finished_at": "2026-11-18T04:41:28.985499+00:00",
+          "duration_seconds": 0.01536220801062882,
+          "exit_code": 0,
+          "stdout": "{\"action\": \"logout\"}\n",
+          "stderr": "",
+          "observed_action": "logout",
+          "action_matches_expected": false,
+          "no_logout_satisfied": false,
+          "evidence_class": "observed function return value"
+        }
+      ],
+      "method": "Direct invocation of existing API for supplied case. No test files generated.",
+      "classification": "unchanged baseline conformance gap"
+    }
+  ],
+  "changed_paths": [
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/27a481b845d4/review.md",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/27a481b845d4/outputs/actions.json"
+  ],
+  "limits": [
+    "Synthetic supplied contract has no represented business approval.",
+    "Controlled execution observes renewal_action return values only. Actual logout execution, browser behavior, production reachability, frequency and impact are UNKNOWN.",
+    "No actual model execution or semantic grading was performed by the fixture helper.",
+    "Only listed fixture assets and selected skill resources were inspected. Cross-skill links and unlisted helper scripts were not loaded.",
+    "No new test files, application fixes, task records, external calls, staging or commits were performed.",
+    "First two tool batches did not capture UTC start timestamps. Their recorded tool elapsed times were 0.1 seconds each; the following batch took 0.2 seconds.",
+    "Security scanners, remote analyzers and browser checks were not run. The fixture supplies only one pure Python decision function and its characterization test."
+  ],
+  "repository_before": {
+    "status_porcelain": "",
+    "working_file_hashes": {
+      "service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+      "test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c"
+    },
+    "head": "037a1e6c0c2c9d0316fa5882f38417330ec48389"
+  },
+  "isolation": {
+    "temporary_root": "/private/tmp/wb-renewal-review-5p4h33ao",
+    "outside_fixture": true,
+    "cleanup": "removed by TemporaryDirectory after checks",
+    "services": "none",
+    "data": "supplied synthetic Boolean inputs",
+    "bytecode_caches": "disabled",
+    "caches_found": []
+  },
+  "repository_after": {
+    "status_porcelain": "",
+    "working_file_hashes": {
+      "service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+      "test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c"
+    },
+    "unchanged": true,
+    "change_fingerprint_unchanged": true,
+    "head": "037a1e6c0c2c9d0316fa5882f38417330ec48389"
+  },
+  "final_validation": {
+    "checked_at": "2026-11-18T04:42:47.712197+00:00",
+    "status": "PASSED",
+    "checks": [
+      {
+        "name": "required_deliverables",
+        "status": "PASSED",
+        "detail": "review.md and outputs/actions.json exist."
+      },
+      {
+        "name": "report_placeholders",
+        "status": "PASSED",
+        "detail": "No template placeholders remain."
+      },
+      {
+        "name": "report_sections",
+        "status": "PASSED",
+        "detail": "Required review content is present."
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "repo/service.py:3"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "test-cases.md#tc-pending"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "outputs/actions.json"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "repo/service.py:1"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "repo/test_characterization.py:6"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "outputs/actions.json"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "requirements.md"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "test-cases.md"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "test-cases.md#tc-pending"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "test-cases.md#tc-retry"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "outputs/actions.json"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "test-cases.md#tc-pending"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "test-cases.md#tc-retry"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "repo/test_characterization.py:5"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "outputs/actions.json"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "review-request.md"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "outputs/actions.json"
+      },
+      {
+        "name": "local_link",
+        "status": "PASSED",
+        "detail": "outputs/actions.json"
+      },
+      {
+        "name": "input_hash",
+        "status": "PASSED",
+        "detail": "repo/service.py"
+      },
+      {
+        "name": "input_hash",
+        "status": "PASSED",
+        "detail": "repo/test_characterization.py"
+      },
+      {
+        "name": "input_hash",
+        "status": "PASSED",
+        "detail": "requirements.md"
+      },
+      {
+        "name": "input_hash",
+        "status": "PASSED",
+        "detail": "review-request.md"
+      },
+      {
+        "name": "input_hash",
+        "status": "PASSED",
+        "detail": "test-cases.md"
+      },
+      {
+        "name": "worktree_clean",
+        "status": "PASSED",
+        "detail": "git status --porcelain=v1 is empty."
+      },
+      {
+        "name": "head_unchanged",
+        "status": "PASSED",
+        "detail": "037a1e6c0c2c9d0316fa5882f38417330ec48389"
+      },
+      {
+        "name": "comparison_identity",
+        "status": "PASSED",
+        "detail": "Patch fingerprint matches initial inspection."
+      },
+      {
+        "name": "case_results",
+        "status": "PASSED",
+        "detail": "Observed baseline and candidate results match retained case records."
+      },
+      {
+        "name": "suite_results",
+        "status": "PASSED",
+        "detail": "Existing suite passed one test on each revision."
+      },
+      {
+        "name": "no_fixture_caches",
+        "status": "PASSED",
+        "detail": "No check-generated Python cache exists in the fixture repository."
+      },
+      {
+        "name": "no_prohibited_prose_punctuation",
+        "status": "PASSED",
+        "detail": "Report contains no semicolons."
+      }
+    ],
+    "report_sha256": "c2baf0fe25bdd7de7d275b69b125b36c3a83aa5d47ea1c65df8213562b91de36",
+    "report_words": 766,
+    "asd_review": "PENDING",
+    "limits": [
+      "Structural, local-link, identity and result consistency checks were executed. Complete ASD-STE100 dictionary and grammar review remains pending."
+    ]
+  }
+}

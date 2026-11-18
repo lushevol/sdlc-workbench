@@ -1,0 +1,52 @@
+{
+  "at": "2026-11-18T04:43:05.401852+00:00",
+  "status": "PASSED",
+  "reviewer": "behavioral_completion_coordinator",
+  "independent_of_author": true,
+  "reviewed_path": ".agents/skills/evaluate-harness/SKILL.md",
+  "reviewed_sha256": "b09433aa8bc0369f9b627300f02e9cb053732089459297836ba179110aac4c71",
+  "supersedes_for_current_wording": "evaluation-input-guard-review.json",
+  "checks": [
+    {
+      "case": "Authorized existing-summary edit",
+      "outcome": "PASSED",
+      "evidence": [
+        "a7b3839159ef/assessment.json#input_integrity",
+        "a7b3839159ef/tasks/demo/stage-review.md",
+        ".agents/skills/evaluate-harness/SKILL.md:28-29"
+      ],
+      "observed": {
+        "path": "tasks/demo/stage-review.md",
+        "expected_sha256": "eb9f0d64a805c815e50c670451c375552de80fc24ab222f6741c66336fd4a2ff",
+        "actual_sha256": "d99c1edc4ae7a33554ae88a5e5032704b72c42b4afe9578390275777bd0e982a",
+        "matches": false,
+        "authorized_change": true
+      },
+      "reason": "The changed authorized summary remains a retained output with both original and resulting hashes. Read-only inputs remain matching."
+    },
+    {
+      "case": "Missing read-only optional reference",
+      "outcome": "PASSED",
+      "evidence": [
+        "snapshot-recovery.json",
+        ".agents/skills/evaluate-harness/SKILL.md:20-21"
+      ],
+      "reason": "Exact pinned reference bytes were restored. The pre-recovery answer retains an explicit availability limitation."
+    },
+    {
+      "case": "Before-dispatch verification",
+      "outcome": "PASSED",
+      "evidence": [
+        "preflight-regression-comparison.json",
+        ".agents/skills/evaluate-harness/SKILL.md:16"
+      ],
+      "reason": "Both next-stage manifests and their input/skill bindings passed before fresh dispatch."
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "Focused instruction review and deterministic checks against retained real trial cases.",
+    "No fresh respondent trial used this evaluator protocol skill. Frozen respondent skills and outcomes remain unchanged.",
+    "ASD writing review remains pending."
+  ]
+}

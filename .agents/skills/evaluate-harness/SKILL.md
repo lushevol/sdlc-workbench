@@ -13,14 +13,20 @@ This is an evaluation protocol. It does not run a model, approve a business resu
 1. Define one bounded task, its permitted actions, the expected decision predicates, and the limits.
 2. Pin the baseline and candidate skill roots, fixture bytes, source revisions, model settings, and assessor criteria.
 3. Prepare a new isolated trial directory. Use the repository's `tests/skill_evaluation.py` fixture preparer when it is available; otherwise retain an equivalent input manifest.
-4. Give the respondent only the task, fixture, selected skills, and permitted actions. Keep the rubric, suspected defect, variant label, and prior result outside its context.
-5. Save the respondent's answer, changed files, command outputs, and actual settings before assessment.
+4. Verify every bound input is readable and matches its pinned hash before dispatch.
+5. Give the respondent only the task, fixture, selected skills, and permitted actions. Keep the rubric, suspected defect, variant label, and prior result outside its context.
+6. Save the respondent's answer, changed files, command outputs, and actual settings before assessment.
+
+If a read-only input disappears or changes, preserve the attempt.
+Restore pinned bytes in the isolated trial copy before further dispatch.
+Record any availability limit for an answer produced before recovery.
 
 Use synthetic fixtures when isolation or privacy requires them. Mark them as synthetic and do not treat them as business or production evidence.
 
 ## Assess the result
 
 An independent assessor receives the raw fixture, pinned expectations, respondent output, artifacts, and action evidence.
+Recheck read-only inputs before assessment. Retain authorized edits with their original and resulting hashes.
 For every criterion record `PASSED`, `FAILED`, or `NOT_ASSESSED`, with an exact evidence locator and material limit.
 Compare baseline and candidate on the same fixture and permitted action set.
 

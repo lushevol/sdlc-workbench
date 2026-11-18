@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-18T04:41:44.058124+00:00",
+  "status": "CORRECTION_REQUIRED",
+  "reviewer": "behavioral_completion_coordinator",
+  "independent_of_author": true,
+  "reviewed_path": ".agents/skills/evaluate-harness/SKILL.md",
+  "reviewed_sha256": "118cae021a15f246e187f21951e0a32e3a707c1ae13d47a0b4826580b2dc9c9c",
+  "evidence": [
+    "snapshot-recovery.json",
+    "assess.py:43-51",
+    "known-policy-required-pair-review.json",
+    "current-results-required-pair-review.json"
+  ],
+  "finding": {
+    "severity": "MATERIAL_PROCEDURAL_EDGE_CASE",
+    "location": ".agents/skills/evaluate-harness/SKILL.md:16-21",
+    "problem": "The new blanket before-assessment hash rule and restore-on-change instruction also cover source assets intentionally edited by the trial prompt. Known-policy/current-results intentionally update the existing hash-bound stage summary. Restoring these authorized changes would overwrite the trial deliverable.",
+    "consequence": "A valid edit workflow could be treated as input corruption, and its retained output could be destroyed or invalidated.",
+    "suggested_correction": "Before dispatch, check every bound input. Before assessment, verify read-only inputs and preserve authorized edits as outputs with original and resulting hashes. Apply restore-on-change only to protected inputs."
+  },
+  "other_checks": [
+    "The missing optional reference recovery correctly requires exact pinned bytes and preserves availability limits.",
+    "No extra publication, deployment or native-client authority is introduced."
+  ],
+  "limits": [
+    "Instruction review against retained real evaluation cases; no fresh model trial ran for this protocol wording."
+  ]
+}

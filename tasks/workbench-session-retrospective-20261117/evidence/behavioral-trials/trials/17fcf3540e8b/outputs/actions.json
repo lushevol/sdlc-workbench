@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "case_id": "current-results",
+  "synthetic": true,
+  "fixture_root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b",
+  "timing": {
+    "started_at": "UNKNOWN",
+    "assessment_observed_at_utc": "2026-11-18 04:33:29 UTC",
+    "finished_at": "UNKNOWN",
+    "total_elapsed_seconds": "UNKNOWN",
+    "tool_batch_wall_seconds_before_write": [0.1, 0.1, 0.1, 0.1],
+    "historical_execution_time": "UNKNOWN"
+  },
+  "actions": [
+    {
+      "tool": "exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/evaluation-input.json",
+      "exit_code": 0,
+      "result": "Read task prompt, asset allowlist, selected skills, revisions, supplied hashes, and limits first."
+    },
+    {
+      "tool": "exec_command",
+      "command_form": "cat 'ABSOLUTE_PATH'",
+      "absolute_paths": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/SKILL.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/analyze-requirement/SKILL.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/tasks/demo/stage-review.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/tasks/demo/intake.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/tasks/demo/test-cases.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/tasks/demo/evidence/earlier-run.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/analyze-requirement/references/current-task-view.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/behavior-review.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/knowledge/session-policy.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/repo/service.py",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/repo/test_characterization.py"
+      ],
+      "exit_codes": "All 0",
+      "result": "Reconciled completed intake, stage, policy candidate, two canonical definitions, script assertions, and historical execution."
+    },
+    {
+      "tool": "exec_command",
+      "workdir": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/17fcf3540e8b/repo",
+      "commands": [
+        "git rev-parse HEAD",
+        "git status --short -- service.py test_characterization.py",
+        "git show d9417ed17a50516fdca3a85478245cf3bafa40ee:service.py",
+        "git show d9417ed17a50516fdca3a85478245cf3bafa40ee:test_characterization.py",
+        "git show 037a1e6c0c2c9d0316fa5882f38417330ec48389:service.py",
+        "git show 037a1e6c0c2c9d0316fa5882f38417330ec48389:test_characterization.py",
+        "git diff d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389 -- service.py test_characterization.py"
+      ],
+      "exit_codes": "All 0",
+      "result": "HEAD is the candidate. Source status is empty. Pending branch changed wait to logout. Failure branch and rejection characterization are unchanged.",
+      "execution_class": "Read-only source inspection"
+    },
+    {
+      "tool": "clock__curr_time",
+      "arguments": {},
+      "result": "2026-11-18 04:33:29 UTC"
+    },
+    {
+      "tool": "apply_patch",
+      "operation": "Update existing stage-review.md and create outputs/actions.json",
+      "result": "Saved current task state, definitions, scripts, retained results, revision comparison, blockers, next actions, and evidence limits."
+    }
+  ],
+  "key_results": {
+    "canonical_cases": ["TC-PENDING", "TC-RETRY"],
+    "current_passing_evidence": "0 / 2",
+    "TC-PENDING": "Historical synthetic PASSED is stale for the candidate. Candidate source predicts logout. No pending assertion exists in the supplied script.",
+    "TC-RETRY": "No retained run. Both revisions predict logout. Existing script expects logout, contradicting retry and no-logout requirements.",
+    "readiness": "Existing READY retained for local verification, within current authorization.",
+    "business_approval": "PENDING",
+    "publication_review": "PENDING",
+    "policy_question_Q-1": "Resolved in existing candidate domain record."
+  },
+  "changed_paths": ["tasks/demo/stage-review.md", "outputs/actions.json"],
+  "preserved_paths": ["tasks/demo/intake.md", "tasks/demo/test-cases.md", "tasks/demo/evidence/earlier-run.json", "knowledge/session-policy.md", "repo/service.py", "repo/test_characterization.py"],
+  "observed_settings": {
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "candidate_revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+    "base_revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+    "historical_environment": "isolated local fixture",
+    "historical_test_revision": "UNKNOWN",
+    "historical_case_revision": "UNKNOWN",
+    "historical_invocation": "UNKNOWN",
+    "historical_configuration": "UNKNOWN",
+    "current_execution_environment": "UNKNOWN",
+    "UAT_configuration": "UNKNOWN",
+    "UAT_access": "UNAVAILABLE",
+    "browser_version": "UNKNOWN",
+    "browser_settings": "UNKNOWN",
+    "release_owner": "UNKNOWN",
+    "new_checks_executed": false,
+    "new_subagents": false
+  },
+  "limits": [
+    "User requested no new checks. No tests, validators, browsers, services, or assurance checks were executed.",
+    "Git commands only inspected listed source assets and selected revisions.",
+    "All inputs are synthetic and establish no real business behavior.",
+    "Historical execution lacks assertion, test, case, invocation, configuration, and time bindings.",
+    "Source predictions establish no executed browser outcome.",
+    "Supplied hashes were read without independent hash validation.",
+    "No memory, external sources, sibling or operator-directory inspection, model execution, or semantic grading was used.",
+    "Selected skill resources were accessed only through paths listed in evaluation-input.json.",
+    "The final write has no independently measured completion timestamp or post-write validation."
+  ]
+}

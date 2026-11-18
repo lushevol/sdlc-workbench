@@ -1,0 +1,50 @@
+{
+  "at": "2026-11-18T04:46:02.682549+00:00",
+  "status": "PASSED",
+  "reviewer": "behavioral_completion_coordinator",
+  "independent_of_author": true,
+  "reviewed_path": ".agents/skills/evaluate-harness/SKILL.md",
+  "reviewed_sha256": "7594847b62383c310d1a488d24b375f83fc54051823418318089244e51fa1e56",
+  "prior_reviews_preserved": [
+    "evaluation-input-guard-review.json",
+    "evaluation-input-guard-rereview.json",
+    "evaluation-input-guard-ownership-review.json"
+  ],
+  "checks": [
+    {
+      "case": "Default live source root",
+      "outcome": "PASSED",
+      "evidence": [
+        "tests/skill_evaluation.py:44",
+        "tests/skill_evaluation.py:98",
+        "tests/skill_evaluation.py:100",
+        ".agents/skills/evaluate-harness/SKILL.md"
+      ],
+      "reason": "The actual preparer can point at shared checkout skills. Final recovery instruction explicitly restores bytes inside the isolated trial copy, preserving shared source ownership."
+    },
+    {
+      "case": "Authorized bound-input edit",
+      "outcome": "PASSED",
+      "evidence": [
+        "a7b3839159ef/assessment.json#input_integrity",
+        "a7b3839159ef/tasks/demo/stage-review.md"
+      ],
+      "reason": "The valid existing-summary edit remains retained with original/resulting hashes. The rule requires read-only input rechecks and preserves authorized edits."
+    },
+    {
+      "case": "Missing optional reference",
+      "outcome": "PASSED",
+      "evidence": [
+        "snapshot-recovery.json",
+        "current-results-required-pair-review.json"
+      ],
+      "reason": "Exact pinned recovery occurs in the isolated snapshot. The pre-recovery answer retains its unverified availability limitation."
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "Focused instruction review plus deterministic source/byte checks against retained trial evidence.",
+    "No fresh respondent trial used the evaluator protocol skill.",
+    "ASD writing review remains pending."
+  ]
+}

@@ -69,7 +69,7 @@ Live agent handles confirmed both states before resumption. Completed trials wer
 The [oracle amendment](evidence/semantic-oracle-amendment.json) corrects one reader question and evidence-class expectations before affected stages.
 The [independent recheck](evidence/semantic-oracle-recheck.json) passed. Source text and prior assessments remain unchanged.
 
-The [behavioral scorecard](evidence/optimization-scorecard.json) now retains twenty-eight assessed trials across seven completed stages.
+The [behavioral scorecard](evidence/optimization-scorecard.json) now retains thirty-two assessed trials across nine completed stages.
 All candidate criteria passed. Baseline source disposition missed one exact-clause citation criterion in its first repetition.
 Both variants found both omissions and preserved justified unchanged and contextual results in all three repetitions.
 Both candidate grouping trials preserved all twelve entries and passed eight criteria.
@@ -79,7 +79,8 @@ Both preserved qualified historical numeric and timing observations. This fixtur
 Each reader variant supplied twelve supported final answers and retained all twenty-four predicates.
 The candidate passed all four review criteria. The baseline passed three criteria and omitted separate draft usability judgments.
 Both final answer sets received identical maximum usability scores.
-Both known-policy engineering trials passed all eight criteria and preserved authorized scope. Six engineering comparisons remain pending.
+The completed engineering pairs cover known policy, current results, and regression comparison. All twenty-six criteria passed.
+Four engineering comparisons remain pending.
 
 The next continuation found missing worker handles. One unfinished authorized draft was retained before retry.
 The [recovery record](evidence/behavioral-trials/operator/engineering-dispatch-recovery.json) preserves its bytes and attempt history.
@@ -88,6 +89,19 @@ The twenty-six accepted trials remained unchanged during recovery.
 The [fresh distribution check](evidence/stage-06-final-distribution.json) builds clean source commit `cad633b99` with the corrected fixture and oracle.
 All 220 shared skill files match. Six initialized catalogs are empty, and zero prohibited artifacts appear.
 Installed-workspace behavior remains separately pending.
+
+### Evaluation input integrity follow-up, 18 November 2026
+
+The current-results comparison exposed missing optional references in the temporary candidate snapshot.
+Exact inventory hashes supported recovery. The deletion cause remains unknown.
+The [recovery evidence](evidence/behavioral-trials/operator/snapshot-recovery.json) retains the failure, restoration, and reference-availability limit.
+Affected scope is the `evaluate-harness` preparation procedure. Qualitative risk is low because this changes evaluation guidance only.
+Add hash verification before dispatch and assessment. Preserve attempts and disclose availability limits after recovery.
+Independent review found an overbroad restoration instruction. The correction preserves authorized edits with original and resulting hashes.
+Restore read-only inputs inside isolated trial copies. The initial adverse review remains retained.
+The [independent recheck](evidence/behavioral-trials/operator/evaluation-input-guard-final-review-7594847b.json) passed recovery, shared-source ownership, and authorized-edit counterexamples.
+All twenty-three workspace-layout tests passed after the correction.
+One current-results optional reference was restored after its response. Availability during that response remains unverified.
 
 ### Evaluation scope correction, 18 November 2026
 

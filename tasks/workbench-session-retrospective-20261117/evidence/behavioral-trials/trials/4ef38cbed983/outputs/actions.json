@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "case_id": "regression-comparison",
+  "synthetic": true,
+  "started_at_utc": "2026-11-18T04:41:22.673329+00:00",
+  "repository": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983/repo",
+  "base_revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+  "candidate_revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+  "comparison_mode": "range, exact endpoints",
+  "observed_settings": {
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "python_version": "3.14.5",
+    "git_version": "git version 2.54.0",
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "head": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+    "initial_git_status_porcelain": "",
+    "external_environment": "UNKNOWN",
+    "deployment_settings": "UNKNOWN",
+    "production_reachability": "UNKNOWN",
+    "test_configuration": "stdlib unittest, isolated exact source copies, -B and PYTHONDONTWRITEBYTECODE=1",
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "network_calls": "None executed",
+    "external_services_substituted": "None",
+    "controlled_clock": "None"
+  },
+  "source_hashes": {
+    "requirements.md": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+    "review-request.md": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+    "test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+    "d9417ed17a50516fdca3a85478245cf3bafa40ee": {
+      "service.py": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+      "test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c"
+    },
+    "037a1e6c0c2c9d0316fa5882f38417330ec48389": {
+      "service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+      "test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c"
+    }
+  },
+  "checks": [
+    {
+      "kind": "existing_suite",
+      "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/wb-review-check-0rgfn_pb/d9417ed17a50516fdca3a85478245cf3bafa40ee",
+      "started_at_utc": "2026-11-18T04:41:22.710148+00:00",
+      "duration_seconds": 0.1257,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+    },
+    {
+      "kind": "direct_observation",
+      "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+      "case_id": "TC-PENDING",
+      "operation": "renewal_action(**inputs) from compiled exact git source",
+      "inputs": {
+        "refresh_pending": true,
+        "refresh_failed": false
+      },
+      "expected_action": "wait",
+      "actual_action": "wait",
+      "action_conforms": true,
+      "does_not_log_out": true,
+      "started_at_utc": "2026-11-18T04:41:22.836792+00:00",
+      "duration_seconds": 1e-06,
+      "status": "PASSED"
+    },
+    {
+      "kind": "direct_observation",
+      "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+      "case_id": "TC-RETRY",
+      "operation": "renewal_action(**inputs) from compiled exact git source",
+      "inputs": {
+        "refresh_pending": false,
+        "refresh_failed": true
+      },
+      "expected_action": "retry",
+      "actual_action": "logout",
+      "action_conforms": false,
+      "does_not_log_out": false,
+      "started_at_utc": "2026-11-18T04:41:22.836881+00:00",
+      "duration_seconds": 1e-06,
+      "status": "FAILED"
+    },
+    {
+      "kind": "existing_suite",
+      "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/wb-review-check-0rgfn_pb/037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "started_at_utc": "2026-11-18T04:41:22.846352+00:00",
+      "duration_seconds": 0.114663,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+    },
+    {
+      "kind": "direct_observation",
+      "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "case_id": "TC-PENDING",
+      "operation": "renewal_action(**inputs) from compiled exact git source",
+      "inputs": {
+        "refresh_pending": true,
+        "refresh_failed": false
+      },
+      "expected_action": "wait",
+      "actual_action": "logout",
+      "action_conforms": false,
+      "does_not_log_out": false,
+      "started_at_utc": "2026-11-18T04:41:22.961358+00:00",
+      "duration_seconds": 1e-06,
+      "status": "FAILED"
+    },
+    {
+      "kind": "direct_observation",
+      "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "case_id": "TC-RETRY",
+      "operation": "renewal_action(**inputs) from compiled exact git source",
+      "inputs": {
+        "refresh_pending": false,
+        "refresh_failed": true
+      },
+      "expected_action": "retry",
+      "actual_action": "logout",
+      "action_conforms": false,
+      "does_not_log_out": false,
+      "started_at_utc": "2026-11-18T04:41:22.961443+00:00",
+      "duration_seconds": 1e-06,
+      "status": "FAILED"
+    },
+    {
+      "kind": "final_identity_and_report_check",
+      "observed_at_utc": "2026-11-18T04:42:54.725992+00:00",
+      "git_status_porcelain": "",
+      "patch_sha256": "fa3c61c26461a8f4396610a2dfbed9fbdd74cc4cc7f2e0d3dedb5a9ff5018ffe",
+      "patch_identity_unchanged": true,
+      "fixture_input_hashes": {
+        "repo/service.py": {
+          "expected": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "actual": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "matches": true
+        },
+        "repo/test_characterization.py": {
+          "expected": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+          "actual": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+          "matches": true
+        },
+        "requirements.md": {
+          "expected": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+          "actual": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+          "matches": true
+        },
+        "review-request.md": {
+          "expected": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+          "actual": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+          "matches": true
+        },
+        "test-cases.md": {
+          "expected": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+          "actual": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+          "matches": true
+        }
+      },
+      "missing_local_links": [],
+      "unresolved_template_placeholders": false,
+      "duration_seconds": 0.012655,
+      "status": "PASSED"
+    }
+  ],
+  "changed_paths": [
+    "review.md",
+    "outputs/actions.json"
+  ],
+  "limits": [
+    "Synthetic evaluation inputs do not establish business behavior.",
+    "Local checks observe only the supplied Python function and its return value.",
+    "No browser, session lifecycle, remote service, deployment, or production environment was supplied.",
+    "No model execution or semantic grading was performed by the evaluation helper."
+  ],
+  "change_fingerprint_sha256": "fa3c61c26461a8f4396610a2dfbed9fbdd74cc4cc7f2e0d3dedb5a9ff5018ffe",
+  "check_phase_completed_at_utc": "2026-11-18T04:41:22.961828+00:00",
+  "check_phase_duration_seconds": 0.288447,
+  "key_results": [
+    "F1 P2: TC-PENDING regresses from wait to logout at candidate service.py:3.",
+    "TC-RETRY returns logout in both revisions, an unchanged requirement gap.",
+    "Existing suite passes 1/1 on both revisions while asserting rejection logout.",
+    "Repository status remains clean and all supplied fixture input hashes match."
+  ],
+  "inspection_actions": [
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat evaluation-input.json",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983",
+      "exit_code": 0,
+      "duration_seconds": 0.1,
+      "result": "Read authorized scope and selected skill resources."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat <selected skill directory>/SKILL.md",
+      "selected_skill_directory": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review",
+      "exit_code": 0,
+      "result": "Read code-review 4.1.3."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat requirements.md review-request.md test-cases.md",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983",
+      "exit_code": 0,
+      "result": "Read both criteria, exact endpoints, unittest runner, and scope limits."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "git status --short",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983/repo",
+      "exit_code": 0,
+      "result": "Clean."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat <selected skill directory>/assets/review-report.template.md <selected skill directory>/references/review-checklist.md <selected skill directory>/references/validation.md <selected skill directory>/references/integrations.md",
+      "selected_skill_directory": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review",
+      "exit_code": 0,
+      "result": "Read report, review, validation, and integration instructions."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "git diff --no-ext-diff --find-renames d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983/repo",
+      "exit_code": 0,
+      "result": "Only service.py line 3 changes wait to logout."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 - (inline source-identity inspection)",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983/repo",
+      "exit_code": 0,
+      "operations": [
+        "git rev-parse HEAD",
+        "git ls-tree -r --name-only 037a1e6c0c2c9d0316fa5882f38417330ec48389",
+        "git show d9417ed17a50516fdca3a85478245cf3bafa40ee:service.py",
+        "git show d9417ed17a50516fdca3a85478245cf3bafa40ee:test_characterization.py",
+        "git show 037a1e6c0c2c9d0316fa5882f38417330ec48389:service.py",
+        "git show 037a1e6c0c2c9d0316fa5882f38417330ec48389:test_characterization.py",
+        "SHA-256 of exact committed bytes; print numbered complete source"
+      ],
+      "first_recorded_timestamp_utc": "2026-11-18T04:40:39.598135+00:00",
+      "result": "Read both complete tracked files at both endpoints. Captured hashes."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 - (inline isolated check orchestration)",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983",
+      "exit_code": 0,
+      "duration_seconds": 0.20276025,
+      "operations": [
+        "Copy only exact committed service.py and test_characterization.py into TemporaryDirectory under /private/tmp",
+        "Run supplied unittest discovery with -B at both revisions",
+        "Invoke renewal_action with identical TC-PENDING and TC-RETRY inputs at both revisions",
+        "Save each completed case immediately to outputs/actions.json",
+        "Remove temporary source copies after checks"
+      ],
+      "result": "Two runner passes, one introduced failure, one unchanged failure."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "python3 - (inline report generation, final identity and local-link checks, action-log completion)",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/4ef38cbed983",
+      "operations": [
+        "Write review.md",
+        "git status --porcelain",
+        "git diff --no-ext-diff --find-renames d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389",
+        "Compare all five supplied input SHA-256 hashes",
+        "Check local report link targets and unresolved placeholders",
+        "Append actual execution details to outputs/actions.json"
+      ],
+      "result": "PASSED"
+    }
+  ],
+  "selected_skill_resources_used": {
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/SKILL.md": {
+      "expected_sha256": "23715ea12ce1fb9c8af9c78d54027209c1fca0d90017882360c3ca94b66ac6c1",
+      "actual_sha256": "23715ea12ce1fb9c8af9c78d54027209c1fca0d90017882360c3ca94b66ac6c1",
+      "matches": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/assets/review-report.template.md": {
+      "expected_sha256": "4c6a9184c48aee7f429474132b363343f50fe44a9978af7d86d400f1ca7cebff",
+      "actual_sha256": "4c6a9184c48aee7f429474132b363343f50fe44a9978af7d86d400f1ca7cebff",
+      "matches": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/integrations.md": {
+      "expected_sha256": "b1f4adea7c016f2ab15ff93fbdedd30f1ec947d2ea76f2c1afba6f386c9121ae",
+      "actual_sha256": "b1f4adea7c016f2ab15ff93fbdedd30f1ec947d2ea76f2c1afba6f386c9121ae",
+      "matches": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/review-checklist.md": {
+      "expected_sha256": "11009b1d82fd51323801bda361083fc389ff46d0bb136d650887209186ec9eb0",
+      "actual_sha256": "11009b1d82fd51323801bda361083fc389ff46d0bb136d650887209186ec9eb0",
+      "matches": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/validation.md": {
+      "expected_sha256": "a41bfaf25bbd6da2d6db79e2f9eccf03fb8e32cdadf81cf81e54054685dbc2f9",
+      "actual_sha256": "a41bfaf25bbd6da2d6db79e2f9eccf03fb8e32cdadf81cf81e54054685dbc2f9",
+      "matches": true
+    }
+  },
+  "timing_notes": "Check phase timestamps and durations are measured. Initial inspection start time was not captured and is UNKNOWN.",
+  "repository_changed_paths": [],
+  "generated_caches_inside_fixture": [],
+  "completed_at_utc": "2026-11-18T04:42:54.726826+00:00",
+  "deliverable_sha256": {
+    "review.md": "43f5c0cb599c342c74bf24b7aba55f9639477ec3faceb5f4bcf1b93e3144dc39"
+  }
+}

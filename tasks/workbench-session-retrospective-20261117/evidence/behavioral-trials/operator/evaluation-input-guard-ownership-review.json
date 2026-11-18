@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-18T04:45:04.330452+00:00",
+  "status": "CORRECTION_REQUIRED",
+  "reviewer": "behavioral_completion_coordinator",
+  "independent_of_author": true,
+  "reviewed_sha256": "b09433aa8bc0369f9b627300f02e9cb053732089459297836ba179110aac4c71",
+  "finding": {
+    "location": ".agents/skills/evaluate-harness/SKILL.md:20",
+    "evidence": [
+      "tests/skill_evaluation.py:44",
+      "tests/skill_evaluation.py:98",
+      "tests/skill_evaluation.py:100",
+      "snapshot-recovery.json"
+    ],
+    "problem": "The preparer accepts a skill root and defaults it to live checkout skills. A bound read-only path can therefore identify shared user-owned source. Restore guidance needs explicit isolated-copy scope.",
+    "consequence": "Unqualified restore guidance could overwrite a concurrent authorized edit in the live shared source root.",
+    "correction": "Preserve the attempt. Restore exact pinned bytes within the isolated trial copy before dispatch."
+  },
+  "scope": "Existing focused authorized-edit and missing-reference checks remain passed. This additional finding concerns physical source ownership during recovery.",
+  "limits": [
+    "Instruction review against current preparer callsite. No such shared-source overwrite occurred in retained trials."
+  ]
+}
