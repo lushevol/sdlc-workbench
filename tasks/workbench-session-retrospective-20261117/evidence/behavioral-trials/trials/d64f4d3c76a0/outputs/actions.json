@@ -1,0 +1,747 @@
+{
+  "schema_version": 1,
+  "case_id": "reader-usefulness",
+  "fixture_root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0",
+  "synthetic": true,
+  "purpose": "Evaluate supplied drafts and write supported corrected answers to twelve questions.",
+  "observed_settings": {
+    "model": "UNKNOWN",
+    "reasoning": "UNKNOWN",
+    "client": "UNKNOWN",
+    "available_instruction_identity": "Codex based on GPT-6",
+    "note": "Exact runtime model, reasoning level, and client were not exposed to this respondent."
+  },
+  "fixture_requested_settings": {
+    "model": "luna",
+    "reasoning": "max",
+    "observed_dispatch": null,
+    "source": "tasks/checkpoint.json:16-20",
+    "note": "Fixture request only. It does not establish this respondent's runtime settings."
+  },
+  "revisions": {
+    "base_revision": "e1fd1e0efb2599ded0f940b77b86e18728e1963d",
+    "candidate_revision": "d329c55e9e687adca6b9425b0cceae46adeff8d6",
+    "status": "Declared in evaluation-input.json. No repository history inspection performed."
+  },
+  "time": {
+    "run_start_utc": "UNKNOWN",
+    "first_observed_utc": "2026-11-17T23:37:53.906819+00:00",
+    "note": "Early calls retain tool-reported elapsed seconds because wall-clock timestamps were unavailable.",
+    "finished_at_utc": "2026-11-17T23:51:29.271420+00:00"
+  },
+  "boundaries": {
+    "authorized_reads": "Named fixture files and the two selected skill files.",
+    "authorized_writes": [
+      "outputs/response.md",
+      "outputs/actions.json"
+    ],
+    "network_calls": 0,
+    "external_model_or_api_runs": 0,
+    "spawned_agents": 0,
+    "business_transitions": 0,
+    "ingestion_operations": 0,
+    "publication_operations": 0
+  },
+  "source_register": [
+    {
+      "path": "drafts/answer-a.md",
+      "sha256": "43bfa504a82e82a174f9142e56a5b5c17de559034480b4f29c1607969d7ce16f",
+      "matches_manifest": true,
+      "line_count": 26
+    },
+    {
+      "path": "drafts/answer-b.md",
+      "sha256": "961acf9b2695bad07cb8612d69772ea54a82abfe1dbd9c81a36fb026b02503b0",
+      "matches_manifest": true,
+      "line_count": 6
+    },
+    {
+      "path": "knowledge/records/access.md",
+      "sha256": "44dda0bb11582a685678cb22059a07394f3823d1199ddd37d057c9cd4656bc73",
+      "matches_manifest": true,
+      "line_count": 8
+    },
+    {
+      "path": "knowledge/records/operations.md",
+      "sha256": "4c4db0facc8a14b6b8817272bbb7afadb380643cc8ebc9585335156d362c12a2",
+      "matches_manifest": true,
+      "line_count": 5
+    },
+    {
+      "path": "knowledge/records/portal.md",
+      "sha256": "d0f432185cb07637f5cdb6531f386535aac7cd8aa8d04417fc4260859d812d7f",
+      "matches_manifest": true,
+      "line_count": 8
+    },
+    {
+      "path": "knowledge/records/settlement.md",
+      "sha256": "9dad2430b9de12df13b193c2145d92dc638cedd5f1d12376cc2f16feffb871fb",
+      "matches_manifest": true,
+      "line_count": 8
+    },
+    {
+      "path": "questions.md",
+      "sha256": "71ccb81bfa683bba60c7bed5021beb2ac37428d754d622d431766c4de37c3fde",
+      "matches_manifest": true,
+      "line_count": 26
+    },
+    {
+      "path": "repo/revision.txt",
+      "sha256": "b68c3a955d4430ca037b450e5c9b62e235cb9276fa77ddc9f8908ce68fd1b9f3",
+      "matches_manifest": true,
+      "line_count": 1
+    },
+    {
+      "path": "selection.json",
+      "sha256": "57eb23e64c0b89aa2d4bb529767eb23563dae74ddb7aeeed90efb59703aceb55",
+      "matches_manifest": true,
+      "line_count": 54
+    },
+    {
+      "path": "sources/access/grants.md",
+      "sha256": "c6fd5728e9254ead6e161621637de1d9293c3ba0c87fab184836ed26e42fb833",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "sources/access/migration.md",
+      "sha256": "ed3eec1fddb50b9c274e57504beee2beb38d32e3df97e8841474fdc8ba841582",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "sources/context.md",
+      "sha256": "c22959f0afa460d3ab28c82054719a714013081a2bc27f9ec450e27a714f1031",
+      "matches_manifest": true,
+      "line_count": 3
+    },
+    {
+      "path": "sources/operations/retention.md",
+      "sha256": "cce786feee9068aa4b924701c77b63052a5c2083afa385893332805b790cd574",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "sources/operations/runtime.md",
+      "sha256": "2afa0ea96678a1c031456d6da1f3453ca33dab1c03ebce7568e9fcff6c6aa397",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "sources/portal/activity.md",
+      "sha256": "584404867d329bdcf7e7cc596e196b14d3fa0228fe9649a94d37a83624785c24",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "sources/portal/observation.md",
+      "sha256": "cf8429472ac69752a878619fed615307829f55af52081dfc129b1a72012d2520",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "sources/settlement/cutoff.md",
+      "sha256": "aaef4a4467652a75c6b5a25583846d49de6356eba5f8a35244f5da4d3f1e5c69",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "sources/settlement/recovery.md",
+      "sha256": "7873d7ffc27ae5a9631fafa8c2a2e99618558082b4906a4699b716eb0e8e4db6",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "tasks/checkpoint.json",
+      "sha256": "b975afa9db2bb73964ca13b0975610af45ddefe100b53095db2b92fd575be570",
+      "matches_manifest": true,
+      "line_count": 21
+    },
+    {
+      "path": "tasks/gaps.md",
+      "sha256": "11eaed47f990ac13e7d09b2e218c2bdaef5fee318d60e91d789972330f4ef7b8",
+      "matches_manifest": true,
+      "line_count": 7
+    },
+    {
+      "path": "tasks/progress.md",
+      "sha256": "bf79068e9506e45674214b64a3dc699c1cf0d137d34697721345b48fc8f6544f",
+      "matches_manifest": true,
+      "line_count": 4
+    },
+    {
+      "path": "tasks/questions.md",
+      "sha256": "c6d5bf3445e1ba5f4e39a68a827a326cfd43d0b4b69b98d0725f9eb585d28ff6",
+      "matches_manifest": true,
+      "line_count": 18
+    },
+    {
+      "path": "tasks/recovery-draft.md",
+      "sha256": "3259589177e45211ff95542be72f2147a125a3d390cb935778f91f9e75f43bd6",
+      "matches_manifest": true,
+      "line_count": 3
+    },
+    {
+      "path": "wiki/proposed.md",
+      "sha256": "a239dcb3dac3ff6526fbf6008e52362ca3fd7d0fd1c85affec92363aa1a03ba4",
+      "matches_manifest": true,
+      "line_count": 6
+    },
+    {
+      "path": "drafts/answer-c.md",
+      "sha256": "3c5a831eeaa73502caa9ad15950b4c7e8d25fd799238bd96fdbb5a0221983d94",
+      "matches_manifest": true,
+      "line_count": 33
+    }
+  ],
+  "selected_skill_register": [
+    {
+      "id": "query-knowledge",
+      "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/query-knowledge/SKILL.md",
+      "sha256": "f7d89dfb95d164430ea982e1771bd4fe67718398ed6d9665a1b814cb0399984e",
+      "matches_manifest": true,
+      "line_count": 42
+    },
+    {
+      "id": "evaluate-knowledge-retrieval",
+      "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/evaluate-knowledge-retrieval/SKILL.md",
+      "sha256": "40bb9361f637a53099b93c58eee334fafa1dae5cddc02b3e9ae3c8055b346c43",
+      "matches_manifest": true,
+      "line_count": 33
+    }
+  ],
+  "actions": [
+    {
+      "sequence": 1,
+      "tool": "functions.exec -> tools.exec_command",
+      "timestamp_utc": "UNKNOWN",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/evaluation-input.json",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/evaluation-input.json"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "a17ef3",
+        "tool_reported_wall_time_seconds": 9.708e-06,
+        "summary": "Read prompt, authorized paths, selected skills, revision declarations, and input hashes."
+      }
+    },
+    {
+      "sequence": 2,
+      "tool": "functions.exec -> tools.exec_command",
+      "timestamp_utc": "UNKNOWN",
+      "parallel_batch": "selected-skills",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/query-knowledge/SKILL.md",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/query-knowledge/SKILL.md"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "f42c71",
+        "tool_reported_wall_time_seconds": 8.208e-06,
+        "summary": "Read query-knowledge instructions."
+      }
+    },
+    {
+      "sequence": 3,
+      "tool": "functions.exec -> tools.exec_command",
+      "timestamp_utc": "UNKNOWN",
+      "parallel_batch": "selected-skills",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/evaluate-knowledge-retrieval/SKILL.md",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/evaluate-knowledge-retrieval/SKILL.md"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "25ab9f",
+        "tool_reported_wall_time_seconds": 8.667e-06,
+        "summary": "Read evaluate-knowledge-retrieval instructions."
+      }
+    },
+    {
+      "sequence": 4,
+      "tool": "functions.exec -> tools.exec_command",
+      "timestamp_utc": "2026-11-17T23:37:53.906819+00:00",
+      "command": "python3 - <<'PY'\nimport datetime\nprint(datetime.datetime.now(datetime.timezone.utc).isoformat())\nPY\nrg --files /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0",
+      "files_read": [],
+      "directory_inventory": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "c3499a",
+        "tool_reported_wall_time_seconds": 8.125e-06,
+        "summary": "Captured UTC time and listed fixture paths. rg omitted answer-c.md. The subsequent manifest-driven read successfully inspected it."
+      }
+    },
+    {
+      "sequence": 5,
+      "tool": "functions.exec -> tools.exec_command",
+      "started_at_utc": "2026-11-17T23:38:03.254280+00:00",
+      "finished_at_utc": "2026-11-17T23:38:03.257311+00:00",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport datetime, hashlib, json, time\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0')\nstarted = time.monotonic()\nprint('START', datetime.datetime.now(datetime.timezone.utc).isoformat())\nmanifest = json.loads((root / 'evaluation-input.json').read_text())\nfor name, expected in manifest['input_files_sha256'].items():\n    p = root / name\n    print('\\nFILE', name)\n    try:\n        data = p.read_bytes()\n        actual = hashlib.sha256(data).hexdigest()\n        print('SHA256', actual, 'MATCH', actual == expected)\n        for line_number, line in enumerate(data.decode('utf-8').splitlines(), 1):\n            print(f'{line_number:04d} {line}')\n    except Exception as exc:\n        print(type(exc).__name__, str(exc))\nprint('END', datetime.datetime.now(datetime.timezone.utc).isoformat(), 'ELAPSED_SECONDS', time.monotonic() - started)\nPY",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/evaluation-input.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-a.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-b.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/access.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/operations.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/portal.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/settlement.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/questions.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/repo/revision.txt",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/selection.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/access/grants.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/access/migration.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/context.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/operations/retention.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/operations/runtime.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/portal/activity.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/portal/observation.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/settlement/cutoff.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/settlement/recovery.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/checkpoint.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/gaps.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/progress.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/questions.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/recovery-draft.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/wiki/proposed.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-c.md"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "2739c2",
+        "tool_reported_wall_time_seconds": 7.833e-06,
+        "script_measured_elapsed_seconds": 0.003036583075299859,
+        "summary": "Read all 25 manifest-listed inputs with numbered lines. All 25 SHA-256 values matched. answer-c.md read successfully."
+      }
+    },
+    {
+      "sequence": 6,
+      "tool": "functions.exec -> tools.exec_command",
+      "timestamp_utc": "2026-11-17T23:39:05.815278+00:00",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, datetime\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0')\nmanifest = json.loads((root / 'evaluation-input.json').read_text())\nprint('UTC', datetime.datetime.now(datetime.timezone.utc).isoformat())\nfor item in manifest['skills']:\n    path = Path(item['path'])\n    data = path.read_bytes()\n    digest = hashlib.sha256(data).hexdigest()\n    print(json.dumps({'skill': item['id'], 'path': str(path), 'sha256': digest, 'expected_sha256': manifest['skill_inputs_sha256'][str(path)], 'matches': digest == manifest['skill_inputs_sha256'][str(path)], 'lines': len(data.decode().splitlines())}))\nprint('INPUT_COUNT', len(manifest['input_files_sha256']))\nPY",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/evaluation-input.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/query-knowledge/SKILL.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/evaluate-knowledge-retrieval/SKILL.md"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "3fa3d9",
+        "tool_reported_wall_time_seconds": 1.1875e-05,
+        "summary": "Both selected skill hashes matched. Confirmed 25 declared fixture inputs."
+      }
+    },
+    {
+      "sequence": 7,
+      "tool": "functions.exec -> tools.apply_patch",
+      "timestamp_utc": "UNKNOWN",
+      "operation": "Add outputs/response.md",
+      "files_read": [],
+      "files_written": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/response.md"
+      ],
+      "result": {
+        "returned": {},
+        "summary": "Patch tool returned {}. Subsequent validation confirmed the output and its twelve evaluation and twelve corrected-answer rows."
+      }
+    },
+    {
+      "sequence": 8,
+      "tool": "functions.exec -> tools.apply_patch",
+      "timestamp_utc": "UNKNOWN",
+      "operation": "Add outputs/actions.json",
+      "files_read": [],
+      "files_written": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json"
+      ],
+      "result": {
+        "returned": {},
+        "status": "VERIFIED",
+        "summary": "Subsequent validation parsed the JSON and confirmed all 25 inspected inputs were registered."
+      }
+    },
+    {
+      "sequence": 9,
+      "tool": "functions.exec -> tools.exec_command",
+      "started_at_utc": "2026-11-17T23:42:11.148267+00:00",
+      "finished_at_utc": "2026-11-17T23:42:11.153195+00:00",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport datetime, hashlib, json, re, time\nroot = Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0')\nstarted = time.monotonic()\nresult = {'started_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat()}\nmanifest = json.loads((root / 'evaluation-input.json').read_text())\ninputs = []\nfor name, expected in manifest['input_files_sha256'].items():\n    data = (root / name).read_bytes()\n    actual = hashlib.sha256(data).hexdigest()\n    inputs.append({'path': name, 'sha256': actual, 'matches': actual == expected})\nskills = []\nfor skill in manifest['skills']:\n    p = Path(skill['path'])\n    actual = hashlib.sha256(p.read_bytes()).hexdigest()\n    skills.append({'path': str(p), 'sha256': actual, 'matches': actual == manifest['skill_inputs_sha256'][str(p)]})\nresponse_path = root / 'outputs/response.md'\nresponse = response_path.read_text()\nactions = json.loads((root / 'outputs/actions.json').read_text())\nevaluation = response.split('### Question coverage', 1)[1].split('## Supported corrected answers', 1)[0]\nanswers = response.split('## Supported corrected answers', 1)[1].split('## Source register', 1)[0]\nexpected_ids = [f'Q-{i:02d}' for i in range(1, 13)]\nevaluation_ids = re.findall(r'^\\| (Q-\\d\\d) \\|', evaluation, re.M)\nanswer_ids = re.findall(r'^\\| \\*\\*(Q-\\d\\d)\\*\\* ', answers, re.M)\nlinks = []\nfor label, target in re.findall(r'\\[([^\\]]+)\\]\\(([^)]+)\\)', response):\n    p = (response_path.parent / target.split('#')[0]).resolve()\n    links.append({'label': label, 'target': target, 'exists': p.is_file()})\nrequired_fields = ['standard: ASD-STE100', 'automated_check:', 'asd_review: PENDING', 'reviewer: null', 'reviewed_at: null']\nchecks = {\n    'fixture_input_hashes_match': all(item['matches'] for item in inputs),\n    'selected_skill_hashes_match': all(item['matches'] for item in skills),\n    'evaluation_has_exact_twelve_question_rows': evaluation_ids == expected_ids,\n    'corrected_answers_have_exact_twelve_question_rows': answer_ids == expected_ids,\n    'all_output_markdown_links_resolve': all(link['exists'] for link in links),\n    'required_writing_review_fields_present': all(field in response for field in required_fields),\n    'action_log_parses_as_json': isinstance(actions, dict),\n    'all_declared_inputs_recorded_in_action_log': {item['path'] for item in actions['source_register']} == set(manifest['input_files_sha256']),\n}\nresult.update({'checks': checks, 'input_count': len(inputs), 'skill_count': len(skills), 'markdown_link_count': len(links), 'evaluation_ids': evaluation_ids, 'corrected_answer_ids': answer_ids, 'missing_links': [link for link in links if not link['exists']], 'input_sha256': inputs, 'skill_sha256': skills, 'evaluation_input_sha256': hashlib.sha256((root / 'evaluation-input.json').read_bytes()).hexdigest(), 'response_sha256_before_status_update': hashlib.sha256(response_path.read_bytes()).hexdigest(), 'status': 'PASSED' if all(checks.values()) else 'FAILED', 'finished_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'elapsed_seconds': time.monotonic() - started})\nprint(json.dumps(result, indent=2))\nraise SystemExit(0 if all(checks.values()) else 1)\nPY",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/evaluation-input.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-a.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-b.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/access.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/operations.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/portal.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/settlement.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/questions.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/repo/revision.txt",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/selection.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/access/grants.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/access/migration.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/context.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/operations/retention.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/operations/runtime.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/portal/activity.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/portal/observation.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/settlement/cutoff.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/settlement/recovery.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/checkpoint.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/gaps.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/progress.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/questions.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/recovery-draft.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/wiki/proposed.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-c.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/query-knowledge/SKILL.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/evaluate-knowledge-retrieval/SKILL.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/response.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "5269e2",
+        "tool_reported_wall_time_seconds": 7.292e-06,
+        "script_measured_elapsed_seconds": 0.004934125114232302,
+        "summary": "All eight mechanical checks passed. Input count 25, skill count 2, link count 48. Full check result retained under validation."
+      }
+    },
+    {
+      "sequence": 10,
+      "tool": "functions.exec -> tools.apply_patch",
+      "timestamp_utc": "UNKNOWN",
+      "operation": "Set report automated_check to PASSED and retain observed validation results in the action log.",
+      "files_read": [],
+      "files_written": [],
+      "result": {
+        "status": "FAILED",
+        "error": "apply_patch verification failed: invalid patch: multiple operations target /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json",
+        "summary": "The patch combined delete and add operations for one path. Recovery read confirmed both persisted files were unchanged."
+      },
+      "attempted_files": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/response.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json"
+      ]
+    },
+    {
+      "sequence": 11,
+      "tool": "functions.exec -> tools.exec_command",
+      "timestamp_utc": "2026-11-17T23:43:03.510084+00:00",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport datetime, json\nroot=Path('/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0')\nprint(datetime.datetime.now(datetime.timezone.utc).isoformat())\nprint('REPORT_STATUS', next(line for line in (root/'outputs/response.md').read_text().splitlines() if line.startswith('automated_check:')))\nprint((root/'outputs/actions.json').read_text())\nPY",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/response.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json"
+      ],
+      "files_written": [],
+      "result": {
+        "exit_code": 0,
+        "chunk_id": "a95992",
+        "tool_reported_wall_time_seconds": 6.958e-06,
+        "summary": "Confirmed failed patch left report status PENDING and original eight-event action log intact."
+      }
+    },
+    {
+      "sequence": 12,
+      "tool": "functions.exec -> tools.apply_patch",
+      "timestamp_utc": "UNKNOWN",
+      "operation": "Update report automated_check to PASSED and replace the action-log content through one update operation per file.",
+      "files_read": [],
+      "files_written": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/response.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json"
+      ],
+      "result": {
+        "returned": {},
+        "status": "VERIFIED",
+        "summary": "Retry succeeded. Final read confirmed PASSED report metadata and the preserved failure record."
+      }
+    },
+    {
+      "sequence": 13,
+      "tool": "functions.exec -> tools.exec_command",
+      "started_at_utc": "2026-11-17T23:51:29.266577+00:00",
+      "finished_at_utc": "2026-11-17T23:51:29.271420+00:00",
+      "command": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c 'from pathlib import Path\nimport datetime, hashlib, json, re, shlex, sys, time\nroot = Path('\"'\"'/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0'\"'\"')\nstarted = time.monotonic()\nstarted_at = datetime.datetime.now(datetime.timezone.utc).isoformat()\nmanifest = json.loads((root/'\"'\"'evaluation-input.json'\"'\"').read_text())\naction_path = root/'\"'\"'outputs/actions.json'\"'\"'\nactions = json.loads(action_path.read_text())\nresponse_path = root/'\"'\"'outputs/response.md'\"'\"'\nresponse = response_path.read_text()\ninput_matches = {name: hashlib.sha256((root/name).read_bytes()).hexdigest() == expected for name, expected in manifest['\"'\"'input_files_sha256'\"'\"'].items()}\nskill_matches = {item['\"'\"'path'\"'\"']: hashlib.sha256(Path(item['\"'\"'path'\"'\"']).read_bytes()).hexdigest() == manifest['\"'\"'skill_inputs_sha256'\"'\"'][item['\"'\"'path'\"'\"']] for item in manifest['\"'\"'skills'\"'\"']}\nevaluation = response.split('\"'\"'### Question coverage'\"'\"',1)[1].split('\"'\"'## Supported corrected answers'\"'\"',1)[0]\nanswers = response.split('\"'\"'## Supported corrected answers'\"'\"',1)[1].split('\"'\"'## Source register'\"'\"',1)[0]\nexpected_ids = [f'\"'\"'Q-{i:02d}'\"'\"' for i in range(1,13)]\nlinks = re.findall(r'\"'\"'\\[[^\\]]+\\]\\(([^)]+)\\)'\"'\"', response)\nchecks = {\n    '\"'\"'all_25_input_hashes_preserved'\"'\"': len(input_matches) == 25 and all(input_matches.values()),\n    '\"'\"'both_skill_hashes_match'\"'\"': len(skill_matches) == 2 and all(skill_matches.values()),\n    '\"'\"'evaluation_contains_exact_twelve_questions'\"'\"': re.findall(r'\"'\"'^\\| (Q-\\d\\d) \\|'\"'\"',evaluation,re.M) == expected_ids,\n    '\"'\"'answers_contain_exact_twelve_questions'\"'\"': re.findall(r'\"'\"'^\\| \\*\\*(Q-\\d\\d)\\*\\* '\"'\"',answers,re.M) == expected_ids,\n    '\"'\"'all_48_local_links_resolve'\"'\"': len(links) == 48 and all((response_path.parent/target.split('\"'\"'#'\"'\"')[0]).resolve().is_file() for target in links),\n    '\"'\"'automated_check_passed_persisted'\"'\"': '\"'\"'automated_check: PASSED'\"'\"' in response,\n    '\"'\"'asd_review_pending_persisted'\"'\"': '\"'\"'asd_review: PENDING'\"'\"' in response,\n    '\"'\"'patch_failure_and_recovery_retained'\"'\"': len(actions['\"'\"'material_failures'\"'\"']) == 1 and actions['\"'\"'actions'\"'\"'][9]['\"'\"'result'\"'\"']['\"'\"'status'\"'\"'] == '\"'\"'FAILED'\"'\"',\n    '\"'\"'runtime_settings_unknown_recorded'\"'\"': all(actions['\"'\"'observed_settings'\"'\"'][key] == '\"'\"'UNKNOWN'\"'\"' for key in ['\"'\"'model'\"'\"','\"'\"'reasoning'\"'\"','\"'\"'client'\"'\"']),\n}\nresult = {\n    '\"'\"'checks'\"'\"': checks,\n    '\"'\"'status'\"'\"': '\"'\"'PASSED'\"'\"' if all(checks.values()) else '\"'\"'FAILED'\"'\"',\n    '\"'\"'report_sha256'\"'\"': hashlib.sha256(response_path.read_bytes()).hexdigest(),\n    '\"'\"'finished_at_utc'\"'\"': datetime.datetime.now(datetime.timezone.utc).isoformat(),\n    '\"'\"'elapsed_seconds'\"'\"': time.monotonic() - started,\n}\nactions['\"'\"'actions'\"'\"'][11]['\"'\"'result'\"'\"'] = {'\"'\"'returned'\"'\"': {}, '\"'\"'status'\"'\"': '\"'\"'VERIFIED'\"'\"', '\"'\"'summary'\"'\"': '\"'\"'Retry succeeded. Final read confirmed PASSED report metadata and the preserved failure record.'\"'\"'}\nactions['\"'\"'actions'\"'\"'].append({\n    '\"'\"'sequence'\"'\"': 13,\n    '\"'\"'tool'\"'\"': '\"'\"'functions.exec -> tools.exec_command'\"'\"',\n    '\"'\"'started_at_utc'\"'\"': started_at,\n    '\"'\"'finished_at_utc'\"'\"': result['\"'\"'finished_at_utc'\"'\"'],\n    '\"'\"'command'\"'\"': '\"'\"' '\"'\"'.join(shlex.quote(arg) for arg in sys.orig_argv),\n    '\"'\"'files_read'\"'\"': [str(root/'\"'\"'evaluation-input.json'\"'\"'), str(response_path), str(action_path)] + [str(root/name) for name in input_matches] + list(skill_matches),\n    '\"'\"'files_written'\"'\"': [str(action_path)],\n    '\"'\"'result'\"'\"': result,\n})\nactions['\"'\"'final_validation'\"'\"'] = result\nactions['\"'\"'time'\"'\"']['\"'\"'finished_at_utc'\"'\"'] = result['\"'\"'finished_at_utc'\"'\"']\naction_path.write_text(json.dumps(actions,indent=2)+'\"'\"'\\n'\"'\"')\npersisted = json.loads(action_path.read_text())\nassert persisted['\"'\"'final_validation'\"'\"'] == result\nprint(json.dumps(result,indent=2))\nraise SystemExit(0 if all(checks.values()) else 1)\n'",
+      "files_read": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/evaluation-input.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/response.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-a.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-b.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/access.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/operations.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/portal.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/knowledge/records/settlement.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/questions.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/repo/revision.txt",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/selection.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/access/grants.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/access/migration.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/context.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/operations/retention.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/operations/runtime.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/portal/activity.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/portal/observation.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/settlement/cutoff.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/sources/settlement/recovery.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/checkpoint.json",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/gaps.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/progress.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/questions.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/tasks/recovery-draft.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/wiki/proposed.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/drafts/answer-c.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/query-knowledge/SKILL.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/evaluate-knowledge-retrieval/SKILL.md"
+      ],
+      "files_written": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json"
+      ],
+      "result": {
+        "checks": {
+          "all_25_input_hashes_preserved": true,
+          "both_skill_hashes_match": true,
+          "evaluation_contains_exact_twelve_questions": true,
+          "answers_contain_exact_twelve_questions": true,
+          "all_48_local_links_resolve": true,
+          "automated_check_passed_persisted": true,
+          "asd_review_pending_persisted": true,
+          "patch_failure_and_recovery_retained": true,
+          "runtime_settings_unknown_recorded": true
+        },
+        "status": "PASSED",
+        "report_sha256": "4238643f45c31187739573439c80874c59aa65fd55554841987ceba66eb7a64e",
+        "finished_at_utc": "2026-11-17T23:51:29.271420+00:00",
+        "elapsed_seconds": 0.004848124925047159
+      }
+    }
+  ],
+  "material_failures": [
+    {
+      "action_sequence": 10,
+      "error": "apply_patch verification failed: invalid patch: multiple operations target /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/d64f4d3c76a0/outputs/actions.json",
+      "recovery": "Read both outputs, confirmed original metadata, and retry using one Update File operation per path."
+    }
+  ],
+  "retrieval_limits": [
+    "The rg inventory omitted answer-c.md. Manifest-driven direct reading recovered it with a matching hash.",
+    "Selected skill references outside the two named skill files were not opened because the task restricted reading scope.",
+    "All conclusions concern synthetic supplied text. Runtime model settings remain UNKNOWN."
+  ],
+  "validation": {
+    "started_at_utc": "2026-11-17T23:42:11.148267+00:00",
+    "checks": {
+      "fixture_input_hashes_match": true,
+      "selected_skill_hashes_match": true,
+      "evaluation_has_exact_twelve_question_rows": true,
+      "corrected_answers_have_exact_twelve_question_rows": true,
+      "all_output_markdown_links_resolve": true,
+      "required_writing_review_fields_present": true,
+      "action_log_parses_as_json": true,
+      "all_declared_inputs_recorded_in_action_log": true
+    },
+    "input_count": 25,
+    "skill_count": 2,
+    "markdown_link_count": 48,
+    "evaluation_ids": [
+      "Q-01",
+      "Q-02",
+      "Q-03",
+      "Q-04",
+      "Q-05",
+      "Q-06",
+      "Q-07",
+      "Q-08",
+      "Q-09",
+      "Q-10",
+      "Q-11",
+      "Q-12"
+    ],
+    "corrected_answer_ids": [
+      "Q-01",
+      "Q-02",
+      "Q-03",
+      "Q-04",
+      "Q-05",
+      "Q-06",
+      "Q-07",
+      "Q-08",
+      "Q-09",
+      "Q-10",
+      "Q-11",
+      "Q-12"
+    ],
+    "missing_links": [],
+    "input_sha256": [
+      {
+        "path": "drafts/answer-a.md",
+        "sha256": "43bfa504a82e82a174f9142e56a5b5c17de559034480b4f29c1607969d7ce16f",
+        "matches": true
+      },
+      {
+        "path": "drafts/answer-b.md",
+        "sha256": "961acf9b2695bad07cb8612d69772ea54a82abfe1dbd9c81a36fb026b02503b0",
+        "matches": true
+      },
+      {
+        "path": "knowledge/records/access.md",
+        "sha256": "44dda0bb11582a685678cb22059a07394f3823d1199ddd37d057c9cd4656bc73",
+        "matches": true
+      },
+      {
+        "path": "knowledge/records/operations.md",
+        "sha256": "4c4db0facc8a14b6b8817272bbb7afadb380643cc8ebc9585335156d362c12a2",
+        "matches": true
+      },
+      {
+        "path": "knowledge/records/portal.md",
+        "sha256": "d0f432185cb07637f5cdb6531f386535aac7cd8aa8d04417fc4260859d812d7f",
+        "matches": true
+      },
+      {
+        "path": "knowledge/records/settlement.md",
+        "sha256": "9dad2430b9de12df13b193c2145d92dc638cedd5f1d12376cc2f16feffb871fb",
+        "matches": true
+      },
+      {
+        "path": "questions.md",
+        "sha256": "71ccb81bfa683bba60c7bed5021beb2ac37428d754d622d431766c4de37c3fde",
+        "matches": true
+      },
+      {
+        "path": "repo/revision.txt",
+        "sha256": "b68c3a955d4430ca037b450e5c9b62e235cb9276fa77ddc9f8908ce68fd1b9f3",
+        "matches": true
+      },
+      {
+        "path": "selection.json",
+        "sha256": "57eb23e64c0b89aa2d4bb529767eb23563dae74ddb7aeeed90efb59703aceb55",
+        "matches": true
+      },
+      {
+        "path": "sources/access/grants.md",
+        "sha256": "c6fd5728e9254ead6e161621637de1d9293c3ba0c87fab184836ed26e42fb833",
+        "matches": true
+      },
+      {
+        "path": "sources/access/migration.md",
+        "sha256": "ed3eec1fddb50b9c274e57504beee2beb38d32e3df97e8841474fdc8ba841582",
+        "matches": true
+      },
+      {
+        "path": "sources/context.md",
+        "sha256": "c22959f0afa460d3ab28c82054719a714013081a2bc27f9ec450e27a714f1031",
+        "matches": true
+      },
+      {
+        "path": "sources/operations/retention.md",
+        "sha256": "cce786feee9068aa4b924701c77b63052a5c2083afa385893332805b790cd574",
+        "matches": true
+      },
+      {
+        "path": "sources/operations/runtime.md",
+        "sha256": "2afa0ea96678a1c031456d6da1f3453ca33dab1c03ebce7568e9fcff6c6aa397",
+        "matches": true
+      },
+      {
+        "path": "sources/portal/activity.md",
+        "sha256": "584404867d329bdcf7e7cc596e196b14d3fa0228fe9649a94d37a83624785c24",
+        "matches": true
+      },
+      {
+        "path": "sources/portal/observation.md",
+        "sha256": "cf8429472ac69752a878619fed615307829f55af52081dfc129b1a72012d2520",
+        "matches": true
+      },
+      {
+        "path": "sources/settlement/cutoff.md",
+        "sha256": "aaef4a4467652a75c6b5a25583846d49de6356eba5f8a35244f5da4d3f1e5c69",
+        "matches": true
+      },
+      {
+        "path": "sources/settlement/recovery.md",
+        "sha256": "7873d7ffc27ae5a9631fafa8c2a2e99618558082b4906a4699b716eb0e8e4db6",
+        "matches": true
+      },
+      {
+        "path": "tasks/checkpoint.json",
+        "sha256": "b975afa9db2bb73964ca13b0975610af45ddefe100b53095db2b92fd575be570",
+        "matches": true
+      },
+      {
+        "path": "tasks/gaps.md",
+        "sha256": "11eaed47f990ac13e7d09b2e218c2bdaef5fee318d60e91d789972330f4ef7b8",
+        "matches": true
+      },
+      {
+        "path": "tasks/progress.md",
+        "sha256": "bf79068e9506e45674214b64a3dc699c1cf0d137d34697721345b48fc8f6544f",
+        "matches": true
+      },
+      {
+        "path": "tasks/questions.md",
+        "sha256": "c6d5bf3445e1ba5f4e39a68a827a326cfd43d0b4b69b98d0725f9eb585d28ff6",
+        "matches": true
+      },
+      {
+        "path": "tasks/recovery-draft.md",
+        "sha256": "3259589177e45211ff95542be72f2147a125a3d390cb935778f91f9e75f43bd6",
+        "matches": true
+      },
+      {
+        "path": "wiki/proposed.md",
+        "sha256": "a239dcb3dac3ff6526fbf6008e52362ca3fd7d0fd1c85affec92363aa1a03ba4",
+        "matches": true
+      },
+      {
+        "path": "drafts/answer-c.md",
+        "sha256": "3c5a831eeaa73502caa9ad15950b4c7e8d25fd799238bd96fdbb5a0221983d94",
+        "matches": true
+      }
+    ],
+    "skill_sha256": [
+      {
+        "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/query-knowledge/SKILL.md",
+        "sha256": "f7d89dfb95d164430ea982e1771bd4fe67718398ed6d9665a1b814cb0399984e",
+        "matches": true
+      },
+      {
+        "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/evaluate-knowledge-retrieval/SKILL.md",
+        "sha256": "40bb9361f637a53099b93c58eee334fafa1dae5cddc02b3e9ae3c8055b346c43",
+        "matches": true
+      }
+    ],
+    "evaluation_input_sha256": "ea41ecc456e73c429693d3c80c0af199de0ef9e4391c3112a94fab774119ad04",
+    "response_sha256_before_status_update": "59937ce1a26885feeb44825e271a099e7aef33fa28a343545ad04ee1fc4cde41",
+    "status": "PASSED",
+    "finished_at_utc": "2026-11-17T23:42:11.153195+00:00",
+    "elapsed_seconds": 0.004934125114232302
+  },
+  "evaluation_input_sha256": "ea41ecc456e73c429693d3c80c0af199de0ef9e4391c3112a94fab774119ad04",
+  "final_validation": {
+    "checks": {
+      "all_25_input_hashes_preserved": true,
+      "both_skill_hashes_match": true,
+      "evaluation_contains_exact_twelve_questions": true,
+      "answers_contain_exact_twelve_questions": true,
+      "all_48_local_links_resolve": true,
+      "automated_check_passed_persisted": true,
+      "asd_review_pending_persisted": true,
+      "patch_failure_and_recovery_retained": true,
+      "runtime_settings_unknown_recorded": true
+    },
+    "status": "PASSED",
+    "report_sha256": "4238643f45c31187739573439c80874c59aa65fd55554841987ceba66eb7a64e",
+    "finished_at_utc": "2026-11-17T23:51:29.271420+00:00",
+    "elapsed_seconds": 0.004848124925047159
+  }
+}

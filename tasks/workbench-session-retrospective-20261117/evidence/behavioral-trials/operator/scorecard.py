@@ -34,6 +34,11 @@ for case_id in order:
                    "variants": variants})
 
 reader = [item for item in assessments if item["case_id"] == "reader-usefulness"]
+extra_assessments = []
+for trial in schedule.get("extra_trials", []):
+    path = Path(trial["root"]) / "assessment.json"
+    if path.is_file():
+        extra_assessments.append(json.loads(path.read_text()))
 scorecard = {
     "schema_version": 1, "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     "schedule": str(ROOT / "schedule.json"), "baseline_commit": schedule["baseline_commit"],
@@ -42,7 +47,16 @@ scorecard = {
     "expected_trials": schedule.get("required_trials", len(schedule["trials"])),
     "proposed_trials": len(schedule["trials"]), "required_trials": schedule.get("required_trials", len(schedule["trials"])),
     "optional_not_executed_trials": len([item for item in schedule["trials"] if item["status"] == "NOT_EXECUTED_OPTIONAL"]),
+    "unexecuted_optional": [{"trial_id": item["id"], "case_id": item["case_id"],
+                             "required": False, "criterion_outcome": "NOT_ASSESSED",
+                             "reason": item["non_execution_reason"]}
+                            for item in schedule["trials"] if item["status"] == "NOT_EXECUTED_OPTIONAL"],
     "assessed_trials": len(assessments), "scope_correction": schedule.get("scope_correction"),
+    "extra_trials": [{"trial_id": item["trial_id"], "case_id": item["case_id"],
+                      "criteria": item["criteria"], "scope_integrity": item["scope_integrity"],
+                      "material_candidate_failure": item["material_candidate_failure"]}
+                     for item in extra_assessments],
+    "reader_generated_draft": schedule.get("reader_generated_draft"),
     "stages": stages,
     "assessor_method": {"independent_of_respondents": True, "variant_blind": False,
                         "respondents_received_oracle_or_prior_results": False,

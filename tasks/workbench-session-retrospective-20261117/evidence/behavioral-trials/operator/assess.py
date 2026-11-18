@@ -15,7 +15,7 @@ def digest(path):
 def assess(trial_id, review):
     schedule_path = ROOT / "schedule.json"
     schedule = json.loads(schedule_path.read_text())
-    trial = next(item for item in schedule["trials"] if item["id"] == trial_id)
+    trial = next(item for item in schedule["trials"] + schedule.get("extra_trials", []) if item["id"] == trial_id)
     folder = Path(trial["root"])
     input_path = folder / "evaluation-input.json"
     request = json.loads(input_path.read_text())

@@ -69,14 +69,20 @@ Live agent handles confirmed both states before resumption. Completed trials wer
 The [oracle amendment](evidence/semantic-oracle-amendment.json) corrects one reader question and evidence-class expectations before affected stages.
 The [independent recheck](evidence/semantic-oracle-recheck.json) passed. Source text and prior assessments remain unchanged.
 
-The [behavioral scorecard](evidence/optimization-scorecard.json) now retains twenty-four assessed trials across five completed stages.
+The [behavioral scorecard](evidence/optimization-scorecard.json) now retains twenty-six assessed trials across six completed stages.
 All candidate criteria passed. Baseline source disposition missed one exact-clause citation criterion in its first repetition.
 Both variants found both omissions and preserved justified unchanged and contextual results in all three repetitions.
 Both candidate grouping trials preserved all twelve entries and passed eight criteria.
 Both baseline grouping trials missed explicit unknown-status and coordination-total accounting.
 Both semantic-review variants accounted for all twenty-four predicates and rejected four unsupported wiki claims.
 Both preserved qualified historical numeric and timing observations. This fixture establishes no factual advantage between variants.
-Reader usefulness and engineering transfer remain in progress or pending.
+Each reader variant supplied twelve supported final answers and retained all twenty-four predicates.
+The candidate passed all four review criteria. The baseline passed three criteria and omitted separate draft usability judgments.
+Both final answer sets received identical maximum usability scores. Engineering transfer remains in progress.
+
+The [fresh distribution check](evidence/stage-06-final-distribution.json) builds clean source commit `cad633b99` with the corrected fixture and oracle.
+All 220 shared skill files match. Six initialized catalogs are empty, and zero prohibited artifacts appear.
+Installed-workspace behavior remains separately pending.
 
 ### Evaluation scope correction, 18 November 2026
 
