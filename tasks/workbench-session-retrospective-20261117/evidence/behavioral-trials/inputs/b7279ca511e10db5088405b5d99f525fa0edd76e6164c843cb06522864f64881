@@ -1,0 +1,21 @@
+# Synthetic case definitions
+
+## TC-PENDING
+
+```gherkin
+Scenario: Wait for a pending renewal
+  Given the user's renewal request is pending
+  When the user selects Extend
+  Then the client action is "wait"
+  And the client does not log out
+```
+
+## TC-RETRY
+
+```gherkin
+Scenario: Retry a rejected renewal
+  Given the user's renewal request failed
+  When the user selects Extend
+  Then the client action is "retry"
+  And the client does not log out
+```

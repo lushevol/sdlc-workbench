@@ -79,6 +79,7 @@ scorecard = {
     "effort": {"input_tokens": "UNKNOWN", "output_tokens": "UNKNOWN", "active_minutes": "UNKNOWN", "savings": "NOT_ASSESSED",
                "basis": "Retained respondent action logs supply observed command and timing evidence only."},
     "limits": ["Synthetic fixtures support only the stated scope.",
+               "candidate_local_changes preserves the historical dirty-worktree snapshot. Respondents received only pinned selected skill inputs and fixture assets; unrelated dirty files, including yarn.lock, were not trial inputs.",
                "The independent assessor knew variant labels. Respondents received neutral inputs without oracle or prior results.",
                "Actual model, reasoning, client and token usage were not independently exposed.",
                "No general reliability or percentage savings conclusion is supported.",

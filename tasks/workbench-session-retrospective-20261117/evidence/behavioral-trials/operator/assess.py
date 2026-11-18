@@ -75,7 +75,7 @@ def assess(trial_id, review):
         "schema_version": 1, "trial_id": trial_id, "case_id": trial["case_id"],
         "variant": trial["variant"], "repetition": trial["repetition"],
         "assessed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "assessor": {"independent_of_respondent": True, "identity": "behavioral_trial_coordinator",
+        "assessor": {"independent_of_respondent": True, "identity": "behavioral_completion_coordinator",
                      "model": "UNKNOWN", "reasoning": "UNKNOWN", "client": "UNKNOWN"},
         "respondent_settings": actions.get("observed", {"model": "UNKNOWN", "reasoning": "UNKNOWN", "client": "UNKNOWN"}),
         "respondent_settings_record": actions.get("observed", actions.get("observed_settings", actions.get("settings", {}))),

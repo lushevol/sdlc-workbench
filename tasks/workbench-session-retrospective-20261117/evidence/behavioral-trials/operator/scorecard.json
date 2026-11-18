@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T23:53:26.266204+00:00",
+  "updated_at": "2026-11-18T04:32:21.296912+00:00",
   "schedule": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/schedule.json",
   "baseline_commit": "a8a38ee49",
   "candidate_commit": "5a37974d166ba5361ae68c614cf04ba19eaadd6a",
@@ -92,7 +92,7 @@
       "reason": "Fixed fifty-trial and three-repeat counts were assistant-selected optional pilot measures. Required stage evaluation and all distinct enhancement outcomes remain in scope. Root confirmed routing correction."
     }
   ],
-  "assessed_trials": 26,
+  "assessed_trials": 28,
   "scope_correction": {
     "at": "2026-11-17T23:27:27.703224+00:00",
     "authority": [
@@ -381,7 +381,7 @@
     },
     {
       "case_id": "known-policy",
-      "complete": false,
+      "complete": true,
       "proposed_trials": 2,
       "required_trials": 2,
       "optional_not_executed_trials": 0,
@@ -389,17 +389,29 @@
       "variants": {
         "baseline": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 4
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445/assessment.json"
+          ]
         },
         "candidate": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 4
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef/assessment.json"
+          ]
         }
       }
     },
@@ -555,6 +567,16 @@
     "basis": "Coordinator assessed different agents against pinned source predicates and retained actual outputs."
   },
   "factual_findings": [
+    {
+      "trial_id": "03a09a33f445",
+      "missed_frozen_criteria": 0,
+      "invented_policy_questions": 0
+    },
+    {
+      "trial_id": "a7b3839159ef",
+      "missed_frozen_criteria": 0,
+      "invented_policy_questions": 0
+    },
     {
       "trial_id": "37abbc1b6aed",
       "missed": [],
@@ -768,6 +790,36 @@
     "predicate_opportunities_per_response": 24
   },
   "actor_settings": [
+    {
+      "trial_id": "03a09a33f445",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "a7b3839159ef",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
     {
       "trial_id": "37abbc1b6aed",
       "respondent": {
@@ -1162,6 +1214,16 @@
   ],
   "output_sizes": [
     {
+      "trial_id": "03a09a33f445",
+      "bytes": 4942,
+      "whitespace_delimited_words": 640
+    },
+    {
+      "trial_id": "a7b3839159ef",
+      "bytes": 5053,
+      "whitespace_delimited_words": 619
+    },
+    {
       "trial_id": "37abbc1b6aed",
       "bytes": 5957,
       "whitespace_delimited_words": 681
@@ -1301,6 +1363,7 @@
   },
   "limits": [
     "Synthetic fixtures support only the stated scope.",
+    "candidate_local_changes preserves the historical dirty-worktree snapshot. Respondents received only pinned selected skill inputs and fixture assets; unrelated dirty files, including yarn.lock, were not trial inputs.",
     "The independent assessor knew variant labels. Respondents received neutral inputs without oracle or prior results.",
     "Actual model, reasoning, client and token usage were not independently exposed.",
     "No general reliability or percentage savings conclusion is supported.",

@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "case_id": "known-policy",
+  "synthetic": true,
+  "deliverable": "tasks/demo/stage-review.md",
+  "scope": {
+    "permitted": [
+      "Read supplied evaluation, skill, reference, and task assets",
+      "Read exact local Git revisions",
+      "Update existing task summary",
+      "Write outputs/actions.json"
+    ],
+    "prohibited": [
+      "Domain knowledge changes",
+      "Business test execution",
+      "Sibling directory inspection beyond explicitly selected skill files",
+      "Subagents"
+    ]
+  },
+  "observed_settings": {
+    "fixture_root": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef",
+    "repository": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef/repo",
+    "candidate_revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+    "baseline_revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+    "initial_repository_worktree": "clean",
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "browser": "UNKNOWN",
+    "browser_version": "UNKNOWN",
+    "effective_session_configuration": "UNKNOWN",
+    "uat_configuration": "UNAVAILABLE per stage record",
+    "uat_access": "UNAVAILABLE per stage record",
+    "deployed_revision": "UNKNOWN",
+    "release_owner": "UNKNOWN",
+    "historical_execution_environment": "isolated local fixture",
+    "historical_case_revision": "UNKNOWN",
+    "historical_effective_configuration": "UNKNOWN",
+    "knowledge_governance": "candidate; publication review pending",
+    "selected_skill": "analyze-requirement",
+    "selected_skill_path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/analyze-requirement/SKILL.md"
+  },
+  "actions": [
+    {
+      "id": 1,
+      "tool": "functions.exec -> exec_command",
+      "command": "cat evaluation-input.json",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef",
+      "result": "Read prompt, permitted scope, revisions, asset bindings and selected skill paths.",
+      "exit_code": 0,
+      "observed_tool_wall_seconds": 0.1,
+      "started_at": "UNKNOWN"
+    },
+    {
+      "id": 2,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nfiles = [Path(selected_skill), Path(selected_current_task_view_reference), Path(\"knowledge/session-policy.md\"), Path(\"repo/service.py\"), Path(\"repo/test_characterization.py\"), Path(\"tasks/demo/evidence/earlier-run.json\"), Path(\"tasks/demo/intake.md\"), Path(\"tasks/demo/stage-review.md\"), Path(\"tasks/demo/test-cases.md\")]\nfor p in files:\n print(p, p.read_text())\nPY",
+      "command_note": "Equivalent concise representation of the executed Python read command; selected paths are recorded above and in evaluation-input.json.",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef",
+      "result": "Read all supplied assets and both explicitly selected skill files. Q-1 is resolved.",
+      "exit_code": 0,
+      "observed_tool_wall_seconds": 0.1,
+      "started_at": "UNKNOWN"
+    },
+    {
+      "id": 3,
+      "tool": "functions.exec -> exec_command",
+      "command": "git status --short\ngit rev-parse HEAD\ngit show -s --format='%H%n%aI%n%cI%n%s' d9417ed17a50516fdca3a85478245cf3bafa40ee\ngit show -s --format='%H%n%aI%n%cI%n%s' 037a1e6c0c2c9d0316fa5882f38417330ec48389\ngit diff d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389 -- service.py test_characterization.py",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef/repo",
+      "result": "Clean candidate HEAD. Pending branch changed wait to logout. Failed branch and assertion did not change. Both commit timestamps are 2026-11-17T20:05:58+08:00.",
+      "exit_code": 0,
+      "observed_command_wall_seconds": 8.041e-06,
+      "started_at": "UNKNOWN"
+    },
+    {
+      "id": 4,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 - <<'PY'\nimport hashlib, json\nfrom pathlib import Path\nfrom datetime import datetime, timezone\nspec=json.loads(Path(\"evaluation-input.json\").read_text())\nprint(datetime.now(timezone.utc).isoformat())\nfor collection in (\"input_files_sha256\",\"skill_inputs_sha256\"):\n for name, expected in spec[collection].items():\n  actual=hashlib.sha256(Path(name).read_bytes()).hexdigest()\n  print(name, actual, actual==expected)\nPY",
+      "command_note": "Equivalent concise representation of the executed hashing command.",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef",
+      "result": "All seven input assets and both selected skill files matched supplied SHA-256 bindings.",
+      "exit_code": 0,
+      "observed_command_wall_seconds": 9.541e-06,
+      "observed_at": "2026-11-18T04:27:14.841448+00:00"
+    },
+    {
+      "id": 5,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport subprocess\nroot=Path.cwd()\nfor relative in [\"knowledge/session-policy.md\",\"tasks/demo/intake.md\",\"tasks/demo/test-cases.md\",\"repo/service.py\",\"repo/test_characterization.py\",\"tasks/demo/evidence/earlier-run.json\"]:\n for number,line in enumerate((root/relative).read_text().splitlines(),1):\n  print(number,line)\nfor rev,path in [(\"d9417ed17a50516fdca3a85478245cf3bafa40ee\",\"service.py\"),(\"037a1e6c0c2c9d0316fa5882f38417330ec48389\",\"service.py\"),(\"037a1e6c0c2c9d0316fa5882f38417330ec48389\",\"test_characterization.py\")]:\n print(subprocess.check_output([\"git\",\"show\",rev+\":\"+path],cwd=root/\"repo\",text=True))\nPY",
+      "command_note": "Equivalent concise representation of the executed source inspection command.",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef",
+      "result": "Confirmed exact baseline/candidate branches and contradictory rejection assertion. Read source only.",
+      "exit_code": 0,
+      "observed_tool_wall_seconds": 0.1,
+      "started_at": "UNKNOWN"
+    },
+    {
+      "id": 6,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc using pathlib.Path.write_text and json.dumps to update tasks/demo/stage-review.md and create outputs/actions.json",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef",
+      "result": "Updated one existing summary with resolved policy, source-level gaps, stale historical evidence, independent dispositions and next decision. Created this action log.",
+      "observed_at": "2026-11-18T04:28:58.265315+00:00",
+      "duration_seconds": "UNKNOWN"
+    },
+    {
+      "id": 7,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc validating unchanged input SHA-256 bindings, selected skill SHA-256 bindings, Markdown link targets and anchors, Git HEAD and clean worktree; then marking documentation checks PASSED and finalizing outputs/actions.json",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/a7b3839159ef",
+      "result": "Six unchanged input assets and both selected skill files retain their supplied hashes. All 13 local links and their anchors resolve. Candidate HEAD and clean worktree confirmed. JSON parsed successfully.",
+      "exit_code": 0,
+      "observed_at": "2026-11-18T04:29:29.748839+00:00",
+      "observed_validation_elapsed_seconds": 0.021012
+    }
+  ],
+  "key_results": {
+    "policy": "Continued mouse, keyboard, and scroll activity renews the session indefinitely.",
+    "q1": "RESOLVED by recorded clarification; high confidence within fixture",
+    "next_decision": "Authorize corrective implementation and local verification for pending and failed renewal handling; identify the owner.",
+    "pending_gap": "Source-level regression: baseline wait, candidate logout. No current execution.",
+    "retry_gap": "Pre-existing source discrepancy: both revisions logout, canonical case requires retry; existing assertion requires logout.",
+    "historical_result": "Retained synthetic baseline TC-PENDING PASSED, observed wait. Stale for current candidate.",
+    "existing_readiness": "READY for local implementation verification retained; current request prohibits executing business tests.",
+    "business_acceptance": "PENDING",
+    "publication_review": "PENDING"
+  },
+  "changes": [
+    {
+      "path": "tasks/demo/stage-review.md",
+      "kind": "updated existing current summary"
+    },
+    {
+      "path": "outputs/actions.json",
+      "kind": "created action log"
+    }
+  ],
+  "timings": {
+    "run_started_at": "UNKNOWN",
+    "first_timestamped_observation_at": "2026-11-18T04:27:14.841448+00:00",
+    "summary_assessed_at": "2026-11-18T04:28:58.265315+00:00",
+    "run_finished_at": "2026-11-18T04:29:29.748839+00:00",
+    "total_elapsed_seconds": "UNKNOWN"
+  },
+  "verification": {
+    "status": "PASSED",
+    "business_tests_executed": false,
+    "code_modified": false,
+    "domain_knowledge_modified": false,
+    "frozen_intake_modified": false,
+    "historical_evidence_modified": false,
+    "checks": [
+      "All six input assets outside the summary retain original SHA-256 bindings",
+      "Both selected skill files retain original SHA-256 bindings",
+      "All 13 Markdown links resolve, including specified anchors",
+      "Git HEAD matches candidate_revision and repository remains clean",
+      "outputs/actions.json parsed successfully"
+    ],
+    "summary_sha256": "d99c1edc4ae7a33554ae88a5e5032704b72c42b4afe9578390275777bd0e982a",
+    "asd_review": "PENDING"
+  },
+  "limits": [
+    "Bounded synthetic inputs establish only fixture conclusions.",
+    "Static inspection is distinct from runtime behavior.",
+    "No business tests, browser, UAT, or production execution.",
+    "No external discovery or semantic grading.",
+    "No newly inferred publication or business approval.",
+    "Unrecorded timings and unavailable settings remain UNKNOWN."
+  ]
+}

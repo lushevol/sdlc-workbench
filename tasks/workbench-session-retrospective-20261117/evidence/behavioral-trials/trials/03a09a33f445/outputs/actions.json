@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "case_id": "known-policy",
+  "synthetic": true,
+  "deliverable": "tasks/demo/stage-review.md",
+  "request_source": "evaluation-input.json#/prompt",
+  "timings": {
+    "started_at_utc": "UNKNOWN",
+    "first_observed_clock_utc": "2026-11-18T04:27:16Z",
+    "action_log_created_at_utc": "2026-11-18T04:30:27.251202+00:00",
+    "finished_at_utc": "2026-11-18T04:31:48.854228+00:00",
+    "note": "Per-action tool-reported command wait times exclude reasoning time."
+  },
+  "observed_settings": {
+    "fixture_root": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+    "repository": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445/repo",
+    "entry_route": "implementation-supplied",
+    "head_revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+    "base_revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+    "initial_repository_status": "clean",
+    "base_commit_author_date": "2026-11-17T20:05:58+08:00",
+    "candidate_commit_author_date": "2026-11-17T20:05:58+08:00",
+    "policy_governance": "candidate",
+    "publication_review": "pending",
+    "business_approval": "pending",
+    "next_phase": "local implementation verification",
+    "readiness": "READY for local implementation verification, retained from original stage",
+    "business_test_execution_authorized_for_this_review": false,
+    "uat_configuration": "UNKNOWN",
+    "uat_access": "unavailable per original stage",
+    "deployed_revision": "UNKNOWN",
+    "effective_session_settings": "UNKNOWN",
+    "browser_version": "UNKNOWN",
+    "release_owner": "UNKNOWN",
+    "business_approver": "UNKNOWN",
+    "model": "UNKNOWN",
+    "reasoning_setting": "UNKNOWN"
+  },
+  "selected_skills": [
+    {
+      "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/analyze-requirement/SKILL.md",
+      "sha256": "db7888b60ed94253561de4ea2f063ac91a2ccffc41f2439128c7465d98a36299",
+      "hash_verified": true
+    },
+    {
+      "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/analyze-requirement/references/current-task-view.md",
+      "sha256": "b44f3395e017cfd72b91662c48c2e7489e28c83c46ee06b2ea37f087d428d18f",
+      "hash_verified": true
+    }
+  ],
+  "actions": [
+    {
+      "id": "A01",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "cat evaluation-input.json",
+      "result": "Read request, allowed scope, source bindings and revisions first.",
+      "exit_code": 0,
+      "wall_seconds": 6.042e-06
+    },
+    {
+      "id": "A02",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "default workspace",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/analyze-requirement/SKILL.md",
+      "result": "Read selected analyze-requirement skill.",
+      "exit_code": 0,
+      "wall_seconds": 5.875e-06
+    },
+    {
+      "id": "A03",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "cat knowledge/session-policy.md tasks/demo/intake.md tasks/demo/stage-review.md tasks/demo/test-cases.md tasks/demo/evidence/earlier-run.json",
+      "result": "Read task sources. Intake frozen. Q-1 resolved. Policy candidate. Approval pending.",
+      "exit_code": 0,
+      "wall_seconds": 6.417e-06
+    },
+    {
+      "id": "A04",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445/repo",
+      "command": "cat service.py test_characterization.py",
+      "result": "Inspect implementation and assertion without importing or running them.",
+      "exit_code": 0,
+      "wall_seconds": 6.542e-06
+    },
+    {
+      "id": "A05",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "default workspace",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/5ee53b487370/.agents/skills/analyze-requirement/references/current-task-view.md",
+      "result": "Read current-task-view and known-answer guidance.",
+      "exit_code": 0,
+      "wall_seconds": 6.709e-06
+    },
+    {
+      "id": "A06",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "rg --files -g '!outputs/**' -g '!repo/.git/**' -g '!evaluation-input.json'",
+      "result": "Enumerate this fixture only. Seven task assets. No supplied knowledge index.",
+      "exit_code": 0,
+      "wall_seconds": 6.25e-06
+    },
+    {
+      "id": "A07",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445/repo",
+      "command": "git status --short && git rev-parse HEAD && git log -2 --format='%H %aI %s' && git diff d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389 -- service.py test_characterization.py",
+      "result": "Clean candidate HEAD. Pending branch changed wait to logout. Failed branch and assertion unchanged.",
+      "exit_code": 0,
+      "wall_seconds": 7.5e-06
+    },
+    {
+      "id": "A08",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "date -u '+%Y-%m-%dT%H:%M:%SZ'",
+      "result": "2026-11-18T04:27:16Z",
+      "exit_code": 0,
+      "wall_seconds": 7.167e-06
+    },
+    {
+      "id": "A09",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "python3 - (stdin script)",
+      "script_operations": [
+        "Read evaluation-input.json.",
+        "Compute SHA-256 for all seven declared input assets and both selected skill files.",
+        "Print numbered source lines for policy, stage, cases, implementation, assertion and retained result."
+      ],
+      "result": "All nine hashes matched. Exact source locations inspected.",
+      "exit_code": 0,
+      "wall_seconds": 7.208e-06
+    },
+    {
+      "id": "A10",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "python3 - (stdin script)",
+      "script_operations": [
+        "Path('tasks/demo/stage-review.md').write_text(summary)"
+      ],
+      "result": "Updated existing summary with resolved policy, source bindings, static gaps, independent dispositions, next acceptance decision and limits.",
+      "exit_code": 0,
+      "wall_seconds": 7.5e-06
+    },
+    {
+      "id": "A11",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "python3 - (stdin script)",
+      "script_operations": [
+        "Attempt to build outputs/actions.json with command history and settings."
+      ],
+      "result": "Python SyntaxError in selected_skills list comprehension. Script parsing failed before writes.",
+      "exit_code": 1,
+      "wall_seconds": 8.125e-06,
+      "recovery": "Replaced malformed comprehension and retried action-log creation in A12."
+    },
+    {
+      "id": "A12",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "python3 - (stdin script)",
+      "script_operations": [
+        "Build action log from observed commands, settings and results.",
+        "Hash current input files.",
+        "Path('outputs/actions.json').write_text(json.dumps(log, indent=2) + '\\n')"
+      ],
+      "result": "Action-log retry completed successfully.",
+      "exit_code": 0,
+      "wall_seconds": 7.167e-06
+    },
+    {
+      "id": "A13",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "python3 - (stdin script)",
+      "script_operations": [
+        "Verify protected hashes, local links, repository identity, and fixture inventory."
+      ],
+      "result": "Protected hashes, links and repository checks passed. Inventory check failed because absolute observed paths were compared with relative expected paths. Validation script failed before writes.",
+      "exit_code": 1,
+      "wall_seconds": 6.958e-06,
+      "recovery": "Normalize observed paths relative to fixture root in A14."
+    },
+    {
+      "id": "A14",
+      "tool": "functions.exec -> tools.exec_command",
+      "cwd": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/03a09a33f445",
+      "command": "python3 - (stdin script)",
+      "script_operations": [
+        "Verify all six protected source hashes.",
+        "Check every local summary link and referenced heading anchor.",
+        "Run git status --porcelain and git rev-parse HEAD in repo.",
+        "Compare relative fixture inventory against declared inputs and allowed outputs.",
+        "Check current-summary content and original summary hash.",
+        "Mark automated document checks PASSED while retaining ASD review PENDING.",
+        "Refresh final action log and read back JSON and summary.",
+        "Print unified document diff."
+      ],
+      "result": "All documentation, preservation, inventory and source-identity checks passed.",
+      "exit_code": 0,
+      "wall_seconds": "UNKNOWN"
+    }
+  ],
+  "source_bindings": [
+    {
+      "path": "knowledge/session-policy.md",
+      "input_sha256": "560d234c50271967456a660003cee47aa6586d6001edca20335dcb953593fc6e",
+      "current_sha256": "560d234c50271967456a660003cee47aa6586d6001edca20335dcb953593fc6e",
+      "changed": false
+    },
+    {
+      "path": "repo/service.py",
+      "input_sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+      "current_sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+      "changed": false
+    },
+    {
+      "path": "repo/test_characterization.py",
+      "input_sha256": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+      "current_sha256": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+      "changed": false
+    },
+    {
+      "path": "tasks/demo/evidence/earlier-run.json",
+      "input_sha256": "35223d72155ceb4111b51f6b10a871de5ffdf8ce631d797e6173bdcce7d13303",
+      "current_sha256": "35223d72155ceb4111b51f6b10a871de5ffdf8ce631d797e6173bdcce7d13303",
+      "changed": false
+    },
+    {
+      "path": "tasks/demo/intake.md",
+      "input_sha256": "590395fdf9b19b4c9bd176a7e2579d1382ac89b3469e819a06cfbce139f39937",
+      "current_sha256": "590395fdf9b19b4c9bd176a7e2579d1382ac89b3469e819a06cfbce139f39937",
+      "changed": false
+    },
+    {
+      "path": "tasks/demo/stage-review.md",
+      "input_sha256": "eb9f0d64a805c815e50c670451c375552de80fc24ab222f6741c66336fd4a2ff",
+      "current_sha256": "b7dcf8011def44449c1921ab234762f7430915b3c134a0f963bc4f9c76ba36a4",
+      "changed": true
+    },
+    {
+      "path": "tasks/demo/test-cases.md",
+      "input_sha256": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+      "current_sha256": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+      "changed": false
+    }
+  ],
+  "key_results": {
+    "policy_answer": "Continued mouse, keyboard, and scroll activity renews the session indefinitely.",
+    "Q_1": "RESOLVED by recorded user clarification in candidate domain record",
+    "confidence": "High for recorded fixture intent and exact source comparison.",
+    "static_TC_PENDING": "Candidate returns logout. Baseline returns wait. Canonical case requires wait and logout prevention.",
+    "static_TC_RETRY": "Both revisions return logout. Canonical case requires retry and logout prevention.",
+    "assertion_mapping": "Single assertion expects logout after failure and conflicts with TC-RETRY. No pending assertion is supplied.",
+    "historical_result": "TC-PENDING PASSED in isolated local fixture at historical revision. Stale for current candidate.",
+    "candidate_execution": "NOT_EXECUTED",
+    "business_tests_executed": 0,
+    "next_recorded_decision": "Business approval of supplied candidate remains pending. Approver unknown.",
+    "publication_disposition": "Independent candidate-policy publication review remains pending."
+  },
+  "changes": [
+    {
+      "path": "tasks/demo/stage-review.md",
+      "operation": "update existing current summary"
+    },
+    {
+      "path": "outputs/actions.json",
+      "operation": "create requested action log"
+    }
+  ],
+  "validation": {
+    "status": "PASSED",
+    "checks": [
+      "All six protected input assets retain declared SHA-256 hashes.",
+      "All 15 local links and referenced heading anchors resolve.",
+      "Repository remains clean at the declared candidate revision.",
+      "File inventory contains original inputs and the requested action log only.",
+      "Current summary records resolved Q-1, candidate governance, conformance limits and next acceptance decision."
+    ],
+    "asd_review": "PENDING",
+    "business_test_execution": "NOT_EXECUTED"
+  },
+  "limits": [
+    "Inspection used this fixture and the two explicitly selected skill files.",
+    "Multiline Python commands are recorded by executable and operations without duplicating the summary payload.",
+    "Static inspection predicts function outcomes. No business function or test was executed.",
+    "Synthetic inputs and retained fixture results do not establish UAT or production behavior.",
+    "Original Q-1 conversation is unavailable. The supplied policy record attributes intent to that clarification.",
+    "No current candidate execution result is supplied.",
+    "Historical run lacks assertion revision, case hash, run time and effective configuration.",
+    "UAT access and configuration are unavailable. Operational settings and accountable owners are unknown.",
+    "Automated documentation checks do not establish complete ASD-STE100 writing review."
+  ]
+}
