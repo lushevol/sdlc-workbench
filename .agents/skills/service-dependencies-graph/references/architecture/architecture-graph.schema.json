@@ -68,34 +68,6 @@
       "items": {
         "$ref": "#/$defs/diagnostic"
       }
-    },
-    "knowledge": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["schema_version", "inputs", "counts", "limitations"],
-      "properties": {
-        "schema_version": {"const": "1.0.0"},
-        "inputs": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["path", "sha256"],
-            "properties": {
-              "path": {"type": "string", "minLength": 1},
-              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
-            }
-          }
-        },
-        "counts": {
-          "type": "object",
-          "additionalProperties": {"type": "integer", "minimum": 0}
-        },
-        "limitations": {
-          "type": "array",
-          "items": {"type": "string", "minLength": 1}
-        }
-      }
     }
   },
   "$defs": {
@@ -198,8 +170,7 @@
           "items": {
             "enum": [
               "RUNTIME",
-              "BUSINESS",
-              "KNOWLEDGE"
+              "BUSINESS"
             ]
           }
         },
@@ -276,8 +247,7 @@
         "dimension": {
           "enum": [
             "RUNTIME",
-            "BUSINESS",
-            "KNOWLEDGE"
+            "BUSINESS"
           ]
         },
         "evidence": {

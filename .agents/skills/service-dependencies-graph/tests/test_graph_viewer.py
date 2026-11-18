@@ -306,6 +306,17 @@ class GraphViewerRendererTests(unittest.TestCase):
         self.assertTrue(any(tag == "table" and (attributes.get("aria-label") or attributes.get("aria-labelledby"))
                             for tag, attributes in parser.elements))
 
+    def test_viewer_has_only_dependency_navigation_and_no_knowledge_interface(self):
+        template = (Path(__file__).parents[1] / 'tools/viewer.html').read_text(encoding='utf-8')
+        self.assertNotIn('knowledge', template.casefold())
+        parser = ScriptCollector()
+        parser.feed(template)
+        self.assertNotIn('explorer-tabs', parser.ids)
+        self.assertNotIn('architecture-tab', parser.ids)
+        self.assertTrue({'viewer-workspace', 'priority', 'dimension', 'repository-view'} <= parser.ids)
+        self.assertTrue({'RUNTIME', 'BUSINESS', 'provided', 'outbound', 'components'} <= {
+            attributes.get('value') for tag, attributes in parser.elements if tag == 'option'})
+
     def test_shipped_script_filters_unknown_providers_and_lists_every_package_across_pages(self):
         node = shutil.which("node")
         if node is None:

@@ -545,6 +545,17 @@ server {
         self.assertEqual(workbench.run(action["id"])["status"], "DENIED")
         self.assertFalse(output.exists())
 
+    def test_graph_provider_exposes_only_dependency_operations(self):
+        from ai_sdlc_workbench.providers.graph import GraphSnapshotProvider
+
+        provider = GraphSnapshotProvider(self.root)
+        self.assertEqual(set(provider.operations), {"coverage", "patterns", "relationships", "services", "search", "neighborhood"})
+        helper = load_graph_tool("snapshot", self.root)
+        for operation in ("knowledge", "references", "paths"):
+            with self.subTest(operation=operation), self.assertRaises(helper.SnapshotError) as caught:
+                helper.query(self.root / "missing-snapshot", operation, {}, self.root)
+            self.assertEqual(caught.exception.code, "UNKNOWN_OPERATION")
+
     def test_generated_workspace_excludes_live_graph_data_and_runtime_source(self):
         shutil.copy2(scaffold_root() / "scaffold.json", self.root / "scaffold.json")
         self.write("core/relationships/graph/leaked.py", "raise RuntimeError('Runtime source leak')\n")

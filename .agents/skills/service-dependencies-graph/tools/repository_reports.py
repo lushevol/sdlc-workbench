@@ -13,8 +13,6 @@ def relationship_report(document):
     frontiers = []
     topics = defaultdict(lambda: {'PUBLISHES': [], 'CONSUMES': []})
     for edge in document['edges']:
-        if edge['dimension'] == 'KNOWLEDGE':
-            continue
         source, target = nodes[edge['source']], nodes[edge['target']]
         left, right = source.get('repository'), target.get('repository')
         if left and right and left != right:

@@ -1,6 +1,9 @@
 """Keep compiled wiki assets outside canonical Workbench knowledge scanners."""
 
 import hashlib
+from contextlib import redirect_stdout
+import io
+import json
 import os
 from pathlib import Path
 import tempfile
@@ -97,20 +100,28 @@ class DerivedKnowledgeBoundaryTests(unittest.TestCase):
         self.assertEqual([(row["path"], row["code"]) for row in result["findings"]],
                          [(invalid.relative_to(self.root).as_posix(), "document_invalid")])
 
-    def test_service_graph_knowledge_projection_ignores_wiki_before_symlink_checks(self):
-        projection = load_graph_tool("knowledge_projection")
+    def test_service_graph_build_ignores_canonical_knowledge_and_derived_wiki(self):
         build = load_graph_tool("build_graph")
-        before = projection.input_fingerprints(self.root)
+        self.write("repos/client/package.json", '{"name":"@fixture/client"}')
+        self.write("repos/client/src/index.ts", 'fetch("https://outside.example/orders");\n')
+
+        def dependency_graph(name):
+            output = self.root / name
+            with redirect_stdout(io.StringIO()):
+                status = build.main(["--workspace", str(self.root), "--repos", str(self.root / "repos"),
+                                     "--out", str(output)])
+            self.assertEqual(status, 0)
+            graph = json.loads((output / "graph.json").read_text())
+            self.assertNotIn("knowledge", graph)
+            self.assertFalse(any(node["type"].startswith("KNOWLEDGE_") for node in graph["nodes"]))
+            self.assertFalse(any(row["path"].startswith("knowledge/") for row in graph["evidence"]))
+            return {key: graph[key] for key in ("nodes", "edges", "evidence", "repositories")}
+
+        before = dependency_graph("before")
         self.derived_workspace()
-        self.assertEqual(projection.input_fingerprints(self.root), before)
-        graph = build.Graph(self.root)
-        projection.apply_knowledge(graph)
-        records = [node for node in graph.nodes.values() if node["type"] == "KNOWLEDGE_RECORD"]
-        self.assertEqual(len(records), 1)
-        self.assertEqual(records[0]["source_paths"], ["knowledge/candidates/policy.md"])
         self.write("knowledge/candidates/invalid.md", "# Invalid canonical record\n")
-        with self.assertRaisesRegex(ValueError, "require YAML frontmatter"):
-            projection.apply_knowledge(build.Graph(self.root))
+        self.canonical.write_text("# Changed separate canonical input\n")
+        self.assertEqual(dependency_graph("after"), before)
 
 
 if __name__ == "__main__":

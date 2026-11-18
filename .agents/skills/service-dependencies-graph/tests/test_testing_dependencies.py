@@ -194,10 +194,8 @@ repositories:
         self.assertNotIn('dependency_scope', inventory['properties'])
         self.assertFalse(any(inventory['id'] in (edge['source'], edge['target']) for edge in graph['edges']))
         self.assertFalse(any(n.get('properties', {}).get('path') == '/unclassified' for n in graph['nodes']))
-        metadata = [n for n in graph['nodes'] if 'KNOWLEDGE' in n['dimensions']]
-        self.assertTrue(metadata)
-        self.assertTrue(all(n['properties']['evidence_class'] in {'DECLARED_METADATA', 'UNKNOWN'} for n in metadata))
-        self.assertTrue(all('dependency_scope' not in n['properties'] for n in metadata))
+        self.assertTrue(all(n['dimensions'] == ['RUNTIME'] for n in graph['nodes']))
+        self.assertNotIn('knowledge', graph)
         self.assertEqual(load_tool('validate_graph').validate(graph, self.workspace), [])
         ordinary_coverage = next(r for r in coverage['repositories'] if r['name'] == 'ordinary')
         self.assertEqual(ordinary_coverage['status'], 'UNSUPPORTED')

@@ -1,0 +1,99 @@
+--- repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java@95480c0e2563bc2a5a639bca1f22ecedb61936c2
++++ repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java@d93455b6533bc017ab6bc42b0b585b804e1e96a1
+@@ -22,7 +22,6 @@
+ import com.scb.sso.singleuibff.service.v2.authorization.TileAuthorizationService;
+ import com.scb.sso.singleuibff.service.v2.filter.AuthFilterExecutor;
+ import com.scb.sso.singleuibff.util.AdminModuleUtil;
+-import com.scb.sso.singleuibff.util.EntitlementRouting;
+ import com.scb.sso.singleuibff.util.JwtTokenUtil;
+ import com.scb.sso.singleuibff.util.OudUtil;
+ import jakarta.servlet.http.Cookie;
+@@ -107,8 +106,6 @@
+         log.info("JwtAuthenticationController.buildEntities, userId: {}, finalEmsResult: {}", username,
+             objectMapper.writeValueAsString(ems2Result));
+         List<Entity> entities = ems2Result.getEntities();
+-        List<Map<String, Object>> entitlementRouting = EntitlementRouting.fromRows(
+-            applicationCategories, authorization.featureControlledTileIds());
+         List<Map<String, Object>> drawers = adminModuleUtil.getAuthorizedDrawer(applicationCategories, authorization);
+
+         // ems3 filter drawers
+@@ -128,7 +125,6 @@
+         returnObject.put("token", token);
+         returnObject.put("entitlementsToken", entitlementsToken);
+         returnObject.put("drawers", drawers);
+-        returnObject.put("entitlementRouting", entitlementRouting);
+         return returnObject;
+     }
+
+@@ -189,14 +185,12 @@
+             final String jwtToken = (String) returnObject.get("token");
+             final String entitlementsToken = (String) returnObject.get("entitlementsToken");
+             final List<Map<String, Object>> drawers = (List<Map<String, Object>>) returnObject.get("drawers");
+-            final List<Map<String, Object>> entitlementRouting =
+-                (List<Map<String, Object>>) returnObject.get("entitlementRouting");
+             String userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);
+             hanldeAnalytics(request, httpServletRequest);
+             clearCookie(response);
+             return ResponseEntity.ok(
+                 ResponseOfAuthenticate.builder().entitlementsToken(entitlementsToken).oud(oudString).result(true).drawers(drawers)
+-                    .entities(entities).entitlementRouting(entitlementRouting)
++                    .entities(entities)
+                     .userInfo(userInfo).build());
+         } catch (AuthenticationException exception) {
+             log.error("login failed, reason: {}", exception.getMessage(), exception);
+@@ -240,15 +234,13 @@
+             final String jwtToken = (String) returnObject.get("token");
+             final String entitlementsToken = (String) returnObject.get("entitlementsToken");
+             final List<Map<String, Object>> drawers = (List<Map<String, Object>>) returnObject.get("drawers");
+-            final List<Map<String, Object>> entitlementRouting =
+-                (List<Map<String, Object>>) returnObject.get("entitlementRouting");
+             String userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);
+             // reuse analytics helper by passing the converted auth request
+             hanldeAnalytics(authRequest, httpServletRequest);
+             clearCookie(response);
+             return ResponseEntity.ok(
+                 ResponseOfAuthenticate.builder().entitlementsToken(entitlementsToken).oud(oudString).result(true).drawers(drawers)
+-                    .entities(entities).entitlementRouting(entitlementRouting)
++                    .entities(entities)
+                     .userInfo(userInfo).build());
+         } catch (AuthenticationException exception) {
+             log.error("entra login failed, reason: {}", exception.getMessage(), exception);
+@@ -282,12 +274,10 @@
+             final List<Entity> entities = (List<Entity>) returnObject.get("entities");
+             final String entitlementsToken = (String) returnObject.get("entitlementsToken");
+             final List<Map<String, Object>> drawers = (List<Map<String, Object>>) returnObject.get("drawers");
+-            final List<Map<String, Object>> entitlementRouting =
+-                (List<Map<String, Object>>) returnObject.get("entitlementRouting");
+             clearCookie(response);
+             return ResponseEntity
+                 .ok(ResponseOfAuthenticate.builder().entitlementsToken(entitlementsToken).oud(oudString).result(result).drawers(drawers)
+-                    .entities(entities).entitlementRouting(entitlementRouting)
++                    .entities(entities)
+                     .userInfo(userInfo).expiration(expirationDate).build());
+         } catch (Exception e) {
+             log.error("token validate failed, reason: {}", e.getMessage(), e);
+@@ -368,11 +358,9 @@
+             userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);
+             final String entitlementsToken = (String) returnObject.get("entitlementsToken");
+             final List<Map<String, Object>> drawers = (List<Map<String, Object>>) returnObject.get("drawers");
+-            final List<Map<String, Object>> entitlementRouting =
+-                (List<Map<String, Object>>) returnObject.get("entitlementRouting");
+             return ResponseEntity
+                 .ok(ResponseOfAuthenticate.builder().entitlementsToken(entitlementsToken).oud(oudString).result(result).drawers(drawers)
+-                    .entities(entities).entitlementRouting(entitlementRouting)
++                    .entities(entities)
+                     .userInfo(userInfo).build());
+         } catch (Exception e) {
+             log.error("token relogin failed, reason: {}", e.getMessage(), e);
+--- repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java@95480c0e2563bc2a5a639bca1f22ecedb61936c2
++++ repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java@d93455b6533bc017ab6bc42b0b585b804e1e96a1
+@@ -222,8 +222,7 @@
+             tile.put("emailSupport", item.get("email_support"));
+             tile.put("filterRule", item.get("filter_rule"));
+             tile.put("entryName", item.get("entry_name"));
+-            tile.put("entitlementSource", controlledTileIds.contains(
+-                Long.parseLong(String.valueOf(item.get("application_tile_id")))) ? "EMS3" : "EMS2");
++            tile.put("entitlementSource", item.get("entitlement_source"));
+             Map<String, Object> resultCheck = drawers.stream()
+                 .filter(t -> t.get("id").equals(item.get("application_category_id")))
+                 .findFirst().orElse(null);

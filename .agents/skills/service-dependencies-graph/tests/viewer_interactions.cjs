@@ -91,6 +91,9 @@ if (['template-error','payload-error'].includes(process.argv[3])) {
   process.exit(0);
 }
 vm.runInContext(script[2], context, {timeout: 5000});
+assert.equal(elements.has('explorer-tabs'), false);
+assert.equal(elements.has('knowledge-workspace'), false);
+assert.equal(elements.get('viewer-workspace').hidden, false);
 const evaluate = expression => JSON.parse(vm.runInContext(`JSON.stringify(${expression})`, context));
 const matches = () => evaluate("matching");
 const set = (id, value, event = "change") => {
@@ -123,11 +126,6 @@ if (process.argv[3] === "investigated") {
 }
 
 if (process.argv[3] === "user-context") {
-  if (evaluate("Boolean(G.knowledge)")) {
-    assert.equal(elements.get('knowledge-workspace').hidden, false);
-    elements.get('architecture-tab').fire('click');
-    assert.equal(elements.get('viewer-workspace').hidden, false);
-  }
   assert.equal(elements.get("architecture-context").hidden, false);
   assert.equal([...elements.get("context-layers").innerHTML.matchAll(/class="context-layer"/g)].length, 4);
   assert.match(elements.get("context-layers").innerHTML, /Root/);

@@ -448,7 +448,7 @@ The project does not promise wheels for every future Python release.
 Python installation compatibility does not establish compatibility for every business test repository.
 
 Static source graph extraction uses the Python parsers and does not require Java or Maven.
-The [knowledge graph](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) uses the same installed Python environment.
+The [service dependency graph](../.agents/skills/service-dependencies-graph/SKILL.md) uses the installed Python environment.
 Run `ai-sdlc --workspace PATH graph build` to generate its snapshot and viewer.
 It needs no graph database, LLM service, API key, or additional installation step.
 Connected setup and prepared offline bundles already contain its dependencies.

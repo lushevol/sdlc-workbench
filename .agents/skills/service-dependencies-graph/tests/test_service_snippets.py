@@ -23,13 +23,21 @@ class ServiceSnippetTests(unittest.TestCase):
         self.coverage = {'repository_root': 'repos', 'repositories': [],
                          'declaration_audit': 'coverage-declarations.json'}
         self.graph = {
+            'schema_version': '2.0.0', 'generated_at': '2026-11-18T00:00:00Z',
+            'generator': {'name': 'service-dependencies-graph', 'version': '2.6.0'},
             'repositories': [],
-            'nodes': [{'id': 'client', 'evidence': ['evidence:client']},
-                      {'id': 'boundary', 'evidence': []}],
-            'edges': [{'source': 'client', 'target': 'boundary', 'evidence': ['evidence:client']}],
+            'nodes': [{'id': identifier, 'type': 'COMPONENT', 'name': identifier,
+                       'repository': None, 'dimensions': ['RUNTIME'], 'functional_role': 'Fixture source boundary',
+                       'business_meaning': 'Dependency query fixture', 'source_paths': [],
+                       'assertion_status': 'CONFIRMED', 'evidence': ['evidence:client']}
+                      for identifier in ('client', 'boundary')],
+            'edges': [{'id': 'edge:call', 'source': 'client', 'target': 'boundary', 'evidence': ['evidence:client'],
+                       'relationship': 'CALLS_COMPONENT', 'dimension': 'RUNTIME', 'assertion_status': 'CONFIRMED'}],
             'evidence': [{'id': 'evidence:client', 'repository': 'repo:caller',
                           'path': 'repos/caller/transport.ts', 'line': 5,
-                          'declaration': 'HTTP call with unresolved provider'}],
+                          'declaration': 'HTTP call with unresolved provider',
+                          'extractor': 'fixture', 'directness': 'DIRECT'}],
+            'diagnostics': [],
         }
         self.rows = [
             self.candidate('endpoint', 'repo:caller', 'HTTP_ENDPOINT', '/orders',
@@ -138,6 +146,7 @@ class ServiceSnippetTests(unittest.TestCase):
             self.graph['evidence'].append({
                 'id': identifier, 'repository': 'repo:caller',
                 'path': row['path'], 'line': line,
+                'declaration': 'HTTP call occurrence', 'extractor': 'fixture', 'directness': 'DIRECT',
             })
             self.graph['nodes'][0]['evidence'].append(identifier)
         self.write_bundle()

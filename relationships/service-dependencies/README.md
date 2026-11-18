@@ -24,11 +24,6 @@ Use `--no-context` for source-only extraction without saved architecture claims.
 Use `--context PATH` to select a different context file; these two options cannot combine.
 
 Read `analysis-coverage.json` before interpreting the graph.
-The same bundle includes the [knowledge graph projection](../../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md).
-It connects declared domain records, exact sources, catalogs, audits, and behavior-review evidence.
-Query `knowledge`, `references`, or bounded `paths` through the registered resource.
-Check `knowledge_freshness` separately from repository freshness.
-Candidate states and original evidence grades remain visible.
 Read `coverage-declarations.json` for deterministic pattern candidates that
 typed extractors did not yet account for. Query them with:
 
@@ -48,8 +43,7 @@ Dynamic nginx templates cannot establish concrete upstream identities without su
 
 ## Viewer hierarchy
 
-The viewer opens Knowledge when the bundle contains its projection.
-Select Architecture for system connections and source dependency details.
+The viewer opens system connections and source dependency details.
 The hierarchy controls presentation depth and does not assign business criticality.
 
 | Priority | View | Included relationships |
@@ -85,7 +79,7 @@ The relationship list includes every filtered match across pages.
 Select a relationship to inspect canonical edge IDs and source evidence.
 
 Registered `graph.snapshot` adapters query the same validated bundle through CLI `call` or MCP `workbench_call`.
-The project resource grants `coverage`, `patterns`, `relationships`, `services`, `search`, `neighborhood`, `knowledge`, `references`, and `paths`.
+The project resource grants `coverage`, `patterns`, `relationships`, `services`, `search`, and `neighborhood`.
 The adapters invoke skill helpers and retain Workbench action records.
 Direct skill commands retain snapshot metadata without Workbench action records.
 

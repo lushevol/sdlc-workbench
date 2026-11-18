@@ -19,7 +19,6 @@ if not __package__:
 from .graph_query import service_catalog
 from .architecture_context import (APPLIED_CONTEXT, PROVENANCE, DEFAULT_CONTEXT,
                                    load_context, write_context)
-from .knowledge_projection import input_fingerprints
 
 OUTPUT_RELATIVE = 'relationships/service-dependencies/generated'
 RUNNER = Path(__file__).resolve().parents[1] / 'scripts' / 'graph.py'
@@ -113,7 +112,6 @@ def main(argv: list[str] | None = None) -> int:
     workspace = args.workspace.expanduser().resolve()
     context_path = args.context or Path(DEFAULT_CONTEXT)
     captured_context = None if args.no_context else load_context(workspace, context_path, required=args.context is not None)
-    knowledge_inputs = input_fingerprints(workspace)
 
     def resolve(path: Path) -> Path:
         return (path if path.is_absolute() else workspace / path).resolve()
@@ -172,10 +170,6 @@ def main(argv: list[str] | None = None) -> int:
         after = current_context.fingerprints() if current_context else {}
         if before != after:
             raise ValueError('Architecture context changed during graph generation; rebuild from stable inputs')
-        projected = json.loads((candidate / 'graph.json').read_bytes()).get('knowledge', {})
-        if (knowledge_inputs != input_fingerprints(workspace)
-                or knowledge_inputs != projected.get('inputs')):
-            raise ValueError('Knowledge inputs changed during graph generation; rebuild from stable inputs')
         write_ai_outputs(candidate, descriptions)
         publish(candidate, output)
     if args.open:

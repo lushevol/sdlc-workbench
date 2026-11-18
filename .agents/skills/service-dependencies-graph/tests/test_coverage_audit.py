@@ -114,7 +114,9 @@ class CoverageAuditTests(unittest.TestCase):
         out = self.root / 'snapshot'
         out.mkdir()
         def bundle(pointer):
-            payloads = {'graph.json': {}, 'analysis-coverage.json': pointer,
+            graph = builder.Graph(self.root).document()
+            graph['generator']['version'] = '2.0.0'
+            payloads = {'graph.json': graph, 'analysis-coverage.json': pointer,
                         'repository-relationships.json': {}, 'services.json': {}}
             rows = []
             for name, value in payloads.items():

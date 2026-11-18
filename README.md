@@ -236,7 +236,7 @@ ai-sdlc --workspace PATH run ACTION_ID
 | --- | --- |
 | `knowledge.local` | `list`, `search`, `read`, `ingest` |
 | `repository.git` | `status`, `diff`, `branch` |
-| `graph.snapshot` | `coverage`, `relationships`, `services`, `search`, `neighborhood` |
+| `graph.snapshot` | `coverage`, `patterns`, `relationships`, `services`, `search`, `neighborhood` |
 | `testing.command` | `list`, `run` |
 | `testing.robot` | `list`, `run` |
 | `logs.file` | `search` |

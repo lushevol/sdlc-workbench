@@ -446,7 +446,7 @@ Agent access and costs follow the existing agent configuration.
 Connected setup and offline preparation include the skill through the existing wheel; regenerate bundles after source changes.
 
 The Workbench service graph viewer embeds its CSS, JavaScript, and graph data.
-The [knowledge graph](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) uses existing Python, PyYAML, and jsonschema dependencies.
+The [service dependency graph](../.agents/skills/service-dependencies-graph/SKILL.md) uses existing Python, PyYAML, and jsonschema dependencies.
 It adds no database, service, package prerequisite, download domain, or runtime network call.
 Connected and prepared-bundle installation use the same existing package paths.
 The [OpenKB wiki](#openkb-primary-wiki) has a separate Python runtime and optional provider calls; its native wiki graph viewer embeds its assets.

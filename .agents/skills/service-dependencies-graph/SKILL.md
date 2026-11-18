@@ -1,19 +1,15 @@
 ---
 name: service-dependencies-graph
-description: Build and query evidence-linked knowledge and static dependency graphs for provenance, architecture discovery, coverage audits, and change impact.
+description: Build and query evidence-linked static dependency graphs for architecture discovery, coverage audits, and change impact.
 ---
 
 # Service Dependencies Graph
 
-This imported skill owns static dependency and governed-evidence graph generation, queries, validation, and visualization.
+This imported skill owns static dependency graph generation, queries, validation, and visualization.
 Keep enhancements to this graph in its `scripts/`, `tools/`, `assets/`, `references/`, or `tests/` directories.
 Workbench CLI and MCP integrations remain thin adapters to this skill.
 The graph records static source declarations and supported identity joins.
 It does not establish deployment, runtime execution, or approved business intent.
-Its [knowledge projection](references/architecture/knowledge-graph.md) connects declared knowledge, provenance, catalogs, and behavior-review evidence.
-
-Use the [llm-wiki bridge](../llm-wiki/SKILL.md) and [native wiki graph procedure](../llm-wiki/references/workflows.md#wiki-graph) for wiki page navigation. Its local OpenKB visualizer needs no model credentials.
-Keep that output separate from this skill's governed-evidence graph and snapshot contracts; this graph's Knowledge tab remains its own evidence projection.
 
 The `.claude/skills/service-dependencies-graph/` alias points to this canonical directory.
 Initialization creates the directory link where the platform permits it.
@@ -31,8 +27,6 @@ Use direct source inspection and existing project tools for unsupported scope, a
 | Request | Procedure | Output |
 | --- | --- | --- |
 | Build or audit the repository census | Run the skill build command, then inspect coverage. | Snapshot, census, diagnostics, and fingerprints. |
-| Explore knowledge and provenance | Read the [knowledge graph guide](references/architecture/knowledge-graph.md), then query records, references, or bounded paths. | Exact identities, lifecycle states, grades, evidence, and freshness. |
-| Build the active wiki graph | Use the [wiki graph workflow](../llm-wiki/references/workflows.md#wiki-graph). | Original OpenKB wikilink visualization in either semantic engine mode. |
 | Explain the architecture | Check coverage, services, and repository relationships. | Analysis roots, confirmed links, and unresolved boundaries. |
 | Discover or complete relationships | Follow [source investigation](references/architecture/initial-instruction-investigation.md), then [the context contract](references/architecture/user-architecture-context.md). Human hints are optional. | Source-backed relationships, missing extraction repairs, and explicit unavailable boundaries. |
 | Collect and connect service call snippets | Follow [snippet discovery](references/architecture/snippet-discovery.md). | Internal and external call candidates, source snippets, bindings, and reviewed call chains. |
@@ -72,7 +66,7 @@ python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PA
 ```
 
 The build inventories source, extracts declarations, resolves identities, renders projections, validates, and publishes one bundle.
-Generation compares repository and knowledge input inventories before and after extraction.
+Generation compares repository and investigated architecture inputs before and after extraction.
 Source changes or failed validation stop publication and preserve the previous valid bundle.
 Generation does not clone repositories, select active profiles, or refresh code indexes.
 
@@ -150,9 +144,8 @@ Changed or missing context evidence makes overall freshness `STALE` when reposit
 Neighborhood results contain direct edges, not recursive impact traversal.
 
 The optional Workbench resource `service-dependencies` uses provider `graph.snapshot`.
-It exposes `coverage`, `patterns`, `relationships`, `services`, `search`, `neighborhood`, `knowledge`, `references`, and `paths`.
+It exposes `coverage`, `patterns`, `relationships`, `services`, `search`, and `neighborhood`.
 CLI `call` and MCP `workbench_call` use the same operation schemas.
-Read [knowledge queries and limits](references/architecture/knowledge-graph.md#build-and-query) before traversing declared references.
 These adapters invoke the skill implementation and retain Workbench action records.
 Direct skill commands retain snapshot metadata without creating Workbench action records.
 
@@ -214,12 +207,11 @@ Solace/JCSMP/JMS and other messaging patterns supply candidates for source revie
 Candidates are review inputs, not canonical relationships. Use the `patterns` query before AI interpretation of unresolved cases.
 
 Generator version `2.2.0` adds method callsites, imported HTTP wrappers, and evidence-backed trace navigation within graph schema `2.0.0`.
-Generator version `2.3.0` adds optional knowledge projection metadata within that same schema.
 Generator version `2.4.0` adds source-driven discovery support, directory calls, Single-SPA registrations, and template route boundaries.
 Generator version `2.5.0` adds broad text discovery, service-call snippets, Solace patterns, and discovery freshness.
+Generator version `2.6.0` contains dependency graphs only, including runtime, business architecture, code, and package relationships.
 Uninspected HTTP routing retains the declared call argument as an inferred boundary, without a resolvable destination path.
 Use `patterns` pagination to inspect every candidate within a stable snapshot.
-Existing architecture projections exclude knowledge navigation edges.
 New snapshots include detailed dependency categories and a checksum-backed declaration audit.
 Legacy version `2.0.0` dependency projections remain valid without these added categories.
 Marker accountability measures recorded dispositions; semantic recall and reviewed precision require separate source review.

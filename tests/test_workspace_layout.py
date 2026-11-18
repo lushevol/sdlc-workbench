@@ -169,6 +169,9 @@ class WorkspacePackagingTests(unittest.TestCase):
             canonical = scaffold / ".agents/skills/service-dependencies-graph"
             for relative in ("SKILL.md", "scripts/graph.py", "tools/viewer.html", "tests/test_portability.py"):
                 self.assertTrue((canonical / relative).is_file(), relative)
+            for relative in ("tools/knowledge_projection.py", "tools/knowledge_queries.py",
+                             "references/architecture/knowledge-graph.md"):
+                self.assertFalse((canonical / relative).exists(), relative)
             engines = sorted(path.relative_to(package).as_posix() for path in package.rglob("build_graph.py"))
             self.assertEqual(engines, [
                 "scaffold/.agents/skills/llm-wiki/upstream/tools/build_graph.py",

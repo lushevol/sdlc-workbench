@@ -191,6 +191,49 @@ The published graph contains 11 repositories, 10,923 nodes, 25,137 edges, and 22
 The published checksum matches its manifest. Current repository fingerprints match the captured inputs.
 The [existing build guide](../../.agents/skills/service-dependencies-graph/SKILL.md#readiness-and-build) remains current for this repeated run.
 
+## Remove the knowledge graph projection
+
+Source: [exact user request](evidence/dependency-only-20261118/user-input.txt), 18 November 2026.
+Authorized scope: remove knowledge graph generation, queries, schema, and viewer integration from the service dependency graph.
+Keep the separate canonical knowledge and wiki capabilities outside this graph's implementation scope.
+Risk: medium; affected consumers include graph builds, queries, CLI/MCP operation discovery, validation, viewer, and installed skills.
+The [baseline](evidence/dependency-only-20261118/baseline.json) records the current projection before removal.
+Next action: remove the integration, run affected regressions, regenerate the graph, and verify dependency-only output.
+
+### Dependency-only outcome
+
+The service graph now contains dependency relationships only.
+Generation, schema validation, snapshots, comparisons, queries, resource grants, viewer rendering, and packaging exclude the former knowledge projection.
+The separate canonical knowledge, governance, ingestion, and wiki tools remain outside this graph.
+
+The rebuilt graph uses generator `2.6.0`.
+It contains 11 repositories, 8,548 nodes, 22,142 edges, and 21,681 evidence records.
+It contains no knowledge envelope, knowledge dimensions, knowledge evidence paths, or knowledge viewer interface.
+The six supported operations are `coverage`, `patterns`, `relationships`, `services`, `search`, and `neighborhood`.
+The retired `knowledge`, `references`, and `paths` operations return `UNKNOWN_OPERATION`.
+
+The [graph validation](evidence/dependency-only-20261118/graph-validation.json) verified the published checksum, 66 artifact checksums, dependency schema, current repository freshness, and current architecture-context freshness.
+The [distribution check](evidence/dependency-only-20261118/distribution.json) verified the installed skill outside this checkout.
+It verified flat Solace discovery, bounded snippet pagination, and isolation from knowledge-file changes.
+The [source review](evidence/dependency-only-20261118/source-review.md) refreshed two changed BFF source bindings and seven shifted endpoint ranges without changing relationship assessments.
+
+The skill suite passed 241 tests.
+The full Workbench suite passed 1,109 tests with two optional connector integration skips.
+The package wheel built successfully and the workspace validator passed.
+Automated documentation checks passed; complete ASD-STE100 review remains pending.
+
+```yaml
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Static graph evidence does not establish deployment or runtime execution.
+  - Broad discovery candidates still require source interpretation.
+  - Automated checks do not establish complete writing review.
+```
+
 ```yaml
 standard: ASD-STE100
 automated_check: PASSED
