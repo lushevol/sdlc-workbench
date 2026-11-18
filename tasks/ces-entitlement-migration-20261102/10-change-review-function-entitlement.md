@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FUNCTION-ENTITLEMENT-20261117
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, MATRIX-X-RATANONE, MATRIX-RATAN-FUNC]
+source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-FUNCTION-EXCEL-20261118, MATRIX-X-RATANONE, MATRIX-RATAN-FUNC]
 related_ids: [CES-MIGRATION, CES-COVERAGE-CASES]
 review:
   state: pending
@@ -122,6 +122,7 @@ API errors cannot count as an empty entitlement or a passing value comparison.
 | USER-FUNCTION-20261117 | [Exact input](evidence/function-entitlement-20261117/user-input.md#exact-user-input) | 2026-11-17; hash in validation | User instruction; reported CES agreement, not runtime proof. |
 | USER-FUNCTION-ANSWERS-20261117 | [Exact discussion answers](evidence/function-entitlement-20261117/user-clarifications.md) | 2026-11-17; hash in validation | User intent; no execution or publication approval. |
 | USER-FUNCTION-TIMING-20261117 | [Exact timing answer](evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) | 2026-11-17; hash in validation | User-selected five-second test target; CES NFR unconfirmed. |
+| USER-FUNCTION-EXCEL-20261118 | [Exact Excel request](evidence/function-entitlement-excel-20261118/user-input.md#exact-user-input) | 2026-11-18 | Plain testing language and inline test data; no execution requested. |
 | MATRIX-X-RATANONE | [Workbook](<ces migration/X_RATANONE_security_matrix_prod.xlsx>) | `e6e6da5a43b1303593c74da3703f8066bcf58a10abe3f729f8ea6aa204678d63` | Historical PROD-labelled conversion snapshot; current applicability unverified. |
 | MATRIX-RATAN-FUNC | [Workbook](<ces migration/RATAN_FUNC_security_matrix_prod.xlsx>) | `f0bb7982136da01bf78b323374f1e53602ceca1df11e6b0c261b8e441786f4ac` | Historical PROD-labelled conversion snapshot; current applicability unverified. |
 
@@ -168,6 +169,21 @@ The candidate remains unpublished. Wiki refresh and business execution remain se
 | Case drafting | [Canonical definitions](06-test-cases.md#function-entitlement-value-tests) | Six requested cases and nine proposed additions saved. | Review additional cases and historical source exceptions. |
 | Document checks | [Validation](evidence/function-entitlement-20261117/validation.json) | See actual retained result. | Resolve material questions before execution. |
 | Business execution | No execution evidence | `NOT_RUN` | Bind release, data, timing, and automation. |
+
+### Excel export, 18 November 2026
+
+The [Excel workbook](../../outputs/01a1ec5d-f2d5-7570-88f5-3858ad40560e/CES-function-entitlement-test-cases.xlsx) follows the [plain-language request](evidence/function-entitlement-excel-20261118/user-input.md#exact-user-input).
+One worksheet contains all 15 case IDs, with 62 scenario rows and 705 source-account rows.
+Each row includes its test data, numbered steps, expected value, source, and editable result fields.
+The workbook contains no BDD syntax. Historical canonical definitions remain available in the case catalog.
+Cases 007 through 015 remain proposed additions. Every execution result is `Not run`.
+
+The [export checks](evidence/function-entitlement-excel-20261118/validation.json) compare all 705 assignments directly with the retained matrices.
+They also verify source hashes, text identifiers, filters, frozen panes, result controls, and rendered sample views.
+The export retains both historical exceptions as unresolved. Assignment-change aliases need authorized test-account identities.
+The downgrade variant needs an approved profile pair. Empty-value and endpoint bindings remain unconfirmed.
+Immediate-read and five-second outcomes remain separate for every lifecycle transition.
+Owner: unknown. Next action: bind those inputs before executing affected rows.
 
 ## Requested decision and actual disposition
 

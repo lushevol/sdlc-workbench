@@ -18,6 +18,8 @@ writing_review:
 
 ## Function entitlement discussion, 17 November 2026
 
+- [Plain-language Excel cases with inline test data](../../../outputs/01a1ec5d-f2d5-7570-88f5-3858ad40560e/CES-function-entitlement-test-cases.xlsx).
+- [18 November Excel request](function-entitlement-excel-20261118/user-input.md#exact-user-input) and [export checks](function-entitlement-excel-20261118/validation.json).
 - [Exact initial request](function-entitlement-20261117/user-input.md#exact-user-input).
 - [Exact discussion answers](function-entitlement-20261117/user-clarifications.md).
 - [Five-second test target](function-entitlement-20261117/user-timing-target.md#exact-answer); CES NFR remains unconfirmed.
