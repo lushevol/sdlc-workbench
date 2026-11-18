@@ -2,16 +2,16 @@
 
 > **Improve existing skill decisions before expanding runtime infrastructure.** Strengthen source accounting, recovery, question handling, and semantic assessment.
 > **Add one distinct skill: `evaluate-harness`.** It compares workflow behavior across skill revisions using isolated trials and independent assessment.
-> Implementation is under completion audit. Bounded checks passed, but the planned behavioral comparison still needs retained respondent and assessor evidence.
+> Implementation and evaluation are complete. Forty main trials, two follow-ups, runtime checks, and installed distribution evidence are retained.
 
 The [requirements table and skill map](07-requirements-and-skills.md) defined the approved scope.
-The [maintenance record](01-maintenance.md#completion-audit-continuation-17-november-2026) records the missing evaluation work and current corrections.
+The [completion record](01-maintenance.md#completed-enhancements-18-november-2026) records outcomes, corrections, measurements, and limits.
 
 ## Direction and evidence
 
 Authority: [planning request](01-maintenance.md#planning-follow-up-17-november-2026) and [skills-first clarification](01-maintenance.md#skills-first-clarification-17-november-2026).
-Current source inspection includes checkout `d8e4f43e2046eb79b412475a012c62fb105bcb33` and the recorded unrelated local changes.
-Recheck revisions and file ownership before implementation.
+The original source inspection used checkout `d8e4f43e2046eb79b412475a012c62fb105bcb33` and the recorded unrelated local changes.
+Implementation revisions and subsequent ownership checks are retained in the completion record.
 
 The intended outcome is fewer interventions between a stated goal and a trustworthy, checkable result.
 Optimize decisions and observable behavior. More instructions, files, receipts, or skill invocations are not success measures.

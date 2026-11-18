@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "case_id": "current-results",
+  "synthetic": true,
+  "task": "Reconcile current evidence in the existing demo stage record",
+  "timing": {
+    "first_action_at": "UNKNOWN",
+    "record_written_at_utc": "2026-11-18T05:03:43.668313+00:00",
+    "read_command_wall_seconds": [
+      8.375e-06,
+      7.083e-06,
+      1.2209e-05,
+      2.3875e-05,
+      1.1667e-05,
+      9.583e-06,
+      7.291e-06,
+      6.875e-06
+    ],
+    "write_script_elapsed_seconds_before_log_save": 0.00026487489230930805,
+    "historical_execution_timestamp": "UNKNOWN"
+  },
+  "tools": [
+    "functions.exec",
+    "exec_command"
+  ],
+  "actions": [
+    {
+      "sequence": 1,
+      "tool": "exec_command",
+      "command": "cat evaluation-input.json",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8",
+      "exit_code": 0,
+      "result": "Read prompt, exact fixture assets, selected skill resources, and revision identities first."
+    },
+    {
+      "sequence": 2,
+      "tool": "exec_command",
+      "command": "cat <selected verify-implementation/SKILL.md> <selected analyze-requirement/SKILL.md>",
+      "resource_paths": [
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/SKILL.md",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/analyze-requirement/SKILL.md"
+      ],
+      "exit_code": 0,
+      "result": "Selected current-stage reconciliation and retained-execution procedures."
+    },
+    {
+      "sequence": 3,
+      "tool": "exec_command",
+      "command": "cat tasks/demo/intake.md tasks/demo/stage-review.md tasks/demo/test-cases.md tasks/demo/evidence/earlier-run.json knowledge/session-policy.md repo/service.py repo/test_characterization.py",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8",
+      "exit_code": 0,
+      "result": "Read all listed task, intent, code, assertion, and retained-result assets."
+    },
+    {
+      "sequence": 4,
+      "tool": "exec_command",
+      "command": "cat <selected analyze-requirement/references/current-task-view.md> <selected verify-implementation/references/behavior-review.md>",
+      "resource_paths": [
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/analyze-requirement/references/current-task-view.md",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/behavior-review.md"
+      ],
+      "exit_code": 0,
+      "result": "Read selected references for one current task view, evidence freshness, static predictions, and exact assertion mapping."
+    },
+    {
+      "sequence": 5,
+      "tool": "exec_command",
+      "command": "git status --short",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8/repo",
+      "exit_code": 0,
+      "result": "Empty output. No repository worktree changes were reported."
+    },
+    {
+      "sequence": 6,
+      "tool": "exec_command",
+      "command": "git show 2b99be8cb98993451b54d9266c624680dbd9baec:service.py",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8/repo",
+      "exit_code": 0,
+      "result": "Candidate returns logout for pending and failed renewal."
+    },
+    {
+      "sequence": 7,
+      "tool": "exec_command",
+      "command": "git show 68cfca27cf130756cbc82098d1271404e675d382:service.py",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8/repo",
+      "exit_code": 0,
+      "result": "Historical source returns wait for pending renewal and logout for failed renewal."
+    },
+    {
+      "sequence": 8,
+      "tool": "exec_command",
+      "command": "git show 2b99be8cb98993451b54d9266c624680dbd9baec:test_characterization.py",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8/repo",
+      "exit_code": 0,
+      "result": "Candidate test directly asserts logout for failed renewal."
+    },
+    {
+      "sequence": 9,
+      "tool": "exec_command",
+      "command": "python3 - <<'PY' [write stage-review.md and outputs/actions.json using pathlib and json] PY",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8",
+      "result": "Saved the requested existing stage record and this action log. No test or validator was invoked."
+    }
+  ],
+  "key_results": {
+    "current_passing_cases": [],
+    "current_passing_count": 0,
+    "canonical_case_count": 2,
+    "TC-PENDING": "Historical PASSED result is stale for the candidate. No pending assertion or complete candidate execution is retained.",
+    "TC-RETRY": "No retained execution. Current assertion expects logout and contradicts required retry.",
+    "next_action": "Unknown task owner reviews source gaps and assigns implementation/assertion work. Obtain matching local results after execution authorization.",
+    "policy_Q1": "Resolved in supplied candidate knowledge. Publication review remains pending."
+  },
+  "changed_paths": [
+    "tasks/demo/stage-review.md",
+    "outputs/actions.json"
+  ],
+  "preserved_paths": [
+    "tasks/demo/intake.md",
+    "tasks/demo/test-cases.md",
+    "tasks/demo/evidence/earlier-run.json",
+    "knowledge/session-policy.md",
+    "repo/service.py",
+    "repo/test_characterization.py"
+  ],
+  "observed_settings": {
+    "candidate_revision": "2b99be8cb98993451b54d9266c624680dbd9baec",
+    "historical_revision": "68cfca27cf130756cbc82098d1271404e675d382",
+    "test_engine_from_source": "Python unittest",
+    "historical_environment": "isolated local fixture",
+    "historical_runtime_configuration": "UNKNOWN",
+    "historical_test_revision": "UNKNOWN",
+    "historical_assertion_identity": "UNKNOWN",
+    "case_version_identifiers": "UNKNOWN",
+    "browser_settings": "UNKNOWN",
+    "UAT_configuration": "UNKNOWN",
+    "UAT_access": "unavailable according to existing stage record",
+    "release_owner": "UNKNOWN",
+    "model_runtime_settings": "UNKNOWN",
+    "readiness": "READY for existing local implementation verification scope",
+    "business_approval": "pending",
+    "knowledge_governance": "candidate, publication review pending"
+  },
+  "limits": [
+    "No new tests, linters, workspace validators, or execution probes were run, as requested.",
+    "Git status and Git show were read-only source inspection.",
+    "No completed intake, canonical definitions, source, tests, policy, or historical results were edited.",
+    "Source comparisons predict return values and do not prove client logout behavior.",
+    "Historical result does not bind test revision, assertion identity, case version, configuration, or explicit no-logout outcome.",
+    "No UAT, browser, or production execution was observed.",
+    "No subagents, sibling assets, or operator directories were inspected. Only expressly selected skill paths outside the assigned fixture were read.",
+    "Synthetic evaluation inputs do not establish business behavior.",
+    "Automated document checks and complete ASD writing review were not performed."
+  ]
+}

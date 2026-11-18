@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "case_id": "source-dispositions",
+  "mode": "review",
+  "scope": {
+    "fixture_root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/190e1206445f",
+    "selected_sources": [
+      "portal/activity.md",
+      "settlement/recovery.md",
+      "access/grants.md",
+      "context.md"
+    ],
+    "skills": [
+      "ingest-knowledge",
+      "prepare-knowledge-sources"
+    ]
+  },
+  "actions": [
+    {
+      "sequence": 1,
+      "tool": "functions.exec -> exec_command",
+      "command": "cat evaluation-input.json",
+      "result": "Read synthetic scope, allowed assets, selected skills, output requirements, and hashes."
+    },
+    {
+      "sequence": 2,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc: read evaluation-input.json; print UTC review start; read each skills[].path",
+      "result": "Read ingest-knowledge and prepare-knowledge-sources; review route selected.",
+      "started_at_utc": "2026-11-18T05:01:44.111914+00:00"
+    },
+    {
+      "sequence": 3,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc: read selected ingest-knowledge/references/{source-preparation.md,workflow.md,evidence.md}",
+      "result": "Inspected source accounting, receipt limitations, review boundaries, evidence classes, and harness guidance. Output truncation was addressed by a targeted workflow read."
+    },
+    {
+      "sequence": 4,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc: read selection.json, questions.md, tasks/checkpoint.json, tasks/progress.md, tasks/questions.md, tasks/gaps.md, tasks/recovery-draft.md, repo/revision.txt",
+      "result": "Four selected identities; accepted Portal/context; unfinished recovery; held grants; dispatch null; saved scoped questions."
+    },
+    {
+      "sequence": 5,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc: print numbered listed sources/, knowledge/, drafts/, wiki/ files; compute all input_files_sha256 and skill_inputs_sha256 hashes",
+      "result": "All 24 fixture hashes and five selected skill hashes matched. Identified incomplete recovery, omitted denial, draft errors, and four false wiki sentences."
+    },
+    {
+      "sequence": 6,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc: read selected ingest-knowledge/references/workflow.md lines 60-115",
+      "result": "Confirmed harness scope, exact commands, and NOT_RUN reporting guidance."
+    },
+    {
+      "sequence": 7,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc: write outputs/response.md and outputs/actions.json with pathlib",
+      "result": "Saved bounded review and action log; only named output paths written."
+    },
+    {
+      "sequence": 8,
+      "tool": "functions.exec -> exec_command",
+      "command": "python3 heredoc: clarify unspecified duration; verify all supplied fixture and selected skill hashes; verify Markdown link existence and line bounds; finalize outputs/actions.json",
+      "result": "All 24 fixture hashes and five selected skill-resource hashes match; all 48 local links resolve within line bounds; only the two named outputs were written."
+    }
+  ],
+  "key_results": {
+    "selected_denominator": 4,
+    "supported_existing_coverage": 1,
+    "supported_context_or_redundancy": 1,
+    "pending": 2,
+    "excluded": 0,
+    "pending_sources": [
+      "settlement/recovery.md",
+      "access/grants.md"
+    ],
+    "all_complete_summary": "UNSUPPORTED",
+    "proposed_wiki_sentences_requiring_repair": 4,
+    "draft_a_substantive_errors": [
+      "Q-04 seven-day retention and omitted reference/duplicate predicates",
+      "Q-06 allow navigation and first-role fallback",
+      "Q-09 inferred effective UAT configuration"
+    ],
+    "draft_b": "Supported partial answers; Q-01 omits duration and suspension details."
+  },
+  "changed_paths": [
+    "outputs/response.md",
+    "outputs/actions.json"
+  ],
+  "observed_settings": {
+    "requested_worker_model": "luna",
+    "requested_worker_reasoning": "max",
+    "observed_dispatch": null,
+    "actual_model": "UNKNOWN",
+    "actual_reasoning": "UNKNOWN",
+    "collection_ready": "UNKNOWN",
+    "publication": "candidate; no human approval",
+    "execution": "historical local fixture only",
+    "yaml_default_expiry_minutes": 15,
+    "local_jvm_override_expiry_minutes": 480,
+    "uat_sample_lifetime_seconds": 900,
+    "effective_uat_issuer_configuration": "UNKNOWN",
+    "uat_clock_offset": "UNKNOWN",
+    "deployment_completion": "UNKNOWN",
+    "release_owner": "UNKNOWN",
+    "base_revision_declared": "b88111f2e3860b9bb8d10b76ae5decc6f66eea28",
+    "candidate_revision_declared": "b6c2e3f2a5ec9d9d152fa9c185981dd47b3415d5",
+    "repository_revision_text": "Synthetic engineering candidate"
+  },
+  "checks": {
+    "input_hashes": "PASSED",
+    "input_file_count": 24,
+    "skill_hashes": "PASSED",
+    "skill_resource_count": 5,
+    "source_planner": "NOT_RUN",
+    "sources_verify": "NOT_RUN",
+    "sources_complete": "NOT_RUN",
+    "ingestion_harness": "NOT_RUN",
+    "business_execution": "NOT_RUN",
+    "final_output_verification": "PASSED",
+    "local_link_count": 48,
+    "input_preservation": "PASSED",
+    "errors": []
+  },
+  "timing": {
+    "review_started_at_utc": "2026-11-18T05:01:44.111914+00:00",
+    "outputs_written_at_utc": "2026-11-18T05:04:36.508278+00:00",
+    "command_wall_seconds_observed": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "review_finished_at_utc": "2026-11-18T05:05:01.726356+00:00",
+    "elapsed_review_seconds": 197.614
+  },
+  "limits": [
+    "Only listed fixture assets and selected skill resources were inspected.",
+    "No network calls, subagents, sibling/operator inspection, business transitions, canonical writes, or receipt creation occurred.",
+    "Runtime planner, source verification, and harness were not invoked for the synthetic review.",
+    "Supplied revisions are declarations; repo/revision.txt contains no implementation proof.",
+    "Synthetic inputs and historical local observations do not establish business behavior.",
+    "Actual model, reasoning, effective UAT issuer settings, and deployment status are unavailable.",
+    "Repairs in response.md are proposed and unapplied.",
+    "Full ASD writing review remains PENDING."
+  ],
+  "output_response_sha256": "5c83051a9db1ba5cb5b9d40191cc16c7ea432166932b089db90967ddfdc6f43c"
+}

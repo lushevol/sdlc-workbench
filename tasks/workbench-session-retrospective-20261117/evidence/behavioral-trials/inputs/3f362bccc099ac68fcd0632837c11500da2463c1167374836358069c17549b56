@@ -1,0 +1,12 @@
+# Synthetic canonical cases
+
+## TC-WARNING
+
+```gherkin
+Scenario: Show the warning before effective expiry
+  Given Cashflow Blotter runs within the deployed host
+  And the session token is valid
+  When token expiry is 60 seconds away
+  Then the warning is visible
+  And Extend is available before token expiry
+```

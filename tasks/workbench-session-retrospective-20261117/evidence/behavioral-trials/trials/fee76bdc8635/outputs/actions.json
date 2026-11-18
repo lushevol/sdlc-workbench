@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "case_id": "deployment-parity",
+  "synthetic": true,
+  "outcome": "TC-WARNING UAT acceptance NOT_VERIFIED. Supplied local PASSED retained within its controlled synthetic scope.",
+  "deliverable": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/assessment.md",
+  "actions": [
+    {
+      "id": "A1",
+      "tool": "functions.exec / exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/evaluation-input.json",
+      "result": "Read bounded prompt, permitted assets, output path, revisions, prohibitions, and expected hashes.",
+      "exit_code": 0,
+      "tool_wall_time_seconds": 0.1
+    },
+    {
+      "id": "A2",
+      "tool": "functions.exec / exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/SKILL.md",
+      "result": "Read selected verify-implementation procedure.",
+      "exit_code": 0,
+      "tool_wall_time_seconds": 0.1
+    },
+    {
+      "id": "A3",
+      "tool": "functions.exec / exec_command",
+      "command_argv": [
+        "python3",
+        "-"
+      ],
+      "stdin_operations": [
+        "Read each of the 10 input_files_sha256 paths with pathlib.",
+        "Print SHA256 and numbered source lines.",
+        "Print current UTC inspection timestamp."
+      ],
+      "read_paths": [
+        "evidence/local-run.json",
+        "evidence/release-note.md",
+        "evidence/uat-observation.json",
+        "repo/application.yaml",
+        "repo/launch-local.txt",
+        "repo/revision.txt",
+        "repo/session.js",
+        "repo/test_session.py",
+        "requirements.md",
+        "test-cases.md"
+      ],
+      "result": "Read contract, case, retained results, deployment note, source, assertion, configuration, and launch override.",
+      "exit_code": 0,
+      "exec_wall_time_seconds": 9.25e-06,
+      "observation_utc": "2026-11-18T04:57:45.387338+00:00"
+    },
+    {
+      "id": "A4",
+      "tool": "functions.exec / exec_command",
+      "command_argv": [
+        "python3",
+        "-"
+      ],
+      "stdin_operations": [
+        "Read three selected skill reference files.",
+        "Print SHA256 and numbered source lines."
+      ],
+      "read_paths": [
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/behavior-review.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/browser-investigation.md",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/deployment-comparison.md"
+      ],
+      "result": "Read deployment comparison and browser timing guidance. Combined tool output was truncated, with relevant deployment and timing sections available.",
+      "exit_code": 0,
+      "exec_wall_time_seconds": 7.708e-06
+    },
+    {
+      "id": "A5",
+      "tool": "functions.exec / exec_command",
+      "command_argv": [
+        "python3",
+        "-"
+      ],
+      "stdin_operations": [
+        "Invoke the five read-only Git commands below with subprocess.run."
+      ],
+      "subcommands": [
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "rev-parse",
+            "HEAD"
+          ],
+          "exit_code": 0,
+          "stdout": "070e9af2c87bc2499f97e41bb96e62690b1b51b6\n"
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "status",
+            "--short"
+          ],
+          "exit_code": 0,
+          "stdout": ""
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "diff",
+            "--no-ext-diff",
+            "867b92b154ec9cf98a1b233df8fdd59825675132",
+            "070e9af2c87bc2499f97e41bb96e62690b1b51b6",
+            "--",
+            "application.yaml",
+            "launch-local.txt",
+            "revision.txt",
+            "session.js",
+            "test_session.py"
+          ],
+          "exit_code": 0,
+          "result": "Only revision.txt added among supplied repository paths."
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "show",
+            "070e9af2c87bc2499f97e41bb96e62690b1b51b6:session.js"
+          ],
+          "exit_code": 0,
+          "result": "Candidate uses Math.max(0, expiryEpochMs - nowEpochMs - 60000)."
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "show",
+            "867b92b154ec9cf98a1b233df8fdd59825675132:session.js"
+          ],
+          "exit_code": 0,
+          "result": "Base timing source matches candidate."
+        }
+      ],
+      "exit_code": 0,
+      "tool_wall_time_seconds": 0.1
+    },
+    {
+      "id": "A6",
+      "tool": "functions.exec / exec_command",
+      "command_argv": [
+        "python3",
+        "-"
+      ],
+      "stdin_operations": [
+        "Verify all fixture and selected skill SHA256 values against evaluation-input.json.",
+        "Compare each supplied repository file with git show candidate:path.",
+        "Write assessment.md and outputs/actions.json.",
+        "Validate every assessment link, required output sections, and JSON round-trip."
+      ],
+      "subcommands": [
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "show",
+            "070e9af2c87bc2499f97e41bb96e62690b1b51b6:application.yaml"
+          ],
+          "exit_code": 0,
+          "result": "Bytes match supplied file."
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "show",
+            "070e9af2c87bc2499f97e41bb96e62690b1b51b6:launch-local.txt"
+          ],
+          "exit_code": 0,
+          "result": "Bytes match supplied file."
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "show",
+            "070e9af2c87bc2499f97e41bb96e62690b1b51b6:revision.txt"
+          ],
+          "exit_code": 0,
+          "result": "Bytes match supplied file."
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "show",
+            "070e9af2c87bc2499f97e41bb96e62690b1b51b6:session.js"
+          ],
+          "exit_code": 0,
+          "result": "Bytes match supplied file."
+        },
+        {
+          "argv": [
+            "git",
+            "-C",
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/repo",
+            "show",
+            "070e9af2c87bc2499f97e41bb96e62690b1b51b6:test_session.py"
+          ],
+          "exit_code": 0,
+          "result": "Bytes match supplied file."
+        }
+      ],
+      "result": "Artifact checks PASSED. No tests executed."
+    }
+  ],
+  "changed_paths": [
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/assessment.md",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/outputs/actions.json"
+  ],
+  "input_hashes_verified": {
+    "evidence/local-run.json": "4e958cff51b13d9b2e862f001e3a768896c8044d8a56cec7197b5a63ec6190a7",
+    "evidence/release-note.md": "e0d7894514e46d069fe2e38f5b1fdd0319f0da7b2a018bd6dd3e0e416ada1bd4",
+    "evidence/uat-observation.json": "13302f40f0c6cb0841a607299d09df13d8c6306daf66e4574fab8d36a46128bf",
+    "repo/application.yaml": "338b625d627f8b2a87836afb170a644f8a739fa41026e83dabe728c623bd4c3a",
+    "repo/launch-local.txt": "86212c2af374a726ce3959e3318a3a57b7c664a218e436d6478634dc4f1be5bb",
+    "repo/revision.txt": "c17fc1c2685b5c32c421407e157c1bf4ca1138a28c16a13158fe5f078e8d378b",
+    "repo/session.js": "698afd232f8a94f3a978e8075315c3374bfd24c3a1673d2a4a1e2504cf223991",
+    "repo/test_session.py": "dcdc575ab2b4696a0f47dbab3e7f80683c22edd21b14683cadcf519d3d0797da",
+    "requirements.md": "b37db6e6d48709f81ee2d4d6ca214f0d4519d502393d3cf09e7c77f9c0bfcc0d",
+    "test-cases.md": "3f362bccc099ac68fcd0632837c11500da2463c1167374836358069c17549b56"
+  },
+  "skill_hashes_verified": {
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/SKILL.md": "6f4e67cfebbe2d89b6604544f872cec3d63109aa4b4f110925aa8f0779f16645",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/behavior-review.md": "6526dc8de3a0d6f4da2f2bb8f6d2f280a92bdd3ef78185fcc557bb0dbf6f602b",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/browser-investigation.md": "0e70f84f61c340557634aa8cf6b5f26c23a4f973dfb3e79f72d9e309a052da2a",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/deployment-comparison.md": "2acea64fd8a8b74fe7d7d6477436eebfba57a3d1f6ebcdfbbbb50ed1392fa8ff"
+  },
+  "assessment_sha256": "c906240e806eb481925e5c84065f9b58de00a67aa96b205f2c132bec7d52e788",
+  "source_comparison": {
+    "base_revision": "867b92b154ec9cf98a1b233df8fdd59825675132",
+    "candidate_revision": "070e9af2c87bc2499f97e41bb96e62690b1b51b6",
+    "head": "070e9af2c87bc2499f97e41bb96e62690b1b51b6",
+    "worktree_initial_status": "clean",
+    "compared_paths": [
+      "application.yaml",
+      "launch-local.txt",
+      "revision.txt",
+      "session.js",
+      "test_session.py"
+    ],
+    "changed_supplied_paths": [
+      "revision.txt"
+    ],
+    "candidate_file_bytes_match": true,
+    "baseline_deployed_result": "UNKNOWN",
+    "candidate_UAT_result": "UNKNOWN"
+  },
+  "observed_settings": {
+    "local_environment": "isolated local services",
+    "local_application": "Cashflow Blotter local stub",
+    "local_host_artifact": "UNKNOWN",
+    "local_issuer_artifact": "UNKNOWN",
+    "repository_default_jwt_tokenExpiration": 15,
+    "repository_default_unit": "UNKNOWN independently; retained local result describes this property in minutes",
+    "local_launch_override": "-Djwt.tokenExpiration=480",
+    "local_reported_effective_value": 480,
+    "local_reported_effective_unit": "minutes",
+    "local_reported_effective_source": "JVM system property overrides application.yaml, as claimed by retained synthetic result",
+    "local_reported_lifetime_seconds": 28800,
+    "local_clock_transform": "Advanced to expiry minus 60 seconds",
+    "local_identity_provider_and_host": "local stubs",
+    "local_assertion": "Warning visible after clock advance",
+    "local_Extend_assertion": "absent in supplied result",
+    "local_browser": "UNKNOWN",
+    "local_clock_offset": "UNKNOWN",
+    "local_run_id": "UNKNOWN",
+    "local_capture_time": "UNKNOWN",
+    "local_execution_test_revision": "UNKNOWN",
+    "local_execution_source_hashes": "UNKNOWN",
+    "uat_requested_application": "Cashflow Blotter",
+    "uat_captured_application": "Legacy Orders Blotter embedded in portal",
+    "uat_host_revision": "portal-release-7",
+    "uat_embedded_revision": "UNKNOWN",
+    "uat_issuer_revision": "UNKNOWN",
+    "uat_browser": "Edge",
+    "uat_browser_version": "UNKNOWN",
+    "uat_sample_lifetime_seconds": 900,
+    "uat_effective_issuer_setting": "UNKNOWN",
+    "uat_configuration_source_and_precedence": "UNKNOWN",
+    "uat_clock_offset": "UNKNOWN",
+    "uat_capture_time": "UNKNOWN",
+    "uat_safe_iat_exp_metadata": "UNKNOWN",
+    "uat_scheduled_delay": "UNKNOWN",
+    "uat_warning_and_Extend_event_order": "UNKNOWN",
+    "uat_observation": "Logout page captured",
+    "release_owner": "UNKNOWN",
+    "deployment_completion": "UNKNOWN",
+    "assessment_model": "UNKNOWN",
+    "assessment_reasoning_effort": "UNKNOWN",
+    "assessment_sandbox_mode": "workspace-write",
+    "assessment_network_access": "restricted"
+  },
+  "timing": {
+    "assessment_start_utc": "UNKNOWN",
+    "first_timestamped_file_inspection_utc": "2026-11-18T04:57:45.387338+00:00",
+    "completed_utc": "2026-11-18T04:59:57.267986+00:00",
+    "elapsed_since_first_timestamped_inspection_seconds": 131.880648,
+    "execution_timing_source": "retained synthetic input only",
+    "local_and_UAT_capture_times": "UNKNOWN",
+    "continuous_eight_hour_observation": "not supplied",
+    "warning_offset_ms_from_source": 60000,
+    "predicted_local_delay_ms_if_scheduled_at_issuance_with_aligned_clocks": 28740000,
+    "predicted_UAT_sample_delay_ms_under_same_assumptions": 840000
+  },
+  "checks": {
+    "fixture_hashes": "10/10 PASSED",
+    "selected_skill_hashes": "4/4 PASSED",
+    "candidate_repository_bytes": "5/5 PASSED",
+    "assessment_local_links": "PASSED",
+    "required_report_fields": "PASSED",
+    "json_serialization": "PASSED",
+    "asd_review": "PENDING",
+    "tests_executed": 0
+  },
+  "limits": [
+    "All behavior inputs are synthetic and establish no actual business approval.",
+    "Retained local result was inspected without rerunning tests.",
+    "Python characterization duplicates an expression and does not call the JavaScript function.",
+    "Running UAT candidate identity, effective configuration, correct application observation, clocks, and full assertion traces are unavailable.",
+    "Only supplied fixture assets, fixture Git metadata, and selected skill resources were inspected.",
+    "Selected reference output was truncated. Relevant deployment comparison and timing guidance were visible.",
+    "Commands with stdin are recorded by actual executable, read/write paths, operations, and any subprocess argv.",
+    "No tests, UAT access, configuration changes, knowledge publication, business-task creation, commits, or subagents occurred."
+  ]
+}

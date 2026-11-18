@@ -38,7 +38,9 @@ extra_assessments = []
 for trial in schedule.get("extra_trials", []):
     path = Path(trial["root"]) / "assessment.json"
     if path.is_file():
-        extra_assessments.append(json.loads(path.read_text()))
+        extra_assessments.append({**json.loads(path.read_text()), "trial_purpose": trial.get("purpose"),
+                                  "delivery_source_commit": trial.get("delivery_source_commit"),
+                                  "assessment_path": str(path)})
 scorecard = {
     "schema_version": 1, "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     "schedule": str(ROOT / "schedule.json"), "baseline_commit": schedule["baseline_commit"],
@@ -52,7 +54,11 @@ scorecard = {
                              "reason": item["non_execution_reason"]}
                             for item in schedule["trials"] if item["status"] == "NOT_EXECUTED_OPTIONAL"],
     "assessed_trials": len(assessments), "scope_correction": schedule.get("scope_correction"),
+    "expected_extra_trials": len(schedule.get("extra_trials", [])),
+    "assessed_extra_trials": len(extra_assessments),
     "extra_trials": [{"trial_id": item["trial_id"], "case_id": item["case_id"],
+                      "purpose": item["trial_purpose"], "delivery_source_commit": item["delivery_source_commit"],
+                      "assessment": item["assessment_path"],
                       "criteria": item["criteria"], "scope_integrity": item["scope_integrity"],
                       "material_candidate_failure": item["material_candidate_failure"]}
                      for item in extra_assessments],

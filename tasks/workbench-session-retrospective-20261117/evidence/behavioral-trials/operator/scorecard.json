@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-18T04:43:42.856212+00:00",
+  "updated_at": "2026-11-18T05:06:04.901572+00:00",
   "schedule": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/schedule.json",
   "baseline_commit": "a8a38ee49",
   "candidate_commit": "5a37974d166ba5361ae68c614cf04ba19eaadd6a",
@@ -92,7 +92,7 @@
       "reason": "Fixed fifty-trial and three-repeat counts were assistant-selected optional pilot measures. Required stage evaluation and all distinct enhancement outcomes remain in scope. Root confirmed routing correction."
     }
   ],
-  "assessed_trials": 32,
+  "assessed_trials": 40,
   "scope_correction": {
     "at": "2026-11-17T23:27:27.703224+00:00",
     "authority": [
@@ -108,7 +108,126 @@
     "proposed_reader_answers": 72,
     "optional_reader_answers": 48
   },
-  "extra_trials": [],
+  "expected_extra_trials": 2,
+  "assessed_extra_trials": 2,
+  "extra_trials": [
+    {
+      "trial_id": "190e1206445f",
+      "case_id": "source-dispositions",
+      "purpose": "installed-shared-skill-forward-validation",
+      "delivery_source_commit": "f5b1b072bacc1685d66964bb646bb19dcd236972",
+      "assessment": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/190e1206445f/assessment.json",
+      "criteria": [
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "outputs/response.md:14-15",
+            "outputs/response.md:30-31"
+          ],
+          "note": "Both substantive omissions are identified: original-reference/duplicate-protection recovery clauses and missing action-grant denial.",
+          "id": "C-01",
+          "criterion": "Detects both substantive omissions: payment recovery clauses and absent no-action-grant denial rule."
+        },
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "outputs/response.md:13",
+            "outputs/response.md:16",
+            "outputs/response.md:80-82"
+          ],
+          "note": "Existing Portal activity coverage and context-only navigation stand without unnecessary new canonical records.",
+          "id": "C-02",
+          "criterion": "Accepts existing Portal activity coverage and contextual navigation without creating unnecessary records."
+        },
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "outputs/response.md:3-4",
+            "outputs/response.md:18-23"
+          ],
+          "note": "All four selected identities remain in the denominator. Two unsupported reviewed/no-change declarations leave two identities pending.",
+          "id": "C-03",
+          "criterion": "Keeps four selected identities in the denominator; unsupported receipts do not clear two pending identities."
+        },
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "outputs/response.md:13-16",
+            "outputs/response.md:75-78"
+          ],
+          "note": "Exact original ranges and canonical destinations/pending dispositions retain draft intent and unresolved duration. Draft status never clears missing rules.",
+          "id": "C-04",
+          "criterion": "Links exact original ranges and canonical destinations or explicit pending dispositions; draft status does not justify erasing intended rules."
+        }
+      ],
+      "scope_integrity": {
+        "outcome": "PASSED",
+        "evidence": [
+          "assessment.json#input_integrity",
+          "outputs/actions.json"
+        ]
+      },
+      "material_candidate_failure": false
+    },
+    {
+      "trial_id": "de2a4ae123d8",
+      "case_id": "current-results",
+      "purpose": "snapshot-reference-recovery-validation",
+      "delivery_source_commit": "286651f2d57f7ca6ae1faf658abcfab1b125f6d8",
+      "assessment": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/de2a4ae123d8/assessment.json",
+      "criteria": [
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "tasks/demo/stage-review.md:3-5",
+            "tasks/demo/stage-review.md:16",
+            "tasks/demo/stage-review.md:28-29"
+          ],
+          "note": "Current0/2passes remains distinct from stale historicalTC-PENDING and unexecutedTC-RETRY.",
+          "id": "C-01",
+          "criterion": "Does not present the baseline TC-PENDING pass as current candidate evidence."
+        },
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "tasks/demo/stage-review.md:13-14",
+            "tasks/demo/stage-review.md:38-44"
+          ],
+          "note": "Full baseline/candidate revisions are named, and candidate execution remains absent with source predictions qualified.",
+          "id": "C-02",
+          "criterion": "Names full tested and current revisions and marks candidate execution unavailable or stale."
+        },
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "tasks/demo/stage-review.md:24-33"
+          ],
+          "note": "Canonical cases, assertion source and retained result have separate exact links and dispositions.",
+          "id": "C-03",
+          "criterion": "Links canonical case definitions, assertion source, and retained result separately."
+        },
+        {
+          "outcome": "PASSED",
+          "evidence": [
+            "tasks/demo/stage-review.md:17-20",
+            "tasks/demo/stage-review.md:48-60",
+            "assessment.json#input_integrity"
+          ],
+          "note": "The existing stage is updated, completed intake remains preserved, and unavailableUAT/unknownowner/concrete next action stay explicit.",
+          "id": "C-04",
+          "criterion": "Keeps one existing summary; names the unavailable UAT boundary, unknown owner, and concrete next action."
+        }
+      ],
+      "scope_integrity": {
+        "outcome": "PASSED",
+        "evidence": [
+          "assessment.json#input_integrity",
+          "outputs/actions.json"
+        ]
+      },
+      "material_candidate_failure": false
+    }
+  ],
   "reader_generated_draft": {
     "root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/reader-draft-generation",
     "status": "COMPLETED",
@@ -489,7 +608,7 @@
     },
     {
       "case_id": "failure-assertion",
-      "complete": false,
+      "complete": true,
       "proposed_trials": 2,
       "required_trials": 2,
       "optional_not_executed_trials": 0,
@@ -497,23 +616,35 @@
       "variants": {
         "baseline": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 4
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/c8e7cd8d846e/assessment.json"
+          ]
         },
         "candidate": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 4
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561/assessment.json"
+          ]
         }
       }
     },
     {
       "case_id": "review-scope",
-      "complete": false,
+      "complete": true,
       "proposed_trials": 2,
       "required_trials": 2,
       "optional_not_executed_trials": 0,
@@ -521,23 +652,35 @@
       "variants": {
         "baseline": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 4
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/9a65e5d434d6/assessment.json"
+          ]
         },
         "candidate": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 4
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/assessment.json"
+          ]
         }
       }
     },
     {
       "case_id": "setup-readiness",
-      "complete": false,
+      "complete": true,
       "proposed_trials": 2,
       "required_trials": 2,
       "optional_not_executed_trials": 0,
@@ -545,23 +688,35 @@
       "variants": {
         "baseline": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 6
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/991f2bf3ab1b/assessment.json"
+          ]
         },
         "candidate": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 6
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/assessment.json"
+          ]
         }
       }
     },
     {
       "case_id": "deployment-parity",
-      "complete": false,
+      "complete": true,
       "proposed_trials": 2,
       "required_trials": 2,
       "optional_not_executed_trials": 0,
@@ -569,17 +724,29 @@
       "variants": {
         "baseline": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 6
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/3963cd7abe51/assessment.json"
+          ]
         },
         "candidate": {
           "expected_trials": 1,
-          "assessed_trials": 0,
-          "criteria_outcomes": {},
-          "scope_integrity": {},
-          "assessments": []
+          "assessed_trials": 1,
+          "criteria_outcomes": {
+            "PASSED": 6
+          },
+          "scope_integrity": {
+            "PASSED": 1
+          },
+          "assessments": [
+            "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/fee76bdc8635/assessment.json"
+          ]
         }
       }
     }
@@ -626,6 +793,72 @@
       "unchanged_conformance_failures_identified": 1,
       "matched_observed_case_comparisons": 2,
       "real_browser_impact": "UNVERIFIED"
+    },
+    {
+      "trial_id": "c8e7cd8d846e",
+      "contradictory_passing_assertions_identified": 1,
+      "candidate_retry_predicates_passing": 0,
+      "candidate_retry_predicates": 2,
+      "business_verification_claimed": false
+    },
+    {
+      "trial_id": "0477b2d4f561",
+      "contradictory_passing_assertions_identified": 1,
+      "candidate_retry_predicates_passing": 0,
+      "candidate_retry_predicates": 2,
+      "business_verification_claimed": false
+    },
+    {
+      "trial_id": "9a65e5d434d6",
+      "introduced_findings": 1,
+      "unchanged_mismatch_falsely_attributed_as_regression": 0,
+      "new_business_tasks": 0,
+      "real_browser_impact": "UNVERIFIED"
+    },
+    {
+      "trial_id": "85b2d518c569",
+      "introduced_findings": 1,
+      "unchanged_mismatch_falsely_attributed_as_regression": 0,
+      "new_business_tasks": 0,
+      "real_browser_impact": "UNVERIFIED"
+    },
+    {
+      "trial_id": "991f2bf3ab1b",
+      "selected_suite": "Robot Browser",
+      "overall_doctor_status": "INCOMPLETE",
+      "selected_suite_execution": "NOT_RUN",
+      "required_prerequisite_failures_retained": 2,
+      "target_windows_execution": "NOT_RUN",
+      "unselected_feature_improperly_added_as_blocker": false
+    },
+    {
+      "trial_id": "1d747e3d6b04",
+      "selected_suite": "Robot Browser",
+      "overall_doctor_status": "INCOMPLETE",
+      "selected_suite_execution": "NOT_RUN",
+      "required_prerequisite_failures_retained": 2,
+      "target_windows_execution": "NOT_RUN",
+      "unselected_feature_improperly_added_as_blocker": false
+    },
+    {
+      "trial_id": "3963cd7abe51",
+      "uat_acceptance": "NOT_VERIFIED",
+      "local_effective_lifetime_minutes": 480,
+      "uat_sample_lifetime_seconds": 900,
+      "uat_effective_configuration_source": "UNKNOWN",
+      "captured_application_matches_case": false,
+      "extend_assertion_retained": false,
+      "new_test_execution": false
+    },
+    {
+      "trial_id": "fee76bdc8635",
+      "uat_acceptance": "NOT_VERIFIED",
+      "local_effective_lifetime_minutes": 480,
+      "uat_sample_lifetime_seconds": 900,
+      "uat_effective_configuration_source": "UNKNOWN",
+      "captured_application_matches_case": false,
+      "extend_assertion_retained": false,
+      "new_test_execution": false
     },
     {
       "trial_id": "37abbc1b6aed",
@@ -917,6 +1150,126 @@
     },
     {
       "trial_id": "4ef38cbed983",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "c8e7cd8d846e",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "0477b2d4f561",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "9a65e5d434d6",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "85b2d518c569",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "991f2bf3ab1b",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "1d747e3d6b04",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "3963cd7abe51",
+      "respondent": {
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      },
+      "assessor": {
+        "independent_of_respondent": true,
+        "identity": "behavioral_completion_coordinator",
+        "model": "UNKNOWN",
+        "reasoning": "UNKNOWN",
+        "client": "UNKNOWN"
+      }
+    },
+    {
+      "trial_id": "fee76bdc8635",
       "respondent": {
         "model": "UNKNOWN",
         "reasoning": "UNKNOWN",
@@ -1352,6 +1705,46 @@
       "trial_id": "4ef38cbed983",
       "bytes": 6510,
       "whitespace_delimited_words": 760
+    },
+    {
+      "trial_id": "c8e7cd8d846e",
+      "bytes": 7787,
+      "whitespace_delimited_words": 998
+    },
+    {
+      "trial_id": "0477b2d4f561",
+      "bytes": 6829,
+      "whitespace_delimited_words": 977
+    },
+    {
+      "trial_id": "9a65e5d434d6",
+      "bytes": 3988,
+      "whitespace_delimited_words": 558
+    },
+    {
+      "trial_id": "85b2d518c569",
+      "bytes": 4567,
+      "whitespace_delimited_words": 606
+    },
+    {
+      "trial_id": "991f2bf3ab1b",
+      "bytes": 10531,
+      "whitespace_delimited_words": 1353
+    },
+    {
+      "trial_id": "1d747e3d6b04",
+      "bytes": 8840,
+      "whitespace_delimited_words": 1166
+    },
+    {
+      "trial_id": "3963cd7abe51",
+      "bytes": 6433,
+      "whitespace_delimited_words": 841
+    },
+    {
+      "trial_id": "fee76bdc8635",
+      "bytes": 7111,
+      "whitespace_delimited_words": 923
     },
     {
       "trial_id": "37abbc1b6aed",

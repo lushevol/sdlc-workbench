@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "case_id": "failure-assertion",
+  "fixture_root": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561",
+  "task": "In /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561, inspect the supplied repository test and intended TC-RETRY behavior. Does a passing run verify that behavior for the candidate? Retain the assessment in /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561/assessment.md. Keep source and tests unchanged. Local checks are authorized. This is a synthetic review exercise, without a business intake gate.",
+  "tools_used": [
+    "functions.exec",
+    "exec_command"
+  ],
+  "actions": [
+    {
+      "order": 1,
+      "tool": "exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561/evaluation-input.json",
+      "result": "Read scope, refs, allowed assets, skill paths, and requested deliverables."
+    },
+    {
+      "order": 2,
+      "tool": "exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/SKILL.md",
+      "result": "Applied verify-implementation skill."
+    },
+    {
+      "order": 3,
+      "tool": "exec_command",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561",
+      "command": "cat requirements.md review-request.md test-cases.md repo/service.py repo/test_characterization.py",
+      "result": "Inspected intended predicates and complete assertion chain before execution."
+    },
+    {
+      "order": 4,
+      "tool": "exec_command",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561/repo",
+      "command": "git status --short; git rev-parse HEAD; git diff d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389 -- service.py test_characterization.py",
+      "result": "Clean candidate checkout. Sole source change replaces pending wait with logout. Test unchanged."
+    },
+    {
+      "order": 5,
+      "tool": "exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/behavior-review.md",
+      "result": "Read assertion, paired-comparison, coverage, and reporting rules."
+    },
+    {
+      "order": 6,
+      "tool": "exec_command",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/0477b2d4f561/repo",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s . -p 'test_*.py' -v",
+      "exit_code": 0,
+      "result": "test_rejection_logs_out passed. Ran 1 test in 0.000s. OK."
+    },
+    {
+      "order": 7,
+      "tool": "exec_command",
+      "command": "python3 heredoc, read-only fixture hashing and exact-revision direct function probes",
+      "operations": [
+        "Read numbered fixture inputs and compute SHA-256.",
+        "git show <revision>:service.py and git show <revision>:test_characterization.py for both selected revisions.",
+        "exec(compile(source_bytes, revision_source_path, exec), namespace)",
+        "namespace[renewal_action](refresh_pending=False, refresh_failed=True)",
+        "namespace[renewal_action](refresh_pending=True, refresh_failed=False)"
+      ],
+      "observed_at": "2026-11-18T04:44:47.511212+00:00",
+      "result": "Both revisions return logout for retry. Baseline waits for pending. Candidate logs out for pending."
+    },
+    {
+      "order": 8,
+      "tool": "exec_command",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 heredoc, exact-revision isolated unittest runs, repeated probes, integrity checks, and deliverable writes",
+      "subprocess_commands": [
+        [
+          [
+            "git",
+            "show",
+            "d9417ed17a50516fdca3a85478245cf3bafa40ee:service.py"
+          ],
+          [
+            "git",
+            "show",
+            "d9417ed17a50516fdca3a85478245cf3bafa40ee:test_characterization.py"
+          ],
+          [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            ".",
+            "-p",
+            "test_*.py",
+            "-v"
+          ]
+        ],
+        [
+          [
+            "git",
+            "show",
+            "037a1e6c0c2c9d0316fa5882f38417330ec48389:service.py"
+          ],
+          [
+            "git",
+            "show",
+            "037a1e6c0c2c9d0316fa5882f38417330ec48389:test_characterization.py"
+          ],
+          [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            ".",
+            "-p",
+            "test_*.py",
+            "-v"
+          ]
+        ]
+      ],
+      "operations": [
+        "TemporaryDirectory(prefix=retry-review-, dir=/private/tmp) per revision.",
+        "Write exact selected Git source and unchanged test bytes only into the temporary directory.",
+        "Run supplied unittest discovery with bytecode disabled.",
+        "Execute exact source bytes directly and compare action/no-logout predicates for both canonical cases.",
+        "Verify supplied file hashes and hashes of the two used skill resources.",
+        "git status --short",
+        "Write assessment.md and outputs/actions.json.",
+        "Validate report local links and actions JSON."
+      ],
+      "result": "See paired_runs and integrity below."
+    }
+  ],
+  "paired_runs": [
+    {
+      "label": "baseline",
+      "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+      "file_sha256": {
+        "service.py": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+        "test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c"
+      },
+      "source_commands": [
+        [
+          "git",
+          "show",
+          "d9417ed17a50516fdca3a85478245cf3bafa40ee:service.py"
+        ],
+        [
+          "git",
+          "show",
+          "d9417ed17a50516fdca3a85478245cf3bafa40ee:test_characterization.py"
+        ]
+      ],
+      "runner_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/retry-review-1y_bxneo",
+      "temporary_directory_removed": true,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "elapsed_seconds": 0.03164420905523002,
+      "probes": [
+        {
+          "case_id": "TC-RETRY",
+          "inputs": {
+            "refresh_pending": false,
+            "refresh_failed": true
+          },
+          "expected_action": "retry",
+          "actual_action": "logout",
+          "action_matches": false,
+          "no_logout_matches": false
+        },
+        {
+          "case_id": "TC-PENDING",
+          "inputs": {
+            "refresh_pending": true,
+            "refresh_failed": false
+          },
+          "expected_action": "wait",
+          "actual_action": "wait",
+          "action_matches": true,
+          "no_logout_matches": true
+        }
+      ]
+    },
+    {
+      "label": "candidate",
+      "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "file_sha256": {
+        "service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+        "test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c"
+      },
+      "source_commands": [
+        [
+          "git",
+          "show",
+          "037a1e6c0c2c9d0316fa5882f38417330ec48389:service.py"
+        ],
+        [
+          "git",
+          "show",
+          "037a1e6c0c2c9d0316fa5882f38417330ec48389:test_characterization.py"
+        ]
+      ],
+      "runner_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/retry-review-b7cqpvjm",
+      "temporary_directory_removed": true,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "elapsed_seconds": 0.028335666051134467,
+      "probes": [
+        {
+          "case_id": "TC-RETRY",
+          "inputs": {
+            "refresh_pending": false,
+            "refresh_failed": true
+          },
+          "expected_action": "retry",
+          "actual_action": "logout",
+          "action_matches": false,
+          "no_logout_matches": false
+        },
+        {
+          "case_id": "TC-PENDING",
+          "inputs": {
+            "refresh_pending": true,
+            "refresh_failed": false
+          },
+          "expected_action": "wait",
+          "actual_action": "logout",
+          "action_matches": false,
+          "no_logout_matches": false
+        }
+      ]
+    }
+  ],
+  "input_integrity": {
+    "repo/service.py": {
+      "expected": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+      "actual": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+      "matches": true
+    },
+    "repo/test_characterization.py": {
+      "expected": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+      "actual": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+      "matches": true
+    },
+    "requirements.md": {
+      "expected": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+      "actual": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+      "matches": true
+    },
+    "review-request.md": {
+      "expected": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+      "actual": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+      "matches": true
+    },
+    "test-cases.md": {
+      "expected": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+      "actual": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+      "matches": true
+    }
+  },
+  "skill_integrity": {
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/SKILL.md": {
+      "expected": "6f4e67cfebbe2d89b6604544f872cec3d63109aa4b4f110925aa8f0779f16645",
+      "actual": "6f4e67cfebbe2d89b6604544f872cec3d63109aa4b4f110925aa8f0779f16645",
+      "matches": true
+    },
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/verify-implementation/references/behavior-review.md": {
+      "expected": "6526dc8de3a0d6f4da2f2bb8f6d2f280a92bdd3ef78185fcc557bb0dbf6f602b",
+      "actual": "6526dc8de3a0d6f4da2f2bb8f6d2f280a92bdd3ef78185fcc557bb0dbf6f602b",
+      "matches": true
+    }
+  },
+  "observed_settings": {
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "python_version": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "operating_system": "Darwin",
+    "platform": "darwin",
+    "test_engine": "unittest",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "temporary_check_root": "/private/tmp",
+    "browser": "UNKNOWN",
+    "deployment_environment": "UNKNOWN",
+    "real_renewal_service": "UNKNOWN",
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "network_calls": 0,
+    "mocks": [],
+    "clock_manipulation": false
+  },
+  "changed_paths": [
+    "assessment.md",
+    "outputs/actions.json"
+  ],
+  "source_or_test_changes": [],
+  "repository_status": "",
+  "timing": {
+    "initial_inspection_started_at": "UNKNOWN",
+    "first_timestamped_observation_at": "2026-11-18T04:44:47.511212+00:00",
+    "retained_paired_run_started_at": "2026-11-18T04:46:26.672273+00:00",
+    "saved_at": "2026-11-18T04:46:26.763077+00:00",
+    "retained_paired_run_and_write_elapsed_seconds": 0.09056320902891457,
+    "per_run_timing": "See paired_runs[].elapsed_seconds"
+  },
+  "key_results": [
+    "Candidate and baseline supplied suites pass one test.",
+    "The passing assertion expects logout after renewal failure.",
+    "TC-RETRY returns logout for both exact revisions and fails both intended predicates.",
+    "TC-RETRY is an unchanged existing failure.",
+    "Candidate pending branch introduces a separate failure under TC-PENDING.",
+    "All supplied input hashes match and repository source/tests remain unchanged."
+  ],
+  "limits": [
+    "Synthetic evaluation contract represents supplied intent without business approval.",
+    "Direct probes execute the exact source function and do not execute the Extend UI or a real client session.",
+    "No production environment or service was accessed.",
+    "No source fixes, new tests, task creation, commits, external calls, or subagents.",
+    "No check-generated cache was written inside the fixture.",
+    "Only listed fixture assets and selected skill resources were read.",
+    "Complete ASD writing review remains PENDING."
+  ]
+}

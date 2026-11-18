@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "case_id": "setup-readiness",
+  "synthetic": true,
+  "completion": "BOUNDED_DELIVERABLE_SAVED",
+  "deliverable": "readiness.md",
+  "actions": [
+    {
+      "order": 1,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/evaluation-input.json",
+      "result": "PASSED",
+      "exit_code": 0,
+      "purpose": "Read only listed fixture assets or selected skill resources",
+      "started_at_utc": "UNKNOWN"
+    },
+    {
+      "order": 2,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/request-context.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/evidence/doctor.json /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/evidence/local-checks.json",
+      "result": "PASSED",
+      "exit_code": 0,
+      "purpose": "Read only listed fixture assets or selected skill resources",
+      "started_at_utc": "UNKNOWN"
+    },
+    {
+      "order": 3,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/repository-onboarding/SKILL.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/connectors/SKILL.md",
+      "result": "PASSED",
+      "exit_code": 0,
+      "purpose": "Read only listed fixture assets or selected skill resources",
+      "started_at_utc": "UNKNOWN"
+    },
+    {
+      "order": 4,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/repository-onboarding/references/setup-readiness.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/repository-onboarding/references/readiness-and-evidence.md",
+      "result": "PASSED",
+      "exit_code": 0,
+      "purpose": "Read only listed fixture assets or selected skill resources",
+      "started_at_utc": "UNKNOWN"
+    },
+    {
+      "order": 5,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/repo/README.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/repo/bundle-target.json /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/repo/requirements.txt /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/repo/revision.txt /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/1d747e3d6b04/repo/tests/orders.robot",
+      "result": "PASSED",
+      "exit_code": 0,
+      "purpose": "Read only listed fixture assets or selected skill resources",
+      "started_at_utc": "UNKNOWN"
+    },
+    {
+      "order": 6,
+      "tool": "functions.exec -> tools.apply_patch",
+      "operation": "Add readiness.md",
+      "result": "PASSED",
+      "changed_paths": [
+        "readiness.md"
+      ],
+      "started_at_utc": "UNKNOWN"
+    },
+    {
+      "order": 7,
+      "tool": "functions.exec -> tools.exec_command",
+      "command": "python3 - <<'PY' [inline standard-library verification and output serialization script] PY",
+      "argv": [
+        "python3",
+        "-"
+      ],
+      "purpose": "Verify input and used-skill hashes, validate report links and status markers, update review metadata, save outputs/actions.json",
+      "result": "PASSED",
+      "started_at_utc": "2026-11-18T04:55:24.462725+00:00",
+      "scope": "Local inspection and requested output writes only"
+    }
+  ],
+  "key_results": {
+    "core_status": "READY in supplied synthetic doctor evidence",
+    "aggregate_doctor_status": "INCOMPLETE in supplied evidence",
+    "selected_suite": "Robot Browser tests/orders.robot, Chromium",
+    "selected_suite_readiness": "BLOCKED",
+    "selected_suite_execution": "NOT_RUN",
+    "blockers": [
+      "Robot Browser Node/browser assets absent",
+      "Required BFF failed startup because configuration file is absent"
+    ],
+    "playwright_smoke": "PASSED in separate supplied investigation evidence",
+    "windows_offline_bundle": "Supplied darwin arm64 Python 3.14 manifest does not establish Windows x64 Python 3.12 compatibility and excludes Robot Browser assets",
+    "target_windows_execution": "NOT_RUN",
+    "optional_release_clinic": "INCOMPLETE, with no selected-suite dependency evidenced",
+    "business_behavior": "UNVERIFIED"
+  },
+  "observed_settings": {
+    "current_platform": "macOS arm64 from synthetic request context",
+    "target_platform": "native Windows x64",
+    "target_python": "3.12",
+    "bundle_platform": "darwin arm64",
+    "bundle_python": "3.14",
+    "declared_robot_framework": "7.2.2",
+    "declared_robot_browser": "19.1.1",
+    "actual_runtime_python": "UNKNOWN",
+    "actual_runtime_node": "UNKNOWN",
+    "selected_interpreter_path": "UNKNOWN",
+    "workspace_path": "UNKNOWN",
+    "source_checkout_path": "UNKNOWN",
+    "checkout_changes": "UNKNOWN",
+    "resource_id": "UNKNOWN",
+    "provider": "UNKNOWN",
+    "tool_grants": "UNKNOWN",
+    "configuration_profile": "UNKNOWN",
+    "api_destination": "UNKNOWN",
+    "variable_presence": "UNKNOWN",
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "service_tier": "UNKNOWN",
+    "reported_candidate_revision": "b36921fc84e9435e9357459d5f578ca36756787f",
+    "reported_base_revision": "99cf7efbd2ab8288bd6c28d75446e8a9efb2aa8a",
+    "git_revision_authenticity": "UNVERIFIED"
+  },
+  "changed_paths": [
+    "readiness.md",
+    "outputs/actions.json"
+  ],
+  "checks": {
+    "fixture_and_used_skill_sha256": [
+      {
+        "path": "evidence/doctor.json",
+        "sha256": "a752d4daba5a0b7da9ad0a5f793e8cdf9ae7acb9e7350b25e7a61fb54804408b",
+        "result": "PASSED"
+      },
+      {
+        "path": "evidence/local-checks.json",
+        "sha256": "5a6f1f59544aa765fa3b8bbec288722d2789c40f5287158b6de5dbd3a8841a26",
+        "result": "PASSED"
+      },
+      {
+        "path": "repo/README.md",
+        "sha256": "2cb26915deaa08d81b354c5e6bce9850288bcd9baa1dccdbc137d51385c42c95",
+        "result": "PASSED"
+      },
+      {
+        "path": "repo/bundle-target.json",
+        "sha256": "81a6567745f570d2057fa66ab05b0709a418af5ed13b182c1f4b05cc7f58b711",
+        "result": "PASSED"
+      },
+      {
+        "path": "repo/requirements.txt",
+        "sha256": "7bd6293cc52861a6b55e4cc6ef77046af427d0f3bda81a2083b455edb374d8be",
+        "result": "PASSED"
+      },
+      {
+        "path": "repo/revision.txt",
+        "sha256": "a79ad845028f350ed0dad7d7007205613631eebedcdd903ce69c4e68bc4d2e87",
+        "result": "PASSED"
+      },
+      {
+        "path": "repo/tests/orders.robot",
+        "sha256": "6b0f0f623d1fad3684e5a0e0914641f6e77f3ab0e017fa4ba490eff7d0b6b692",
+        "result": "PASSED"
+      },
+      {
+        "path": "request-context.md",
+        "sha256": "bb8daf9346bce0880fa2afa03a41a9e596d393154e638497d4296638ae039a7c",
+        "result": "PASSED"
+      },
+      {
+        "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/repository-onboarding/SKILL.md",
+        "sha256": "3b32d5556ccc5df781299d1303e15047e47874b1bc713e1847875064471cf605",
+        "result": "PASSED"
+      },
+      {
+        "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/connectors/SKILL.md",
+        "sha256": "963f903441f3b1f4d14ab3507e4520fc921769ba066305e9924f5da4d6e9e5ee",
+        "result": "PASSED"
+      },
+      {
+        "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/repository-onboarding/references/setup-readiness.md",
+        "sha256": "d5391d0f077507c02c26e1ff31b996754df31b4615ecc0858cf29fea119599b5",
+        "result": "PASSED"
+      },
+      {
+        "path": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/repository-onboarding/references/readiness-and-evidence.md",
+        "sha256": "76ced38fa6e66b79b1ede3ac3bf52e02b033f8d9b17d4ae92fc51e2e79f895b6",
+        "result": "PASSED"
+      }
+    ],
+    "local_report_links": {
+      "result": "PASSED",
+      "count": 16
+    },
+    "required_status_markers": "PASSED",
+    "source_and_catalog_writes": "NONE",
+    "application_or_test_execution": "NONE",
+    "network_calls": "NONE",
+    "package_installations": "NONE",
+    "asd_review": "PENDING"
+  },
+  "timing": {
+    "initial_read_started_at_utc": "UNKNOWN",
+    "verification_started_at_utc": "2026-11-18T04:55:24.462725+00:00",
+    "saved_at_utc": "2026-11-18T04:55:24.465152+00:00",
+    "verification_elapsed_seconds": 0.00238,
+    "total_task_elapsed_seconds": "UNKNOWN",
+    "retained_runtime_evidence_timestamps": "UNKNOWN"
+  },
+  "limits": [
+    "Synthetic evaluation inputs do not establish business behavior.",
+    "No model execution or semantic grading was performed by this helper.",
+    "Only listed fixture assets and selected skill resources were inspected.",
+    "No subagents or sibling/operator-directory inspection was used.",
+    "No package installation, application launch, suite execution, network access, source/catalog mutation, or external message occurred.",
+    "Runtime statuses are supplied synthetic observations, without actual environment verification.",
+    "Actions list records the final Python heredoc by invocation and scope because its inline script contains this log serializer.",
+    "No Git inspection or source-to-commit authenticity check was performed.",
+    "The Windows commands are prepared handoff examples and were not executed."
+  ]
+}

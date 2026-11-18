@@ -2,11 +2,48 @@
 
 > **The strongest opportunity is reliable completion across existing tools.** Your history repeatedly requests trustworthy outcomes, visible progress, and less supervision.
 > **Review requirements before choosing skill enhancements.** The latest table covers the full retained input set and maps existing responsibilities.
-> Skill changes are implemented. Completion remains under audit because earlier evaluations covered only bounded structural examples.
+> **The approved enhancements are complete.** Independent evaluation, runtime checks, packaging, and installed-workspace behavior passed.
 
 The [requirements table and skill map](07-requirements-and-skills.md) are the current joint-review surface.
-The [earlier optimization plan](06-optimization-plan.md) remains a provisional implementation proposal.
+The [optimization plan](06-optimization-plan.md) records the approved steps, file targets, and measurement methods.
 The approved changes below implement the supported parts of that plan. Numerical targets remain measurement proposals.
+
+## Completed enhancements, 18 November 2026
+
+All approved enhancements passed the completion audit. Five existing skills improved, and one reusable evaluation skill was added.
+
+| Enhancement | What it now does | Evidence |
+| --- | --- | --- |
+| Lifecycle and recovery | Reconciles actual stage totals and resumes unfinished authorized work. | [Lifecycle skill](../../.agents/skills/manage-knowledge-lifecycle/SKILL.md) |
+| Source accounting | Accounts for every selected source and exposes substantive omissions. | [Ingestion skill](../../.agents/skills/ingest-knowledge/SKILL.md) |
+| Question grouping | Preserves question IDs, exact answers, owners, and differing decisions. | [Question skill](../../.agents/skills/resolve-knowledge-questions/SKILL.md) |
+| Semantic preservation | Retains conditions, uncertainties, and qualified historical observations. | [Claim review](../../.agents/skills/review-knowledge-claims/SKILL.md) |
+| Answer evaluation | Checks factual support and explicit reader-usefulness dimensions. | [Retrieval evaluation](../../.agents/skills/evaluate-knowledge-retrieval/SKILL.md) |
+| New harness evaluation | Uses pinned trials, independent assessment, input preflight, and ownership-safe recovery. | [Evaluation skill](../../.agents/skills/evaluate-harness/SKILL.md) |
+| Receipt enforcement | Rejects incomplete accounting, binds coverage targets, and requeues changed outputs. | [Runtime correction](evidence/stage-02r-accounting-correction.json) |
+
+The [scorecard](evidence/optimization-scorecard.json) contains forty main trials across thirteen distinct cases.
+Candidate criteria passed 85/85. Baseline criteria passed 81/85. Both additional follow-ups passed 4/4 criteria each.
+All forty-two scope checks passed. Twenty-four final reader answers retain all reviewed source predicates.
+Both final reader variants received identical maximum usability scores. The candidate provided more explicit draft-review judgments.
+
+The [installed distribution](evidence/stage-06-installed-final.json) comes from clean source commit `f5b1b072b`.
+All 223 shared skill files match. Six catalogs are empty, with zero prohibited generated artifacts.
+The [current full suite](evidence/final-current-tests.json) passed 1,107 tests, with two optional connector tests skipped.
+The final instruction-only guard also passed twenty-three workspace-layout tests and independent ownership review.
+The [delivery checks](evidence/final-delivery-checks.json) verify retained bytes and local links.
+
+### Evaluation decisions and limits
+
+The earlier completion claim was premature. The broader behavioral comparison is a corrective retrospective evaluation.
+The assistant-selected fifty-trial pilot gate was corrected. Ten optional repetitions remain explicitly unexecuted, with their original preparations retained.
+Every distinct case, source predicate, reader question, and approved enhancement remains covered.
+A temporary reference-availability limit remains recorded in its original trial. A fresh follow-up verified restored inputs before dispatch.
+The temporary deletion cause remains unknown. Independent review corrected draft-restoration and shared-source ownership risks before committing the guard.
+The [size measurements](evidence/skill-context-measurements.json) show existing entrypoints grew from 22,495 to 26,838 bytes.
+The new evaluation entrypoint contains 3,530 bytes. Actual token and active-time savings remain unknown.
+The assessor was independent and variant-aware. Actual model, reasoning, and client settings remain unknown.
+Evidence uses local synthetic fixtures. Native Windows, other native clients, live business behavior, and complete ASD review remain unverified.
 
 ### Enhancement authorization, 17 November 2026
 
@@ -69,7 +106,7 @@ Live agent handles confirmed both states before resumption. Completed trials wer
 The [oracle amendment](evidence/semantic-oracle-amendment.json) corrects one reader question and evidence-class expectations before affected stages.
 The [independent recheck](evidence/semantic-oracle-recheck.json) passed. Source text and prior assessments remain unchanged.
 
-The [behavioral scorecard](evidence/optimization-scorecard.json) now retains thirty-two assessed trials across nine completed stages.
+The [behavioral scorecard](evidence/optimization-scorecard.json) retains forty main assessments and two separate follow-ups.
 All candidate criteria passed. Baseline source disposition missed one exact-clause citation criterion in its first repetition.
 Both variants found both omissions and preserved justified unchanged and contextual results in all three repetitions.
 Both candidate grouping trials preserved all twelve entries and passed eight criteria.
@@ -79,8 +116,7 @@ Both preserved qualified historical numeric and timing observations. This fixtur
 Each reader variant supplied twelve supported final answers and retained all twenty-four predicates.
 The candidate passed all four review criteria. The baseline passed three criteria and omitted separate draft usability judgments.
 Both final answer sets received identical maximum usability scores.
-The completed engineering pairs cover known policy, current results, and regression comparison. All twenty-six criteria passed.
-Four engineering comparisons remain pending.
+All seven engineering comparisons passed sixty-six criteria across both variants.
 
 The next continuation found missing worker handles. One unfinished authorized draft was retained before retry.
 The [recovery record](evidence/behavioral-trials/operator/engineering-dispatch-recovery.json) preserves its bytes and attempt history.
@@ -88,7 +124,7 @@ The twenty-six accepted trials remained unchanged during recovery.
 
 The [fresh distribution check](evidence/stage-06-final-distribution.json) builds clean source commit `cad633b99` with the corrected fixture and oracle.
 All 220 shared skill files match. Six initialized catalogs are empty, and zero prohibited artifacts appear.
-Installed-workspace behavior remains separately pending.
+Installed-workspace behavior passed the separate source-disposition follow-up.
 
 ### Evaluation input integrity follow-up, 18 November 2026
 
@@ -351,7 +387,7 @@ Their findings corrected the revised plan before commitment.
 The [revised plan checks](evidence/plan-document-checks.json) cover the current task documents.
 The [requirements table checks](evidence/requirements-table-checks.json) additionally verify row, input, and existing-skill accounting.
 Independent table reviews checked semantic scope and skill ownership. They retained consumer-usage and minimal-schema qualifications for migration.
-The stage evaluations and distribution checks are recorded above. Independent model-based evaluations remain underway.
+The stage evaluations and distribution checks are recorded above. Independent model-based evaluations and both follow-ups are complete.
 Native client dispatch, live integration, business execution, and complete ASD writing review remain untested.
 
 ```yaml

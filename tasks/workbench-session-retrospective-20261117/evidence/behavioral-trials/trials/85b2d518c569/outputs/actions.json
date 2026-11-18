@@ -1,0 +1,468 @@
+{
+  "schema_version": 1,
+  "case_id": "review-scope",
+  "synthetic": true,
+  "timing": {
+    "first_action_started_at": "UNKNOWN",
+    "first_recorded_observation_at": "2026-11-18T04:48:50.229Z",
+    "checks_started_at": "2026-11-18T04:50:18.920781+00:00",
+    "checks_completed_at": "2026-11-18T04:50:19.026945+00:00",
+    "completed_at": "2026-11-18T04:51:33.877344+00:00"
+  },
+  "observed_settings": {
+    "repository": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+    "comparison_mode": "range",
+    "base_revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+    "candidate_revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "cache_control": "PYTHONDONTWRITEBYTECODE=1; unittest subprocesses use -B; temporary checkouts use /private/tmp",
+    "test_runner": "python -m unittest discover -s . -p 'test_*.py' -v",
+    "deployment_settings": "UNKNOWN",
+    "live_environment": "UNKNOWN",
+    "model_settings": "UNKNOWN",
+    "owner": "UNKNOWN",
+    "network_calls": 0,
+    "subagents": 0
+  },
+  "actions": [
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat evaluation-input.json",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569",
+      "exit_code": 0,
+      "duration_seconds": 9.208e-06,
+      "result": "Read authorized prompt, assets, skill resources, revisions, and limits before other inspection."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/SKILL.md",
+      "exit_code": 0,
+      "duration_seconds": 7.792e-06,
+      "result": "Read code-review 4.1.3."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat review-request.md requirements.md test-cases.md",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569",
+      "exit_code": 0,
+      "duration_seconds": 7e-06,
+      "result": "Exact endpoints, existing runner, same inputs, no fixes/new tests/tasks/external calls. Pending expects wait. Rejection expects retry."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "git status --short && git log -3 --oneline && git diff d9417ed17a50516fdca3a85478245cf3bafa40ee 037a1e6c0c2c9d0316fa5882f38417330ec48389 -- service.py test_characterization.py",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+      "exit_code": 0,
+      "duration_seconds": 1.0208e-05,
+      "result": "Clean worktree. One changed line in service.py, wait becomes logout for pending renewal."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat service.py test_characterization.py && git ls-tree -r --name-only 037a1e6c0c2c9d0316fa5882f38417330ec48389 && git show d9417ed17a50516fdca3a85478245cf3bafa40ee:service.py && git show d9417ed17a50516fdca3a85478245cf3bafa40ee:test_characterization.py && git show 037a1e6c0c2c9d0316fa5882f38417330ec48389:service.py && git show 037a1e6c0c2c9d0316fa5882f38417330ec48389:test_characterization.py",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+      "exit_code": 0,
+      "duration_seconds": 6.666e-06,
+      "result": "Inspected complete sources and existing test at both endpoints before execution. Repository contains these two tracked files. Existing test expects rejected renewal to return logout."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "cat /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/assets/review-report.template.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/validation.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/review-checklist.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/helpers.md /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/integrations.md",
+      "exit_code": 0,
+      "duration_seconds": 6.833e-06,
+      "result": "Read supplied report, validation, review, helper, and scope guidance. Combined tool output truncated part of the checklist; relevant correctness, validation, scope and reporting guidance was visible."
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/scripts/review_context.py --repo /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo --mode range --base d9417ed17a50516fdca3a85478245cf3bafa40ee --head 037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "exit_code": 0,
+      "duration_seconds": 7.791e-06,
+      "result": {
+        "fingerprint": "7be63653f011a59d07842b4d415f35495b29ee8889d55db33c0b77191ab949ce",
+        "change_count": 1,
+        "changed_path": "service.py",
+        "added_ranges": [
+          [
+            3,
+            3
+          ]
+        ],
+        "removed_ranges": [
+          [
+            3,
+            3
+          ]
+        ],
+        "limitations": []
+      }
+    },
+    {
+      "tool": "functions.exec / exec_command",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/scripts/scan_changes.py --repo /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo --mode range --base d9417ed17a50516fdca3a85478245cf3bafa40ee --head 037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "exit_code": 0,
+      "duration_seconds": 5.792e-06,
+      "result": {
+        "status": "COMPLETE_WITH_LIMITS",
+        "added_lines_scanned": 1,
+        "findings": [],
+        "limits": "Pattern scanning does not establish complete credential absence or business conformance."
+      }
+    },
+    {
+      "tool": "functions.exec / exec_command / Python",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+      "result": {
+        "case_id": "TC-PENDING",
+        "inputs": {
+          "refresh_pending": true,
+          "refresh_failed": false
+        },
+        "expected_action": "wait",
+        "expected_logout": false,
+        "endpoints": {
+          "base": {
+            "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+            "source_sha256": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+            "observed_action": "wait",
+            "logout_action_returned": false,
+            "requirement_conforms": true,
+            "evidence_class": "observed isolated function call"
+          },
+          "candidate": {
+            "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+            "source_sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+            "observed_action": "logout",
+            "logout_action_returned": true,
+            "requirement_conforms": false,
+            "evidence_class": "observed isolated function call"
+          }
+        },
+        "duration_seconds": 0.010289124911651015,
+        "completed_at": "2026-11-18T04:50:18.938986+00:00"
+      },
+      "generated_test_files": [],
+      "execution_method": "For each recorded source_command, compile returned bytes in memory, then call the recorded function with the recorded keyword arguments."
+    },
+    {
+      "tool": "functions.exec / exec_command / Python",
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+      "result": {
+        "case_id": "TC-RETRY",
+        "inputs": {
+          "refresh_pending": false,
+          "refresh_failed": true
+        },
+        "expected_action": "retry",
+        "expected_logout": false,
+        "endpoints": {
+          "base": {
+            "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+            "source_sha256": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+            "observed_action": "logout",
+            "logout_action_returned": true,
+            "requirement_conforms": false,
+            "evidence_class": "observed isolated function call"
+          },
+          "candidate": {
+            "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+            "source_sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+            "observed_action": "logout",
+            "logout_action_returned": true,
+            "requirement_conforms": false,
+            "evidence_class": "observed isolated function call"
+          }
+        },
+        "duration_seconds": 0.007854958064854145,
+        "completed_at": "2026-11-18T04:50:18.947073+00:00"
+      },
+      "generated_test_files": [],
+      "execution_method": "For each recorded source_command, compile returned bytes in memory, then call the recorded function with the recorded keyword arguments."
+    },
+    {
+      "tool": "functions.exec / exec_command / subprocess",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/review-scope-base-2vftugx8",
+      "source": "Exact committed source and existing test copied by git show; temporary directory removed after execution.",
+      "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+      "side": "base",
+      "duration_seconds": 0.035462167114019394,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "interpretation": "Existing test passes while expecting logout for rejection. It has no pending-renewal assertion and does not establish either supplied requirement.",
+      "completed_at": "2026-11-18T04:50:18.982741+00:00"
+    },
+    {
+      "tool": "functions.exec / exec_command / subprocess",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/review-scope-candidate-0s7p_8km",
+      "source": "Exact committed source and existing test copied by git show; temporary directory removed after execution.",
+      "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+      "side": "candidate",
+      "duration_seconds": 0.037561000091955066,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "interpretation": "Existing test passes while expecting logout for rejection. It has no pending-renewal assertion and does not establish either supplied requirement.",
+      "completed_at": "2026-11-18T04:50:19.020787+00:00"
+    },
+    {
+      "tool": "functions.exec / exec_command / subprocess",
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+      "exit_code": 0,
+      "result": "",
+      "interpretation": "Reviewed source and tests remain unchanged."
+    },
+    {
+      "tool": "functions.exec / exec_command / subprocess",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/scripts/review_context.py",
+        "--repo",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+        "--mode",
+        "range",
+        "--base",
+        "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+        "--head",
+        "037a1e6c0c2c9d0316fa5882f38417330ec48389"
+      ],
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569",
+      "exit_code": 0,
+      "result": {
+        "base": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+        "change_count": 1,
+        "comparison_base": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+        "files": [
+          {
+            "added_ranges": [
+              [
+                3,
+                3
+              ]
+            ],
+            "before_content_sha256": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+            "binary": false,
+            "content_sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+            "path": "service.py",
+            "removed_ranges": [
+              [
+                3,
+                3
+              ]
+            ],
+            "status": "M"
+          }
+        ],
+        "fingerprint": "7be63653f011a59d07842b4d415f35495b29ee8889d55db33c0b77191ab949ce",
+        "head": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+        "limitations": [],
+        "line_basis": "raw-content-comparison",
+        "mode": "range",
+        "repository": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/repo",
+        "schema_version": 1
+      },
+      "duration_seconds": 0.07931287493556738,
+      "completed_at": "2026-11-18T04:51:33.871779+00:00"
+    },
+    {
+      "tool": "functions.exec / exec_command / Python",
+      "operation": "Write review.md and verify report references, placeholders, finding count, source/test input hashes, selected skill hashes, and clean Git status.",
+      "result": "PASSED",
+      "report_links_checked": 13,
+      "input_hashes_match_evaluation": {
+        "repo/service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+        "repo/test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+        "requirements.md": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+        "review-request.md": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+        "test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881"
+      },
+      "git_status_command": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "git_status_result": "",
+      "report_sha256": "0566b941b088237618be1de70328b887f9e1f0320fba9f2de0c59d8d8527db87",
+      "asd_writing_review": "PENDING",
+      "completed_at": "2026-11-18T04:51:33.877340+00:00"
+    }
+  ],
+  "skill_directory": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review",
+  "input_hashes": {
+    "repo/service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+    "repo/test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+    "requirements.md": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+    "review-request.md": "18ed84075600fb544d2474fa87d02e04c0633a934056ee78d176a1fbe52344cc",
+    "test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881",
+    "evaluation-input.json": "9c27113f83c3f6a9aeb0b19ed53d0a1b473d114313257b67d6ffeeeba262c802"
+  },
+  "case_results": [
+    {
+      "case_id": "TC-PENDING",
+      "inputs": {
+        "refresh_pending": true,
+        "refresh_failed": false
+      },
+      "expected_action": "wait",
+      "expected_logout": false,
+      "endpoints": {
+        "base": {
+          "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+          "source_sha256": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+          "observed_action": "wait",
+          "logout_action_returned": false,
+          "requirement_conforms": true,
+          "evidence_class": "observed isolated function call",
+          "source_command": [
+            "git",
+            "show",
+            "d9417ed17a50516fdca3a85478245cf3bafa40ee:service.py"
+          ],
+          "call": {
+            "function": "renewal_action",
+            "keyword_arguments": {
+              "refresh_pending": true,
+              "refresh_failed": false
+            }
+          }
+        },
+        "candidate": {
+          "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+          "source_sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "observed_action": "logout",
+          "logout_action_returned": true,
+          "requirement_conforms": false,
+          "evidence_class": "observed isolated function call",
+          "source_command": [
+            "git",
+            "show",
+            "037a1e6c0c2c9d0316fa5882f38417330ec48389:service.py"
+          ],
+          "call": {
+            "function": "renewal_action",
+            "keyword_arguments": {
+              "refresh_pending": true,
+              "refresh_failed": false
+            }
+          }
+        }
+      },
+      "duration_seconds": 0.010289124911651015,
+      "completed_at": "2026-11-18T04:50:18.938986+00:00"
+    },
+    {
+      "case_id": "TC-RETRY",
+      "inputs": {
+        "refresh_pending": false,
+        "refresh_failed": true
+      },
+      "expected_action": "retry",
+      "expected_logout": false,
+      "endpoints": {
+        "base": {
+          "revision": "d9417ed17a50516fdca3a85478245cf3bafa40ee",
+          "source_sha256": "64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a",
+          "observed_action": "logout",
+          "logout_action_returned": true,
+          "requirement_conforms": false,
+          "evidence_class": "observed isolated function call",
+          "source_command": [
+            "git",
+            "show",
+            "d9417ed17a50516fdca3a85478245cf3bafa40ee:service.py"
+          ],
+          "call": {
+            "function": "renewal_action",
+            "keyword_arguments": {
+              "refresh_pending": false,
+              "refresh_failed": true
+            }
+          }
+        },
+        "candidate": {
+          "revision": "037a1e6c0c2c9d0316fa5882f38417330ec48389",
+          "source_sha256": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "observed_action": "logout",
+          "logout_action_returned": true,
+          "requirement_conforms": false,
+          "evidence_class": "observed isolated function call",
+          "source_command": [
+            "git",
+            "show",
+            "037a1e6c0c2c9d0316fa5882f38417330ec48389:service.py"
+          ],
+          "call": {
+            "function": "renewal_action",
+            "keyword_arguments": {
+              "refresh_pending": false,
+              "refresh_failed": true
+            }
+          }
+        }
+      },
+      "duration_seconds": 0.007854958064854145,
+      "completed_at": "2026-11-18T04:50:18.947073+00:00"
+    }
+  ],
+  "changed_paths": [
+    "review.md",
+    "outputs/actions.json"
+  ],
+  "limits": [
+    "Synthetic inputs establish only the supplied evaluation contract.",
+    "Only the selected one-line range and the supplied enclosing source, existing test, requirements and cases were reviewed.",
+    "The isolated probe observes returned action strings. Real browser logout, session effects, production reachability, frequency and business acceptance are unverified.",
+    "Rejected renewal fails the supplied requirement on both revisions. This unchanged mismatch is excluded from introduced-defect findings.",
+    "No application fixes, new test files, task records, commits, external calls or publication were performed."
+  ],
+  "skill_resource_hashes": {
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/SKILL.md": "23715ea12ce1fb9c8af9c78d54027209c1fca0d90017882360c3ca94b66ac6c1",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/assets/review-report.template.md": "4c6a9184c48aee7f429474132b363343f50fe44a9978af7d86d400f1ca7cebff",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/helpers.md": "90d849743756f8040fca85ed54baf710d82c201c43bd654a01558d57848f8223",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/integrations.md": "b1f4adea7c016f2ab15ff93fbdedd30f1ec947d2ea76f2c1afba6f386c9121ae",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/language-checks.md": "937ab6affdc1f9d4458c920831ad39e2e2552085ace136cf060794987dac41bf",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/review-checklist.md": "11009b1d82fd51323801bda361083fc389ff46d0bb136d650887209186ec9eb0",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/review-schema.md": "78025c1544cf876d530ad2f44022ec26db745ee1f269738300ae46f69cb286d8",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/references/validation.md": "a41bfaf25bbd6da2d6db79e2f9eccf03fb8e32cdadf81cf81e54054685dbc2f9",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/scripts/review_context.py": "c749e1762c819b96a721c3e16191a815441659f59553b4e71518411a0654aee9",
+    "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/ae360e4a5f0e/.agents/skills/code-review/scripts/scan_changes.py": "67ff72fed4f234b2da3980946520f175c212ca5109e1723684ac5ab57549707d"
+  },
+  "outcome": {
+    "report": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/wb-evaluation-sft1jwcb/85b2d518c569/review.md",
+    "finding_count": 1,
+    "priority": "P2",
+    "source_and_tests_unchanged": true,
+    "baseline_tests": "1 passed",
+    "candidate_tests": "1 passed",
+    "new_test_files": 0,
+    "final_fingerprint_matches_initial": true
+  }
+}

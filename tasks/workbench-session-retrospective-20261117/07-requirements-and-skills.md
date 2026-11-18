@@ -147,7 +147,7 @@ Record future answers here with their exact source and date. Do not infer answer
 | New skill responsibility | `evaluate-harness`: paired baseline/candidate workflow evaluation with independent assessment. |
 
 The selected skills were inspected against the agreed requirements and representative cases.
-The affected files, outcomes, measurements, and limits are recorded in the [implementation record](01-maintenance.md#enhancement-completion-17-november-2026) and [stage evidence](evidence/stage-06-distribution-evaluation.json).
+The affected files, outcomes, measurements, and limits are recorded in the [completion record](01-maintenance.md#completed-enhancements-18-november-2026) and [installed evidence](evidence/stage-06-installed-final.json).
 Reuse the [plan](06-optimization-plan.md) for future matched pilots without treating bounded trials as general reliability proof.
 
 ## Checks and limits
