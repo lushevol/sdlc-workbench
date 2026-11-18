@@ -18,8 +18,9 @@ writing_review:
 
 ## Function entitlement discussion, 17 November 2026
 
-- [Plain-language Excel cases with inline test data](../../../outputs/01a1ec5d-f2d5-7570-88f5-3858ad40560e/CES-function-entitlement-test-cases.xlsx).
-- [18 November Excel request](function-entitlement-excel-20261118/user-input.md#exact-user-input), [authentic-data correction](function-entitlement-excel-20261118/authentic-data-user-input.md#exact-user-input), and [current export checks](function-entitlement-excel-20261118/authentic-data-validation.json).
+- [Plain-language Excel test patterns and separate authentic data](../../../outputs/01a1ec5d-f2d5-7570-88f5-3858ad40560e/CES-function-entitlement-test-cases.xlsx).
+- [18 November Excel request](function-entitlement-excel-20261118/user-input.md#exact-user-input) and [authentic-data correction](function-entitlement-excel-20261118/authentic-data-user-input.md#exact-user-input).
+- [Pattern-layout request](function-entitlement-excel-20261118/pattern-layout-user-input.md#exact-user-input) and [current export checks](function-entitlement-excel-20261118/pattern-layout-validation.json).
 - [Exact initial request](function-entitlement-20261117/user-input.md#exact-user-input).
 - [Exact discussion answers](function-entitlement-20261117/user-clarifications.md).
 - [Five-second test target](function-entitlement-20261117/user-timing-target.md#exact-answer); CES NFR remains unconfirmed.
