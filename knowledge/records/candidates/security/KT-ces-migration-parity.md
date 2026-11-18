@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-ces-migration-parity
-version: 7
+version: 8
 owner: unknown
 governance_state: candidate
 status: draft
@@ -33,16 +33,19 @@ sources:
 - resource: conversation:ces-entitlement-migration-20261102:function-entitlement-timing-20261117
   revision: sha256:d4c77b89c9184612658472b6060fc1e38ba73377101d8f364f076d74e98df83e
   sha256: d4c77b89c9184612658472b6060fc1e38ba73377101d8f364f076d74e98df83e
-previous_version: 6
-previous_content_sha256: 759e0220294b3a312ea4b3cca8d1e455f5dcd27ab18187059754b47bc4bd6718
-previous_revision: 0620f12083a6f1df08130b7d8091cb90b633ada8
+- resource: conversation:ces-entitlement-migration-20261102:function-entitlement-eight-areas-20261118
+  revision: sha256:9995f08c1ec69b37acf53ad581284ff684f25bedd7a5c43e6dd001ce936b654f
+  sha256: 9995f08c1ec69b37acf53ad581284ff684f25bedd7a5c43e6dd001ce936b654f
+previous_version: 7
+previous_content_sha256: 4219cce4fc398a863cefff482bd3ff57a8533ccb1e23404e6c1729a2583a131f
+previous_revision: bfc1b2d87ebbd4d8a326a35c5ecaeb4b37ef5241
 generated:
   by: agent:codex
-  at: '2026-11-17T08:15:59.160570+00:00'
+  at: '2026-11-18T03:42:45.929372+00:00'
 verified: []
 classification: security
 scope: Intended permission preservation, frontend compatibility, tile migration, account scope, and functional-profile values for EMS2 to CES.
-summary: Preserve upper-application APIs and mapped permissions. Return one account-appropriate functional profile. Reject incompatible assignments. Keep consumer ownership unresolved.
+summary: Preserve upper-application APIs and mapped permissions. Reflect functional assignment and definition changes. Isolate non-functional changes. Keep consumer ownership unresolved.
 related:
 - KT-sdk-and-entitlements
 - CES-MIGRATION
@@ -78,6 +81,7 @@ It permits existing `hasPermission(code)` calls to accept mapped EMS2 or CES gra
 The [function-entitlement request](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-input.md#exact-user-input) adds value-test intent from 17 November 2026.
 The [returned answers](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-clarifications.md) define functional-profile cardinality and account-type separation.
 The [timing answer](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) selects a five-second test target; CES NFR remains unconfirmed.
+The [eight-area clarification](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input) adds functional-definition changes and non-functional-change isolation from 18 November 2026.
 The owning [migration task](../../../../tasks/ces-entitlement-migration-20261102/01-intake.md#current-task-state) retains source observations, implementation, and execution evidence separately.
 
 ## Summary
@@ -100,6 +104,10 @@ Return the account's one assigned functional profile, or no profile when none is
 Reject user/general profile assignments in both incompatible directions.
 General accounts include Generic, System, and Service accounts.
 Check the immediate first read separately from the selected five-second propagation target.
+
+Reflect functional profile renames for every affected account.
+Deleting the only functional profile restores the empty value when no replacement exists.
+Changes limited to non-functional entitlements preserve the functional profile.
 
 ## Documented knowledge
 
@@ -177,9 +185,19 @@ A valid account cannot hold two simultaneous functional profiles.
 
 Other CES entitlement names can remain multiple; they do not become multiple functional profiles.
 
+The [18 November clarification](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input) also covers entitlement definition changes.
+Renaming an assigned functional profile updates every affected account to the approved new name.
+The old name must not remain in those accounts' functional values.
+The user supplied no replacement name. Use the approved execution value without inventing a role.
+Deleting the account's only functional profile restores the empty value when no replacement profile exists.
+
+Changes limited to non-functional entitlements must preserve `function_entitlement`.
+This applies to their assignment changes, definition renames, and definition deletions.
+Such changes cannot select a different functional profile or fill an empty functional value.
+
 The [timing answer](../../../../tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) selects five seconds as a test target.
 CES has not confirmed that NFR.
-The test clock starts when CES confirms the assignment change.
+The test clock starts when CES confirms the functional assignment or definition change.
 
 This clock origin is a measurement convention, not a confirmed CES contract.
 Check the first API read after that confirmation and the five-second target separately.
@@ -269,7 +287,7 @@ Check the immediate first read independently.
 ```gherkin
 Feature: Check immediate functional-profile correctness
   Scenario: Read the new functional value immediately after confirmation
-    Given CES confirms an account's valid functional-assignment change
+    Given CES confirms an account's valid functional assignment or definition change
     When the first entitlement API read follows that confirmation
     Then function_entitlement equals the new expected functional value
     And the number of immediate value mismatches equals 0
@@ -285,7 +303,7 @@ Measure the selected five-second propagation target separately.
 ```gherkin
 Feature: Measure the selected functional-profile propagation target
   Scenario: Observe the expected value within the test target
-    Given CES confirms an account's valid functional-assignment change
+    Given CES confirms an account's valid functional assignment or definition change
     And that confirmation defines the test clock origin
     When entitlement API reads observe the new expected functional value
     Then the first correct value is observed within 5 seconds of that confirmation
@@ -295,6 +313,75 @@ Feature: Measure the selected functional-profile propagation target
 Measure: at most five seconds from CES confirmation to the first observed correct value.
 Five seconds is the user-selected test target. It is not a CES-confirmed NFR or measured guarantee.
 The clock origin remains a test convention until CES confirms its contract.
+
+#### FUNC-PROFILE-AC-006
+
+Reflect a functional profile rename for every affected account.
+
+```gherkin
+Feature: Reflect functional profile definition renames
+  Scenario: Rename one assigned functional profile
+    Given a functional profile has at least one assigned account
+    And an approved new name exists for that profile
+    When CES confirms that functional profile's rename
+    And every affected account is checked at each selected timing boundary
+    Then each affected account's function_entitlement equals the approved new name
+    And the number of affected accounts returning the old name equals 0
+    And the number of returned functional profiles per affected account equals 1
+```
+
+Measure: every affected account returns the approved new name, with zero retained old names.
+The replacement name is an execution parameter. This source supplies no approved replacement literal.
+
+#### FUNC-PROFILE-AC-007
+
+Clear the value after deleting the only functional profile without replacement.
+
+```gherkin
+Feature: Reflect functional profile definition deletion
+  Scenario: Delete the only assigned functional profile without replacement
+    Given every affected account has only the selected functional profile
+    And no replacement functional profile will be assigned
+    When CES confirms deletion of that functional profile
+    And every affected account is checked at each selected timing boundary
+    Then every affected account's function_entitlement has semantic value no profile
+    And the number of affected accounts retaining the deleted profile equals 0
+    And the number of fallback functional profiles equals 0
+```
+
+Measure: every affected account has no functional profile, with zero deleted or fallback profiles.
+The literal empty representation remains unresolved under the existing empty-value rule.
+This case does not define a replacement profile when another valid assignment exists.
+
+#### FUNC-PROFILE-AC-008
+
+Preserve the functional value when only non-functional entitlements change.
+
+```gherkin
+Feature: Isolate non-functional entitlement changes
+  Scenario Outline: Keep the functional profile unchanged
+    Given an account has functional value <original>
+    And its functional assignments and definitions remain unchanged
+    When CES confirms only a non-functional entitlement <change>
+    And the account is checked at each selected timing boundary
+    Then function_entitlement equals <original>
+    And the number of functional value changes equals 0
+
+    Examples:
+      | original   | change              |
+      | profile A  | assignment grant    |
+      | profile A  | assignment removal  |
+      | profile A  | definition rename   |
+      | profile A  | definition deletion |
+      | no profile | assignment grant    |
+      | no profile | assignment removal  |
+      | no profile | definition rename   |
+      | no profile | definition deletion |
+```
+
+Measure: zero functional value changes across the declared non-functional changes and both initial states.
+`profile A` represents the account's actual assigned functional profile, not an invented role literal.
+`no profile` retains the unresolved empty API representation.
 
 ### Frontend compatibility and per-tile migration
 
@@ -567,6 +654,8 @@ The functional-profile clarification defines one account-appropriate profile and
 It does not establish API implementation, current assignments, caller projection, or saved-item ownership.
 The five-second propagation target lacks CES NFR confirmation. Its clock origin is a test convention.
 The exact empty value remains unresolved. Immediate and propagation-target results remain separate.
+Functional-definition changes and non-functional-change isolation are intended rules, not observed CES behavior.
+No approved rename literal or executed rename/deletion evidence is supplied.
 The provider-union clarification changes permission-check intent. It does not prove implementation or deployed log collection.
 Its expectation about returned legacy entities remains an implementation question, separate from this intended rule.
 No human review, knowledge publication, migration acceptance, or deployment approval is recorded.

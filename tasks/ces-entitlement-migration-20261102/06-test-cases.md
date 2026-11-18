@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 16
+version: 17
 status: draft
 owner: unknown
-source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-PROVIDER-UNION-20261109, USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-FUNCTION-EIGHT-AREAS-20261118, USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-PROVIDER-UNION-20261109, USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -25,7 +25,7 @@ writing_review:
 > **New function entitlement value cases require discussion before execution.**
 > Action: review the [new cases](#function-entitlement-value-tests) and [open questions](10-change-review-function-entitlement.md#unknowns-and-blockers).
 > Consequence: response bindings and historical account exceptions still affect execution.
-> Owner: unknown. Evidence: [17 November request](evidence/function-entitlement-20261117/user-input.md#exact-user-input).
+> Owner: unknown. Evidence: [latest eight-area request](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input).
 
 > **Additive BFF metadata does not resolve the existing scalar role contract.**
 > Action: verify the [BFF field cases](#bff-entity-field-extension) and retain multiple-role policy as unresolved.
@@ -1566,10 +1566,11 @@ No inspected production caller invokes this exact modal launch. Current deployme
 
 ## Function entitlement value tests
 
-Definition version: 1. Test level: proposed CES API functional integration. Execution: `NOT_RUN` for every new case.
+Definition version: 2. Test level: proposed CES API functional integration. Execution: `NOT_RUN` for every new case.
 Owner: unknown. Automation bindings and direct executable assertions: unavailable for every new case.
 The [17 November input](evidence/function-entitlement-20261117/user-input.md#exact-user-input) supplies the first six cases.
-The remaining cases are proposals for discussion. The [stage record](10-change-review-function-entitlement.md) owns questions and source limits.
+The [eight-area request](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input) extends non-functional isolation and adds functional definition changes.
+Cases 007 and 009 through 015 remain additional proposals. The [stage record](10-change-review-function-entitlement.md) owns questions and source limits.
 The [user answers](evidence/function-entitlement-20261117/user-clarifications.md) require one profile, incompatible-assignment rejection, and both timing checks.
 The [timing answer](evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) sets a five-second test target; the CES NFR remains unconfirmed.
 Historical cases above retain their original expected results and execution boundaries.
@@ -1584,8 +1585,11 @@ Its criteria remain candidate intent, with publication and execution separate.
 | [FUNC-PROFILE-AC-001](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-001) | [TC-FUNC-001](#tc-func-001), [TC-FUNC-002](#tc-func-002), [TC-FUNC-006](#tc-func-006), [TC-FUNC-013](#tc-func-013) |
 | [FUNC-PROFILE-AC-002](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-002) | [TC-FUNC-003](#tc-func-003), [TC-FUNC-004](#tc-func-004), [TC-FUNC-005](#tc-func-005), [TC-FUNC-011](#tc-func-011), [TC-FUNC-014](#tc-func-014) |
 | [FUNC-PROFILE-AC-003](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-003) | [TC-FUNC-006](#tc-func-006), including occupied and empty accounts |
-| [FUNC-PROFILE-AC-004](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-004) | [TC-FUNC-012](#tc-func-012), plus the common lifecycle timing assertions |
-| [FUNC-PROFILE-AC-005](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-005) | [TC-FUNC-012](#tc-func-012), plus the common lifecycle timing assertions |
+| [FUNC-PROFILE-AC-004](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-004) | [TC-FUNC-012](#tc-func-012), [TC-FUNC-016](#tc-func-016), [TC-FUNC-017](#tc-func-017), plus common change timing assertions |
+| [FUNC-PROFILE-AC-005](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-005) | [TC-FUNC-012](#tc-func-012), [TC-FUNC-016](#tc-func-016), [TC-FUNC-017](#tc-func-017), plus common change timing assertions |
+| [FUNC-PROFILE-AC-006](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-006) | [TC-FUNC-016](#tc-func-016), functional definition rename |
+| [FUNC-PROFILE-AC-007](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-007) | [TC-FUNC-017](#tc-func-017), sole functional definition deletion without replacement |
+| [FUNC-PROFILE-AC-008](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-008) | [TC-FUNC-008](#tc-func-008), non-functional assignment and definition isolation |
 
 Additional isolation and repeated-assignment cases remain test proposals, not independently approved domain policies.
 
@@ -1598,7 +1602,7 @@ Additional isolation and repeated-assignment cases remain test proposals, not in
 | User case 5: offboarding | [TC-FUNC-005](#tc-func-005) | Removing the last functional profile produces empty. |
 | User case 6: account separation | [TC-FUNC-006](#tc-func-006) | Reject incompatible assignments in both directions; preserve the original value. |
 | Proposed: data-only account | [TC-FUNC-007](#tc-func-007) | Data profiles do not supply a functional value. |
-| Proposed: data-profile independence | [TC-FUNC-008](#tc-func-008) | Functional value stays unchanged after a data-only change. |
+| User item 8: non-functional changes | [TC-FUNC-008](#tc-func-008) | Functional value stays unchanged after non-functional assignment, rename, or deletion changes. |
 | Proposed: application isolation | [TC-FUNC-009](#tc-func-009) | Another application's roles do not enter this field. |
 | Proposed: account isolation | [TC-FUNC-010](#tc-func-010) | Changing account A leaves account B unchanged. |
 | Proposed: re-onboarding | [TC-FUNC-011](#tc-func-011) | Profile becomes empty and then returns exactly. |
@@ -1606,6 +1610,8 @@ Additional isolation and repeated-assignment cases remain test proposals, not in
 | Proposed: exact names and attribution | [TC-FUNC-013](#tc-func-013) | Names preserve case and scope; equal grants cannot substitute role identity. |
 | Proposed: general-account lifecycle | [TC-FUNC-014](#tc-func-014) | General accounts follow their own profile changes and offboarding. |
 | Proposed: unchanged assignment | [TC-FUNC-015](#tc-func-015) | Reapplying the same profile retains exactly that single profile. |
+| User item 7: functional definition rename | [TC-FUNC-016](#tc-func-016) | Every affected account returns the approved new profile name. |
+| User item 7: functional definition deletion | [TC-FUNC-017](#tc-func-017) | Deleting the sole profile without replacement leaves every affected account empty. |
 
 ### Function entitlement setup and comparison rules
 
@@ -1624,8 +1630,10 @@ Additional isolation and repeated-assignment cases remain test proposals, not in
 | General fixture `general-a` | Isolated authorized Generic, System, or Service account. Exercise all three classes with their approved RATAN_FUNC profiles. |
 | Control `human-b` | Separate account whose approved profile stays unchanged throughout account-isolation tests. |
 | Role names | Use exact workbook names, such as FMO_RO, NON_FMO_RO, SYS_RO, and SYS_OPS, after current applicability review. |
+| Approved rename parameter | Bind the exact approved replacement name before rename execution. The latest request supplies no replacement literal. |
 | Environment | Record CES environment, build, matrix hashes, account type, before/after assignments, and response timestamps. |
 | Isolation and cleanup | Use authorized test accounts; restore their exact pre-test assignments through the approved provisioning procedure. |
+| Definition change scope | Use approved test scope. Record every affected account and restore changed definitions and assignments after each run. |
 
 The [workbook inspection](evidence/function-entitlement-20261117/source-inspection.json) supplies source hashes and cell locators.
 Expected values must not be inferred from the API field under test or flattened effective grants.
@@ -1633,7 +1641,8 @@ No JSON schema, datatype, required-field, or complete-response assertion is incl
 Exactly one functional profile is allowed per assigned account. More than one profile is a value failure.
 Do not invent trimming, case folding, aliases, profile priorities, or comma-joined values.
 An unavailable response is unassessed. It is never evidence of an empty profile.
-All lifecycle cases check the immediate read and five-second target separately.
+All assignment and definition change cases check the immediate read and five-second target separately.
+Both checks start from receipt of the same CES change confirmation.
 A later correct value cannot erase an incorrect immediate value.
 If the first acquisition fails, report immediate comparison as unassessed. Do not substitute a successful retry for that result.
 For propagation measurement, query immediately and poll every 250 milliseconds until the expected value appears or five seconds elapse.
@@ -1816,11 +1825,13 @@ Feature: Exclude data and common roles from functional profile selection
 
 ### TC-FUNC-008
 
-Proposal: data-profile changes cannot replace a functional profile.
-Basis: the [separate functional and data concepts](03-output-mapping.md#authentication-and-authorization).
+Purpose: preserve the functional value when only non-functional assignments or definitions change.
+Intent: [latest user item 8](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input).
+Criterion: [FUNC-PROFILE-AC-008](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-008).
+The [separate functional and data concepts](03-output-mapping.md#authentication-and-authorization) retain the original data-profile example.
 
 ```gherkin
-Feature: Keep functional values independent from data-profile changes
+Feature: Keep functional values independent from non-functional changes
   @TC-FUNC-008
   Scenario: A data-only update preserves the human functional profile
     Given human-a has only functional profile FMO_RO and data profile Global
@@ -1828,7 +1839,34 @@ Feature: Keep functional values independent from data-profile changes
     And the tester queries human-a immediately after CES confirms the change
     Then function_entitlement equals FMO_RO
     And function_entitlement contains zero old or new data-profile names
+
+  Scenario Outline: Non-functional changes preserve assigned and empty functional values
+    Given the selected account has <functional_state>
+    And its function_entitlement equals <original_value>
+    And approved non-functional test data exists for <change>
+    And its functional assignments and definitions remain unchanged
+    When CES confirms only the non-functional <change>
+    And the tester queries the account immediately after receiving that confirmation
+    Then function_entitlement equals <original_value>
+    When the tester continues those queries every 250 milliseconds until five seconds elapse from that confirmation receipt
+    Then every assessed function_entitlement value equals <original_value>
+    And the immediate-read and five-second results are recorded separately
+
+    Examples:
+      | functional_state              | original_value         | change              |
+      | only functional profile FMO_RO | FMO_RO                 | assignment grant    |
+      | only functional profile FMO_RO | FMO_RO                 | assignment removal  |
+      | only functional profile FMO_RO | FMO_RO                 | definition rename   |
+      | only functional profile FMO_RO | FMO_RO                 | definition deletion |
+      | no functional profile          | the agreed empty value | assignment grant    |
+      | no functional profile          | the agreed empty value | assignment removal  |
+      | no functional profile          | the agreed empty value | definition rename   |
+      | no functional profile          | the agreed empty value | definition deletion |
 ```
+
+The approved non-functional rename literal remains an execution parameter. Do not invent it.
+Failed acquisitions cannot satisfy the unchanged-value assertion. Zero assessed responses cannot produce a pass.
+Owner: unknown. Next action: bind approved non-functional change data before execution.
 
 ### TC-FUNC-009
 
@@ -1984,10 +2022,68 @@ Feature: Preserve one profile when the same assignment is repeated
 
 The provisioning outcome can be unchanged or redundant-request rejection. Both must preserve the original value.
 
+### TC-FUNC-016
+
+Purpose: update every affected account after a functional profile definition rename.
+Intent: [latest user item 7](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input).
+Criterion: [FUNC-PROFILE-AC-006](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-006).
+
+```gherkin
+Feature: Reflect a functional profile definition rename
+  @TC-FUNC-016
+  Scenario: Every affected account returns the approved replacement name
+    Given the selected functional profile has at least one assigned account
+    And every affected account has only that functional profile
+    And an exact approved replacement name is bound as the rename execution parameter
+    When CES confirms renaming that functional profile to the approved replacement name
+    And the tester queries every affected account immediately after receiving that confirmation
+    Then each affected account's function_entitlement equals the approved replacement name
+    And zero affected accounts return the original profile name
+    And each affected account returns exactly one functional profile name
+    When the tester continues those account queries every 250 milliseconds until five seconds elapse from that confirmation receipt
+    Then every affected account returns the approved replacement name within five seconds of that confirmation receipt
+    And the immediate-read and five-second results are recorded separately
+```
+
+Repeat for selected X_RATANONE and RATAN_FUNC definitions, including their affected human and general accounts.
+The approved replacement literal is unavailable. Owner: unknown. Bind that exact name before execution.
+A later correct value cannot erase an incorrect or unassessed first-read result.
+Restore the approved original definition and assignments after each isolated run.
+The user request defines expectations. It does not authorize production definition changes.
+
+### TC-FUNC-017
+
+Purpose: clear affected accounts after deleting their sole functional profile without replacement.
+Intent: [latest user item 7](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input).
+Criterion: [FUNC-PROFILE-AC-007](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-007).
+
+```gherkin
+Feature: Reflect deletion of the sole functional profile definition
+  @TC-FUNC-017
+  Scenario: Definition deletion clears every affected account without a fallback profile
+    Given every affected account has only the selected functional profile
+    And no replacement functional profile will be assigned
+    When CES confirms deletion of that functional profile definition
+    And the tester queries every affected account immediately after receiving that confirmation
+    Then each affected account's function_entitlement equals the agreed empty value
+    And zero affected accounts retain the deleted profile name
+    And zero affected accounts receive a fallback functional profile
+    When the tester continues those account queries every 250 milliseconds until five seconds elapse from that confirmation receipt
+    Then every affected account returns the agreed empty value within five seconds of that confirmation receipt
+    And the immediate-read and five-second results are recorded separately
+```
+
+Repeat for selected X_RATANONE and RATAN_FUNC definitions, including affected accounts that retain non-functional entitlements.
+This case requires the sole functional profile and no replacement. It does not invent fallback selection rules.
+The exact empty API representation remains unresolved. Unavailable responses cannot establish an empty value.
+A later empty value cannot erase an incorrect or unassessed first-read result.
+Restore the approved original definition and assignments after each isolated run.
+Execution remains `NOT_RUN`; production mutations are not authorized by this specification.
+
 ### Function entitlement execution binding
 
 ```yaml
-definition_version: 1
+definition_version: 2
 execution_status: NOT_RUN
 repository_id: null
 repository_revision: null

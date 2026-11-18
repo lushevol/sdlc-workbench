@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FUNCTION-ENTITLEMENT-20261117
-version: 4
+version: 5
 status: draft
 owner: unknown
-source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-FUNCTION-EXCEL-20261118, USER-FUNCTION-AUTHENTIC-DATA-20261118, USER-FUNCTION-PATTERNS-20261118, MATRIX-X-RATANONE, MATRIX-RATAN-FUNC]
+source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-FUNCTION-EXCEL-20261118, USER-FUNCTION-AUTHENTIC-DATA-20261118, USER-FUNCTION-PATTERNS-20261118, USER-FUNCTION-EIGHT-AREAS-20261118, MATRIX-X-RATANONE, MATRIX-RATAN-FUNC]
 related_ids: [CES-MIGRATION, CES-COVERAGE-CASES]
 review:
   state: pending
@@ -66,13 +66,14 @@ No inspected sample contains the new field. Actual field location and candidate 
 | Human accounts | Matrix contains X_RATANONE profiles. | Verify exact assigned names for every scoped account and every approved profile. | [X_RATANONE matrix](<ces migration/X_RATANONE_security_matrix_prod.xlsx>) |
 | General accounts | Matrix contains SYS_RO and SYS_OPS. | Compare values with the corresponding RATAN_FUNC assignment. | [RATAN_FUNC matrix](<ces migration/RATAN_FUNC_security_matrix_prod.xlsx>) |
 | Lifecycle changes | New-field update behavior is unobserved. | Verify switch, onboarding, last-role removal, and re-onboarding values. | [Canonical cases](06-test-cases.md#function-entitlement-value-tests) |
+| Definition changes | No rename or deletion execution exists. | Verify every affected account after functional definition renames and deletions. Preserve values after non-functional changes. | [Eight-area clarification](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input) |
 | Additional coverage | Current request names six initial cases. | Discuss isolation, data-only accounts, freshness, exact names, and repeated assignment. | Proposed test extensions; review pending. |
 
 ## Scope and affected artifacts
 
 | Artifact | Exact version | Effect | Risk and basis | Owner |
 | --- | --- | --- | --- | --- |
-| [Case catalog](06-test-cases.md#function-entitlement-value-tests) | Version 16 | Append value cases; preserve historical definitions. | Low; documentation change. | unknown |
+| [Case catalog](06-test-cases.md#function-entitlement-value-tests) | Version 17; function definition 2 | Add definition-change cases; preserve historical definitions. | Low; documentation change. | unknown |
 | [Source inspection](evidence/function-entitlement-20261117/source-inspection.json) | Workbook hashes and cells | Retain counts, role definitions, and exceptions without account identities. | Historical conversion data can disagree with current assignments. | unknown |
 | CES API | Release unknown | Verification target only. | Wrong expected values could conceal an incorrect role projection. | unknown |
 
@@ -101,8 +102,8 @@ No API schema, datatype, required-field, or whole-response comparison is request
 
 ## Proposed acceptance and validation
 
-The [traceability table](06-test-cases.md#function-entitlement-traceability) maps all six requested behaviors to cases.
-The [additional cases](06-test-cases.md#tc-func-007) remain proposals for discussion.
+The [traceability table](06-test-cases.md#function-entitlement-traceability) maps all eight requested areas to cases.
+Cases 007 and 009 through 015 remain additional proposals for discussion.
 All new cases have execution status `NOT_RUN` and unavailable automation bindings.
 Expected values must come from approved assignments, independently of the field under test.
 API errors cannot count as an empty entitlement or a passing value comparison.
@@ -125,6 +126,7 @@ API errors cannot count as an empty entitlement or a passing value comparison.
 | USER-FUNCTION-EXCEL-20261118 | [Exact Excel request](evidence/function-entitlement-excel-20261118/user-input.md#exact-user-input) | 2026-11-18 | Plain testing language and inline test data; no execution requested. |
 | USER-FUNCTION-AUTHENTIC-DATA-20261118 | [Authentic-data correction](evidence/function-entitlement-excel-20261118/authentic-data-user-input.md#exact-user-input) | 2026-11-18 | Use authentic matrix IDs and entitlements for every Excel case. |
 | USER-FUNCTION-PATTERNS-20261118 | [Pattern-layout request](evidence/function-entitlement-excel-20261118/pattern-layout-user-input.md#exact-user-input) | 2026-11-18 | Separate patterns from data; retain critical steps and key columns. |
+| USER-FUNCTION-EIGHT-AREAS-20261118 | [Eight-area clarification](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input) | 2026-11-18 | Eight tabs, full migration assignments, definition changes, and non-functional isolation. |
 | MATRIX-X-RATANONE | [Workbook](<ces migration/X_RATANONE_security_matrix_prod.xlsx>) | `e6e6da5a43b1303593c74da3703f8066bcf58a10abe3f729f8ea6aa204678d63` | Historical PROD-labelled conversion snapshot; current applicability unverified. |
 | MATRIX-RATAN-FUNC | [Workbook](<ces migration/RATAN_FUNC_security_matrix_prod.xlsx>) | `f0bb7982136da01bf78b323374f1e53602ceca1df11e6b0c261b8e441786f4ac` | Historical PROD-labelled conversion snapshot; current applicability unverified. |
 
@@ -141,6 +143,7 @@ No network request or business test ran. No credentials are copied into this sta
 | FUNC-Q4, resolved | General includes Generic, System, and Service. [Exact answer](evidence/function-entitlement-20261117/user-clarifications.md#func-q3-and-func-q4-exact-question-and-answer). | All three classes require RATAN_FUNC coverage. | User answer; implementation owner unknown | Classify historical exceptions separately. |
 | FUNC-Q5 | Which actual new-field response defines the empty value and exact field location? | Assertions cannot distinguish an intended empty value from an unavailable acquisition. | unknown | Bind a sanitized CES response before automation; no schema validation required. |
 | FUNC-Q6 | How must the two historical exceptions below be remediated? | Their prior values contradict the current intended account rule. | unknown | Record corrected source assignments or a separately approved exception. |
+| FUNC-Q7 | Which exact new names are approved for functional and non-functional rename cases? | Rename cases need explicit execution inputs. | unknown | Enter approved names before execution; do not invent role names. |
 
 Two historical rows conflict with the latest account rule:
 
@@ -162,33 +165,49 @@ The candidate remains unpublished. Wiki refresh and business execution remain se
 | Answer scope | Record change | Criteria and audit | Remaining state |
 | --- | --- | --- | --- |
 | Single profile, account classes, lifecycle, rejection, and timing target | [KT-ces-migration-parity](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#current-functional-profile-value-rule), version 6 to version 7 | [Profile](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-001), [lifecycle](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-002), [rejection](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-003), [immediate read](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-004), [five seconds](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-005); [new candidate audit](../../knowledge/evidence/audit/AUD-20261117-KT-ces-migration-parity-v7.yaml) | Candidate. Empty representation and CES NFR remain unresolved; consumer ownership remains separate. |
+| Functional definition changes and non-functional isolation | [Parity candidate](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#current-functional-profile-value-rule), version 7 to version 8 | [Rename](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-006), [deletion](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-007), [isolation](../../knowledge/records/candidates/security/KT-ces-migration-parity.md#func-profile-ac-008); [v8 audit](../../knowledge/evidence/audit/AUD-20261118-KT-ces-migration-parity-v8.yaml) | [Reconciliation checks passed](evidence/function-entitlement-excel-20261118/eight-tab-knowledge-reconciliation.json). Candidate remains unpublished. Rename inputs and execution remain pending. |
 
 ## Stage evidence and completion
 
 | Stage | Evidence | Result | Remaining action |
 | --- | --- | --- | --- |
 | Source inspection | [Workbook facts](evidence/function-entitlement-20261117/source-inspection.json) | Local inspection complete. | Confirm current matrix applicability. |
-| Case drafting | [Canonical definitions](06-test-cases.md#function-entitlement-value-tests) | Six requested cases and nine proposed additions saved. | Review additional cases and historical source exceptions. |
+| Case drafting | [Canonical definitions](06-test-cases.md#function-entitlement-value-tests) | Seventeen case definitions cover eight requested areas and additional proposals. | Review proposals and historical source exceptions. |
 | Document checks | [Validation](evidence/function-entitlement-20261117/validation.json) | See actual retained result. | Resolve material questions before execution. |
 | Business execution | No execution evidence | `NOT_RUN` | Bind release, data, timing, and automation. |
 
 ### Excel export, 18 November 2026
 
-The [Excel workbook](../../outputs/01a1ec5d-f2d5-7570-88f5-3858ad40560e/CES-function-entitlement-test-cases.xlsx) follows the latest [pattern-layout request](evidence/function-entitlement-excel-20261118/pattern-layout-user-input.md#exact-user-input).
-`Test patterns` contains 15 reusable cases. `Test data` contains 35 authentic data choices and exceptions.
-Each sheet has five columns. Case rows retain combinations, critical steps, and expected values.
-Data keys replace repeated steps for each account. Transition keys select roles for the same account.
+The [Excel workbook](../../outputs/01a1ec5d-f2d5-7570-88f5-3858ad40560e/CES-function-entitlement-test-cases.xlsx) follows the [eight-area request](evidence/function-entitlement-excel-20261118/eight-tab-user-input.md#exact-user-input).
+All eight tabs use five key columns and plain testing language. Schema validation remains excluded.
 
-The data covers 23 human profiles, six general class/profile choices, four special account choices, and two historical exceptions.
-Recorded assignments retain exact source cells. Missing combinations have explicit setup using real IDs and defined profiles.
-The workbook uses plain testing language. Cases 007 through 015 remain proposed. All tests remain `Not run`.
-Shared notes preserve independent first-read and five-second outcomes, confirmation timing, and assignment restoration.
+| Tab | Content |
+| --- | --- |
+| 1 Existing Accounts | All 691 X_RATANONE assignments and expected values. No steps or status columns. |
+| 2 General Accounts | All 14 RATAN_FUNC assignments and expected values. No steps or status columns. |
+| 3 Role Modification | Profile replacement, freshness, exact names, and repeated assignment. Includes the full 23-profile X catalog. |
+| 4 New Functional Grant | Data-only users become functional users. Includes real user 1669784 and proposed FMO_RO grant. |
+| 5 Role Offboarding | Final-profile removal, retained data permissions, re-onboarding, and account isolation. |
+| 6 Account Separation | Rejection in both incompatible directions. Includes Generic, System, Service, and User accounts. |
+| 7 Role Definition Changes | Renames update every affected account. Deleting the sole profile without replacement clears all affected values. |
+| 8 Other Entitlement Changes | Data and other-application changes preserve assigned and empty functional values. |
 
-The [current checks](evidence/function-entitlement-excel-20261118/pattern-layout-validation.json) verify source bindings, data keys, case IDs, filters, and rendered views.
-Representative data covers profile and account-class patterns. It does not establish assessment of all 705 source accounts.
-The [prior expanded export checks](evidence/function-entitlement-excel-20261118/authentic-data-validation.json) remain bound to commit `372facf12`.
-Empty-value and endpoint bindings remain unconfirmed. No CES query or account mutation occurred.
-Owner: unknown. Next action: confirm those inputs before execution.
+Tabs 3 through 8 separate reusable patterns from their authentic data on the same sheet.
+Recorded assignments retain exact source cells. Missing combinations have explicit proposed setup using real IDs and defined profiles.
+The two historical conflicts remain unresolved in the migration tables and account-separation data.
+First-read and five-second outcomes remain independent. Timing starts at CES confirmation receipt.
+Rename cases contain blank approved-name input cells. No replacement role name was invented.
+
+The [current checks](evidence/function-entitlement-excel-20261118/eight-tab-validation.json) cover all exported assignments, authentic examples, filters, and eight rendered tabs.
+The [prior pattern checks](evidence/function-entitlement-excel-20261118/pattern-layout-validation.json) remain bound to commit `2e6cef696`.
+The [knowledge reconciliation](evidence/function-entitlement-excel-20261118/eight-tab-knowledge-reconciliation.json) passed the scoped integrity harness.
+The candidate remains unpublished. Derived wiki freshness and human review remain pending.
+Current assignments, empty-value representation, endpoint binding, approved rename names, and CES NFR remain unconfirmed.
+No CES query, provisioning operation, or business test occurred. All cases remain `NOT_RUN`.
+Owner: unknown. Next action: confirm execution inputs and resolve source conflicts before the affected tests.
+
+Current documentation assessment: this export changes task specifications and candidate intent only.
+The existing knowledge record owns intended behavior. No stable `docs/` procedure needs a change.
 
 ## Requested decision and actual disposition
 
@@ -196,6 +215,6 @@ Owner: unknown. Next action: confirm those inputs before execution.
 - Decision owner: unknown.
 - Actual decision: one profile, account-class separation, rejection coverage, both timing checks, and five-second target confirmed by the linked answers.
 - Implementation: not performed.
-- Intent review: six user-supplied behaviors; additional expectations remain proposed.
+- Intent review: eight user-supplied areas; remaining additional cases stay proposed.
 - Execution: `NOT_RUN`.
 - Business acceptance and deployment: not established.
