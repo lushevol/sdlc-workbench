@@ -179,6 +179,18 @@ All 269 graph tests passed. The full suite completed 1,136 tests with two option
 The [distribution probe](evidence/snippet-discovery-20261118/verify-distribution.py) checks an installed workspace outside this checkout.
 It verifies flat custom-source discovery and snippet queries through the shipped skill.
 
+## Current repository graph regeneration
+
+Source: [exact user request](evidence/graph-regeneration-20261118/user-input.txt), 18 November 2026.
+Authorized scope: regenerate the local repository graph with the current skill and saved investigated context.
+Risk: low; generation replaces derived artifacts and keeps repository sources read-only.
+The [run record](evidence/graph-regeneration-20261118/run.json) retains the command, previous snapshot identity, and final checks.
+
+Generation passed graph, dependency, relationship, source-stability, and publication checks.
+The published graph contains 11 repositories, 10,923 nodes, 25,137 edges, and 22,986 evidence records.
+The published checksum matches its manifest. Current repository fingerprints match the captured inputs.
+The [existing build guide](../../.agents/skills/service-dependencies-graph/SKILL.md#readiness-and-build) remains current for this repeated run.
+
 ```yaml
 standard: ASD-STE100
 automated_check: PASSED
