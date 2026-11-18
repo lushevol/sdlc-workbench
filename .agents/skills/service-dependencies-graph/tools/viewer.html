@@ -144,7 +144,7 @@ function isKnowledge(item) { return item.dimension==='KNOWLEDGE'||(item.dimensio
 const architectureNodes=G.nodes.filter(node=>!isKnowledge(node));
 const architectureEdges=G.edges.filter(edge=>!isKnowledge(edge));
 const colors = {api:'#1764c0',data:'#007c70',shared:'#8051b5',configuration:'#a64c68',package:'#697383',structure:'#9b6940',other:'#667d8d'};
-const laneInfo = {ui:['UI / APPLICATIONS','#1764c0'],service:['SERVICES / LIBRARIES','#007c70'],infra:['INFRASTRUCTURE','#b06b22'],data:['DATA / MESSAGING','#8051b5'],external:['EXTERNAL / UNKNOWN','#697383'],package:['PACKAGES / BUILD','#697383']};
+const laneInfo = {ui:['UI / APPLICATIONS','#1764c0'],service:['SERVICES / LIBRARIES','#007c70'],infra:['INFRASTRUCTURE','#b06b22'],source:['SOURCE INVENTORY','#697383'],data:['DATA / MESSAGING','#8051b5'],external:['EXTERNAL / UNKNOWN','#697383'],package:['PACKAGES / BUILD','#697383']};
 const familyNames = {api:'API calls',data:'Data flow',shared:'Shared code',configuration:'Configuration',package:'Packages',structure:'Ownership context',other:'Other declarations'};
 const assessmentNames = {SUPPORTED:'Source supported',INFERRED:'Inferred',CONFLICTED:'Conflicted',UNVERIFIED:'Unverified',OUT_OF_SCOPE:'Out of scope',EXTRACTED:'Extracted'};
 const statusNames = {resolved:'Resolved',declared:'Declared only',unresolved:'Unresolved',ambiguous:'Ambiguous',candidate:'Candidate'};
@@ -444,7 +444,7 @@ function drawGraph() {
   const architectureLayers=[...new Map(Object.values(V.nodes).filter(node=>node.architecture_layer).map(node=>[node.architecture_layer.id,node.architecture_layer])).values()].sort((a,b)=>a.order-b.order);
   const architectureInfo=Object.fromEntries(architectureLayers.map(layer=>['layer:'+layer.id,[`${layer.order} · ${layer.label.toUpperCase()}`,'#1764c0']]));
   const highestInfo={...laneInfo,...architectureInfo};
-  const order = level === 'highest' ? [...architectureLayers.map(layer=>'layer:'+layer.id),'ui','service','infra','data','external','package'] : ['repository','experience','capability','api','handler','contract','implementation','persistence','client','configuration','storage','message','external','package'];
+  const order = level === 'highest' ? [...architectureLayers.map(layer=>'layer:'+layer.id),'ui','service','infra','source','data','external','package'] : ['repository','experience','capability','api','handler','contract','implementation','persistence','client','configuration','storage','message','external','package'];
   const groups = order.map(key => ({key,nodes:projection.nodes.filter(node => semanticRole(node) === key)})).filter(group => group.nodes.length);
   const sameColumnCounts=new Map();
   for(const edge of projection.edges)if(semanticRole(byId.get(edge.source))===semanticRole(byId.get(edge.target))){const key=semanticRole(byId.get(edge.source));sameColumnCounts.set(key,(sameColumnCounts.get(key)||0)+1);}

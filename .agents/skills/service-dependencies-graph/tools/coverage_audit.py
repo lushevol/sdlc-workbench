@@ -14,6 +14,7 @@ import tree_sitter_typescript
 
 from .source_inventory import iter_source_files, java_source_roots
 from .extract_pattern_candidates import scan_repository
+from .discovery_sources import discovery_inventory
 
 
 def _rate(numerator, denominator):
@@ -32,11 +33,22 @@ def build_audit(document: dict, census: dict, workspace: Path, ledger: list[dict
     pattern_candidates = []
     pattern_skipped = []
     pattern_scanned = 0
+    discovery_files = []
+    discovery_repositories = {}
     for repository in census['repositories']:
         repo = workspace / repository['path']
         if not repo.is_dir():
             continue
         patterns = scan_repository(workspace, 'repo:' + repository['name'], repo)
+        discovery = patterns.get('file_inventory') or discovery_inventory(repo)
+        if (repository.get('discovery_sha256') is not None
+                and discovery['content_sha256'] != repository['discovery_sha256']):
+            raise ValueError('DISCOVERY_SOURCE_CHANGED: ' + repository['path'])
+        discovery_repositories['repo:' + repository['name']] = {
+            'content_sha256': discovery['content_sha256'], **discovery['summary']}
+        discovery_files.extend({**row, 'repository': 'repo:' + repository['name'],
+                                'path': (repo / row['path']).relative_to(workspace).as_posix()}
+                               for row in discovery['files'])
         pattern_scanned += patterns['scanned_files']
         pattern_skipped.extend(patterns['skipped_files'])
         pattern_candidates.extend(patterns['candidates'])
@@ -160,10 +172,17 @@ def build_audit(document: dict, census: dict, workspace: Path, ledger: list[dict
         selected_patterns = [row for row in pattern_candidates if row['repository'] == rid]
         by_repo[rid]['pattern_candidates'] = dict(sorted(Counter(row['family'] for row in selected_patterns).items()))
         by_repo[rid]['pattern_accountability'] = dict(sorted(Counter(row['accountability'] for row in selected_patterns).items()))
+        by_repo[rid]['discovery_inventory'] = discovery_repositories.get(rid, {})
     return {'schema_version': '1.0.0', 'generated_at': document['generated_at'],
             'canonical_graph': 'graph.json', 'files': sorted(files, key=lambda r: r['path']),
             'declarations': sorted(retained, key=lambda r: (str(r.get('repository')), r['path'], r['line'], r['family'])),
             'source_candidates': candidates, 'pattern_candidates': pattern_candidates,
+            'discovery_inventory': {'files': sorted(discovery_files, key=lambda row: (row['repository'], row['path'])),
+                                    'repositories': discovery_repositories,
+                                    'summary': {'scanned_files': sum(row['status'] == 'SCANNED' for row in discovery_files),
+                                                'skipped_entries': sum(row['status'] == 'SKIPPED' for row in discovery_files),
+                                                'skip_reasons': dict(sorted(Counter(row['reason'] for row in discovery_files
+                                                                                  if row['status'] == 'SKIPPED').items()))}},
             'pattern_summary': {'scanned_files': pattern_scanned,
                                 'skipped_files': sorted(pattern_skipped, key=lambda row: row['path']),
                                 'families': {key: dict(sorted(value.items())) for key, value in sorted(pattern_families.items())}},
@@ -173,4 +192,5 @@ def build_audit(document: dict, census: dict, workspace: Path, ledger: list[dict
                            'Semantic rates remain UNKNOWN until an independent source review supplies denominators.',
                            'A gap disposition does not count as successful extraction.',
                            'Pattern candidates use high-recall search and require source review before canonical promotion.',
+                           'Discovery text inventory is broader than the typed extractor inventory; skipped files and subtrees remain explicit.',
                            'Static declarations do not establish production execution.']}

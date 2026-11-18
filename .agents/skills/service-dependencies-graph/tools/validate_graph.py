@@ -244,7 +244,7 @@ def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
         owned = [node for node in graph["nodes"] if node.get("repository") == repository["id"]]
         if not any("RUNTIME" in node.get("dimensions", []) for node in owned):
             errors.append(f"{repository['id']} has no runtime projection")
-        if repository["kind"] not in {"INFRA", "TESTING"} and not any("BUSINESS" in node.get("dimensions", []) for node in owned):
+        if repository["kind"] not in {"INFRA", "TESTING", "SOURCE_ONLY"} and not any("BUSINESS" in node.get("dimensions", []) for node in owned):
             errors.append(f"{repository['id']} has no business projection")
     return errors
 

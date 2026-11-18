@@ -5,12 +5,17 @@ The agent discovers relationships from available sources. Users do not need to e
 The goal is an integrated, evidence-backed graph with explicit limits for evidence unavailable in the selected scope.
 The agent investigates. The build validates and publishes the saved investigation.
 Running the build alone does not perform AI investigation or refresh its conclusions.
+Prioritize internal and external service calls: caller, operation, destination, transport, and receiving endpoint.
+Use [snippet discovery](snippet-discovery.md) to collect broad candidates and connect them through AI source investigation.
 
 ## Establish the source boundary
 
 Read registered locations, local mappings, repository census, fingerprints, coverage, and previous investigations.
 Include every in-scope repository, including disconnected repositories and sources with inventory-only extraction.
 Record missing repositories, excluded files, unsupported stacks, parse failures, and unknown source revisions.
+Use `--repos PATH --layout flat` when every immediate directory contains one repository.
+Read discovery file dispositions separately from typed parser source coverage.
+Search text independently of source-root names, language classifications, and known graph neighbors.
 Build a source-only baseline before using saved architecture claims as discovery answers.
 Use `build --no-context --out .workbench/graph-source-baseline` for isolated extraction without saved architecture claims.
 Do not delete the current context or modify the published bundle to obtain that baseline.

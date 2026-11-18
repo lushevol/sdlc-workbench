@@ -34,7 +34,7 @@ from .source_inventory import (is_source_directory, is_source_file, iter_source_
 
 
 SCHEMA_VERSION = "2.0.0"
-GENERATOR_VERSION = "2.4.0"
+GENERATOR_VERSION = "2.5.0"
 FOUNDATION_REPOS: set[str] = set()
 WEB_GROUPS = {
     "components": ("UI_COMPONENT", "renders the user interactions and visual state for"),
@@ -1348,6 +1348,24 @@ def resolve_cross_repository(graph: Graph) -> None:
     resolve(graph)
 
 
+def add_source_inventory(graph: Graph, repository: str, census: dict) -> None:
+    """Anchor inspected sources without asserting a runtime or provider identity."""
+    summary = census['discovery_summary']
+    evidence = graph.add_evidence(
+        repository, census['path'], 1,
+        f"Repository source inventory; SHA-256 {census['discovery_sha256']}; "
+        f"scanned files {summary['scanned_files']}; skipped entries {summary['skipped_entries']}",
+        'repository-source-inventory')
+    graph.add_node(
+        f"component:{census['name']}:source-inventory", 'COMPONENT', census['name'] + ' source inventory',
+        repository, dimensions=('RUNTIME',), component_kind='SOURCE_INVENTORY',
+        functional_role='Anchors repository sources outside supported typed extraction',
+        business_meaning='Business responsibility and runtime behavior remain unestablished',
+        source_paths=(census['path'],), evidence=(evidence,),
+        properties={'extraction_status': 'SOURCE_ONLY', 'provider_status': 'NOT_ESTABLISHED',
+                    'discovery_sha256': census['discovery_sha256'], 'discovery_summary': dict(summary)})
+
+
 def apply_description_overrides(graph: Graph, path: Path) -> None:
     if not path.exists():
         return
@@ -1486,6 +1504,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--workspace", type=Path, default=Path.cwd())
     parser.add_argument("--repos", type=Path)
+    parser.add_argument("--layout", choices=("auto", "flat"), default="auto")
     parser.add_argument("--out", type=Path)
     parser.add_argument("--descriptions", type=Path)
     parser.add_argument("--context", type=Path)
@@ -1494,7 +1513,7 @@ def main(argv: list[str] | None = None) -> int:
     repos_root = (args.repos or workspace / "repos").resolve()
     out = (args.out or workspace / "relationships/service-dependencies/generated").resolve()
     graph = Graph(workspace)
-    census = inventory(workspace, repos_root)
+    census = inventory(workspace, repos_root, layout=args.layout)
     for row in census["repositories"]:
         repo = workspace / row["path"]
         for exclusion in row['source_exclusions']:
@@ -1503,6 +1522,11 @@ def main(argv: list[str] | None = None) -> int:
                              path=source_path(workspace, repo / exclusion['path']))
         if row["status"] in {"MISSING", "UNSUPPORTED"}:
             graph.diagnostic(row["status"] + "_REPOSITORY", "; ".join(row["limitations"]) or "Manifest repository is not present", path=row["path"])
+            if row['status'] == 'UNSUPPORTED' and row['discovery_summary'].get('scanned_files', 0):
+                visible = repo.name not in FOUNDATION_REPOS
+                repository = graph.add_repository(repo, 'SOURCE_ONLY', visible)
+                if visible:
+                    add_source_inventory(graph, repository, row)
             continue
         visible = repo.name not in FOUNDATION_REPOS
         repository = graph.add_repository(repo, row["kind"], visible)

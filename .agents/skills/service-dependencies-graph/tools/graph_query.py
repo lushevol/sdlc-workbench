@@ -103,7 +103,9 @@ def service_catalog(graph: dict[str, Any], dependencies: dict[str, Any]) -> dict
         roots = [node for node in owned if node["type"] in {"APPLICATION", "SERVICE"}]
         capabilities = [compact_node(node) for node in owned if node["type"] == "BUSINESS_CAPABILITY"]
         pages = [compact_node(node) for node in owned if node["type"] == "PAGE"]
-        components = [node for node in owned if node["type"] == "COMPONENT"]
+        components = [node for node in owned if node["type"] == "COMPONENT"
+                      and node.get('component_kind') != 'SOURCE_INVENTORY']
+        source_inventory = next((node for node in owned if node.get('component_kind') == 'SOURCE_INVENTORY'), None)
         operations = {}
         for edge in graph["edges"]:
             if edge["dimension"] == "KNOWLEDGE":
@@ -128,6 +130,8 @@ def service_catalog(graph: dict[str, Any], dependencies: dict[str, Any]) -> dict
         services.append({
             "id": repo["id"], "name": repo["name"], "kind": repo["kind"], "path": repo["path"],
             "root": compact_node(roots[0]) if roots else None,
+            **({'source_inventory': compact_node(source_inventory) if source_inventory else None}
+               if repo['kind'] == 'SOURCE_ONLY' else {}),
             "business": {
                 "capabilities": capabilities,
                 "pages": pages,
@@ -147,6 +151,7 @@ def service_catalog(graph: dict[str, Any], dependencies: dict[str, Any]) -> dict
             "services": sum(service["kind"] == "SPRING" for service in services),
             "web_applications": sum(service["kind"] == "WEB" for service in services),
             "infrastructure_repositories": sum(service["kind"] == "INFRA" for service in services),
+            "source_only_repositories": sum(service["kind"] == "SOURCE_ONLY" for service in services),
             "nodes": len(graph["nodes"]), "edges": len(graph["edges"]),
         },
         "services": services,

@@ -1,6 +1,8 @@
 """Verify investigated instructions enter the same graph without false joins."""
 from copy import deepcopy
+from contextlib import redirect_stdout
 import hashlib
+import io
 import json
 from pathlib import Path
 import runpy
@@ -117,6 +119,88 @@ class ArchitectureIntegrationTests(unittest.TestCase):
         bad.pop('investigations')
         with self.assertRaisesRegex(ValueError, 'SOURCE_REVIEWED subject'):
             context.validate_document(bad)
+
+    def test_unsupported_flat_sources_bind_exact_inventory_nodes_without_automatic_call_join(self):
+        workspace = self.root / 'flat-workspace'
+        source_rows, captured_sources = [], {}
+        contents = {
+            'services': ('main.go', 'package main\nimport "net/http"\nfunc main() { http.Get("http://ui/orders") }\n'),
+            'ui': ('routes.custom', 'route /orders handler\n'),
+        }
+        for name, (filename, content) in contents.items():
+            source = workspace / 'repos' / name / filename
+            source.parent.mkdir(parents=True)
+            source.write_text(content)
+            raw = source.read_bytes()
+            digest = hashlib.sha256(raw).hexdigest()
+            source_rows.append({'id': name + '-code', 'path': source.relative_to(workspace).as_posix(),
+                                'sha256': digest, 'revision': 'sha256:' + digest, 'kind': 'SOURCE_REVIEW'})
+            captured_sources[name + '-code'] = raw
+        output = workspace / 'generated'
+        with redirect_stdout(io.StringIO()):
+            build.main(['--workspace', str(workspace), '--layout', 'flat', '--out', str(output)])
+        baseline = json.loads((output / 'graph.json').read_bytes())
+        self.assertEqual({row['kind'] for row in baseline['repositories']}, {'SOURCE_ONLY'})
+        self.assertEqual(baseline['edges'], [])
+        self.assertFalse(any(row['type'] in {'APPLICATION', 'SERVICE', 'API_OPERATION'} for row in baseline['nodes']))
+        self.assertFalse(any(row['code'] == 'EXCLUDED_REPOSITORY_MANIFEST' for row in baseline['diagnostics']))
+        self.assertEqual(validate.validate(baseline, workspace), [])
+        census = json.loads((output / 'analysis-coverage.json').read_bytes())
+        census_by_id = {'repo:' + row['name']: row for row in census['repositories']}
+        for node in baseline['nodes']:
+            self.assertEqual(node['dimensions'], ['RUNTIME'])
+            self.assertEqual(node['component_kind'], 'SOURCE_INVENTORY')
+            self.assertEqual(node['properties']['extraction_status'], 'SOURCE_ONLY')
+            self.assertEqual(node['properties']['provider_status'], 'NOT_ESTABLISHED')
+            self.assertEqual(node['properties']['discovery_sha256'], census_by_id[node['repository']]['discovery_sha256'])
+        dependencies = json.loads((output / 'dependencies.json').read_bytes())
+        self.assertEqual(validate.validate_dependencies(dependencies, baseline), [])
+        catalog = load_tool('graph_query').service_catalog(baseline, dependencies)
+        self.assertEqual(catalog['counts']['services'], 0)
+        self.assertEqual(catalog['counts']['web_applications'], 0)
+        self.assertEqual(catalog['counts']['source_only_repositories'], 2)
+        self.assertTrue(all(row['root'] is None and not row['runtime']['api_operations'] for row in catalog['services']))
+        self.assertTrue(all(row['business']['component_count'] == 0 for row in catalog['services']))
+        self.assertTrue(all(row['source_inventory']['component_kind'] == 'SOURCE_INVENTORY' for row in catalog['services']))
+        viewer = load_tool('viewer_model').build_viewer_model(baseline)
+        self.assertTrue(all(row['lane'] == 'source' for row in viewer['nodes'].values()))
+        self.assertEqual(viewer['counts']['node_lanes']['source'], 2)
+
+        graph = build.Graph(workspace)
+        for name in contents:
+            repository = graph.add_repository(workspace / 'repos' / name, 'SOURCE_ONLY', True)
+            build.add_source_inventory(graph, repository, census_by_id[repository])
+        document = {
+            'schema_version': '1.1.0', 'sources': source_rows, 'layers': [],
+            'subjects': [{'id': name, 'repository': 'repo:' + name,
+                          'node_id': 'component:' + name + ':source-inventory', 'label': name,
+                          'role': 'SOURCE_COMPONENT', 'layer_id': None, 'status': 'SOURCE_REVIEWED',
+                          'description': 'Inspected repository sources', 'source_ids': [name + '-code']}
+                         for name in contents],
+            'relationships': [{'id': 'source-call', 'source': 'services', 'target': 'ui', 'kind': 'CALLS_HTTP',
+                               'description': 'Source call and route declaration',
+                               'source_ids': list(captured_sources)}],
+            'notes': [],
+            'investigations': [{'id': 'review-source-call', 'relationship_id': 'source-call', 'status': 'SUPPORTED',
+                                'family': 'api', 'rationale': 'Both source declarations were inspected.',
+                                'source_refs': [{'source_id': name + '-code', 'line': 1,
+                                                 'end_line': len(contents[name][1].splitlines())} for name in contents],
+                                'canonical_edge_ids': []}],
+        }
+        raw = (json.dumps(document) + '\n').encode()
+        captured = context.ContextInput(document, context.DEFAULT_CONTEXT, raw, captured_sources)
+        implicit = deepcopy(document)
+        implicit['subjects'][0].pop('node_id')
+        with self.assertRaisesRegex(ValueError, 'explicit node_id'):
+            integration.apply_context(graph, context.ContextInput(implicit, context.DEFAULT_CONTEXT,
+                                                                 json.dumps(implicit).encode(), captured_sources))
+        integration.apply_context(graph, captured)
+        reviewed = graph.document()
+        edge, = reviewed['edges']
+        self.assertEqual(edge['relationship'], 'REVIEWED_RELATIONSHIP')
+        self.assertEqual(edge['resolution_status'], 'UNRESOLVED')
+        self.assertEqual(edge['properties']['runtime_status'], 'NOT_VERIFIED')
+        self.assertEqual(validate.validate(reviewed, workspace), [])
 
     def test_user_only_or_one_sided_evidence_cannot_promote_a_supported_link(self):
         """Given insufficient source evidence, when integration runs, then unsupported promotion fails before graph changes."""

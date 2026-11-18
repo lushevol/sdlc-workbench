@@ -1,0 +1,125 @@
+{
+  "status": "PASSED",
+  "checks": [
+    {
+      "name": "graph_unit_tests",
+      "status": "PASSED",
+      "tests": 269,
+      "skipped": 0,
+      "skip_evidence": [],
+      "command": ".venv/bin/python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -v",
+      "seconds": 18.516
+    },
+    {
+      "name": "repository_unit_tests",
+      "status": "PASSED",
+      "tests": 1136,
+      "skipped": 2,
+      "skip_evidence": [
+        "test_example_grants_use_registered_native_tool_names (test_connector_provider.NativeConnectorIntegrationTests.test_example_grants_use_registered_native_tool_names) ... skipped 'Optional Node integration requires WORKBENCH_CONNECTOR_INTEGRATION=1.'",
+        "test_provider_bridge_services_use_root_variables_and_retain_observations (test_connector_provider.NativeConnectorIntegrationTests.test_provider_bridge_services_use_root_variables_and_retain_observations) ... skipped 'Optional Node integration requires WORKBENCH_CONNECTOR_INTEGRATION=1.'"
+      ],
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "seconds": 104.386
+    },
+    {
+      "name": "skill_quick_validate",
+      "status": "PASSED",
+      "command": ".venv/bin/python /Users/lushevol/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/service-dependencies-graph"
+    },
+    {
+      "name": "offline_wheel_build",
+      "status": "PASSED",
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist"
+    },
+    {
+      "name": "flat_holdout",
+      "status": "PASSED",
+      "command": ".venv/bin/python tasks/workbench-graph-instruction-integration-20261028/evidence/snippet-discovery-20261118/verify-flat-discovery.py"
+    },
+    {
+      "name": "source_hashes_and_real_query",
+      "status": "PASSED",
+      "command": ".venv/bin/python tasks/workbench-graph-instruction-integration-20261028/evidence/snippet-discovery-20261118/verify-graph.py"
+    },
+    {
+      "name": "installed_distribution",
+      "status": "PASSED",
+      "command": ".venv/bin/python tasks/workbench-graph-instruction-integration-20261028/evidence/snippet-discovery-20261118/verify-distribution.py"
+    },
+    {
+      "name": "workspace_validate",
+      "status": "PASSED",
+      "command": ".venv/bin/python -m ai_sdlc_workbench.cli --workspace . validate"
+    },
+    {
+      "name": "local_markdown_file_links",
+      "status": "PASSED",
+      "links_checked": 121,
+      "limits": [
+        "Checks local file targets; does not validate every Markdown anchor."
+      ]
+    },
+    {
+      "name": "git_diff_check",
+      "status": "PASSED",
+      "command": "git diff --check"
+    }
+  ],
+  "writing_checks": {
+    "tasks/workbench-graph-instruction-integration-20261028/01-maintenance.md": {
+      "standard": "ASD-STE100",
+      "automated_check": "PASSED",
+      "findings": [],
+      "asd_review": "PENDING",
+      "reviewer": null,
+      "reviewed_at": null,
+      "limitations": [
+        "Automated checks do not check the complete approved dictionary or grammar rules."
+      ]
+    },
+    "tasks/workbench-graph-instruction-integration-20261028/02-discovery-plan.md": {
+      "standard": "ASD-STE100",
+      "automated_check": "PASSED",
+      "findings": [],
+      "asd_review": "PENDING",
+      "reviewer": null,
+      "reviewed_at": null,
+      "limitations": [
+        "Automated checks do not check the complete approved dictionary or grammar rules."
+      ]
+    },
+    ".agents/skills/service-dependencies-graph/references/architecture/snippet-discovery.md": {
+      "standard": "ASD-STE100",
+      "automated_check": "PASSED",
+      "findings": [],
+      "asd_review": "PENDING",
+      "reviewer": null,
+      "reviewed_at": null,
+      "limitations": [
+        "Automated checks do not check the complete approved dictionary or grammar rules."
+      ]
+    }
+  },
+  "limits": [
+    "Two optional connector integration tests remain disabled without WORKBENCH_CONNECTOR_INTEGRATION=1.",
+    "The full expanded candidate corpus has not received complete semantic review.",
+    "Static and fixture results do not establish deployed connectivity or Solace migration.",
+    "Full audit parsing remains proportional to its approximately 481 MiB saved artifact."
+  ],
+  "prior_findings": [
+    {
+      "finding": "Unsupported repository omission expectation conflicted with source-only inventory anchors.",
+      "correction": "Update regression to preserve testing scope and verify the inventory root creates no runtime call."
+    },
+    {
+      "finding": "Inline RPC declarations were missed; command credentials could enter neighboring snippets.",
+      "correction": "Extend content patterns and sanitation with positive and negative regressions."
+    },
+    {
+      "finding": "Full-file line counting and linear duplicate checks slowed repeated occurrence collection.",
+      "correction": "Index line offsets and occurrence keys; retain measured replay evidence."
+    }
+  ],
+  "workbench_revision_before_commit": "2e6cef6969061b19daa913375fce5e0d98e6192d"
+}

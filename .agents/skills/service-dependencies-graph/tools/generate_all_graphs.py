@@ -101,6 +101,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, default=Path.cwd())
     parser.add_argument('--repos', type=Path, help='Repository directory, relative to the workspace')
+    parser.add_argument('--layout', choices=('auto', 'flat'), default='auto',
+                        help='Use flat for one repository per immediate directory; auto preserves grouped discovery')
     parser.add_argument('--out', type=Path, help='Published bundle directory, relative to the workspace')
     parser.add_argument('--descriptions', type=Path, help='Optional reviewed description overrides')
     context_options = parser.add_mutually_exclusive_group()
@@ -135,7 +137,8 @@ def main(argv: list[str] | None = None) -> int:
         candidate = Path(temporary) / 'bundle'
         context_arguments = ['--context', workspace / captured_context.path] if captured_context else []
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'build_graph', '--workspace', workspace,
-            '--repos', repositories, '--out', candidate, '--descriptions', descriptions, *context_arguments, workspace=workspace)
+            '--repos', repositories, '--layout', args.layout, '--out', candidate,
+            '--descriptions', descriptions, *context_arguments, workspace=workspace)
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'prepare_ai_context', candidate / 'graph.json',
             '--output', candidate / 'business-description-context.json', workspace=workspace)
         if captured_context:
@@ -160,7 +163,7 @@ def main(argv: list[str] | None = None) -> int:
             '--relationships', candidate / 'repository-relationships.json', workspace=workspace)
         from .repository_inventory import inventory, extraction_fingerprints
         coverage = json.loads((candidate / 'analysis-coverage.json').read_text(encoding='utf-8'))
-        current = inventory(workspace, repositories)
+        current = inventory(workspace, repositories, layout=args.layout)
         if extraction_fingerprints(coverage) != extraction_fingerprints(current):
             raise ValueError('Repository sources changed during graph generation; rebuild from stable inputs')
         current_context = (None if args.no_context else

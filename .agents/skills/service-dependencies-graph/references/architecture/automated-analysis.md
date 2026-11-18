@@ -24,7 +24,12 @@ Source fingerprints cover recognized source/configuration and contract files
 (`.graphqls`, `.gql`, `.proto`, `.mjs`, `.cjs`, `.html`, `.ejs`, `.env.*`, and
 common build/config suffixes) within recorded exclusions.
 They are not Git commits or semantic coverage scores.
-Excluded test directories, dependencies, hidden directories, and generated output remain outside the source inventory.
+Typed source inventory excludes test directories, dependencies, hidden directories, and generated output.
+Broad candidate discovery uses a separate recursive text inventory without extension or source-root restrictions.
+It includes hidden workflow directories, tests, deployment files, and custom layouts.
+It retains skip reasons for metadata, dependency outputs, binary, oversized, unreadable, and symbolic paths.
+Discovery hashes participate in freshness and publication checks for new snapshots.
+Legacy snapshots retain their typed freshness and report unknown discovery freshness.
 Explicitly registered testing repositories receive bounded Python and Robot analysis within the shared source policy.
 Inventory failures stop generation.
 
@@ -130,19 +135,19 @@ No complete dependency score follows from successful extraction alone.
 ## Published projections and checks
 
 Coverage retains source states, fingerprints, exclusions, diagnostics, and limits.
-The build also runs `extract_pattern_candidates.py` over the included source
-boundary. It uses bounded regular-expression searches for literal HTTP
-endpoints, configuration reads, Kafka/Camel channels, SQL tables, imports,
-gateway directives, and GraphQL schema files. It deduplicates values per file,
-skips Robot fixture interpolation and non-contract JSON, and retains exact line
-evidence. Robot and resource files remain listed as specialized-extractor
-skips. Pattern candidates expose recall gaps; they do not prove execution or
-provider identity.
+The build runs `extract_pattern_candidates.py` over broad discovered text files.
+It combines client/handler, destination/configuration, and contract/library search patterns.
+Candidates retain source hashes, occurrence ranges, role/protocol hints, and sanitized snippets.
+Grouped repeated values retain their individual occurrence locations.
+Solace/JCSMP/JMS candidates expose asynchronous call declarations and binding clues.
+Generic messaging syntax cannot prove Solace use without supporting imports or configuration.
+Pattern candidates expose recall gaps; they do not prove execution or provider identity.
 
-Use the `patterns` snapshot query to filter these candidates by repository or
-family. Review candidates against typed extractor evidence before promoting a
-relationship. This keeps AI work focused on ambiguous bindings instead of
-repeating repository-wide searches.
+Use `patterns` to filter by repository, family, literal query, or service boundary scope.
+Request sanitized snippets when preparing AI review batches.
+Follow [the snippet procedure](snippet-discovery.md) to connect caller, wrapper, destination binding, and provider evidence.
+Keep external destinations visible when provider source is unavailable.
+Review candidates against typed extractor evidence before promoting a relationship.
 
 Repository relationships retain canonical edge IDs and evidence IDs.
 Unresolved boundaries remain visible even when targets belong to their caller repository.

@@ -13,16 +13,18 @@ import yaml
 
 from .source_inventory import (EXCLUDED, is_source_directory, is_source_file, iter_source_files,
                                java_source_roots, discover_maven_modules)
+from .discovery_sources import discovery_inventory
 
 GROUP_DIRECTORIES = {'ui', 'services', 'infra', 'libraries', 'testing', 'data', 'integration', 'deployment',
                      'frontends', 'backends'}
 
 
-def extraction_fingerprints(census: dict) -> dict:
+def extraction_fingerprints(census: dict, *, include_discovery: bool = True) -> dict:
     """Compare source bytes and the declarations that select extraction scope."""
     return {row['path']: (row.get('content_sha256'), row.get('commit'), row.get('dirty'),
                            row.get('kind'), row.get('primary_type'),
-                           tuple(row.get('modules', [])), tuple(row.get('java_source_roots', [])))
+                           tuple(row.get('modules', [])), tuple(row.get('java_source_roots', [])),
+                           *((row.get('discovery_sha256'),) if include_discovery else ()))
             for row in census['repositories']}
 
 
@@ -189,8 +191,10 @@ def _catalog_paths(workspace: Path) -> tuple[list[tuple[Path, dict]], list[str]]
     return rows, limits
 
 
-def inventory(workspace: Path, root: Path) -> dict:
+def inventory(workspace: Path, root: Path, *, layout: str = 'auto') -> dict:
     workspace, root = workspace.resolve(), root.resolve()
+    if layout not in {'auto', 'flat'}:
+        raise ValueError('Repository layout must be auto or flat')
     if not root.is_dir() or not root.is_relative_to(workspace):
         raise ValueError('Repository root must be an existing directory inside the workspace')
     declared, paths = {}, set()
@@ -211,7 +215,7 @@ def inventory(workspace: Path, root: Path) -> dict:
     for child in sorted(root.iterdir()):
         if not child.is_dir() or child.name.startswith('.'):
             continue
-        if (child.name in GROUP_DIRECTORIES and not child.is_symlink() and not (child / '.git').exists()
+        if (layout == 'auto' and child.name in GROUP_DIRECTORIES and child not in declared and not child.is_symlink() and not (child / '.git').exists()
                 and not (child / 'package.json').exists() and not (child / 'pom.xml').exists()):
             paths.update(path for path in child.iterdir() if path.is_dir() and not path.name.startswith('.'))
         else:
@@ -225,6 +229,7 @@ def inventory(workspace: Path, root: Path) -> dict:
         row = {'name': name, 'path': repo.relative_to(workspace).as_posix(), 'declared': repo in declared,
                'status': 'MISSING', 'kind': None, 'source_files': 0, 'source_extensions': {},
                'content_sha256': None, 'source_exclusions': [], 'nested_manifests': [], 'limitations': [],
+               'discovery_sha256': None, 'discovery_summary': {},
                **own_git_revision(repo)}
         if declared.get(repo, {}).get('registry_id'):
             row['registry_id'] = declared[repo]['registry_id']
@@ -237,6 +242,9 @@ def inventory(workspace: Path, root: Path) -> dict:
             row['status'] = 'UNSUPPORTED'
             row['limitations'].append('Symlink repository roots are not traversed.')
             continue
+        discovery = discovery_inventory(repo)
+        row['discovery_sha256'] = discovery['content_sha256']
+        row['discovery_summary'] = discovery['summary']
         has_web = is_source_file(repo, repo / 'package.json')
         has_java = is_source_file(repo, repo / 'pom.xml')
         java_root = repo / 'src/main/java'
@@ -289,4 +297,5 @@ def inventory(workspace: Path, root: Path) -> dict:
     return {'schema_version': '1.0.0', 'repositories': rows,
             'counts': dict(sorted(Counter(row['status'] for row in rows).items())),
             'excluded_directories': sorted(EXCLUDED), 'registry_limits': registry_limits,
+            'repository_layout': layout,
             'repository_root': root.relative_to(workspace).as_posix()}

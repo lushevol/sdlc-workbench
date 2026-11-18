@@ -17,7 +17,8 @@ Read the [knowledge graph contract](knowledge-graph.md) for identities, evidence
 Knowledge navigation does not contribute architecture dependencies or API counts.
 Collections use sorted, unique identities.
 Use the schema for current kinds, node types, and required fields.
-Coverage can retain unsupported repositories without canonical nodes.
+Repositories with readable text and no typed extractor use canonical kind `SOURCE_ONLY`.
+Missing repositories and excluded symbolic roots retain coverage without canonical nodes.
 
 Include supported application shells and foundation repositories.
 Graph service/repository roots are analysis identities.
@@ -91,6 +92,19 @@ Dynamic, unavailable, excluded, profile-only, and escaping module roots retain d
 Explicit testing catalogs select the `TESTING` repository kind.
 Testing declarations retain `dependency_scope=TESTING` within the runtime dimension and require no business projection.
 Their calls and resource imports do not establish production dependencies or test execution.
+
+Each `SOURCE_ONLY` repository has one `COMPONENT` anchor: `component:<repository-name>:source-inventory`.
+Its `component_kind=SOURCE_INVENTORY` records source navigation within the runtime dimension.
+Its properties retain `extraction_status=SOURCE_ONLY`, `provider_status=NOT_ESTABLISHED`, the discovery hash, and inventory summary.
+Its evidence identifies the census path, discovery hash, and scanned and skipped counts.
+The anchor establishes no service, provider, business responsibility, or automatic call relationship.
+Source-only repositories require no business projection and do not participate in automatic identity resolution.
+Reviewed context can bind their exact anchor through `node_id` and cited source ranges.
+Automatic repository-root inference remains limited to unique `APPLICATION` or `SERVICE` nodes.
+The service catalog keeps `root=null` and exposes the anchor as `source_inventory`.
+Its `source_only_repositories` count remains separate from service and application counts.
+Inventory anchors do not contribute business components or discovered API operations.
+The viewer places them in the `SOURCE INVENTORY` lane.
 
 `CONFIGURATION_KEY` identities describe repository-local property names, with source/profile contexts on declarations.
 They do not select precedence, active values, profiles, or environment bindings.

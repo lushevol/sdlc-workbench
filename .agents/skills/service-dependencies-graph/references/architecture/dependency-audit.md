@@ -14,6 +14,9 @@ Review all census entries, including unsupported and missing repositories.
 
 Read every relevant pattern candidate through the `patterns` query.
 Its optional `repository` and `family` filters apply before pagination.
+Use `service_only: true` to prioritize service boundary candidates and `include_snippets: true` to read sanitized source context.
+Use `query` for literal text searches across related candidates, then follow source and canonical evidence references.
+The [snippet workflow](snippet-discovery.md) explains AI connection of callers, wrappers, bindings, and internal or external providers.
 Use `limit` from 1 through 500 and a nonnegative `offset`; the default offset is zero.
 Continue with each returned `next_offset` until it is `null`.
 Keep the snapshot manifest checksum constant across pages; restart traversal when it changes.
@@ -26,7 +29,8 @@ Read the [implemented analysis](automated-analysis.md) before claiming syntax su
 
 ## Source comparison
 
-Use source-inventory exclusions when selecting files.
+Inspect broad discovery dispositions and typed source exclusions separately.
+Candidate search includes text beyond typed parser source layouts. Retained skips remain explicit limits.
 Inspect enclosing declarations, imports, and configuration bindings before assigning a dependency type.
 
 | Family | Declarations to inspect |
@@ -35,7 +39,7 @@ Inspect enclosing declarations, imports, and configuration bindings before assig
 | Providers | Spring mappings, inherited/composed annotations, and gateway routes. |
 | GraphQL | Selected resolver annotations, transport routes, client links, and request base queries. |
 | WebSocket | SockJS/STOMP construction, Spring registration, and upgrade routes. |
-| Messaging | Kafka listeners/sends, topic headers, constants, configuration getters, typed helpers, and Camel routes. |
+| Messaging | Solace/JCSMP/JMS publishers, consumers, queues, subscriptions, broker/VPN bindings, Kafka declarations, and generic messaging calls. |
 | Build | Root/nested npm manifests, Maven coordinates, scopes, modules, parents, and profiles. |
 | Data | Runtime clients, ORM mappings, native queries, mapper XML, and explicit cache clients. |
 | External | Selected SDK calls, platform clients, file operations, and external authorities. |

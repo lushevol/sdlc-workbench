@@ -180,13 +180,20 @@ repositories:
         self.assertEqual(status, 0)
         graph = json.loads((output / 'graph.json').read_text())
         coverage = json.loads((output / 'analysis-coverage.json').read_text())
-        self.assertEqual([r['kind'] for r in graph['repositories']], ['TESTING'])
-        self.assertEqual([r['name'] for r in graph['repositories']], ['suite'])
+        self.assertEqual({r['name']: r['kind'] for r in graph['repositories']},
+                         {'ordinary': 'SOURCE_ONLY', 'suite': 'TESTING'})
         self.assertTrue(all('BUSINESS' not in n['dimensions'] for n in graph['nodes']))
         self.assertFalse(any(n['type'] in {'SERVICE', 'APPLICATION'} for n in graph['nodes']))
-        runtime = [n for n in graph['nodes'] if 'RUNTIME' in n['dimensions']]
+        runtime = [n for n in graph['nodes'] if 'RUNTIME' in n['dimensions'] and n['repository'] != 'repo:ordinary']
         self.assertTrue(runtime)
         self.assertTrue(all(n['properties']['dependency_scope'] == 'TESTING' for n in runtime))
+        inventory, = [n for n in graph['nodes'] if n['repository'] == 'repo:ordinary']
+        self.assertEqual((inventory['type'], inventory['component_kind']), ('COMPONENT', 'SOURCE_INVENTORY'))
+        self.assertEqual(inventory['properties']['extraction_status'], 'SOURCE_ONLY')
+        self.assertEqual(inventory['properties']['provider_status'], 'NOT_ESTABLISHED')
+        self.assertNotIn('dependency_scope', inventory['properties'])
+        self.assertFalse(any(inventory['id'] in (edge['source'], edge['target']) for edge in graph['edges']))
+        self.assertFalse(any(n.get('properties', {}).get('path') == '/unclassified' for n in graph['nodes']))
         metadata = [n for n in graph['nodes'] if 'KNOWLEDGE' in n['dimensions']]
         self.assertTrue(metadata)
         self.assertTrue(all(n['properties']['evidence_class'] in {'DECLARED_METADATA', 'UNKNOWN'} for n in metadata))

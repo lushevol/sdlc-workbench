@@ -14,7 +14,7 @@ from .viewer_traces import build_trace_model
 
 FAMILIES = ('api', 'data', 'shared', 'configuration', 'package', 'structure', 'other')
 STATUSES = ('resolved', 'unresolved', 'ambiguous', 'candidate', 'declared')
-LANES = ('ui', 'service', 'infra', 'data', 'external', 'package')
+LANES = ('ui', 'service', 'infra', 'source', 'data', 'external', 'package')
 LEVELS = ('highest', 'medium', 'low', 'context')
 
 _STRUCTURE = {
@@ -156,6 +156,8 @@ def _lane(node: dict[str, Any], repository: dict[str, Any] | None) -> str:
         return 'ui'
     if repository.get('kind') == 'INFRA':
         return 'infra'
+    if repository.get('kind') == 'SOURCE_ONLY':
+        return 'source'
     return 'service'
 
 

@@ -81,7 +81,8 @@ Version `1.1.0` requires the preceding arrays and an `investigations` array.
 Each relationship requires exactly one investigation.
 Each subject can provide `node_id` to bind an exact existing canonical node.
 The node must belong to the subject's declared repository.
-Without an explicit binding, a unique repository root supplies the anchor.
+Without an explicit binding, one unique `APPLICATION` or `SERVICE` node supplies the repository anchor.
+`SOURCE_ONLY` inventory anchors require explicit `node_id` bindings and establish no runtime provider.
 Unbound subjects become explicit `ARCHITECTURE_BOUNDARY` nodes, not discovered providers.
 
 | Investigation field | Meaning |

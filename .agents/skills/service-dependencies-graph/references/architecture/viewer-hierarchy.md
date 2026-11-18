@@ -62,7 +62,8 @@ An empty view can reflect unsupported extraction. Check coverage before claiming
 ## Legend and uncertainty
 
 Line color identifies API, data, shared code, package, or ownership relationships.
-Card markers identify UI, service/library, infrastructure, data, and external/unknown roles.
+Card markers identify UI, service/library, infrastructure, source inventory, data, and external/unknown roles.
+The source inventory lane establishes no runtime service or provider identity.
 Arrows follow the recorded relationship.
 Calls point toward providers; reads point toward data sources.
 

@@ -1,9 +1,11 @@
 """Regression tests for high-recall deterministic search candidates."""
 from pathlib import Path
+import hashlib
 import json
 import runpy
 import tempfile
 import unittest
+from unittest.mock import patch
 
 load_tool = runpy.run_path(str(Path(__file__).with_name('_support.py')))['load_tool']
 patterns = load_tool('extract_pattern_candidates')
@@ -163,6 +165,206 @@ import thing from "@fm/shared";
             with self.subTest(offset=value), self.assertRaises(snapshot.SnapshotError) as error:
                 snapshot.query(self.root, 'patterns', {'offset': value}, self.root)
             self.assertEqual(error.exception.code, 'INVALID_ARGUMENT')
+
+    def test_flat_arbitrary_text_paths_expose_external_calls_and_provider_contracts(self):
+        flat = self.root / 'flat-service'
+        flat.mkdir()
+        sources = {
+            'connector.custom': 'client.request(\n externalUrl\n);\nEXTERNAL_URL=https://outside.example/orders\n',
+            'handlers.opaque': '@GetMapping(\n "/orders/{id}"\n)\napp.post("/payment", handler);\n',
+            'schema.anything': 'openapi: 3.1.0\npaths:\n  /settlement:\n    post:\nasyncapi: 3.0.0\n',
+            'payload.json': '{"endpoint":"https://third-party.example/service"}',
+            'suite.robot': 'Call External    https://robot.example/test\n',
+        }
+        for name, text in sources.items():
+            (flat / name).write_text(text)
+        result = patterns.scan_repository(self.root, 'repo:flat', flat)
+        self.assertEqual(result['scanned_files'], len(sources))
+        self.assertEqual(result['skipped_files'], [])
+        values = {row['value'] for row in result['candidates']}
+        self.assertTrue({'https://outside.example/orders', 'https://third-party.example/service',
+                         'https://robot.example/test', '/orders/{id}', '/payment', '/settlement'} <= values)
+        self.assertIn('HTTP_CLIENT', {row['family'] for row in result['candidates']})
+        self.assertIn('API_CONTRACT', {row['family'] for row in result['candidates']})
+        self.assertTrue(all(row['disposition'] == 'CANDIDATE' and 'relationship' not in row for row in result['candidates']))
+        self.assertEqual(result['discovery_sha256'], result['file_inventory']['content_sha256'])
+
+    def test_solace_producers_consumers_configuration_and_kafka_remain_candidates(self):
+        source = self.repo / 'integration.unknown'
+        source.write_text('''import com.solacesystems.jcsmp.JCSMPFactory;
+import com.solacesystems.jcsmp.JCSMPProperties;
+JCSMPSession session = JCSMPFactory.onlyInstance().createSession(properties);
+XMLMessageProducer producer = session.createProducer(listener);
+XMLMessageConsumer consumer = session.createConsumer(listener);
+Topic topic = JCSMPFactory.onlyInstance().createTopic("orders/created");
+producer.send(message, topic);
+consumer.receive();
+const solace = require("solclientjs");
+const jsSession = solace.SolclientFactory.createSession({url: "wss://broker.example/smf"});
+jsSession.subscribe(solace.SolclientFactory.createTopicDestination("orders/confirmed"));
+spring.cloud.stream.bindings.output.destination=orders/created
+spring.cloud.stream.solace.binder.msgVpn=business
+solace.java.host=smfs://broker.example:55443
+kafkaTemplate.send("legacy-events", message);
+''')
+        result = patterns.scan_repository(self.root, 'repo:client', self.repo)
+        rows = result['candidates']
+        solace = [row for row in rows if row['family'] == 'MESSAGE_CLIENT' and 'SOLACE' in row['protocol_hints']]
+        self.assertTrue(solace)
+        channels = {row['value'] for row in rows if row['family'] == 'MESSAGE_CHANNEL'}
+        self.assertTrue({'orders/created', 'orders/confirmed', 'legacy-events'} <= channels)
+        self.assertTrue(any(row['family'] == 'CONFIG_DECLARATION' and 'destination' in row['value'] for row in rows))
+        send = next(row for row in rows if row['family'] == 'CALL_HINT' and row['value'] == 'producer.send')
+        receive = next(row for row in rows if row['family'] == 'CALL_HINT' and row['value'] == 'consumer.receive')
+        self.assertEqual(send['protocol_hints'], [])
+        self.assertIn('producer', send['role_hints'])
+        self.assertIn('subscriber', receive['role_hints'])
+        unknown = self.repo / 'unknown-client'
+        unknown.write_text('solaceProducer.publish(payload);')
+        unknown_rows = patterns.scan_files(self.root, 'repo:client', [unknown])['candidates']
+        self.assertTrue(all(row['protocol_hints'] == [] for row in unknown_rows))
+
+    def test_repeated_and_multiline_calls_keep_each_source_reference_and_role(self):
+        path = self.repo / 'calls'
+        raw = b'fetch(\n  "/orders"\n);\nfetch("/orders");\n@GetMapping("/orders")\n'
+        path.write_bytes(raw)
+        row = next(row for row in patterns.scan_files(self.root, 'repo:client', [path])['candidates']
+                   if row['family'] == 'HTTP_ENDPOINT' and row['value'] == '/orders')
+        self.assertEqual(row['source_sha256'], hashlib.sha256(raw).hexdigest())
+        self.assertEqual({ref['start_line'] for ref in row['occurrences']}, {1, 4, 5})
+        self.assertEqual(len(row['occurrences']), 3)
+        self.assertTrue({'consumer', 'provider'} <= set(row['role_hints']))
+        self.assertEqual(row['occurrences'][0]['end_line'], 2)
+        self.assertIn('consumer', row['occurrences'][0]['role_hints'])
+        self.assertIn('provider', row['occurrences'][-1]['role_hints'])
+        for occurrence in row['occurrences']:
+            self.assertLessEqual(len(occurrence['snippet']), 1600)
+            self.assertLessEqual(occurrence['snippet_end_line'] - occurrence['snippet_start_line'], 7)
+
+    def test_snippets_redact_neighboring_and_multiline_credentials(self):
+        path = self.repo / 'sensitive.data'
+        path.write_text('''API_PASSWORD=env-secret-value
+fetch("https://outside.example/orders?api_key=query-secret#fragment-secret");
+{"password":
+ "json-secret-value", "endpoint": "https://json.example/route"}
+Authorization: Bearer bearer-secret-value
+JCSMPProperties.PASSWORD,
+ "argument-secret-value";
+client.setPassword(
+ "setter-secret-value");
+JCSMPFactory.createSession(
+ getConnectionName(), "positional-user", "positional-secret-value");
+const credentials = new PasswordAuthentication("username", "constructor-secret-value");
+password: |
+  yaml-secret-first
+  yaml-secret-second
+client.connect("https://url-user:url-password@broker.example/api?access=hidden-query");
+-----BEGIN PRIVATE KEY-----
+private-material-value
+-----END PRIVATE KEY-----
+grpc.Dial("target");
+''')
+        result = patterns.scan_files(self.root, 'repo:client', [path])
+        serialized = json.dumps(result)
+        for secret in ('env-secret-value', 'query-secret', 'fragment-secret', 'json-secret-value',
+                       'bearer-secret-value', 'argument-secret-value', 'setter-secret-value',
+                       'positional-user', 'positional-secret-value', 'constructor-secret-value',
+                       'yaml-secret-first', 'yaml-secret-second',
+                       'url-user', 'url-password', 'hidden-query', 'private-material-value'):
+            self.assertNotIn(secret, serialized)
+        self.assertIn('https://outside.example/orders', serialized)
+        self.assertIn('broker.example/api', serialized)
+        self.assertIn('source_sha256', serialized)
+
+    def test_content_patterns_cover_rpc_messaging_storage_and_network_families(self):
+        path = self.repo / 'all.protocols'
+        path.write_text('''ManagedChannelBuilder.forAddress(host, port);
+grpc.Dial(endpoint);
+rpc Settle (Request) returns (Response);
+@JmsListener(destination = "orders.queue")
+RabbitTemplate rabbit; mqtt.connect(endpoint);
+StreamBridge bridge; JmsTemplate jms;
+LdapTemplate directory; RedisTemplate cache;
+S3Client storage; BlobServiceClient blobs;
+MongoClient database; JdbcTemplate jdbc;
+FileInputStream file; SFTPClient remote;
+Socket socket; WebSocketClient websocket;
+<wsdl:definitions targetNamespace="https://schemas.example/service" />
+<dependency><groupId>external.api</groupId></dependency>
+''')
+        result = patterns.scan_files(self.root, 'repo:client', [path])
+        families = {row['family'] for row in result['candidates']}
+        self.assertTrue({'RPC_INTERFACE', 'MESSAGE_CLIENT', 'MESSAGE_CHANNEL', 'DIRECTORY_CLIENT',
+                         'CACHE_CLIENT', 'STORAGE_CLIENT', 'DATABASE_CLIENT', 'FILE_CLIENT',
+                         'NETWORK_CLIENT', 'API_CONTRACT', 'PACKAGE_DECLARATION'} <= families)
+
+    def test_scanner_rejects_content_changed_after_inventory(self):
+        path = self.repo / 'client'
+        path.write_text('fetch("/before");')
+        inventory = patterns.discovery_inventory(self.repo)
+        path.write_text('fetch("/after");')
+        with patch.object(patterns, 'discovery_inventory', return_value=inventory):
+            with self.assertRaisesRegex(ValueError, 'DISCOVERY_SOURCE_CHANGED'):
+                patterns.scan_repository(self.root, 'repo:client', self.repo)
+
+    def test_inline_proto_rpcs_and_graphql_declarations_keep_each_occurrence(self):
+        path = self.repo / 'inline-contract'
+        path.write_text('service Orders { rpc Settle (Request) returns (Response); rpc Cancel (Request) returns (Response); }\n'
+                        'type Query { order: ID } type Mutation { settle: ID } schema { query: Query }\n')
+        rows = patterns.scan_files(self.root, 'repo:client', [path])['candidates']
+        rpcs = [row for row in rows if row['family'] == 'RPC_INTERFACE']
+        self.assertEqual({row['value'] for row in rpcs}, {'rpc Settle (', 'rpc Cancel ('})
+        self.assertTrue(all(row['line'] == 1 for row in rpcs))
+        graphql = next(row for row in rows if row['family'] == 'GRAPHQL_SCHEMA')
+        self.assertEqual(len(graphql['occurrences']), 3)
+        self.assertEqual({ref['start_line'] for ref in graphql['occurrences']}, {2})
+        self.assertEqual(len({ref['start_column'] for ref in graphql['occurrences']}), 3)
+
+    def test_custom_extension_graphql_operations_and_sdk_clients(self):
+        path = self.repo / 'graphql.custom'
+        path.write_text('''import {ApolloClient, useQuery} from "@apollo/client";
+query Orders($id: ID!) { order(id: $id) { id } }
+mutation Settle { settle }
+subscription Changed { changed }
+const result = useQuery(ORDERS);
+const client = new ApolloClient(options);
+''')
+        rows = patterns.scan_files(self.root, 'repo:client', [path])['candidates']
+        operations = [row for row in rows if row['family'] == 'GRAPHQL_OPERATION']
+        self.assertEqual(len(operations), 3)
+        clients = {row['value'] for row in rows if row['family'] == 'GRAPHQL_CLIENT'}
+        self.assertTrue({'ApolloClient', 'useQuery'} <= clients)
+        path.write_text('database.query(statement); useQuery(options);')
+        rows = patterns.scan_files(self.root, 'repo:client', [path])['candidates']
+        self.assertFalse(any(row['family'].startswith('GRAPHQL') for row in rows))
+
+    def test_command_flags_redact_credentials_without_removing_external_urls(self):
+        path = self.repo / 'commands.custom'
+        path.write_text('''curl --user demo-user:synthetic-password https://outside.example/orders
+docker login registry.example -u demo -p docker-synthetic-password
+fetch("https://outside.example/next");
+curl -u "quoted-user:quoted-password" https://outside.example/quoted
+tool --auth-token=synthetic-auth-token --api-key synthetic-api-key
+wget --password=wget-password https://outside.example/download
+curl -uconcatenated-user:concatenated-password https://outside.example/short-option
+''')
+        serialized = json.dumps(patterns.scan_files(self.root, 'repo:client', [path]))
+        for secret in ('demo-user', 'synthetic-password', 'docker-synthetic-password',
+                       'quoted-user', 'quoted-password', 'synthetic-auth-token', 'synthetic-api-key', 'wget-password',
+                       'concatenated-user', 'concatenated-password'):
+            self.assertNotIn(secret, serialized)
+        self.assertIn('https://outside.example/orders', serialized)
+        self.assertIn('https://outside.example/next', serialized)
+
+    def test_large_repeated_calls_keep_complete_line_evidence(self):
+        path = self.repo / 'generated-text.custom'
+        calls = 6000
+        path.write_text(('fetch("/orders"); //' + 'padding' * 12 + '\n') * calls)
+        rows = patterns.scan_files(self.root, 'repo:client', [path])['candidates']
+        endpoint = next(row for row in rows if row['family'] == 'HTTP_ENDPOINT')
+        self.assertEqual(endpoint['occurrence_count'], calls)
+        self.assertEqual({ref['start_line'] for ref in endpoint['occurrences']}, set(range(1, calls + 1)))
+        self.assertTrue(all(ref['start_column'] == 1 and 'fetch' in ref['snippet'] for ref in endpoint['occurrences']))
 
 
 if __name__ == '__main__':

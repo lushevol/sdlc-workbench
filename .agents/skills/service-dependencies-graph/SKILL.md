@@ -35,6 +35,7 @@ Use direct source inspection and existing project tools for unsupported scope, a
 | Build the active wiki graph | Use the [wiki graph workflow](../llm-wiki/references/workflows.md#wiki-graph). | Original OpenKB wikilink visualization in either semantic engine mode. |
 | Explain the architecture | Check coverage, services, and repository relationships. | Analysis roots, confirmed links, and unresolved boundaries. |
 | Discover or complete relationships | Follow [source investigation](references/architecture/initial-instruction-investigation.md), then [the context contract](references/architecture/user-architecture-context.md). Human hints are optional. | Source-backed relationships, missing extraction repairs, and explicit unavailable boundaries. |
+| Collect and connect service call snippets | Follow [snippet discovery](references/architecture/snippet-discovery.md). | Internal and external call candidates, source snippets, bindings, and reviewed call chains. |
 | Trace one repository or boundary | Search concrete names or paths, then inspect neighborhoods and cited source. | Consumer/provider evidence and identity limits. |
 | Inspect the viewer | Use the [viewer guide](references/architecture/viewer-hierarchy.md). | System connections, interaction details, and package declarations. |
 | Assess requirement or code impact | Use [impact guidance](references/architecture/impact-analysis.md). | Source-backed effects, candidates, and unexamined scope. |
@@ -82,6 +83,10 @@ Trace unmatched declarations, repair demonstrated extraction gaps, and repeat un
 When `relationships/service-dependencies/initial-instructions.md` exists, preserve and read it as optional hypotheses and regression expectations.
 Compare those expectations after independent source discovery. Do not use them as the discovery scope or provider proof.
 The deterministic build extracts supported syntax. The agent performs source investigation; a build alone does not complete it.
+Prioritize service-to-service calls, including external providers, when discovering architecture.
+Use [snippet discovery](references/architecture/snippet-discovery.md) to collect broad candidates and connect calls through wrappers and destination bindings.
+Candidate search traverses text recursively, independent of source directories and file extensions.
+Typed extraction keeps its documented layout limits. Inspect discovery skips separately from typed coverage.
 
 The build also reads optional `relationships/service-dependencies/architecture-context.json`.
 Use `build --context PATH` to select another workspace-local context file.
@@ -130,9 +135,11 @@ python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PA
 python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH query --data-dir relationships/service-dependencies/generated relationships --args '{}'
 ```
 
-`coverage` accepts an empty object. `patterns` accepts optional `repository`,
-`family`, and `limit` filters and returns deterministic search candidates plus
-accountability counts.
+`coverage` accepts an empty object. `patterns` accepts optional `repository`, `family`, `query`, `service_only`,
+`include_snippets`, `candidate_id`, `occurrence_limit`, `occurrence_offset`, `limit`, and `offset` arguments.
+It returns deterministic search candidates, occurrence references, and accountability counts.
+Use `include_snippets` for bounded sanitized context and `service_only` to prioritize service boundary candidates.
+Use `next_occurrence_offset` with an exact `candidate_id` to continue within a candidate's retained source occurrences.
 It returns supplied architecture context separately when the bundle includes that context.
 Context freshness checks the applied input and cited source bytes.
 Changed or missing context evidence makes overall freshness `STALE` when repository freshness can be checked.
@@ -200,16 +207,16 @@ Read the [Java structure](references/architecture/java-structure-extraction.md),
 [ORM detail](references/architecture/orm-column-detail.md) guides when reviewing these declarations.
 Read [testing dependencies](references/architecture/testing-dependencies.md) for explicitly registered test repositories.
 
-Every build also runs a deterministic high-recall pattern census over the same
-included source boundary. It records endpoint, configuration, messaging,
-database, module, gateway, and GraphQL-schema candidates with exact lines in
-`coverage-declarations.json`. Candidates are review inputs, not canonical
-relationships. Use the `patterns` query to inspect them before asking an AI
-agent to interpret unresolved cases.
+Every build also runs broad candidate discovery across repository text files.
+It records file dispositions and endpoint, configuration, messaging, RPC, external client, routing, and contract candidates in `coverage-declarations.json`.
+The scanner preserves sanitized snippets, source hashes, and repeated occurrence locations.
+Solace/JCSMP/JMS and other messaging patterns supply candidates for source review; existing Kafka extraction remains available.
+Candidates are review inputs, not canonical relationships. Use the `patterns` query before AI interpretation of unresolved cases.
 
 Generator version `2.2.0` adds method callsites, imported HTTP wrappers, and evidence-backed trace navigation within graph schema `2.0.0`.
 Generator version `2.3.0` adds optional knowledge projection metadata within that same schema.
 Generator version `2.4.0` adds source-driven discovery support, directory calls, Single-SPA registrations, and template route boundaries.
+Generator version `2.5.0` adds broad text discovery, service-call snippets, Solace patterns, and discovery freshness.
 Uninspected HTTP routing retains the declared call argument as an inferred boundary, without a resolvable destination path.
 Use `patterns` pagination to inspect every candidate within a stable snapshot.
 Existing architecture projections exclude knowledge navigation edges.

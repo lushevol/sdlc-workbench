@@ -31,7 +31,14 @@ def integer_schema(minimum, maximum):
 
 OPERATIONS = {
     "coverage": {"description": "Read graph coverage, source fingerprints, and extraction limits.", "input_schema": object_schema()},
-    "patterns": {"description": "Read deterministic dependency-shaped search candidates and their extraction accountability.", "input_schema": object_schema({"repository": string_schema(256), "family": string_schema(128), "limit": integer_schema(1, 500), "offset": {"type": "integer", "minimum": 0, "default": 0}}, ())},
+    "patterns": {"description": "Search dependency candidates, optional sanitized snippets, and matching canonical source evidence.", "input_schema": object_schema({
+        "repository": string_schema(256), "family": string_schema(128), "query": string_schema(500),
+        "candidate_id": string_schema(512),
+        "service_only": {"type": "boolean", "default": False},
+        "include_snippets": {"type": "boolean", "default": False},
+        "occurrence_offset": {"type": "integer", "minimum": 0, "default": 0},
+        "occurrence_limit": {**integer_schema(1, 500), "default": 10},
+        "limit": integer_schema(1, 500), "offset": {"type": "integer", "minimum": 0, "default": 0}}, ())},
     "relationships": {"description": "Read source-backed repository links and unresolved boundaries.", "input_schema": object_schema({"repository": string_schema(256), "limit": integer_schema(1, 200)})},
     "services": {"description": "Read static application and service projections.", "input_schema": object_schema({"repository": string_schema(256)})},
     "search": {"description": "Find graph nodes and their source evidence.", "input_schema": object_schema({"query": string_schema(500), "repository": string_schema(256), "limit": integer_schema(1, 100)}, ("query",))},
@@ -50,6 +57,70 @@ OPERATIONS = {
         "max_depth": integer_schema(1, 6), "limit": integer_schema(1, 50),
         "max_visits": integer_schema(1, 2000)}, ("source", "target"))},
 }
+
+
+SERVICE_PATTERN_FAMILIES = {
+    'HTTP_ENDPOINT', 'HTTP_CLIENT', 'HTTP_PROVIDER', 'GRAPHQL_SCHEMA', 'GRAPHQL_CLIENT', 'GRAPHQL_OPERATION', 'GATEWAY_ROUTE',
+    'MESSAGE_CHANNEL', 'MESSAGE_CLIENT', 'MESSAGE_OPERATION', 'RPC_INTERFACE',
+    'DATABASE_TABLE', 'DATABASE_CLIENT', 'DIRECTORY_CLIENT', 'CACHE_CLIENT', 'STORAGE_CLIENT',
+    'FILE_CLIENT', 'NETWORK_CLIENT', 'NETWORK_ENDPOINT', 'CONFIG_READ', 'CONFIG_DECLARATION', 'API_CONTRACT', 'CALL_HINT',
+}
+
+
+def _pattern_matches(row: dict, query: str) -> bool:
+    def text_values(value):
+        if isinstance(value, dict):
+            for item in value.values():
+                yield from text_values(item)
+        elif isinstance(value, list):
+            for item in value:
+                yield from text_values(item)
+        elif isinstance(value, str):
+            yield value
+
+    fields = {key: row.get(key) for key in ('repository', 'path', 'family', 'pattern_id', 'value',
+                                           'role_hints', 'protocol_hints', 'occurrences')}
+    return any(query.casefold() in value.casefold() for value in text_values(fields))
+
+
+def _pattern_results(rows: list[dict], graph: dict, include_snippets: bool,
+                     occurrence_offset: int = 0, occurrence_limit: int = 10) -> list[dict]:
+    """Link source locations for investigation without asserting relationship joins."""
+    from collections import defaultdict
+    evidence_by_source, nodes_by_evidence = defaultdict(list), defaultdict(set)
+    for evidence in graph['evidence']:
+        evidence_by_source[(evidence.get('repository'), evidence['path'])].append(evidence)
+    for node in graph['nodes']:
+        for identifier in node['evidence']:
+            nodes_by_evidence[identifier].add(node['id'])
+    for edge in graph['edges']:
+        for identifier in edge['evidence']:
+            nodes_by_evidence[identifier].update((edge['source'], edge['target']))
+    results = []
+    for row in rows:
+        result = dict(row)
+        all_occurrences = row.get('occurrences', [])
+        occurrences = all_occurrences[occurrence_offset:occurrence_offset + occurrence_limit]
+        ranges = [(occurrence.get('start_line', row['line']), occurrence.get('end_line', row['line']))
+                  for occurrence in occurrences]
+        if not all_occurrences:
+            ranges = [(row['line'], row['line'])]
+        evidence_ids = sorted(evidence['id'] for evidence in evidence_by_source[(row.get('repository'), row['path'])]
+                              if any(start <= evidence['line'] <= end for start, end in ranges))
+        result['canonical_evidence_ids'] = evidence_ids
+        result['related_node_ids'] = sorted({identifier for evidence_id in evidence_ids
+                                             for identifier in nodes_by_evidence[evidence_id]})
+        if 'occurrences' in row:
+            result['occurrence_count'] = len(all_occurrences)
+            result['occurrence_offset'] = occurrence_offset
+            next_offset = occurrence_offset + occurrence_limit
+            result['next_occurrence_offset'] = next_offset if next_offset < len(all_occurrences) else None
+            result['occurrences'] = [{key: value for key, value in occurrence.items()
+                                      if include_snippets or key != 'snippet'} for occurrence in occurrences]
+        if not include_snippets:
+            result.pop('snippet', None)
+        results.append(result)
+    return results
 
 
 def _bundle(root: Path) -> tuple[dict, dict[str, bytes], str]:
@@ -148,10 +219,16 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
                                            ('schema_version', 'repositories', 'families', 'limitations')}
         from .repository_inventory import inventory, extraction_fingerprints
         try:
-            current = inventory(workspace_root, workspace_root / coverage["repository_root"])
-            saved, present = extraction_fingerprints(coverage), extraction_fingerprints(current)
+            current = inventory(workspace_root, workspace_root / coverage["repository_root"],
+                                layout=coverage.get('repository_layout', 'auto'))
+            discovery_captured = all('discovery_sha256' in row for row in coverage.get('repositories', []))
+            saved = extraction_fingerprints(coverage, include_discovery=discovery_captured)
+            present = extraction_fingerprints(current, include_discovery=discovery_captured)
             changed = sorted(key for key in saved.keys() | present.keys() if saved.get(key) != present.get(key))
             result["freshness"] = {"status": "STALE" if changed else "CURRENT", "changed_paths": changed}
+            if not discovery_captured:
+                result['discovery_freshness'] = {'status': 'UNKNOWN',
+                                                 'reason': 'This snapshot predates the broad discovery file inventory.'}
             if context is not None:
                 context_changed = result['architecture_context']['freshness']['changed_paths']
                 result['freshness']['changed_paths'] = sorted(set(changed) | set(context_changed))
@@ -177,10 +254,16 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
         audit = _read(artifacts, audit_name)
         rows = audit.get('pattern_candidates', [])
         family = arguments.get('family')
+        if arguments.get('candidate_id'):
+            rows = [row for row in rows if row.get('id') == arguments['candidate_id']]
         if repository_id:
             rows = [row for row in rows if row.get('repository') == repository_id]
         if family:
             rows = [row for row in rows if row.get('family') == family]
+        if arguments.get('service_only', False):
+            rows = [row for row in rows if row.get('family') in SERVICE_PATTERN_FAMILIES]
+        if arguments.get('query'):
+            rows = [row for row in rows if _pattern_matches(row, arguments['query'])]
         limit = arguments.get('limit', 100)
         offset = arguments.get('offset', 0)
         from collections import Counter
@@ -192,9 +275,17 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
             scoped_families.setdefault(family_name, {})[disposition] = counts
         scoped_summary['families'] = scoped_families
         scoped_summary['scope'] = {'repository': repository_id, 'family': family}
+        for name in ('query', 'candidate_id', 'service_only', 'include_snippets', 'occurrence_offset', 'occurrence_limit'):
+            if name in arguments:
+                scoped_summary['scope'][name] = arguments[name]
         result.update(pattern_summary=scoped_summary, global_pattern_summary=audit.get('pattern_summary', {}),
-                      matches=rows[offset:offset + limit], matching_total=len(rows), limit=limit,
+                      matches=_pattern_results(rows[offset:offset + limit], _read(artifacts, 'graph.json'),
+                                               arguments.get('include_snippets', False),
+                                               arguments.get('occurrence_offset', 0),
+                                               arguments.get('occurrence_limit', 10)),
+                      matching_total=len(rows), limit=limit,
                       offset=offset, next_offset=offset + limit if offset + limit < len(rows) else None)
+        result['limitations'].append('Pattern filters select investigation candidates. Matching source locations do not establish service calls or provider identity.')
     elif operation == "services":
         services = _read(artifacts, "services.json")
         if repository_id:

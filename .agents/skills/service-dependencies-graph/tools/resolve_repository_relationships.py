@@ -33,7 +33,7 @@ def identities(graph):
         return graph.add_evidence(repo['id'], path.relative_to(graph.workspace).as_posix(), line, declaration, extractor)
 
     for repo in graph.repositories:
-        if not repo['visible']:
+        if not repo['visible'] or repo['kind'] == 'SOURCE_ONLY':
             continue
         root = graph.repo_roots[repo['id']]
         owner = application_id(repo)

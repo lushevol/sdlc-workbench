@@ -115,6 +115,70 @@ Updated [automated extraction](../../.agents/skills/service-dependencies-graph/r
 Updated [workspace design](../../docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary), [graph entry guide](../../relationships/service-dependencies/README.md), and [optional notes](../../relationships/service-dependencies/initial-instructions.md).
 These guides distinguish source-driven skill operation, deterministic builds, reviewed semantics, and unavailable evidence.
 
+## Snippet discovery follow-up
+
+Source: [exact user clarification](evidence/snippet-discovery-20261118/user-input.txt), 18 November 2026.
+The user requests broad snippet discovery, followed by AI connection of service call chains.
+Internal and external service calls take priority. Patterns must not depend on directory categories or source-root layouts.
+The user will supply repositories under one flat parent. Solace replaces Kafka as the future messaging focus.
+
+This clarification does not establish an executed messaging migration.
+
+Scope: refine the existing scanner, source accountability, evidence queries, and source investigation guidance.
+Risk: medium; broad searches can introduce false candidates or omit destination bindings.
+Keep typed graph resolution and source investigation distinct. Preserve existing graph contracts and unrelated worktree changes.
+Inspect extraction callers, snapshot readers, build publication, and source freshness before implementation.
+The [discovery plan](02-discovery-plan.md) will track the current stage and verification.
+
+### Implemented snippet workflow
+
+The skill now collects broadly before the active agent connects service calls.
+The content catalog provides 37 recognizers across 25 candidate families.
+The [procedure](../../.agents/skills/service-dependencies-graph/references/architecture/snippet-discovery.md) covers three searches and source-backed call chains.
+The [plan](02-discovery-plan.md) organizes fourteen dependency groups around internal and external calls.
+
+Flat discovery preserves repositories named `ui` or `services` without requiring category folders.
+The broad inventory includes hidden workflows, deployment files, tests, unusual extensions, and custom source layouts.
+Source-only anchors let reviewed findings retain unsupported repository identities without inventing providers.
+Solace/JCSMP/JMS patterns cover clients, destinations, bindings, and generic publisher or receiver calls.
+Existing Kafka evidence remains available; this change performs no messaging migration.
+
+The [actual graph check](evidence/snippet-discovery-20261118/graph-validation.json) records 6,928 scanned text files and 180 skipped entries.
+The earlier pattern boundary scanned 2,904 files.
+The new scan retains 105,489 candidates across 651,884 occurrences.
+Those counts include tests, examples, documentation, and repeated calls. They do not count missing dependencies.
+
+The investigated graph still contains 19 reviewed relationships from 43 repository sources.
+No human relationship source supplies those bindings.
+
+The expanded candidates have not all received semantic adjudication.
+The graph therefore retains the existing supported relationships and exposes new candidates for source investigation.
+No Solace protocol hints appeared in this captured corpus. That result cannot establish absence of every Solace integration.
+The [file boundary](evidence/snippet-discovery-20261118/graph-validation.json) identifies excluded scope, including seven oversized files.
+The current text limit remains two megabytes per file.
+
+### Verification evidence
+
+The [flat fixture](evidence/snippet-discovery-20261118/flat-discovery.json) checks custom paths, external authorities, Solace destinations, RPC contracts, and explicit skips.
+Its [reproducer](evidence/snippet-discovery-20261118/verify-flat-discovery.py) confirms stale-source detection and publication preservation.
+The [actual query probe](evidence/snippet-discovery-20261118/verify-graph.py) checks source hashes, freshness, and bounded occurrence pages.
+Snippets retain sanitized context. The query returns ten occurrences per candidate by default and supplies continuation offsets.
+
+Independent fixtures exposed inline RPC omissions and command credentials leaking into neighboring snippets.
+Both defects have regressions. Credential sanitation preserves useful external URLs while removing recognized credential values.
+Source-capture regressions reject temporary source revisions, including changes restored before final validation.
+
+The [performance replay](evidence/snippet-discovery-20261118/performance.json) found repeated full-file line counting and linear occurrence checks.
+Indexed line offsets and occurrence sets preserve source references while reducing the measured cost.
+Previously timed-out files now complete within 1.04 through 1.98 seconds in those bounded replays.
+The full audit remains approximately 481 MiB because every occurrence retains context.
+Query pagination bounds returned snippets; it does not make the saved audit or its parsing small.
+
+The [validation record](evidence/snippet-discovery-20261118/validation.json) lists final checks and remaining limits.
+All 269 graph tests passed. The full suite completed 1,136 tests with two optional connector integration skips.
+The [distribution probe](evidence/snippet-discovery-20261118/verify-distribution.py) checks an installed workspace outside this checkout.
+It verifies flat custom-source discovery and snippet queries through the shipped skill.
+
 ```yaml
 standard: ASD-STE100
 automated_check: PASSED

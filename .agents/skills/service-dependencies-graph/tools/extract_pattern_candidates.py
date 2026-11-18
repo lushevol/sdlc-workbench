@@ -7,19 +7,21 @@ reviewer can inspect only ambiguous or unsupported cases.
 """
 from __future__ import annotations
 
+from bisect import bisect_right
 import hashlib
 import re
 from pathlib import Path
 from typing import Iterable
 from urllib.parse import urlsplit
 
-from .source_inventory import iter_source_files
+from .dependency_patterns import PATTERNS
+from .discovery_sources import MAX_TEXT_BYTES, decode_discovery_text, discovery_inventory
 
 
-_URL = re.compile(r"(?P<quote>[\"'])(?P<value>(?:https?|wss?)://[^\"']+|//[^\"']+|/(?:api|auth|graphql|events|ws|socket|v[0-9]+)[^\"']*)(?P=quote)", re.I)
+_URL = re.compile(r"(?P<quote>[\"'`])(?P<value>(?:https?|wss?)://[^\"'`]+|//[^\"'`]+|/(?:api|auth|graphql|events|ws|socket|v[0-9]+)[^\"'`]*)(?P=quote)", re.I)
 _HTTP_CALL_URL = re.compile(
     r"\b(?:fetch|axios(?:\.[A-Za-z]+)?|(?:client|http|api|request|requests?)\.(?:get|post|put|patch|delete|request))\s*"
-    r"\(\s*(?P<quote>[\"'])(?P<value>/[^\"']+)(?P=quote)", re.I,
+    r"\(\s*(?P<quote>[\"'`])(?P<value>/[^\"'`]+)(?P=quote)", re.I,
 )
 _CONFIG = re.compile(
     r"(?:process\.env\.(?P<node>[A-Za-z_][A-Za-z0-9_]*)|import\.meta\.env\.(?P<meta>[A-Za-z_][A-Za-z0-9_]*)|"
@@ -43,18 +45,33 @@ _IMPORT = re.compile(
     re.I,
 )
 _NGINX = re.compile(r"\b(?P<directive>location|proxy_pass|rewrite|upstream)\b\s+(?P<value>[^;{\n]+)", re.I)
-_CODE_CONFIG_SUFFIXES = {'.java', '.kt', '.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.mts', '.cts',
-                         '.py', '.go', '.rs', '.cs', '.kts', '.gradle', '.properties', '.yaml', '.yml',
-                         '.toml', '.ini', '.conf', '.j2', '.sql', '.graphql', '.graphqls', '.gql', '.proto',
-                         '.html', '.ejs'}
+_ABS_URL = re.compile(r'(?P<value>(?:https?|wss?|grpcs?|tcp|tcps|mqtts?|amqps?|ldaps?|rediss?|smfs?|solace|sftp|ftp|s3|file|jdbc:[a-z]+)://[^\s\"\'`<>\])}]+)', re.I)
+_CONFIG_DECLARATION = re.compile(
+    r'^[ \t]*[\"\']?(?P<value>[A-Za-z_][\w.\[\]-]*(?:url|uri|host|port|address|endpoint|broker|topic|queue|channel|destination|server|service|bootstrap|vpn|connection|provider|jndi|binding)[\w.\[\]-]*|(?:urls?|uris?|hosts?|ports?|addresses|endpoints?|brokers?|topics?|queues?|channels?|destinations?|servers?|services?|vpn|connections?|providers?|jndi|bindings?|listeners?|upstreams?|ingress|routes?))[\"\']?\s*[:=]', re.I | re.M)
+_CONFIG_API = re.compile(
+    r'(?:\b(?:getProperty|getRequiredProperty|getenv|GetEnvironmentVariable|config\.get|os\.getenv|os\.environ\.get|env|value)\s*\(\s*[\"\'](?P<value>[A-Za-z_][\w.-]*)[\"\']|\b(?:os\.environ|process\.env)\s*\[\s*[\"\'](?P<index>[A-Za-z_][\w.-]*)[\"\']|(?P<annotation>@ConfigurationProperties)\b)', re.I)
+_SENSITIVE = r'(?:pass(?:word|wd|phrase)?|pwd|secret|token|credential|authorization|authentication|api[_-]?key|access[_-]?key|private[_-]?key|client[_-]?secret|sasl\.jaas\.config)'
+_QUOTED = r'"""[\s\S]*?"""|' + "'''[\\s\\S]*?'''|" + r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|`(?:\\.|[^`\\])*`'
+_SECRET_ASSIGNMENT = re.compile(
+    r'(?P<label>\b[\w.-]*' + _SENSITIVE + r'[\w.-]*[\"\']?\s*(?::|=|,)\s*)(?P<value>' + _QUOTED + r'|[^\r\n]*)', re.I)
+_SECRET_CALL = re.compile(
+    r'(?P<label>\b(?:set|with)[\w]*' + _SENSITIVE + r'[\w]*\s*\(\s*)(?P<value>' + _QUOTED + r'|[^)\r\n]*)', re.I)
+_SECRET_BLOCK = re.compile(
+    r'(?P<label>^[ \t]*[\w.-]*' + _SENSITIVE + r'[\w.-]*\s*:\s*[|>][+-]?[ \t]*\r?\n)(?P<value>(?:[ \t]+[^\r\n]*(?:\r?\n|$))+)', re.I | re.M)
+_CREDENTIAL_CALL = re.compile(
+    r'\b(?:createSession|createConnection|getConnection|connect|simple_bind_s|bind|login|authenticate|withBasicAuth|basicAuthentication|setCredentials|PasswordAuthentication|UsernamePasswordCredentials|PasswordCredentials|NetworkCredential|BasicAWSCredentials|AwsBasicCredentials\.create)\s*\(', re.I)
+_PRIVATE_KEY = re.compile(r'-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----[\s\S]*?(?:-----END [A-Z0-9 ]*PRIVATE KEY-----|\Z)', re.I)
+_XML_SECRET = re.compile(r'(<(?:[\w.-]+:)?' + _SENSITIVE + r'\b[^>]*>)[\s\S]*?(</[^>]+>)', re.I)
+_BEARER = re.compile(r'\b(?:Bearer|Basic)\s+[A-Za-z0-9_+/=.\-]+', re.I)
+_JWT = re.compile(r'\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b')
+_CLI_SECRET = re.compile(
+    r'(?P<label>(?<![\w-])--(?:password|passwd|token|auth-token|access-token|api-key|apikey|secret|client-secret|access-key|secret-key|private-key|credential|user|proxy-user)(?:\s*=\s*|\s+)(?:\\\r?\n[ \t]*)*)(?P<value>' + _QUOTED + r'|[^\s\\]+)', re.I)
+_AUTH_COMMAND = re.compile(r'\b(?:curl|wget|(?:docker|podman)\s+login)\b(?:\\\r?\n|[^\r\n])*', re.I)
+_CLI_SHORT_SECRET = re.compile(r'(?P<label>(?<![\w-])-[upU](?:\s*=\s*|\s+|(?=[^\s-]))(?:\\\r?\n[ \t]*)*)(?P<value>' + _QUOTED + r'|[^\s\\]+)')
 
 
 def _is_env_file(path: Path) -> bool:
     return path.name == '.env' or path.name.startswith('.env.')
-
-
-def _is_import_map(path: Path) -> bool:
-    return 'importmap' in re.sub(r'[^a-z0-9]', '', path.stem.lower())
 
 
 def _safe_value(value: str, *, url: bool = False) -> str:
@@ -69,11 +86,76 @@ def _safe_value(value: str, *, url: bool = False) -> str:
         value = value.split('#', 1)[0].split('?', 1)[0]
     if re.search(r"(?:password|passwd|secret|token|credential|authorization|client_secret)", value, re.I):
         return '<redacted>'
-    return value[:240]
+    value = _safe_snippet(value)
+    return value.replace('\r', ' ').replace('\n', ' ')[:240]
 
 
-def _line_at(text: str, offset: int) -> int:
-    return text.count('\n', 0, max(0, offset)) + 1
+def _preserve_lines_redaction(value: str) -> str:
+    return '\n'.join('<redacted>' if line else '' for line in value.split('\n'))
+
+
+def _safe_snippet(text: str) -> str:
+    """Sanitize the full file before selecting context, including multiline secrets."""
+    text = _PRIVATE_KEY.sub(lambda match: _preserve_lines_redaction(match.group()), text)
+    text = _XML_SECRET.sub(lambda match: match.group(1) + _preserve_lines_redaction(
+        match.group()[len(match.group(1)):-len(match.group(2))]) + match.group(2), text)
+    text = _SECRET_BLOCK.sub(lambda match: match.group('label') + _preserve_lines_redaction(match.group('value')), text)
+    # Positional authentication arguments have no trustworthy parameter names.
+    replacements = []
+    for call in _CREDENTIAL_CALL.finditer(text):
+        cursor, depth, quote = call.end(), 1, None
+        while cursor < len(text) and cursor - call.end() < 4096 and depth:
+            character = text[cursor]
+            if quote:
+                if character == '\\':
+                    cursor += 2
+                    continue
+                if character == quote:
+                    quote = None
+            elif character in {'"', "'", '`'}:
+                quote = character
+            elif character == '(':
+                depth += 1
+            elif character == ')':
+                depth -= 1
+            cursor += 1
+        for literal in re.finditer(_QUOTED, text[call.end():cursor]):
+            start, end = call.end() + literal.start(), call.end() + literal.end()
+            value = literal.group()[1:-1]
+            if text[end:cursor].lstrip().startswith(':') or _ABS_URL.fullmatch(value):
+                continue
+            replacements.append((start, end))
+    nonoverlapping = []
+    for start, end in sorted(set(replacements), key=lambda span: (span[0], -span[1])):
+        if not nonoverlapping or start >= nonoverlapping[-1][1]:
+            nonoverlapping.append((start, end))
+    for start, end in reversed(nonoverlapping):
+        text = text[:start] + _preserve_lines_redaction(text[start:end]) + text[end:]
+    text = _SECRET_ASSIGNMENT.sub(lambda match: match.group('label') + _preserve_lines_redaction(match.group('value')), text)
+    text = _SECRET_CALL.sub(lambda match: match.group('label') + _preserve_lines_redaction(match.group('value')), text)
+    text = _CLI_SECRET.sub(lambda match: match.group('label') + _preserve_lines_redaction(match.group('value')), text)
+    text = _AUTH_COMMAND.sub(lambda command: _CLI_SHORT_SECRET.sub(
+        lambda match: match.group('label') + _preserve_lines_redaction(match.group('value')), command.group()), text)
+    text = _BEARER.sub('<redacted>', _JWT.sub('<redacted>', text))
+
+    def url(match):
+        value = match.group('value').split('?', 1)[0].split('#', 1)[0]
+        return re.sub(r'(?<=//)[^/@\s]+@', '<redacted>@', value)
+
+    text = _ABS_URL.sub(url, text)
+    return re.sub(r'(?<!:)//[^\s/\"\']+@[^\s\"\'<>]+',
+                  lambda match: re.sub(r'(?<=//)[^/@\s]+@', '<redacted>@', match.group()).split('?', 1)[0].split('#', 1)[0], text)
+
+
+def _protocols(value: str) -> tuple[str, ...]:
+    scheme = value.lower().split(':', 1)[0]
+    if scheme in {'http', 'https'}:
+        return ('HTTP',)
+    if scheme in {'ws', 'wss'}:
+        return ('WEBSOCKET',)
+    if scheme in {'smf', 'smfs', 'solace'}:
+        return ('SOLACE',)
+    return (scheme.upper(),) if scheme in {'grpc', 'grpcs', 'tcp', 'tcps', 'mqtt', 'mqtts', 'amqp', 'amqps', 'ldap', 'ldaps', 'redis', 'rediss', 'sftp', 'ftp', 's3', 'jdbc', 'file', 'jms', 'kafka', 'rabbitmq', 'activemq', 'ibmmq'} else ()
 
 
 def _row(repository: str, workspace: Path, path: Path, line: int, family: str,
@@ -89,98 +171,128 @@ def _row(repository: str, workspace: Path, path: Path, line: int, family: str,
     return row
 
 
-def scan_files(workspace: Path, repository: str, paths: Iterable[Path]) -> dict:
+def scan_files(workspace: Path, repository: str, paths: Iterable[Path], *, expected_sha256: dict | None = None) -> dict:
     candidates: list[dict] = []
     scanned = 0
     skipped = []
     for path in sorted(paths):
-        # Robot suites and large fixture JSON files have their own bounded
-        # extractor.  Searching every variable interpolation there creates
-        # noise without improving cross-repository identity resolution.
-        if path.suffix in {'.robot', '.resource'}:
-            skipped.append({'path': path.relative_to(workspace).as_posix(), 'reason': 'SPECIALIZED_TEST_EXTRACTOR'})
-            continue
-        if path.suffix == '.json' and path.name not in {'package.json', 'tsconfig.json', 'jsconfig.json'} and not _is_import_map(path):
-            continue
-        if path.suffix not in _CODE_CONFIG_SUFFIXES and path.suffix != '.json' and not _is_env_file(path):
-            continue
         try:
-            if path.stat().st_size > 2 * 1024 * 1024:
-                skipped.append({'path': path.relative_to(workspace).as_posix(), 'reason': 'SOURCE_SIZE_LIMIT'})
-                continue
-            text = path.read_text(encoding='utf-8', errors='replace')
-        except OSError:
-            skipped.append({'path': path.relative_to(workspace).as_posix(), 'reason': 'UNREADABLE_SOURCE'})
+            with path.open('rb') as source:
+                raw = source.read(MAX_TEXT_BYTES + 1)
+            if len(raw) > MAX_TEXT_BYTES:
+                raise ValueError('SOURCE_SIZE_LIMIT')
+            text = decode_discovery_text(raw)[0]
+        except (OSError, ValueError, UnicodeError) as error:
+            if expected_sha256 is not None:
+                raise ValueError('DISCOVERY_SOURCE_CHANGED: ' + path.relative_to(workspace).as_posix()) from error
+            reason = str(error) if str(error) in {'SOURCE_SIZE_LIMIT', 'BINARY_FILE'} else 'UNREADABLE_SOURCE'
+            skipped.append({'path': path.relative_to(workspace).as_posix(), 'reason': reason})
             continue
+        source_sha256 = hashlib.sha256(raw).hexdigest()
+        if expected_sha256 is not None and (path.is_symlink() or expected_sha256.get(path) != source_sha256):
+            raise ValueError('DISCOVERY_SOURCE_CHANGED: ' + path.relative_to(workspace).as_posix())
         scanned += 1
-        lines = text.splitlines()
-        file_values: set[tuple[str, str]] = set()
-        for number, line in enumerate(lines, 1):
-            for match in _URL.finditer(line):
-                value = _safe_value(match.group('value'), url=True)
-                key = ('HTTP_ENDPOINT', value)
-                if key not in file_values:
-                    file_values.add(key)
-                    candidates.append(_row(repository, workspace, path, number, 'HTTP_ENDPOINT', 'url-literal', value))
-            for match in _HTTP_CALL_URL.finditer(line):
-                value = _safe_value(match.group('value'), url=True)
-                key = ('HTTP_ENDPOINT', value)
-                if key not in file_values:
-                    file_values.add(key)
-                    candidates.append(_row(repository, workspace, path, number, 'HTTP_ENDPOINT', 'http-call-url-literal', value))
-            config_matches = _CONFIG.finditer(line) if path.suffix in _CODE_CONFIG_SUFFIXES else ()
-            if _is_env_file(path):
-                config_matches = _ENV_CONFIG.finditer(line)
-            for match in config_matches:
-                env_name = match.groupdict().get('env')
-                value = env_name or next((match.group(name) for name in ('node', 'meta', 'java', 'value', 'template') if match.group(name)), '')
-                value = value if env_name else _safe_value(value)
-                key = ('CONFIG_READ', value)
-                if key not in file_values:
-                    file_values.add(key)
-                    candidates.append(_row(repository, workspace, path, number, 'CONFIG_READ', 'configuration-access', value))
-            for match in _KAFKA.finditer(line):
-                value = next((match.group(name) for name in ('annotation', 'send', 'camel') if match.group(name)), '')
-                value = _safe_value(value)
-                key = ('MESSAGE_CHANNEL', value)
-                if key not in file_values:
-                    file_values.add(key)
-                    candidates.append(_row(repository, workspace, path, number, 'MESSAGE_CHANNEL', 'kafka-channel', value))
-            for match in _SQL.finditer(line):
-                value = _safe_value(match.group('table'))
-                key = ('DATABASE_TABLE', value)
-                if key not in file_values:
-                    file_values.add(key)
-                    candidates.append(_row(repository, workspace, path, number, 'DATABASE_TABLE', 'sql-table', value))
-            for match in _IMPORT.finditer(line):
-                module = _safe_value(match.group('module'))
-                if module and not module.startswith(('http://', 'https://', '//')):
-                    key = ('MODULE_IMPORT', module)
-                    if key not in file_values:
-                        file_values.add(key)
-                        candidates.append(_row(repository, workspace, path, number, 'MODULE_IMPORT', 'module-import', module))
-            if path.suffix in {'.conf', '.j2'}:
-                for match in _NGINX.finditer(line):
-                    raw_value = match.group('value')
-                    value = _safe_value(raw_value, url=bool(re.search(r'(?:https?|wss?)://|//', raw_value, re.I)))
-                    key = ('GATEWAY_ROUTE', value)
-                    if key not in file_values:
-                        file_values.add(key)
-                        candidates.append(_row(repository, workspace, path, number, 'GATEWAY_ROUTE', 'nginx-directive', value))
-        # Re-scan HTTP call syntax over the complete file so a bounded
-        # multiline call such as fetch(\n  "/orders"\n) remains discoverable.
+        safe_lines = _safe_snippet(text).split('\n')
+        line_starts = [0, *(match.end() for match in re.finditer('\n', text))]
+        file_values: dict[tuple[str, str], dict] = {}
+        occurrence_keys: dict[tuple[str, str], set] = {}
+        snippets = {}
+        has_graphql_context = bool(re.search(r'\b(?:ApolloClient|ApolloProvider|graphql|gql|urql|react-apollo)\b|@apollo/client', text, re.I))
+        has_solace_context = bool(re.search(r'\b(?:com\.solacesystems|com\.solace\.messaging|solace\.messaging|solclientjs|solace-pubsubplus|solace-messaging)\b', text))
+
+        def record(match, family, pattern_id, value, roles=(), protocols=(), *, url=False):
+            start, end = match.span()
+            start += len(match.group()) - len(match.group().lstrip())
+            start_line, end_line = bisect_right(line_starts, start), bisect_right(line_starts, max(start, end - 1))
+            value = (value if family in {'CONFIG_READ', 'CONFIG_DECLARATION'} and re.fullmatch(r'[A-Za-z_][\w.@\[\]-]*', value)
+                     else _safe_value(value, url=url))
+            if not value:
+                return
+            if family in {'CALL_HINT', 'MESSAGE_OPERATION'}:
+                operation = value.rsplit('.', 1)[-1].lower()
+                if operation.startswith(('send', 'publish', 'createproducer')):
+                    roles = (*roles, 'producer')
+                elif operation.startswith(('subscribe', 'consume', 'receive', 'createconsumer', 'addsubscription')):
+                    roles = (*roles, 'subscriber')
+            key = (family, value)
+            row = file_values.get(key)
+            if row is None:
+                row = _row(repository, workspace, path, start_line, family, pattern_id, value,
+                           source_sha256=source_sha256, role_hints=[], protocol_hints=[], occurrences=[])
+                file_values[key] = row
+                occurrence_keys[key] = set()
+                candidates.append(row)
+            first = max(1, start_line - 1)
+            last = min(len(safe_lines), max(end_line + 1, start_line), first + 7)
+            if (first, last) not in snippets:
+                snippets[first, last] = '\n'.join(line[:400] for line in safe_lines[first - 1:last])[:1600]
+            occurrence_key = (start, end, pattern_id, tuple(roles), tuple(protocols))
+            if occurrence_key in occurrence_keys[key]:
+                return
+            occurrence_keys[key].add(occurrence_key)
+            occurrence = {
+                'start_line': start_line, 'end_line': end_line,
+                'start_column': start - line_starts[start_line - 1] + 1,
+                'end_column': end - line_starts[bisect_right(line_starts, end) - 1] + 1,
+                'pattern_id': pattern_id, 'role_hints': list(roles), 'protocol_hints': list(protocols),
+                'snippet_start_line': first, 'snippet_end_line': last, 'snippet': snippets[first, last],
+            }
+            # Different recognizers may find one declaration. Preserve each distinct occurrence and its hints.
+            row['occurrences'].append(occurrence)
+            row['role_hints'] = sorted(set(row['role_hints']) | set(roles))
+            row['protocol_hints'] = sorted(set(row['protocol_hints']) | set(protocols))
+            row['occurrence_count'] = len(row['occurrences'])
+
+        for match in _URL.finditer(text):
+            record(match, 'HTTP_ENDPOINT', 'url-literal', match.group('value'), ('dependency',),
+                   _protocols(match.group('value')) or ('HTTP',), url=True)
         for match in _HTTP_CALL_URL.finditer(text):
-            value = _safe_value(match.group('value'), url=True)
-            key = ('HTTP_ENDPOINT', value)
-            if key not in file_values:
-                file_values.add(key)
-                candidates.append(_row(repository, workspace, path, _line_at(text, match.start()),
-                                       'HTTP_ENDPOINT', 'http-call-url-literal', value))
-        if path.suffix in {'.graphql', '.graphqls', '.gql'}:
-            schema_line = next((index for index, line in enumerate(lines, 1)
-                                if re.search(r'^\s*(?:type|schema|directive|extend)\b', line)), 1)
-            candidates.append(_row(repository, workspace, path, schema_line,
-                                   'GRAPHQL_SCHEMA', 'graphql-schema-declaration', path.name))
+            record(match, 'HTTP_ENDPOINT', 'http-call-url-literal', match.group('value'), ('consumer',), ('HTTP',), url=True)
+        for match in _ABS_URL.finditer(text):
+            value = match.group('value')
+            family = 'HTTP_ENDPOINT' if value.lower().startswith(('http:', 'https:', 'ws:', 'wss:')) else 'NETWORK_ENDPOINT'
+            record(match, family, 'unquoted-network-url', value, ('dependency',), _protocols(value), url=True)
+        for match in _CONFIG.finditer(text):
+            value = next((value for value in match.groupdict().values() if value), '')
+            record(match, 'CONFIG_READ', 'configuration-access', value, ('configuration',))
+        for match in re.finditer(_ENV_CONFIG.pattern, text, re.M):
+            # Configuration names remain useful even when their values are credentials.
+            value = match.group('env')
+            if value.isupper() or _is_env_file(path):
+                record(match, 'CONFIG_READ', 'configuration-access', value, ('configuration',))
+        for match in _CONFIG_API.finditer(text):
+            value = next((value for value in match.groupdict().values() if value), '')
+            record(match, 'CONFIG_READ', 'configuration-api', value, ('configuration',))
+        for match in _CONFIG_DECLARATION.finditer(text):
+            record(match, 'CONFIG_DECLARATION', 'configuration-declaration', match.group('value'), ('configuration',))
+        for match in _KAFKA.finditer(text):
+            value = next((value for value in match.groupdict().values() if value), '')
+            record(match, 'MESSAGE_CHANNEL', 'kafka-channel', value, ('consumer',), ('KAFKA',))
+        for match in _SQL.finditer(text):
+            record(match, 'DATABASE_TABLE', 'sql-table', match.group('table'), ('consumer',), ('SQL',))
+        for match in _IMPORT.finditer(text):
+            module = match.group('module')
+            if not module.startswith(('http://', 'https://', '//')):
+                record(match, 'MODULE_IMPORT', 'module-import', module, ('dependency',))
+        for match in _NGINX.finditer(text):
+            value = match.group('value')
+            record(match, 'GATEWAY_ROUTE', 'nginx-directive', value, ('configuration', 'provider'),
+                   ('HTTP',), url=bool(re.search(r'(?:https?|wss?)://|//', value, re.I)))
+        for family, pattern_id, pattern, roles, protocols in PATTERNS:
+            for match in pattern.finditer(text):
+                value = next((value for value in match.groupdict().values() if value), match.group())
+                if family == 'GRAPHQL_SCHEMA':
+                    value = path.name
+                if (family == 'GRAPHQL_CLIENT' and value in {'useQuery', 'useLazyQuery', 'useMutation', 'useSubscription'}
+                        and not has_graphql_context):
+                    continue
+                hints = _protocols(value) or protocols
+                if pattern_id == 'solace-operation' and not has_solace_context:
+                    hints = ()
+                record(match, family, pattern_id, value, roles, hints,
+                       url=family in {'HTTP_ENDPOINT', 'MESSAGE_CHANNEL'})
+        for row in file_values.values():
+            row['occurrences'].sort(key=lambda occurrence: (occurrence['start_line'], occurrence['start_column'], occurrence['pattern_id']))
     unique = {row['id']: row for row in candidates}
     return {
         'scanned_files': scanned,
@@ -190,5 +302,13 @@ def scan_files(workspace: Path, repository: str, paths: Iterable[Path]) -> dict:
 
 
 def scan_repository(workspace: Path, repository: str, root: Path) -> dict:
-    """Scan the same included source boundary used by the census."""
-    return scan_files(workspace, repository, iter_source_files(root, root=root))
+    """Search the broad text inventory independently of typed-extractor layouts."""
+    inventory = discovery_inventory(root)
+    sources = {root / row['path']: row['sha256'] for row in inventory['files'] if row['status'] == 'SCANNED'}
+    result = scan_files(workspace, repository, sources, expected_sha256=sources)
+    result['skipped_files'].extend({'path': (root / row['path']).relative_to(workspace).as_posix(), 'reason': row['reason']}
+                                   for row in inventory['files'] if row['status'] == 'SKIPPED')
+    result['skipped_files'].sort(key=lambda row: row['path'])
+    result['file_inventory'] = inventory
+    result['discovery_sha256'] = inventory['content_sha256']
+    return result

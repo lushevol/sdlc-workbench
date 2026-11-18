@@ -117,3 +117,15 @@ Build commands do not investigate Markdown notes or refresh saved conclusions.
 Ask the agent to investigate sources before final regeneration. A build command alone does not complete semantic source review.
 Discovery completeness applies to the reviewed source boundary, with unavailable and unsupported scope stated explicitly.
 Keep project-specific architecture in optional workspace inputs. Keep validation and rendering enhancements inside the canonical skill.
+
+### Service call snippets
+
+Prioritize internal and external service calls when extending the architecture graph.
+Use [snippet discovery](../../.agents/skills/service-dependencies-graph/references/architecture/snippet-discovery.md) to collect candidates and connect call chains through AI source review.
+For a flat repository parent, use `build --repos PATH --layout flat`; repository names do not select search patterns.
+Use `patterns` with `service_only: true` and `include_snippets: true` to inspect service call candidates.
+Search related symbols or destinations with `query`, then trace wrappers, configuration, routes, and providers.
+
+The [18 November clarification](../../tasks/workbench-graph-instruction-integration-20261028/evidence/snippet-discovery-20261118/user-input.txt) identifies Solace as the future messaging platform.
+Review Solace publishers, consumers, broker/VPN settings, queue/topic destinations, subscriptions, and request/reply bindings when sources contain them.
+Keep current Kafka evidence until actual source changes support its removal or replacement.
