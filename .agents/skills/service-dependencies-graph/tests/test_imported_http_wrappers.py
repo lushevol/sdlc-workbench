@@ -10,6 +10,37 @@ web = load_tool('extract_web_interfaces')
 
 
 class ImportedHttpWrapperTests(unittest.TestCase):
+    def test_uninspected_routing_keeps_distinct_declared_calls_without_provider_joins(self):
+        builder = load_tool('build_graph')
+        with tempfile.TemporaryDirectory() as directory:
+            workspace, repository = self.fixture(directory, client='''import axios from "axios";
+const service = axios.create(runtimeConfig); export default service;''')
+            (repository / 'package.json').write_text('{"name":"@fixture/web"}')
+            (repository / 'src').mkdir()
+            (repository / 'src/consumer.ts').write_text('''import service from "../client";
+service.get('/api/orders'); service.post('/api/orders', {});''')
+            provider = workspace / 'repos/provider'
+            (provider / 'src/main/java').mkdir(parents=True)
+            (provider / 'pom.xml').write_text('<project><groupId>fixture</groupId><artifactId>provider</artifactId></project>')
+            (provider / 'src/main/java/Controller.java').write_text('''@RestController class Controller {
+@GetMapping("/api/orders") Object get() {return null;}
+@PostMapping("/api/orders") Object post() {return null;}
+}''')
+            graph = builder.Graph(workspace)
+            builder.extract_web(graph, repository, graph.add_repository(repository, 'WEB', True), True)
+            builder.extract_spring(graph, provider, graph.add_repository(provider, 'SPRING', True))
+            builder.resolve_cross_repository(graph)
+            declarations = [node for node in graph.nodes.values() if node.get('properties', {}).get('routing_limit')]
+            self.assertEqual({node['properties']['method'] for node in declarations}, {'GET', 'POST'})
+            self.assertEqual(len(declarations), 2)
+            for node in declarations:
+                self.assertNotIn('path', node['properties'])
+                self.assertEqual(node['properties']['declared_path'], '/api/orders')
+            calls = [edge for edge in graph.edges.values() if edge['relationship'] == 'CALLS_REST']
+            self.assertEqual(len(calls), 2)
+            self.assertTrue(all(edge['resolution_status'] == 'UNRESOLVED' for edge in calls))
+            self.assertTrue(all(edge['assertion_status'] == 'INFERRED' for edge in calls))
+
     def fixture(self, directory, *, helper=None, client=None, wrapper=None):
         workspace = Path(directory)
         repository = workspace / 'repos/web'
@@ -109,6 +140,8 @@ postService("https://outside.example/token", {});''')
 postService("/auth/v2/sso/login", {});''')
                 self.assertTrue(binding['wrappers']['postService']['routing_limit'])
                 self.assertEqual(result['operations'], [])
+                self.assertEqual([row['path'] for row in result['unresolved_operations']], ['/api/auth/v2/sso/login'])
+                self.assertTrue(result['unresolved_operations'][0]['routing_limit'])
                 self.assertIn('UNRESOLVED_WEB_CLIENT_ROUTING', {row['code'] for row in result['diagnostics']})
                 self.assertNotIn('DO_NOT_RETAIN', json.dumps((binding, result)))
 

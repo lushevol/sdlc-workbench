@@ -34,7 +34,7 @@ Use direct source inspection and existing project tools for unsupported scope, a
 | Explore knowledge and provenance | Read the [knowledge graph guide](references/architecture/knowledge-graph.md), then query records, references, or bounded paths. | Exact identities, lifecycle states, grades, evidence, and freshness. |
 | Build the active wiki graph | Use the [wiki graph workflow](../llm-wiki/references/workflows.md#wiki-graph). | Original OpenKB wikilink visualization in either semantic engine mode. |
 | Explain the architecture | Check coverage, services, and repository relationships. | Analysis roots, confirmed links, and unresolved boundaries. |
-| Discover relationships from initial instructions | Follow [instruction investigation](references/architecture/initial-instruction-investigation.md), then [the context contract](references/architecture/user-architecture-context.md). | Investigated relationships integrated into the graph, with source support, inference, conflicts, and limits. |
+| Discover or complete relationships | Follow [source investigation](references/architecture/initial-instruction-investigation.md), then [the context contract](references/architecture/user-architecture-context.md). Human hints are optional. | Source-backed relationships, missing extraction repairs, and explicit unavailable boundaries. |
 | Trace one repository or boundary | Search concrete names or paths, then inspect neighborhoods and cited source. | Consumer/provider evidence and identity limits. |
 | Inspect the viewer | Use the [viewer guide](references/architecture/viewer-hierarchy.md). | System connections, interaction details, and package declarations. |
 | Assess requirement or code impact | Use [impact guidance](references/architecture/impact-analysis.md). | Source-backed effects, candidates, and unexamined scope. |
@@ -75,17 +75,22 @@ Generation compares repository and knowledge input inventories before and after 
 Source changes or failed validation stop publication and preserve the previous valid bundle.
 Generation does not clone repositories, select active profiles, or refresh code indexes.
 
-When `relationships/service-dependencies/initial-instructions.md` exists, read it before building or refreshing the graph.
-Treat changed notes and newly added repositories as investigation inputs under the [instruction investigation workflow](references/architecture/initial-instruction-investigation.md).
-The Markdown file is an agent input. The deterministic build does not read or investigate it.
+For discovery and completeness requests, use the [source investigation workflow](references/architecture/initial-instruction-investigation.md).
+Start from the repository census and boundary declarations. Human relationship input is unnecessary.
+Inspect every in-scope repository and dependency family, including unsupported and disconnected sources.
+Trace unmatched declarations, repair demonstrated extraction gaps, and repeat until remaining boundaries have explicit evidence limits.
+When `relationships/service-dependencies/initial-instructions.md` exists, preserve and read it as optional hypotheses and regression expectations.
+Compare those expectations after independent source discovery. Do not use them as the discovery scope or provider proof.
+The deterministic build extracts supported syntax. The agent performs source investigation; a build alone does not complete it.
 
 The build also reads optional `relationships/service-dependencies/architecture-context.json`.
 Use `build --context PATH` to select another workspace-local context file.
+Use `build --no-context` for source-only extraction. It excludes saved architecture context and cannot combine with `--context`.
 Read the [context contract](references/architecture/user-architecture-context.md) before creating or changing this input.
 Context records require exact source hashes and known repository, layer, subject, and evidence references.
 The build captures cited bytes and rejects source changes before publication.
-Treat initial instructions as search seeds. They can be incomplete, outdated, or incorrect.
-Investigate their claims against current sources before generating the final graph.
+Keep source-only findings independent of user clarification evidence.
+Optional instructions can be incomplete, outdated, or incorrect. Check their claims against current sources before final generation.
 Version `1.1.0` integrates investigated claims into graph nodes, relationships, queries, and the main viewer.
 Source-supported claims retain review evidence. Inferences, conflicts, and unavailable boundaries retain explicit assessments.
 Reuse matching canonical edges instead of duplicating extracted facts.
@@ -110,7 +115,7 @@ Read these artifacts as needed:
 - `graph.json`: canonical nodes, edges, and evidence.
 - `relationship-viewer.html`: interactive projection of the same snapshot.
 - `manifest.json`: artifact checksums and snapshot identity.
-- `architecture-context.json`: optional applied user architecture input, with separate provenance and captured source bytes.
+- `architecture-context.json`: optional applied investigation context, with separate provenance and captured source bytes.
 
 ## Query the snapshot
 
@@ -171,6 +176,7 @@ Static changes do not establish runtime impact or business defects.
 | GraphQL | Selected clients, annotated resolvers, transport routes, and imported gql documents. | Dynamic documents stay partial; selections do not establish provider or transport bindings. |
 | Feign | Declared service identity and method contract extraction. | URL overrides, collisions, and dynamic identities remain unresolved. |
 | Java HTTP | URI clients and typed RestTemplate calls, including symbolic destinations. | Dynamic endpoints stay unresolved; getter spans can identify configuration dependencies. |
+| Directory APIs | Typed Spring LDAP and JNDI directory operations. | Provider identities remain unknown; generic JNDI does not prove LDAP. |
 | Configuration | YAML/properties declarations, Spring bindings, Value/Environment reads, and typed getters. | Values stay excluded; profiles stay unselected. |
 | Java structure | Declared types, constructor/field injection, inheritance, and bounded typed calls. | Interface targets do not select runtime implementations. |
 | Web structure | Relative/alias value imports, index modules, barrels, and named/default exported symbols. | Dynamic imports, ambiguous aliases, and unsupported exports retain dispositions. |
@@ -180,8 +186,8 @@ Static changes do not establish runtime impact or business defects.
 | npm/Maven | Direct coordinates, local publishers, and scopes. | Build declarations do not establish runtime invocation or version compatibility. |
 | ES module imports | Exact value imports and in-scope npm producers. | Type-only imports are excluded; duplicate providers remain ambiguous. |
 | Database | Supported runtime clients, queries, and mapper declarations. | Migrations and equal table names do not prove runtime access. |
-| MFE/SystemJS | Literal remote imports and exact package identity. | Missing or duplicate provider identities remain unresolved or ambiguous. |
-| Nginx/gateway | Supported static routes, rewrites, proxy targets, and service aliases. | Dynamic templates and ambiguous upstream pools remain unresolved. |
+| MFE/SystemJS | Literal remote imports, inspected Single-SPA layout registrations, and exact package identity. | Missing or duplicate provider identities remain unresolved or ambiguous. |
+| Nginx/gateway | Supported static routes, rewrites, proxy targets, service aliases, and symbolic template routes. | Templates retain unresolved boundaries; no environment value is selected. |
 | Cache/platform | Known Redis clients/configuration and selected platform clients. | Names alone do not establish dependency or cluster identity. |
 | Internal gRPC SDK | Selected direct SDK calls with explicit imported types. | Generic stubs and external provider identities remain unsupported or unresolved. |
 | Local files | Selected instantiated Java file APIs. | Path identity remains unknown; no shared-file or SFTP join is inferred. |
@@ -203,6 +209,9 @@ agent to interpret unresolved cases.
 
 Generator version `2.2.0` adds method callsites, imported HTTP wrappers, and evidence-backed trace navigation within graph schema `2.0.0`.
 Generator version `2.3.0` adds optional knowledge projection metadata within that same schema.
+Generator version `2.4.0` adds source-driven discovery support, directory calls, Single-SPA registrations, and template route boundaries.
+Uninspected HTTP routing retains the declared call argument as an inferred boundary, without a resolvable destination path.
+Use `patterns` pagination to inspect every candidate within a stable snapshot.
 Existing architecture projections exclude knowledge navigation edges.
 New snapshots include detailed dependency categories and a checksum-backed declaration audit.
 Legacy version `2.0.0` dependency projections remain valid without these added categories.

@@ -163,6 +163,8 @@ function renderArchitectureContext() {
   const panel=$('architecture-context');panel.hidden=!architectureContext;if(!architectureContext)return;
   const data=architectureContext.document, query=$('context-search').value.trim().toLowerCase(), repository=$('context-repository').value;
   const subjects=new Map(data.subjects.map(row=>[row.id,row])), layers=new Map(data.layers.map(row=>[row.id,row]));
+  const reviews=new Map((data.investigations||[]).map(row=>[row.relationship_id,row.status]));
+  const sourceKinds=new Map(data.sources.map(row=>[row.id,row.kind]));
   const repositoryMatch=row=>repository==='all'||repository==='unbound'&&!row.repository||row.repository===repository;
   const textMatch=row=>!query||JSON.stringify(row).toLowerCase().includes(query)||(row.layer_id&&JSON.stringify(layers.get(row.layer_id)).toLowerCase().includes(query));
   const scoped=new Set(data.subjects.filter(repositoryMatch).map(row=>row.id));
@@ -172,10 +174,10 @@ function renderArchitectureContext() {
   for(const row of relationships){selected.add(row.source);selected.add(row.target);}
   for(const row of notes)for(const id of row.subject_ids)if(scoped.has(id))selected.add(id);
   const visible=data.subjects.filter(row=>selected.has(row.id));
-  $('context-counts').textContent=`${visible.length} of ${data.subjects.length} subjects · ${relationships.length} of ${data.relationships.length} supplied relationships. Adjacent subjects remain visible.`;
-  $('context-layers').innerHTML=[...data.layers].sort((a,b)=>a.order-b.order).map(layer=>`<section class="context-layer"><div class="eyebrow">Layer ${layer.order} · USER_REPORTED</div><h2>${esc(layer.label)}</h2><p>${esc(layer.description)}</p><p>${contextEvidence(layer.source_ids)}</p>${visible.filter(row=>row.layer_id===layer.id).map(contextSubject).join('')||'<p class="muted">No matching subjects in this layer.</p>'}</section>`).join('');
+  $('context-counts').textContent=`${visible.length} of ${data.subjects.length} subjects · ${relationships.length} of ${data.relationships.length} context relationships. Adjacent subjects remain visible.`;
+  $('context-layers').innerHTML=[...data.layers].sort((a,b)=>a.order-b.order).map(layer=>`<section class="context-layer"><div class="eyebrow">Layer ${layer.order} · ${layer.source_ids.every(id=>sourceKinds.get(id)==='SOURCE_REVIEW')?'SOURCE_REVIEWED':'USER_REPORTED'}</div><h2>${esc(layer.label)}</h2><p>${esc(layer.description)}</p><p>${contextEvidence(layer.source_ids)}</p>${visible.filter(row=>row.layer_id===layer.id).map(contextSubject).join('')||'<p class="muted">No matching subjects in this layer.</p>'}</section>`).join('');
   $('context-unlayered').innerHTML='<div class="context-other">'+visible.filter(row=>!row.layer_id).map(contextSubject).join('')+'</div>';
-  $('context-relationships').innerHTML=relationships.map(row=>`<tr><td>${esc(subjects.get(row.source).label)} → ${esc(subjects.get(row.target).label)}</td><td><strong>${esc(row.kind)}</strong><span class="badge candidate">USER_REPORTED</span><small>${esc(row.description)}</small></td><td>${contextEvidence(row.source_ids)}</td></tr>`).join('')||'<tr><td colspan="3">No supplied relationships match these filters.</td></tr>';
+  $('context-relationships').innerHTML=relationships.map(row=>`<tr><td>${esc(subjects.get(row.source).label)} → ${esc(subjects.get(row.target).label)}</td><td><strong>${esc(row.kind)}</strong><span class="badge candidate">${esc(reviews.get(row.id)||'USER_REPORTED')}</span><small>${esc(row.description)}</small></td><td>${contextEvidence(row.source_ids)}</td></tr>`).join('')||'<tr><td colspan="3">No context relationships match these filters.</td></tr>';
   $('context-notes').innerHTML=notes.map(row=>`<p class="context-note">${esc(row.description)} <small>${contextEvidence(row.source_ids)}</small></p>`).join('')||'<p>No clarification notes match these filters.</p>';
   $('context-sources').innerHTML=architectureContext.provenance.sources.map(row=>`<p class="context-note" id="context-source-${esc(row.id)}"><strong>${esc(row.id)} · ${esc(row.kind)}</strong><br><a href="${esc(row.snapshot_path)}">Captured source bytes</a> · <a href="${esc(sourcePrefix+row.path.split('/').map(encodeURIComponent).join('/'))}">${esc(row.path)}</a><br>Revision: ${esc(row.revision)}<br><code>SHA-256 ${esc(row.sha256)}</code></p>`).join('');
   $('context-limits').innerHTML=architectureContext.provenance.limitations.map(limit=>`<p class="context-note">${esc(limit)}</p>`).join('');

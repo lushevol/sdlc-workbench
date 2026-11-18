@@ -103,12 +103,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--repos', type=Path, help='Repository directory, relative to the workspace')
     parser.add_argument('--out', type=Path, help='Published bundle directory, relative to the workspace')
     parser.add_argument('--descriptions', type=Path, help='Optional reviewed description overrides')
-    parser.add_argument('--context', type=Path, help='Optional user architecture context, relative to the workspace')
+    context_options = parser.add_mutually_exclusive_group()
+    context_options.add_argument('--context', type=Path, help='Optional reviewed architecture context, relative to the workspace')
+    context_options.add_argument('--no-context', action='store_true', help='Build from sources without applying saved architecture context')
     parser.add_argument('--open', action='store_true', help='Open the published viewer')
     args = parser.parse_args(argv)
     workspace = args.workspace.expanduser().resolve()
     context_path = args.context or Path(DEFAULT_CONTEXT)
-    captured_context = load_context(workspace, context_path, required=args.context is not None)
+    captured_context = None if args.no_context else load_context(workspace, context_path, required=args.context is not None)
     knowledge_inputs = input_fingerprints(workspace)
 
     def resolve(path: Path) -> Path:
@@ -161,7 +163,8 @@ def main(argv: list[str] | None = None) -> int:
         current = inventory(workspace, repositories)
         if extraction_fingerprints(coverage) != extraction_fingerprints(current):
             raise ValueError('Repository sources changed during graph generation; rebuild from stable inputs')
-        current_context = load_context(workspace, context_path, required=captured_context is not None or args.context is not None)
+        current_context = (None if args.no_context else
+                           load_context(workspace, context_path, required=captured_context is not None or args.context is not None))
         before = captured_context.fingerprints() if captured_context else {}
         after = current_context.fingerprints() if current_context else {}
         if before != after:

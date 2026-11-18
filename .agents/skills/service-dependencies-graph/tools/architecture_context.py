@@ -40,7 +40,7 @@ LAYER = _object({'id': ID, 'label': TEXT, 'order': {'type': 'integer', 'minimum'
                  'description': TEXT, 'source_ids': REFS})
 SUBJECT = _object({'id': ID, 'repository': {'type': ['string', 'null'], 'pattern': r'^repo:.+'},
                    'label': TEXT, 'role': TEXT, 'layer_id': {'anyOf': [ID, {'type': 'null'}]},
-                   'status': {'enum': ['USER_REPORTED', 'OUT_OF_SCOPE']},
+                   'status': {'enum': ['USER_REPORTED', 'SOURCE_REVIEWED', 'OUT_OF_SCOPE']},
                    'description': TEXT, 'source_ids': REFS})
 SUBJECT['properties']['node_id'] = TEXT
 RELATIONSHIP = _object({'id': ID, 'source': ID, 'target': ID, 'kind': TEXT,
@@ -104,6 +104,7 @@ def validate_document(document: dict, repository_ids: set[str] | None = None) ->
     if len(identifiers) != len(set(identifiers)):
         raise ValueError('Architecture context IDs must be unique')
     source_ids = {row['id'] for row in document['sources']}
+    source_by_id = {row['id']: row for row in document['sources']}
     layer_ids = {row['id'] for row in document['layers']}
     subject_ids = {row['id'] for row in document['subjects']}
     orders = [row['order'] for row in document['layers']]
@@ -116,6 +117,9 @@ def validate_document(document: dict, repository_ids: set[str] | None = None) ->
             if not set(row['source_ids']) <= source_ids:
                 raise ValueError('Architecture context contains an unknown source reference: ' + row['id'])
     for row in document['subjects']:
+        if row['status'] == 'SOURCE_REVIEWED' and (document['schema_version'] != '1.1.0' or not any(
+                source_by_id[source_id]['kind'] == 'SOURCE_REVIEW' for source_id in row['source_ids'])):
+            raise ValueError('SOURCE_REVIEWED subject requires version 1.1.0 and SOURCE_REVIEW evidence: ' + row['id'])
         if row['layer_id'] is not None and row['layer_id'] not in layer_ids:
             raise ValueError('Architecture context contains an unknown layer reference: ' + row['id'])
         if repository_ids is not None and row['repository'] is not None and row['repository'] not in repository_ids:

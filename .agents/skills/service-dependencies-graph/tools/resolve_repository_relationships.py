@@ -145,6 +145,8 @@ def resolve(graph):
         return len(left) == len(right) and all(segment_match(a, b) for a, b in zip(left, right))
 
     def rewrite_path(route, path: str) -> str | None:
+        if route.get('template') or route.get('location_modifier') in {'~', '~*'}:
+            return None
         location = route.get('location', '')
         if route.get('exact'):
             if path != location:
@@ -411,9 +413,13 @@ def resolve(graph):
         if relation == 'LOADS_REMOTE':
             join(edge, aliases.get(props.get('module', ''), {}), 'declared-module-identity')
         elif relation == 'CALLS_SERVICE':
+            if props.get('template'):
+                continue
             alias = str(props.get('service_alias', '')).lower()
             join(edge, {key: values for key, values in aliases.get(alias, {}).items() if graph.nodes[key]['type'] == 'SERVICE'}, 'declared-service-identity')
         elif relation in {'CALLS_REST', 'CALLS_GRAPHQL', 'SUBSCRIBES_WS'}:
+            if props.get('routing_limit'):
+                continue
             protocol = props.get('protocol')
             path = props.get('path', '')
             # Absolute URLs need an exact known authority. Never discard an external host.

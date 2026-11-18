@@ -26,6 +26,8 @@ Repository groups are optional placement conventions.
 | Agent adapters | Shared CLI, MCP, canonical skills, and client discovery guides. | Each client controls discovery. Native desktop and browser integrations have separate platform limits. |
 
 Graph coverage is partial outside its documented extractors, including generic gRPC and unsupported language syntax.
+The [graph discovery workflow](../.agents/skills/service-dependencies-graph/references/architecture/initial-instruction-investigation.md) starts from available repositories without requiring human relationship hints.
+It combines extraction, source review, and supported parser repairs while preserving unresolved boundaries.
 Inspect [the extraction map](../.agents/skills/service-dependencies-graph/SKILL.md#dependency-extraction-map) before using graph results.
 An unsupported extractor does not block manual onboarding or execution through existing repository tools.
 It also supplies no evidence that a relationship is absent.

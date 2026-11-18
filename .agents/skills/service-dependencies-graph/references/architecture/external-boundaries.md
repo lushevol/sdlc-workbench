@@ -18,6 +18,7 @@ Dynamic Jinja expressions remain unresolved without concrete bindings.
 IP-only identities and multiple/empty upstream pools cannot establish unique repository providers.
 
 A route template does not establish its active deployment.
+Symbolic Jinja routes remain unresolved even when a static route uses the same upstream label.
 Timeouts, retries, headers, and request/response types require direct evidence when relevant.
 Generated contract files cannot replace a bound runtime caller or provider.
 Unsupported rewrite chains remain explicit limits.
@@ -52,6 +53,9 @@ Runtime clients and queries determine supported data-access claims.
 Datasource configuration identifies connection or migration scope without table-level execution proof.
 Shared table names require matching datasource/schema identity before cross-repository joins.
 Never retain credentials or unredacted connection strings.
+Typed Spring LDAP calls establish directory operations with unknown provider identity.
+JNDI `InitialDirContext` remains a generic directory boundary because its provider need not use LDAP.
+Imports, fields, and client construction without a supported operation do not establish Spring LDAP access.
 
 Selected SDK calls can identify external boundaries with unresolved provider identities.
 Generic generated stubs, tracing configuration, and platform names remain insufficient alone.
@@ -61,6 +65,8 @@ Keep inferred platform findings explicit.
 ## MFE and internal packages
 
 Literal remote imports and exact published module names can establish composition joins.
+Inspected Single-SPA registrations can obtain literal module names from their bound HTML layout.
+Shadowed APIs, runtime names, mutations, and unknown registration-object escapes remain unresolved.
 Import maps remain configuration evidence; observed browser traces supply separate runtime evidence.
 Direct npm/Maven declarations retain coordinates and scopes.
 Exact local publishers can establish build dependencies.

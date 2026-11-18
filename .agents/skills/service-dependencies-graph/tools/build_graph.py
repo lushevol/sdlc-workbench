@@ -21,6 +21,7 @@ from .extract_web_interfaces import extract_interfaces, extract_rtk_base_query_w
 from .extract_websocket_endpoints import extract_websocket_endpoints
 from .extract_feign_clients import extract_feign_clients
 from .extract_file_dependencies import extract as extract_file_dependencies
+from .extract_ldap_dependencies import extract as extract_ldap_dependencies
 from .extract_gateway_routes import extract_nginx_routes, extract_open_api_routes
 from .extract_grpc_dependencies import extract as extract_grpc_dependencies
 from .extract_java_http import extract as extract_java_http
@@ -33,7 +34,7 @@ from .source_inventory import (is_source_directory, is_source_file, iter_source_
 
 
 SCHEMA_VERSION = "2.0.0"
-GENERATOR_VERSION = "2.3.0"
+GENERATOR_VERSION = "2.4.0"
 FOUNDATION_REPOS: set[str] = set()
 WEB_GROUPS = {
     "components": ("UI_COMPONENT", "renders the user interactions and visual state for"),
@@ -674,7 +675,8 @@ def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> Non
         )
         for diagnostic in interfaces["diagnostics"]:
             graph.diagnostic(diagnostic["code"], f"Line {diagnostic['line']}: {diagnostic['message']}", repository, path_value)
-        for operation in interfaces["operations"]:
+        for operation in [*interfaces["operations"], *interfaces.get("unresolved_operations", [])]:
+            routing_limit = operation.get("routing_limit")
             url, protocol = operation["path"], operation["protocol"]
             relationship = {"REST": "CALLS_REST", "GRAPHQL": "CALLS_GRAPHQL", "WEBSOCKET": "SUBSCRIBES_WS"}[protocol]
             ev = graph.add_evidence(repository, path_value, operation["line"], operation["declaration"], f"web-{protocol.lower()}")
@@ -683,11 +685,13 @@ def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> Non
                 operation_evidence.add(graph.add_evidence(
                     repository, support.get("path", path_value), support["line"], support["declaration"], support["extractor"],
                 ))
-            operation_id = stable_id(f"operation:{protocol.lower()}", operation["method"], url)
+            operation_id = (stable_id("operation:unresolved-routing", repository, path_value, operation["line"], protocol, operation["method"], url)
+                            if routing_limit else stable_id(f"operation:{protocol.lower()}", operation["method"], url))
             graph.add_node(operation_id, "API_OPERATION", url, None, dimensions=("RUNTIME",), component_kind=None,
                            functional_role=f"Provides a {protocol} runtime interface", business_meaning="Supplies data or actions required by a user workflow",
                            source_paths=(), evidence=operation_evidence, assertion_status=operation.get("assertion_status", "CONFIRMED"),
-                           properties={"protocol": protocol, "path": url, "method": operation["method"],
+                           properties={"protocol": protocol, "method": operation["method"],
+                                       **({"declared_path": url, "routing_limit": routing_limit} if routing_limit else {"path": url}),
                                        **({"conditional": True} if operation.get("conditional") else {})})
             client_id = f"component:{repo.name}:client:{stable_id('path', path_value, protocol).split(':')[1]}"
             graph.add_node(client_id, "COMPONENT", path.stem, repository, dimensions=("RUNTIME", "BUSINESS"),
@@ -697,7 +701,8 @@ def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> Non
             graph.add_edge(owner, client_id, "USES_COMPONENT", "RUNTIME", (ev,))
             graph.add_edge(client_id, operation_id, relationship, "RUNTIME", operation_evidence,
                            assertion_status=operation.get("assertion_status", "CONFIRMED"),
-                           resolution_status="UNRESOLVED")
+                           resolution_status="UNRESOLVED",
+                           properties={"routing_limit": routing_limit} if routing_limit else None)
         for match in re.finditer(r'\bgql\s*`\s*(query|mutation|subscription)\s+([A-Za-z_][A-Za-z0-9_]*)', text, re.I):
             operation_type, operation_name = match.groups()
             protocol = "WEBSOCKET" if operation_type.lower() == "subscription" else "GRAPHQL"
@@ -728,7 +733,6 @@ def extract_gateway_configuration(graph: Graph, repo: Path, repository: str) -> 
             path_value = source_path(graph.workspace, path)
             graph.diagnostic("UNRESOLVED_NGINX_TEMPLATE", "Nginx template requires environment values before route resolution", repository, path_value)
             graph.add_evidence(repository, path_value, 1, "Nginx configuration template; environment values are unknown", "nginx-template")
-            continue
         routes, diagnostics = extract_nginx_routes(path)
         path_value = source_path(graph.workspace, path)
         for diagnostic in diagnostics:
@@ -801,11 +805,14 @@ def extract_infrastructure(graph: Graph, repo: Path, repository: str) -> None:
             alias = host if host and not any(token in host for token in ("$", "{", "}")) else ""
         if route.get("upstream_ambiguous"):
             alias = ""
-        boundary = stable_id("external:nginx-upstream", repository, authority)
+        if route.get("template"):
+            alias = ""
+        boundary = stable_id("external:nginx-template-upstream" if route.get("template") else "external:nginx-upstream", repository, authority)
         graph.add_node(boundary, "EXTERNAL_SYSTEM", authority, None, dimensions=("RUNTIME",),
                        component_kind=None, functional_role="Names a configured nginx upstream",
                        business_meaning="Provider identity remains unresolved until an exact declared identity matches",
-                       source_paths=[], evidence=[ev], properties={"service_alias": alias, "upstream": authority})
+                       source_paths=[], evidence=[ev], properties={"service_alias": alias, "upstream": authority,
+                                                                  **({"template": True} if route.get("template") else {})})
         graph.add_edge(component, boundary, "CALLS_SERVICE", "RUNTIME", [ev], resolution_status="UNRESOLVED",
                        properties={"client": "NGINX"})
 
@@ -1270,6 +1277,21 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
                        properties={"expressions": [topic.get("expression", topic["name"])],
                                    **({"configuration_paths": [source_path(graph.workspace, repo / item) for item in topic["related_paths"]]} if topic.get("related_paths") else {})})
 
+    for operation in extract_maven_modules(extract_ldap_dependencies, repo)["operations"]:
+        path_value = source_path(graph.workspace, repo / operation["path"])
+        ev = graph.add_evidence(repository, path_value, int(operation["line"]), operation["declaration"], "java-ldap-client")
+        boundary = stable_id("directory", repository, operation["protocol"])
+        graph.add_node(boundary, "DATA_PLATFORM", operation["protocol"] + " directory", None,
+                       dimensions=("RUNTIME",), component_kind=None,
+                       functional_role="Provides directory operations through an unidentified provider",
+                       business_meaning="Directory dependency declared by typed source calls",
+                       source_paths=(), evidence=(ev,),
+                       properties={"platform_kind": "DIRECTORY", "protocol": operation["protocol"], "provider_identity": "UNKNOWN"})
+        owner = detail_by_path.get(operation["path"], service_id)
+        graph.add_edge(owner, boundary, "QUERIES_DATA_PLATFORM", "RUNTIME", (ev,), resolution_status="UNRESOLVED",
+                       properties={"directory_apis": [operation["api"]], "directory_methods": [operation["method"]]})
+        graph.diagnostic("UNRESOLVED_DIRECTORY_IDENTITY", "Directory operations have unknown provider identity", repository, path_value)
+
     for operation in extract_maven_modules(extract_file_dependencies, repo)["operations"]:
         path_value = source_path(graph.workspace, repo / operation["path"])
         ev = graph.add_evidence(repository, path_value, int(operation["line"]),
@@ -1489,6 +1511,8 @@ def main(argv: list[str] | None = None) -> int:
         if visible:
             if row["kind"] == "WEB":
                 extract_web(graph, repo, repository, visible)
+                from .extract_single_spa_layout import add_to_graph as add_single_spa_layout
+                add_single_spa_layout(graph, repo, repository)
                 from .extract_web_structure import add_to_graph as add_web_structure
                 web_structure = add_web_structure(graph, repo, repository)
                 retain_ledger(graph, repo, repository, web_structure.get('ledger', []))

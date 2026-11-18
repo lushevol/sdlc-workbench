@@ -31,7 +31,7 @@ def integer_schema(minimum, maximum):
 
 OPERATIONS = {
     "coverage": {"description": "Read graph coverage, source fingerprints, and extraction limits.", "input_schema": object_schema()},
-    "patterns": {"description": "Read deterministic dependency-shaped search candidates and their extraction accountability.", "input_schema": object_schema({"repository": string_schema(256), "family": string_schema(128), "limit": integer_schema(1, 500)}, ())},
+    "patterns": {"description": "Read deterministic dependency-shaped search candidates and their extraction accountability.", "input_schema": object_schema({"repository": string_schema(256), "family": string_schema(128), "limit": integer_schema(1, 500), "offset": {"type": "integer", "minimum": 0, "default": 0}}, ())},
     "relationships": {"description": "Read source-backed repository links and unresolved boundaries.", "input_schema": object_schema({"repository": string_schema(256), "limit": integer_schema(1, 200)})},
     "services": {"description": "Read static application and service projections.", "input_schema": object_schema({"repository": string_schema(256)})},
     "search": {"description": "Find graph nodes and their source evidence.", "input_schema": object_schema({"query": string_schema(500), "repository": string_schema(256), "limit": integer_schema(1, 100)}, ("query",))},
@@ -182,6 +182,7 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
         if family:
             rows = [row for row in rows if row.get('family') == family]
         limit = arguments.get('limit', 100)
+        offset = arguments.get('offset', 0)
         from collections import Counter
         scoped_summary = dict(audit.get('pattern_summary', {}))
         scoped_families = {}
@@ -192,7 +193,8 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
         scoped_summary['families'] = scoped_families
         scoped_summary['scope'] = {'repository': repository_id, 'family': family}
         result.update(pattern_summary=scoped_summary, global_pattern_summary=audit.get('pattern_summary', {}),
-                      matches=rows[:limit], matching_total=len(rows), limit=limit)
+                      matches=rows[offset:offset + limit], matching_total=len(rows), limit=limit,
+                      offset=offset, next_offset=offset + limit if offset + limit < len(rows) else None)
     elif operation == "services":
         services = _read(artifacts, "services.json")
         if repository_id:

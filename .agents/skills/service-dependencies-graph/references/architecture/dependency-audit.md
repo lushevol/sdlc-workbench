@@ -12,6 +12,14 @@ Read coverage, repository relationships, and unresolved boundaries.
 Record snapshot identity, generation time, repository revisions, dirty states, and source fingerprints.
 Review all census entries, including unsupported and missing repositories.
 
+Read every relevant pattern candidate through the `patterns` query.
+Its optional `repository` and `family` filters apply before pagination.
+Use `limit` from 1 through 500 and a nonnegative `offset`; the default offset is zero.
+Continue with each returned `next_offset` until it is `null`.
+Keep the snapshot manifest checksum constant across pages; restart traversal when it changes.
+`matching_total` and family counts cover all filtered candidates, including candidates beyond the current page.
+An offset beyond that total returns an empty page.
+
 The build reads local source without cloning or selecting active profiles.
 Missing repositories remain coverage gaps.
 Read the [implemented analysis](automated-analysis.md) before claiming syntax support.

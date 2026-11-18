@@ -6,6 +6,8 @@ The local skill runner builds inventories, extracts declarations, resolves ident
 The skill owns every graph implementation and enhancement.
 Workbench integrations remain thin adapters.
 No language model participates in deterministic extraction.
+The [source discovery workflow](initial-instruction-investigation.md) supplies autonomous source review in the active agent session.
+Human architecture notes are optional. `build --no-context` excludes saved architecture context for an independent extraction comparison.
 
 `build_graph.py` owns canonical nodes and edges.
 Extraction modules return declarations.
@@ -42,6 +44,7 @@ Dynamic fetch methods remain conditional and inferred.
 | Boundary | Required evidence | Unresolved cases |
 | --- | --- | --- |
 | SystemJS | Literal module import and exact declared package identity. | Missing or duplicate providers. |
+| Single-SPA | Imported framework APIs, bound HTML layout, inspected SystemJS loader, registration, and exact package identity. | Indirection, shadowing, mutations, and unknown object escapes remain unsupported. |
 | ES value imports | Exact module name and in-scope npm producer, with both source declarations. | Missing producers, duplicate producers, or dynamic names. |
 | Feign | Parsed service name and unique declared service identity. | URL overrides, unresolved constants, or duplicate aliases. |
 | HTTP | Exposed provider, compatible method/path, and known authority when required. | External authorities, unsupported rewrites, missing base URLs, or ambiguous routes. |
@@ -88,14 +91,22 @@ Generic file and HTTP channels cannot become Kafka topics through naming.
 | Kafka/Camel | Supported listeners, sends, topic headers, constants, configuration getters, and bounded typed helpers. | Ambiguous implementations, overloaded helpers, reassignment, generated code, active profiles, and cluster identity. |
 | Database | Selected entity mappings, framework table configuration, native/JDBC queries, and mapper XML. | Entity-only mappings remain inferred; dynamic SQL and concrete ORM execution are outside supported proof. |
 | Redis | Known configuration with imported client types or client construction. | Imports alone, unrelated type names, key-level access, TTL behavior, and deployment reachability. |
+| LDAP/JNDI | Typed Spring LDAP operations, context acquisition, and selected JNDI directory operations. | Endpoint and provider identity remain unknown. Generic JNDI retains `DIRECTORY` protocol. |
 | Local files | Selected typed/instantiated Java file APIs and supported directions. | Shared path identity, helper data flow, static imports, and SFTP. |
 | Internal gRPC SDK | Selected direct `RatanBusinessDataProviderService` calls with explicit imported types. | Generic stubs, `.proto` files, channel authority, and remote provider identity. |
-| Nginx | Supported static locations, rewrites, proxy URI replacement, and upstream declarations. | Dynamic templates, IP-only identities, and multiple/empty upstream pools. |
+| Nginx | Supported static locations, rewrites, proxy URI replacement, upstream declarations, and symbolic Jinja routes. | Templates, regex locations, IP-only identities, and multiple/empty upstream pools cannot establish routing joins. |
 
 Supported nginx proxy URI replacement preserves the unmatched request suffix.
 Templates retain evidence and unresolved diagnostics.
+Their route blocks retain symbolic destinations and exact source lines without executing Jinja or selecting environment values.
+Template boundaries remain separate from static boundaries with equal upstream labels.
 Dynamic upstream names cannot establish concrete services without binding evidence.
 IP similarity cannot establish a repository provider.
+
+An imported HTTP client with uninspected routing retains its declared method and sanitized call argument.
+These inferred API boundaries use `declared_path` and `routing_limit`; they have no provider-matching `path`.
+They remain visible in dependency projections without resolving to a coincidentally matching controller.
+Unknown interceptor side effects remain an extraction limit.
 
 ## Layouts and coverage limits
 

@@ -1,7 +1,8 @@
 # Architecture instructions and investigated relationships
 
-Use architecture context when a user supplies initial roles, layers, or relationship hints.
-Follow [instruction investigation](initial-instruction-investigation.md) before creating the final graph.
+Use architecture context for source investigation conclusions and optional user-supplied roles, layers, or relationship hints.
+Follow [source investigation](initial-instruction-investigation.md) before creating the final graph.
+User clarification evidence is optional. Source-only conclusions cite inspected source-review evidence independently.
 Keep supplied intent separate from source facts, resolved provider matches, and runtime verification.
 Do not encode project names or project-specific routing rules in skill tools.
 
@@ -10,6 +11,8 @@ Do not encode project names or project-specific routing rules in skill tools.
 The normal build reads `relationships/service-dependencies/architecture-context.json` when that file exists.
 Use `build --context PATH` to select another workspace-local file.
 An explicitly selected file must exist.
+Use `build --no-context` to exclude saved context for source-only extraction.
+The `--context` and `--no-context` options are mutually exclusive.
 Use schema version `1.1.0` for investigated relationships integrated into the graph.
 Version `1.0.0` remains supported for legacy annotations.
 The skill validates the contract in `tools/architecture_context.py`.
@@ -62,10 +65,13 @@ It does not establish runtime verification.
 Subject `repository` accepts an exact captured `repo:` ID or `null`.
 The build rejects unknown repository IDs.
 Subject `layer_id` accepts a known layer ID or `null`.
-Subject `status` accepts `USER_REPORTED` or `OUT_OF_SCOPE`.
+Subject `status` accepts `USER_REPORTED` or `OUT_OF_SCOPE` in both supported versions.
+Version `1.1.0` also accepts `SOURCE_REVIEWED` for independently inspected subjects.
+Each `SOURCE_REVIEWED` subject requires a `SOURCE_REVIEW` entry in its `source_ids`.
+This status records investigation provenance. It does not establish provider resolution or runtime verification.
 Use `OUT_OF_SCOPE` for boundaries deliberately excluded from the present investigation.
 A subject without a repository binding does not establish a discovered provider.
-Relationship `kind` describes the supplied relationship in stable project terminology.
+Relationship `kind` describes the investigated relationship in stable project terminology.
 It does not reuse canonical resolution status.
 An empty note `subject_ids` array describes the complete context.
 

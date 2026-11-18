@@ -1,0 +1,1210 @@
+{
+  "phase": "baseline-without-architecture-context",
+  "workbench_revision": "cad633b99",
+  "command": ".venv/bin/python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace . build --no-context --out .workbench/graph-autonomous/baseline",
+  "exit_code": 0,
+  "generated_at": "2026-11-18T00:15:25Z",
+  "graph_sha256": "bb86d94f1aa74912ccad9672eb3ff6a32c60eaa005f5c846031c3c7a45861708",
+  "generator": {
+    "name": "service-dependencies-graph",
+    "version": "2.3.0"
+  },
+  "counts": {
+    "repositories": 11,
+    "nodes": 10858,
+    "edges": 25052,
+    "evidence": 22765,
+    "diagnostics": 1326,
+    "resolved_relationships": 21,
+    "candidate_relationships": 0,
+    "unresolved_boundaries": 3125
+  },
+  "pattern_families": {
+    "CONFIG_READ": {
+      "RECORDED": 103,
+      "REVIEW_REQUIRED": 1985
+    },
+    "DATABASE_TABLE": {
+      "RECORDED": 10,
+      "REVIEW_REQUIRED": 257
+    },
+    "GATEWAY_ROUTE": {
+      "RECORDED": 227,
+      "REVIEW_REQUIRED": 607
+    },
+    "GRAPHQL_SCHEMA": {
+      "REVIEW_REQUIRED": 8
+    },
+    "HTTP_ENDPOINT": {
+      "RECORDED": 22,
+      "REVIEW_REQUIRED": 519
+    },
+    "MODULE_IMPORT": {
+      "RECORDED": 2901,
+      "REVIEW_REQUIRED": 6430
+    }
+  },
+  "repositories": [
+    {
+      "name": "nginx",
+      "path": "repos/infra/nginx",
+      "declared": true,
+      "status": "PARTIAL",
+      "kind": "INFRA",
+      "source_files": 9,
+      "source_extensions": {
+        ".conf": 3,
+        ".j2": 6
+      },
+      "content_sha256": "36456bd7d463dbef8ea584ba69d0303691139fdc6fc1ea20a214f77d75a9027b",
+      "source_exclusions": [],
+      "nested_manifests": [],
+      "limitations": [
+        "Source snapshot has no readable independent Git revision.",
+        "Nginx templates need environment values. Dynamic template routes remain unresolved."
+      ],
+      "ref": null,
+      "commit": null,
+      "dirty": null,
+      "registry_id": "nginx",
+      "primary_type": "deployment",
+      "evidence_files": 7,
+      "extractors": {
+        "nginx-configuration": 1,
+        "nginx-route": 86,
+        "nginx-template": 6
+      },
+      "diagnostics": {
+        "PARTIAL_REPOSITORY_COVERAGE": 2,
+        "UNRESOLVED_NGINX_TEMPLATE": 6
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 9,
+          "denominator": 9,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "GATEWAY_ROUTE": 329
+        },
+        "pattern_accountability": {
+          "RECORDED": 87,
+          "REVIEW_REQUIRED": 242
+        }
+      }
+    },
+    {
+      "name": "single-ui-sdk-starter",
+      "path": "repos/libraries/single-ui-sdk-starter",
+      "declared": true,
+      "status": "PARTIAL",
+      "kind": "SPRING",
+      "source_files": 29,
+      "source_extensions": {
+        ".java": 23,
+        ".xml": 5,
+        ".yml": 1
+      },
+      "content_sha256": "a586f71172d39ac779027725eae7da99bbecf0457623a8b164359d9de11478a4",
+      "source_exclusions": [
+        {
+          "path": ".git",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "single-ui-sdk-starter/target",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "single-ui-sdk-starter/src/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [
+        "single-ui-sdk-starter/pom.xml"
+      ],
+      "limitations": [
+        "Custom source root is dynamic, excluded, missing, or outside its repository",
+        "Custom source root is dynamic, excluded, missing, or outside its repository"
+      ],
+      "ref": "codex/initial-baseline",
+      "commit": "0240b1c260337bf3c38f2b5ecaad2d1ec157296d",
+      "dirty": true,
+      "registry_id": "single-ui-auth-sdk",
+      "primary_type": "library",
+      "modules": [
+        ".",
+        "single-ui-sdk-starter"
+      ],
+      "java_source_roots": [
+        "single-ui-sdk-starter/src/main/java"
+      ],
+      "module_diagnostics": [
+        {
+          "code": "UNRESOLVED_MAVEN_SOURCE_ROOT",
+          "path": "./pom.xml",
+          "message": "Custom source root is dynamic, excluded, missing, or outside its repository"
+        },
+        {
+          "code": "UNRESOLVED_MAVEN_SOURCE_ROOT",
+          "path": "./pom.xml",
+          "message": "Custom source root is dynamic, excluded, missing, or outside its repository"
+        }
+      ],
+      "evidence_files": 24,
+      "extractors": {
+        "java-configuration": 38,
+        "java-http-client": 1,
+        "java-structure": 223,
+        "maven-artifact": 1,
+        "repository-identity": 1,
+        "spring-component-detail": 2,
+        "spring-component-grouping": 23,
+        "spring-manifest": 1
+      },
+      "diagnostics": {
+        "PARTIAL_REPOSITORY_COVERAGE": 1,
+        "SOURCE_EXCLUDED_DIRECTORY": 3,
+        "UNRESOLVED_JAVA_HTTP_DESTINATION": 1,
+        "UNRESOLVED_JAVA_HTTP_URI": 1
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 29,
+          "denominator": 29,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 23,
+          "denominator": 23,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {
+          "configuration_class": 1
+        },
+        "marker_accountability": {
+          "numerator": 1,
+          "denominator": 1,
+          "rate": 1.0
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {},
+        "pattern_accountability": {}
+      }
+    },
+    {
+      "name": "ratan-auth-server",
+      "path": "repos/services/ratan-auth-server",
+      "declared": true,
+      "status": "PARTIAL",
+      "kind": "SPRING",
+      "source_files": 105,
+      "source_extensions": {
+        ".conf": 1,
+        ".java": 98,
+        ".json": 2,
+        ".xml": 2,
+        ".yml": 2
+      },
+      "content_sha256": "3ea1e5779b935f23ccdc9013d8196c6e6ffc8865ba5854f2b4d93392fd11ec9e",
+      "source_exclusions": [
+        {
+          "path": ".git",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": ".turbo",
+          "reason": "HIDDEN_DIRECTORY"
+        },
+        {
+          "path": "target",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [],
+      "limitations": [
+        "Mixed root manifests: runtime extraction selects SPRING source layouts."
+      ],
+      "ref": "codex/apply-service-diffs-20261027",
+      "commit": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
+      "dirty": false,
+      "registry_id": "ratan-auth-server",
+      "primary_type": "backend",
+      "modules": [
+        "."
+      ],
+      "java_source_roots": [
+        "src/main/java"
+      ],
+      "module_diagnostics": [],
+      "evidence_files": 101,
+      "extractors": {
+        "configuration-source": 216,
+        "java-configuration": 177,
+        "java-http-client": 8,
+        "java-structure": 1072,
+        "maven-artifact": 1,
+        "maven-dependency": 21,
+        "redis-client": 27,
+        "repository-identity": 1,
+        "spring-component-detail": 26,
+        "spring-component-grouping": 98,
+        "spring-manifest": 1,
+        "spring-open-api-route": 1,
+        "spring-rest": 21,
+        "spring-service-identity": 1
+      },
+      "diagnostics": {
+        "AMBIGUOUS_JAVA_INHERITED_CALL": 11,
+        "AMBIGUOUS_JAVA_INTERFACE_DISPATCH": 11,
+        "PARTIAL_REPOSITORY_COVERAGE": 1,
+        "SOURCE_EXCLUDED_DIRECTORY": 3,
+        "SOURCE_HIDDEN_DIRECTORY": 1,
+        "UNRESOLVED_JAVA_HTTP_DESTINATION": 8
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 105,
+          "denominator": 105,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 98,
+          "denominator": 98,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {
+          "configuration_class": 12
+        },
+        "marker_accountability": {
+          "numerator": 12,
+          "denominator": 12,
+          "rate": 1.0
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 36,
+          "HTTP_ENDPOINT": 17
+        },
+        "pattern_accountability": {
+          "RECORDED": 53
+        }
+      }
+    },
+    {
+      "name": "single-ui-bff",
+      "path": "repos/services/single-ui-bff",
+      "declared": true,
+      "status": "PARTIAL",
+      "kind": "SPRING",
+      "source_files": 177,
+      "source_extensions": {
+        ".conf": 1,
+        ".java": 136,
+        ".json": 3,
+        ".properties": 1,
+        ".sql": 12,
+        ".xml": 3,
+        ".yaml": 7,
+        ".yml": 14
+      },
+      "content_sha256": "4694bb5250d65e02591a5c45d1ce2e6875963472ecb997aea80fa8f889757eab",
+      "source_exclusions": [
+        {
+          "path": ".git",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "target",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "verification/target",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [],
+      "limitations": [
+        "Mixed root manifests: runtime extraction selects SPRING source layouts."
+      ],
+      "ref": "codex/ces-entitlement-migration-20261106",
+      "commit": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
+      "dirty": false,
+      "registry_id": "single-ui-bff",
+      "primary_type": "backend",
+      "modules": [
+        "."
+      ],
+      "java_source_roots": [
+        "src/main/java"
+      ],
+      "module_diagnostics": [],
+      "evidence_files": 151,
+      "extractors": {
+        "configuration-source": 2501,
+        "java-configuration": 145,
+        "java-database-client": 15,
+        "java-file-client": 2,
+        "java-http-client": 11,
+        "java-structure": 1975,
+        "maven-artifact": 1,
+        "maven-dependency": 28,
+        "orm-column": 38,
+        "orm-entity": 7,
+        "orm-repository": 7,
+        "postgres-client": 1,
+        "repository-identity": 1,
+        "search-client": 3,
+        "spring-component-detail": 34,
+        "spring-component-grouping": 136,
+        "spring-manifest": 1,
+        "spring-open-api-route": 11,
+        "spring-rest": 23,
+        "sql-column-reference": 21
+      },
+      "diagnostics": {
+        "PARTIAL_REPOSITORY_COVERAGE": 1,
+        "SOURCE_EXCLUDED_DIRECTORY": 4,
+        "SQL_WILDCARD_COLUMN_SET": 15,
+        "UNRESOLVED_DATA_PLATFORM_CLIENT": 3,
+        "UNRESOLVED_FILE_IDENTITY": 1,
+        "UNRESOLVED_JAVA_HTTP_DESTINATION": 11,
+        "UNRESOLVED_JAVA_HTTP_URI": 2,
+        "UNRESOLVED_JAVA_SUPERCLASS": 2,
+        "UNRESOLVED_ORM_COLUMN_NAME": 14,
+        "UNRESOLVED_ORM_TABLE_NAME": 7,
+        "UNSUPPORTED_COMPLEX_SQL": 3
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 177,
+          "denominator": 177,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 136,
+          "denominator": 136,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {
+          "ORM_COLUMN": 38,
+          "ORM_ENTITY": 7,
+          "configuration_class": 12
+        },
+        "marker_accountability": {
+          "numerator": 57,
+          "denominator": 57,
+          "rate": 1.0
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 71,
+          "DATABASE_TABLE": 32,
+          "HTTP_ENDPOINT": 4
+        },
+        "pattern_accountability": {
+          "RECORDED": 77,
+          "REVIEW_REQUIRED": 30
+        }
+      }
+    },
+    {
+      "name": "ratan-test-engine",
+      "path": "repos/testing/ratan-test-engine",
+      "declared": true,
+      "status": "SCANNED",
+      "kind": "TESTING",
+      "source_files": 1455,
+      "source_extensions": {
+        ".cjs": 43,
+        ".conf": 1,
+        ".html": 2,
+        ".js": 1,
+        ".json": 308,
+        ".mjs": 2,
+        ".proto": 1,
+        ".py": 35,
+        ".resource": 29,
+        ".robot": 297,
+        ".sql": 6,
+        ".toml": 1,
+        ".xml": 704,
+        ".yaml": 24,
+        ".yml": 1
+      },
+      "content_sha256": "7b70149a492f154610f8b2841f158afe4e757ec3e1065ecfbac8e9027cbad4bd",
+      "source_exclusions": [
+        {
+          "path": ".git",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": ".venv",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": ".workbench",
+          "reason": "HIDDEN_DIRECTORY"
+        },
+        {
+          "path": "Resources/data/config/__pycache__",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "Tests/ratan/plugin/ui/session/real-world/__pycache__",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "Tests/workbench/__pycache__",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "scripts/__pycache__",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [],
+      "limitations": [],
+      "ref": "codex/initial-baseline",
+      "commit": "9f83897e8e71f8afa524b260ffa3e809b281a2f0",
+      "dirty": true,
+      "registry_id": "ratan-test-engine",
+      "primary_type": "testing",
+      "evidence_files": 333,
+      "extractors": {
+        "testing-database": 1,
+        "testing-http": 16,
+        "testing-import-provider": 33,
+        "testing-object-storage": 11,
+        "testing-robot-library": 2338,
+        "testing-robot-resource": 1647,
+        "testing-scope": 1
+      },
+      "diagnostics": {
+        "EXCLUDED_REPOSITORY_MANIFEST": 1,
+        "SOURCE_EXCLUDED_DIRECTORY": 6,
+        "SOURCE_HIDDEN_DIRECTORY": 1,
+        "TEST_PYTHON_PARSE_ERROR": 1,
+        "UNRESOLVED_TEST_DEPENDENCY": 28
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 1455,
+          "denominator": 1455,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 34,
+          "denominator": 35,
+          "rate": 0.971429
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 385,
+          "DATABASE_TABLE": 25,
+          "HTTP_ENDPOINT": 124,
+          "MODULE_IMPORT": 187
+        },
+        "pattern_accountability": {
+          "REVIEW_REQUIRED": 721
+        }
+      }
+    },
+    {
+      "name": "mfe-base",
+      "path": "repos/ui/mfe-base",
+      "declared": true,
+      "status": "PARTIAL",
+      "kind": "WEB",
+      "source_files": 388,
+      "source_extensions": {
+        ".js": 4,
+        ".json": 7,
+        ".jsx": 1,
+        ".ts": 171,
+        ".tsx": 199,
+        ".yaml": 5,
+        ".yml": 1
+      },
+      "content_sha256": "3cc41c04f8e325a3ef3e9af74d6d3d2105a3f6d6e5bc85623226e581142e33e3",
+      "source_exclusions": [
+        {
+          "path": ".git",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "coverage",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "dist",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "node_modules",
+          "reason": "SYMLINK_DIRECTORY"
+        },
+        {
+          "path": "src/@types",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [
+        "server/package.json"
+      ],
+      "limitations": [
+        "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots.",
+        "Source symlinks are excluded. See source_exclusions for each path."
+      ],
+      "ref": "codex/ces-entitlement-migration-20261106",
+      "commit": "10560f39a57e8ce4010cee634f7682559b1a6bdd",
+      "dirty": false,
+      "registry_id": "mfe-base",
+      "primary_type": "frontend",
+      "evidence_files": 255,
+      "extractors": {
+        "npm-dependency": 99,
+        "npm-nested-package": 1,
+        "npm-package": 1,
+        "react-router": 4,
+        "repository-identity": 1,
+        "web-component-detail": 47,
+        "web-domain-grouping": 9,
+        "web-exported-symbol": 615,
+        "web-manifest": 1,
+        "web-source-import": 423,
+        "web-source-module": 244
+      },
+      "diagnostics": {
+        "PARTIAL_REPOSITORY_COVERAGE": 2,
+        "SOURCE_EXCLUDED_DIRECTORY": 4,
+        "SOURCE_SYMLINK_DIRECTORY": 1,
+        "UNBOUND_WEB_ENDPOINT": 4,
+        "UNRESOLVED_WEB_CLIENT_ROUTING": 34,
+        "UNRESOLVED_WEB_ENDPOINT": 6,
+        "UNRESOLVED_WEB_SOURCE_IMPORT": 9,
+        "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+        "UNSUPPORTED_WEB_IMPORT_SYNTAX": 9,
+        "WEB_PARSE_ERROR": 1,
+        "WEB_SOURCE_PARSE_ERROR": 1
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 388,
+          "denominator": 388,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 373,
+          "denominator": 375,
+          "rate": 0.994667
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 322,
+          "DATABASE_TABLE": 1,
+          "HTTP_ENDPOINT": 150,
+          "MODULE_IMPORT": 1594
+        },
+        "pattern_accountability": {
+          "RECORDED": 364,
+          "REVIEW_REQUIRED": 1703
+        }
+      }
+    },
+    {
+      "name": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter",
+      "declared": true,
+      "status": "PARTIAL",
+      "kind": "WEB",
+      "source_files": 757,
+      "source_extensions": {
+        ".graphqls": 8,
+        ".js": 2,
+        ".json": 12,
+        ".ts": 402,
+        ".tsx": 327,
+        ".yaml": 5,
+        ".yml": 1
+      },
+      "content_sha256": "0817852b222602d18dc07320c22cb3c2cf58d648b808296a8a3907ef301141e6",
+      "source_exclusions": [
+        {
+          "path": "dist",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/@types",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/generated",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/Cashflow_BIC_Netting_Static_Table/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/Cashflow_CN/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/Cashflow_CN/components/BulkFixExceptions/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/Cashflow_Splitting_Static/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/Cashflow_Utilization_Static_Table/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [
+        "server/package.json"
+      ],
+      "limitations": [
+        "Source snapshot has no readable independent Git revision.",
+        "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots."
+      ],
+      "ref": null,
+      "commit": null,
+      "dirty": null,
+      "registry_id": "mfe-cashflow-blotter",
+      "primary_type": "frontend",
+      "evidence_files": 506,
+      "extractors": {
+        "es-module-import": 5,
+        "npm-dependency": 109,
+        "npm-nested-package": 1,
+        "npm-package": 1,
+        "react-router": 8,
+        "repository-identity": 1,
+        "systemjs-import": 3,
+        "web-component-detail": 77,
+        "web-domain-grouping": 7,
+        "web-exported-symbol": 1317,
+        "web-graphql": 11,
+        "web-graphql-document": 8,
+        "web-graphql-document-import": 3,
+        "web-graphql-operation": 1,
+        "web-manifest": 1,
+        "web-rest": 54,
+        "web-rtk-api-base-query": 3,
+        "web-rtk-base-query": 4,
+        "web-source-import": 1229,
+        "web-source-module": 484,
+        "web-typescript-path-alias": 1,
+        "web-websocket": 1
+      },
+      "diagnostics": {
+        "DYNAMIC_GRAPHQL_DOCUMENT": 1,
+        "PARTIAL_REPOSITORY_COVERAGE": 2,
+        "SOURCE_EXCLUDED_DIRECTORY": 9,
+        "UNBOUND_WEB_ENDPOINT": 5,
+        "UNRESOLVED_GQL_TAG_PROVIDER": 2,
+        "UNRESOLVED_WEB_ENDPOINT": 32,
+        "UNRESOLVED_WEB_SOURCE_IMPORT": 17,
+        "UNRESOLVED_WEB_SYMBOL_IMPORT": 314,
+        "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+        "UNSUPPORTED_WEB_IMPORT_SYNTAX": 4,
+        "WEB_PARSE_ERROR": 1,
+        "WEB_SOURCE_PARSE_ERROR": 1
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 757,
+          "denominator": 757,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 730,
+          "denominator": 731,
+          "rate": 0.998632
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 461,
+          "DATABASE_TABLE": 67,
+          "GRAPHQL_SCHEMA": 8,
+          "HTTP_ENDPOINT": 43,
+          "MODULE_IMPORT": 3048
+        },
+        "pattern_accountability": {
+          "RECORDED": 1044,
+          "REVIEW_REQUIRED": 2583
+        }
+      }
+    },
+    {
+      "name": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container",
+      "declared": true,
+      "status": "PARTIAL",
+      "kind": "WEB",
+      "source_files": 520,
+      "source_extensions": {
+        ".js": 4,
+        ".json": 32,
+        ".ts": 219,
+        ".tsx": 259,
+        ".yaml": 5,
+        ".yml": 1
+      },
+      "content_sha256": "180f60e27cc94e1582a2588b5aae777a6c7b002514cb37a536438ecb41061588",
+      "source_exclusions": [
+        {
+          "path": ".git",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/@types",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/Root/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [
+        "server/package.json",
+        "src/ratancomponents/RatanFilterBuilder/ReactQueryBuilder/package.json"
+      ],
+      "limitations": [
+        "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots."
+      ],
+      "ref": "codex/ces-entitlement-migration-20261106",
+      "commit": "a7e38d048545dd913ae5996a1475980056de18bd",
+      "dirty": false,
+      "registry_id": "mfe-ratan-container",
+      "primary_type": "frontend",
+      "evidence_files": 321,
+      "extractors": {
+        "es-module-import": 1,
+        "npm-dependency": 107,
+        "npm-nested-package": 2,
+        "npm-package": 1,
+        "react-router": 8,
+        "repository-identity": 1,
+        "systemjs-import": 8,
+        "web-component-detail": 8,
+        "web-domain-grouping": 6,
+        "web-exported-symbol": 943,
+        "web-graphql": 18,
+        "web-graphql-document": 28,
+        "web-graphql-document-import": 1,
+        "web-manifest": 1,
+        "web-rest": 140,
+        "web-source-import": 633,
+        "web-source-module": 308
+      },
+      "diagnostics": {
+        "DYNAMIC_GRAPHQL_DOCUMENT": 1,
+        "PARTIAL_REPOSITORY_COVERAGE": 1,
+        "SOURCE_EXCLUDED_DIRECTORY": 3,
+        "UNBOUND_WEB_ENDPOINT": 1,
+        "UNRESOLVED_WEB_ENDPOINT": 35,
+        "UNRESOLVED_WEB_SOURCE_IMPORT": 11,
+        "UNRESOLVED_WEB_SYMBOL_IMPORT": 9,
+        "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+        "UNSUPPORTED_WEB_IMPORT_SYNTAX": 18,
+        "WEB_PARSE_ERROR": 1,
+        "WEB_SOURCE_PARSE_ERROR": 1
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 520,
+          "denominator": 520,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 481,
+          "denominator": 482,
+          "rate": 0.997925
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 298,
+          "DATABASE_TABLE": 17,
+          "HTTP_ENDPOINT": 99,
+          "MODULE_IMPORT": 1475
+        },
+        "pattern_accountability": {
+          "RECORDED": 488,
+          "REVIEW_REQUIRED": 1401
+        }
+      }
+    },
+    {
+      "name": "mfe-root-config",
+      "path": "repos/ui/mfe-root-config",
+      "declared": true,
+      "status": "SCANNED",
+      "kind": "WEB",
+      "source_files": 40,
+      "source_extensions": {
+        ".conf": 7,
+        ".ejs": 1,
+        ".html": 1,
+        ".js": 13,
+        ".json": 6,
+        ".local": 1,
+        ".ts": 5,
+        ".yaml": 5,
+        ".yml": 1
+      },
+      "content_sha256": "93a79fce7bb78638c06a4a1839d492cc3014983eea9a4ec1cc042c70217fd1c1",
+      "source_exclusions": [
+        {
+          "path": ".git",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "node_modules",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [],
+      "limitations": [],
+      "ref": "codex/initial-baseline",
+      "commit": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+      "dirty": false,
+      "registry_id": "mfe-root-config",
+      "primary_type": "frontend",
+      "evidence_files": 22,
+      "extractors": {
+        "nginx-route": 144,
+        "npm-dependency": 35,
+        "npm-package": 1,
+        "repository-identity": 1,
+        "systemjs-import-map": 17,
+        "web-exported-symbol": 2,
+        "web-manifest": 1,
+        "web-source-module": 16
+      },
+      "diagnostics": {
+        "SOURCE_EXCLUDED_DIRECTORY": 2,
+        "UNRESOLVED_WEB_SOURCE_IMPORT": 1,
+        "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+        "UNSUPPORTED_WEB_IMPORT_SYNTAX": 5
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 40,
+          "denominator": 40,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 18,
+          "denominator": 18,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 18,
+          "DATABASE_TABLE": 71,
+          "GATEWAY_ROUTE": 505,
+          "HTTP_ENDPOINT": 64,
+          "MODULE_IMPORT": 14
+        },
+        "pattern_accountability": {
+          "RECORDED": 140,
+          "REVIEW_REQUIRED": 532
+        }
+      }
+    },
+    {
+      "name": "mfe-rules",
+      "path": "repos/ui/mfe-rules",
+      "declared": false,
+      "status": "PARTIAL",
+      "kind": "WEB",
+      "source_files": 268,
+      "source_extensions": {
+        ".js": 2,
+        ".json": 7,
+        ".ts": 122,
+        ".tsx": 131,
+        ".yaml": 5,
+        ".yml": 1
+      },
+      "content_sha256": "114be8898dcc949a2ee08db6421bfec27d62ff96448c6b4d2727a40ba669c6e2",
+      "source_exclusions": [
+        {
+          "path": "src/@types",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/DroolsRule/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        },
+        {
+          "path": "src/DryRunCenter/test",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [
+        "server/package.json",
+        "src/DroolsRule/package.json"
+      ],
+      "limitations": [
+        "Source snapshot has no readable independent Git revision.",
+        "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots."
+      ],
+      "ref": null,
+      "commit": null,
+      "dirty": null,
+      "primary_type": null,
+      "evidence_files": 169,
+      "extractors": {
+        "es-module-import": 4,
+        "npm-dependency": 88,
+        "npm-nested-package": 2,
+        "npm-package": 1,
+        "react-router": 11,
+        "repository-identity": 1,
+        "systemjs-import": 1,
+        "web-component-detail": 5,
+        "web-domain-grouping": 11,
+        "web-exported-symbol": 395,
+        "web-manifest": 1,
+        "web-rest": 1,
+        "web-source-import": 367,
+        "web-source-module": 154
+      },
+      "diagnostics": {
+        "PARTIAL_REPOSITORY_COVERAGE": 2,
+        "SOURCE_EXCLUDED_DIRECTORY": 4,
+        "UNRESOLVED_MODULE_PROVIDER": 1,
+        "UNRESOLVED_WEB_ENDPOINT": 25,
+        "UNRESOLVED_WEB_SOURCE_IMPORT": 3,
+        "UNRESOLVED_WEB_SYMBOL_IMPORT": 69,
+        "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+        "UNSUPPORTED_WEB_IMPORT_SYNTAX": 4
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 268,
+          "denominator": 268,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 255,
+          "denominator": 255,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 149,
+          "DATABASE_TABLE": 16,
+          "HTTP_ENDPOINT": 2,
+          "MODULE_IMPORT": 978
+        },
+        "pattern_accountability": {
+          "RECORDED": 315,
+          "REVIEW_REQUIRED": 830
+        }
+      }
+    },
+    {
+      "name": "mfe-trades",
+      "path": "repos/ui/mfe-trades",
+      "declared": false,
+      "status": "PARTIAL",
+      "kind": "WEB",
+      "source_files": 559,
+      "source_extensions": {
+        ".js": 3,
+        ".json": 13,
+        ".ts": 219,
+        ".tsx": 318,
+        ".yaml": 5,
+        ".yml": 1
+      },
+      "content_sha256": "b4cbdc56675e8eeb4e2c0c0b1eab8feb3da69175a42c8bda1e25dafbea23d104",
+      "source_exclusions": [
+        {
+          "path": "src/@types",
+          "reason": "EXCLUDED_DIRECTORY"
+        }
+      ],
+      "nested_manifests": [
+        "server/package.json"
+      ],
+      "limitations": [
+        "Source snapshot has no readable independent Git revision.",
+        "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots."
+      ],
+      "ref": null,
+      "commit": null,
+      "dirty": null,
+      "primary_type": null,
+      "evidence_files": 336,
+      "extractors": {
+        "es-module-import": 6,
+        "npm-dependency": 102,
+        "npm-nested-package": 1,
+        "npm-package": 1,
+        "react-router": 3,
+        "repository-identity": 1,
+        "systemjs-import": 4,
+        "web-component-detail": 31,
+        "web-domain-grouping": 8,
+        "web-exported-symbol": 893,
+        "web-graphql-document": 10,
+        "web-graphql-document-import": 1,
+        "web-manifest": 1,
+        "web-rest": 26,
+        "web-source-import": 773,
+        "web-source-module": 324
+      },
+      "diagnostics": {
+        "PARTIAL_REPOSITORY_COVERAGE": 2,
+        "SOURCE_EXCLUDED_DIRECTORY": 1,
+        "UNBOUND_WEB_ENDPOINT": 52,
+        "UNRESOLVED_GQL_TAG_PROVIDER": 1,
+        "UNRESOLVED_WEB_ENDPOINT": 7,
+        "UNRESOLVED_WEB_SOURCE_IMPORT": 7,
+        "UNRESOLVED_WEB_SYMBOL_IMPORT": 243,
+        "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+        "UNSUPPORTED_WEB_IMPORT_SYNTAX": 11,
+        "WEB_PARSE_ERROR": 2,
+        "WEB_SOURCE_PARSE_ERROR": 2
+      },
+      "measures": {
+        "source_inventory": {
+          "numerator": 559,
+          "denominator": 559,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 538,
+          "denominator": 540,
+          "rate": 0.996296
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review",
+        "pattern_candidates": {
+          "CONFIG_READ": 348,
+          "DATABASE_TABLE": 38,
+          "HTTP_ENDPOINT": 38,
+          "MODULE_IMPORT": 2035
+        },
+        "pattern_accountability": {
+          "RECORDED": 695,
+          "REVIEW_REQUIRED": 1764
+        }
+      }
+    }
+  ],
+  "context_applied": false,
+  "limits": [
+    "Source census and parse accountability do not establish semantic recall.",
+    "Rebuildable bundle remains in ignored .workbench storage."
+  ]
+}

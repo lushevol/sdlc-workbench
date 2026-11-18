@@ -145,8 +145,12 @@ if (process.argv[3] === "user-context") {
   assert.match(elements.get("context-relationships").innerHTML, /Portal shell → Remote tile/);
   assert.deepEqual(evaluate("matching"), canonicalBefore);
   set("context-search", "no-supplied-subject-matches", "input");
-  assert.match(elements.get("context-relationships").innerHTML, /No supplied relationships/);
+  assert.match(elements.get("context-relationships").innerHTML, /No context relationships/);
   assert.deepEqual(evaluate("matching"), canonicalBefore);
+  set("context-search", "", "input");
+  vm.runInContext("architectureContext.document.investigations=[{relationship_id:architectureContext.document.relationships[0].id,status:'SUPPORTED'}];renderArchitectureContext()", context);
+  assert.match(elements.get("context-relationships").innerHTML, /SUPPORTED/);
+  assert.doesNotMatch(elements.get("context-relationships").innerHTML, /USER_REPORTED/);
   set("context-search", "", "input");
   set("context-repository", "unbound");
   assert.match(elements.get("context-relationships").innerHTML, /LOADS_REMOTE_UI/);

@@ -506,6 +506,7 @@ def extract_interfaces(source: str, *, tsx: bool = False,
     language = tree_sitter_typescript.language_tsx() if tsx else tree_sitter_typescript.language_typescript()
     root = Parser(Language(language)).parse(encoded).root_node
     operations: list[dict[str, Any]] = []
+    unresolved_operations: list[dict[str, Any]] = []
     diagnostics: list[dict[str, Any]] = []
     rtk_apis: dict[str, dict[str, Any]] = {}
     http_bindings = external_http_bindings or {}
@@ -1209,6 +1210,14 @@ def extract_interfaces(source: str, *, tsx: bool = False,
             if routing_limit:
                 diagnostics.append({"code": "UNRESOLVED_WEB_CLIENT_ROUTING", "line": node.start_point.row + 1,
                                     "message": "Imported HTTP client destination is not established: " + routing_limit})
+                # Keep the declared call argument for investigation without
+                # supplying a destination path to provider resolution.
+                for url in sorted({endpoint for candidate in urls if (endpoint := safe_endpoint(candidate)) is not None}):
+                    unresolved_operations.append({"path": url, "protocol": protocol, "method": method or "ANY",
+                                                  "line": node.start_point.row + 1,
+                                                  "declaration": "HTTP invocation argument " + url + "; routing remains unresolved",
+                                                  "assertion_status": "INFERRED", "routing_limit": routing_limit,
+                                                  "supporting_evidence": call_support})
                 continue
             if base_url:
                 urls = [url if re.match(r"^(?:[A-Za-z][A-Za-z0-9+.-]*:)?//", url) else
@@ -1277,4 +1286,5 @@ def extract_interfaces(source: str, *, tsx: bool = False,
     for name, declaration in constants.items():
         if declaration is not None and declaration.type == "identifier" and text(declaration) in rtk_apis:
             rtk_apis[name] = dict(rtk_apis[text(declaration)])
-    return {"operations": operations, "diagnostics": diagnostics, "rtk_apis": rtk_apis}
+    return {"operations": operations, "unresolved_operations": unresolved_operations,
+            "diagnostics": diagnostics, "rtk_apis": rtk_apis}

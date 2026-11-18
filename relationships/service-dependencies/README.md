@@ -20,6 +20,8 @@ Keep the complete bundle and matching manifest together.
 Use `--open` to display its interactive viewer.
 Use `--repos` to select a repository directory within the workspace.
 Use `--out` to select a separate output directory.
+Use `--no-context` for source-only extraction without saved architecture claims.
+Use `--context PATH` to select a different context file; these two options cannot combine.
 
 Read `analysis-coverage.json` before interpreting the graph.
 The same bundle includes the [knowledge graph projection](../../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md).
@@ -93,12 +95,16 @@ It leaves live graph output behind.
 
 Read the canonical skill for build, query, evidence, and source audit procedures.
 
-## Architecture clarification
+## Source-driven discovery
 
-Use optional `relationships/service-dependencies/initial-instructions.md` for new repositories, relationship hints, and corrections.
-Create the file when absent.
-The [investigation workflow](../../.agents/skills/service-dependencies-graph/references/architecture/initial-instruction-investigation.md) directs the agent to preserve and investigate those notes.
-The agent also searches for relationships beyond the supplied hints.
+Ask the [canonical skill](../../.agents/skills/service-dependencies-graph/SKILL.md) to discover dependencies from all in-scope repositories.
+Human relationship input and architecture notes are optional.
+The [source investigation workflow](../../.agents/skills/service-dependencies-graph/references/architecture/initial-instruction-investigation.md) starts with the repository census and boundary declarations.
+The agent inspects missing syntax and unresolved identities, repairs demonstrated extraction gaps, and checks the rebuilt evidence.
+It records unavailable sources and deployment bindings as explicit limits.
+
+Use optional `relationships/service-dependencies/initial-instructions.md` for hypotheses, source locations, and corrections when useful.
+Its absence does not block discovery. Existing notes are checked against independently inspected sources.
 
 The optional `architecture-context.json` stores reviewed conclusions, source hashes, and relationship assessments.
 Version `1.1.0` integrates investigated relationships into graph nodes, queries, and the main viewer.
@@ -108,5 +114,6 @@ Reviewed relationships preserve provider uncertainty and do not select deploymen
 
 Normal builds include the JSON context when it exists.
 Build commands do not investigate Markdown notes or refresh saved conclusions.
-Ask the agent to investigate the updated notes and repositories before regenerating the graph.
+Ask the agent to investigate sources before final regeneration. A build command alone does not complete semantic source review.
+Discovery completeness applies to the reviewed source boundary, with unavailable and unsupported scope stated explicitly.
 Keep project-specific architecture in optional workspace inputs. Keep validation and rendering enhancements inside the canonical skill.

@@ -10,13 +10,22 @@ from __future__ import annotations
 import re
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlencode, urlsplit
 
 import yaml
 
 
 def _line(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
+
+
+def _safe_rewrite_target(value: str | None) -> str | None:
+    if value is None:
+        return None
+    value = value.split('#', 1)[0]
+    base, separator, query = value.partition('?')
+    base = re.sub(r'^((?:[A-Za-z][A-Za-z0-9+.-]*:)?//)[^/]*@', r'\1', base)
+    return base + ('?' + urlencode([(key, '{value}') for key, _ in parse_qsl(query, keep_blank_values=True)]) if separator else '')
 
 
 def extract_open_api_routes(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
@@ -107,11 +116,16 @@ def extract_nginx_routes(path: Path) -> tuple[list[dict[str, Any]], list[dict[st
     except OSError as exc:
         return [], [{"code": "INVALID_NGINX_CONFIGURATION", "path": path.as_posix(), "message": str(exc)}]
     lines = text.splitlines()
+    template = path.name.endswith('.j2')
+    # Jinja braces describe template expressions, not nginx block nesting.
+    masked = re.sub(r'\{\{.*?\}\}|\{%.*?%\}|\{#.*?#\}',
+                    lambda match: ''.join('\n' if char == '\n' else ' ' for char in match[0]), text, flags=re.S)
+    structural_lines = masked.splitlines()
     routes: list[dict[str, Any]] = []
     diagnostics: list[dict[str, Any]] = []
-    location_re = re.compile(r"^\s*location\s+(?:(=)\s+)?([^\s{]+)")
+    location_re = re.compile(r"^\s*location\s+(?:(=|\^~|~\*?)\s+)?(.+?)\s*\{\s*(?:#.*)?$")
     rewrite_re = re.compile(r"^\s*rewrite\s+(\S+)\s+(\S+)(?:\s+\w+)?\s*;")
-    proxy_re = re.compile(r"^\s*proxy_pass\s+(\S+)\s*;")
+    proxy_re = re.compile(r"^\s*proxy_pass\s+([^;]+?)\s*;")
     upstream_re = re.compile(r"^\s*upstream\s+([\w.-]+)\s*\{")
     upstreams: dict[str, str] = {}
     unresolved_upstreams: set[str] = set()
@@ -127,7 +141,7 @@ def extract_nginx_routes(path: Path) -> tuple[list[dict[str, Any]], list[dict[st
             body: list[str] = []
             depth = 1
             for index in range(number - 1, len(lines)):
-                fragment = lines[index].split('#', 1)[0]
+                fragment = structural_lines[index].split('#', 1)[0]
                 if index == number - 1:
                     fragment = fragment[match.end():]
                 for character in fragment:
@@ -159,11 +173,12 @@ def extract_nginx_routes(path: Path) -> tuple[list[dict[str, Any]], list[dict[st
             index += 1
             continue
         start = index
-        depth = lines[index].count("{") - lines[index].count("}")
+        depth = structural_lines[index].split('#', 1)[0].count("{") - structural_lines[index].split('#', 1)[0].count("}")
         index += 1
         block: list[tuple[int, str]] = []
         while index < len(lines) and depth > 0:
-            depth += lines[index].count("{") - lines[index].count("}")
+            fragment = structural_lines[index].split('#', 1)[0]
+            depth += fragment.count("{") - fragment.count("}")
             block.append((index + 1, lines[index]))
             index += 1
         rewrite = next((rewrite_re.match(line) for _, line in block if rewrite_re.match(line)), None)
@@ -172,12 +187,19 @@ def extract_nginx_routes(path: Path) -> tuple[list[dict[str, Any]], list[dict[st
             continue
         location = match.group(2)
         target = proxy.group(1)
-        host = target.split("//", 1)[1].split("/", 1)[0] if "//" in target else target
-        proxy_path = urlsplit(target).path if "://" in target else ""
+        host = re.split(r'[/?#]', target.split("//", 1)[1] if "//" in target else target, maxsplit=1)[0]
+        host = host.rsplit('@', 1)[-1]
+        if re.search(r'password|passwd|secret|credential|token|authorization', host, re.I):
+            host = '<redacted>'
+        try:
+            proxy_path = urlsplit(target).path if "://" in target else ""
+        except ValueError:
+            proxy_path = ""
         routes.append({
-            "location": location, "exact": bool(match.group(1)),
+            "location": location, "exact": match.group(1) == '=',
+            "template": template, "location_modifier": match.group(1),
             "rewrite_pattern": rewrite.group(1) if rewrite else None,
-            "rewrite_target": rewrite.group(2) if rewrite else None,
+            "rewrite_target": _safe_rewrite_target(rewrite.group(2)) if rewrite else None,
             "proxy_path": proxy_path or None,
             "upstream": host, "upstream_server": upstreams.get(host),
             "upstream_ambiguous": host in unresolved_upstreams,

@@ -1,14 +1,14 @@
-# Relationship discovery instructions
+# Optional relationship discovery notes
 
-Edit this file when you add repositories or learn more about their relationships.
-Write in English or Chinese. Partial information and uncertain guesses are useful starting points.
-These notes guide investigation. They do not establish source facts or runtime behavior.
+The skill discovers dependencies from repository sources without requiring this file or human relationship input.
+Optional notes can record corrections, source locations, and hypotheses. English or Chinese input is supported.
+These notes supply regression expectations. They do not establish source facts, provider identity, or runtime behavior.
 
 Entry point source: [user request](../../tasks/workbench-graph-instruction-integration-20261028/evidence/graph-instruction-integration-20261028/user-input-instruction-location-20261028.txt), 28 October 2026.
 
 ## Existing architecture notes
 
-Start with the [preserved architecture explanation](../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt).
+Compare independent discovery with the [preserved architecture explanation](../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt).
 It describes the four MFE layers, Nginx, BFF, SDK, and Auth Server.
 Keep that historical source unchanged. Add corrections and newer information below.
 
@@ -17,7 +17,7 @@ The agent maintains that structured file after checking current repository sourc
 
 ## New repositories and corrections
 
-Add dated notes here. Include what you know:
+If useful, add dated notes here. No relationship inventory is required from the user.
 
 - Repository name and relative path under `repos/`.
 - Its purpose, provided interfaces, and expected consumers.
@@ -25,16 +25,17 @@ Add dated notes here. Include what you know:
 - Known aliases, useful source locations, uncertainties, and investigation exclusions.
 - Corrections to earlier notes, with the affected claim identified.
 
-Leave unknown details explicit. The agent must also discover relationships beyond these notes.
+Leave unknown details explicit. The agent investigates all in-scope repositories and boundary families independently of these notes.
 
 ## Apply changes
 
-After updating this file, ask:
+To request discovery, ask:
 
-> Use $service-dependencies-graph. Read relationships/service-dependencies/initial-instructions.md, investigate all repos, update the reviewed context, and regenerate the graph.
+> Use $service-dependencies-graph. Discover dependencies from all in-scope repositories, investigate extraction gaps, and regenerate the graph.
 
-The agent preserves these notes as dated evidence before investigation.
-It records supported relationships, inferences, conflicts, and missing evidence in the reviewed context.
+The agent checks available source first. Optional notes are compared with independently discovered declarations.
+The agent preserves changed notes as dated evidence before editing them.
+It records supported relationships, inferences, conflicts, and missing evidence through canonical extraction and reviewed context.
 A build command alone validates and renders saved context. It does not investigate this Markdown file.
 
 Open the generated [relationship viewer](generated/relationship-viewer.html) after successful generation.

@@ -135,6 +135,23 @@ class ArchitectureContextTests(unittest.TestCase):
         (repository / 'package.json').write_text('{"name":"@fixture/client"}', encoding='utf-8')
         (repository / 'src/index.ts').write_text("fetch('/orders');\n", encoding='utf-8')
 
+    def test_no_context_build_ignores_saved_context_without_modifying_it(self):
+        _, path, _ = supplied_context(self.root)
+        # Even invalid saved notes cannot influence the extraction-only run.
+        path.write_text('{invalid saved context', encoding='utf-8')
+        before = path.read_bytes()
+        self._repository()
+        output = self.root / 'generated'
+        with redirect_stdout(io.StringIO()):
+            generation.main(['--workspace', str(self.root), '--out', str(output), '--no-context'])
+        graph = json.loads((output / 'graph.json').read_bytes())
+        self.assertTrue(any(row['relationship'] == 'CALLS_REST' for row in graph['edges']))
+        self.assertFalse(any(row['relationship'] == 'REVIEWED_RELATIONSHIP' for row in graph['edges']))
+        self.assertFalse((output / context_tool.APPLIED_CONTEXT).exists())
+        self.assertEqual(path.read_bytes(), before)
+        with self.assertRaises(SystemExit):
+            generation.main(['--no-context', '--context', str(path)])
+
     def test_input_symlink_retarget_makes_freshness_stale(self):
         """Given a captured input alias, when its target changes, then freshness reports that alias as STALE."""
         document, path, _ = supplied_context(self.root)

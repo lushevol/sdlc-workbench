@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 import runpy
@@ -12,6 +13,73 @@ builder = load_tool('build_graph')
 
 
 class HttpCoverageTests(unittest.TestCase):
+    def test_rewrite_targets_strip_userinfo_query_values_and_fragments(self):
+        gateway = load_tool('extract_gateway_routes')
+        for prefix in ('https://', '//'):
+            with self.subTest(prefix=prefix):
+                target = gateway._safe_rewrite_target(prefix + 'user:DO_NOT_RETAIN@orders-service/path?token=DO_NOT_RETAIN#DO_NOT_RETAIN')
+                self.assertEqual(target, prefix + 'orders-service/path?token=%7Bvalue%7D')
+
+    def test_nginx_templates_keep_route_declarations_without_environment_provider_guesses(self):
+        gateway = load_tool('extract_gateway_routes')
+        path = self.write('site.conf.j2', '''{% if enabled %}
+server {
+ location ^~ /api/ {
+  proxy_pass {{ protocol }}://gateway-{{ environment }};
+ }
+ location /{{ app.endpoint }}/ {
+  proxy_pass http://{{ app.name }}-{{ environment }};
+ }
+ location /notification/ {
+  proxy_pass {{ protocol }}://query-service-{{ environment }};
+  proxy_set_header Upgrade $http_upgrade;
+ }
+}
+{% endif %}''')
+        routes, _ = gateway.extract_nginx_routes(path)
+        self.assertEqual([row['location'] for row in routes], ['/api/', '/{{ app.endpoint }}/', '/notification/'])
+        self.assertEqual([row['line'] for row in routes], [3, 6, 9])
+        self.assertTrue(all(row['template'] for row in routes))
+        self.assertEqual(routes[0]['upstream'], 'gateway-{{ environment }}')
+        self.assertTrue(routes[-1]['websocket'])
+        graph = builder.Graph(self.root.parent)
+        repository = graph.add_repository(self.root, 'INFRA', True)
+        builder.extract_infrastructure(graph, self.root, repository)
+        builder.resolve_cross_repository(graph)
+        boundaries = [node for node in graph.nodes.values() if node.get('properties', {}).get('template')]
+        self.assertEqual(len(boundaries), 3)
+        self.assertTrue(all(not node['properties']['service_alias'] for node in boundaries))
+        self.assertTrue(all(edge.get('resolution_status') != 'RESOLVED' for edge in graph.edges.values()
+                            if edge['relationship'] == 'CALLS_SERVICE'))
+
+    def test_template_and_static_upstreams_cannot_merge_provider_evidence(self):
+        template = self.write('a.conf.j2', '''server {
+ location /api/ {
+  rewrite ^/api/(.*)$ /$1?api_key=DO_NOT_RETAIN_QUERY break;
+  proxy_pass http://user:DO_NOT_RETAIN_PASSWORD@orders-service?api_key=DO_NOT_RETAIN_PROXY#DO_NOT_RETAIN_FRAGMENT;
+ }
+}''')
+        self.write('z.conf', '''server {
+ location /api/ {
+  proxy_pass http://orders-service;
+ }
+}''')
+        graph = builder.Graph(self.root.parent)
+        repository = graph.add_repository(self.root, 'INFRA', True)
+        builder.extract_infrastructure(graph, self.root, repository)
+        provider = self.root.parent / (self.root.name + '-provider')
+        provider.mkdir()
+        self.addCleanup(lambda: shutil.rmtree(provider))
+        (provider / 'pom.xml').write_text('<project><groupId>fixture</groupId><artifactId>orders-service</artifactId></project>')
+        builder.extract_spring(graph, provider, graph.add_repository(provider, 'SPRING', True))
+        builder.resolve_cross_repository(graph)
+        calls = [edge for edge in graph.edges.values() if edge['relationship'] == 'CALLS_SERVICE']
+        self.assertTrue(any(edge['resolution_status'] == 'RESOLVED' for edge in calls))
+        template_calls = [edge for edge in calls if any(graph.evidence[ref]['path'].endswith(template.name) for ref in edge['evidence'])]
+        self.assertTrue(template_calls)
+        self.assertTrue(all(edge['resolution_status'] == 'UNRESOLVED' for edge in template_calls))
+        self.assertNotIn('DO_NOT_RETAIN', json.dumps(graph.document()))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

@@ -97,6 +97,27 @@ class ArchitectureIntegrationTests(unittest.TestCase):
         report = load_tool('repository_reports').relationship_report(document)
         self.assertEqual(report['counts']['resolved_relationships'], 0)
 
+    def test_source_only_investigation_needs_no_user_clarification(self):
+        self.document['sources'] = [row for row in self.document['sources'] if row['kind'] == 'SOURCE_REVIEW']
+        self.sources.pop('user')
+        self.document['layers'] = []
+        for row in self.document['subjects']:
+            row.update(status='SOURCE_REVIEWED', source_ids=[row['id'] + '-code'], layer_id=None)
+        self.document['relationships'][0]['source_ids'] = ['client-code', 'provider-code']
+        integration.apply_context(self.graph, self.captured())
+        edge = next(row for row in self.graph.document()['edges'] if row['relationship'] == 'REVIEWED_RELATIONSHIP')
+        self.assertEqual(edge['properties']['investigation_status'], 'SUPPORTED')
+        self.assertTrue(all(row['kind'] == 'SOURCE_REVIEW' for row in self.document['sources']))
+        bad = deepcopy(self.document)
+        bad['sources'][0]['kind'] = 'USER_CLARIFICATION'
+        with self.assertRaisesRegex(ValueError, 'SOURCE_REVIEWED subject'):
+            context.validate_document(bad)
+        bad = deepcopy(self.document)
+        bad['schema_version'] = '1.0.0'
+        bad.pop('investigations')
+        with self.assertRaisesRegex(ValueError, 'SOURCE_REVIEWED subject'):
+            context.validate_document(bad)
+
     def test_user_only_or_one_sided_evidence_cannot_promote_a_supported_link(self):
         """Given insufficient source evidence, when integration runs, then unsupported promotion fails before graph changes."""
         initial = deepcopy(self.graph.document())

@@ -126,6 +126,43 @@ import thing from "@fm/shared";
         self.assertEqual(result['matches'][0]['family'], 'HTTP_ENDPOINT')
         self.assertEqual(set(result['pattern_summary']['families']), {'HTTP_ENDPOINT'})
         self.assertIn('GRAPHQL_SCHEMA', result['global_pattern_summary']['families'])
+        self.assertEqual(result['offset'], 0)
+        self.assertIsNone(result['next_offset'])
+
+    def test_patterns_pages_traverse_all_filtered_candidates_in_one_snapshot(self):
+        (self.repo / 'package.json').write_text(json.dumps({'name': '@fixture/client'}))
+        source = self.repo / 'src' / 'client.ts'
+        source.parent.mkdir(exist_ok=True)
+        source.write_text('const base = process.env.API_BASE;\n' + '\n'.join(
+            f'fetch("/api/orders/{index}");' for index in range(7)))
+        out = self.root / 'generated'
+        generator.main(['--workspace', str(self.root), '--out', str(out)])
+        arguments = {'repository': 'client', 'family': 'HTTP_ENDPOINT', 'limit': 2}
+        offset, observed, snapshots = 0, [], set()
+        while offset is not None:
+            result = snapshot.query(out, 'patterns', {**arguments, 'offset': offset}, self.root)
+            self.assertEqual(result['matching_total'], 7)
+            self.assertEqual(result['offset'], offset)
+            self.assertEqual(set(result['pattern_summary']['families']), {'HTTP_ENDPOINT'})
+            observed.extend(result['matches'])
+            snapshots.add(result['snapshot']['manifest_sha256'])
+            offset = result['next_offset']
+        self.assertEqual(len(snapshots), 1)
+        self.assertEqual(len(observed), 7)
+        self.assertEqual(len({row['id'] for row in observed}), 7)
+        self.assertEqual({row['value'] for row in observed}, {f'/api/orders/{index}' for index in range(7)})
+        beyond = snapshot.query(out, 'patterns', {**arguments, 'offset': 99}, self.root)
+        self.assertEqual(beyond['matches'], [])
+        self.assertEqual(beyond['matching_total'], 7)
+        self.assertIsNone(beyond['next_offset'])
+        first = snapshot.query(out, 'patterns', arguments, self.root)
+        self.assertEqual(first['matches'], observed[:2])
+
+    def test_patterns_offset_requires_a_nonnegative_integer(self):
+        for value in (-1, 1.5, True, '1'):
+            with self.subTest(offset=value), self.assertRaises(snapshot.SnapshotError) as error:
+                snapshot.query(self.root, 'patterns', {'offset': value}, self.root)
+            self.assertEqual(error.exception.code, 'INVALID_ARGUMENT')
 
 
 if __name__ == '__main__':
