@@ -22,14 +22,15 @@ All approved enhancements passed the completion audit. Five existing skills impr
 | New harness evaluation | Uses pinned trials, independent assessment, input preflight, and ownership-safe recovery. | [Evaluation skill](../../.agents/skills/evaluate-harness/SKILL.md) |
 | Receipt enforcement | Rejects incomplete accounting, binds coverage targets, and requeues changed outputs. | [Runtime correction](evidence/stage-02r-accounting-correction.json) |
 
-The [scorecard](evidence/optimization-scorecard.json) contains forty main trials across thirteen distinct cases.
+The [original scorecard](evidence/optimization-scorecard.json) contains forty main trials across thirteen distinct cases.
 Candidate criteria passed 85/85. Baseline criteria passed 81/85. Both additional follow-ups passed 4/4 criteria each.
 All forty-two scope checks passed. Twenty-four final reader answers retain all reviewed source predicates.
-Both final reader variants received identical maximum usability scores. The candidate provided more explicit draft-review judgments.
+The second assessment corrected two baseline usability scores. Candidate scores remain unchanged under the frozen definitions.
+Both variants retain supported final answers. The candidate provided more explicit draft-review judgments.
 
 The [installed distribution](evidence/stage-06-installed-final.json) comes from clean source commit `f5b1b072b`.
 All 223 shared skill files match. Six catalogs are empty, with zero prohibited generated artifacts.
-The [current full suite](evidence/final-current-tests.json) passed 1,107 tests, with two optional connector tests skipped.
+The [prior full suite](evidence/final-current-tests.json) passed 1,107 tests, with two optional connector tests skipped.
 The final instruction-only guard also passed twenty-three workspace-layout tests and independent ownership review.
 The [delivery checks](evidence/final-delivery-checks.json) verify retained bytes and local links.
 
@@ -44,6 +45,41 @@ The [size measurements](evidence/skill-context-measurements.json) show existing 
 The new evaluation entrypoint contains 3,530 bytes. Actual token and active-time savings remain unknown.
 The assessor was independent and variant-aware. Actual model, reasoning, and client settings remain unknown.
 Evidence uses local synthetic fixtures. Native Windows, other native clients, live business behavior, and complete ASD review remain unverified.
+
+### Second completion assessment, 18 November 2026
+
+Source is the current Codex conversation. Exact user input follows.
+
+```text
+double confirm if anything left, and full assessed check if it finished.
+```
+
+Review the current implementation, approved scope, retained assessments, installed package, and final checks.
+Affected scope is this task and its enhanced skills and ingestion runtime. Qualitative review risk is low.
+Retain discrepancies and correct evidence-backed completion records. Preserve unrelated worktree edits.
+
+Continuation, 18 November 2026:
+
+```text
+go on
+```
+
+The [second assessment](evidence/second-assessment-20261118/result.json) found no unfinished approved implementation.
+It corrected two reporting discrepancies. Original assessments and adverse evidence remain unchanged.
+
+| Area | Reassessment outcome | Evidence |
+| --- | --- | --- |
+| Implementation | No actionable defect found. Independent focused checks passed 59/59 tests. | [Implementation review](evidence/second-assessment-20261118/implementation-review/review-summary.json) |
+| Full tests | 1,107 passed; two optional skips then passed separately. All 1,109 unique tests have passing results. | [Full suite](evidence/second-assessment-20261118/full-tests.log), [optional connectors](evidence/second-assessment-20261118/optional-native-connectors.log) |
+| Installed distribution | Clean `eda185114` build matched 223 skill files, six empty catalogs, and zero prohibited artifacts. | [Installation result](evidence/second-assessment-20261118/distribution-result.json) |
+| Source and documents | All 901 tracked source entries remained stable. Validation found zero issues across 119 documents. | [Source bindings](evidence/second-assessment-20261118/source-stability.json), [validation](evidence/second-assessment-20261118/workspace-validation.json) |
+| Evidence | All 42 assessments were reviewed. The installed-transfer sentence and two reader dimension scores were corrected. | [Evidence review](evidence/second-assessment-20261118/evidence-review/audit-result.json) |
+
+The installed forward trial had already passed. Its earlier pending sentence was stale.
+Baseline completeness and organization now score 1/2 under the frozen review-and-answer definitions.
+Baseline qualification visibility and action clarity remain 2/2. All four candidate dimensions remain 2/2.
+These corrections preserve the original criterion counts and twenty-four supported final answers.
+No trial was replayed. Ten optional repetitions and the previously stated environment and writing limits remain explicit.
 
 ### Enhancement authorization, 17 November 2026
 
@@ -115,7 +151,7 @@ Both semantic-review variants accounted for all twenty-four predicates and rejec
 Both preserved qualified historical numeric and timing observations. This fixture establishes no factual advantage between variants.
 Each reader variant supplied twelve supported final answers and retained all twenty-four predicates.
 The candidate passed all four review criteria. The baseline passed three criteria and omitted separate draft usability judgments.
-Both final answer sets received identical maximum usability scores.
+Both final answer sets retain supported predicates. The second assessment corrects the original combined review-and-answer usability scores.
 All seven engineering comparisons passed sixty-six criteria across both variants.
 
 The next continuation found missing worker handles. One unfinished authorized draft was retained before retry.
