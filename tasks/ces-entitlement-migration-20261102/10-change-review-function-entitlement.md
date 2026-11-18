@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FUNCTION-ENTITLEMENT-20261117
-version: 2
+version: 3
 status: draft
 owner: unknown
-source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-FUNCTION-EXCEL-20261118, MATRIX-X-RATANONE, MATRIX-RATAN-FUNC]
+source_refs: [USER-FUNCTION-20261117, USER-FUNCTION-ANSWERS-20261117, USER-FUNCTION-TIMING-20261117, USER-FUNCTION-EXCEL-20261118, USER-FUNCTION-AUTHENTIC-DATA-20261118, MATRIX-X-RATANONE, MATRIX-RATAN-FUNC]
 related_ids: [CES-MIGRATION, CES-COVERAGE-CASES]
 review:
   state: pending
@@ -123,6 +123,7 @@ API errors cannot count as an empty entitlement or a passing value comparison.
 | USER-FUNCTION-ANSWERS-20261117 | [Exact discussion answers](evidence/function-entitlement-20261117/user-clarifications.md) | 2026-11-17; hash in validation | User intent; no execution or publication approval. |
 | USER-FUNCTION-TIMING-20261117 | [Exact timing answer](evidence/function-entitlement-20261117/user-timing-target.md#exact-answer) | 2026-11-17; hash in validation | User-selected five-second test target; CES NFR unconfirmed. |
 | USER-FUNCTION-EXCEL-20261118 | [Exact Excel request](evidence/function-entitlement-excel-20261118/user-input.md#exact-user-input) | 2026-11-18 | Plain testing language and inline test data; no execution requested. |
+| USER-FUNCTION-AUTHENTIC-DATA-20261118 | [Authentic-data correction](evidence/function-entitlement-excel-20261118/authentic-data-user-input.md#exact-user-input) | 2026-11-18 | Use authentic matrix IDs and entitlements for every Excel case. |
 | MATRIX-X-RATANONE | [Workbook](<ces migration/X_RATANONE_security_matrix_prod.xlsx>) | `e6e6da5a43b1303593c74da3703f8066bcf58a10abe3f729f8ea6aa204678d63` | Historical PROD-labelled conversion snapshot; current applicability unverified. |
 | MATRIX-RATAN-FUNC | [Workbook](<ces migration/RATAN_FUNC_security_matrix_prod.xlsx>) | `f0bb7982136da01bf78b323374f1e53602ceca1df11e6b0c261b8e441786f4ac` | Historical PROD-labelled conversion snapshot; current applicability unverified. |
 
@@ -173,15 +174,28 @@ The candidate remains unpublished. Wiki refresh and business execution remain se
 ### Excel export, 18 November 2026
 
 The [Excel workbook](../../outputs/01a1ec5d-f2d5-7570-88f5-3858ad40560e/CES-function-entitlement-test-cases.xlsx) follows the [plain-language request](evidence/function-entitlement-excel-20261118/user-input.md#exact-user-input).
-One worksheet contains all 15 case IDs, with 62 scenario rows and 705 source-account rows.
+One worksheet contains all 15 case IDs, with 89 scenario rows and 705 source-account rows.
 Each row includes its test data, numbered steps, expected value, source, and editable result fields.
 The workbook contains no BDD syntax. Historical canonical definitions remain available in the case catalog.
 Cases 007 through 015 remain proposed additions. Every execution result is `Not run`.
 
-The [export checks](evidence/function-entitlement-excel-20261118/validation.json) compare all 705 assignments directly with the retained matrices.
+The [current export checks](evidence/function-entitlement-excel-20261118/authentic-data-validation.json) compare all 705 assignments directly with the retained matrices.
 They also verify source hashes, text identifiers, filters, frozen panes, result controls, and rendered sample views.
-The export retains both historical exceptions as unresolved. Assignment-change aliases need authorized test-account identities.
-The downgrade variant needs an approved profile pair. Empty-value and endpoint bindings remain unconfirmed.
+The [authentic-data correction](evidence/function-entitlement-excel-20261118/authentic-data-user-input.md#exact-user-input) replaces every Excel account alias with a retained matrix ID.
+All 89 scenario rows use authentic account IDs. Their recorded assignments include exact source cells.
+Read-only comparison covers the original 705 assignments. The export retains both historical exceptions as unresolved.
+The data-only scenario uses `1669784`; retained-data offboarding uses `1255470` with `FMO_RO` and `Global`.
+Generic, System, and Service examples use `srv.ratan.001`, `srv.51129.fmdataplatform.dqslrt.001`, and `srv.TIS-FM-SCBK.001`.
+
+Recorded assignments and proposed setup are separate Excel fields. The matrices contain no assigned `FMO_MO` account.
+That coverage uses existing ID `1617180` with a proposed replacement of its recorded `FMO_MO_RO` profile.
+Generic and System `SYS_OPS` coverage also requires proposed replacements of recorded `SYS_RO` assignments.
+Empty general-account scenarios require prerequisite removal. They do not assert an unrecorded historical empty state.
+The permission-reduction case uses `2026705`, replacing `FMO_COO_SUP` with `FMO_COO`.
+Matrix action sets contain 13 and 11 tuples respectively. Complete live privilege ordering remains unconfirmed.
+
+The [earlier export checks](evidence/function-entitlement-excel-20261118/validation.json) remain bound to the earlier workbook in commit `dd94a4d2b`.
+Empty-value and endpoint bindings remain unconfirmed. No CES query or account mutation occurred.
 Immediate-read and five-second outcomes remain separate for every lifecycle transition.
 Owner: unknown. Next action: bind those inputs before executing affected rows.
 
