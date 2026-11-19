@@ -64,7 +64,8 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m unittest \
 ```
 
 The full source, incremental, CLI, and wiki regression groups contain 123 passing tests in this environment.
-The repository-wide suite and wheel build remain pending.
+The repository-wide suite ran 1,110 tests with two skips and 39 errors from sandboxed localhost socket binding in unrelated integration fixtures.
+The changed tests passed. The wheel build passed, and workspace validation returned `VALID` with no findings.
 Live provider compilation, remote access, publication, and deployment authorization remain outside this maintenance check.
 
 ## Writing review
