@@ -67,6 +67,11 @@ Publication is not a prerequisite for qualified candidate summaries. Wiki freshn
 Querying reads these sources without promoting their states.
 Release synchronization classifies changes and reuses only the affected operations.
 
+The [local knowledge reader](SETUP.md#local-knowledge-web-reader) browses these layers without changing lifecycle state.
+It preserves canonical metadata, native wiki sections, and source aliases within `knowledge/`.
+Its embedded OpenKB graph displays an existing snapshot and does not establish wiki freshness.
+Audit logs and processing receipts remain outside the reader's collections.
+
 ## Storage and invalidation
 
 | Stage | Storage | Reuse and invalidation |

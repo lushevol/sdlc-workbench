@@ -1,0 +1,97 @@
+{
+  "started_at": "2026-11-19T03:01:56.079Z",
+  "base": "http://localhost:8767",
+  "cases": [
+    {
+      "id": "knowledge-scope-and-authored-navigation",
+      "started_at": "2026-11-19T03:01:59.053Z",
+      "collections": {
+        "records": 123,
+        "wiki": 208,
+        "guide": 2,
+        "evidence": 1044
+      },
+      "assertions": [
+        "Every catalog path stays inside knowledge/.",
+        "Audit and runtime files are absent.",
+        "Canonical index tables render.",
+        "Authored canonical-to-wiki link opens the native wiki index."
+      ],
+      "status": "PASSED",
+      "finished_at": "2026-11-19T03:01:59.315Z"
+    },
+    {
+      "id": "wiki-native-links-and-canonical-aliases",
+      "started_at": "2026-11-19T03:01:59.316Z",
+      "assertions": [
+        "Native wikilinks open the correct entity.",
+        "Wiki full_text alias opens its one canonical source.",
+        "Canonical and derived authority labels stay distinct."
+      ],
+      "status": "PASSED",
+      "finished_at": "2026-11-19T03:01:59.540Z"
+    },
+    {
+      "id": "standard-markdown-and-unsafe-content-fixture",
+      "started_at": "2026-11-19T03:01:59.540Z",
+      "assertions": [
+        "Nested lists and final table rows render.",
+        "Unicode duplicate headings receive unique anchors.",
+        "Authored anchors work.",
+        "Raw HTML and unsafe links remain inert.",
+        "Remote images make no request.",
+        "Outside links report the scope boundary."
+      ],
+      "status": "PASSED",
+      "finished_at": "2026-11-19T03:01:59.942Z"
+    },
+    {
+      "id": "original-wiki-graph-and-sandbox",
+      "started_at": "2026-11-19T03:01:59.942Z",
+      "nodes": "201",
+      "edges": "1716",
+      "assertions": [
+        "Original graph executes with nonzero nodes.",
+        "Graph search accepts interaction.",
+        "Opaque sandbox blocks access to the reader document."
+      ],
+      "status": "PASSED",
+      "finished_at": "2026-11-19T03:02:00.832Z"
+    },
+    {
+      "id": "mobile-browse-and-search",
+      "started_at": "2026-11-19T03:02:00.833Z",
+      "assertions": [
+        "Narrow-screen browse opens and closes.",
+        "Search opens a result.",
+        "No horizontal page overflow at 390 pixels."
+      ],
+      "status": "PASSED",
+      "finished_at": "2026-11-19T03:02:01.031Z"
+    }
+  ],
+  "source_hashes": {
+    "core/knowledge_web/server.py": "1174123c3a5648f34573ba4621307d20ac42205d94077b86f09107c38eedc5ab",
+    "core/knowledge_web/static/app.js": "27dfee6c6d46e4cd1521e15e99c32c79dcef3d1711fa0a417bf256ffc2f25522",
+    "core/knowledge_web/static/index.html": "a5a54b757d41627ac79f4f75e35daf79b7f0223a62d90fe9172f67fc0e05e8d0",
+    "core/knowledge_web/static/styles.css": "556cce70bc83d355d845516e221986d3626e135ace6faafbb8fc94fb57585ccf",
+    "core/knowledge_web/static/marked.umd.js": "0db7abc826b5ac76f6ed11951ae34074ba50438ce6ea8d52889203779e5cbbad",
+    "canonical.png": "0d8362776b3bf0d11597872421cee3480ca6bbc310af1bc3fe08bbc032c698d8",
+    "wiki-graph.png": "22180656c96571c94732ff0fb4d55d5a61d9fad2f1d1d917e82eccf426163690",
+    "mobile.png": "897c562147560f1767571960efe5fde8fa1b21f80d1cb86c7bd78a076639d241"
+  },
+  "environment": {
+    "node": "v24.16.0",
+    "platform": "darwin",
+    "browser": "Installed Chromium, headless, disposable profile",
+    "browser_version": "156.0.8078.4"
+  },
+  "limits": [
+    "Local macOS browser checks only.",
+    "The format and unsafe-content case substitutes one synthetic API document."
+  ],
+  "status": "PASSED",
+  "page_errors": [],
+  "remote_requests": [],
+  "finished_at": "2026-11-19T03:02:01.032Z"
+}

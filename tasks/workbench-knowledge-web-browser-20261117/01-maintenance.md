@@ -1,21 +1,111 @@
-# Knowledge web browser investigation and proposal
+# Knowledge web reader maintenance
 
-> **Critical conclusions: Design discussion required**
+> **No critical conclusions require user attention or action.**
 >
-> **Use one local reader that preserves the existing knowledge layers.**
-> Action: Discuss the proposed reader layout before implementation. Owner: project user.
-> Evidence: [Exact request](#exact-user-input) and [inspected structure](#current-structure-and-formats).
->
-> **Source images are missing from the inspected exports.**
-> Consequence: Available Markdown cannot reproduce those images or exact original Confluence styling.
-> Owner: unknown. Next action: show missing attachments and retain original source links.
-> Evidence: [Source fidelity limits](#source-fidelity-limits).
+> The local reader refinement is implemented and checked.
+> Source-format and platform limits remain explicit below.
 
 Date: 17 November 2026.
-Scope: Workbench maintenance; investigation and implementation discussion only.
-Status: POC implemented. Production hardening and final UX decisions remain open.
+Updated: 19 November 2026.
+Scope: Workbench maintenance; local knowledge browsing and existing wiki graph integration.
+Status: Implemented and locally verified. Shared hosting and publication are outside this scope.
+
+## Current refinement outcome
+
+The [19 November request](#knowledge-web-service-refinement-19-november-2026) supersedes the earlier collection scope.
+The reader now exposes only approved content under `knowledge/`.
+It excludes audit events, wiki logs, processing receipts, incoming exports, task snapshots, and project documentation.
+Page reads create no retained action records or audit files.
+Existing canonical sources, wiki content, graph bytes, and governance history remain unchanged.
+
+Canonical navigation follows actual record folders and classifications.
+Wiki navigation retains its authored index, summaries, concepts, entities, and explorations.
+The reader displays actual type, version, status, governance state, and source metadata.
+Relative links, native wikilinks, heading fragments, source-line citations, and validated canonical aliases resolve through the catalog.
+
+The bundled Marked renderer preserves nested lists, complete tables, fenced code, and heading structure.
+Empty authored anchors remain usable. General source HTML is escaped, and unsupported URL schemes remain inert.
+The graph view embeds the existing OpenKB viewer without changing its renderer or regenerating knowledge.
+Its sandbox blocks access to the parent reader. Its content policy excludes external asset requests.
+The inspected graph contains 201 nodes and 1,716 edges.
+
+### Verification and evidence
+
+The [check summary](evidence/web-refinement-20261119/checks.json) binds commands, outcomes, source hashes, and environment details.
+
+Applicable unit inventory: 1,113 core unit tests, including ten knowledge-reader tests.
+The complete discovery command ran 1,115 tests: 1,113 passed, two optional connector integration tests skipped.
+The skipped integrations require `WORKBENCH_CONNECTOR_INTEGRATION=1` and do not exercise changed reader interfaces.
+There were no failures, errors, or expected failures.
+Runtime: macOS arm64, Python 3.14.5; suite duration: 96.788 seconds.
+
+```sh
+PYTHONPATH=. .venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist
+```
+
+The wheel build passed and includes the renderer bundle and its MIT license.
+The [isolated installation check](evidence/web-refinement-20261119/package-check.json) passed outside this checkout.
+Seven installed HTTP routes responded successfully. A fresh workspace validated as `VALID`.
+Generated workspaces retain guides, skills, schemas, and templates without Python runtime source.
+The initial probe incorrectly rejected the entire `core/` guide directory; the retained result explains its correction.
+
+Five [browser cases](evidence/web-refinement-20261119/run-2/results.json) passed against the final local service.
+They cover scope, authored navigation, native links, source aliases, Markdown structure, unsafe content, graph isolation, and mobile browsing.
+The format case uses a synthetic API document. Other cases read the actual workspace.
+No browser page errors or external asset requests occurred.
+The [retained probe](evidence/web-refinement-20261119/probe.mjs) records assertion outcomes and source hashes after each case.
+Independent inspection also checked containment, rendering, and graph restrictions.
+
+Visual review found an overlapping mobile header after the [initial passing assertions](evidence/web-refinement-20261119/run-1/results.json).
+The [initial screenshot](evidence/web-refinement-20261119/run-1/mobile.png) retains that limitation.
+The corrected layout and an explicit non-overlap assertion passed in the final run.
+
+![Canonical record navigation](evidence/web-refinement-20261119/run-2/canonical.png)
+
+![Existing wiki graph inside the reader](evidence/web-refinement-20261119/run-2/wiki-graph.png)
+
+![Corrected mobile header](evidence/web-refinement-20261119/run-2/mobile.png)
+
+### Current documentation and limits
+
+Updated [setup](../../docs/SETUP.md#local-knowledge-web-reader), [dependencies](../../docs/DEPENDENCIES.md#browser-assets-and-documentation), and [lifecycle guidance](../../docs/KNOWLEDGE_LIFECYCLE.md#three-connected-lifecycles).
+Updated the [root guide](../../README.md) and [architecture knowledge section](../../ARCHITECTURE.md#knowledge).
+No installer prerequisite changed. Existing wheel and offline-bundle paths carry the bundled browser assets.
+Browser startup downloads no packages and needs no Node installation or model credentials.
+
+Images remain unavailable placeholders; Mermaid fences remain source code.
+Source exports cannot reconstruct missing attachments or exact original Confluence styling.
+The internal wiki source manifest includes processing history and is excluded from browsable documents.
+Its authored links report an unavailable destination; native canonical source aliases remain usable.
+Graph freshness still requires the existing wiki workflow. Displayed relationships remain a generated snapshot.
+Native Windows, other browser engines, and shared hosting were not tested.
+Formal ASD writing review remains pending.
 
 ## Exact user input
+
+### Knowledge web service refinement, 19 November 2026
+
+Source: User message in the current Codex session, 19 November 2026.
+
+The JSON string preserves the message's newlines and trailing space.
+
+```json
+"knowledge web service\n\n\n\n1. don't need audit logs\n2. only focus on knowledge folder\n3. for canonical knowledges and wikis, follows proper construction.\n4. integrate wiki graph into web "
+```
+
+This request authorizes the existing reader refinement and wiki graph integration.
+Limit browsing and search to `knowledge/`. Exclude audit logs from the web service.
+Preserve canonical record and native wiki structures, metadata, and links.
+Keep retained source bytes and governance history unchanged.
+Base revision: `d460e4ed80a0694e2ee2fb2ad2b4ef5fa0105c49`.
+Existing unrelated changes: deleted `core/connectors/yarn.lock`, untracked `core/release-report/`, and untracked processing-resume task.
+Affected consumers: knowledge reader, catalog routes, CLI help, package assets, and reader tests.
+Risk: moderate for file containment, document rendering, native navigation, and graph links.
+Current documentation to reconcile: setup, dependencies, and knowledge lifecycle guidance.
+Status: implementation and local verification completed; see [current outcome](#current-refinement-outcome).
+
+### Original investigation request
 
 Source: User message in the current Codex session, 17 November 2026.
 
@@ -73,6 +163,9 @@ It does not authorize publication, deployment, editing, ingestion, governance tr
 - Keep the proposal here until an accepted design changes current implementation guidance.
 
 ## Investigation and proposed design
+
+This section retains the original 17 November investigation and proposal.
+The current refinement outcome above governs the implemented scope.
 
 ### Current structure and formats
 
@@ -288,6 +381,8 @@ Run the applicable complete unit suite, wheel build, installed-workspace probe, 
 
 ## Source identity checkpoint
 
+These source hashes describe the 17 November checkpoint.
+
 | Source | Current local SHA-256 |
 | --- | --- |
 | [Candidate index](../../knowledge/records/candidates/index.md) | `706a3d5f84b810355347495afec5ad78d635a143267b2883f3022be516aebac8` |
@@ -300,6 +395,9 @@ Inventories reflect local bytes during this assessment. Concurrent later changes
 
 ## Checks and limits
 
+The following observations describe the 17 November POC baseline.
+The current verification and limits above describe the 19 November refinement.
+
 Workspace discovery succeeded through `.venv/bin/ai-sdlc --workspace . status`.
 The bare `ai-sdlc` command was unavailable on the current shell PATH.
 No installation change was needed for investigation.
@@ -310,8 +408,8 @@ The live Chrome preview rendered the three-column layout and document metadata.
 Final document checks passed for 26 local links, their heading fragments, balanced fences, and three source checkpoint hashes.
 The staged diff review checks whitespace and confirms this task remains the only staged change.
 
-Current guides remain unchanged because this stage proposes behavior without introducing an accepted implementation.
-Implementation would update architecture, knowledge lifecycle, setup, dependencies, and relevant runtime responsibility guides together.
+The original POC stage left current guides unchanged.
+The 19 November refinement reconciles current documentation as recorded above.
 
 ```yaml
 standard: ASD-STE100
@@ -321,6 +419,6 @@ reviewer: null
 reviewed_at: null
 limitations:
   - Automated checks do not establish complete writing review.
-  - The POC renderer is a bounded Markdown subset and does not prove full source-format fidelity.
-  - The local preview was visually checked in Chrome only; production accessibility and cross-browser coverage remain pending.
+  - Images remain placeholders and Mermaid fences remain source code.
+  - Local Chromium checks do not establish native Windows or cross-browser behavior.
 ```

@@ -3,24 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Workbench Knowledge Preview</title>
+  <title>Workbench Knowledge</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="mark">K</span><div><strong>Knowledge preview</strong><small>AI SDLC Workbench</small></div></div>
-    <label class="search"><span class="sr-only">Search</span><input id="search" type="search" placeholder="Search records, wiki, docs and evidence"><kbd>/</kbd></label>
-    <div class="actions"><select id="scope" aria-label="Search collection"><option value="">All collections</option></select><button id="refresh">Refresh</button></div>
+    <div class="brand"><span class="mark">K</span><div><strong>Knowledge</strong><small>AI SDLC Workbench</small></div></div>
+    <button id="browse-toggle" class="browse-toggle" aria-controls="collections-panel" aria-expanded="false">Browse</button>
+    <label class="search"><span class="sr-only">Search knowledge</span><input id="search" type="search" placeholder="Search canonical records, wiki and sources"><kbd>/</kbd></label>
+    <div class="actions"><select id="scope" aria-label="Search collection"><option value="">All knowledge</option></select><button id="refresh">Refresh</button></div>
   </header>
-  <main class="shell">
-    <aside class="sidebar left" aria-label="Collections"><div class="panel-title"><span>Browse</span><span id="count" class="muted"></span></div><div id="collections"></div></aside>
-    <section class="reader" aria-live="polite">
-      <div id="welcome" class="welcome"><div class="welcome-icon">✦</div><h1>Browse the workspace knowledge</h1><p>Choose a document from the left or search across the selected collections.</p><div class="welcome-grid"><div><b>Records</b><span>Canonical intent and draft status</span></div><div><b>Wiki</b><span>Derived summaries and concepts</span></div><div><b>Evidence</b><span>Sources, selections and task links</span></div></div></div>
+  <div id="notice" class="notice hidden" role="status"></div>
+  <main id="shell" class="shell">
+    <aside id="collections-panel" class="sidebar left" aria-label="Knowledge collections"><div class="panel-title"><span>Browse knowledge</span><span id="count" class="muted"></span></div><button id="graph-button" class="graph-button" aria-pressed="false"><span>◈</span> Wiki graph</button><div id="collections"></div></aside>
+    <section id="reader" class="reader" aria-label="Knowledge reader" aria-live="polite">
+      <div id="welcome" class="welcome"><div class="welcome-icon">✦</div><h1>Browse the knowledge folder</h1><p>Open an authored index, explore the folder tree, or search the knowledge collections.</p><div class="welcome-grid"><div><b>Canonical records</b><span>Intent, types, versions and review status</span></div><div><b>Derived wiki</b><span>Summaries, concepts, entities and explorations</span></div><div><b>Wiki graph</b><span>Explore the existing relationship snapshot</span></div></div></div>
       <article id="article" class="article hidden"></article>
+      <section id="graph-view" class="graph-view hidden" aria-label="Wiki graph"><div class="graph-header"><div><h1>Wiki graph</h1><p>Generated OpenKB snapshot · summaries, concepts and entities</p></div><button id="graph-refresh">Reload graph</button></div><p class="graph-note">This graph shows the existing generated wiki relationships. Document changes appear after the wiki graph is regenerated.</p><div id="graph-content"></div></section>
     </section>
     <aside class="sidebar right" aria-label="Document details"><div class="panel-title">Document details</div><div id="details" class="details muted">Select a document to see its metadata and table of contents.</div></aside>
   </main>
-  <div id="search-panel" class="search-panel hidden"><div class="panel-title"><span>Search results</span><button id="close-search">Close</button></div><div id="results"></div></div>
+  <div id="search-panel" class="search-panel hidden" role="region" aria-label="Knowledge search results"><div class="panel-title"><span>Search results</span><button id="close-search">Close</button></div><p id="search-limit" class="search-limit"></p><div id="results"></div></div>
+  <script src="/assets/marked.umd.js" defer></script>
   <script src="/assets/app.js" defer></script>
 </body>
 </html>

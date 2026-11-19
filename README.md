@@ -197,6 +197,15 @@ Use the [knowledge guide](knowledge/README.md), shipped schemas, and templates f
 Keep original source bytes under `knowledge/evidence/sources/`. Record source identities and hashes in `knowledge/evidence/manifest.yaml`.
 Create candidates and findings before publishing derived knowledge.
 
+Browse local knowledge with the [web reader](docs/SETUP.md#local-knowledge-web-reader):
+
+```sh
+ai-sdlc --workspace PATH knowledge serve --port 8765 --open
+```
+
+The reader preserves canonical and native wiki navigation and embeds the existing wiki graph.
+It limits browsing to `knowledge/`, excluding audit logs and private engine state.
+
 Use `governance_state` for candidate → investigated → verified → published.
 Use contested, stale, or superseded when evidence requires them.
 Keep this lifecycle separate from OKF `status` and test outcomes.

@@ -401,6 +401,35 @@ It reads the shared OpenKB page layout and writes `knowledge/llm-wiki/output/vis
 OpenKB's viewer embeds its graph data and assets and can open without a CDN request.
 This wiki graph remains separate from `ai-sdlc graph build` and its governed-evidence/service graph.
 
+### Local knowledge web reader
+
+Start the installed reader from the selected workspace:
+
+```sh
+ai-sdlc --workspace PATH knowledge serve --port 8765 --open
+```
+
+For a source checkout, use its installed Python environment:
+
+```sh
+PYTHONPATH=. .venv/bin/python -m ai_sdlc_workbench --workspace . knowledge serve --port 8765 --open
+```
+
+The service binds to loopback. Stop it with Ctrl+C.
+Browse canonical records, native wiki pages, retained knowledge sources, and selections inside `knowledge/`.
+Audit logs, task snapshots, project documentation, incoming exports, and private engine state are excluded.
+Folder navigation preserves record classifications and wiki summaries, concepts, entities, explorations, and authored indexes.
+The reader displays actual metadata and resolves native wiki links and registered canonical aliases.
+Rendered Markdown supports tables and nested lists. Raw source remains available.
+Source HTML is escaped. Missing images show placeholders; Mermaid fences remain source code.
+
+Select **Wiki graph** to open the existing OpenKB visualization inside the reader.
+It reads `knowledge/llm-wiki/output/visualize/graph.html` without recompiling wiki content.
+If absent, generate it with the graph command above, then select **Refresh**.
+Graph content is a generated snapshot; it does not prove current canonical or wiki freshness.
+Browsing needs no OpenKB runtime, model credentials, Node installation, or network asset download.
+See [browser dependencies](DEPENDENCIES.md#browser-assets-and-documentation) for bundled renderer details and offline recovery.
+
 ### ADE usage and model authentication
 
 Set both `OPENAI_API_BASE` and `LLM_API_KEY` in `knowledge/llm-wiki/.env` or the process environment to select OpenKB.

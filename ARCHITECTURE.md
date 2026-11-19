@@ -273,6 +273,12 @@ New initialization creates this consolidated layout. Existing workspaces with th
 The shared runtime resolves the active layout from the unique source manifest location. Both manifest locations are ambiguous; a consolidated manifest without `knowledge/records/` is incomplete. Diagnose either condition instead of merging inputs or silently falling back.
 Canonical discovery selects the resolved record root; evidence and wiki operations use their own roots and validation contracts.
 
+The optional [local reader](docs/SETUP.md#local-knowledge-web-reader) serves knowledge through the installed Python runtime.
+It keeps canonical records, native wiki pages, and retained sources in separate navigation collections.
+Its catalog excludes audit logs, processing state, and documents outside `knowledge/`.
+Bundled browser assets render Markdown and embed the existing OpenKB graph in a sandboxed frame.
+Reads do not dispatch retained actions or change knowledge lifecycle state.
+
 `KnowledgeTopic` records connect background, domain terms, workflows, and historical explanations across sources.
 Classified drafts live under `knowledge/records/candidates/<classification>/` with a project-specific `index.md`.
 The ingestion skill supplies review and ingestion modes for agent-assisted operation.

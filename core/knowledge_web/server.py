@@ -7,11 +7,12 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import posixpath
 import re
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import threading
 from typing import Iterable
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 import webbrowser
 
 import yaml
@@ -21,7 +22,7 @@ from ..models import WorkbenchError
 
 
 MAX_DOCUMENT_BYTES = 2 * 1024 * 1024
-TEXT_SUFFIXES = frozenset({".md", ".markdown", ".txt", ".json", ".yaml", ".yml", ".log"})
+TEXT_SUFFIXES = frozenset({".md", ".markdown", ".txt", ".json", ".yaml", ".yml"})
 SKIP_PARTS = frozenset({".git", ".venv", ".workbench", "node_modules", "__pycache__", ".openkb"})
 FRONTMATTER = re.compile(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|\Z)", re.S)
 HEADING = re.compile(r"^ {0,3}(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$")
@@ -61,8 +62,6 @@ class RootSpec:
     label: str
     path: Path
     extensions: frozenset[str]
-    evidence_only: bool = False
-    allowed_files: frozenset[Path] | None = None
 
 
 def _safe_json(value):
@@ -130,10 +129,10 @@ def _headings(body: str) -> tuple[dict, ...]:
 def _read_document(collection: str, path: Path, workspace: Path) -> Document | None:
     try:
         resolved = path.resolve(strict=True)
-        if not resolved.is_relative_to(workspace) or path.is_symlink() or not resolved.is_file():
+        if resolved != path or not resolved.is_relative_to(workspace / "knowledge") or not resolved.is_file():
             return None
         raw = resolved.read_bytes()
-    except (OSError, ValueError):
+    except (OSError, ValueError, RuntimeError):
         return None
     if len(raw) > MAX_DOCUMENT_BYTES:
         return None
@@ -151,12 +150,11 @@ def _read_document(collection: str, path: Path, workspace: Path) -> Document | N
 
 
 def _walk(spec: RootSpec) -> Iterable[Path]:
-    if spec.allowed_files is not None:
-        for path in sorted(spec.allowed_files):
-            if path.is_file() and not path.is_symlink():
-                yield path
+    try:
+        resolved = spec.path.resolve()
+    except (OSError, RuntimeError):
         return
-    if spec.path.is_symlink():
+    if resolved != spec.path:
         return
     if spec.path.is_file():
         if spec.path.suffix.casefold() in spec.extensions:
@@ -167,12 +165,14 @@ def _walk(spec: RootSpec) -> Iterable[Path]:
     for directory, directories, filenames in os.walk(spec.path, followlinks=False):
         base = Path(directory)
         directories[:] = sorted(name for name in directories
-                                 if name not in SKIP_PARTS and not (base / name).is_symlink())
+                                 if name not in SKIP_PARTS and not name.startswith(".")
+                                 and not (base / name).is_symlink()
+                                 and (spec.collection != "records" or name not in {"evidence", "llm-wiki"}))
         for filename in sorted(filenames):
             path = base / filename
-            if path.is_symlink() or path.suffix.casefold() not in spec.extensions:
+            if path.is_symlink() or filename.startswith(".") or path.suffix.casefold() not in spec.extensions:
                 continue
-            if spec.evidence_only and "evidence" not in path.relative_to(spec.path).parts:
+            if filename == "AGENTS.md" or (spec.collection == "wiki" and filename == "log.md"):
                 continue
             yield path
 
@@ -185,52 +185,69 @@ class KnowledgeCatalog:
         self._lock = threading.RLock()
         self._roots = self._root_specs()
         self._documents: dict[str, Document] = {}
+        self._paths: dict[str, str] = {}
+        self._aliases: dict[str, str] = {}
         self.refresh()
 
     def _root_specs(self) -> tuple[RootSpec, ...]:
         records, evidence = knowledge_layout(self.workspace)
-        specs = [RootSpec("records", "Canonical records", records, frozenset({".md", ".markdown"}))]
+        markdown = frozenset({".md", ".markdown"})
+        specs = [RootSpec("records", "Canonical records", records, markdown)]
         wiki = self.workspace / "knowledge/llm-wiki/wiki"
-        if wiki.is_dir():
-            specs.append(RootSpec("wiki", "Derived wiki", wiki, frozenset({".md", ".markdown"})))
-        docs = self.workspace / "docs"
-        if docs.is_dir():
-            specs.append(RootSpec("docs", "Current documentation", docs, frozenset({".md", ".markdown"})))
-        for root_file in ("README.md", "ARCHITECTURE.md", "PRINCIPLE.md", "AGENTS.md", "knowledge/README.md"):
-            path = self.workspace / root_file
-            if path.is_file():
-                specs.append(RootSpec("docs", "Current documentation", path, frozenset({path.suffix.casefold()})))
-        if evidence.is_dir():
-            specs.append(RootSpec("evidence", "Knowledge evidence", evidence, TEXT_SUFFIXES))
-        tasks = self.workspace / "tasks"
-        if tasks.is_dir():
-            linked = set()
-            manifest = evidence / "manifest.yaml"
-            if manifest.is_file():
-                try:
-                    payload = yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
-                except (OSError, UnicodeError, yaml.YAMLError):
-                    payload = {}
-                for entry in payload.get("sources", []) if isinstance(payload, dict) else []:
-                    snapshot = entry.get("snapshot") if isinstance(entry, dict) else None
-                    if not isinstance(snapshot, str) or not snapshot.startswith("tasks/"):
-                        continue
-                    path = self.workspace / snapshot
-                    if path.is_file() and path.resolve().is_relative_to(tasks.resolve()):
-                        linked.add(path)
-            specs.append(RootSpec("evidence", "Linked task evidence", tasks, TEXT_SUFFIXES,
-                                  allowed_files=frozenset(linked)))
+        specs.append(RootSpec("wiki", "Derived wiki", wiki, markdown))
+        for name in ("README.md", "index.md"):
+            path = self.workspace / "knowledge" / name
+            if path.parent != records:
+                specs.append(RootSpec("guide", "Knowledge guide", path, markdown))
+        if evidence.is_relative_to(self.workspace / "knowledge"):
+            for name in ("sources", "selections", "findings", "README.md", "manifest.yaml"):
+                specs.append(RootSpec("evidence", "Sources and evidence", evidence / name, TEXT_SUFFIXES))
         return tuple(specs)
+
+    def _source_aliases(self, paths: dict[str, str]) -> dict[str, str]:
+        manifest = self.workspace / "knowledge/llm-wiki/source-manifest.json"
+        try:
+            if manifest.resolve(strict=True) != manifest:
+                return {}
+            payload = json.loads(manifest.read_text(encoding="utf-8"))
+        except (OSError, ValueError, RuntimeError):
+            return {}
+        aliases = {}
+        entries = payload.get("sources", []) if isinstance(payload, dict) else []
+        for entry in entries if isinstance(entries, list) else []:
+            if not isinstance(entry, dict):
+                continue
+            origin, name = entry.get("origin"), entry.get("doc_name")
+            if not isinstance(origin, str) or origin not in paths or not isinstance(name, str) or not name or "/" in name or "\\" in name:
+                continue
+            if not origin.startswith("knowledge/records/"):
+                continue
+            for folder in ("raw", "wiki/sources"):
+                alias = self.workspace / "knowledge/llm-wiki" / folder / f"{name}.md"
+                try:
+                    if alias.parent.resolve(strict=True) != alias.parent:
+                        continue
+                    if alias.is_symlink() and alias.resolve(strict=True) == self.workspace / origin:
+                        aliases[alias.relative_to(self.workspace).as_posix()] = paths[origin]
+                except (OSError, ValueError, RuntimeError):
+                    continue
+        return aliases
 
     def refresh(self) -> dict:
         fresh: dict[str, Document] = {}
-        for spec in self._roots:
+        roots = self._root_specs()
+        for spec in roots:
             for path in _walk(spec):
                 document = _read_document(spec.collection, path, self.workspace)
                 if document is not None:
                     fresh[document.key] = document
+        paths = {document.path: document.key for document in fresh.values()}
+        aliases = self._source_aliases(paths)
         with self._lock:
+            self._roots = roots
             self._documents = fresh
+            self._paths = paths
+            self._aliases = aliases
         return self.health()
 
     def health(self) -> dict:
@@ -257,6 +274,54 @@ class KnowledgeCatalog:
         if document is None:
             raise KeyError(key)
         return document
+
+    def resolve(self, key: str, target: str) -> dict:
+        document = self.document(key)
+        parsed = urlparse(target)
+        if parsed.netloc or parsed.scheme not in {"", "wiki"} or "\\" in target or "\x00" in target:
+            raise KeyError(target)
+        path, fragment = unquote(parsed.path), unquote(parsed.fragment)
+        if not path:
+            return {"key": key, "fragment": fragment}
+        wiki_root = "knowledge/llm-wiki/wiki"
+        if parsed.scheme == "wiki":
+            candidates = [posixpath.join(wiki_root, path)]
+        elif path.startswith("/"):
+            candidates = [path.lstrip("/")]
+        else:
+            candidates = [posixpath.join(posixpath.dirname(document.path), path)]
+            if document.collection == "wiki":
+                candidates.append(posixpath.join(wiki_root, path))
+        with self._lock:
+            for candidate in candidates:
+                normalized = posixpath.normpath(candidate)
+                for item in (normalized, normalized + ".md", normalized.rstrip("/") + "/index.md"):
+                    found = self._paths.get(item) or self._aliases.get(item)
+                    if found:
+                        return {"key": found, "fragment": fragment}
+            if parsed.scheme == "wiki" and "/" not in path:
+                matches = [item.key for item in self._documents.values()
+                           if item.collection == "wiki" and Path(item.path).stem == path.removesuffix(".md")]
+                if len(matches) == 1:
+                    return {"key": matches[0], "fragment": fragment}
+        raise KeyError(target)
+
+    def graph_bytes(self) -> bytes:
+        path = self.workspace / "knowledge/llm-wiki/output/visualize/graph.html"
+        try:
+            if path.resolve(strict=True) != path:
+                raise KeyError("graph")
+            return path.read_bytes()
+        except (OSError, RuntimeError) as error:
+            raise KeyError("graph") from error
+
+    def graph(self) -> dict:
+        try:
+            payload = self.graph_bytes()
+        except KeyError:
+            return {"available": False, "reason": "The existing wiki graph has not been generated in knowledge/llm-wiki/output/visualize/."}
+        return {"available": True, "url": "/wiki-graph", "sha256": hashlib.sha256(payload).hexdigest(),
+                "bytes": len(payload), "description": "Existing OpenKB graph snapshot of summaries, concepts, and entities."}
 
     def search(self, query: str, collection: str | None, limit: int) -> list[dict]:
         folded = query.casefold().strip()
@@ -295,12 +360,17 @@ class _Handler(BaseHTTPRequestHandler):
     def catalog(self) -> KnowledgeCatalog:
         return self.server.catalog  # type: ignore[attr-defined]
 
-    def _send(self, status: int, payload: bytes, content_type: str) -> None:
+    def _send(self, status: int, payload: bytes, content_type: str, *, graph: bool = False) -> None:
         self.send_response(status)
         self.send_header("Content-Type", f"{content_type}; charset=utf-8")
         self.send_header("Content-Length", str(len(payload)))
         self.send_header("Cache-Control", "no-store")
-        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'")
+        policy = ("default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; "
+                  "base-uri 'none'; form-action 'none'; frame-ancestors 'self'; sandbox allow-scripts" if graph else
+                  "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+                  "connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'")
+        self.send_header("Content-Security-Policy", policy)
+        self.send_header("X-Content-Type-Options", "nosniff")
         self.end_headers()
         if self.command != "HEAD":
             self.wfile.write(payload)
@@ -324,13 +394,26 @@ class _Handler(BaseHTTPRequestHandler):
         self._error(405, "The preview is read-only.")
 
     def _route(self) -> None:
+        try:
+            host = urlparse("//" + self.headers.get("Host", "")).hostname
+        except ValueError:
+            host = None
+        if host not in {"127.0.0.1", "localhost", "::1"}:
+            self._error(403, "The knowledge preview accepts localhost requests only.")
+            return
         parsed = urlparse(self.path)
+        if parsed.path == "/wiki-graph":
+            try:
+                self._send(200, self.catalog.graph_bytes(), "text/html", graph=True)
+            except KeyError:
+                self._error(404, "Wiki graph not found.")
+            return
         if parsed.path == "/":
             self._send(200, _asset("index.html"), "text/html")
             return
         if parsed.path.startswith("/assets/"):
             name = parsed.path.removeprefix("/assets/")
-            if name not in {"app.js", "styles.css"}:
+            if name not in {"app.js", "styles.css", "marked.umd.js"}:
                 self._error(404, "Not found.")
                 return
             content_type = "text/javascript" if name.endswith(".js") else "text/css"
@@ -346,6 +429,10 @@ class _Handler(BaseHTTPRequestHandler):
                 self._send(200, _json_bytes(self.catalog.health()), "application/json")
             elif parsed.path == "/api/navigation":
                 self._send(200, _json_bytes(self.catalog.navigation()), "application/json")
+            elif parsed.path == "/api/resolve":
+                self._send(200, _json_bytes(self.catalog.resolve(value("from"), value("target"))), "application/json")
+            elif parsed.path == "/api/graph":
+                self._send(200, _json_bytes(self.catalog.graph()), "application/json")
             elif parsed.path == "/api/document":
                 document = self.catalog.document(value("key"))
                 self._send(200, _json_bytes({**document.summary(), "metadata": document.metadata,

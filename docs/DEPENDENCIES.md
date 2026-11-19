@@ -438,6 +438,20 @@ See [the installation and ADE procedure](SETUP.md#openkb-primary-wiki) for porta
 
 ## Browser assets and documentation
 
+The local knowledge reader uses Python's standard-library HTTP server and the existing PyYAML dependency.
+Its wheel bundles [Marked 17.0.5](../core/knowledge_web/static/marked.umd.js) and the [MIT license](../core/knowledge_web/static/marked.LICENSE.txt).
+The unmodified browser bundle comes from the `marked` npm package, version `17.0.5`.
+Its SHA-256 is `0db7abc826b5ac76f6ed11951ae34074ba50438ce6ea8d52889203779e5cbbad`.
+Source distribution: [Marked repository](https://github.com/markedjs/marked), package registry: [npm](https://www.npmjs.com/package/marked).
+Browsing requires an installed Workbench runtime and a modern browser, without Node, a CDN, or model credentials.
+Connected installation and matching-platform offline bundles supply these assets through the existing wheel.
+No installer acquisition, startup download, runtime endpoint, or dependency-diagnosis change is required.
+Rebuild the wheel and prepared bundle when these assets change.
+If a renderer asset is missing, reinstall the complete wheel or regenerate the prepared bundle.
+The reader escapes source HTML, restricts links, and isolates the original wiki graph in a sandboxed frame.
+It reads the existing graph file; graph generation uses the separate optional OpenKB installation described above.
+Local Chromium checks cover rendering; native Windows and other browser engines remain untested for this reader.
+
 The [Ponytail skill](../.agents/skills/ponytail/SKILL.md) supplies coding instructions to the existing agent.
 The installed source is upstream package version `5.3.3`, revision `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`, dated 29 October 2026.
 Its [source record](../.agents/skills/ponytail/SOURCE.md) and [MIT license](../.agents/skills/ponytail/LICENSE.md) ship with the skill.
