@@ -146,7 +146,7 @@ ai-sdlc --workspace PATH sources view --source COLLECTION --output .workbench/in
 ai-sdlc --workspace PATH sources view --source COLLECTION --plan .workbench/ingestion/plan.json --output .workbench/ingestion/filtered/INCREMENT
 ```
 
-Choose a new output directory for each view.
+Choose an unused output directory for each new view. If rendering is interrupted, retry the same requested path. The runtime stages files and publishes the directory only after its manifest and entries pass their checks.
 With `--plan`, emit only kept present pages from its current processing queue.
 Other pages remain explicit omissions, including completed unchanged pages marked `outside_plan`.
 The manifest records the plan identity. Without `--plan`, the existing full reviewed-view behavior remains available.

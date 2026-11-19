@@ -342,6 +342,28 @@ class SourcePreparationTests(unittest.TestCase):
                 render_sources(self.root, "docs", ".workbench/racing-view")
         self.assertFalse((self.root / ".workbench/racing-view/manifest.json").exists())
 
+    def test_interrupted_view_can_retry_same_output_path(self):
+        """A failed staged view leaves no published directory, so the same request can resume."""
+        self.page("partial.md", content="A\nB\n")
+        self.refresh()
+        self.apply([self.decide("KEEP_SECTIONS", path="partial.md", ranges=[[1, 2]])])
+        output = self.root / ".workbench/resumed-view"
+        original = Path.write_text
+        failed = {"value": False}
+
+        def fail_once(path, *args, **kwargs):
+            if path.name == "partial.md" and not failed["value"]:
+                failed["value"] = True
+                raise OSError("synthetic interruption")
+            return original(path, *args, **kwargs)
+
+        with patch.object(Path, "write_text", fail_once):
+            with self.assertRaisesRegex(OSError, "synthetic interruption"):
+                render_sources(self.root, "docs", ".workbench/resumed-view")
+        self.assertFalse(output.exists())
+        result = render_sources(self.root, "docs", ".workbench/resumed-view")
+        self.assertTrue((self.root / result["manifest"]).is_file())
+
 
 if __name__ == "__main__":
     unittest.main()

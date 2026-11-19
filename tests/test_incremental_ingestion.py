@@ -15,6 +15,7 @@ import yaml
 
 from ai_sdlc_workbench.governance.schemas import HEADINGS
 from ai_sdlc_workbench.ingestion import harness
+from ai_sdlc_workbench.ingestion import incremental
 from ai_sdlc_workbench.ingestion.incremental import complete_sources, load_plan, plan_sources
 from ai_sdlc_workbench.ingestion.sources import apply_selections, refresh_sources
 from ai_sdlc_workbench.models import WorkbenchError
@@ -170,6 +171,29 @@ class IncrementalIngestionTests(unittest.TestCase):
         self.assertEqual(after["counts"]["unchanged"], 1)
         changed_recipe, _ = self.plan("canonical-v2")
         self.assertEqual(len(changed_recipe["process_queue"]), 1)
+
+    def test_completion_receipt_write_failure_can_retry_same_batch(self):
+        """A receipt write interruption leaves the reviewed batch replayable and idempotent."""
+        self.page()
+        self.refresh()
+        self.select()
+        plan, path = self.plan()
+        result = self.result()
+        original_atomic = incremental._atomic
+        failed = {"value": False}
+
+        def fail_receipt_write(target, data):
+            if Path(target).name == "docs.json" and not failed["value"]:
+                failed["value"] = True
+                raise OSError("synthetic receipt interruption")
+            return original_atomic(target, data)
+
+        with patch("ai_sdlc_workbench.ingestion.incremental._atomic", fail_receipt_write):
+            with self.assertRaisesRegex(OSError, "synthetic receipt interruption"):
+                self.complete(plan, path, result)
+        self.assertFalse((self.root / "evidence/knowledge/processing/docs.json").exists())
+        self.assertEqual(self.complete(plan, path, result)["written"], 1)
+        self.assertEqual(self.complete(plan, path, result)["written"], 0)
 
     def test_no_change_requires_complete_source_to_output_accounting(self):
         """Given selected source clauses, when no-change accounting is missing or pending, then the queue remains retryable."""

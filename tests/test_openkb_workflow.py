@@ -727,6 +727,20 @@ class OpenKBWorkflowTests(unittest.TestCase):
         self.compiler.side_effect = self.synthetic_compiler
         self.assertEqual(self.compile()["counts"], {"pending_review": 1})
 
+    def test_binding_failure_marks_compilation_retryable(self):
+        """A provenance failure after generation leaves the source queued for safe retry."""
+        self.record()
+        self.compiler.side_effect = self.synthetic_compiler
+        with patch.object(WIKI, "write_binding_pair", side_effect=ValueError("synthetic provenance failure")):
+            with self.assertRaisesRegex(ValueError, "synthetic provenance failure"):
+                self.compile()
+        state = WIKI.wiki_state(self.kb)[0]["incremental"]
+        self.assertEqual(state["attempts"]["topic"]["status"], "failed")
+        self.assertEqual(WIKI.update_plan(self.project)["counts"], {"pending_review": 1})
+        self.compiler.reset_mock()
+        self.assertEqual(self.compile()["counts"], {"pending_review": 1})
+        self.compiler.assert_not_awaited()
+
     def test_plan_needs_no_engine_runtime_credentials_or_native_calls(self):
         self.record()
         with patch.object(WIKI, "configured_credentials", side_effect=AssertionError("private config")), \

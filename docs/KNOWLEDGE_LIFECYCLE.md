@@ -98,6 +98,7 @@ No additional top-level raw archive or copied filtered source tree is required.
 Run `sources refresh`, then `sources plan` before semantic reading.
 Review queued selections and create a fresh plan after applying decisions.
 Use `sources view --plan` for queued kept pages and retain complete original SHA-256 provenance.
+Source views publish through a staged directory, so an interrupted render can retry the same output path without exposing partial files.
 Process the affected canonical closure, including previous outputs and former dependents of withdrawn claims.
 Record reviewed results with `sources complete`; selection and observed hashes cannot prove canonical completion.
 Updated outputs require the matching passed sealed ingestion checkpoint. No-change outcomes preserve their starting output bytes.
@@ -106,6 +107,7 @@ Partial completion remains retryable. A repeated refresh cannot clear unfinished
 Run wiki `plan` with the exact canonical scope before semantic engine selection.
 Current reviewed completion and output hashes permit unchanged inputs to skip compilation.
 Legacy bindings without receipts require scoped review. Native compiler return alone leaves review pending.
+An interrupted or failed compiler attempt returns to retry when its derived outputs are unchanged. Partial derived outputs return to explicit review before another compiler call.
 Maintain summaries, prior and new concepts/entities, contradictions, backlinks, index entries, and affected saved explorations.
 Global navigation edits do not independently invalidate every unrelated canonical input.
 

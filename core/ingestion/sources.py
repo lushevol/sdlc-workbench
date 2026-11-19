@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path, PureWindowsPath
 import re
+import shutil
 import tempfile
 
 import yaml
@@ -561,6 +562,7 @@ def render_sources(root: Path, source_id: str, output_dir: str, *, plan_path: st
         output = _local(root, output_dir)
         if not output.is_relative_to(root / ".workbench") or output == root / ".workbench" or output.exists():
             raise WorkbenchError("Create a source view in a new directory below .workbench/.")
+        output.parent.mkdir(parents=True, exist_ok=True)
         selected, omitted = [], []
         for row in index["sources"]:
             if (not row["present"] or row["decision"] not in {"KEEP", "KEEP_SECTIONS"}
@@ -570,53 +572,61 @@ def render_sources(root: Path, source_id: str, output_dir: str, *, plan_path: st
                 continue
             raw = _snapshot(root, row["source"])
             selected.append((row, raw))
-        output.mkdir(parents=True)
-        entries = []
-        for row, raw in selected:
-            destination = output / row["path"]
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            mapping, fragments, output_line = [], [], 1
-            raw_lines = raw.decode("utf-8").splitlines(keepends=True)
-            for start, end in row["ranges"]:
-                fragments.append("".join(raw_lines[start - 1:end]))
-                mapping.append({"source_start": start, "source_end": end,
-                                "output_start": output_line, "output_end": output_line + end - start})
-                output_line += end - start + 1
-            kind = "excerpt"
-            if row["decision"] == "KEEP":
-                try:
-                    destination.symlink_to(os.path.relpath(_local(root, row["source"]["snapshot"]), destination.parent))
-                    kind = "symlink"
-                except (OSError, NotImplementedError):
-                    destination.write_bytes(raw)
-                    kind = "copy"
-            else:
-                destination.write_text("".join(fragments), encoding="utf-8", newline="")
-            expected_output = raw if row["decision"] == "KEEP" else "".join(fragments).encode("utf-8")
-            if destination.read_bytes() != expected_output:
-                raise WorkbenchError("Source view output changed during rendering; create a new view after review.")
-            entries.append({"path": row["path"], "output": row["path"], "kind": kind,
-                            "source": row["source"], "source_sha256": row["source"]["sha256"],
-                            "output_sha256": _digest(destination.read_bytes()),
-                            "ranges": row["ranges"], "mapping": mapping})
-        for row, raw in selected:
-            if _snapshot(root, row["source"]) != raw:
-                raise WorkbenchError("Retained source changed during rendering; restore its source binding.")
-        if (_read(_local(root, _index_path(root, source_id))) != index_raw
-                or _read(_local(root, (knowledge_layout(root)[1] / "manifest.yaml").relative_to(root).as_posix())) != manifest_raw
-                or [finding for finding in _freshness(root, index) if finding["code"] != "input_missing"]):
-            raise WorkbenchError("Source preparation changed during rendering; refresh and create a new view.")
-        view = {"schema_version": 1, "source_id": source_id,
-                "selection": {"path": _index_path(root, source_id),
-                              "sha256": _digest(_read(_local(root, _index_path(root, source_id))))},
-                "policy": index["policy"], "sources": entries, "omitted": omitted}
-        if plan is not None:
-            load_plan(root, source_id, plan_path)
-            view["plan"] = {"path": plan_path, "plan_id": plan["plan_id"]}
-        _atomic(output / "manifest.json", (json.dumps(view, indent=2, ensure_ascii=False) + "\n").encode("utf-8"))
-        return {"schema_version": 1, "status": "VIEW_CREATED", "source_id": source_id,
-                "output": output_dir, "manifest": output_dir + "/manifest.json",
-                "counts": {"selected": len(entries), "omitted": len(omitted),
-                           "links": sum(entry["kind"] == "symlink" for entry in entries),
-                           "excerpts": sum(entry["kind"] == "excerpt" for entry in entries),
-                           "copies": sum(entry["kind"] == "copy" for entry in entries)}}
+        staging = Path(tempfile.mkdtemp(prefix=f".{output.name}.", dir=output.parent))
+        try:
+            entries = []
+            for row, raw in selected:
+                destination = staging / row["path"]
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                mapping, fragments, output_line = [], [], 1
+                raw_lines = raw.decode("utf-8").splitlines(keepends=True)
+                for start, end in row["ranges"]:
+                    fragments.append("".join(raw_lines[start - 1:end]))
+                    mapping.append({"source_start": start, "source_end": end,
+                                    "output_start": output_line, "output_end": output_line + end - start})
+                    output_line += end - start + 1
+                kind = "excerpt"
+                if row["decision"] == "KEEP":
+                    try:
+                        final_destination = output / row["path"]
+                        destination.symlink_to(os.path.relpath(_local(root, row["source"]["snapshot"]), final_destination.parent))
+                        kind = "symlink"
+                    except (OSError, NotImplementedError):
+                        destination.write_bytes(raw)
+                        kind = "copy"
+                else:
+                    destination.write_text("".join(fragments), encoding="utf-8", newline="")
+                expected_output = raw if row["decision"] == "KEEP" else "".join(fragments).encode("utf-8")
+                if destination.read_bytes() != expected_output:
+                    raise WorkbenchError("Source view output changed during rendering; retry the view.")
+                entries.append({"path": row["path"], "output": row["path"], "kind": kind,
+                                "source": row["source"], "source_sha256": row["source"]["sha256"],
+                                "output_sha256": _digest(destination.read_bytes()),
+                                "ranges": row["ranges"], "mapping": mapping})
+            for row, raw in selected:
+                if _snapshot(root, row["source"]) != raw:
+                    raise WorkbenchError("Retained source changed during rendering; restore its source binding.")
+            if (_read(_local(root, _index_path(root, source_id))) != index_raw
+                    or _read(_local(root, (knowledge_layout(root)[1] / "manifest.yaml").relative_to(root).as_posix())) != manifest_raw
+                    or [finding for finding in _freshness(root, index) if finding["code"] != "input_missing"]):
+                raise WorkbenchError("Source preparation changed during rendering; refresh and retry the view.")
+            view = {"schema_version": 1, "source_id": source_id,
+                    "selection": {"path": _index_path(root, source_id),
+                                  "sha256": _digest(_read(_local(root, _index_path(root, source_id))))},
+                    "policy": index["policy"], "sources": entries, "omitted": omitted}
+            if plan is not None:
+                load_plan(root, source_id, plan_path)
+                view["plan"] = {"path": plan_path, "plan_id": plan["plan_id"]}
+            _atomic(staging / "manifest.json", (json.dumps(view, indent=2, ensure_ascii=False) + "\n").encode("utf-8"))
+            if output.exists():
+                raise WorkbenchError("A source view was created concurrently; keep it and choose a new output path.")
+            staging.replace(output)
+            return {"schema_version": 1, "status": "VIEW_CREATED", "source_id": source_id,
+                    "output": output_dir, "manifest": output_dir + "/manifest.json",
+                    "counts": {"selected": len(entries), "omitted": len(omitted),
+                               "links": sum(entry["kind"] == "symlink" for entry in entries),
+                               "excerpts": sum(entry["kind"] == "excerpt" for entry in entries),
+                               "copies": sum(entry["kind"] == "copy" for entry in entries)}}
+        finally:
+            if staging.exists():
+                shutil.rmtree(staging)

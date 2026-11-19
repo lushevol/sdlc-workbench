@@ -394,7 +394,7 @@ def update_plan(project, source=None, selected=(), recipe="default"):
             disposition = "changed"
             reasons.append("canonical source bytes changed")
         elif attempt:
-            disposition = "retry" if attempt.get("status") == "failed" else "pending_review"
+            disposition = "retry" if attempt.get("status") in {"failed", "running"} else "pending_review"
             reasons.append(f"unfinished attempt: {attempt.get('status')}")
         elif not completed:
             disposition = "bootstrap_review"
@@ -408,8 +408,15 @@ def update_plan(project, source=None, selected=(), recipe="default"):
         else:
             disposition = "unchanged"
         if attempt and attempt.get("sha256") == sha and disposition != "repair_review":
-            disposition = "recipe_changed" if attempt.get("recipe") != fingerprint else ("retry" if attempt.get("status") == "failed" else "pending_review")
+            changed_outputs = output_hashes(kb)
+            attempt_changed = any(attempt.get("output_before", {}).get(relative) != changed_outputs.get(relative)
+                                  for relative in attempt.get("expected_outputs", []))
+            disposition = "recipe_changed" if attempt.get("recipe") != fingerprint else (
+                "pending_review" if attempt_changed else
+                ("retry" if attempt.get("status") in {"failed", "running"} else "pending_review"))
             reasons.append(f"unfinished attempt: {attempt.get('status')}")
+            if attempt_changed:
+                reasons.append("unfinished attempt has derived output changes; review before retry")
         if binding and binding.get("sha256") == sha:
             valid_registry = registry.get(sha, {}).get("doc_name") == doc_name
             aliases = all((kb / relative).is_symlink() and (kb / relative).resolve() == original.resolve()
@@ -546,33 +553,35 @@ def compile_sources(project, source, selected=(), recipe="default", force=False)
                                               max_concurrency=resolve_concurrency(config) or 2, bundle=bundle))
                 if digest(original) != before:
                     raise ValueError(f"Source changed during compilation; binding not advanced: {original}")
+                metadata = canonical_records(project, source, [item["path"]])[item["id"]]["metadata"]
+                registry = {key: value for key, value in registry.items() if value.get("doc_name") != original.stem}
+                registry[before] = {"name": original.name, "doc_name": original.stem, "type": "md",
+                                    "path": f"raw/{original.name}", "raw_path": f"raw/{original.name}",
+                                    "source_path": f"wiki/sources/{original.name}"}
+                bindings[original.stem] = {"doc_name": original.stem, "id": item["id"],
+                                           "origin": original.relative_to(project).as_posix(), "sha256": before,
+                                           **{key: metadata[key]
+                                              for key in ("version", "status", "governance_state")
+                                              if key in metadata}}
+                manifest["sources"] = list(bindings.values())
+                after = output_hashes(kb)
+                attempt["status"] = "pending_review"
+                attempt["expected_outputs"] = sorted(set(attempt["expected_outputs"]) | dependent_outputs(kb, original.stem)
+                                                     | {path for path in set(output_before) | set(after) if output_before.get(path) != after.get(path)})
+                def check_source():
+                    if digest(original) != before:
+                        raise ValueError(f"Source changed before binding completion: {original}")
+                expected_pair = write_binding_pair(project, manifest, registry, expected_pair, check_source)
             except BaseException as error:
                 attempt["status"] = "failed"
                 attempt["failure_type"] = type(error).__name__
                 attempt["expected_outputs"] = sorted(set(attempt["expected_outputs"]) | dependent_outputs(kb, original.stem)
                                                      | {path for path, sha in output_hashes(kb).items() if output_before.get(path) != sha})
                 require_binding_bytes(kb, expected_pair)
+                manifest = json.loads(expected_pair[0])
+                manifest["incremental"]["attempts"][original.stem] = attempt
                 save_json(manifest_path, manifest)
                 raise
-            metadata = canonical_records(project, source, [item["path"]])[item["id"]]["metadata"]
-            registry = {key: value for key, value in registry.items() if value.get("doc_name") != original.stem}
-            registry[before] = {"name": original.name, "doc_name": original.stem, "type": "md",
-                                "path": f"raw/{original.name}", "raw_path": f"raw/{original.name}",
-                                "source_path": f"wiki/sources/{original.name}"}
-            bindings[original.stem] = {"doc_name": original.stem, "id": item["id"],
-                                       "origin": original.relative_to(project).as_posix(), "sha256": before,
-                                       **{key: metadata[key]
-                                          for key in ("version", "status", "governance_state")
-                                          if key in metadata}}
-            manifest["sources"] = list(bindings.values())
-            after = output_hashes(kb)
-            attempt["status"] = "pending_review"
-            attempt["expected_outputs"] = sorted(set(attempt["expected_outputs"]) | dependent_outputs(kb, original.stem)
-                                                 | {path for path in set(output_before) | set(after) if output_before.get(path) != after.get(path)})
-            def check_source():
-                if digest(original) != before:
-                    raise ValueError(f"Source changed before binding completion: {original}")
-            expected_pair = write_binding_pair(project, manifest, registry, expected_pair, check_source)
             append_log(kb / "wiki", "ingest", f"OpenKB semantic compilation: {original.name}")
             print(f"Compiled {original.name}; explicit output review is pending")
         return update_plan(project, source, selected, recipe)

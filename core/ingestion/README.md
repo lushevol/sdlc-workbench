@@ -31,6 +31,7 @@ Read [source preparation](../../.agents/skills/ingest-knowledge/references/sourc
 Every generated source link records the original page hash and output hash.
 `plan` queues selection review and canonical processing separately, without model calls.
 `view --plan` emits only queued kept pages. `complete` records reviewed, checked canonical outcomes.
+Views are built in a temporary staging directory and published only after all selected pages and the manifest pass their checks. An interrupted render can be retried with the same output path.
 Processing receipts live under `knowledge/evidence/processing/`; full plan baselines remain in ignored `.workbench/` storage.
 Unchanged completed inputs skip semantic work when input, recipe, context, and output hashes still match.
 
