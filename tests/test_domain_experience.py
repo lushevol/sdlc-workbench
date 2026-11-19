@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 import yaml
@@ -41,10 +43,16 @@ class DomainExperienceScriptsTests(unittest.TestCase):
             "domain": "demo",
             "status": "observed",
             "applies_when": ["A demo workflow is required"],
+            "retrospective": {
+                "summary": "The demo task completed.",
+                "successful_path": "Run the parameterized shell script.",
+                "reusable_reason": "The same inputs produce the same local result.",
+                "discarded": ["Verbose logs"],
+            },
             "requires": {"tools": ["sh"], "variables": ["DEMO_ROOT"]},
             "provenance": {"task_id": "demo", "evidence": [{"path": "tasks/demo/evidence/result.json", "sha256": digest}]},
             "verification": {"outcome": "successful", "conditions": ["local"], "assertions": ["result status is SUCCEEDED"]},
-            "assets": {"procedure": "experience.md", "variables": None, "scripts": ["scripts/run.sh"], "fixtures": []},
+            "assets": {"primary": {"kind": "script", "path": "scripts/run.sh"}, "procedure": "experience.md", "variables": None, "scripts": ["scripts/run.sh"], "fixtures": []},
             "knowledge": {"records": [], "wiki_topics": []},
             "security": {"classification": "synthetic", "secrets_present": False},
             "limits": ["Demo data only"],
@@ -74,6 +82,16 @@ class DomainExperienceScriptsTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertIn("possible secret", result.stdout)
 
+    def test_validator_requires_a_primary_end_to_end_recipe(self):
+        packet = self.write_packet()
+        manifest_path = packet / "manifest.yaml"
+        manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+        manifest["assets"].pop("primary")
+        manifest_path.write_text(yaml.safe_dump(manifest, sort_keys=False), encoding="utf-8")
+        result = self.run_script(VALIDATOR, packet)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("assets.primary", result.stdout)
+
     def test_indexer_writes_compact_retrieval_index(self):
         self.write_packet()
         result = self.run_script(INDEXER, "--root", self.workspace / "assets/experience")
@@ -100,7 +118,51 @@ class DomainExperienceScriptsTests(unittest.TestCase):
         self.assertIn("tasks/demo/01-maintenance.md", paths)
         self.assertIn(".workbench/session-export.md", paths)
         self.assertTrue(any("workflow" in item["signals"] for item in payload["files"]))
-        self.assertTrue(any("Signals are search hints" in item for item in payload["limits"]))
+        self.assertTrue(any("Signals and candidates are search hints" in item for item in payload["limits"]))
+        self.assertEqual(payload["review"]["review_status"], "PENDING")
+        self.assertEqual(payload["promotion"]["packets_created"], 0)
+        self.assertFalse((self.workspace / "assets/experience").exists())
+
+    def test_history_scanner_applies_default_week_duration_to_sessions(self):
+        session = self.workspace / "retained-session"
+        session.mkdir()
+        recent = session / "recent.md"
+        old = session / "old.md"
+        recent.write_text("# Recent\n## Workflow\n", encoding="utf-8")
+        old.write_text("# Old\n## Workflow\n", encoding="utf-8")
+        os.utime(old, (time.time() - 9 * 86400, time.time() - 9 * 86400))
+        output = self.workspace / ".workbench/experience/week.json"
+        result = self.run_script(SCANNER, "--workspace", self.workspace, "--path", session, "--output", output)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        paths = {item["path"] for item in json.loads(output.read_text(encoding="utf-8"))["files"]}
+        self.assertIn("retained-session/recent.md", paths)
+        self.assertNotIn("retained-session/old.md", paths)
+
+    def test_history_scanner_skips_unchanged_sessions_and_rescans_changes(self):
+        session = self.workspace / "retained-session"
+        session.mkdir()
+        source = session / "workflow.md"
+        source.write_text("# Session\n## Workflow\n", encoding="utf-8")
+        first = self.workspace / ".workbench/experience/first.json"
+        second = self.workspace / ".workbench/experience/second.json"
+        self.assertEqual(self.run_script(SCANNER, "--workspace", self.workspace, "--path", session, "--output", first).returncode, 0)
+        second_result = self.run_script(SCANNER, "--workspace", self.workspace, "--path", session, "--output", second)
+        self.assertEqual(second_result.returncode, 0, second_result.stdout + second_result.stderr)
+        second_payload = json.loads(second.read_text(encoding="utf-8"))
+        self.assertEqual(len(second_payload["session_scan"]["skipped_sessions"]), 1)
+        self.assertEqual(second_payload["session_scan"]["scanned_sessions"], [])
+        source.write_text("# Session\n## Workflow\n## Recovery steps\n", encoding="utf-8")
+        third = self.workspace / ".workbench/experience/third.json"
+        third_result = self.run_script(SCANNER, "--workspace", self.workspace, "--path", session, "--output", third)
+        self.assertEqual(third_result.returncode, 0, third_result.stdout + third_result.stderr)
+        third_payload = json.loads(third.read_text(encoding="utf-8"))
+        self.assertEqual(len(third_payload["session_scan"]["scanned_sessions"]), 1)
+
+    def test_history_scanner_rejects_invalid_duration(self):
+        result = self.run_script(SCANNER, "--workspace", self.workspace, "--past-duration", "0d",
+                                 "--output", self.workspace / ".workbench/experience/invalid.json")
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("positive duration", result.stderr)
 
 
 if __name__ == "__main__":

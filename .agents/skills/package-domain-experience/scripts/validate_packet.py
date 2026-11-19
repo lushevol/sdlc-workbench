@@ -74,7 +74,7 @@ def validate(packet: Path, workspace: Path | None = None) -> list[str]:
     if not isinstance(manifest, dict):
         return ["manifest.yaml: mapping required"]
 
-    required = {"schema_version", "id", "title", "domain", "status", "applies_when", "requires",
+    required = {"schema_version", "id", "title", "domain", "status", "applies_when", "retrospective", "requires",
                 "provenance", "verification", "assets", "knowledge", "security", "limits"}
     for key in sorted(required - set(manifest)):
         errors.append(f"manifest.{key}: required")
@@ -90,6 +90,14 @@ def validate(packet: Path, workspace: Path | None = None) -> list[str]:
     for key in ("applies_when", "limits"):
         if not isinstance(manifest.get(key), list):
             errors.append(f"manifest.{key}: list required")
+    retrospective = manifest.get("retrospective")
+    if not isinstance(retrospective, dict) or set(retrospective) != {"summary", "successful_path", "reusable_reason", "discarded"}:
+        errors.append("manifest.retrospective: summary, successful_path, reusable_reason, and discarded required")
+    elif any(not isinstance(retrospective.get(key), str) or not retrospective[key].strip()
+             for key in ("summary", "successful_path", "reusable_reason")):
+        errors.append("manifest.retrospective: summary, successful_path, and reusable_reason must be nonempty")
+    elif not isinstance(retrospective.get("discarded"), list) or not all(isinstance(item, str) for item in retrospective["discarded"]):
+        errors.append("manifest.retrospective.discarded: list of strings required")
     requires = manifest.get("requires")
     if not isinstance(requires, dict):
         errors.append("manifest.requires: mapping required")
@@ -139,6 +147,15 @@ def validate(packet: Path, workspace: Path | None = None) -> list[str]:
     if not isinstance(assets, dict):
         errors.append("manifest.assets: mapping required")
     else:
+        primary = assets.get("primary")
+        if not isinstance(primary, dict) or set(primary) != {"kind", "path"}:
+            errors.append("manifest.assets.primary: kind and path required")
+        elif primary.get("kind") not in {"script", "workflow", "instructions"} or not _safe_relative(primary.get("path")):
+            errors.append("manifest.assets.primary: supported kind and packet-relative path required")
+        elif not (packet / primary["path"]).is_file():
+            errors.append("manifest.assets.primary.path: referenced file is unavailable")
+        else:
+            referenced.append(primary["path"])
         procedure = assets.get("procedure")
         if procedure != "experience.md":
             errors.append("manifest.assets.procedure: experience.md required")

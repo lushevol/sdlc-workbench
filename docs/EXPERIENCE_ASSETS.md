@@ -1,7 +1,7 @@
 # Reusable domain experience
 
 The `package-domain-experience` and `learn-domain-experience` skills turn supported task results into concise project assets.
-They provide a reusable execution card with provenance, scripts, fixtures, variable templates, recovery steps, and links to canonical knowledge.
+They provide a reusable execution card with provenance, one primary end-to-end recipe, supporting scripts, fixtures, variable templates, recovery steps, and links to canonical knowledge.
 
 ## Storage
 
@@ -26,8 +26,11 @@ Each manifest records the source task, session when available, exact evidence ha
 
 ## Capture and learning
 
-Use `package-domain-experience` after a supported successful result.
-Use `learn-domain-experience` to scan retained task records or explicitly supplied session exports, identify repeated patterns, and prepare candidate packets.
+Use `package-domain-experience` after a supported successful result and a short session retrospective.
+Make one parameterized script the primary recipe when it can finish the whole task. Use a compact workflow or instruction set when a script is unsuitable.
+Use `learn-domain-experience` to scan retained task records or explicitly supplied session exports, identify repeated patterns, and prepare review candidates.
+Session scans require `--past-duration` and default to one week. The ignored scan state skips unchanged sessions whose latest source was already scanned.
+Learning stops at `review_status: PENDING`. It asks for explicit approval, rejection, or revision before `package-domain-experience` creates packets.
 The scan does not establish success, business approval, production reachability, or knowledge publication.
 
 Use `observed` for one supported result, `replayed` after a qualifying repeat, `reviewed` after applicable human review, and `retired` when the packet no longer applies.

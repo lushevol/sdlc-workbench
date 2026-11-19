@@ -26,6 +26,11 @@ domain: domain-name
 status: observed
 applies_when:
   - A concrete trigger or condition
+retrospective:
+  summary: What the session achieved
+  successful_path: The shortest path that worked
+  reusable_reason: Why the path should be reused
+  discarded: []
 requires:
   tools: []
   variables: []
@@ -41,6 +46,9 @@ verification:
   conditions: []
   assertions: []
 assets:
+  primary:
+    kind: script
+    path: scripts/run.sh
   procedure: experience.md
   variables: variables.example.yaml
   scripts: []
@@ -54,7 +62,7 @@ security:
 limits: []
 ```
 
-Paths in `assets` are packet-relative. Evidence paths are workspace-relative and retain their original hashes. Every referenced file must exist. The index contains only retrieval metadata, packet paths, applicability terms, and status.
+`assets.primary` identifies the one minimal end-to-end recipe. Its `kind` is `script`, `workflow`, or `instructions`. Paths in `assets` are packet-relative. Evidence paths are workspace-relative and retain their original hashes. Every referenced file must exist. The index contains only retrieval metadata, packet paths, applicability terms, and status.
 
 Use `classification` values such as `public`, `redacted`, `synthetic`, or `private-reference`. Private references may point to an ignored local configuration path through a variable name, but they contain no private value.
 
