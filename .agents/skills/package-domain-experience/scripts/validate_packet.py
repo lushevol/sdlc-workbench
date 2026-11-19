@@ -24,12 +24,20 @@ SECRET_PATTERNS = (
 )
 STATUSES = {"observed", "replayed", "reviewed", "retired"}
 CLASSIFICATIONS = {"public", "redacted", "synthetic", "private-reference"}
+PROMOTION_KINDS = {"guide", "skill", "runtime-skill", "script"}
+PROMOTION_ACTIONS = {"add", "update"}
 MAX_FILE_BYTES = 8 * 1024 * 1024
 
 
 def _safe_relative(value: object) -> bool:
     return (isinstance(value, str) and bool(value) and not value.startswith("/")
             and "\\" not in value and all(part not in {"", ".", ".."} for part in value.split("/")))
+
+
+def _workbench_target(value: object) -> bool:
+    if not _safe_relative(value):
+        return False
+    return value == "AGENTS.md" or value.startswith((".agents/skills/", "core/skills/", "scripts/"))
 
 
 def _text(path: Path) -> str | None:
@@ -75,7 +83,7 @@ def validate(packet: Path, workspace: Path | None = None) -> list[str]:
         return ["manifest.yaml: mapping required"]
 
     required = {"schema_version", "id", "title", "domain", "status", "applies_when", "retrospective", "requires",
-                "provenance", "verification", "assets", "knowledge", "security", "limits"}
+                "provenance", "verification", "assets", "knowledge", "promotions", "security", "limits"}
     for key in sorted(required - set(manifest)):
         errors.append(f"manifest.{key}: required")
     if manifest.get("schema_version") != 1:
@@ -173,6 +181,47 @@ def validate(packet: Path, workspace: Path | None = None) -> list[str]:
                 errors.append(f"manifest.assets.{key}: list of packet-relative paths required")
             else:
                 referenced.extend(values)
+
+    promotions = manifest.get("promotions")
+    if not isinstance(promotions, list):
+        errors.append("manifest.promotions: list required")
+    else:
+        for index, promotion in enumerate(promotions):
+            prefix = f"manifest.promotions[{index}]"
+            required_promotion = {"target", "kind", "action", "source", "purpose", "before_sha256", "after_sha256", "checks"}
+            if not isinstance(promotion, dict) or set(promotion) != required_promotion:
+                errors.append(f"{prefix}: target, kind, action, source, purpose, before_sha256, after_sha256, and checks required")
+                continue
+            if not _workbench_target(promotion["target"]):
+                errors.append(f"{prefix}.target: unsupported Workbench asset target")
+            if promotion["kind"] not in PROMOTION_KINDS:
+                errors.append(f"{prefix}.kind: unsupported promotion kind")
+            if promotion["action"] not in PROMOTION_ACTIONS:
+                errors.append(f"{prefix}.action: use add or update")
+            if not _safe_relative(promotion["source"]):
+                errors.append(f"{prefix}.source: packet-relative path required")
+            elif not (packet / promotion["source"]).is_file():
+                errors.append(f"{prefix}.source: referenced packet file is unavailable")
+            if not isinstance(promotion["purpose"], str) or not promotion["purpose"].strip():
+                errors.append(f"{prefix}.purpose: nonempty text required")
+            if promotion["before_sha256"] is not None and (not isinstance(promotion["before_sha256"], str)
+                                                              or HASH.fullmatch(promotion["before_sha256"]) is None):
+                errors.append(f"{prefix}.before_sha256: lowercase SHA-256 or null required")
+            if promotion["action"] == "update" and promotion["before_sha256"] is None:
+                errors.append(f"{prefix}.before_sha256: existing targets require a before hash")
+            if promotion["action"] == "add" and promotion["before_sha256"] is not None:
+                errors.append(f"{prefix}.before_sha256: new targets require null")
+            if not isinstance(promotion["after_sha256"], str) or HASH.fullmatch(promotion["after_sha256"]) is None:
+                errors.append(f"{prefix}.after_sha256: lowercase SHA-256 required")
+            if not isinstance(promotion["checks"], list) or not all(isinstance(item, str) and item.strip() for item in promotion["checks"]):
+                errors.append(f"{prefix}.checks: list of nonempty strings required")
+            if workspace is not None and _workbench_target(promotion["target"]):
+                target_path = workspace / promotion["target"]
+                actual = _sha256(target_path)
+                if actual is None:
+                    errors.append(f"{prefix}.target: promoted target is unavailable")
+                elif actual != promotion["after_sha256"]:
+                    errors.append(f"{prefix}.after_sha256: promoted target hash does not match")
 
     security = manifest.get("security")
     if not isinstance(security, dict) or security.get("classification") not in CLASSIFICATIONS:

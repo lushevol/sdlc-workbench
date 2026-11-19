@@ -23,6 +23,7 @@ assets/experience/
 
 The index contains retrieval metadata. The packet contains the shortest usable procedure and its reusable inputs.
 Each manifest records the source task, session when available, exact evidence hashes, tested conditions, status, sensitivity classification, and known limits.
+When a result generalizes into shared Workbench guidance or tooling, the packet records a hash-bound promotion into `AGENTS.md`, canonical `.agents/skills/`, `core/skills/`, or `scripts/`.
 
 ## Capture and learning
 
@@ -32,6 +33,8 @@ Use `learn-domain-experience` to scan retained task records or explicitly suppli
 Session scans require `--past-duration` and default to one week. The ignored scan state skips unchanged sessions whose latest source was already scanned.
 Learning stops at `review_status: PENDING`. It asks for explicit approval, rejection, or revision before `package-domain-experience` creates packets.
 The scan does not establish success, business approval, production reachability, or knowledge publication.
+
+Package review also checks whether the result should update a shared Workbench asset. Keep domain-specific material in the packet. Apply the smallest compatible shared-asset change and record its target, purpose, before and after hashes, source section, and checks.
 
 Use `observed` for one supported result, `replayed` after a qualifying repeat, `reviewed` after applicable human review, and `retired` when the packet no longer applies.
 Preserve earlier packets when later replay disagrees.

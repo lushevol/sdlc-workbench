@@ -54,6 +54,7 @@ class DomainExperienceScriptsTests(unittest.TestCase):
             "verification": {"outcome": "successful", "conditions": ["local"], "assertions": ["result status is SUCCEEDED"]},
             "assets": {"primary": {"kind": "script", "path": "scripts/run.sh"}, "procedure": "experience.md", "variables": None, "scripts": ["scripts/run.sh"], "fixtures": []},
             "knowledge": {"records": [], "wiki_topics": []},
+            "promotions": [],
             "security": {"classification": "synthetic", "secrets_present": False},
             "limits": ["Demo data only"],
         }
@@ -91,6 +92,45 @@ class DomainExperienceScriptsTests(unittest.TestCase):
         result = self.run_script(VALIDATOR, packet)
         self.assertEqual(result.returncode, 1)
         self.assertIn("assets.primary", result.stdout)
+
+    def test_validator_binds_shared_workbench_asset_promotions(self):
+        packet = self.write_packet()
+        target = self.workspace / "AGENTS.md"
+        target.write_text("Shared guidance.\n", encoding="utf-8")
+        manifest_path = packet / "manifest.yaml"
+        manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+        manifest["promotions"] = [{
+            "target": "AGENTS.md",
+            "kind": "guide",
+            "action": "update",
+            "source": "experience.md",
+            "purpose": "Add the reusable workflow to shared guidance.",
+            "before_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+            "after_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+            "checks": ["markdown-link-check"],
+        }]
+        manifest_path.write_text(yaml.safe_dump(manifest, sort_keys=False), encoding="utf-8")
+        result = self.run_script(VALIDATOR, packet, "--workspace", self.workspace)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_validator_rejects_application_source_promotion_targets(self):
+        packet = self.write_packet()
+        manifest_path = packet / "manifest.yaml"
+        manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+        manifest["promotions"] = [{
+            "target": "repos/application/src/main.py",
+            "kind": "script",
+            "action": "update",
+            "source": "experience.md",
+            "purpose": "Invalid broad promotion.",
+            "before_sha256": None,
+            "after_sha256": "0" * 64,
+            "checks": ["tests"],
+        }]
+        manifest_path.write_text(yaml.safe_dump(manifest, sort_keys=False), encoding="utf-8")
+        result = self.run_script(VALIDATOR, packet)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("unsupported Workbench asset target", result.stdout)
 
     def test_indexer_writes_compact_retrieval_index(self):
         self.write_packet()

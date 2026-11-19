@@ -10,13 +10,13 @@ status: IN_PROGRESS
 ## User input
 
 The user requested new skills that package successful task experience into reusable domain materials and scan past sessions to extract experience for later use. The target agent environments are Codex, Claude Code, and VS Code with Copilot.
-The follow-up request makes a minimal end-to-end script, workflow, or instruction set the primary package output after a session retrospective. Session learning must use a bounded past duration, default to one week, skip unchanged sessions that were already scanned, and stop at explicit review and decision before packaging.
+The follow-up request makes a minimal end-to-end script, workflow, or instruction set the primary package output after a session retrospective. Session learning must use a bounded past duration, default to one week, skip unchanged sessions that were already scanned, and stop at explicit review and decision before packaging. A later clarification asks the package skill to promote reusable results into shared Workbench assets such as `AGENTS.md`, skills, and scripts.
 
-Exact inputs are retained in [user-input.md](evidence/user-input.md) and [user-input-20261119-followup.md](evidence/user-input-20261119-followup.md).
+Exact inputs are retained in [user-input.md](evidence/user-input.md), [user-input-20261119-followup.md](evidence/user-input-20261119-followup.md), and [user-input-20261119-workbench-promotion.md](evidence/user-input-20261119-workbench-promotion.md).
 
 ## Scope and risk
 
-Update the canonical shared skills, packet contract, deterministic packet validation and history scanning helpers, review-only learning state, and focused coverage. Do not change runtime execution, client hook registrations, knowledge governance, or unrelated worktree files.
+Update the canonical shared skills, packet contract, deterministic packet validation and history scanning helpers, review-only learning state, shared Workbench promotion metadata, and focused coverage. Do not change runtime execution, client hook registrations, knowledge governance, or unrelated worktree files.
 
 Risk is low for runtime behavior. The main risk is promoting secrets, stale configuration, synthetic data, or unsupported conclusions into reusable assets.
 
@@ -28,7 +28,7 @@ Risk is low for runtime behavior. The main risk is promoting secrets, stale conf
 
 ## Current outcome
 
-Implemented the two client-neutral skills, packet contract, history scanner, packet validator, index builder, project guidance, scaffold aliases, and focused tests. The follow-up now makes the primary recipe explicit, adds one-week session scanning with scan-state reuse, and stops learning at pending review.
+Implemented the two client-neutral skills, packet contract, history scanner, packet validator, index builder, project guidance, scaffold aliases, and focused tests. The follow-up now makes the primary recipe explicit, adds one-week session scanning with scan-state reuse, stops learning at pending review, and records hash-bound promotion into shared Workbench assets.
 
 Checks completed:
 

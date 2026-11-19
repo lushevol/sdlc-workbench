@@ -56,6 +56,7 @@ assets:
 knowledge:
   records: []
   wiki_topics: []
+promotions: []
 security:
   classification: synthetic
   secrets_present: false
@@ -67,3 +68,20 @@ limits: []
 Use `classification` values such as `public`, `redacted`, `synthetic`, or `private-reference`. Private references may point to an ignored local configuration path through a variable name, but they contain no private value.
 
 Knowledge references identify canonical records or wiki topics with their current path, version, and hash. A packet can support reuse without becoming a second knowledge authority.
+
+When experience is promoted into a shared Workbench asset, add one entry to `promotions`.
+
+```yaml
+promotions:
+  - target: .agents/skills/example/SKILL.md
+    kind: skill
+    action: update
+    source: experience.md
+    purpose: Add the reusable workflow to the shared skill.
+    before_sha256: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    after_sha256: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    checks:
+      - quick_validate
+```
+
+Allowed targets are `AGENTS.md`, `.agents/skills/**`, `core/skills/**`, and `scripts/**`. Use `add` when the target did not exist. Use `update` when an existing target changes. Hashes bind the promotion to the exact before and after bytes.

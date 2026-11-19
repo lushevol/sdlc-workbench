@@ -19,8 +19,10 @@ Use the owning task and its evidence as the source. Preserve the task evidence a
 5. Select the smallest reusable set. Remove secrets, personal data, private tokens, machine paths, and environment-specific values. Replace them with named placeholders and variable templates.
 6. Write one packet under `assets/experience/packets/<experience-id>/`. Use the packet contract in [packet-schema.md](references/packet-schema.md).
 7. Link canonical knowledge records and wiki topics by identity, revision, and hash. Route new business intent through the existing knowledge workflow.
-8. Run `scripts/validate_packet.py`, rebuild `assets/experience/index.yaml` with `scripts/rebuild_index.py`, and inspect the resulting diff.
-9. Link the packet and its disposition from the owning task record. Keep full logs, screenshots, traces, and execution history in task evidence.
+8. Assess whether the reusable result belongs in a shared Workbench asset. Read [workbench-promotion.md](references/workbench-promotion.md). Promote only generalizable guidance or tooling into `AGENTS.md`, canonical `.agents/skills/`, `core/skills/`, or project `scripts/` targets. Keep domain-specific material in the packet.
+9. Record every shared-asset promotion in the packet manifest with its target, action, before and after hashes, source section, purpose, and checks. Apply the smallest compatible change and preserve existing instructions.
+10. Run `scripts/validate_packet.py`, rebuild `assets/experience/index.yaml` with `scripts/rebuild_index.py`, and inspect the resulting diff.
+11. Link the packet and its disposition from the owning task record. Keep full logs, screenshots, traces, and execution history in task evidence.
 
 Use `observed` for one supported successful run, `replayed` after a qualifying repeat, `reviewed` after applicable human review, and `retired` when the packet no longer applies.
 Record the tested conditions and limits beside the reusable steps. Preserve failed replays and create a successor packet when a source or contract changes.

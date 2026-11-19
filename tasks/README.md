@@ -681,6 +681,7 @@ Validate retained hashes and references after cleanup. Remove empty directories 
 After a supported successful result and a short retrospective, use [package-domain-experience](../.agents/skills/package-domain-experience/SKILL.md) to select one minimal end-to-end script, workflow, or instruction set as the primary recipe, then retain only supporting procedures, scripts, fixtures, variable templates, references, and recovery steps.
 Use [learn-domain-experience](../.agents/skills/learn-domain-experience/SKILL.md) to scan retained task records or explicitly supplied session exports for repeated patterns. Session scans require a past duration and default to one week. Unchanged sessions are skipped from the recorded scan state.
 Learning produces a pending review bundle. Ask for explicit candidate decisions before invoking the packaging skill.
+After approval, promote generalizable guidance or tooling into `AGENTS.md`, canonical `.agents/skills/`, `core/skills/`, or `scripts/` when the packet identifies a shared Workbench benefit. Record the exact target and before and after hashes in the packet manifest.
 Keep scratch scans in ignored `.workbench/experience/` storage and promote selected packets under `assets/experience/`.
 Link each packet from the owning task and preserve its evidence paths and hashes.
 Keep new business intent in the existing knowledge lifecycle. Keep secrets, private data, and live environment values in ignored configuration.
