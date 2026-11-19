@@ -37,6 +37,9 @@ Shipped optional collector mappings retain their upstream specialization; config
 
 ### Adoption sequence
 
+Use `$workbench-ready` to coordinate the applicable steps for a new or restored workspace.
+It reuses current setup and evidence, then checks the prerequisites for the selected task. [Workbench Ready skill](../.agents/skills/workbench-ready/SKILL.md)
+
 1. Install the Workbench runtime. Use core-only setup when optional integrations are unnecessary.
 2. Initialize an empty workspace beside existing repositories.
 3. Assess repository instructions, source revisions, layouts, components, and available build and test commands.

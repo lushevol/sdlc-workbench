@@ -384,6 +384,9 @@ They also supply repository onboarding, document validation, and dependency grap
 Their inputs, outputs, evidence requirements, and limits must remain independent of the AI client.
 Procedure execution can require an external agent and registered tools.
 
+`workbench-ready` coordinates existing setup, repository onboarding, graph freshness checks, and verification prerequisites.
+It starts the first requested task when the evidence supports that task. [Workbench Ready skill](.agents/skills/workbench-ready/SKILL.md)
+
 `.agents/skills/repository-onboarding/` owns the imported repository assessment procedure and static helpers.
 Use it to locate responsibilities, components, contracts, tests, and agent readiness with exact source evidence.
 It stages outputs outside target checkouts and keeps proposed metadata separate from live catalogs.

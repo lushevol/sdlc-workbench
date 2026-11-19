@@ -31,6 +31,10 @@ The packaged skill includes optional structured report validation and conditiona
 
 ## Start setup
 
+If your agent supports shared skills, invoke `$workbench-ready` with the target workspace and your first task.
+The skill checks your setup and uses the applicable procedures below. [Workbench Ready skill](../.agents/skills/workbench-ready/SKILL.md)
+If an existing workspace lacks the skill, use `ai-sdlc --workspace PATH skills workbench-ready` with the updated installation.
+
 Keep the checkout in a local directory where your account can write.
 Preserve the complete checkout, including `core/connectors`, `package-lock.json`, and shared skills.
 Paths with spaces are supported when quoted in commands.

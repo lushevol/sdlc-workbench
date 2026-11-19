@@ -18,6 +18,11 @@ The approved v2 plan and subsequent recorded clarifications control the folder a
 
 ## Adopt an existing project
 
+Use `$workbench-ready` to set up or restore a workspace and prepare it for your first task.
+Name the workspace, the available repositories, and the first task in your request. [Workbench Ready skill](.agents/skills/workbench-ready/SKILL.md)
+
+> Use `$workbench-ready` to prepare this workspace and trace the callers of the API contract I plan to change.
+
 Read [the brownfield adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary) for supported components and specialized limits.
 Workbench preserves existing layouts and accepts project-defined catalog classifications.
 Shared skills use source evidence and each repository's own commands when specialized extraction is unavailable.
