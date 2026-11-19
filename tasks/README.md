@@ -676,6 +676,14 @@ Keep registered raw snapshots, stable source identities, prior provenance manife
 Repair active links and inventories. Historical locators can resolve through the cleanup record and retained Git revision.
 Validate retained hashes and references after cleanup. Remove empty directories and redundant check outputs.
 
+### Promote reusable domain experience
+
+After a supported successful result, use [package-domain-experience](../.agents/skills/package-domain-experience/SKILL.md) to select reusable procedures, scripts, fixtures, variable templates, references, and recovery steps.
+Use [learn-domain-experience](../.agents/skills/learn-domain-experience/SKILL.md) to scan retained task records or explicitly supplied session exports for repeated patterns.
+Keep scratch scans in ignored `.workbench/experience/` storage and promote selected packets under `assets/experience/`.
+Link each packet from the owning task and preserve its evidence paths and hashes.
+Keep new business intent in the existing knowledge lifecycle. Keep secrets, private data, and live environment values in ignored configuration.
+
 ## Decide whether intake can finish
 
 Name the proposed next stage and the evidence required for that decision.

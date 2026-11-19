@@ -270,6 +270,12 @@ Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, executi
 Business-system technical explanations qualify when they describe domain behavior or responsibilities.
 `core/knowledge/` holds reusable schemas and templates outside the domain knowledge base.
 
+Reusable task experience has a separate project-owned boundary under `assets/experience/`.
+The `package-domain-experience` skill stores concise execution cards, sanitized scripts, safe variable templates, synthetic or redacted fixtures, and links to canonical knowledge.
+The `learn-domain-experience` skill scans retained task and explicitly supplied session material to prepare candidate packets.
+Packets retain source tasks, evidence hashes, tested conditions, status, and limits. They do not duplicate canonical knowledge or grant execution authority.
+Generated workspaces receive the skills and guide without the adopting project's experience packets.
+
 New workspaces use this consolidated layout. The shared runtime also supports existing workspaces with canonical records directly under `knowledge/` and their manifest at `evidence/knowledge/manifest.yaml` until explicit migration.
 Resolve the layout from its unique active source manifest. Reject both manifest locations present, and reject a consolidated manifest without `knowledge/records/`; never combine trees or silently fall back from an incomplete migration.
 
