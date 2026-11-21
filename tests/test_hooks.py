@@ -356,6 +356,14 @@ class HookRuntimeTests(unittest.TestCase):
                 "codex", stop_hook_active=True)), ({}, "", 0))
             runner.assert_not_called()
 
+    def test_codex_completion_accepts_session_end_payload(self):
+        self.bind()
+        self.changed()
+        with self.successful_runner() as runner:
+            self.assertEqual(module.run_hook(self.root, "codex", "stop", self.payload(
+                "codex", hook_event_name="SessionEnd", reason="other")), ({}, "", 0))
+            runner.assert_called_once()
+
     def test_only_explicitly_selected_artifact_and_evidence_checks_run(self):
         index = self.write("tasks/example/review-index.json", '{"schema_version": 1}\n')
         baseline = self.write("tasks/example/baseline.json", '{"schema_version": 1}\n')

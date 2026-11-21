@@ -13,7 +13,7 @@ ai-sdlc --workspace . hooks install --client codex
 ai-sdlc --workspace . hooks status
 ```
 
-The optional [hook adapter](../../docs/HOOKS.md) maps `SessionStart` and `Stop` to shared Workbench behavior.
+The optional [hook adapter](../../docs/HOOKS.md) maps `SessionStart` and `SessionEnd` to shared Workbench behavior.
 Its project registration is `.codex/hooks.json`.
 Run the hook commands from the workspace root.
 Installation preserves unrelated entries and invokes the installed `ai-sdlc` command through the agent's `PATH`.

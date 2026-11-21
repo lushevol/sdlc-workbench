@@ -29,7 +29,8 @@ ai-sdlc --workspace . hooks status
 
 Installation preserves unrelated hook entries and settings. Repeating installation updates only Workbench-owned entries.
 The installed handlers invoke `ai-sdlc hooks run --client CLIENT --event EVENT` through `PATH`.
-They store no machine-specific interpreter or workspace path.
+The Codex command first searches the native working directory and its parents for `.venv/bin/ai-sdlc`, then falls back to `PATH`.
+Registrations store no machine-specific interpreter or workspace path.
 Keep the installed `ai-sdlc` command available in the environment inherited by each agent client.
 Activate the installed Python environment before launching a client, or expose its command through your approved environment setup.
 Moving or copying the workspace does not require rewriting these registrations.
@@ -47,12 +48,13 @@ It does not launch clients or check native event delivery.
 
 | Client surface | Native project configuration | Session context | Completion check |
 | --- | --- | --- | --- |
-| Codex | `.codex/hooks.json` | `SessionStart` | `Stop` |
+| Codex | `.codex/hooks.json` | `SessionStart` | `SessionEnd` |
 | GitHub Copilot CLI | `.github/hooks/workbench.json` | `sessionStart` | `agentStop` |
 | GitHub Copilot in VS Code, Copilot harness | Same Copilot format | `sessionStart` | `agentStop` |
 | Claude Code | `.claude/workbench-hooks.json`, selected with `claude --settings .claude/workbench-hooks.json` from the workspace root | `SessionStart` | `Stop` |
 
 Codex requires review and trust for non-managed hooks. Review the installed entries through `/hooks` or desktop hook settings.
+Codex `SessionEnd` is the main-session shutdown event. Its current `reason` value is `other`, and its handler is advisory.
 Claude Code applies its workspace trust and settings rules.
 Copilot in VS Code requires the Copilot harness. Its hooks experience is preview.
 The deprecated VS Code Local harness uses a separate schema.

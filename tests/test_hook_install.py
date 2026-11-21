@@ -144,6 +144,20 @@ class HookInstallationTests(unittest.TestCase):
         self.assertEqual(self.read(module.CONFIGS["codex"])["hooks"]["SessionStart"],
                          [{"hooks": [{"type": "command", "command": "user-command"}]}])
 
+    def test_schema_two_codex_stop_registration_migrates(self):
+        old = module._previous_registrations("codex")
+        self.write(module.CONFIGS["codex"], {"hooks": {event: [entry] for event, entry in old.items()}})
+        self.write(module._STATE, {"schema_version": 2, "clients": {
+            "codex": {"registrations": old, "created": True, "had_hooks": False}}})
+        self.assertEqual(module.hook_status(self.root)["status"], "INCOMPLETE")
+        result = module.install_hooks(self.root, ["codex"])
+        self.assertEqual(result["status"], "PARTIAL")
+        self.assertEqual(result["clients"][0]["status"], "CONFIGURED")
+        document = self.read(module.CONFIGS["codex"])
+        self.assertEqual(set(document["hooks"]), {"SessionStart", "SessionEnd"})
+        self.assertEqual(self.read(module._STATE)["clients"]["codex"]["registrations"],
+                         module._registrations("codex"))
+
     def test_modified_legacy_entry_prevents_migration_and_partial_uninstall(self):
         self.install_legacy()
         document = self.read(module.CONFIGS["claude"])
@@ -236,7 +250,7 @@ class HookInstallationTests(unittest.TestCase):
     def test_modified_owned_handler_blocks_update_and_remove_without_overwrite(self):
         module.install_hooks(self.root)
         changed = self.read(module.CONFIGS["codex"])
-        changed["hooks"]["Stop"][0]["hooks"][0]["timeout"] = 3
+        changed["hooks"]["SessionEnd"][0]["hooks"][0]["timeout"] = 2
         self.write(module.CONFIGS["codex"], changed)
         before = self.settings()
         for operation in (module.install_hooks, module.remove_hooks):
@@ -318,8 +332,11 @@ class HookInstallationTests(unittest.TestCase):
         self.assertEqual(handler["args"], expected)
         self.assertNotIn("bash", handler)
         codex = self.read(module.CONFIGS["codex"])["hooks"]["SessionStart"][0]["hooks"][0]
-        self.assertEqual(codex["command"], "ai-sdlc hooks run --client codex --event start")
+        self.assertIn("exec ai-sdlc hooks run --client codex --event start", codex["command"])
         self.assertNotIn("commandWindows", codex)
+        codex_end = self.read(module.CONFIGS["codex"])["hooks"]["SessionEnd"][0]["hooks"][0]
+        self.assertIn("exec ai-sdlc hooks run --client codex --event stop", codex_end["command"])
+        self.assertEqual(codex_end["timeout"], 3)
         claude = self.read(module.CONFIGS["claude"])["hooks"]["SessionStart"][0]["hooks"][0]
         self.assertEqual(claude["command"], "ai-sdlc")
         self.assertEqual(claude["args"], ["hooks", "run", "--client", "claude", "--event", "start"])
@@ -332,6 +349,21 @@ class HookInstallationTests(unittest.TestCase):
         self.assertNotIn(str(self.root), serialized)
         self.assertNotIn(sys.executable, serialized)
         self.assertNotIn("powershell", serialized)
+
+    @unittest.skipIf(os.name == "nt", "POSIX workspace-local runtime probe")
+    def test_codex_registration_finds_workspace_local_runtime_before_path(self):
+        runtime = self.root / ".venv/bin/ai-sdlc"
+        runtime.parent.mkdir(parents=True)
+        runtime.write_text("#!" + sys.executable + "\nimport json, sys\nprint(json.dumps(sys.argv[1:]))\n", encoding="utf-8")
+        runtime.chmod(0o700)
+        nested = self.root / "nested/worktree"
+        nested.mkdir(parents=True)
+        module.install_hooks(self.root, ["codex"])
+        handler = self.read(module.CONFIGS["codex"])["hooks"]["SessionStart"][0]["hooks"][0]
+        result = subprocess.run(["/bin/sh", "-c", handler["command"]], cwd=nested,
+                                env={"PATH": "/usr/bin:/bin"}, capture_output=True, text=True, timeout=5)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout), ["hooks", "run", "--client", "codex", "--event", "start"])
 
     def settings_as_json(self):
         return {relative: raw.decode("utf-8") for relative, raw in self.settings().items()}

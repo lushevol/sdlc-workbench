@@ -34,17 +34,38 @@ def _clients(clients):
     return list(dict.fromkeys(selected))
 
 
+def _codex_event(event):
+    return "SessionStart" if event == "start" else "SessionEnd"
+
+
+def _codex_command(arguments):
+    """Resolve a workspace-local environment before using the installed command."""
+    invocation = shlex.join(arguments)
+    return ("workbench_root=\"$PWD\"; "
+            "while [ \"$workbench_root\" != \"/\" ]; do "
+            "if [ -x \"$workbench_root/.venv/bin/ai-sdlc\" ]; then "
+            "exec \"$workbench_root/.venv/bin/ai-sdlc\" " + invocation + "; "
+            "fi; "
+            "parent=\"${workbench_root%/*}\"; "
+            "if [ \"$parent\" = \"$workbench_root\" ]; then break; fi; "
+            "workbench_root=\"$parent\"; "
+            "done; "
+            "exec ai-sdlc " + invocation)
+
+
 def _registrations(client):
     result = {}
-    for event, native in (("start", "sessionStart" if client == "copilot" else "SessionStart"),
-                          ("stop", "agentStop" if client == "copilot" else "Stop")):
+    for event in ("start", "stop"):
+        native = ("sessionStart" if event == "start" else "agentStop") if client == "copilot" else (
+            _codex_event(event) if client == "codex" else "SessionStart" if event == "start" else "Stop")
         arguments = ["hooks", "run", "--client", client, "--event", event]
         if client == "copilot":
             handler = {"type": "command", "exec": "ai-sdlc", "args": arguments, "timeoutSec": 15}
         elif client == "claude":
             handler = {"type": "command", "command": "ai-sdlc", "args": arguments, "timeout": 15}
         else:
-            handler = {"type": "command", "command": "ai-sdlc " + " ".join(arguments), "timeout": 15}
+            handler = {"type": "command", "command": _codex_command(arguments),
+                       "timeout": 3 if event == "stop" else 15}
         result[native] = handler if client == "copilot" else {"hooks": [handler]}
     return result
 
@@ -68,6 +89,19 @@ def _legacy_registrations(client, root, executable):
                        "commandWindows": "powershell.exe -NoProfile -NonInteractive -EncodedCommand " + encoded,
                        "timeout": 15}
         result[native] = handler if client == "copilot" else {"hooks": [handler]}
+    return result
+
+
+def _previous_registrations(client):
+    """Recognize the previous portable schema-2 Codex entries during migration."""
+    if client != "codex":
+        return None
+    result = {}
+    for event, native in (("start", "SessionStart"), ("stop", "Stop")):
+        arguments = ["hooks", "run", "--client", client, "--event", event]
+        result[native] = {"hooks": [{"type": "command",
+                                     "command": "ai-sdlc " + " ".join(arguments),
+                                     "timeout": 15}]}
     return result
 
 
@@ -99,7 +133,8 @@ def _state(root):
             if any(not isinstance(record[field], str) or not (Path(record[field]).is_absolute()
                    or PureWindowsPath(record[field]).is_absolute()) for field in ("python", "workspace")):
                 raise WorkbenchError("The Workbench hook installation record is invalid.")
-        elif record["registrations"] != _registrations(client):
+        elif (record["registrations"] != _registrations(client)
+              and record["registrations"] != _previous_registrations(client)):
             raise WorkbenchError("The Workbench hook installation record is invalid.")
     return state, raw
 
@@ -303,9 +338,12 @@ def hook_status(root: Path) -> dict:
             try:
                 document, raw = _document(root, relative)
                 _remove_owned(document, client, record, missing=False)
-                configured = raw is not None and state["schema_version"] == 2
+                configured = (raw is not None and state["schema_version"] == 2
+                              and record["registrations"] == _registrations(client))
                 if state["schema_version"] == 1:
                     detail = "Legacy hook registrations need a portable reinstall. Run hooks install."
+                elif record.get("registrations") == _previous_registrations(client):
+                    detail = "Older Workbench hook registrations need a portable reinstall. Run hooks install."
             except WorkbenchError as error:
                 detail = str(error)
         row = {"client": client, "path": relative, "status": "CONFIGURED" if configured else

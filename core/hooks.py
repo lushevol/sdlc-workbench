@@ -20,6 +20,7 @@ from .models import WorkbenchError
 CLIENTS = ("codex", "copilot", "claude")
 MAX_INPUT = 1024 * 1024
 CHECK_TIMEOUT = 10
+SESSION_END_CHECK_TIMEOUT = 2
 _MAX_FILE = 8 * 1024 * 1024
 _LISTS = ("artifacts", "cases", "watch")
 _LIMIT = "Deterministic checks do not establish business verification, readiness, or publication approval."
@@ -218,9 +219,9 @@ def _checks(scope):
     return checks
 
 
-def _run_checks(root, scope):
+def _run_checks(root, scope, *, budget=CHECK_TIMEOUT):
     results = []
-    deadline = time.monotonic() + CHECK_TIMEOUT
+    deadline = time.monotonic() + budget
     for name, arguments in _checks(scope):
         remaining = deadline - time.monotonic()
         if remaining <= 0:
@@ -267,7 +268,8 @@ def run_hook(root, client, event, payload):
     _identity(client, session)
     if "stop_hook_active" in payload and type(payload["stop_hook_active"]) is not bool:
         raise WorkbenchError("The native stop continuation flag must be a boolean.")
-    expected = "SessionStart" if event == "start" else "Stop"
+    expected = ("SessionStart" if event == "start" else
+                "SessionEnd" if client == "codex" else "Stop")
     if payload.get("hook_event_name", expected) != expected:
         raise WorkbenchError("The native hook event does not match the configured handler.")
     cwd = payload.get("cwd")
@@ -304,8 +306,9 @@ def run_hook(root, client, event, payload):
         if fingerprint == state["fingerprint"]:
             return {}, "", 0
         missing = [value for value in _scope(root, state["scope"]) if not _path(root, value).is_file()]
+        budget = SESSION_END_CHECK_TIMEOUT if client == "codex" else CHECK_TIMEOUT
         results = ([{"check": "scope", "status": "FAILED", "findings": [{"code": "MISSING_INPUT", "path": value}
-                    for value in missing]}] if missing else _run_checks(root, state["scope"]))
+                    for value in missing]}] if missing else _run_checks(root, state["scope"], budget=budget))
         changed = _fingerprint(root, state["scope"]) != fingerprint
         if changed:
             results.append({"check": "inputs", "status": "NOT_RUN", "reason": "inputs changed during validation"})

@@ -319,6 +319,7 @@ ai-sdlc --workspace . hooks status
 Run these commands from the workspace root.
 Activate the installed Python environment before launching the agent client, or expose `ai-sdlc` through your approved environment setup.
 The agent must inherit a `PATH` that can resolve `ai-sdlc` for later hook events.
+Codex registrations also search a `.venv/bin/ai-sdlc` under the native working directory and its workspace ancestors.
 The installer preserves unrelated client configuration and writes portable commands without interpreter or workspace locations.
 Hooks discover the nearest Workbench workspace ancestor from each native event's working directory.
 Workspace moves and copies require no configuration rewrite. Reinstall to migrate earlier Workbench-owned registrations that used machine paths.
