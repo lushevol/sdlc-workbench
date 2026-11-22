@@ -1,3 +1,13 @@
+---
+standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Automated checks do not establish complete writing review.
+---
+
 # Skill lifecycle suggestion review
 
 Date: 22 November 2026
@@ -23,13 +33,21 @@ The six areas map to current behavior.
 
 ## Material gaps
 
-The current skill has no progressive references taxonomy files, templates, or examples.
-The current engine does not generate or edit SKILL.md.
-The CES capability intentionally reuses ces-migration-scan guidance rather than adding a duplicate skill.
-Hooks capture lifecycle metadata, but semantic extraction still occurs at an agent checkpoint.
+The current skill links to the shared guide for classification, evidence, reconciliation, and promotion.
+A short authoring reference would clarify when to update registry data and when to revise instructions.
+The CES capability already has a feedback path through the migration scan skill.
+Hooks capture lifecycle metadata. The agent extracts discoveries at checkpoints.
 
-These limits preserve the single Python runtime, existing skill ownership, security review, and knowledge boundaries.
-The proposal's compatibility Node.js text would be inaccurate for this Workbench.
+### Instruction-only changes
+
+The Workbench maintenance owner should track reviewed changes to skill instructions in the lifecycle.
+In a temporary workspace, an initial manual promotion recorded the fixture skill hash.
+The probe changed the skill instructions and submitted new evidence for the existing rule.
+The checkpoint returned `NO_CHANGE`, and the capability history still contained one revision.
+Consequently, that submission did not provide an updated review record for the skill instructions.
+The rule comparison drives the decision before the new skill digest can affect it.
+Track skill content changes separately from rule equality. Test review and promotion with unchanged rule data.
+[Rule comparison](../../../core/capability_learning.py#L301) · [Skill validation](../../../core/capability_learning.py#L330)
 
 ## Acceptance probe
 
@@ -37,11 +55,12 @@ An inline isolated probe used separate CLI processes and a local fixture bridge.
 
 Session A retained one release-branch ADO observation. It remained an EXTEND candidate because one build did not satisfy independent verification.
 Session B retrieved that candidate, added a second build with a distinct commit, and promoted revision 2 of ado-deploy-artifact.
-Session C used a newly initialized workspace containing only the versioned capability history. It resolved the release artifact without an explicit artifact name. The existing main-branch rule still resolved its prior artifact.
-The canonical skill file hash was unchanged. The improved behavior came from scoped capability data.
+Session C imported the versioned capability history into a newly initialized workspace.
+It resolved the release artifact without an explicit artifact name. The main-branch rule still resolved its prior artifact.
+The scoped capability data changed the outcome with the same skill file hash.
 
-The probe used fixture transport. It made no live ADO request and did not create a new skill source file.
-This proves cross-process and cross-workspace capability reuse. It does not prove three live agent sessions.
+The probe used fixture transport and independent CLI processes.
+Live ADO execution and language-model sessions were outside its scope.
 
 Commands used:
 

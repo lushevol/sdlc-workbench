@@ -83,21 +83,7 @@ limitations:
 
 The user supplied the [exact suggestion](evidence/skill-lifecycle-suggestion.txt) for review on 22 November 2026.
 The review compares it with committed Workbench revision `b04f3cf74`.
-
-## Review of the supplied Skill Lifecycle Manager suggestion
-
-The proposal is directionally correct as a lifecycle model.
-It maps to discovery, checkpoint extraction, reconciliation, validation, promotion, and revision maintenance.
-Its Node.js engine location conflicts with the Workbench single-Python-runtime boundary.
-Its compatibility Node.js text would misdescribe this runtime.
-
-The implementation does not automatically generate or edit SKILL.md.
-It validates linked skill identity and hash, then keeps general authoring under reviewed skill procedures.
-The CES capability reuses the existing migration-scan skill to avoid duplicate responsibility.
-The proposal's references, templates, examples, explicit learning-feedback headings, and skill-authoring reference remain possible documentation improvements.
-They are not required for the current vertical slice.
-
-The isolated A/B/C acceptance probe confirmed the suggested cross-session behavior with separate CLI processes and a local fixture bridge.
-It confirmed that the learned scoped rule changed ado-resolve behavior in a new workspace.
-The canonical skill bytes remained unchanged.
-[Review evidence](evidence/proposal-review.md)
+Use the six responsibilities as the model for the existing skill and Python engine.
+The ADO fixture completed the proposed reuse sequence across CLI processes and two workspaces.
+A separate probe confirmed that instruction-only updates fall outside the current promotion workflow.
+The review record explains the gap and the smallest follow-up. [Review evidence](evidence/proposal-review.md)
