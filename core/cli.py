@@ -9,6 +9,7 @@ import subprocess
 import sys
 
 from .models import WorkbenchError
+from .hook_install import CAPTURE_ONLY_EVENTS, HOOK_EVENTS
 from .runtime import Workbench
 from .workspace import initialize_workspace
 
@@ -42,7 +43,7 @@ def _parser() -> argparse.ArgumentParser:
         operation = hook_commands.add_parser(name)
         operation.add_argument("--client", required=True, choices=("codex", "copilot", "claude"))
         if name == "run":
-            operation.add_argument("--event", required=True, choices=("start", "stop"))
+            operation.add_argument("--event", required=True, choices=HOOK_EVENTS)
         else:
             operation.add_argument("--session", required=True, help="Native session ID shown by the start hook")
         if name == "bind":
@@ -51,6 +52,38 @@ def _parser() -> argparse.ArgumentParser:
             operation.add_argument("--baseline", help="Workspace-relative behavior evidence baseline")
             for flag in ("artifact", "case", "watch"):
                 operation.add_argument("--" + flag, action="append", default=[], help="Workspace-relative input file; repeat as needed")
+    learning = commands.add_parser("learning", help="Retrieve and improve scoped Workbench capabilities")
+    learning_commands = learning.add_subparsers(dest="learning_command", required=True)
+    available = learning_commands.add_parser("list", help="Search the capability registry")
+    available.add_argument("--query", default="")
+    available.add_argument("--scope", help="JSON applicability selectors")
+    use = learning_commands.add_parser("use", help="Resolve rules for a capability and exact task scope")
+    use.add_argument("capability_id")
+    use.add_argument("--scope", required=True, help="JSON applicability selectors")
+    use.add_argument("--revision", type=int)
+    for name in ("pending", "conflicts", "diagnose"):
+        learning_commands.add_parser(name)
+    checkpoint = learning_commands.add_parser("checkpoint", help="Extract a structured discovery and reconcile it")
+    checkpoint_source = checkpoint.add_mutually_exclusive_group(required=True)
+    checkpoint_source.add_argument("--input", help="Workspace-relative discovery JSON")
+    checkpoint_source.add_argument("--ado-observation", action="append", help="Artifact observation path; repeat to compare builds")
+    checkpoint.add_argument("--task", help="Workspace-relative living record for artifact observations")
+    for name in ("validate", "promote"):
+        operation = learning_commands.add_parser(name)
+        operation.add_argument("discovery_id")
+        if name == "promote":
+            operation.add_argument("--approval", help="Workspace-relative evidence-bound approval JSON")
+    for name in ("history", "rollback"):
+        operation = learning_commands.add_parser(name)
+        operation.add_argument("capability_id")
+        if name == "rollback":
+            operation.add_argument("--revision", required=True, type=int)
+    ado = learning_commands.add_parser("ado-resolve", help="Resolve an exact Azure DevOps artifact with read grants")
+    ado.add_argument("--resource", dest="resource_id", required=True)
+    for name in ("project", "repository-id", "source-ref", "source-commit", "artifact-name"):
+        ado.add_argument("--" + name, required=name != "artifact-name")
+    for name in ("pipeline-id", "build-id"):
+        ado.add_argument("--" + name, required=True, type=int)
     sources = commands.add_parser("sources", help="Prepare local source exports with hash-bound selections")
     source_commands = sources.add_subparsers(dest="source_command", required=True)
     for name in ("refresh", "select", "plan", "complete", "view", "verify"):
@@ -190,9 +223,10 @@ def main(argv: list[str] | None = None) -> int:
                     selected_root = root if explicit_workspace is not None else discover_workspace(payload)
                     output, diagnostic, code = run_hook(selected_root, arguments.client, arguments.event, payload)
                 except WorkbenchError as error:
-                    output, diagnostic, code = advisory(arguments.client, str(error))
+                    output, diagnostic, code = ({}, "", 0) if arguments.event in CAPTURE_ONLY_EVENTS else advisory(arguments.client, str(error))
                 except (OSError, ValueError, UnicodeError, RecursionError):
-                    output, diagnostic, code = advisory(arguments.client, "The native payload or local hook state is unavailable or invalid. Check hooks status and bind the scope again.")
+                    output, diagnostic, code = ({}, "", 0) if arguments.event in CAPTURE_ONLY_EVENTS else advisory(
+                        arguments.client, "The native payload or local hook state is unavailable or invalid. Check hooks status and bind the scope again.")
                 print(json.dumps(output, ensure_ascii=False))
                 if diagnostic:
                     print(diagnostic, file=sys.stderr)
@@ -211,6 +245,66 @@ def main(argv: list[str] | None = None) -> int:
                                     artifacts=arguments.artifact, cases=arguments.case, watch=arguments.watch)
             _print_json(result)
             return 1 if result["status"] == "INCOMPLETE" else 0
+        if arguments.command == "learning":
+            from .capability_learning import CapabilityRegistry, _command_switch, _validate_scope
+
+            root = Path(arguments.workspace).expanduser().resolve()
+            operation = arguments.learning_command
+            if operation == "diagnose":
+                from .hook_install import hook_status
+                from .learning_events import diagnose_events
+
+                result = {"capture": _command_switch("WORKBENCH_LEARNING_CAPTURE"),
+                          "auto_promotion": _command_switch("WORKBENCH_LEARNING_PROMOTION"),
+                          "hooks": hook_status(root), "events": diagnose_events(root)}
+            elif operation == "ado-resolve":
+                from .capability_ado import artifact_scope, resolve_artifact
+
+                workbench = Workbench(root)
+                selectors = {key: getattr(arguments, key)
+                             for key in ("resource_id", "project", "pipeline_id", "repository_id", "source_ref")}
+                name = arguments.artifact_name
+                scope = artifact_scope(workbench, **selectors)
+                if name is None:
+                    rules = CapabilityRegistry(root).use("ado-deploy-artifact", scope)["rules"]
+                    name = next((rule["value"] for rule in rules if rule["key"] == "artifact-name"), None)
+                result = resolve_artifact(workbench, **selectors, build_id=arguments.build_id,
+                                          source_commit=arguments.source_commit, artifact_name=name,
+                                          expected_scope=scope, require_unique=arguments.artifact_name is None)
+            else:
+                registry = CapabilityRegistry(root)
+                if operation in {"list", "use"}:
+                    from .assurance import _json
+
+                    try:
+                        scope = _json(arguments.scope.encode()) if arguments.scope is not None else None
+                    except (ValueError, UnicodeError, RecursionError):
+                        raise WorkbenchError("Supply scope as a JSON object.") from None
+                    if scope is not None:
+                        _validate_scope(scope)
+                    result = (registry.available(arguments.query, scope) if operation == "list"
+                              else registry.use(arguments.capability_id, scope, arguments.revision))
+                elif operation in {"pending", "conflicts"}:
+                    result = registry.pending(conflicts=operation == "conflicts")
+                elif operation == "checkpoint":
+                    if arguments.input:
+                        if arguments.task:
+                            raise WorkbenchError("Include the task in the discovery JSON when using --input.")
+                        result = registry.checkpoint(arguments.input)
+                    else:
+                        result = registry.ado_checkpoint(arguments.ado_observation, arguments.task)
+                elif operation == "validate":
+                    result = registry.validate(arguments.discovery_id)
+                elif operation == "promote":
+                    result = registry.promote(arguments.discovery_id, arguments.approval)
+                elif operation == "history":
+                    result = registry.history(arguments.capability_id)
+                else:
+                    result = registry.rollback(arguments.capability_id, arguments.revision)
+            _print_json(result)
+            if operation == "validate" and result["status"] in {"INVALID_EVIDENCE", "CONFLICT", "GOVERNANCE_REQUIRED"}:
+                return 1
+            return 0
         if arguments.command == "sources":
             from .ingestion.incremental import complete_sources, plan_sources
             from .ingestion.sources import apply_selections, refresh_sources, render_sources, verify_sources

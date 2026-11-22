@@ -58,4 +58,6 @@ For example, use `$ces-migration-scan` with `/path/to/ui-app` and `/path/to/api-
 
 Use exact revisions where available. Separate observed source facts, inferred consequences, unresolved policy, and unavailable runtime evidence. Tests with only EMS2 fixtures do not prove CES compatibility. A passing static scan or unit suite does not establish live CES parity, production reachability, or release approval.
 
+At the task checkpoint, classify reusable findings and retain their evidence. [CES capability learning](references/capability-learning.md)
+
 The helper intentionally excludes common generated and dependency directories. Record those exclusions and any inventory truncation in the report. Use `rg` or direct source inspection when a repository uses generated imports, dynamic routing, or unsupported file types.

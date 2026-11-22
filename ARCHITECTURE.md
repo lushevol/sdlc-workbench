@@ -375,6 +375,14 @@ It does not yet maintain a complete requirement-to-code-to-test verification bas
 
 ### Skills and adapters
 
+Capability learning extends the existing context registry and agent workflows.
+Native hooks record bounded lifecycle metadata. The current agent extracts claims at task checkpoints.
+Deterministic validation binds claims to retained evidence and reconciles them with current scoped rules.
+The registry journal stores complete reviewed revisions. Rollback appends a revision that restores earlier rules.
+Skills consume these rules through stable capability identities and refer to existing contracts and canonical knowledge.
+Only allowlisted read-only improvements qualify for automatic promotion.
+See the [capability learning guide](docs/CAPABILITY_LEARNING.md) for scope, promotion, and operational controls.
+
 `.agents/skills/` owns all shared engineering procedures.
 The [knowledge lifecycle map](docs/KNOWLEDGE_LIFECYCLE.md) defines six knowledge orchestrators and their reusable operation skills.
 Source preparation, canonical governance, and derived wiki freshness retain separate completion boundaries.

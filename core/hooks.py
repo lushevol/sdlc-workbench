@@ -13,7 +13,7 @@ import sys
 import time
 
 from .assurance import _json, _read, local_path
-from .hook_install import _atomic
+from .hook_install import NATIVE_EVENTS, _atomic
 from .models import WorkbenchError
 
 
@@ -69,9 +69,13 @@ def _state_path(root, client, session):
     return local_path(root, ".workbench/hooks/sessions/" + _identity(client, session) + ".json")
 
 
-@contextmanager
 def _lock(root, client, session):
     path = local_path(root, ".workbench/hooks/sessions/" + _identity(client, session) + ".lock")
+    return _file_lock(path, busy_message="A hook check for this client session is already running; no duplicate check was started.")
+
+
+@contextmanager
+def _file_lock(path, *, busy_message="Another local write holds the file lock. Retry after it finishes."):
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a+b") as stream:
         if os.name == "nt":
@@ -83,13 +87,13 @@ def _lock(root, client, session):
             try:
                 msvcrt.locking(stream.fileno(), msvcrt.LK_NBLCK, 1)
             except OSError:
-                raise WorkbenchError("A hook check for this client session is already running; no duplicate check was started.") from None
+                raise WorkbenchError(busy_message) from None
         else:
             import fcntl
             try:
                 fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except BlockingIOError:
-                raise WorkbenchError("A hook check for this client session is already running; no duplicate check was started.") from None
+                raise WorkbenchError(busy_message) from None
         try:
             yield
         finally:
@@ -262,20 +266,29 @@ def _run_checks(root, scope, *, budget=CHECK_TIMEOUT):
 def run_hook(root, client, event, payload):
     """Translate the native contract and perform only explicitly scoped local checks."""
     root = _root(root)
-    if client not in CLIENTS or event not in {"start", "stop"} or not isinstance(payload, dict):
-        raise WorkbenchError("Select a supported hook client, start or stop event, and a JSON object payload.")
+    if client not in CLIENTS or event not in NATIVE_EVENTS[client] or not isinstance(payload, dict):
+        raise WorkbenchError("Select a supported hook client and event with a JSON object payload.")
     session = payload.get("sessionId") if client == "copilot" and "sessionId" in payload else payload.get("session_id")
-    _identity(client, session)
+    session_key = _identity(client, session)
     if "stop_hook_active" in payload and type(payload["stop_hook_active"]) is not bool:
         raise WorkbenchError("The native stop continuation flag must be a boolean.")
-    expected = ("SessionStart" if event == "start" else
-                "SessionEnd" if client == "codex" else "Stop")
-    if payload.get("hook_event_name", expected) != expected:
+    native = NATIVE_EVENTS[client][event]
+    compatible = ("Stop" if event == "stop" else native[0].upper() + native[1:]) if client == "copilot" else native
+    if payload.get("hook_event_name", native) not in (native, compatible):
         raise WorkbenchError("The native hook event does not match the configured handler.")
     cwd = payload.get("cwd")
     if not isinstance(cwd, str) or not Path(cwd).is_absolute() or not Path(cwd).resolve().is_relative_to(root):
         raise WorkbenchError("The hook working directory must be inside the explicitly selected workspace.")
-    if payload.get("agent_id") or payload.get("agentId") or payload.get("parentAgentId"):
+    if any(payload.get(field) for field in ("agent_id", "agentId", "parentAgentId", "parent_agent_id")):
+        return {}, "", 0
+    from .learning_events import capture_enabled, capture_event
+    if not payload.get("stop_hook_active") and capture_enabled():
+        # Learning is advisory and must not interrupt explicitly bound checks.
+        try:
+            capture_event(root, client, session_key, event, payload)
+        except (OSError, ValueError, WorkbenchError):
+            pass
+    if event not in ("start", "stop"):
         return {}, "", 0
     if event == "start":
         state = _load(root, client, session)
@@ -292,6 +305,7 @@ def run_hook(root, client, event, payload):
         else:
             lines += ["No task or collection is bound. Reuse tasks/README.md or .agents/skills/manage-knowledge-lifecycle/SKILL.md.",
                       "Before scoped edits, bind the existing living record: " + command]
+        lines.append("Use .agents/skills/capability-learning/SKILL.md to look up capabilities and capture reusable findings at task checkpoints.")
         lines.append("Reuse existing authorization and recorded answers. " + _LIMIT)
         return _native(client, "\n".join(lines)[:2000]), "", 0
     if payload.get("stop_hook_active"):

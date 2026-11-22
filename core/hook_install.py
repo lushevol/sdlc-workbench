@@ -23,6 +23,21 @@ CONFIGS = {
     # Copilot imports ordinary Claude settings; an explicit settings file avoids double registration.
     "claude": ".claude/workbench-hooks.json",
 }
+CAPTURE_ONLY_EVENTS = ("tool", "tool-failure", "compact", "end")
+HOOK_EVENTS = ("start", "stop", *CAPTURE_ONLY_EVENTS)
+NATIVE_EVENTS = {
+    "codex": {"start": "SessionStart", "stop": "SessionEnd"},
+    "copilot": {"start": "sessionStart", "stop": "agentStop", "tool": "postToolUse",
+                "tool-failure": "postToolUseFailure", "compact": "preCompact", "end": "sessionEnd"},
+    "claude": {"start": "SessionStart", "stop": "Stop", "tool": "PostToolUse",
+               "tool-failure": "PostToolUseFailure", "compact": "PreCompact", "end": "SessionEnd"},
+}
+TOOL_CLASSES = {
+    "Bash": "shell", "bash": "shell", "powershell": "shell",
+    "Edit": "edit", "Write": "edit", "edit": "edit", "create": "edit",
+    "apply_patch": "edit", "str_replace_editor": "edit",
+}
+CONNECTOR_PREFIX = "mcp__workbench__"
 _STATE = ".workbench/hooks/installation.json"
 _LOCK = ".workbench/hooks/installation.lock"
 
@@ -32,10 +47,6 @@ def _clients(clients):
     if not selected or any(client not in CONFIGS for client in selected):
         raise WorkbenchError("Select codex, copilot, or claude hook clients.")
     return list(dict.fromkeys(selected))
-
-
-def _codex_event(event):
-    return "SessionStart" if event == "start" else "SessionEnd"
 
 
 def _codex_command(arguments):
@@ -53,20 +64,26 @@ def _codex_command(arguments):
             "exec ai-sdlc " + invocation)
 
 
-def _registrations(client):
+def _registrations(client, *, lifecycle=True):
     result = {}
-    for event in ("start", "stop"):
-        native = ("sessionStart" if event == "start" else "agentStop") if client == "copilot" else (
-            _codex_event(event) if client == "codex" else "SessionStart" if event == "start" else "Stop")
+    for event, native in NATIVE_EVENTS[client].items():
+        capture_only = event in CAPTURE_ONLY_EVENTS
+        if capture_only and not lifecycle:
+            continue
         arguments = ["hooks", "run", "--client", client, "--event", event]
+        timeout = 3 if capture_only else 15
         if client == "copilot":
-            handler = {"type": "command", "exec": "ai-sdlc", "args": arguments, "timeoutSec": 15}
+            handler = {"type": "command", "exec": "ai-sdlc", "args": arguments, "timeoutSec": timeout}
         elif client == "claude":
-            handler = {"type": "command", "command": "ai-sdlc", "args": arguments, "timeout": 15}
+            handler = {"type": "command", "command": "ai-sdlc", "args": arguments, "timeout": timeout}
         else:
             handler = {"type": "command", "command": _codex_command(arguments),
                        "timeout": 3 if event == "stop" else 15}
-        result[native] = handler if client == "copilot" else {"hooks": [handler]}
+        entry = handler if client == "copilot" else {"hooks": [handler]}
+        if event in ("tool", "tool-failure"):
+            names = ("Bash", "Edit", "Write") if client == "claude" else tuple(TOOL_CLASSES)
+            entry["matcher"] = "^(?:" + "|".join((*names, CONNECTOR_PREFIX + ".*")) + ")$"
+        result[native] = entry
     return result
 
 
@@ -134,6 +151,7 @@ def _state(root):
                    or PureWindowsPath(record[field]).is_absolute()) for field in ("python", "workspace")):
                 raise WorkbenchError("The Workbench hook installation record is invalid.")
         elif (record["registrations"] != _registrations(client)
+              and record["registrations"] != _registrations(client, lifecycle=False)
               and record["registrations"] != _previous_registrations(client)):
             raise WorkbenchError("The Workbench hook installation record is invalid.")
     return state, raw
@@ -259,7 +277,7 @@ def _transaction(root, originals, updates):
 
 
 def install_hooks(root: Path, clients=None, python: str | Path | None = None) -> dict:
-    """Merge two project registrations per selected client; preserve all unrelated entries."""
+    """Merge project registrations for selected clients and preserve unrelated entries."""
     root = Path(root).expanduser().resolve()
     selected = _clients(clients)
     if not root.is_dir():
@@ -344,6 +362,8 @@ def hook_status(root: Path) -> dict:
                     detail = "Legacy hook registrations need a portable reinstall. Run hooks install."
                 elif record.get("registrations") == _previous_registrations(client):
                     detail = "Older Workbench hook registrations need a portable reinstall. Run hooks install."
+                elif not configured and record["registrations"] == _registrations(client, lifecycle=False):
+                    detail = "Installed Workbench hooks omit learning events. Run hooks install."
             except WorkbenchError as error:
                 detail = str(error)
         row = {"client": client, "path": relative, "status": "CONFIGURED" if configured else

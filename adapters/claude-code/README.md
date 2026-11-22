@@ -43,6 +43,7 @@ ai-sdlc --workspace . hooks status
 ```
 
 The adapter maps native `SessionStart` and `Stop` events through isolated `.claude/workbench-hooks.json`.
+It also captures event classes from `PostToolUse`, `PostToolUseFailure`, `PreCompact`, and `SessionEnd`.
 **From the workspace root, launch Claude Code with `claude --settings .claude/workbench-hooks.json`.**
 Make installed `ai-sdlc` available on the agent's `PATH` before launching Claude Code.
 Native events discover the nearest owning Workbench workspace from their working directory; registrations contain no machine paths.
@@ -52,3 +53,5 @@ The isolated file prevents Copilot from inheriting the installed Claude Workbenc
 Native workspace trust remains a client responsibility.
 Bind the active living record to the exact client session before expecting task-specific checks.
 The hooks provide advisory evidence checks; they do not replace semantic workflows or grant publication approval.
+The workspace's [Claude instructions](../../CLAUDE.md) import the shared operating instructions for agent checkpoints.
+See the [capture controls and native test scope](../../docs/HOOKS.md#learning-capture).

@@ -16,6 +16,7 @@ from unittest.mock import patch
 
 from ai_sdlc_workbench import hooks as module
 from ai_sdlc_workbench.hook_install import CONFIGS, install_hooks
+from ai_sdlc_workbench.learning_events import EVENTS_DIR, diagnose_events
 from ai_sdlc_workbench.models import WorkbenchError
 from ai_sdlc_workbench.workspace import initialize_workspace
 
@@ -177,7 +178,9 @@ class HookRuntimeTests(unittest.TestCase):
                 self.assertIn("hooks bind", context)
                 self.assertIn("same-native-session", context)
                 self.assertNotIn("decision", output)
-        self.assertFalse((self.root / ".workbench").exists())
+        self.assertEqual(diagnose_events(self.root)["clients"], {
+            "codex": {"start": 1}, "copilot": {"start": 1}, "claude": {"start": 1}})
+        self.assertFalse((self.root / ".workbench/hooks").exists())
 
     def test_public_cli_rejects_malformed_and_oversized_payloads_without_leaking_input(self):
         private = "private-input-must-not-be-printed"
@@ -213,14 +216,75 @@ class HookRuntimeTests(unittest.TestCase):
                         "The selected invalid file must fail lint rather than invoking --print-schema.")
         self.assertNotIn("decision", output)
 
-    def test_unbound_stop_does_not_scan_or_create_state(self):
+    def test_unbound_stop_captures_lifecycle_without_creating_scope_state(self):
         before = self.snapshot()
         for client in ("codex", "copilot", "claude"):
             with self.subTest(client=client), self.successful_runner() as runner:
                 self.assertEqual(module.run_hook(self.root, client, "stop", self.payload(client)), ({}, "", 0))
                 runner.assert_not_called()
         self.assertEqual(self.snapshot(), before)
-        self.assertFalse((self.root / ".workbench").exists())
+        self.assertFalse((self.root / ".workbench/hooks").exists())
+        self.assertEqual(diagnose_events(self.root)["clients"], {
+            "codex": {"end": 1}, "copilot": {"completion": 1}, "claude": {"completion": 1}})
+
+    def test_lifecycle_capture_coalesces_and_retains_only_allowlisted_fields(self):
+        secret = "test-only-" + ("~" * 12)
+        for client, event, payload in (
+            ("claude", "start", {"source": "resume", "transcript_path": secret}),
+            ("claude", "tool", {"tool_name": "mcp__workbench__" + secret,
+                                "tool_input": {"token": secret}, "tool_response": secret}),
+            ("claude", "tool-failure", {"tool_name": "Bash", "error": secret, "tool_response": secret}),
+            ("claude", "compact", {"custom_instructions": secret}),
+            ("claude", "end", {"reason": "prompt_input_exit"}),
+            ("copilot", "start", {"source": "startup", "initialPrompt": secret}),
+            ("copilot", "tool", {"toolName": "bash", "toolArgs": secret,
+                                 "toolResult": {"resultType": "success", "textResultForLlm": secret}}),
+            ("copilot", "tool", {"toolName": "Bash", "hook_event_name": "PostToolUse",
+                                 "tool_result": {"result_type": "failure", "text_result_for_llm": secret}}),
+            ("copilot", "tool", {"toolName": secret, "toolArgs": secret}),
+            ("copilot", "stop", {"stopReason": "end_turn", "transcriptPath": secret}),
+        ):
+            with self.subTest(client=client, event=event):
+                for _ in range(2):
+                    _, diagnostic, code = module.run_hook(self.root, client, event, self.payload(client, secret, **payload))
+                    self.assertEqual((diagnostic, code), ("", 0))
+        paths = list((self.root / EVENTS_DIR).glob("*.json"))
+        self.assertEqual(len(paths), 9)
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn(secret, text)
+            self.assertNotIn(str(self.root), text)
+            self.assertNotIn(secret, path.name)
+        self.assertEqual(diagnose_events(self.root)["clients"], {
+            "codex": {}, "copilot": {"start": 1, "tool": 2, "completion": 1},
+            "claude": {"recovery": 1, "tool": 2, "compact": 1, "end": 1}})
+
+    def test_learning_opt_out_and_capture_failure_leave_normal_checks_available(self):
+        self.bind(client="claude")
+        self.changed()
+        with patch.dict(os.environ, {"WORKBENCH_LEARNING_CAPTURE": "0"}), self.successful_runner() as runner:
+            result = module.run_hook(self.root, "claude", "stop", self.payload("claude"))
+            self.assertEqual(result, ({}, "", 0))
+            runner.assert_called_once()
+            self.assertFalse(diagnose_events(self.root)["capture_enabled"])
+        self.assertFalse((self.root / EVENTS_DIR).exists())
+        self.changed()
+        with patch("ai_sdlc_workbench.learning_events._atomic", side_effect=OSError("private failure")), self.successful_runner() as runner:
+            result = module.run_hook(self.root, "claude", "stop", self.payload("claude"))
+            self.assertEqual(result, ({}, "", 0))
+            runner.assert_called_once()
+        self.assertEqual(diagnose_events(self.root)["status"], "NO_EVENTS")
+
+    def test_capture_only_cli_ignores_invalid_payloads_without_emitting_an_advisory(self):
+        for client in ("claude", "copilot"):
+            with self.subTest(client=client):
+                invalid = self.cli("run", "--client", client, "--event", "tool", payload="[]")
+                self.assertEqual((json.loads(invalid.stdout), invalid.stderr, invalid.returncode), ({}, "", 0))
+                valid = self.cli("run", "--client", client, "--event", "tool",
+                                 payload=json.dumps(self.payload(client, tool_name="Bash")))
+                self.assertEqual((json.loads(valid.stdout), valid.stderr, valid.returncode), ({}, "", 0))
+                self.assertEqual(diagnose_events(self.root)["clients"][client], {"tool": 1})
+        self.assertFalse((self.root / ".workbench/hooks").exists())
 
     def test_windows_start_guidance_uses_powershell_quoting(self):
         with patch.object(module.sys, "platform", "win32"), patch.object(module.sys, "executable", "C:\\User's Tools\\python.exe"):

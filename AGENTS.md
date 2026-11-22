@@ -144,6 +144,17 @@ Inspect the worktree and preserve unrelated changes. Inspect callers, importers,
 Record affected scope and qualitative risk in the owning record. Follow instructions in each affected business repository.
 Use direct inspection without a usable index; do not invent a GitNexus score or query an unrelated repository.
 
+### Learn reusable capabilities
+
+Use [capability-learning](.agents/skills/capability-learning/SKILL.md) during meaningful engineering work.
+At entry, search the capability registry. Load relevant skills and contracts, then check scope and permissions.
+During work, use the granted connectors and retain exact evidence for significant reusable discoveries.
+At checkpoints and handoff, classify discoveries and reconcile them with existing capabilities.
+Submit minimized evidence references without waiting for a separate learning request.
+Use validated rules in future sessions. Recheck uncertain evidence when it could change the outcome.
+Keep unresolved claims as candidates. Follow canonical governance for business intent and entitlement decisions.
+Continue the primary task if learning fails. Use the [checkpoint fallback](docs/CAPABILITY_LEARNING.md#configure-and-diagnose) when native hooks are unavailable.
+
 ### Coding tasks with Ponytail
 
 Read [Ponytail](.agents/skills/ponytail/SKILL.md) before coding, reviewing code, refactoring, or choosing dependencies.

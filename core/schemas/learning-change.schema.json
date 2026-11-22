@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-sdlc-workbench:learning-change:1",
+  "title": "Workbench capability change",
+  "description": "A reconciliation decision bound to an evidence-bearing discovery and a registry baseline.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "capability_id", "operation", "discovery_id", "discovery_sha256", "baseline",
+    "status", "reason", "related_capabilities"
+  ],
+  "properties": {
+    "id": { "$ref": "#/$defs/digest" },
+    "capability_id": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?![\\s\\S])"
+    },
+    "operation": { "enum": ["CREATE", "EXTEND", "CORRECT", "REPLACE", "DEPRECATE", "NO_CHANGE"] },
+    "discovery_id": { "$ref": "#/$defs/digest" },
+    "discovery_sha256": { "$ref": "#/$defs/digest" },
+    "baseline": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/digest" }] },
+    "status": { "enum": ["PROPOSED", "CONFLICT", "NO_CHANGE"] },
+    "reason": {
+      "type": "string",
+      "pattern": "^(?=.*\\S)[^\\u0000-\\u001f\\u007f-\\u009f]+(?![\\s\\S])",
+      "maxLength": 512
+    },
+    "related_capabilities": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,79}(?![\\s\\S])" }
+    }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}(?![\\s\\S])" }
+  }
+}

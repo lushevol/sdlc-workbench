@@ -17,6 +17,9 @@ Workbench supplies shared session context and scoped completion checks for Codex
 The installed Python runtime owns the behavior. Client configuration translates native events into that shared behavior.
 The existing [workflow skills](../.agents/skills/) retain semantic decisions and authorization boundaries.
 
+Workbench retains bounded lifecycle hints for capability learning. Each hint has a client, hashed session identity, time, and event class.
+Tool hints add an allowlisted tool class and an outcome class.
+
 ## Install and inspect
 
 Use an installed Workbench environment and run these commands from the workspace root.
@@ -122,6 +125,35 @@ Hook results do not establish verified business behavior, publication approval, 
 The hooks do not publish knowledge, create governance events, compile the wiki, or run remote tools.
 Required full unit tests remain part of deliberate delivery verification.
 Hooks cannot replace immediate persistence of completed case evidence before further execution or waits.
+
+## Learning capture
+
+Reinstall owned registrations with `ai-sdlc --workspace . hooks install` after upgrading.
+Claude Code supplies `PostToolUse`, `PostToolUseFailure`, `PreCompact`, and `SessionEnd` alongside its context and completion events.
+Copilot CLI uses `postToolUse`, `postToolUseFailure`, `preCompact`, and `sessionEnd`.
+Start payloads distinguish startup and recovery when the client supplies a resume, fork, or compaction reason.
+Codex captures startup, recovery, and termination through its existing registrations.
+
+The allowlist covers shell, edit, and Workbench connector tool classes.
+Prompts, tool arguments, detailed responses, transcripts, paths, and raw session IDs are discarded before learning capture.
+The retained outcome describes the native tool event. It cannot establish command success or verify task behavior.
+Identical event classes for a session coalesce under the ignored `.workbench/learning/events/` directory.
+Explicit task checkpoints and retained task evidence drive semantic extraction and verification.
+Use the [capability-learning skill](../.agents/skills/capability-learning/SKILL.md) if native hooks are restricted or unavailable.
+
+Set `WORKBENCH_LEARNING_CAPTURE=0`, `false`, or `off` in the client environment to disable capture.
+Capture failures leave completion checks available.
+Use `ai-sdlc --workspace . learning diagnose` to inspect capture counts and invalid event records.
+Inspect runtime availability, workspace trust, client logs, and supported events if expected counts are absent.
+
+Claude Code 2.1.325 dispatched startup, tool, completion, compaction, termination, and recovery in an isolated Workbench on macOS.
+The client loaded the shared instructions and found both capability skills.
+A local Anthropic-compatible fixture supplied the model response.
+VS Code 1.147.0 included Copilot Chat 0.75.0 and its embedded Copilot runtime.
+That runtime discovered both skills and dispatched startup, tool, completion, compaction, termination, and recovery.
+A local OpenAI-compatible fixture supplied the model response.
+The installed Copilot CLI shim reported that a standalone Copilot CLI was unavailable.
+Tool failure dispatch used adapter payloads. Native Windows, standalone Copilot CLI, and cloud dispatch remain unverified.
 
 ## Disable or remove
 
@@ -291,7 +323,7 @@ Scenario Outline: Reuse registrations after a workspace is copied or moved
 ## Native references
 
 - [Codex hooks](https://learn.chatgpt.com/docs/hooks)
-- [GitHub Copilot hooks](https://docs.github.com/en/copilot/reference/hooks-configuration)
+- [GitHub Copilot hooks](https://docs.github.com/en/copilot/reference/hooks-reference)
 - [Copilot harness hooks in VS Code](https://code.visualstudio.com/docs/copilot/customization/hooks)
 - [Claude Code hooks](https://code.claude.com/docs/en/hooks)
 

@@ -42,12 +42,14 @@ ai-sdlc --workspace . hooks status
 ```
 
 The adapter uses `.github/hooks/workbench.json` with `sessionStart` and `agentStop` events.
+It also captures event classes from `postToolUse`, `postToolUseFailure`, `preCompact`, and `sessionEnd`.
 Run the hook commands from the workspace root and make installed `ai-sdlc` available on the agent's `PATH` before launching Copilot.
 Native events discover the nearest owning Workbench workspace from their working directory; registrations contain no machine paths.
-Copilot CLI and the VS Code Copilot harness share this format.
-The VS Code hooks experience is preview; the deprecated Local harness has a separate schema.
+Copilot CLI supports these command registrations. The embedded Copilot runtime in VS Code also loaded them in a local test.
+The VS Code hooks experience is preview. The deprecated Local harness has a separate schema.
 `sessionEnd` means session termination and does not replace turn completion.
 Workbench keeps Claude hooks in a separate settings file selected explicitly by the Claude launcher.
 That file avoids duplicate Workbench handlers from Copilot's ordinary Claude-settings discovery.
 Bind the active living record to the exact client session before expecting task-specific checks.
 Configuration validity does not establish successful hook execution in the installed client or cloud environment.
+See the [capture controls and native test scope](../../docs/HOOKS.md#learning-capture).

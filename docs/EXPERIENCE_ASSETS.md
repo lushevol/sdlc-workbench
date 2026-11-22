@@ -3,6 +3,9 @@
 The `package-domain-experience` and `learn-domain-experience` skills turn supported task results into concise project assets.
 They provide a reusable execution card with provenance, one primary end-to-end recipe, supporting scripts, fixtures, variable templates, recovery steps, and links to canonical knowledge.
 
+Use [capability learning](CAPABILITY_LEARNING.md) in ordinary Workbench tasks.
+Use the experience packet workflow when a successful procedure needs a reviewed reusable package.
+
 ## Storage
 
 Promoted packets live under the project-owned `assets/experience/` area.

@@ -192,8 +192,27 @@ class HookInstallationTests(unittest.TestCase):
         self.assertEqual(ordinary.read_bytes(), original)
         claude = next(row for row in result["clients"] if row["client"] == "claude")
         self.assertEqual(claude["launch_argv"], ["claude", "--settings", ".claude/workbench-hooks.json"])
-        self.assertEqual(set(self.read(module.CONFIGS["copilot"])["hooks"]), {"sessionStart", "agentStop"})
-        self.assertEqual(set(self.read(module.CONFIGS["claude"])["hooks"]), {"SessionStart", "Stop"})
+        self.assertEqual(set(self.read(module.CONFIGS["copilot"])["hooks"]),
+                         {"sessionStart", "agentStop", "postToolUse", "postToolUseFailure", "preCompact", "sessionEnd"})
+        self.assertEqual(set(self.read(module.CONFIGS["claude"])["hooks"]),
+                         {"SessionStart", "Stop", "PostToolUse", "PostToolUseFailure", "PreCompact", "SessionEnd"})
+
+    def test_previous_portable_claude_and_copilot_registrations_upgrade(self):
+        state = {"schema_version": 2, "clients": {}}
+        for client in ("claude", "copilot"):
+            registrations = module._registrations(client, lifecycle=False)
+            document = {"hooks": {event: [entry] for event, entry in registrations.items()}}
+            if client == "copilot":
+                document["version"] = 1
+            self.write(module.CONFIGS[client], document)
+            state["clients"][client] = {"registrations": registrations, "created": True, "had_hooks": False}
+        self.write(module._STATE, state)
+        self.assertEqual(module.hook_status(self.root)["status"], "INCOMPLETE")
+        self.assertEqual(module.install_hooks(self.root, ["claude", "copilot"])["status"], "PARTIAL")
+        for client in ("claude", "copilot"):
+            installed = self.read(module.CONFIGS[client])["hooks"]
+            self.assertEqual(installed, {event: [entry] for event, entry in module._registrations(client).items()})
+        self.assertEqual(module.remove_hooks(self.root)["status"], "NOT_CONFIGURED")
 
     def test_codex_user_hooks_and_unrelated_concurrent_settings_survive(self):
         user = {"hooks": [{"type": "command", "command": "user-command"}]}
@@ -348,7 +367,7 @@ class HookInstallationTests(unittest.TestCase):
         serialized = json.dumps([self.settings_as_json(), module.hook_status(self.root)], ensure_ascii=False)
         self.assertNotIn(str(self.root), serialized)
         self.assertNotIn(sys.executable, serialized)
-        self.assertNotIn("powershell", serialized)
+        self.assertNotIn('"powershell":', serialized)
 
     @unittest.skipIf(os.name == "nt", "POSIX workspace-local runtime probe")
     def test_codex_registration_finds_workspace_local_runtime_before_path(self):

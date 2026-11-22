@@ -1,5 +1,8 @@
 # Context registry
 
+Use [capability learning](../docs/CAPABILITY_LEARNING.md) to retrieve active scoped rules and review learning candidates.
+Capability metadata stays in the capability catalog. Accepted rule revisions live under `registry/capability-history/`.
+
 `workspace.yaml` identifies the registry files.
 Registries describe assets and relationships.
 They do not verify source claims or actual execution.
