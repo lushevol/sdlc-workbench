@@ -1,21 +1,20 @@
 ---
 name: ces-domain-capability
-description: Investigate CES entitlement models, effective access, data scope, integration contracts, and EMS2 or EMS3 compatibility. Use for CES domain questions, access differences, and permission verification.
+description: Explain CES entitlements and data scope, inspect CES response contracts, and compare effective access across captured snapshots. Use for CES access questions, contract checks, and entitlement investigations.
 ---
 
 # CES domain capability
 
-1. Identify the CES application, entity, environment, and evidence date or revision. Include the provider and affected integration when they matter.
-2. Locate applicable decisions, contracts, and source revisions using the [knowledge query workflow](../query-knowledge/SKILL.md).
-3. Follow the relevant route below. Distinguish intended access, configured access, and observed enforcement.
+Scope each investigation to the CES application, principal, environment, and observation time or source revision.
+Use the applicable policy and exact capture before making a claim about an account or resource.
 
-| Task | Domain procedure |
+| Task | Read |
 | --- | --- |
-| Explain an entitlement or access difference | Trace the application and entity to role memberships, effective subject and action permissions, and the applicable data profiles and policies. |
-| Review a CES integration or consumer | Inspect provider, adapter, and caller together. Check identity, cardinality, empty and error responses, and where the permission is enforced. |
-| Compare EMS2 and CES behavior or review a mixed rollout | Use the [migration compatibility workflow](references/migration-compatibility.md) for static inspection and CES replay for captured responses. |
+| Explain entitlement assignments, feature actions, or record visibility | [CES domain model](references/domain-model.md) |
+| Check an application catalog or effective-user response | [CES response contracts](references/contracts.md) |
+| Trace effective access or compare two captures | [CES workflows and commands](references/workflows.md) |
 
-Keep role names, application identity, functional permissions, and data scope distinct.
-Trace the owner and rule for any computed permission or data filter. Report missing policy or evidence as unresolved.
-Use the [CES evidence and learning guide](references/capability-learning.md) to interpret replay and capture reusable findings.
-Keep tenant-specific access decisions in governed knowledge. Route entitlement or policy changes through [knowledge governance](../govern-knowledge/SKILL.md).
+Run `scripts/inspect_ces.py` with Python 3.10 or newer. The script reads local JSON and prints aggregate results.
+Use the included synthetic examples to check the command from any copy of the skill folder.
+Report whether the evidence establishes a definition, an assignment, an effective feature action, or observed enforcement.
+Resolve policy interpretation through the applicable approved source and its owner.

@@ -116,3 +116,31 @@ The checks cover skill distribution and offline operation. Live CES and native c
 
 See the [CES domain skill](../../.agents/skills/ces-domain-capability/SKILL.md)
 and its entry in [capability learning](../../docs/CAPABILITY_LEARNING.md#integration-examples).
+
+## Standalone CES capability
+
+The user supplied the [exact follow-up](evidence/ces-standalone-skill-request.txt) in this Codex session on 23 November 2026.
+Baseline Workbench revision is `4301ebcee1de55e7ffc49375a08e38337d3f2dd4`.
+The skill must package CES contracts, domain knowledge, workflows, and scripts.
+Remove migration scan content from the skill and verify the package outside Workbench.
+
+The package now contains CES response contracts, a domain model, investigation workflows, an offline inspector, and synthetic captures.
+The inspector uses the Python standard library.
+The active skill links resolve within its own folder.
+The Workbench capability registry points to the same skill entry.
+The change replaces one diagnostic tool and its supporting migration material with a CES capture inspector.
+[Removed files and recovery revision](evidence/ces-standalone-skill-removals.json)
+
+The response shapes follow four retained CES GET captures.
+The evidence covers the application catalog and effective-user views.
+[Captured API field mapping](../ces-entitlement-migration-20261102/03-output-mapping.md#operations-and-delivery)
+
+- All 1,157 Workbench tests passed on macOS with connector integration enabled.
+- The Agent Skills validator and Workbench validation passed. Workbench found zero issues in 119 knowledge documents.
+- An installed wheel shipped all nine package files. CLI discovery, the Claude alias, and internal links passed in a fresh workspace.
+- The inspector passed from a copied folder with Python isolated mode and site imports disabled.
+- The independent walkthrough verified exact feature/action checks and compared assignment, grant, and data-section changes.
+
+The offline checks cover captured responses. Data-policy interpretation and current CES enforcement need scoped evidence.
+Current instructions are in [CES domain capability](../../.agents/skills/ces-domain-capability/SKILL.md)
+and the [Workbench capability guide](../../docs/CAPABILITY_LEARNING.md#integration-examples).
