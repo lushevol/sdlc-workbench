@@ -1,6 +1,5 @@
-"""Build scoped CES contract derivatives from retained sources; never call CES."""
+"""Build CES examples and OpenAPI from retained sources; never call CES."""
 
-from collections import defaultdict
 from copy import deepcopy
 import hashlib
 import json
@@ -13,33 +12,24 @@ import yaml
 ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = ROOT / ".agents/skills/ces-domain-capability"
 REVIEW = Path(__file__).with_name("ces-standard-source-review-20261123.json")
-maps = defaultdict(dict)
+account_aliases = {}
 
 
-def token(value, category):
+def account_alias(value):
     if value == "":
         return value
-    entries = maps[category]
-    if value not in entries:
-        entries[value] = f"{category}-{len(entries) + 1:03d}"
-    return entries[value]
+    if value not in account_aliases:
+        account_aliases[value] = f"account-{len(account_aliases) + 1:03d}"
+    return account_aliases[value]
 
 
 def sanitize(value, field=""):
     if isinstance(value, dict):
-        return {token(key, "group") if field in ("data_policies", "data_profiles") else key:
-                sanitize(item, key) for key, item in value.items()}
+        return {key: sanitize(item, key) for key, item in value.items()}
     if isinstance(value, list):
         return [sanitize(item, field) for item in value]
-    if isinstance(value, str):
-        category = {
-            "app_name": "application", "appName": "application", "itam_id": "itam",
-            "user_id": "account", "user_ids": "account", "entitlement_name": "entitlement",
-            "entitlementName": "entitlement", "feature": "feature", "featureName": "feature",
-            "action": "action", "actionName": "action", "policy_owner": "owner",
-            "data_profile_owner": "owner",
-        }.get(field, "value")
-        return token(value, category)
+    if isinstance(value, str) and field in ("user_id", "user_ids", "policy_owner", "data_profile_owner"):
+        return account_alias(value)
     return value
 
 
@@ -58,6 +48,7 @@ def observed_schema(value):
 
 
 def build():
+    account_aliases.clear()
     review = json.loads(REVIEW.read_text(encoding="utf-8"))
     source_keys = ("inventory", "http_sources", "assigned_role_fixture", "functional_profile_user_sources",
                    "canonical_candidate_references", "authentication_evidence", "limits")
@@ -83,10 +74,10 @@ def build():
         url = urlsplit(example["request"]["url"])
         parts = url.path.split("/")
         # /fmces/v1/entitlement/app/{itam}/{app}: indexes include the leading empty part.
-        params = {"itam_id": token(parts[5], "itam"), "application": token(parts[6], "application")}
+        params = {"itam_id": parts[5], "application": parts[6]}
         effective = source["id"].startswith("effective-user")
         if effective:
-            params["user_id"] = token(parts[8], "account")
+            params["user_id"] = account_alias(parts[8])
         indexes = list(range(len(body)))
         if not effective:
             selectors = [lambda row: bool(row["user_ids"]) and bool(row["role_entitlements"]),
@@ -121,7 +112,7 @@ def build():
                          "source_sha256": source["sha256"],
                          "source_revision": source["revision"], "request_locator": "/examples/0/request",
                          "response_locator": "/examples/0/response", "body_locator": "/examples/0/response/body/data",
-                         "sanitization": "Stable typed aliases replace string values and dynamic group keys; empty strings/nulls remain.",
+                         "sanitization": "Stable account aliases replace user_id, user_ids, policy_owner and data_profile_owner values. Authorization is redacted. Domain names, group keys, IDs and data-scope values are retained.",
                          "selection_limit": "Catalog rows and large nested arrays are sampled; never infer absent assignments or grants from these subsets.",
                          "derivation": str(Path(__file__).relative_to(ROOT))},
         }
@@ -137,6 +128,7 @@ def build():
         "evidence": {"classification": "sanitized-supplied-body-fixture", "source_path": fixture["path"],
                      "source_sha256": fixture["sha256"], "source_revision": fixture["revision"],
                      "locator": "/", "capture_date": None, "environment": None,
+                     "sanitization": "No body fields changed; the supplied fixture contains application and entitlement metadata only.",
                      "limit": "No captured request, status, headers, or account identity accompanies this SDK body."},
     })
 
@@ -157,6 +149,21 @@ def build():
         application = next(branch for branch in fields["applicationDto"]["anyOf"] if branch["type"] == "object")
         application["properties"]["appUID"]["type"] = "integer"
         fields["applicationDto"] = application
+
+    # Share identical wire shapes without importing local inspector requiredness.
+    grant = schemas["CatalogObservation"]["items"]["properties"]["role_entitlements"]["items"]
+    effective_grants = schemas["EffectiveUserObservation"]["items"]["properties"]["entitlements"]["properties"]["role_entitlements"]
+    assert effective_grants["items"] == grant
+    schemas["FeatureActionObservation"] = deepcopy(grant)
+    schemas["CatalogObservation"]["items"]["properties"]["role_entitlements"]["items"] = {
+        "$ref": "#/components/schemas/FeatureActionObservation"}
+    effective_grants["items"] = {
+        "$ref": "#/components/schemas/FeatureActionObservation"}
+    sides = role_fields["featureActionDtos"]["items"]["properties"]
+    assert sides["features"]["properties"]["applicationDto"] == sides["actions"]["properties"]["applicationDto"]
+    schemas["AssignedApplicationObservation"] = deepcopy(sides["features"]["properties"]["applicationDto"])
+    for side in ("features", "actions"):
+        sides[side]["properties"]["applicationDto"] = {"$ref": "#/components/schemas/AssignedApplicationObservation"}
 
     paths = {}
     operations = (("getApplicationCatalog", "/fmces/v1/entitlement/app/{itam_id}/{application}", "CatalogObservation"),

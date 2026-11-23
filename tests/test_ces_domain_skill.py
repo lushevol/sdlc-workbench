@@ -13,6 +13,7 @@ import yaml
 
 
 SKILL = Path(__file__).resolve().parents[1] / ".agents/skills/ces-domain-capability"
+FIXTURES = Path(__file__).resolve().parent / "fixtures/ces"
 
 
 class CesDomainSkillTests(unittest.TestCase):
@@ -23,10 +24,10 @@ class CesDomainSkillTests(unittest.TestCase):
         self.skill = self.workspace / "ces-domain-capability"
         shutil.copytree(SKILL, self.skill)
 
-    def run_inspector(self, command, *arguments, success=True):
+    def run_inspector(self, command, *arguments, success=True, app="DEMO_REPORTS"):
         result = subprocess.run(
-            [sys.executable, "-I", "-S", str(self.skill / "scripts/inspect_ces.py"),
-             command, *arguments, "--app", "DEMO_REPORTS"],
+            [sys.executable, "-I", "-S", str(self.skill / "Workflows/tools/inspect_ces.py"),
+             command, *arguments, "--app", app],
             cwd=self.workspace, text=True, capture_output=True, timeout=15,
         )
         self.assertEqual(result.returncode, 0 if success else 2, result.stderr)
@@ -39,7 +40,7 @@ class CesDomainSkillTests(unittest.TestCase):
     def fixture(self, name):
         if name == "variables.example":
             return self.skill / "Workflows" / "variables.example.json"
-        return self.skill / "Contracts/examples" / f"{name}.json"
+        return FIXTURES / f"{name}.json"
 
     def test_packaged_response_schemas_and_uat_origin(self):
         variables = json.loads(self.fixture("variables.example").read_text(encoding="utf-8"))
@@ -179,6 +180,42 @@ class CesDomainSkillTests(unittest.TestCase):
         duplicate.write_text(json.dumps(rows), encoding="utf-8")
         self.run_inspector("reconcile", duplicate, self.fixture("roles"), self.fixture("user-before"),
                            "--user", "demo-account", success=False)
+
+    def test_copied_skill_inspects_retained_response_examples(self):
+        expected = {"effective-user-a": (5, 47), "effective-user-b": (7, 31)}
+        for pair_path in sorted((self.skill / "Contracts/examples").glob("*-uat-pair.json")):
+            pair = json.loads(pair_path.read_text(encoding="utf-8"))
+            with self.subTest(case=pair["id"]):
+                parameters = pair["request"]["path_parameters"]
+                self.assertEqual(parameters["itam_id"], "51358")
+                body = pair["response"]["body"]
+                capture = self.workspace / f"{pair['id']}-body.json"
+                capture.write_text(json.dumps(body), encoding="utf-8")
+                if pair["operationId"] == "getEffectiveUser":
+                    self.assertEqual(parameters["application"], "RATAN_ENTITLEMENT_RULE")
+                    result = self.run_inspector(
+                        "user", capture, "--user", parameters["user_id"],
+                        "--feature", "RATAN_DATA_ENTITLEMENT", "--action", "VIEW_ENTITLEMENT",
+                        app=parameters["application"],
+                    )
+                    self.assertEqual((result["assignment_count"], result["effective_grant_count"]),
+                                     expected[pair["id"]])
+                    self.assertEqual(result["requested_grant"], "PRESENT")
+                    self.assertNotIn(parameters["user_id"], json.dumps(result))
+                else:
+                    self.assertEqual(parameters["application"],
+                                     "FLOWZERO" if pair["id"] == "catalog-a" else "RATAN_ENTITLEMENT_RULE")
+                    result = self.run_inspector("catalog", capture, app=parameters["application"])
+                    self.assertEqual(result["entitlement_count"], len(pair["response"]["selected_record_indexes"]))
+                    self.assertLess(result["entitlement_count"], pair["response"]["original_record_count"])
+                    self.assertEqual(result["assignment_count"], sum(len(row["user_ids"]) for row in body))
+
+        fixture = json.loads((self.skill / "Contracts/examples/assigned-role-body-fixture.json").read_text(encoding="utf-8"))
+        capture = self.workspace / "assigned-role-body.json"
+        capture.write_text(json.dumps(fixture["response"]["body"]), encoding="utf-8")
+        assigned = self.run_inspector("assigned-role", capture, app="RATAN_ENTITLEMENT_RULE")
+        self.assertEqual((assigned["assignment_count"], assigned["assignments_without_grants"]), (6, 3))
+        self.assertEqual(assigned["role_grant_count"], 30)
 
     def test_contract_pairs_and_documented_schema_subset(self):
         contract = yaml.safe_load((self.skill / "Contracts/openapi.yaml").read_text(encoding="utf-8"))

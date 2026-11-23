@@ -28,6 +28,8 @@ Do not publish captured credentials as security defaults or turn an observed URL
 
 ### Paired examples
 
+Use retained real exchanges as published examples when available. Keep synthetic inputs separate for controlled tests or unsupported illustrations.
+Label synthetic examples explicitly when no suitable real exchange exists. They establish no observed behavior.
 Keep each request attached to its corresponding response, operation, condition, and source exchange.
 Use named OpenAPI examples for concise variants. Store detailed pairs in `Contracts/examples/` when context is needed.
 Record path/query/header values and request bodies that explain the variation. Redact private values consistently.
@@ -35,29 +37,15 @@ Preserve status, relevant response headers, body, and the original evidence bind
 Represent observed differences in optional parameters, payloads, empty results, pagination, validation errors, and permission failures.
 Missing variants are gaps to investigate, not scenarios to fabricate or execute without task authorization.
 
-A paired case needs these fields; use the project's existing format when equivalent:
+A paired case records its ID, operationId, applicability, request, response, evidence classification, and exact source binding.
+For retained observations, supply the source revision or hash, locator, observation date, and environment when known.
+Label a supplied response-body fixture as a fixture. Do not invent its request, status, headers, date, or environment.
 
-```yaml
-id: list-items-page-two
-operationId: listItems
-applicability:
-  environment: synthetic
-  api_version: "1"
-request:
-  method: GET
-  path: /items
-  query: {cursor: example-next}
-response:
-  status: 200
-  body: {items: [], next: null}
-evidence:
-  classification: synthetic
-  source: illustrative-only
-```
-
-This example illustrates pairing only. For retained observations, supply the actual source, revision or hash, locator, and date.
+Redact credentials, personal or account identities, and other sensitive values. Preserve meaningful application, entitlement, feature, action, and policy names unless sensitive.
 Sanitization must preserve field types, nulls, omissions, relationships, and the distinction between input variants.
 Keep original sensitive evidence in its approved location. Record sanitized examples as derivatives rather than claiming identical original bytes.
+Record redacted fields and transformations. For projections, retain selected source paths or ranges, original lengths, and omitted-content limits.
+Do not use projected examples to establish completeness or absence. Compare derivatives against their retained sources before publishing them.
 
 Validate YAML, references, and examples using available project tooling. Check both request and response schemas when present.
 Separate syntax checks, schema checks, source comparison, and live verification in the outcome.
@@ -132,5 +120,8 @@ Update the domain README with linked operations, scenarios, background topics, a
 An index entry must resolve to real content. Do not advertise absent scripts, APIs, or verified outcomes.
 Reopen existing files and compare source conditions before merging. Preserve earlier supported examples and significant contrary evidence.
 Keep stable file and operation identities. Add a distinct scenario only when its purpose or conditions differ materially.
+Inspect callers before removing legacy scripts, wrappers, or duplicate files. Keep one maintained implementation and reference shared definitions.
+Repair commands, tests, links, and packaging consumers together. Preserve distinct validation responsibilities and protected historical evidence.
+Record removed paths, prior hashes or revisions, replacement locations, and reasons in the owning task.
 Check the diff for lost detail, duplicates, broken links, secrets, unsupported guarantees, and unreviewed authority claims.
 Record actual automated checks separately from writing review under the project's reporting convention.

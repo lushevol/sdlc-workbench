@@ -17,19 +17,21 @@ Bearer authentication appears in retained client requests and SDK source. Requir
 | --- | --- | --- |
 | [Effective user A](examples/effective-user-a-uat-pair.json) | One account: HTTP 200, five assignments, 47 flattened grants | Sanitized observation; account differs from case B |
 | [Effective user B](examples/effective-user-b-uat-pair.json) | Another account: HTTP 200, seven assignments, 31 flattened grants | A separate account, not an after-change capture |
-| [Catalog A](examples/catalog-a-uat-pair.json) | Application A: HTTP 200; selected normal, empty-grant, and empty-membership rows | Projected subset of 40 source definitions |
-| [Catalog B](examples/catalog-b-uat-pair.json) | Application B: HTTP 200; selected structural variants | Projected subset of 74 source definitions |
+| [Catalog A](examples/catalog-a-uat-pair.json) | FLOWZERO: HTTP 200; selected normal, empty-grant, and empty-membership rows | Projected subset of 40 source definitions |
+| [Catalog B](examples/catalog-b-uat-pair.json) | RATAN_ENTITLEMENT_RULE: HTTP 200; selected structural variants | Projected subset of 74 source definitions |
 | [Assigned-role body](examples/assigned-role-body-fixture.json) | Sanitized SDK fixture with role-level grouping and empty grant arrays | Request, HTTP status, headers, account, and capture time were not retained |
 
 The four HTTP cases preserve request/response pairing and the original source hash.
-String aliases replace private values consistently. Catalog projections state their selected source indexes.
+Account aliases replace user IDs and policy/profile owner identities consistently. Authorization values are redacted.
+Application, entitlement, feature/action, policy/profile names, group keys, and data-scope values retain their source values.
+Catalog projections state their selected source indexes.
 Large membership and grant arrays retain their first two entries, with original lengths and exact ranges recorded.
 These projections cannot establish absent memberships or complete catalog counts from their example bodies.
 HTTP Date headers describe retained server responses. They are not independent retrieval timestamps.
 No captured HTTP failures, request payload variations, query parameters, or continuation exchanges accompany these four cases.
 
-The small `catalog.json`, `user-before.json`, `user-after.json`, and `roles.json` bodies are synthetic tool examples.
-They demonstrate commands and deliberate differences. They do not reproduce the captured accounts or establish live parity.
+The assigned-role body retains its original field values. It is a supplied fixture, with no accompanying HTTP exchange.
+Controlled synthetic inputs remain in Workbench tests, outside this portable library.
 
 ## Application catalog
 
@@ -68,7 +70,26 @@ An observed role grant supplies entitlement-level attribution. The effective-use
 OpenAPI observation schemas retain supported field types while leaving service-wide requiredness and bounds unconfirmed.
 The separate Draft 2020-12 inspection schemas define the complete local inputs accepted by the offline inspector.
 Their `required` fields and single-record constraint are inspector requirements, not inferred CES-wide guarantees.
-Validate exported bodies against the applicable local inspection schema before using the tool.
+Full schema validation requires a Draft 2020-12 validator, separate from the standard-library inspector.
+Workbench's Python environment already includes `jsonschema`. From the skill folder, validate an exported effective-user body:
+
+```sh
+python3 - "$CES_BODY_JSON" Contracts/schemas/effective-user-response.schema.json <<'PY'
+import json
+import sys
+from jsonschema import Draft202012Validator
+
+with open(sys.argv[1], encoding="utf-8") as stream:
+    body = json.load(stream)
+with open(sys.argv[2], encoding="utf-8") as stream:
+    schema = json.load(stream)
+Draft202012Validator(schema).validate(body)
+print("Schema validation passed.")
+PY
+```
+
+Use the corresponding schema for catalog or assigned-role bodies. Select a Python environment with `jsonschema` available.
+Standalone inspector checks cover operational inputs. They do not validate every nested data-policy or profile field.
 The inspector separately checks capture identity and duplicate grants or assignments. It uses the Python standard library.
 Confirm pagination, errors, authorization, defaults, and nullability outside the captured values from sources for the selected scope.
 The assigned-role OpenAPI response uses `default` with a local body-schema reference because no HTTP status accompanied its fixture.

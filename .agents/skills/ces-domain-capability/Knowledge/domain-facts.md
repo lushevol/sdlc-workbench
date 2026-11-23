@@ -35,20 +35,13 @@ Nested application metadata must agree with the selected application when presen
 The supplied SDK fixture contains six rows, including three explicit empty-grant assignments.
 It provides no captured HTTP status, response headers, account identity, environment, or observation time.
 
-The effective-user response contains `user_data.app_name`, `user_data.user_id`, and optional `user_data.itam_id`.
-It returns `entitlement_name[]` and flattened `role_entitlements[]` pairs.
-The flattened pairs do not restore which entitlement supplied each pair.
-It can include `data_policies`, `data_profiles`, and `data_entitlements`.
-The retained sections use dynamic group keys for policy and profile objects, and `key` plus string `values` for data entitlements.
+The [effective-user contract](../Contracts/README.md#effective-user) defines the observed fields and attribution limits.
 Effective-user A contains five assignment names and 47 flattened grants. Effective-user B contains seven names and 31 grants.
 These accounts differ. The two captures do not measure an account's before-and-after access.
 
 ## Access interpretation
 
-An entitlement assignment, an effective feature/action grant, and a data restriction are separate facts.
-A functional grant can coexist with a data predicate that excludes a record.
-Record visibility requires the applicable policy, record attributes, and observed consumer predicate or result.
-Do not infer data-policy precedence from the presence of a field or a historical design.
+Use the [access concepts](domain-model.md#access-concepts) to distinguish assignments, grants, data scope, and observed enforcement.
 
 `function_entitlement` is a value-level contract under investigation.
 The retained user direction requires exactly one functional profile for an assigned account and rejection checks for incompatible assignments.

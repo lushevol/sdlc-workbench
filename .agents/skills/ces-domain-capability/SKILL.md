@@ -21,7 +21,6 @@ Read the [variable guide](Workflows/variables.md) for bindings and keep private 
 | Verify provenance, uncertainty, or failure lessons | [Source register](Knowledge/sources.json) and workflow failure sections |
 
 Run `Workflows/tools/inspect_ces.py` with Python 3.10 or newer. It reads local JSON and prints aggregate results.
-The existing `scripts/inspect_ces.py` command forwards to the same implementation.
-Use the included synthetic examples to check the command from any copy of the skill folder.
+Use the retained response examples through the [capture workflow](Workflows/inspect-captures.md#commands-and-outputs).
 Report whether the evidence establishes a definition, an assignment, an effective feature action, or observed enforcement.
 Resolve policy interpretation through the applicable approved source and its owner.

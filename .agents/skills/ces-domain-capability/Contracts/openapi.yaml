@@ -128,12 +128,7 @@ components:
           role_entitlements:
             type: array
             items:
-              type: object
-              properties:
-                feature:
-                  type: string
-                action:
-                  type: string
+              $ref: '#/components/schemas/FeatureActionObservation'
       x-local-inspection-schema: schemas/catalog-response.schema.json
     EffectiveUserObservation:
       title: CES effective-user response
@@ -162,12 +157,7 @@ components:
               role_entitlements:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    feature:
-                      type: string
-                    action:
-                      type: string
+                  $ref: '#/components/schemas/FeatureActionObservation'
               data_policies:
                 type: object
                 additionalProperties:
@@ -239,12 +229,7 @@ components:
                     featureId:
                       type: integer
                     applicationDto:
-                      type: object
-                      properties:
-                        appName:
-                          type: string
-                        appUID:
-                          type: integer
+                      $ref: '#/components/schemas/AssignedApplicationObservation'
                 actions:
                   type: object
                   properties:
@@ -253,13 +238,22 @@ components:
                     actionId:
                       type: integer
                     applicationDto:
-                      type: object
-                      properties:
-                        appName:
-                          type: string
-                        appUID:
-                          type: integer
+                      $ref: '#/components/schemas/AssignedApplicationObservation'
       x-local-inspection-schema: schemas/assigned-role-response.schema.json
+    FeatureActionObservation:
+      type: object
+      properties:
+        feature:
+          type: string
+        action:
+          type: string
+    AssignedApplicationObservation:
+      type: object
+      properties:
+        appName:
+          type: string
+        appUID:
+          type: integer
   securitySchemes:
     observedBearer:
       type: http

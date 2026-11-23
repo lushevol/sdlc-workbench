@@ -155,6 +155,8 @@ Installed workspaces receive the standalone skill folder. Copy that folder for i
 Review assigned-role evidence, reconcile the three views, or compare effective access. [CES workflows](../.agents/skills/ces-domain-capability/Workflows/inspect-captures.md)
 Use a local variable copy for account, service origin, application, and evidence inputs. [CES variable template](../.agents/skills/ces-domain-capability/Workflows/variables.example.json)
 The [OpenAPI subset](../.agents/skills/ces-domain-capability/Contracts/openapi.yaml) separates observed response shapes from local inspector requirements.
+The [CES examples](../.agents/skills/ces-domain-capability/Contracts/README.md#paired-cases-and-supplied-bodies) retain real domain values and redact account identities.
+Published command examples use those retained bodies. Controlled synthetic inputs remain in the source checkout's tests.
 In Workbench, submit reusable CES findings against the existing capability ID `ces-entitlement-migration`. Keep policy decisions in governed knowledge.
 
 ## Configure and diagnose

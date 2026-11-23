@@ -55,26 +55,48 @@ An absent effective record makes effective comparisons unassessed; catalog-to-ro
 
 ## Commands and outputs
 
-Run these synthetic examples from the skill folder.
+Change directory to the copied `ces-domain-capability/` folder before running these retained examples.
+Export each envelope's response body to a temporary directory first.
+The library files remain unchanged.
 
 ```sh
-python3 Workflows/tools/inspect_ces.py catalog Contracts/examples/catalog.json --app DEMO_REPORTS
-python3 Workflows/tools/inspect_ces.py user Contracts/examples/user-before.json --app DEMO_REPORTS --user demo-account
-python3 Workflows/tools/inspect_ces.py user Contracts/examples/user-before.json --app DEMO_REPORTS --user demo-account --feature Reports --action View
-python3 Workflows/tools/inspect_ces.py assigned-role Contracts/examples/roles.json --app DEMO_REPORTS --entitlement 'Report Reader' --feature Reports --action View
-python3 Workflows/tools/inspect_ces.py compare Contracts/examples/user-before.json Contracts/examples/user-after.json --app DEMO_REPORTS --user demo-account
-python3 Workflows/tools/inspect_ces.py reconcile Contracts/examples/catalog.json Contracts/examples/roles.json Contracts/examples/user-before.json --app DEMO_REPORTS --user demo-account
+CES_EXAMPLE_DIR=$(mktemp -d)
+export CES_EXAMPLE_DIR
+python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+for source in Path("Contracts/examples").glob("*.json"):
+    case = json.loads(source.read_text(encoding="utf-8"))
+    target = Path(os.environ["CES_EXAMPLE_DIR"]) / source.name
+    target.write_text(json.dumps(case["response"]["body"]), encoding="utf-8")
+PY
+python3 Workflows/tools/inspect_ces.py catalog "$CES_EXAMPLE_DIR/catalog-a-uat-pair.json" --app FLOWZERO
+python3 Workflows/tools/inspect_ces.py user "$CES_EXAMPLE_DIR/effective-user-a-uat-pair.json" --app RATAN_ENTITLEMENT_RULE --user account-001
+python3 Workflows/tools/inspect_ces.py user "$CES_EXAMPLE_DIR/effective-user-a-uat-pair.json" --app RATAN_ENTITLEMENT_RULE --user account-001 --feature RATAN_DATA_ENTITLEMENT --action VIEW_ENTITLEMENT
+python3 Workflows/tools/inspect_ces.py assigned-role "$CES_EXAMPLE_DIR/assigned-role-body-fixture.json" --app RATAN_ENTITLEMENT_RULE
 ```
 
+Effective user A reports five assignments, 47 effective grants, and the selected grant as `PRESENT`.
+The assigned-role fixture reports six assignments, three without grants, and 30 role grants.
+Catalog A reports the selected subset only. Its 40 original definitions are recorded in the envelope metadata.
+The account alias identifies a redacted source account. It is not an executable CES account ID.
 Commands read local files and print JSON summaries.
 The paired selectors report a grant as `PRESENT`, `ABSENT`, or `UNASSESSED` in the captured response.
 The assigned-role command reports account scope as `CALLER_DECLARED`.
 Use `--app-id` for the string role-view identifier or `--app-uid` for the numeric UID when the capture supplies them.
 The comparison reports grants and assignments added or removed and identifies changed data sections by field.
 Inspect user or comparison status before interpreting counts. A command can succeed with an absent record or an unassessed comparison.
-Use the original approved captures when exact grant names or data values are necessary.
-The synthetic reconciliation deliberately produces assignment differences with a matching effective union.
+Use the exact task captures for completeness and current policy decisions.
 The retained effective-user UAT cases concern different accounts. They cannot be used as a two-snapshot account comparison.
+The catalog subsets cannot establish reconciliation completeness. The supplied role fixture has no captured account request.
+Use complete, matched task captures for comparison and reconciliation:
+
+```sh
+python3 Workflows/tools/inspect_ces.py compare "$BEFORE_JSON" "$AFTER_JSON" --app "$CES_APPLICATION" --user "$CES_USER"
+python3 Workflows/tools/inspect_ces.py reconcile "$CATALOG_JSON" "$ROLES_JSON" "$EFFECTIVE_JSON" --app "$CES_APPLICATION" --user "$CES_USER"
+```
 
 ## Decision rules and verification
 

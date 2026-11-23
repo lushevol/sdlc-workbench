@@ -10,8 +10,8 @@
     "origin": "https://fmcesuat.gdc.standardchartered.com",
     "route_template": "/fmces/v1/entitlement/app/{itam_id}/{application}",
     "path_parameters": {
-      "itam_id": "itam-001",
-      "application": "application-001"
+      "itam_id": "51358",
+      "application": "RATAN_ENTITLEMENT_RULE"
     },
     "query_parameters": {},
     "headers": {
@@ -27,20 +27,20 @@
     "body": [
       {
         "entitlement_id": 21,
-        "entitlement_name": "entitlement-013",
+        "entitlement_name": "RATAN_ENTITLEMENT_INDONESIA",
         "role_entitlements": [
           {
-            "feature": "feature-019",
-            "action": "action-003"
+            "feature": "Entitlement",
+            "action": "View"
           }
         ],
         "user_ids": [
-          "account-005"
+          "account-007"
         ]
       },
       {
         "entitlement_id": 70,
-        "entitlement_name": "entitlement-014",
+        "entitlement_name": "RATAN_ENTITLEMENT_SUP_USER",
         "role_entitlements": [],
         "user_ids": []
       }
@@ -66,7 +66,7 @@
     "request_locator": "/examples/0/request",
     "response_locator": "/examples/0/response",
     "body_locator": "/examples/0/response/body/data",
-    "sanitization": "Stable typed aliases replace string values and dynamic group keys; empty strings/nulls remain.",
+    "sanitization": "Stable account aliases replace user_id, user_ids, policy_owner and data_profile_owner values. Authorization is redacted. Domain names, group keys, IDs and data-scope values are retained.",
     "selection_limit": "Catalog rows and large nested arrays are sampled; never infer absent assignments or grants from these subsets.",
     "derivation": "tasks/workbench-capability-learning-20261122/evidence/build-ces-standard-20261123.py"
   }

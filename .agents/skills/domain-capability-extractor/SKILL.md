@@ -44,6 +44,7 @@ Do not infer unseen session history or fill absent API fields, errors, policy, o
 
 Bind material claims and examples to precise source locators, revisions or hashes, observation dates, and applicable environments.
 Separate observed behavior, documented requirements, inference, synthetic illustrations, and unknowns.
+Use retained real responses for published examples when available. Follow the [paired-example rules](references/construction.md#paired-examples) for redaction and projections.
 One observed response does not establish required fields, universal enums, omitted defaults, or behavior in other environments.
 Keep meaningful failures and conflicting sources. A correction needs evidence; a suspected cause remains a hypothesis.
 Use stable case identities. Repeated extraction should enrich existing files without duplicating content or erasing earlier conditions.
@@ -59,7 +60,7 @@ Every workflow has a detailed Markdown procedure. Add scripts only when they imp
 Place concrete step scripts under `Workflows/scripts/` and shared domain operations under `Workflows/tools/`, when needed.
 Reuse existing connectors for transport, authentication, and grants. Do not build another generic client or execution engine.
 Keep variable definitions, types, sources, allowed values, and safe placeholders separate from task-specific values.
-Remove credentials, tokens, personal records, and sensitive payloads. Preserve sanitized shapes and source bindings.
+Redact credentials, private identities, and sensitive values. Preserve useful domain values, response structure, and source bindings.
 Keep private values in ignored configuration. Never repeat a mutation merely to obtain extraction evidence.
 
 Keep domain-specific assets in the domain library. Promote shared guidance only when evidence supports a cross-domain benefit.

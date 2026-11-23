@@ -1,5 +1,7 @@
 # Self-Evolving Capability System
 
+**No critical conclusions require user attention or action.**
+
 The user supplied the [exact implementation directive](evidence/user-directive.txt) on 22 November 2026 in this Codex session.
 The directive authorizes local Workbench implementation and fixture-based tests.
 It protects production deployment and entitlement operations.
@@ -278,3 +280,53 @@ No new dependency or execution grant was added. The unrelated release-report sou
 
 Validation covers retained observations, synthetic tool cases, and standalone distribution on macOS.
 Live CES, provisioning, current consumer enforcement, and native Windows activation remain unverified.
+
+## CES cleanup and real-response examples
+
+The user supplied the [exact request](evidence/ces-legacy-duplication-real-examples-request-20261123.md) on 23 November 2026.
+Baseline Workbench revision is `e72f75c55`.
+The scope covers CES compatibility code, duplicate definitions, published examples, tests, and extractor guidance.
+The unrelated release-report source remains outside this scope.
+Real examples must retain domain values and observed structure, with narrowly scoped identity and credential redactions.
+
+Removing active consumers can break tools or packaging. Over-redaction can erase useful domain information.
+The completed cleanup and verification follow below.
+
+## CES cleanup completion
+
+The source comparison verified four HTTP pairs, the assigned-role body, and 90 scoped checks.
+It preserved 453 domain string values and five nonstring values.
+Fifteen private occurrences became seven stable aliases.
+The portable library contained no checked account, owner, credential, or token values.
+
+The obsolete `scripts/inspect_ces.py` wrapper was removed.
+Tests and guidance now invoke `Workflows/tools/inspect_ces.py`.
+Four synthetic command bodies moved to `tests/fixtures/ces/` without byte changes.
+Published examples now use retained response bodies.
+Local inspection schemas remain because they enforce required fields and nested input validation.
+OpenAPI references shared feature/action and assigned-application observation schemas.
+
+Examples retain application names, entitlement names, feature/action names, policy/profile names, data-scope values, response dates, and ITAM `51358`.
+Account IDs, policy owners, profile owners, and Authorization values remain redacted.
+Catalog projections record selected indexes, source counts, and half-open array ranges.
+The extractor guidance now requires real examples when available and records narrow redactions and projections.
+
+Nine focused CES tests and all 1,164 Workbench tests passed.
+The full suite had zero failures, errors, or skips.
+Both skill validators, OpenAPI checks, example schemas, regeneration, and 52 relative-link checks passed.
+Workbench validation reported zero findings across 119 knowledge documents.
+An independent standalone trial verified the documented commands and retained comparison limits.
+
+The source archive, wheel, isolated installation, and fresh workspace passed final-byte checks.
+All 21 CES files and extractor guidance matched the source.
+The source archive retained the four test-only fixtures.
+The installed copy excluded the retired wrapper and synthetic published bodies.
+Existing Python dependencies supported runtime checks. No package download occurred.
+
+[Cleanup inventory, source review, distribution, and trial](evidence/ces-cleanup-inventory-20261124.json) · [Complete unit results, gzip](evidence/ces-cleanup-unit-suite-20261124.txt.gz)
+
+Live CES, provisioning, current enforcement, deployment, and native Windows remain unverified.
+Independent task-evidence-growth edits appeared during work. They remain outside this cleanup.
+
+The lightweight maintenance record follows ordinary Markdown under the task guide. Business-artifact lint does not apply to that format.
+The capability checkpoint recorded `NO_CHANGE` for the existing CES capability. No new entitlement rule or execution grant was added.
