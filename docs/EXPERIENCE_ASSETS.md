@@ -3,7 +3,9 @@
 The `package-domain-experience` and `learn-domain-experience` skills turn supported task results into concise project assets.
 They provide a reusable execution card with provenance, one primary end-to-end recipe, supporting scripts, fixtures, variable templates, recovery steps, and links to canonical knowledge.
 
-Use [capability learning](CAPABILITY_LEARNING.md) in ordinary Workbench tasks.
+Use [domain capability extraction](CAPABILITY_LEARNING.md#extract-domain-capabilities) for cumulative API, workflow, failure, and background references.
+That extraction writes domain files directly and requires no experience packet approval.
+Use [capability learning](CAPABILITY_LEARNING.md#scoped-capability-registry) when scoped registry reconciliation is needed.
 Use the experience packet workflow when a successful procedure needs a reviewed reusable package.
 
 ## Storage

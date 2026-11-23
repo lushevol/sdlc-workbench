@@ -187,6 +187,7 @@ workbench/
 │   │   ├── manifest.yaml           # Stable identities, revisions, locators, and hashes.
 │   │   ├── findings/               # Gaps, conflicts, ambiguity, and stale evidence.
 │   │   └── audit/                  # One immutable YAML file per governance event.
+│   ├── integrations/               # Domain Contracts, Workflows, tools, and Knowledge references.
 │   └── llm-wiki/                   # Derived pages, canonical aliases, native state and wiki graph.
 ├── relationships/
 │   ├── requirement-code/
@@ -266,7 +267,13 @@ Tests check supported behavior, consequential boundaries, and confirmed defects.
 Later-phase descriptions do not justify unused implementation or demonstration assets.
 
 `registry/` declares assets and explicit references.
-`knowledge/` is the shared parent for `records/`, `evidence/`, and `llm-wiki/`.
+`knowledge/` is the shared parent for `records/`, `evidence/`, `integrations/`, and `llm-wiki/`.
+The [domain extractor](../.agents/skills/domain-capability-extractor/SKILL.md) maintains technical references under `knowledge/integrations/<domain>/`.
+Each domain has a compact README and linked Contracts, Workflows, and Knowledge folders, populated only when needed.
+Workflows use Markdown with optional scripts and tools. Meaningful failures retain their conditions and evidence.
+These references link canonical business intent and owning task evidence without replacing their authority.
+Extraction uses ordinary agent tools without hooks, a learning engine, or experience packet promotion.
+Generated workspaces receive the skill and guides without project integration content.
 `knowledge/records/` contains curated business-domain Markdown records and navigation only.
 Retain terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
 Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
@@ -369,6 +376,7 @@ Add a page only when a distinct lasting responsibility has a current reader and 
 | `docs/` | Integrated current explanations and procedures. Summarize supported state, link authoritative sources, and update affected sections during work. |
 | `tasks/<task-id>/` | Incremental request, decisions, investigation, change and verification history, with supporting evidence. Reuse the owning scope rather than splitting work into `docs/` reports. |
 | `knowledge/records/` | Canonical business intent, applicability and reviewed domain decisions under knowledge governance. Documentation links the applicable record and version. |
+| `knowledge/integrations/` | Reusable technical contracts, workflows, tools, failures, and background with exact source bindings. Links canonical intent and task evidence. |
 | `knowledge/evidence/` | Retained knowledge source revisions, selections, processing receipts, findings and immutable governance events. |
 | Registered repositories and external sources | Owning implementation, tests and original documentation. Keep them in place and link their exact revisions instead of copying them into Workbench docs. |
 

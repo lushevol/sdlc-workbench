@@ -1,0 +1,68 @@
+[
+  {
+    "id": "wildcard-empty",
+    "date": "2026-11-23",
+    "environment": "lab",
+    "request": {
+      "method": "GET",
+      "path": "/v2/packages",
+      "query": {
+        "project": "alpha",
+        "branch": "release/*"
+      }
+    },
+    "response": {
+      "status": 200,
+      "body": {
+        "packages": [],
+        "next": "next-1"
+      }
+    }
+  },
+  {
+    "id": "exact-branch",
+    "date": "2026-11-23",
+    "environment": "lab",
+    "request": {
+      "method": "GET",
+      "path": "/v2/packages",
+      "query": {
+        "project": "alpha",
+        "branch": "release/2"
+      }
+    },
+    "response": {
+      "status": 200,
+      "body": {
+        "packages": [
+          {
+            "id": "p2",
+            "name": "bundle",
+            "commit": "abc123",
+            "retention": null
+          }
+        ],
+        "next": null
+      }
+    }
+  },
+  {
+    "id": "forbidden",
+    "date": "2026-11-23",
+    "environment": "lab",
+    "request": {
+      "method": "GET",
+      "path": "/v2/packages",
+      "query": {
+        "project": "restricted"
+      }
+    },
+    "response": {
+      "status": 403,
+      "body": {
+        "error": "AccessDenied",
+        "trace": "synthetic-trace"
+      }
+    }
+  }
+]

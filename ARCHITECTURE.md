@@ -132,7 +132,7 @@ workbench/
 │   ├── sources.yaml
 │   ├── tools.yaml
 │   └── examples/                    # Catalog examples checked against registry contracts.
-├── knowledge/                      # One parent; three distinct content responsibilities.
+├── knowledge/                      # One parent; distinct content responsibilities.
 │   ├── records/                    # Canonical business-domain Markdown and navigation.
 │   │   ├── candidates/
 │   │   ├── requirements/
@@ -147,6 +147,7 @@ workbench/
 │   │   ├── manifest.yaml           # Source identities, revisions, and hashes.
 │   │   ├── findings/               # Investigation and governance records.
 │   │   └── audit/                  # Immutable governance events.
+│   ├── integrations/               # Technical domain contracts, workflows, tools, and background.
 │   └── llm-wiki/                   # Single derived wiki, canonical aliases, and local engine state.
 ├── relationships/
 │   ├── requirement-code/

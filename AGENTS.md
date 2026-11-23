@@ -146,14 +146,18 @@ Use direct inspection without a usable index; do not invent a GitNexus score or 
 
 ### Learn reusable capabilities
 
-Use [capability-learning](.agents/skills/capability-learning/SKILL.md) during meaningful engineering work.
-At entry, search the capability registry. Load relevant skills and contracts, then check scope and permissions.
-During work, use the granted connectors and retain exact evidence for significant reusable discoveries.
-At checkpoints and handoff, classify discoveries and reconcile them with existing capabilities.
-Submit minimized evidence references without waiting for a separate learning request.
+Use [domain-capability-extractor](.agents/skills/domain-capability-extractor/SKILL.md) for reusable domain contracts, workflows, failures, tools, and background context.
+Maintain linked Contracts, Workflows, and Knowledge under `knowledge/integrations/<domain>/` through ordinary agent tools.
+Extraction requires no hook, learning engine, or experience packet. Keep canonical business intent under existing governance.
+
+Use [capability-learning](.agents/skills/capability-learning/SKILL.md) when scoped registry retrieval or reconciliation is relevant to the task.
+For that workflow, search the registry at entry. Load linked skills and contracts, then check scope and permissions.
+Use granted connectors and retain exact evidence. Reconcile reusable discoveries at its checkpoints and handoff.
+Submit minimized evidence references without waiting for a separate learning request when registry learning applies.
 Use validated rules in future sessions. Recheck uncertain evidence when it could change the outcome.
-Keep unresolved claims as candidates. Follow canonical governance for business intent and entitlement decisions.
-Continue the primary task if learning fails. Use the [checkpoint fallback](docs/CAPABILITY_LEARNING.md#configure-and-diagnose) when native hooks are unavailable.
+Keep unresolved registry claims as candidates. Follow canonical governance for business intent and entitlement decisions.
+Continue the primary task if registry learning fails. Use its [checkpoint fallback](docs/CAPABILITY_LEARNING.md#configure-and-diagnose) when native hooks are unavailable.
+Direct domain extraction follows the extractor workflow. Registry work remains separate unless requested or independently relevant.
 
 ### Coding tasks with Ponytail
 

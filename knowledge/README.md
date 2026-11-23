@@ -8,7 +8,11 @@ Harness configuration, upgrades, tooling, and Workbench maintenance use a [light
 Maintain current procedures in project guides and source configuration. Keep incremental work and supporting evidence in the owning task.
 The [documentation ownership contract](../docs/WORKSPACE_DESIGN.md#documentation-ownership) keeps integrated current views separate from canonical intent and task history.
 
-Use `knowledge/` as one parent for canonical `records/`, supporting `evidence/`, and the single derived `llm-wiki/`.
+Use `knowledge/` as one parent for canonical `records/`, supporting `evidence/`, technical `integrations/`, and the single derived `llm-wiki/`.
+Maintain integration references under `integrations/<domain>/` with linked Contracts, Workflows, and Knowledge folders.
+Use [domain-capability-extractor](../.agents/skills/domain-capability-extractor/SKILL.md) for this technical reference library.
+Keep approved business intent in canonical records and link it by identity and version.
+Integration references do not confer publication, execution, or deployment authority.
 Store canonical business-system domain knowledge and navigation only in `knowledge/records/`.
 Knowledge describes requirements, intent, and ideal target system behavior.
 Keep business terms, intended rules, workflows, requirements, contracts, and target architecture decisions here.

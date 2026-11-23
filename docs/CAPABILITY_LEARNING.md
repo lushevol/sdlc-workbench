@@ -10,6 +10,26 @@ limitations:
 
 # Capability learning
 
+## Extract domain capabilities
+
+Use [domain-capability-extractor](../.agents/skills/domain-capability-extractor/SKILL.md) to retain useful integration discoveries from engineering work.
+It uses ordinary agent tools and requires no hooks, registry promotion, learning engine, or experience packet.
+Maintain `knowledge/integrations/<domain>/README.md` with three linked areas:
+
+| Area | Content |
+| --- | --- |
+| `Contracts/` | Scoped APIs, OpenAPI 3.1 schemas, paired request/response cases, and interface dependencies |
+| `Workflows/` | Detailed Markdown procedures, decisions, failure lessons, verification, recovery, and optional scripts/tools |
+| `Knowledge/` | Background, architecture, conventions, decisions, limitations, and canonical business-rule links |
+
+Merge existing files and preserve supported detail, useful failures, conflicting evidence, and material unknowns.
+Extract useful partial results without inventing completion. Keep full execution history and implementation gaps in the owning task.
+The [construction reference](../.agents/skills/domain-capability-extractor/references/construction.md) defines contracts, workflow content, examples, and maintenance checks.
+These technical references remain outside canonical record and wiki ownership. New business intent follows existing governance.
+Keep domain-specific assets here. Shared promotion requires a demonstrated benefit, normal source review, and task evidence.
+
+## Scoped capability registry
+
 The Workbench records reusable discoveries during ordinary engineering work.
 It reuses the current agent for semantic review at task checkpoints.
 The local CLI validates and reconciles those discoveries without a model call.

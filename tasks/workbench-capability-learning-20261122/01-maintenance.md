@@ -193,3 +193,39 @@ All 1,159 Workbench tests passed with connector integration enabled on macOS.
 The wheel installed outside the checkout and shipped the UAT origin and all three schemas.
 The new workspace passed validation. Live endpoint behavior and service-wide schema guarantees remain unverified.
 The full suite log SHA-256 is `2df36f06be9afe48416d1cc5ddaee643fa5c2a570c593b8c10c372e349f9c683`.
+
+## Domain capability extraction refinement
+
+The user supplied the [exact refinement request](evidence/domain-capability-extraction-request-20261123.md) on 23 November 2026.
+The request references a shared conversation with the latest suggestions.
+Baseline Workbench revision is `c5edb0322`.
+Existing CES skill, inspector, domain-facts, and maintenance edits were present at entry.
+The untracked release-report source was also present. Preserve these changes during refinement.
+
+The [retained conversation selection](evidence/domain-capability-shared-suggestions-20261123.md) supplies the latest direction.
+Use one extractor with domain-specific Contracts, Workflows, and Knowledge folders under `knowledge/integrations/`.
+Keep workflows in Markdown. Scripts are optional. Retain meaningful failures and merge existing content.
+The extractor uses ordinary agent tools without a hook or learning-engine prerequisite.
+
+The change affects skill discovery, shipped guidance, and package distribution.
+Incorrect extraction can overstate API guarantees or overwrite supported facts. Source bindings and isolated trials address that risk.
+The [extractor](../../.agents/skills/domain-capability-extractor/SKILL.md) and its construction reference now define that workflow.
+Root guidance routes extraction directly. Registry retrieval and reconciliation apply when independently relevant.
+The scaffold ships the skill and creates its Claude discovery alias.
+Existing CES edits remain separate from this refinement.
+
+All 1,159 unit tests passed with connector integration enabled. No failures, errors, or skips occurred.
+Skill structure, workspace validation, new relative links, and installed-wheel checks passed.
+The wheel initialized outside the checkout with matching skill, reference, guide, and alias bytes.
+An initial wheel check detected a guide edited after building. The rebuilt wheel passed.
+
+An independent synthetic extraction preserved existing scoped content and three paired exchanges.
+It retained uncertain causes, observation limits, and unfinished pagination and deployment steps.
+Independent source review found one root routing conflict. The correction made registry learning conditional.
+No actionable findings remained after review.
+[Verification and trial evidence](evidence/domain-extractor-verification-20261123.json)
+
+Current guidance changed in `AGENTS.md`, `ARCHITECTURE.md`, `docs/CAPABILITY_LEARNING.md`, `docs/EXPERIENCE_ASSETS.md`,
+`docs/WORKSPACE_DESIGN.md`, `knowledge/README.md`, and `tasks/README.md`.
+The workflow discovery became a shared instruction change. No runtime promotion or business-rule change was needed.
+Validation covers offline behavior and one synthetic extraction. Full OpenAPI validation and live integrations remain unverified.

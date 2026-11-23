@@ -678,6 +678,11 @@ Validate retained hashes and references after cleanup. Remove empty directories 
 
 ### Promote reusable domain experience
 
+For cumulative domain extraction, use [domain-capability-extractor](../.agents/skills/domain-capability-extractor/SKILL.md).
+Maintain linked Contracts, Workflows, and Knowledge under `knowledge/integrations/<domain>/`, including useful failures and partial results.
+This direct extraction requires no experience packet or learning-engine promotion.
+Use the packet workflow below when a reviewed successful recipe is the requested deliverable.
+
 After a supported successful result and a short retrospective, use [package-domain-experience](../.agents/skills/package-domain-experience/SKILL.md) to select one minimal end-to-end script, workflow, or instruction set as the primary recipe, then retain only supporting procedures, scripts, fixtures, variable templates, references, and recovery steps.
 Use [learn-domain-experience](../.agents/skills/learn-domain-experience/SKILL.md) to scan retained task records or explicitly supplied session exports for repeated patterns. Session scans require a past duration and default to one week. Unchanged sessions are skipped from the recorded scan state.
 Learning produces a pending review bundle. Ask for explicit candidate decisions before invoking the packaging skill.

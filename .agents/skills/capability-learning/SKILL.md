@@ -5,6 +5,10 @@ description: Retrieve scoped Workbench capabilities and reconcile reusable engin
 
 # Capability learning
 
+For domain extraction, use [domain-capability-extractor](../domain-capability-extractor/SKILL.md).
+It maintains Contracts, Workflows, and Knowledge through ordinary agent tools, without a learning-engine prerequisite.
+Use this skill for scoped registry retrieval and reconciliation when that separate responsibility applies.
+
 At task entry, search the central registry with `ai-sdlc --workspace . learning list --query TERMS`.
 Use `learning use ID --scope JSON` for the exact task. Inspect its linked sources, skills and permission requirements.
 

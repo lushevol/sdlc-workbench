@@ -1,0 +1,265 @@
+{
+  "date": "2026-11-23",
+  "baseline": "c5edb03220ce285a5a0d3cb5bb8f1389ad547333",
+  "environment": {
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "Python 3.14.5"
+  },
+  "checks": {
+    "unit_suite": {
+      "status": "PASSED",
+      "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+      "tests": 1159,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "summary": "----------------------------------------------------------------------\nRan 1159 tests in 106.791s\n\nOK",
+      "log_sha256": "be1d4e157b1cc5f87a66f08a7bf6798614ac45da3b7093783979df544db8b1b3",
+      "log_path": "tasks/workbench-capability-learning-20261122/evidence/domain-extractor-unit-suite-20261123.txt"
+    },
+    "skill_structure": {
+      "status": "PASSED",
+      "validator": "skill-creator/scripts/quick_validate.py"
+    },
+    "workspace": {
+      "status": "PASSED",
+      "documents": 119,
+      "findings": 0
+    },
+    "installed_wheel": {
+      "status": "PASSED",
+      "runtime": "/private/tmp/domain-extractor-final-installed/ai_sdlc_workbench/__init__.py",
+      "workspace": "/tmp/domain-extractor-final-initialized",
+      "wheel_sha256": "846c2ad7511faf9496728a2409a43f82e9cd219aeb79fb820b246c1b06f8a7a9",
+      "skill_files": {
+        "SKILL.md": "2654ee6a5cbb69871e27fec0d338869b4108dc3debeb922221bcf6c07b801a69",
+        "references/construction.md": "c91cceabc17d53d4e79bca5ec85df44c4a0ff74ad7dd689a909586665091c0e4"
+      },
+      "checks": [
+        "installed runtime outside checkout",
+        "skill and reference bytes",
+        "updated guide bytes",
+        "Claude alias",
+        "no project content",
+        "no runtime source",
+        "initialized workspace validation"
+      ],
+      "first_attempt": {
+        "status": "FAILED",
+        "reason": "Guide byte comparison detected docs/WORKSPACE_DESIGN.md changed after wheel build started. Rebuild final source after review.",
+        "wheel_sha256": "954d850e0ab75a814675f5252aecf978cd761343ce6360c1a25f46b04e357ac8"
+      },
+      "limits": [
+        "Used existing Python dependencies with an isolated wheel installation; native Windows client activation untested."
+      ]
+    },
+    "independent_forward_trial": {
+      "status": "PASSED",
+      "synthetic": true,
+      "original_root": "/tmp/domain-extractor-forward-20261123",
+      "retained_root": "tasks/workbench-capability-learning-20261122/evidence/domain-extractor-forward-20261123",
+      "skill_files_sha256": {
+        "SKILL.md": "2654ee6a5cbb69871e27fec0d338869b4108dc3debeb922221bcf6c07b801a69",
+        "references/construction.md": "c91cceabc17d53d4e79bca5ec85df44c4a0ff74ad7dd689a909586665091c0e4"
+      },
+      "assessment": [
+        {
+          "criterion": "Preserve existing scoped convention and case",
+          "status": "PASSED",
+          "evidence": [
+            "knowledge/integrations/buildvault/Knowledge/conventions.md",
+            "knowledge/integrations/buildvault/Contracts/examples/legacy.json",
+            "input-manifest.json"
+          ]
+        },
+        {
+          "criterion": "Preserve three matching request/response pairs and source hashes",
+          "status": "PASSED",
+          "evidence": [
+            "knowledge/integrations/buildvault/Contracts/examples/wildcard-empty.json",
+            "knowledge/integrations/buildvault/Contracts/examples/exact-branch.json",
+            "knowledge/integrations/buildvault/Contracts/examples/forbidden.json"
+          ]
+        },
+        {
+          "criterion": "Distinguish specification requirements from one observed response",
+          "status": "PASSED",
+          "evidence": [
+            "knowledge/integrations/buildvault/Contracts/packages-v2.openapi.yaml#/components/schemas/Package",
+            "knowledge/integrations/buildvault/Contracts/packages-v2.openapi.yaml#/components/schemas/PackageObservation"
+          ]
+        },
+        {
+          "criterion": "Retain uncertain 403 cause and unverified token correction",
+          "status": "PASSED",
+          "evidence": [
+            "knowledge/integrations/buildvault/Workflows/resolve-exact-commit.md#failure-points"
+          ]
+        },
+        {
+          "criterion": "Preserve pagination and incomplete deployment limits",
+          "status": "PASSED",
+          "evidence": [
+            "knowledge/integrations/buildvault/Workflows/resolve-exact-commit.md#procedure",
+            "knowledge/integrations/buildvault/Knowledge/package-resolution.md#unresolved-boundaries"
+          ]
+        },
+        {
+          "criterion": "Avoid unsupported wildcard rules and required commit field",
+          "status": "PASSED",
+          "evidence": [
+            "knowledge/integrations/buildvault/Knowledge/package-resolution.md#observations-and-selection-meaning"
+          ]
+        },
+        {
+          "criterion": "Use requested three-folder domain layout and linked index",
+          "status": "PASSED",
+          "evidence": [
+            "knowledge/integrations/buildvault/README.md"
+          ]
+        },
+        {
+          "criterion": "Validate structural artifacts and resolve relative links",
+          "status": "PASSED",
+          "evidence": [
+            "result.txt"
+          ]
+        }
+      ],
+      "artifacts_sha256": {
+        "result.txt": "4ed3bb13c2cbf19b3982f9c309ce47c90d45a1bd437e85383577d8bb94290630",
+        "input-manifest.json": "fa6a56bf2a21263ad2f9067f4be35717b7671aa538841a6c24c5a0f490523c25",
+        "baseline-README.md": "8a7ef5e242f6b8e03cf258b967d28c302e99454abf87c0846e518fe660a53679",
+        "sources/spec.md": "6c1c5f8c85adc3bbdf7ddb1e23ea04d5ad486bde7a4fde07598ff97b5dbcd336",
+        "sources/session.md": "0f331635032129452ed85cb3589bd1fe847e6c732bb745c0c8649d6e03acb104",
+        "sources/exchanges.json": "f27dcde489f2b2da7132d64a93fe5cb9b6f13b5b9d6f17cbf85bef308f3bb415",
+        "knowledge/integrations/buildvault/README.md": "f9f4c2f2c31310e914e42576580775b5ab5213f79d9a6cf2dc0abd49d64f30d5",
+        "knowledge/integrations/buildvault/Contracts/packages-v2.openapi.yaml": "3c587e562b2cc1d10a773376ff5bd986dcb95f8c438f7f2f7d66925521ba9ebf",
+        "knowledge/integrations/buildvault/Workflows/resolve-exact-commit.md": "6e2a6ab2a0f4d37b810ea7bf010d1db2a2f8a6440904c724ca0d560991d6a84d",
+        "knowledge/integrations/buildvault/Knowledge/conventions.md": "095749103b0f6ea4b7fc8c26f6f3d1441ea90c2974330970ae61f5463c6b2cd6",
+        "knowledge/integrations/buildvault/Knowledge/package-resolution.md": "32767649f0b80c5571e281caace7874782b90a8c5d67568e2b366579bccaae1c",
+        "knowledge/integrations/buildvault/Contracts/examples/forbidden.json": "c4e27565fa64a7ce5f77bdd98c9043d3e2bb26c4b5e01c8a6a604484a3c7d9a4",
+        "knowledge/integrations/buildvault/Contracts/examples/exact-branch.json": "4ea83fababacc73ad2646aefbe025a0eb598c4f0eed80cedca872c63eb7355d1",
+        "knowledge/integrations/buildvault/Contracts/examples/legacy.json": "37c74668ef8b7f7d3ff97c6e14ceda83e9158bec73512f452e9efc59b0692bb5",
+        "knowledge/integrations/buildvault/Contracts/examples/wildcard-empty.json": "bbb2372d416fbf50d0595398e5881f121a0a57f1ded9606a6c17d1691f6ff14f"
+      },
+      "limits": [
+        "One independent synthetic forward trial; no baseline model comparison or unchanged-source repeat trial.",
+        "Full OpenAPI validator unavailable; focused structure, schema subset, references and paired examples checked.",
+        "No live operations or business verification."
+      ],
+      "parent_schema_check": {
+        "status": "PASSED",
+        "tool": "PyYAML plus jsonschema Draft202012Validator",
+        "checks": [
+          "OpenAPI YAML parses",
+          "all four component schemas are valid",
+          "three request query variants validate",
+          "three response variants validate",
+          "observed package validates"
+        ],
+        "limits": [
+          "This checks embedded JSON Schemas and examples; it does not validate the complete OpenAPI document schema."
+        ]
+      },
+      "respondent_agent": "/root/extractor_forward",
+      "assessment_agent": "/root"
+    },
+    "independent_review": {
+      "status": "PASSED",
+      "scope": [
+        "extractor and construction reference",
+        "root routing",
+        "domain ownership guides",
+        "scaffold distribution",
+        "relative links and alias",
+        "git diff --check"
+      ],
+      "finding_resolved": "Root guide made registry learning conditional; direct extraction remains independent.",
+      "remaining_findings": 0,
+      "limits": [
+        "Read-only source review; no trial, runtime, or wheel checks by this reviewer."
+      ],
+      "reviewer_agent": "/root/extractor_review"
+    },
+    "relative_links": {
+      "status": "PASSED",
+      "scope": "New links in changed guides and canonical extractor references; trial checked 27 links separately."
+    }
+  },
+  "learning_checkpoint": {
+    "category": "workflow",
+    "disposition": "Refined shared extraction instructions directly; no runtime promotion or business rule change.",
+    "scope": "Reusable system integration contracts, workflows, failure lessons and background.",
+    "registry_search": "Existing CES capability inspected; no extraction skill declared by that result."
+  },
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Offline unit tests do not establish live integration behavior.",
+    "The suite includes pre-existing CES tool changes; this task does not assess their new commands.",
+    "Automated checks do not establish complete writing review."
+  ],
+  "shared_asset_changes": {
+    "purpose": "One simple domain extraction skill with Contracts, Workflows, Knowledge and independent routing.",
+    "source": "domain-capability-shared-suggestions-20261123.md",
+    "files": {
+      ".agents/skills/capability-learning/SKILL.md": {
+        "before_sha256": "c7020125c7ec65fdf7e2783502e93be9d67186ff7f484beccb29466019b3f9ec",
+        "after_sha256": "240e36a55ab67d045e84f51ab8ec185bbe24a8de6908de8a0abb53d1b5d7602e"
+      },
+      ".agents/skills/domain-capability-extractor/SKILL.md": {
+        "before_sha256": null,
+        "after_sha256": "2654ee6a5cbb69871e27fec0d338869b4108dc3debeb922221bcf6c07b801a69"
+      },
+      ".agents/skills/domain-capability-extractor/references/construction.md": {
+        "before_sha256": null,
+        "after_sha256": "c91cceabc17d53d4e79bca5ec85df44c4a0ff74ad7dd689a909586665091c0e4"
+      },
+      "AGENTS.md": {
+        "before_sha256": "8400b1037815ba844498221ca07f60d9321859b6bb763eaf7f948fce79620320",
+        "after_sha256": "c34c50eb0fcea353701c1d4652555137ac01b7bb60a6d2a1a6b88afd0a385d8c"
+      },
+      "ARCHITECTURE.md": {
+        "before_sha256": "d589f6affdd81b581313171fdd95160cc42c66202303d320cf974c4181041b40",
+        "after_sha256": "0cf237ce7de98eda2276abc296db7463a76be9d8747f2e9199d728ce6d3889c7"
+      },
+      "docs/CAPABILITY_LEARNING.md": {
+        "before_sha256": "10318f61fee02200312330b0cf523155afe4e7bdbb8239590a128b897939a060",
+        "after_sha256": "7facc06c024c67dcca2cb28a255f183a9e852eba01aafddee47f82a9404cda04"
+      },
+      "docs/EXPERIENCE_ASSETS.md": {
+        "before_sha256": "7d093c50020604f0d7727b3d97ee973a435e6d769bbd24fe819e4856b6fec0be",
+        "after_sha256": "cbd2d6fc136da9fc26e8219fa0f2dbd7e5134f297c2a5539d3344a83ddb052dc"
+      },
+      "docs/WORKSPACE_DESIGN.md": {
+        "before_sha256": "d96ac0242a51c0a70871a2c4d37a51ea45d991ffa736c1e74076ef586489512f",
+        "after_sha256": "6623dff2b359836f859c78e623b32754a59ecf5b701f108681df71c39ccf054c"
+      },
+      "knowledge/README.md": {
+        "before_sha256": "e33d27ac75b2adc9b22719bff4d564c2055b45af3a85d01ce5a4054d0d1de93a",
+        "after_sha256": "70b03e55498ed8bf436c82e8a94a1ff70b65b8dabc1116711a8fddae7751a539"
+      },
+      "scaffold.json": {
+        "before_sha256": "d12884470b6fbb6d52d5900a4aa292e3dbafba16049d907de3c5e1adadc0d22e",
+        "after_sha256": "148b2e2beb6f0c4e67adf0c19752bd3431a114141d1591f6ec7102afad7548e6"
+      },
+      "tasks/README.md": {
+        "before_sha256": "436797d471d67908e57dfc080bbe1f65c4eee2149e36b5ce5771e35570315aa9",
+        "after_sha256": "010fd9255ecc3cca4a4f3b1fa29a9a25637fa9599b082d85176b0ebf74d15ea2"
+      },
+      "tests/test_workspace_layout.py": {
+        "before_sha256": "bcf67bf4b859a25379a1bf3fab83c10021ae17db25531b35e84afc6d2b359424",
+        "after_sha256": "754d8d3b4cd41e9ed4142c9fc4e4ed692f0de48b17ee4d14ac4651cf53c8088e"
+      }
+    }
+  },
+  "preexisting_test_inputs_sha256": {
+    ".agents/skills/ces-domain-capability/SKILL.md": "4082ead3fcde5740c7ed080e190c691233d9b1f77cd319af93f62fd85a6a7145",
+    ".agents/skills/ces-domain-capability/scripts/inspect_ces.py": "b30eb41d8fef93b1981e45d1248afe19976a7deaa67d4b04fab2b6d4abb7e89e",
+    ".agents/skills/ces-domain-capability/references/domain-facts.md": "bf0562682dc24ae73ef06bf388e6dab068257786848ef2eace906af5127318d2"
+  }
+}
