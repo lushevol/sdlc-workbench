@@ -13,7 +13,7 @@ For each operation, capture:
 | Concern | Required detail when supported |
 | --- | --- |
 | Identity | System, service, purpose, method, path, stable operationId, API version, scoped base URL |
-| Access | Authentication mechanism, permissions, headers, token/session prerequisites; no credential values |
+| Access | Authentication mechanism, permissions, headers, token/session prerequisites, and the environment or approved secret-store binding; no credential values |
 | Request | Path/query/header parameters, body, media type, types, requiredness, nullability, defaults, constraints, dependencies |
 | Response | Status, relevant headers, body schemas, conditional fields, errors, pagination and continuation |
 | Dependencies | Interface consumers/providers, ordering, protocols, versions, access and runtime prerequisites |
@@ -85,6 +85,19 @@ Distinguish documented verification steps from checks actually executed.
 ## Related knowledge and evidence
 Relative links to conventions, background, source revisions, and retained results.
 ```
+
+### External system dependencies
+
+Record each dependency in the workflow's prerequisites and inputs using one of these scopes:
+
+1. **Secret binding** — environment variable or approved secret-store key, authentication type, requiredness, and redaction rule. Never store resolved secrets in skills, examples, catalogs, logs, or task evidence.
+2. **Project setting** — project or workspace configuration key, owning project, safe unset/default behavior, and precedence only when the source confirms it. Keep active deployment values and machine paths in the owning project's settings.
+3. **Task input** — local variable-file field or task-record field for the account, environment, endpoint selection, request parameters, or evidence path. Shipped templates remain unset or use safe placeholders.
+
+Use existing project loading conventions. Do not invent a new configuration loader or assume that environment variables override configuration files.
+Retained response examples describe observations. Their hosts and domain values do not select active project settings or supply credentials.
+Validate configuration and access bindings before making an external call. Name missing inputs without printing resolved secrets.
+A missing binding blocks that live step and its live verification. Continue offline extraction from retained sources and document the unfinished step.
 
 Preserve failed approaches when their conditions or corrections help avoid repeated investigation.
 Record confirmed causes separately from hypotheses and unresolved issues. Include a successful correction only when supported.

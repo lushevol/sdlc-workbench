@@ -3,6 +3,9 @@
 Use this library to inspect CES interfaces, entitlement assignments, effective access, and scoped data restrictions.
 The same maintained files serve Workbench discovery and standalone copies.
 All commands read local evidence. Documented routes and captured origins grant no execution permission.
+Live CES work requires the selected project's settings and client-defined environment or secret-store bindings.
+Keep credentials, CA paths, and active project settings outside this library.
+The offline inspector and retained examples need no live credentials or network access.
 
 ## Contracts
 

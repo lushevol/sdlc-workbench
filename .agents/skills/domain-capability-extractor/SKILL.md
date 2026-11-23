@@ -63,6 +63,9 @@ Keep variable definitions, types, sources, allowed values, and safe placeholders
 Redact credentials, private identities, and sensitive values. Preserve useful domain values, response structure, and source bindings.
 Keep private values in ignored configuration. Never repeat a mutation merely to obtain extraction evidence.
 
+Separate secret environment bindings, project configuration, and task inputs using the [external dependency rules](references/construction.md#external-system-dependencies).
+Validate bindings before external calls. Missing credentials or project configuration block live execution, while offline extraction can continue from retained evidence.
+
 Keep domain-specific assets in the domain library. Promote shared guidance only when evidence supports a cross-domain benefit.
 Use the existing shared asset and normal source review. Record the target, reason, checks, and before/after hashes in the task.
 Do not make extraction depend on that promotion.

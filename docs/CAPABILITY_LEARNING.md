@@ -27,6 +27,8 @@ Extract useful partial results without inventing completion. Keep full execution
 The [construction reference](../.agents/skills/domain-capability-extractor/references/construction.md) defines contracts, workflow content, examples, and maintenance checks.
 These technical references remain outside canonical record and wiki ownership. New business intent follows existing governance.
 Keep domain-specific assets here. Shared promotion requires a demonstrated benefit, normal source review, and task evidence.
+Document external dependencies as credential references, project settings, and task inputs with explicit sources and resolution rules.
+Keep credential values outside the skill. Missing live dependencies do not block extraction from retained evidence.
 
 ## Scoped capability registry
 
@@ -154,6 +156,7 @@ The source checkout exposes it at `knowledge/integrations/ces/` through a direct
 Installed workspaces receive the standalone skill folder. Copy that folder for independent use.
 Review assigned-role evidence, reconcile the three views, or compare effective access. [CES workflows](../.agents/skills/ces-domain-capability/Workflows/inspect-captures.md)
 Use a local variable copy for account, service origin, application, and evidence inputs. [CES variable template](../.agents/skills/ces-domain-capability/Workflows/variables.example.json)
+The [CES binding guide](../.agents/skills/ces-domain-capability/Workflows/variables.md#external-dependencies-and-resolution) separates project settings and credential environment references from offline inputs.
 The [OpenAPI subset](../.agents/skills/ces-domain-capability/Contracts/openapi.yaml) separates observed response shapes from local inspector requirements.
 The [CES examples](../.agents/skills/ces-domain-capability/Contracts/README.md#paired-cases-and-supplied-bodies) retain real domain values and redact account identities.
 Published command examples use those retained bodies. Controlled synthetic inputs remain in the source checkout's tests.

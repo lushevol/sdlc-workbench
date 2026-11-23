@@ -330,3 +330,46 @@ Independent task-evidence-growth edits appeared during work. They remain outside
 
 The lightweight maintenance record follows ordinary Markdown under the task guide. Business-artifact lint does not apply to that format.
 The capability checkpoint recorded `NO_CHANGE` for the existing CES capability. No new entitlement rule or execution grant was added.
+
+## External credentials and project settings
+
+The user supplied the [exact clarification](evidence/domain-external-configuration-request-20261124.md) on 24 November 2026.
+Baseline Workbench revision is `d684799f3`.
+The scope covers extractor instructions, CES variable bindings, and current capability documentation.
+Credentials belong in environment variables or an approved secret store.
+Project settings belong to the selected project's configuration, with explicit source and precedence.
+The offline inspector remains independent of live credentials.
+
+Missing bindings can select the wrong tenant or expose secrets through copied configuration.
+Inspect existing consumers and document resolution without introducing a new loader or external call.
+The unrelated `core/release-report/` source remains outside this scope.
+
+## External credentials and project settings completion
+
+The extractor separates secret bindings, project settings, and task inputs.
+Skills record environment-variable or approved secret-store names without resolved values.
+Project settings supply active origins, routes, CA paths, defaults, and precedence.
+Task-local variables hold selectors, account scope, and evidence paths.
+
+The CES template leaves `project.settings_path`, `ces.base_url`, `ces.token_env`, and `ces.ca_env` unset.
+It records references without loading settings or credentials.
+The copied inspector reads local JSON and works offline without a token.
+Missing live bindings block only the affected live step.
+
+The Workbench coverage helper was inspected at revision `d684799f3`.
+Its project configuration names `CES_COVERAGE_BEARER_TOKEN` and `CES_COVERAGE_CA_FILE`.
+Its process-environment precedence and CA-path resolution apply only to that helper.
+Standalone skills must confirm the consuming client's loader and precedence.
+
+Nine focused CES tests and two skill validators passed.
+Workbench validation checked 119 documents with zero findings. All 53 relative-link checks passed.
+Independent offline usage review found no actionable issues.
+The final source archive, wheel, isolated installation, and initialized workspace matched current shipped bytes.
+The full suite was not rerun for these documentation and template changes.
+
+[Exact source, check, trial, and distribution evidence](evidence/ces-external-configuration-20261124.json)
+
+No live CES authentication, CA validation, provisioning, external call, or write was performed.
+Current guidance changed in the extractor, CES index, CES entry point, CES variable guide, and `docs/CAPABILITY_LEARNING.md`.
+No configuration loader, dependency, or registry rule was added.
+The capability checkpoint recorded `NO_CHANGE` for `ces-entitlement-migration`; no new business rule, credential grant, or runtime loader was added.
