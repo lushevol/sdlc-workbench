@@ -12,7 +12,7 @@ Collect task inputs in a local copy of the [variable template](assets/variables.
 | Task | Read |
 | --- | --- |
 | Explain entitlement assignments, feature actions, or record visibility | [CES domain model](references/domain-model.md) |
-| Select a catalog, effective-user, or assigned-role response | [CES response contracts](references/contracts.md) |
+| Select a catalog, effective-user, or assigned-role endpoint and schema | [CES response contracts](references/contracts.md) |
 | Trace effective access or compare two captures | [CES workflows and commands](references/workflows.md) |
 | Check a functional profile value or review provisioning evidence | [Functional profile checks](references/functional-profile.md) |
 

@@ -8,6 +8,8 @@ import sys
 import tempfile
 import unittest
 
+from jsonschema import Draft202012Validator
+
 
 SKILL = Path(__file__).resolve().parents[1] / ".agents/skills/ces-domain-capability"
 
@@ -35,6 +37,32 @@ class CesDomainSkillTests(unittest.TestCase):
 
     def fixture(self, name):
         return self.skill / "assets" / f"{name}.json"
+
+    def test_packaged_response_schemas_and_uat_origin(self):
+        variables = json.loads(self.fixture("variables.example").read_text(encoding="utf-8"))
+        self.assertEqual(variables["ces"]["origins"]["uat"], "https://fmcesuat.gdc.standardchartered.com")
+        self.assertIsNone(variables["ces"]["base_url"])
+        self.assertIsNone(variables["account"]["id"])
+        cases = (
+            ("catalog", ("catalog",), ("user_ids",), 42),
+            ("effective-user", ("user-before", "user-after"), ("entitlements", "data_profiles"), []),
+            ("assigned-role", ("roles",), ("featureActionDtos", 0, "actions", "actionName"), 42),
+        )
+        for view, fixtures, path, invalid_value in cases:
+            with self.subTest(view=view):
+                schema_path = self.skill / "schemas" / f"{view}-response.schema.json"
+                schema = json.loads(schema_path.read_text(encoding="utf-8"))
+                Draft202012Validator.check_schema(schema)
+                validator = Draft202012Validator(schema)
+                validator.validate([])
+                for fixture in fixtures:
+                    body = json.loads(self.fixture(fixture).read_text(encoding="utf-8"))
+                    validator.validate(body)
+                record = body[0]
+                for part in path[:-1]:
+                    record = record[part]
+                record[path[-1]] = invalid_value
+                self.assertFalse(validator.is_valid(body))
 
     def test_assigned_role_attribution_and_empty_grants(self):
         source = self.fixture("roles")

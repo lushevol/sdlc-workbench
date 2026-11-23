@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:workbench:ces:catalog-response:1",
+  "title": "CES application catalog response",
+  "description": "Captured entitlement definitions and memberships. Application identity comes from the request.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "entitlement_name",
+      "user_ids",
+      "role_entitlements"
+    ],
+    "properties": {
+      "entitlement_id": {
+        "type": "integer"
+      },
+      "entitlement_name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "user_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "role_entitlements": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "feature",
+            "action"
+          ],
+          "properties": {
+            "feature": {
+              "type": "string",
+              "minLength": 1
+            },
+            "action": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

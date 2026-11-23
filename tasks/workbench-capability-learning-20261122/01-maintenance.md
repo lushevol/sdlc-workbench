@@ -172,3 +172,24 @@ The wheel, clean-workspace link checks, skill structure validation, and isolated
 Verification covers offline captures and documentation. Live CES and provisioning outcomes need scoped evidence.
 
 [Updated CES skill](../../.agents/skills/ces-domain-capability/SKILL.md) · [Variable template](../../.agents/skills/ces-domain-capability/assets/variables.example.json)
+
+## CES UAT origin and response schemas
+
+The user supplied the [exact request](evidence/ces-uat-and-schema-request-20261123.txt) in Codex on 23 November 2026.
+Baseline is `3d612a2c6`. The change covers the CES skill package and offline contract validation.
+
+The previous skill contained route templates and prose field descriptions.
+The update records the supplied host as a named UAT origin in the [variable template](../../.agents/skills/ces-domain-capability/assets/variables.example.json).
+The [retained collection configuration](../ces-entitlement-migration-20261102/coverage/config.json#L31) and four HTTP captures use that host.
+The active base URL remains an explicit task input.
+
+Three Draft 2020-12 schemas cover the catalog, effective-user, and assigned-role response shapes.
+The schema test accepted the four synthetic bodies and rejected an invalid body for each view.
+Offline validation accepted two UAT catalogs, two effective-user bodies, and the retained assigned-role SDK fixture.
+The inspector remains a separate standard-library tool for scoped comparisons.
+See the [response contracts](../../.agents/skills/ces-domain-capability/references/contracts.md).
+
+All 1,159 Workbench tests passed with connector integration enabled on macOS.
+The wheel installed outside the checkout and shipped the UAT origin and all three schemas.
+The new workspace passed validation. Live endpoint behavior and service-wide schema guarantees remain unverified.
+The full suite log SHA-256 is `2df36f06be9afe48416d1cc5ddaee643fa5c2a570c593b8c10c372e349f9c683`.

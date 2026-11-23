@@ -7,11 +7,12 @@ Use the inputs from that copy when running the documented commands. The inspecto
 | --- | --- |
 | `topic`, `environment` | Name the investigation and the environment where the response originated. Record replay or live separately in the evidence. |
 | `account.id`, `account.type` | Use the exact account in the authorized capture. Keep human and general account types explicit. |
-| `ces.base_url`, `ces.routes` | Fill the service origin from approved environment configuration. Confirm each route template against the applicable contract. |
+| `ces.origins.uat`, `ces.base_url`, `ces.routes` | Select the named UAT origin when UAT is in scope. Set the active base URL in the local copy and confirm the route against the applicable contract. |
 | `ces.application_name`, `itam_id`, `assigned_role_app_id`, `application_uid` | Keep app name, external ITAM reference, assigned-role `appId`, and internal UID distinct. Supply sourced identifiers. |
 | `query` | Use the exact entitlement, feature, action, or policy reference needed for the question. Preserve case and meaningful spaces. |
 | `evidence` | Supply the local capture paths, observation time, and capture hash or source revision. |
 | `functional_profile` | Supply the verified response locator and independent expected-value source. Bind the empty representation and test target separately when known. |
 
 Keep live tenant values in the task's local copy and credentials in the approved secret store.
-Keep packaged deployment fields unset. Update route templates in the example only when the source and scope support the change.
+The example records the supplied CES UAT origin under `ces.origins.uat`.
+Select the environment and active base URL in the local copy.
