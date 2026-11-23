@@ -128,8 +128,8 @@ ai-sdlc --workspace . learning checkpoint \
 
 Use a single path to record an initial candidate. Supply both paths once the independent check is available.
 
-Use [CES migration scan](../.agents/skills/ces-migration-scan/SKILL.md) for its read-only evidence procedure.
-Review the [CES capability guide](../.agents/skills/ces-migration-scan/references/capability-learning.md) before categorizing observations.
+Use the CES domain skill to investigate effective access, data scope, contracts, and migration compatibility. [CES domain capability](../.agents/skills/ces-domain-capability/SKILL.md)
+Use its evidence guide to classify observations, scope replay, and submit reusable findings. [CES evidence and capability learning](../.agents/skills/ces-domain-capability/references/capability-learning.md)
 Prior migration observations do not authorize changes to the current entitlement policy.
 
 ## Configure and diagnose

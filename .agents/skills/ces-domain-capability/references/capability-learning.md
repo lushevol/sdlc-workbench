@@ -1,6 +1,6 @@
-# Learn from CES entitlement migration
+# CES evidence and capability learning
 
-Use the `ces-entitlement-migration` capability when a migration task discovers reusable information about entitlements or their verification.
+Use the `ces-entitlement-migration` capability ID when CES work discovers reusable information about entitlements or their verification.
 Retrieve the applicable capability and records by instance, environment, application, and version.
 Inspect the original revision or capture before relying on the recorded conclusion.
 
@@ -20,7 +20,7 @@ Keep only aggregate or pseudonymous evidence references in a discovery payload.
 Exclude user IDs, assignments, raw response bodies, and credentials from the learning record.
 
 For read-only verification, use the existing migration coverage runner. Select replay and a task-owned comparison configuration.
-`python -m ai_sdlc_workbench.coverage_suite --config TASK_CONFIG` uses retained responses by default.
+`python -m ai_sdlc_workbench.coverage_suite --mode replay --config TASK_CONFIG` uses retained responses.
 Review the candidate and baseline inventories, unassessed identities, and exact asserted differences.
 Replay establishes the selected comparison over its captured inputs. Current service parity needs an authorized, environment-bound check.
 
@@ -30,8 +30,9 @@ Use the approving authority's recorded decision before modifying the canonical r
 Keep protected changes pending in the learning engine. Capability promotion supplies no permission to change entitlements.
 [Capability learning](../../capability-learning/SKILL.md)
 
-## Source checkout references
+## Locate source material
 
-- Candidate migration scope, mapping, preservation rules, and evidence limits. [CES migration permission preservation](../../../../knowledge/records/candidates/security/KT-ces-migration-parity.md)
-- Candidate policy interpretation and reconciliation alternatives. [User entitlement control](../../../../knowledge/records/candidates/security/KT-ces-entitlement-control-20261115.md)
-- Replay inputs, comparison definitions, and known limits. [Migration coverage procedure](../../../../tasks/ces-entitlement-migration-20261102/coverage/README.md)
+Search the active workspace for the applicable entitlement control record and permission preservation baseline.
+In the Workbench source checkout, initial candidates include `KT-ces-entitlement-control-20261115` and `KT-ces-migration-parity`.
+Check their lifecycle status, exact source references, and scope before using them.
+The migration coverage task in the source checkout documents replay inputs, comparison definitions, and report limits.
