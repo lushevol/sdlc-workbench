@@ -19,6 +19,7 @@ When comparing two data sections, verify operator meaning, precedence, and value
 
 ## Evidence and ownership
 
+Use the [source register](sources.json) to resolve the captured view and its exact revision before applying these concepts.
 Use a complete catalog capture to make completeness claims about its declared application scope.
 Use an effective-user capture to report what its matched account and application returned.
 Use a scoped assertion or execution record to establish what an integration allowed, denied, or filtered.
@@ -26,5 +27,6 @@ Keep missing captures, unavailable services, explicit empty records, and unresol
 
 The response model comes from retained CES catalog and effective-user captures.
 Historical CES designs describe HR-derived policy, role-derived profiles, and filters at query and notification boundaries.
+The registered design record remains candidate/draft. It does not establish current enforcement or approved policy precedence.
 Find the applicable approved policy before applying any historical rule, field list, or precedence.
 Keep credentials and personal data in the authorized source location. Cite sanitized evidence references in reports.

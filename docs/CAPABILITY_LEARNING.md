@@ -149,8 +149,12 @@ ai-sdlc --workspace . learning checkpoint \
 Use a single path to record an initial candidate. Supply both paths once the independent check is available.
 
 Use the CES domain skill for entitlement definitions, effective access, data scope, and CES response contracts. [CES domain capability](../.agents/skills/ces-domain-capability/SKILL.md)
-Copy its folder to review assigned-role evidence, compare effective access, or assess functional profile evidence. [CES investigation workflows](../.agents/skills/ces-domain-capability/references/workflows.md)
-Use a local copy of the variable template for account, service origin, application, and topic inputs. [CES variable template](../.agents/skills/ces-domain-capability/assets/variables.example.json)
+The [CES library](../.agents/skills/ces-domain-capability/README.md) links Contracts, Workflows, and Knowledge through one maintained folder.
+The source checkout exposes it at `knowledge/integrations/ces/` through a directory link.
+Installed workspaces receive the standalone skill folder. Copy that folder for independent use.
+Review assigned-role evidence, reconcile the three views, or compare effective access. [CES workflows](../.agents/skills/ces-domain-capability/Workflows/inspect-captures.md)
+Use a local variable copy for account, service origin, application, and evidence inputs. [CES variable template](../.agents/skills/ces-domain-capability/Workflows/variables.example.json)
+The [OpenAPI subset](../.agents/skills/ces-domain-capability/Contracts/openapi.yaml) separates observed response shapes from local inspector requirements.
 In Workbench, submit reusable CES findings against the existing capability ID `ces-entitlement-migration`. Keep policy decisions in governed knowledge.
 
 ## Configure and diagnose

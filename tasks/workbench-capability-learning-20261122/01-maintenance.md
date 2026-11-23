@@ -171,7 +171,7 @@ The passing log SHA-256 is `99f5b4e2b31e08c2879d62c1e997751feb824bbf34e18d03f6ae
 The wheel, clean-workspace link checks, skill structure validation, and isolated Python commands passed.
 Verification covers offline captures and documentation. Live CES and provisioning outcomes need scoped evidence.
 
-[Updated CES skill](../../.agents/skills/ces-domain-capability/SKILL.md) · [Variable template](../../.agents/skills/ces-domain-capability/assets/variables.example.json)
+[Updated CES skill](../../.agents/skills/ces-domain-capability/SKILL.md) · [Variable template](../../.agents/skills/ces-domain-capability/Workflows/variables.example.json)
 
 ## CES UAT origin and response schemas
 
@@ -179,7 +179,7 @@ The user supplied the [exact request](evidence/ces-uat-and-schema-request-202611
 Baseline is `3d612a2c6`. The change covers the CES skill package and offline contract validation.
 
 The previous skill contained route templates and prose field descriptions.
-The update records the supplied host as a named UAT origin in the [variable template](../../.agents/skills/ces-domain-capability/assets/variables.example.json).
+The update records the supplied host as a named UAT origin in the [variable template](../../.agents/skills/ces-domain-capability/Workflows/variables.example.json).
 The [retained collection configuration](../ces-entitlement-migration-20261102/coverage/config.json#L31) and four HTTP captures use that host.
 The active base URL remains an explicit task input.
 
@@ -187,12 +187,17 @@ Three Draft 2020-12 schemas cover the catalog, effective-user, and assigned-role
 The schema test accepted the four synthetic bodies and rejected an invalid body for each view.
 Offline validation accepted two UAT catalogs, two effective-user bodies, and the retained assigned-role SDK fixture.
 The inspector remains a separate standard-library tool for scoped comparisons.
-See the [response contracts](../../.agents/skills/ces-domain-capability/references/contracts.md).
+See the [response contracts](../../.agents/skills/ces-domain-capability/Contracts/README.md).
 
 All 1,159 Workbench tests passed with connector integration enabled on macOS.
 The wheel installed outside the checkout and shipped the UAT origin and all three schemas.
 The new workspace passed validation. Live endpoint behavior and service-wide schema guarantees remain unverified.
 The full suite log SHA-256 is `2df36f06be9afe48416d1cc5ddaee643fa5c2a570c593b8c10c372e349f9c683`.
+
+## CES domain facts and reusable tools
+
+The user supplied the [exact follow-up](evidence/ces-domain-tools-refinement-request-20261123.txt) on 23 November 2026.
+Baseline Workbench revision is `c5edb0322`. The scope is the standalone CES skill, its tests, and its Workbench guidance.
 
 ## Domain capability extraction refinement
 
@@ -229,3 +234,47 @@ Current guidance changed in `AGENTS.md`, `ARCHITECTURE.md`, `docs/CAPABILITY_LEA
 `docs/WORKSPACE_DESIGN.md`, `knowledge/README.md`, and `tasks/README.md`.
 The workflow discovery became a shared instruction change. No runtime promotion or business-rule change was needed.
 Validation covers offline behavior and one synthetic extraction. Full OpenAPI validation and live integrations remain unverified.
+
+## CES capability under the extraction standard
+
+The user supplied the [exact request](evidence/ces-new-standard-request-20261123.md) on 23 November 2026.
+Baseline Workbench revision is `d6ca85c8a`.
+The earlier CES facts and tool edits are now within the requested CES refinement scope.
+Untracked release-report files remain outside this scope.
+The affected consumers include CES skill discovery, the inspector command, response schemas, tests, registry links, and workspace packaging.
+Preserve standalone CES use while consolidating contracts, workflows, and knowledge with source-bound evidence.
+
+Incorrect schemas can overstate guarantees. Relocation can break tools and standalone discovery.
+The real skill folder now contains the Contracts, Workflows, and Knowledge library.
+`knowledge/integrations/ces/` links that folder without duplicating its maintained content.
+The original inspector command forwards to the relocated implementation.
+[Byte-preserving relocation and recovery bindings](evidence/ces-standard-relocation-20261123.json)
+
+Four sanitized paired cases retain their original request and response bindings.
+Catalog examples identify their selected rows and incomplete-body projection.
+Large nested arrays retain bounded prefixes, with original lengths and exact selected ranges recorded.
+The assigned-role example is a supplied body fixture, with no invented request, status, or capture date.
+OpenAPI observation schemas separate field shapes from local inspector requirements.
+[Inspected source bindings](evidence/ces-standard-source-review-20261123.json)
+
+The eight focused CES tests and all 1,163 Workbench tests passed. No failures, errors, or skips occurred.
+The OpenAPI document passed the official OpenAPI 3.1 schema. Embedded schemas and paired bodies passed separate JSON Schema checks.
+The source archive built a wheel, which initialized outside the checkout with matching library bytes.
+Six new command paths and six legacy command paths produced identical results from an isolated standalone folder.
+Skill discovery, Claude alias, 47 local links, workspace validation, and offline source fingerprint checks passed.
+
+Independent review found account identifiers in original provenance filenames. Portable references now use source IDs, hashes, and inventory locators.
+The full source-path mapping remains in task evidence. None of 5,151 captured account identifiers appear in the portable library.
+An early usage-trial manifest mislabeled all inputs synthetic. Its limited result and exact inputs remain retained.
+The final independent trial used explicit evidence classes. Eight commands passed and all 26 input hashes remained unchanged.
+It retained four comparison differences, a matching effective union, and unresolved profile assertions.
+Final source review re-derived all four pairs after sampling. The catalog examples are 3,086 and 2,338 bytes.
+
+Catalog A selects FLOWZERO. Catalog B and both effective-user captures select RATAN_ENTITLEMENT_RULE.
+The library now states that these application scopes cannot be combined for reconciliation.
+Current documentation changed in `docs/CAPABILITY_LEARNING.md` and this library's index, contracts, workflows, variables, and knowledge.
+No new dependency or execution grant was added. The unrelated release-report source remains outside this change.
+[Final verification, source hashes, and trial evidence](evidence/ces-standard-verification-20261123.json)
+
+Validation covers retained observations, synthetic tool cases, and standalone distribution on macOS.
+Live CES, provisioning, current consumer enforcement, and native Windows activation remain unverified.

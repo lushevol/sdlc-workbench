@@ -1,0 +1,544 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-11-23",
+  "reviewer_agent": "/root/ces_evidence",
+  "mode": "read-only offline source inspection",
+  "scope": "CES contract and source bindings for the new extraction standard",
+  "source_owner": "unknown",
+  "inventory": {
+    "path": "tasks/ces-entitlement-migration-20261102/evidence/coverage-intake-20261103/api-inventory.json",
+    "sha256": "7b6583fb1fcc0a2b7d6e5a6add9b4c9937c48d9858194e8b94b78c495c508e69",
+    "revision": "31e508f75443916633cb196d013129ad82a65974",
+    "locator": "/sources/0 through /sources/3"
+  },
+  "http_sources": [
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by app and user (1289935).yml",
+      "sha256": "e2f1f505e032790ca9c43ca55a3b6c08b21ea0b3eb8b543359201216291f2382",
+      "revision": "31e508f75443916633cb196d013129ad82a65974",
+      "locator": "/examples/0",
+      "id": "effective-user-a",
+      "inventory_locator": "/sources/0",
+      "classification": "retained-http-exchange",
+      "request": {
+        "method": "GET",
+        "origin": "https://fmcesuat.gdc.standardchartered.com",
+        "route_template": "/fmces/v1/entitlement/app/{itam_id}/{application}/user/{user_id}",
+        "path_parameter_names": [
+          "itam_id",
+          "application",
+          "user_id"
+        ],
+        "query_parameter_names": [],
+        "body_present": false,
+        "header_names": [
+          "Authorization"
+        ],
+        "authorization_scheme": "Bearer",
+        "credential_values_retained": false,
+        "request_locator": "/examples/0/request",
+        "configured_auth_locator": "/http/headers",
+        "collection_auth": "inherit"
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "http_date": "Tue, 03 Nov 2026 05:33:51 GMT",
+        "header_names": [
+          "transfer-encoding",
+          "vary",
+          "x-content-type-options",
+          "x-xss-protection",
+          "cache-control",
+          "pragma",
+          "expires",
+          "strict-transport-security",
+          "x-frame-options",
+          "content-type",
+          "date",
+          "content-security-policy",
+          "referrer-policy"
+        ],
+        "body_locator": "/examples/0/response/body/data",
+        "body_encoding": "JSON text inside collection export body.data",
+        "body_text_sha256": "c55b5f1bc80fe60bc4cb9aeb5c1a462ab4af569f15d0e8e22b2ece5d7c01385e",
+        "record_count": 1,
+        "shape": {
+          "user_data_types": {
+            "app_name": "str",
+            "itam_id": "str",
+            "user_id": "str"
+          },
+          "entitlement_section_types": {
+            "entitlement_name": "list",
+            "data_policies": "dict",
+            "data_profiles": "dict",
+            "data_entitlements": "list",
+            "role_entitlements": "list"
+          },
+          "assigned_name_count": 5,
+          "functional_pair_count": 47,
+          "policy_group_count": 1,
+          "profile_group_count": 1,
+          "data_entitlement_count": 1,
+          "policy_rule_fields": [
+            "data_policy_name",
+            "policy_owner"
+          ],
+          "profile_rule_fields": [
+            "data_profile_name",
+            "data_profile_owner"
+          ],
+          "data_entitlement_fields": [
+            "key",
+            "values"
+          ]
+        }
+      },
+      "source_date_limits": [
+        "HTTP Date is a retained response header, not an independent retrieval timestamp.",
+        "The collection file does not establish current deployment or synchronized observation."
+      ]
+    },
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by app and user (1481696).yml",
+      "sha256": "5b184ecf59ae310086a1b6054d8eea3043e2e585fa0341a1a9079246e9ab1a3c",
+      "revision": "31e508f75443916633cb196d013129ad82a65974",
+      "locator": "/examples/0",
+      "id": "effective-user-b",
+      "inventory_locator": "/sources/1",
+      "classification": "retained-http-exchange",
+      "request": {
+        "method": "GET",
+        "origin": "https://fmcesuat.gdc.standardchartered.com",
+        "route_template": "/fmces/v1/entitlement/app/{itam_id}/{application}/user/{user_id}",
+        "path_parameter_names": [
+          "itam_id",
+          "application",
+          "user_id"
+        ],
+        "query_parameter_names": [],
+        "body_present": false,
+        "header_names": [
+          "Authorization"
+        ],
+        "authorization_scheme": "Bearer",
+        "credential_values_retained": false,
+        "request_locator": "/examples/0/request",
+        "configured_auth_locator": "/http/headers",
+        "collection_auth": "inherit"
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "http_date": "Tue, 03 Nov 2026 05:33:42 GMT",
+        "header_names": [
+          "transfer-encoding",
+          "vary",
+          "x-content-type-options",
+          "x-xss-protection",
+          "cache-control",
+          "pragma",
+          "expires",
+          "strict-transport-security",
+          "x-frame-options",
+          "content-type",
+          "date",
+          "content-security-policy",
+          "referrer-policy"
+        ],
+        "body_locator": "/examples/0/response/body/data",
+        "body_encoding": "JSON text inside collection export body.data",
+        "body_text_sha256": "b79dff48766b97230b7d80238971994f2ada5202c03e04efe420ca67bcfffcb7",
+        "record_count": 1,
+        "shape": {
+          "user_data_types": {
+            "app_name": "str",
+            "itam_id": "str",
+            "user_id": "str"
+          },
+          "entitlement_section_types": {
+            "entitlement_name": "list",
+            "data_policies": "dict",
+            "data_profiles": "dict",
+            "data_entitlements": "list",
+            "role_entitlements": "list"
+          },
+          "assigned_name_count": 7,
+          "functional_pair_count": 31,
+          "policy_group_count": 1,
+          "profile_group_count": 1,
+          "data_entitlement_count": 1,
+          "policy_rule_fields": [
+            "data_policy_name",
+            "policy_owner"
+          ],
+          "profile_rule_fields": [
+            "data_profile_name",
+            "data_profile_owner"
+          ],
+          "data_entitlement_fields": [
+            "key",
+            "values"
+          ]
+        }
+      },
+      "source_date_limits": [
+        "HTTP Date is a retained response header, not an independent retrieval timestamp.",
+        "The collection file does not establish current deployment or synchronized observation."
+      ]
+    },
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by application (FlowZero).yml",
+      "sha256": "3b124edf881824b0f3269eabba1149e2d47d1e811a3c67b05ebe3ba5b033200f",
+      "revision": "31e508f75443916633cb196d013129ad82a65974",
+      "locator": "/examples/0",
+      "id": "catalog-a",
+      "inventory_locator": "/sources/2",
+      "classification": "retained-http-exchange",
+      "request": {
+        "method": "GET",
+        "origin": "https://fmcesuat.gdc.standardchartered.com",
+        "route_template": "/fmces/v1/entitlement/app/{itam_id}/{application}",
+        "path_parameter_names": [
+          "itam_id",
+          "application"
+        ],
+        "query_parameter_names": [],
+        "body_present": false,
+        "header_names": [
+          "Authorization"
+        ],
+        "authorization_scheme": "Bearer",
+        "credential_values_retained": false,
+        "request_locator": "/examples/0/request",
+        "configured_auth_locator": "/http/headers",
+        "collection_auth": "inherit"
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "http_date": "Tue, 03 Nov 2026 05:33:19 GMT",
+        "header_names": [
+          "transfer-encoding",
+          "vary",
+          "x-content-type-options",
+          "x-xss-protection",
+          "cache-control",
+          "pragma",
+          "expires",
+          "strict-transport-security",
+          "x-frame-options",
+          "content-type",
+          "date",
+          "content-security-policy",
+          "referrer-policy"
+        ],
+        "body_locator": "/examples/0/response/body/data",
+        "body_encoding": "JSON text inside collection export body.data",
+        "body_text_sha256": "6f5a8bbc01b42540f3e40fb5e8c457071b42691f495fd557b5b4e9d32ca8a180",
+        "record_count": 40,
+        "shape": {
+          "row_fields": [
+            "entitlement_id",
+            "entitlement_name",
+            "role_entitlements",
+            "user_ids"
+          ],
+          "row_field_types": {
+            "entitlement_id": [
+              "int"
+            ],
+            "entitlement_name": [
+              "str"
+            ],
+            "role_entitlements": [
+              "list"
+            ],
+            "user_ids": [
+              "list"
+            ]
+          },
+          "empty_grant_definition_count": 2,
+          "empty_membership_definition_count": 11
+        }
+      },
+      "source_date_limits": [
+        "HTTP Date is a retained response header, not an independent retrieval timestamp.",
+        "The collection file does not establish current deployment or synchronized observation."
+      ]
+    },
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by application.yml",
+      "sha256": "1b9ee6360712663dd9386c1a7ad61e416773067698770105b3276d1bbfc4d14e",
+      "revision": "31e508f75443916633cb196d013129ad82a65974",
+      "locator": "/examples/0",
+      "id": "catalog-b",
+      "inventory_locator": "/sources/3",
+      "classification": "retained-http-exchange",
+      "request": {
+        "method": "GET",
+        "origin": "https://fmcesuat.gdc.standardchartered.com",
+        "route_template": "/fmces/v1/entitlement/app/{itam_id}/{application}",
+        "path_parameter_names": [
+          "itam_id",
+          "application"
+        ],
+        "query_parameter_names": [],
+        "body_present": false,
+        "header_names": [
+          "Authorization"
+        ],
+        "authorization_scheme": "Bearer",
+        "credential_values_retained": false,
+        "request_locator": "/examples/0/request",
+        "configured_auth_locator": "/http/headers",
+        "collection_auth": "inherit"
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "http_date": "Tue, 03 Nov 2026 05:30:46 GMT",
+        "header_names": [
+          "transfer-encoding",
+          "vary",
+          "x-content-type-options",
+          "x-xss-protection",
+          "cache-control",
+          "pragma",
+          "expires",
+          "strict-transport-security",
+          "x-frame-options",
+          "content-type",
+          "date",
+          "content-security-policy",
+          "referrer-policy"
+        ],
+        "body_locator": "/examples/0/response/body/data",
+        "body_encoding": "JSON text inside collection export body.data",
+        "body_text_sha256": "ecef4093fdcb5b6594bfc013db273af127d3cc5f8fb4328219eb8db674247c3a",
+        "record_count": 74,
+        "shape": {
+          "row_fields": [
+            "entitlement_id",
+            "entitlement_name",
+            "role_entitlements",
+            "user_ids"
+          ],
+          "row_field_types": {
+            "entitlement_id": [
+              "int"
+            ],
+            "entitlement_name": [
+              "str"
+            ],
+            "role_entitlements": [
+              "list"
+            ],
+            "user_ids": [
+              "list"
+            ]
+          },
+          "empty_grant_definition_count": 35,
+          "empty_membership_definition_count": 17
+        }
+      },
+      "source_date_limits": [
+        "HTTP Date is a retained response header, not an independent retrieval timestamp.",
+        "The collection file does not establish current deployment or synchronized observation."
+      ]
+    }
+  ],
+  "observed_variations": [
+    "Two effective-user captures have different source accounts and counts. They are not before/after captures of one account.",
+    "Two catalogs have different application scopes, sizes, empty grant lists, and empty membership lists."
+  ],
+  "observed_http_errors": [],
+  "assigned_role_fixture": {
+    "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/test/resources/ces-role-details.json",
+    "repository": "repos/libraries/single-ui-sdk-starter",
+    "repository_relative_path": "single-ui-sdk-starter/src/test/resources/ces-role-details.json",
+    "revision": "fd9a157e260850b6d9efa10da3223950ea61133a",
+    "sha256": "8f841cc6573449027db65a97ad26a01d2720f4f60c565e6dd9e18314651d32f3",
+    "locator": "/",
+    "classification": "supplied-sdk-response-body-fixture",
+    "retained_binding": {
+      "path": "tasks/single-ui-sdk-ces-migration-20261101/evidence/candidate-run-04/inputs.json",
+      "locator": "/files entry whose path equals single-ui-sdk-starter/src/test/resources/ces-role-details.json"
+    },
+    "route_template": "/fmces/v1/entitlement/user/{user_id}",
+    "route_and_auth_sources": [
+      {
+        "repository": "repos/libraries/single-ui-sdk-starter",
+        "path": "single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/properties/AuthProperties.java",
+        "revision": "fd9a157e260850b6d9efa10da3223950ea61133a",
+        "sha256": "e6ac8c3a6c56feaeb04f25852664d1415126ae89ad9b68cfd67811dc3b075acc",
+        "locator": "lines 38",
+        "purpose": "Assigned-role default route",
+        "classification": "inspected-client-source",
+        "live_verification": false
+      },
+      {
+        "repository": "repos/libraries/single-ui-sdk-starter",
+        "path": "single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImpl.java",
+        "revision": "fd9a157e260850b6d9efa10da3223950ea61133a",
+        "sha256": "3ef667ae69c380387c517db1fdbcc4805168ab5beeaa566b8892f5d385f7aabc",
+        "locator": "lines 55-58, 77-80",
+        "purpose": "Injected token provider, Bearer header, and GET method",
+        "classification": "inspected-client-source",
+        "live_verification": false
+      }
+    ],
+    "response_status": null,
+    "capture_date": null,
+    "capture_environment": null,
+    "account_binding": "not echoed by body; request association unavailable in fixture",
+    "shape": {
+      "role_count": 6,
+      "roles_with_empty_grants": 3,
+      "listed_role_grant_count": 30,
+      "row_fields": [
+        "entitlementId",
+        "entitlementName",
+        "appId",
+        "appName",
+        "itamName",
+        "appUID",
+        "itamId",
+        "featureActionDtos"
+      ],
+      "observed_field_types": {
+        "entitlementId": [
+          "str"
+        ],
+        "entitlementName": [
+          "str"
+        ],
+        "appId": [
+          "str"
+        ],
+        "appName": [
+          "str"
+        ],
+        "appUID": [
+          "int"
+        ],
+        "itamId": [
+          "NoneType"
+        ]
+      },
+      "nested_feature_fields": [
+        "featureId",
+        "featureName",
+        "applicationDto"
+      ],
+      "nested_action_fields": [
+        "actionId",
+        "actionName",
+        "applicationDto"
+      ],
+      "nested_application_fields": [
+        "appName",
+        "appUID"
+      ]
+    },
+    "limits": [
+      "This is not a captured HTTP request/response pair.",
+      "Do not invent its status, observation date, environment, or account request identity.",
+      "The fixture was unchanged at inspection; current SDK HEAD has advanced beyond its introducing revision."
+    ]
+  },
+  "functional_profile_user_sources": [
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-clarifications.md",
+      "sha256": "512f8f281cdc872f2f398f93a7a1a2d318e4fdffe71e25d0d2fee733be6bb6b0",
+      "revision": "73917a552bcaf0b6f4b20625c0a21cb22e86baa5",
+      "locator": "lines 6-34",
+      "date": "2026-11-17",
+      "source_type": "recorded-user-clarification",
+      "claims": [
+        "Exactly one functional profile for an assigned account.",
+        "Also verify rejection of incompatible assignments.",
+        "Cover both directions and preserve the original functional value after rejection.",
+        "General accounts include Generic, System, and Service.",
+        "Report the immediate read separately from propagation deadline conformance."
+      ],
+      "limits": [
+        "The answers authorize case definitions, not provisioning execution.",
+        "The response locator and empty wire representation remain unresolved."
+      ]
+    },
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-timing-target.md",
+      "sha256": "d4c77b89c9184612658472b6060fc1e38ba73377101d8f364f076d74e98df83e",
+      "revision": "73917a552bcaf0b6f4b20625c0a21cb22e86baa5",
+      "locator": "lines 6-20",
+      "date": "2026-11-17",
+      "source_type": "recorded-user-clarification",
+      "target_seconds": 5,
+      "clock_origin": "CES confirms the assignment change; selected test convention",
+      "claims": [
+        "Five seconds is the user-selected test target.",
+        "The service NFR remains unconfirmed."
+      ],
+      "limits": [
+        "No measured propagation behavior or CES-approved NFR is established."
+      ]
+    }
+  ],
+  "canonical_candidate_references": [
+    {
+      "path": "knowledge/records/candidates/security/KT-ces-migration-parity.md",
+      "sha256": "48d2517b5821f33179dbafe81ba4adba9bab91ba260594c39fa884538dac63c5",
+      "revision": "9ae2703baab9aadea71773e87d19035c1e2079cd",
+      "locator": "lines 164-203; functional-profile conditions and timing limits",
+      "id": "KT-ces-migration-parity",
+      "version": 8,
+      "status": "draft",
+      "governance_state": "candidate",
+      "verified_entries": 0,
+      "authority_limit": "Draft canonical candidate; not published policy or proof of deployed enforcement."
+    },
+    {
+      "path": "knowledge/records/candidates/security/KT-ces-entitlement-control-20261115.md",
+      "sha256": "a05ebc47f5c9197f6dd54a16519e7f428ee35ec1a92188087618a9f1dedc8c35",
+      "revision": "65c90aa9f9958c876f381fc8c885e7673a06fa9d",
+      "locator": "query-and-notification-enforcement",
+      "id": "KT-ces-entitlement-control-20261115",
+      "version": 2,
+      "status": "draft",
+      "governance_state": "candidate",
+      "verified_entries": 0,
+      "authority_limit": "Draft canonical candidate; not published policy or proof of deployed enforcement."
+    }
+  ],
+  "authentication_evidence": {
+    "captured_scheme": "Bearer Authorization header present in all four successful exchanges",
+    "client_token_source": "Inspected SDK FmaaTokenProvider interface and injected provider usage",
+    "unsupported": [
+      "Authorization scopes and permission names",
+      "Service-wide required authentication behavior",
+      "Token issuance or refresh contract",
+      "JWT bearer format guarantee",
+      "Unauthenticated and unauthorized error response shape"
+    ],
+    "secret_handling": "All Authorization values omitted. Keep approved credential material outside extracted examples."
+  },
+  "limits": [
+    "All four HTTP examples are successful GET captures only.",
+    "Observed fields do not establish universal requiredness, enums, omitted defaults, pagination, or a complete service contract.",
+    "No CES service-account effective response was supplied in these four captures.",
+    "Effective feature/action pairs lack per-pair entitlement provenance.",
+    "Policy names, profile owners, and data-filter values do not establish current enforcement or precedence.",
+    "No provisioning, mutation, retry, propagation, live parity, or deployed acceptance was verified."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "automated_check_scope": "Source hashes match retained inventory; source and SDK revision bindings checked; JSON metadata derived from decoded stored exchanges.",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not establish complete writing review."
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "id": "catalog-a",
+  "operationId": "getApplicationCatalog",
+  "applicability": {
+    "environment": "UAT",
+    "http_date": "Tue, 03 Nov 2026 05:33:19 GMT"
+  },
+  "request": {
+    "method": "GET",
+    "origin": "https://fmcesuat.gdc.standardchartered.com",
+    "route_template": "/fmces/v1/entitlement/app/{itam_id}/{application}",
+    "path_parameters": {
+      "itam_id": "itam-001",
+      "application": "application-002"
+    },
+    "query_parameters": {},
+    "headers": {
+      "Authorization": "Bearer <redacted>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "date": "Tue, 03 Nov 2026 05:33:19 GMT"
+    },
+    "body": [
+      {
+        "entitlement_id": 603,
+        "entitlement_name": "entitlement-010",
+        "role_entitlements": [
+          {
+            "feature": "feature-010",
+            "action": "action-003"
+          }
+        ],
+        "user_ids": []
+      },
+      {
+        "entitlement_id": 604,
+        "entitlement_name": "entitlement-011",
+        "role_entitlements": [],
+        "user_ids": []
+      },
+      {
+        "entitlement_id": 606,
+        "entitlement_name": "entitlement-012",
+        "role_entitlements": [
+          {
+            "feature": "feature-032",
+            "action": "action-012"
+          },
+          {
+            "feature": "feature-033",
+            "action": "action-013"
+          }
+        ],
+        "user_ids": [
+          "account-003",
+          "account-004"
+        ]
+      }
+    ],
+    "body_complete": false,
+    "original_record_count": 40,
+    "selected_record_indexes": [
+      0,
+      1,
+      3
+    ],
+    "nested_array_projections": [
+      {
+        "source_row_index": 3,
+        "field": "user_ids",
+        "original_length": 2739,
+        "selected_range": [
+          0,
+          2
+        ]
+      },
+      {
+        "source_row_index": 3,
+        "field": "role_entitlements",
+        "original_length": 21,
+        "selected_range": [
+          0,
+          2
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "classification": "sanitized-observation",
+    "source_id": "catalog-a",
+    "source_lookup": {
+      "inventory_path": "tasks/ces-entitlement-migration-20261102/evidence/coverage-intake-20261103/api-inventory.json",
+      "inventory_sha256": "7b6583fb1fcc0a2b7d6e5a6add9b4c9937c48d9858194e8b94b78c495c508e69",
+      "locator": "/sources/2"
+    },
+    "source_sha256": "3b124edf881824b0f3269eabba1149e2d47d1e811a3c67b05ebe3ba5b033200f",
+    "source_revision": "31e508f75443916633cb196d013129ad82a65974",
+    "request_locator": "/examples/0/request",
+    "response_locator": "/examples/0/response",
+    "body_locator": "/examples/0/response/body/data",
+    "sanitization": "Stable typed aliases replace string values and dynamic group keys; empty strings/nulls remain.",
+    "selection_limit": "Catalog rows and large nested arrays are sampled; never infer absent assignments or grants from these subsets.",
+    "derivation": "tasks/workbench-capability-learning-20261122/evidence/build-ces-standard-20261123.py"
+  }
+}
