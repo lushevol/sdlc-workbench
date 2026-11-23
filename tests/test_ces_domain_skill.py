@@ -36,6 +36,24 @@ class CesDomainSkillTests(unittest.TestCase):
     def fixture(self, name):
         return self.skill / "assets" / f"{name}.json"
 
+    def test_assigned_role_attribution_and_empty_grants(self):
+        source = self.fixture("roles")
+        lookup = ("--feature", "Reports", "--action", "View")
+        assigned = self.run_inspector("assigned-role", source, "--entitlement", "Report Reader", *lookup)
+        self.assertEqual(assigned["account_scope"], "CALLER_DECLARED")
+        self.assertEqual(assigned["assignment_count"], 2)
+        self.assertEqual(assigned["assignments_without_grants"], 1)
+        self.assertEqual(assigned["requested_grant"], "PRESENT")
+        empty = self.run_inspector("assigned-role", source, "--entitlement", "Unassigned Feature Set", *lookup)
+        self.assertEqual((empty["requested_entitlement"], empty["requested_grant"]), ("PRESENT", "ABSENT"))
+        self.run_inspector("assigned-role", source, "--app-uid", "999", success=False)
+
+        rows = json.loads(source.read_text(encoding="utf-8"))
+        rows[0]["featureActionDtos"][0]["features"]["applicationDto"]["appUID"] = 999
+        invalid = self.workspace / "invalid-roles.json"
+        invalid.write_text(json.dumps(rows), encoding="utf-8")
+        self.run_inspector("assigned-role", invalid, success=False)
+
     def test_copied_skill_checks_catalog_grant_and_snapshot_differences(self):
         catalog = self.run_inspector("catalog", self.fixture("catalog"))
         self.assertEqual(catalog["application_scope"], "CALLER_DECLARED")

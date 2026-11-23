@@ -142,6 +142,83 @@ def user_summary(record, requested=None):
     return result
 
 
+def selected_grant(feature, action):
+    if feature is None and action is None:
+        return None
+    if feature is None or action is None:
+        raise EvidenceError("Supply --feature and --action together.")
+    return name(feature, "feature"), name(action, "action")
+
+
+def assigned_grant_side(value, field, app, app_uid):
+    side = require_type(value, dict, "CES assigned-role grant")
+    nested = side.get("applicationDto")
+    if nested is not None:
+        nested = require_type(nested, dict, "applicationDto")
+        nested_uid = nested.get("appUID")
+        if nested_uid is not None and type(nested_uid) is not int:
+            raise EvidenceError("Grant application UID requires an integer.")
+        if name(nested.get("appName"), "grant application name") != app or (
+            app_uid is not None and nested_uid != app_uid
+        ):
+            raise EvidenceError("Grant application contradicts its assigned role.")
+    return name(side.get(field), field)
+
+
+def assigned_role_summary(rows, app, app_id=None, app_uid=None, entitlement=None, requested=None):
+    app = name(app, "CES application")
+    if app_id is not None:
+        app_id = name(app_id, "CES application ID")
+    if entitlement is not None:
+        entitlement = name(entitlement, "CES assigned entitlement")
+    assignments = {}
+    selected_ids, selected_uids = set(), set()
+    matched_app_name = False
+    for item in rows:
+        row = require_type(item, dict, "CES assigned-role record")
+        if name(row.get("appName"), "appName") != app:
+            continue
+        matched_app_name = True
+        row_id = name(row.get("appId"), "appId")
+        if app_id is not None and row_id != app_id:
+            continue
+        row_uid = row.get("appUID")
+        if row_uid is not None and type(row_uid) is not int:
+            raise EvidenceError("appUID requires an integer.")
+        if app_uid is not None and row_uid != app_uid:
+            continue
+        selected_ids.add(row_id)
+        if row_uid is not None:
+            selected_uids.add(row_uid)
+        if len(selected_ids) > 1 or len(selected_uids) > 1:
+            raise EvidenceError("The selected application name matches conflicting CES application identities.")
+        role = name(row.get("entitlementName"), "entitlementName")
+        if role in assignments:
+            raise EvidenceError("CES assigned-role response contains duplicate entitlement names.")
+        grants = []
+        for item in require_type(row.get("featureActionDtos"), list, "featureActionDtos"):
+            pair = require_type(item, dict, "CES assigned-role grant")
+            feature = assigned_grant_side(pair.get("features"), "featureName", app, row_uid)
+            action = assigned_grant_side(pair.get("actions"), "actionName", app, row_uid)
+            grants.append((feature, action))
+        assignments[role] = unique(grants, "CES assigned-role grant list")
+    if matched_app_name and not assignments:
+        raise EvidenceError("No matching application row has the requested CES application identity.")
+    result = {
+        "status": "ASSIGNMENTS_PRESENT" if assignments else "NO_ASSIGNMENTS",
+        "account_scope": "CALLER_DECLARED",
+        "assignment_count": len(assignments),
+        "assignments_without_grants": sum(not grants for grants in assignments.values()),
+        "role_grant_count": sum(len(grants) for grants in assignments.values()),
+    }
+    if entitlement is not None:
+        result["requested_entitlement"] = "PRESENT" if entitlement in assignments else "ABSENT"
+    if requested is not None:
+        grants = assignments.values() if entitlement is None else [assignments.get(entitlement, set())]
+        result["requested_grant"] = "PRESENT" if any(requested in pairs for pairs in grants) else "ABSENT"
+    return result
+
+
 def delta(before, after):
     return {"added": len(after - before), "removed": len(before - after)}
 
@@ -165,7 +242,7 @@ def compare(before, after):
 def main(argv=None):
     parser = ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    for command in ("catalog", "user", "compare"):
+    for command in ("catalog", "user", "compare", "assigned-role"):
         subparser = commands.add_parser(command)
         if command == "compare":
             subparser.add_argument("before")
@@ -173,22 +250,26 @@ def main(argv=None):
         else:
             subparser.add_argument("file")
         subparser.add_argument("--app", required=True)
-        if command != "catalog":
+        if command in ("user", "compare"):
             subparser.add_argument("--user", required=True)
-        if command == "user":
+        if command in ("user", "assigned-role"):
             subparser.add_argument("--feature")
             subparser.add_argument("--action")
+        if command == "assigned-role":
+            subparser.add_argument("--app-id")
+            subparser.add_argument("--app-uid", type=int)
+            subparser.add_argument("--entitlement")
     args = parser.parse_args(argv)
     try:
         if args.command == "catalog":
             result = catalog_summary(read_rows(args.file), args.app)
         elif args.command == "user":
-            requested = None
-            if args.feature is not None or args.action is not None:
-                if args.feature is None or args.action is None:
-                    raise EvidenceError("Supply --feature and --action together.")
-                requested = (name(args.feature, "feature"), name(args.action, "action"))
+            requested = selected_grant(args.feature, args.action)
             result = user_summary(effective_record(read_rows(args.file), args.app, args.user), requested)
+        elif args.command == "assigned-role":
+            requested = selected_grant(args.feature, args.action)
+            result = assigned_role_summary(read_rows(args.file), args.app, args.app_id, args.app_uid,
+                                           args.entitlement, requested)
         else:
             before = effective_record(read_rows(args.before), args.app, args.user)
             after = effective_record(read_rows(args.after), args.app, args.user)

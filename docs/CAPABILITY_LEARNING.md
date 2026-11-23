@@ -129,7 +129,8 @@ ai-sdlc --workspace . learning checkpoint \
 Use a single path to record an initial candidate. Supply both paths once the independent check is available.
 
 Use the CES domain skill for entitlement definitions, effective access, data scope, and CES response contracts. [CES domain capability](../.agents/skills/ces-domain-capability/SKILL.md)
-Copy its folder to use the packaged references, synthetic examples, and offline capture inspector. [CES investigation workflows](../.agents/skills/ces-domain-capability/references/workflows.md)
+Copy its folder to review assigned-role evidence, compare effective access, or assess functional profile evidence. [CES investigation workflows](../.agents/skills/ces-domain-capability/references/workflows.md)
+Use a local copy of the variable template for account, service origin, application, and topic inputs. [CES variable template](../.agents/skills/ces-domain-capability/assets/variables.example.json)
 In Workbench, submit reusable CES findings against the existing capability ID `ces-entitlement-migration`. Keep policy decisions in governed knowledge.
 
 ## Configure and diagnose

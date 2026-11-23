@@ -144,3 +144,31 @@ The evidence covers the application catalog and effective-user views.
 The offline checks cover captured responses. Data-policy interpretation and current CES enforcement need scoped evidence.
 Current instructions are in [CES domain capability](../../.agents/skills/ces-domain-capability/SKILL.md)
 and the [Workbench capability guide](../../docs/CAPABILITY_LEARNING.md#integration-examples).
+
+## CES domain coverage and variables
+
+The user supplied the [exact follow-up](evidence/ces-skill-enrichment-request-20261123.txt) in Codex on 23 November 2026.
+Baseline Workbench revision is `39a10b1a2`.
+Review relevant session decisions and retained tasks. Enrich the standalone CES skill and maintain its variable definitions separately.
+
+The SDK session and retained fixture establish the assigned-role view and its role-specific grant shape.
+The functional-profile session establishes the requested value checks, rejection cases, and timing convention.
+The data-control design supplies decision points for tracing record and notification visibility.
+These sources inform the skill's procedures. Current wire and policy details require evidence for the selected scope.
+
+- Assigned roles and provenance. [SDK contract review](../single-ui-sdk-ces-migration-20261101/10-change-review.md#selected-compatibility-design)
+- Profile values and account types. [Recorded clarifications](../ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-clarifications.md) and [timing convention](../ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/user-timing-target.md)
+- Policy and consumer visibility. [Historical data-control design summary](../../knowledge/records/candidates/security/KT-ces-entitlement-control-20261115.md#query-and-notification-enforcement)
+
+The skill adds assigned-role inspection and a role-attribution fixture.
+The functional-profile guide distinguishes value, provisioning, and timing checks.
+The variable template separates topic, service origin, routes, account, application, selectors, and evidence inputs.
+Packaged tenant values are unset. Task values belong in a local copy.
+
+All 1,158 Workbench tests passed on macOS with connector integration enabled.
+The first attempt hit sandbox loopback errors. The rerun with local fixture access passed.
+The passing log SHA-256 is `99f5b4e2b31e08c2879d62c1e997751feb824bbf34e18d03f6ae73397cecf2dd`.
+The wheel, clean-workspace link checks, skill structure validation, and isolated Python commands passed.
+Verification covers offline captures and documentation. Live CES and provisioning outcomes need scoped evidence.
+
+[Updated CES skill](../../.agents/skills/ces-domain-capability/SKILL.md) · [Variable template](../../.agents/skills/ces-domain-capability/assets/variables.example.json)
