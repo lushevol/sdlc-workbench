@@ -212,9 +212,15 @@ Omit `--test` to execute the full selected file. Use `--include TAG` for tag sel
 Executing existing suites does not require workbook generation or report-upload utilities.
 
 Open `report.html` or `log.html` under the selected Robot output directory.
-Retain `output.xml`, the command, exit code, configuration hash, application revisions, and test source hashes.
+Routine generated reports and troubleshooting logs stay in ignored local output.
+For a reported business verification claim, retain `output.xml` under the owning task.
+Bind it to the command, exit code, configuration hash, application revisions, and test source hashes.
+Keep native output local for exploratory or routine runs without a business verification claim.
+Record a compact receipt in the living record.
 The session `artifactDir` contains case JSON and screenshots.
 Save each completed case immediately under the owning task's evidence rules.
+Promote additional log content only when a consequential claim or required procedure needs it.
+Keep necessary raw context under the [evidence and log boundary](../tasks/README.md#git-managed-evidence-and-local-logs).
 Review private data before moving local artifacts into retained task evidence.
 Inspect the assertions and matching results before reporting verified behavior.
 

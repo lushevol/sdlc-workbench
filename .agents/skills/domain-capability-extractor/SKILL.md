@@ -51,7 +51,9 @@ Use stable case identities. Repeated extraction should enrich existing files wit
 
 In Workbench, these files are technical integration references, outside canonical `knowledge/records/` and derived wiki ownership.
 Link approved business rules by record identity and version. Route new business intent through existing knowledge governance.
-Keep full execution history and implementation gaps in the owning task; retain reusable lessons here with exact evidence links.
+Keep implementation gaps and necessary execution evidence in the owning task.
+Keep routine logs in ignored local storage. Promote required raw context when consequential claims need it.
+Retain reusable lessons here with exact evidence links.
 Extraction does not establish publication, acceptance, deployed behavior, or permission to execute a documented workflow.
 
 ## Tools, configuration, and promotion

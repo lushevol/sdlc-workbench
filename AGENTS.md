@@ -55,6 +55,9 @@ Only evidence-backed `READY` permits the named phase within existing authorizati
 Follow [task document order](tasks/README.md#document-order), [baseline comparisons](tasks/README.md#compare-behavior-for-gap-analysis), and [knowledge reconciliation](tasks/README.md#update-knowledge-after-clarification).
 Save each completed case immediately, including parallel completions, under the [resume checkpoint rules](tasks/README.md#save-case-evidence-and-resume-checkpoints).
 Apply [critical evidence retention](tasks/README.md#critical-evidence-and-reusable-payloads), [growth controls](tasks/README.md#control-evidence-growth-before-execution), and [cleanup rules](tasks/README.md#evidence-priorities-and-cleanup).
+Commit selected decision evidence under the [evidence and log boundary](tasks/README.md#git-managed-evidence-and-local-logs).
+Keep routine command output and troubleshooting logs in ignored `.workbench/logs/` storage.
+Promote log content when consequential claims, required procedures, or protected provenance require it. Preserve necessary raw context.
 Retain one canonical payload. Preserve meaningful failures, contradictory evidence, registered snapshots, immutable audits, and recovery information.
 Authorized cleanup records paths, hashes, prior revisions, and reasons. Relocation preserves bytes and identities, records mappings, and repairs active references.
 

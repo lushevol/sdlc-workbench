@@ -23,7 +23,8 @@ Maintain `knowledge/integrations/<domain>/README.md` with three linked areas:
 | `Knowledge/` | Background, architecture, conventions, decisions, limitations, and canonical business-rule links |
 
 Merge existing files and preserve supported detail, useful failures, conflicting evidence, and material unknowns.
-Extract useful partial results without inventing completion. Keep full execution history and implementation gaps in the owning task.
+Extract useful partial results without inventing completion. Keep necessary execution evidence and implementation gaps in the owning task.
+Keep routine logs in ignored local storage under the [evidence and log boundary](../tasks/README.md#git-managed-evidence-and-local-logs).
 The [construction reference](../.agents/skills/domain-capability-extractor/references/construction.md) defines contracts, workflow content, examples, and maintenance checks.
 These technical references remain outside canonical record and wiki ownership. New business intent follows existing governance.
 Keep domain-specific assets here. Shared promotion requires a demonstrated benefit, normal source review, and task evidence.

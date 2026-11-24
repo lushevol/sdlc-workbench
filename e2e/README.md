@@ -348,6 +348,10 @@ See [validation evidence](VALIDATION.md) for the tested platform and remaining l
 ## Screenshot audit runs
 
 The [audit configuration](audit.config.ts) retains named frames, assertions, and per-case results.
+Without `E2E_AUDIT_OUTPUT`, routine runs write to ignored `.workbench/logs/e2e-audit/<run>/` storage.
+These local diagnostics are not committed automatically.
+For decision evidence, select a new owning-task evidence directory through `E2E_AUDIT_OUTPUT` before execution.
+
 It retains traces for failed cases by default. Successful cases keep their assertions and screenshot evidence.
 Set `E2E_AUDIT_TRACE=on` before timing, request, or causal investigations that need successful traces.
 Supported values are `off`, `on`, and `retain-on-failure`. Invalid values stop configuration loading.
@@ -360,6 +364,12 @@ Use the [critical evidence policy](../tasks/README.md#critical-evidence-and-reus
 Keep required run files and referenced payloads together. Optional HTML bundles are derived views and remain ignored.
 Check inherited ignores before execution. Historical audit folders can ignore `playwright-artifacts/`, which now holds canonical reporter attachments.
 Choose an unignored task output location for required captures. Do not treat every runner artifact as disposable.
+
+If a routine capture becomes decision evidence, preserve required payloads before local cleanup.
+Record original and retained locators, matching hashes, source identity, assertions, environment, and material limits.
+Ensure retained references resolve before handoff.
+Stage only the exact reviewed evidence files.
+Do not force-add an entire run directory or commit verbose diagnostics only because the runner produced them.
 
 HTML reports are optional. Set `E2E_AUDIT_HTML=1` before execution to generate one.
 Unset this variable, or use `0`, to omit attachment copies made by the HTML reporter.

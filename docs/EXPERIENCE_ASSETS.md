@@ -12,7 +12,11 @@ Use the experience packet workflow when a successful procedure needs a reviewed 
 
 Promoted packets live under the project-owned `assets/experience/` area.
 Scratch scans and candidate material stay in ignored `.workbench/experience/` storage until selected.
-Full execution logs, screenshots, traces, and source evidence remain under their owning task.
+Keep selected decision evidence, required screenshots, and traces under their owning task.
+Link canonical source snapshots from `knowledge/evidence/sources/` by source identity and hash.
+Keep routine execution and troubleshooting logs in ignored `.workbench/logs/<task-id>/<run-id>/`.
+Promote necessary log content under the [evidence and log boundary](../tasks/README.md#git-managed-evidence-and-local-logs).
+Preserve full raw context when reproduction, review, or recovery requires it.
 
 ```text
 assets/experience/

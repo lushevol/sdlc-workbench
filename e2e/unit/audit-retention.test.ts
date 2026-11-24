@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test, { type TestContext } from 'node:test';
+import { fileURLToPath } from 'node:url';
 import type { FullConfig, Suite, TestCase, TestResult } from '@playwright/test/reporter';
 import AuditReporter from '../audit.reporter.js';
 import { auditCaseId, digest } from '../support/audit-fixture.js';
@@ -124,6 +126,31 @@ test('Given an external alias to durable run bytes, When the alias is removed, T
 test('Given no capture overrides, When choosing audit settings, Then successful traces and HTML copies are omitted', () => {
   assert.equal(auditTraceMode({}), 'retain-on-failure');
   assert.equal(auditHtmlReport({}), false);
+});
+
+test('Given routine or explicit audit output, When loading configuration, Then every reporter uses its selected run directory', () => {
+  const workspace = fileURLToPath(new URL('../../', import.meta.url));
+  for (const requested of [undefined, 'tasks/retention-probe/evidence/run-001']) {
+    const run = JSON.parse(execFileSync(process.execPath, ['--import', 'tsx', '--input-type=module', '--eval',
+      `const { default: config } = await import('./e2e/audit.config.ts');
+       console.log(JSON.stringify({ requested: process.env.E2E_AUDIT_OUTPUT,
+         outputDir: config.outputDir, reporter: config.reporter }));`], {
+      cwd: workspace, encoding: 'utf8', timeout: 15_000,
+      env: { ...process.env, E2E_AUDIT_OUTPUT: requested, E2E_ENVIRONMENT: undefined, E2E_ENVIRONMENTS_FILE: undefined,
+        E2E_AUDIT_TRACE: undefined, E2E_AUDIT_HTML: undefined, E2E_BROWSER: 'chromium' },
+    }));
+    const output = requested ? path.resolve(workspace, requested) : run.requested;
+    if (requested) assert.equal(run.requested, requested);
+    else {
+      assert.equal(path.dirname(output), path.join(workspace, '.workbench/logs/e2e-audit'));
+      assert.match(path.basename(output), /^\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z$/);
+    }
+    assert.equal(run.outputDir, path.join(output, 'playwright-artifacts'));
+    assert.deepEqual(run.reporter, [
+      ['line'], ['./audit.reporter.ts', { output }],
+      ['json', { outputFile: path.join(output, 'playwright-report.json') }],
+    ]);
+  }
 });
 
 test('Given explicit capture controls, When choosing audit settings, Then supported modes apply and invalid values fail', () => {

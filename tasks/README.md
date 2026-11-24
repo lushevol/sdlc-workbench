@@ -549,6 +549,32 @@ Keep provenance manifest records and immutable audit events. Validate relocated 
 Governed publication still uses the existing knowledge contracts and append-only audit events.
 Keep the task evidence and link any additional governance snapshot or record.
 
+### Git-managed evidence and local logs
+
+Keep selected decision evidence in Git with the owning task record.
+Examples include requirements, decisions, material findings, assertion results, review evidence, source snapshots, and required recovery information.
+Record its purpose, source revision or capture time, hash, and owning claim.
+Review and commit the selected files after applicable checks.
+Git tracking preserves selected bytes. It does not establish correctness, approval, or business acceptance.
+
+Write routine command output and troubleshooting diagnostics to ignored `.workbench/logs/<task-id>/<run-id>/`.
+Keep these logs out of commits.
+This includes verbose stdout, stderr, clean-build output, repeated diagnostics, and disposable report exports.
+File extensions do not determine retention. A JSON result can be disposable, and a `.log` can be required evidence.
+
+Promote log content into task evidence when a consequential decision or claim requires it.
+Also promote content required by an applicable procedure or protected provenance.
+Examples include material failures, contradictions, timing, correlations, reproduction, and recovery.
+Retain the necessary raw bytes when a reviewer needs full context.
+Use an excerpt only when omitted context cannot change the supported conclusion.
+Label excerpts and state their scope and omitted-context limits.
+A hash identifies bytes. It cannot replace necessary raw content.
+
+Keep routine check receipts in the living record.
+Include the command, source identity, environment, exit status, assertion outcomes, counts, and material limits.
+Before staging evidence, inspect ignore rules and select exact files. Do not stage a complete diagnostic output directory.
+Preserve existing required logs and provenance. This boundary does not authorize historical deletion or untracking.
+
 ### Critical evidence and reusable payloads
 
 Apply this policy to business tasks and harness maintenance evidence.
@@ -579,11 +605,10 @@ Keep full logs when their contents support those claims or an applicable procedu
 Label excerpts as excerpts. Record omitted context and its effect on the conclusion.
 Lossless compression can retain large required text when consumers support it. Record original and compressed hashes separately.
 
-Write routine command output, scratch diagnostics, and rebuildable logs to ignored `.workbench/logs/<task-id>/<run-id>/` while a run is active.
+Apply the [evidence and log boundary](#git-managed-evidence-and-local-logs) while a run is active.
 Promote required raw output to the owning task `evidence/` directory before case completion, handoff, or runtime cleanup.
-Promotion requires a named failure, assertion, correlation, timing claim, recovery need, or protected provenance.
+Promotion requires a consequential finding, necessary assertion, correlation, timing claim, recovery need, or protected provenance.
 Record the promoted path, source identity, capture time, and hash in the living record or evidence index.
-Keep routine successful receipts in the living record, including commands, exit status, counts, assertions, and material limits.
 Do not promote repeated clean output or empty files without another evidentiary purpose.
 
 Before retaining a payload, check existing task and governed evidence for the same source or capture.

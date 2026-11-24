@@ -22,7 +22,7 @@ Use the owning task and its evidence as the source. Preserve the task evidence a
 8. Assess whether the reusable result belongs in a shared Workbench asset. Read [workbench-promotion.md](references/workbench-promotion.md). Promote only generalizable guidance or tooling into `AGENTS.md`, canonical `.agents/skills/`, `core/skills/`, or project `scripts/` targets. Keep domain-specific material in the packet.
 9. Record every shared-asset promotion in the packet manifest with its target, action, before and after hashes, source section, purpose, and checks. Apply the smallest compatible change and preserve existing instructions.
 10. Run `scripts/validate_packet.py`, rebuild `assets/experience/index.yaml` with `scripts/rebuild_index.py`, and inspect the resulting diff.
-11. Link the packet and its disposition from the owning task record. Keep full logs, screenshots, traces, and execution history in task evidence.
+11. Link the packet and its disposition from the owning task record. Retain selected decision evidence and necessary execution payloads there. Keep routine logs in ignored local storage under the [evidence and log boundary](../../../tasks/README.md#git-managed-evidence-and-local-logs).
 
 Use `observed` for one supported successful run, `replayed` after a qualifying repeat, `reviewed` after applicable human review, and `retired` when the packet no longer applies.
 Record the tested conditions and limits beside the reusable steps. Preserve failed replays and create a successor packet when a source or contract changes.
