@@ -11,7 +11,8 @@ Scope each investigation to the application, principal, environment, and observa
 Use the applicable policy and exact capture before making a claim about an account or resource.
 Collect task inputs in a local copy of the [variable template](Workflows/variables.example.json).
 Read the [variable guide](Workflows/variables.md) for bindings and keep private values outside this library.
-Resolve project settings and environment-variable references through the selected client's existing configuration.
+Use the domain contract for the observed origin, routes, API version, and response properties.
+Resolve only credential bindings and dynamic runtime values through the selected client's existing configuration.
 The offline inspector needs no live credentials. Missing live bindings block only the affected external step.
 
 | Task | Read |

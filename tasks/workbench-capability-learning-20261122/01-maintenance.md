@@ -346,6 +346,8 @@ The unrelated `core/release-report/` source remains outside this scope.
 
 ## External credentials and project settings completion
 
+This earlier completion note recorded the first interpretation. The later domain-property correction below supersedes its classification of origins and routes as project settings.
+
 The extractor separates secret bindings, project settings, and task inputs.
 Skills record environment-variable or approved secret-store names without resolved values.
 Project settings supply active origins, routes, CA paths, defaults, and precedence.
@@ -373,3 +375,41 @@ No live CES authentication, CA validation, provisioning, external call, or write
 Current guidance changed in the extractor, CES index, CES entry point, CES variable guide, and `docs/CAPABILITY_LEARNING.md`.
 No configuration loader, dependency, or registry rule was added.
 The capability checkpoint recorded `NO_CHANGE` for `ces-entitlement-migration`; no new business rule, credential grant, or runtime loader was added.
+
+## Domain property boundary correction
+
+The [latest user correction](evidence/domain-capability-properties-correction-20261124.md) governs the configuration boundary.
+Baseline Workbench revision is `0e00faf46`.
+Stable properties, including base URLs and routes, belong to the domain capability.
+Only credentials and dynamic variables require external settings.
+Earlier project-settings guidance moved stable domain properties outside their intended owner. This section supersedes that interpretation.
+
+Correct the extractor, CES instructions, variables, current docs, and affected test consumers together.
+Preserve the helper-specific credential and TLS observations. Keep the prior execution evidence unchanged.
+No runtime loader or external call is required. Unrelated `core/release-report/` files remain outside scope.
+
+## Domain property boundary correction completion
+
+The final correction keeps stable CES properties in the domain library.
+The OpenAPI contract owns the observed UAT base URL, paths, operation IDs, media type, Bearer scheme, and response schemas.
+The domain facts retain the source-bound origin and routes.
+The variable template now contains credentials references and dynamic task inputs only.
+It has no `base_url`, `origins`, `routes`, or `project.settings_path` fields.
+`token_env` and `ca_env` remain unset binding-name fields.
+
+The extractor now states that stable domain properties stay in Contracts and Knowledge.
+External dependencies cover secret bindings, dynamic runtime values, and task inputs.
+A local adapter copy must remain validated against the maintained domain contract.
+The stale `ces.routes` table heading now uses OpenAPI operation IDs.
+
+Nine focused CES tests passed.
+Both skill validators passed. Workbench validation passed.
+The corrected source distribution, wheel, isolated installation, and initialized workspace passed all 16 distribution checks.
+All 21 CES files matched the source and the copied package.
+The independent boundary review found no actionable issues.
+
+[Correction evidence, distribution, review, and final checks](evidence/ces-properties-boundary-correction-20261124.json)
+
+No live CES call, authentication, provisioning, deployment, or external write was performed.
+The prior project-settings interpretation remains preserved as historical task evidence and is explicitly superseded here.
+The capability checkpoint remains `NO_CHANGE`; no business rule or execution grant was added.

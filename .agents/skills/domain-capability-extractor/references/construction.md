@@ -88,14 +88,18 @@ Relative links to conventions, background, source revisions, and retained result
 
 ### External system dependencies
 
-Record each dependency in the workflow's prerequisites and inputs using one of these scopes:
+Record stable contract properties in Contracts or Knowledge. This includes observed base URLs, route templates, API versions, media types, stable authentication schemes, and response properties.
+Do not move those properties into project settings or replace them with an unbound local value.
+If an adapter requires a local copy, record it as a validated mirror of the domain contract.
+
+Record each external dependency in the workflow's prerequisites and inputs using one of these scopes:
 
 1. **Secret binding** — environment variable or approved secret-store key, authentication type, requiredness, and redaction rule. Never store resolved secrets in skills, examples, catalogs, logs, or task evidence.
-2. **Project setting** — project or workspace configuration key, owning project, safe unset/default behavior, and precedence only when the source confirms it. Keep active deployment values and machine paths in the owning project's settings.
-3. **Task input** — local variable-file field or task-record field for the account, environment, endpoint selection, request parameters, or evidence path. Shipped templates remain unset or use safe placeholders.
+2. **Dynamic runtime value** — account, environment selection, selector, request parameter, evidence path, or machine-specific CA path supplied by the selected client or task. Keep its source, owner, safe unset behavior, and confirmed precedence explicit.
+3. **Task input** — local variable-file field or task-record field for dynamic values and evidence. Shipped templates remain unset or use safe placeholders.
 
-Use existing project loading conventions. Do not invent a new configuration loader or assume that environment variables override configuration files.
-Retained response examples describe observations. Their hosts and domain values do not select active project settings or supply credentials.
+Use existing client loading conventions for credential and dynamic values. Do not invent a new configuration loader or assume that environment variables override configuration files.
+Retained examples supply source evidence for domain properties. They do not supply credentials or independently override the maintained contract.
 Validate configuration and access bindings before making an external call. Name missing inputs without printing resolved secrets.
 A missing binding blocks that live step and its live verification. Continue offline extraction from retained sources and document the unfinished step.
 

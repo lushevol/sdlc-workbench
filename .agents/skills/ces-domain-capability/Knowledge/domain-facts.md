@@ -13,7 +13,8 @@ The [source register](sources.json) supplies exact paths, revisions, hashes, and
 | Assigned roles | `/fmces/v1/entitlement/user/{user_id}` | `assigned_role_fixture` and pinned SDK client source; body has no account identity |
 
 The observed UAT origin is `https://fmcesuat.gdc.standardchartered.com`.
-Keep the active base URL in the task variable copy. The origin is a domain fact, not an authorization grant.
+The domain contract owns this base URL. The task selects the environment without redefining its endpoint.
+The recorded origin grants no authorization to call CES.
 The captured HTTP Date headers are from 3 November 2026. They do not establish present deployment or retrieval time.
 Bearer headers appear in captured requests and the pinned SDK client. Permission scopes and service-side authorization behavior remain unknown.
 Both effective-user captures and catalog B select ITAM `51358`, application `RATAN_ENTITLEMENT_RULE`.

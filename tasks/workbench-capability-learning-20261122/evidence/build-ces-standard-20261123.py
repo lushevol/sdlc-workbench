@@ -191,7 +191,7 @@ def build():
     contract = {
         "openapi": "3.1.0", "info": {"title": "CES inspected interface subset", "version": "capture-2026-11-03",
             "description": "Source-derived technical reference. HTTP captures and the SDK body fixture have distinct evidence classes. No service-wide guarantee is inferred."},
-        "servers": [{"url": "https://fmcesuat.gdc.standardchartered.com", "description": "Observed UAT origin; select active task configuration explicitly."}],
+        "servers": [{"url": "https://fmcesuat.gdc.standardchartered.com", "description": "CES UAT base URL recorded as a domain property; select UAT only when in scope."}],
         "paths": paths, "components": {"schemas": schemas, "securitySchemes": {
             "observedBearer": {"type": "http", "scheme": "bearer",
                 "description": "Observed client configuration, not a complete authentication or permission contract."}}},

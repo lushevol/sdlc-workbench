@@ -2,14 +2,16 @@
 
 Use the [OpenAPI 3.1 subset](openapi.yaml) for the three inspected CES views.
 The [source register](../Knowledge/sources.json) binds exact revisions, hashes, request/response locators, and evidence limits.
-Select the active origin and route from the task's [variable copy](../Workflows/variables.example.json).
+Read the observed UAT base URL from OpenAPI `servers` and routes from `paths`.
+Use the task's [variable copy](../Workflows/variables.example.json) for environment selection, credentials references, and dynamic inputs.
+Add sourced properties to the domain contract when another environment is supported. Keep missing environment endpoints unresolved.
 Bearer authentication appears in retained client requests and SDK source. Required scopes and unauthenticated behavior remain unknown.
 
-| View | Route key under `ces.routes` | Body and identity | JSON Schema |
+| View | OpenAPI operationId | Body and identity | JSON Schema |
 | --- | --- | --- | --- |
-| Application catalog | `catalog` | Array of entitlement definitions. Bind the application to the request metadata. | [Catalog inspection schema](schemas/catalog-response.schema.json) |
-| Effective user | `effective_user` | Match `user_data.app_name` and `user_data.user_id` to the request. | [Effective-user inspection schema](schemas/effective-user-response.schema.json) |
-| Assigned role details | `assigned_roles` | User-wide role array. Bind the account to the request and select the application. | [Assigned-role inspection schema](schemas/assigned-role-response.schema.json) |
+| Application catalog | `getApplicationCatalog` | Array of entitlement definitions. Bind the application to the request metadata. | [Catalog inspection schema](schemas/catalog-response.schema.json) |
+| Effective user | `getEffectiveUser` | Match `user_data.app_name` and `user_data.user_id` to the request. | [Effective-user inspection schema](schemas/effective-user-response.schema.json) |
+| Assigned role details | `getAssignedRoles` | User-wide role array. Bind the account to the request and select the application. | [Assigned-role inspection schema](schemas/assigned-role-response.schema.json) |
 
 ## Paired cases and supplied bodies
 

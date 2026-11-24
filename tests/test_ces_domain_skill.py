@@ -44,8 +44,13 @@ class CesDomainSkillTests(unittest.TestCase):
 
     def test_packaged_response_schemas_and_uat_origin(self):
         variables = json.loads(self.fixture("variables.example").read_text(encoding="utf-8"))
-        self.assertEqual(variables["ces"]["origins"]["uat"], "https://fmcesuat.gdc.standardchartered.com")
-        self.assertIsNone(variables["ces"]["base_url"])
+        contract = yaml.safe_load((self.skill / "Contracts/openapi.yaml").read_text(encoding="utf-8"))
+        self.assertEqual(contract["servers"][0]["url"], "https://fmcesuat.gdc.standardchartered.com")
+        self.assertNotIn("base_url", variables["ces"])
+        self.assertNotIn("origins", variables["ces"])
+        self.assertNotIn("routes", variables["ces"])
+        self.assertIsNone(variables["ces"]["token_env"])
+        self.assertIsNone(variables["ces"]["ca_env"])
         self.assertIsNone(variables["account"]["id"])
         cases = (
             ("catalog", ("catalog",), ("user_ids",), 42),
