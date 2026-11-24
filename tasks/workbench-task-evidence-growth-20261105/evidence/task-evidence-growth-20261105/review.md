@@ -88,7 +88,7 @@ Equal file sizes do not establish equal contents.
 ### Prioritized optimization plan
 
 1. **Simplify new task evidence immediately.** Use one living record for requests, decisions, findings, and routine check receipts.
-   Keep separate payloads for necessary assertions, failures, contradictions, unresolved questions, reproduction, recovery, or protected provenance.
+   Keep separate payloads for necessary assertions, consequential failures, contradictions, material questions, reproduction, recovery, or protected provenance.
    This applies the [existing policy](../../../README.md#critical-evidence-and-reusable-payloads), without another mandatory report or index.
 2. **Review historical trace and HTML copies first.** Start with the UI coverage task and byte-identical trace groups.
    Select canonical retained payloads, inspect all consumers, and record exact recovery information under the cleanup procedure.
@@ -107,6 +107,36 @@ Do not create separate `document-checks.json`, `verification-summary.json`, or e
 Retain such files when a real consumer, machine assertion, failure investigation, or protected evidence contract needs them.
 Large executions retain their existing case results, one run binding, and indexed canonical payloads.
 This target preserves immediate case saving and exact observations while reducing incidental file creation.
+
+### Source-control boundary for evidence and logs
+
+Source: current Codex chat, 24 November 2026, Asia/Singapore.
+
+> separate evidence with logs, evidence is important to key decision and should be record with git source management, but logs more likely to use one time or troubleshooting, should not commit in git. Your opinion ?
+
+The proposed boundary separates decision evidence from disposable diagnostics.
+Keep decision evidence under Git source management.
+Its purpose can include requirements, assertions, material findings, unresolved questions, acceptance decisions, or protected provenance.
+Give it a stable path, source revision or capture time, hash, and link from the owning record.
+
+Keep routine logs in ignored `.workbench/` storage when they support one execution, troubleshooting session, or rebuildable check.
+Examples include verbose stdout, stderr, clean-build output, temporary traces, generated HTML bundles, and repeated diagnostics.
+Do not commit files only because a command produced them.
+
+Promote selected log content when a key decision or consequential claim requires it.
+Examples include material failures, timing, correlations, contradictions, reproduction, recovery, and protected execution details.
+Retain raw bytes at an accessible canonical path when full context is necessary.
+An excerpt suffices only when its omitted context cannot change the supported claim.
+Label excerpts and record omitted-context limits.
+A hash establishes content identity. It cannot replace necessary raw bytes.
+Record the command, source identity, environment, exit status, and relevant hashes.
+Compress large retained text only when consumers support it. Record original and compressed hashes.
+
+File extension does not decide this boundary.
+A JSON result can be disposable, and a `.log` file can be required evidence.
+Git tracking records retention and review; it does not prove that a payload is useful or safe to delete.
+This assessment records a proposal for task and producer guidance.
+Historical file classification and retention remain unchanged.
 
 ### Assessment checks and scope limits
 
