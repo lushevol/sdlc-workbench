@@ -1,0 +1,37 @@
+{
+  "case_id" : "RN-S009",
+  "executed_at" : "2026-10-29T01:54:55.360720Z",
+  "execution_level" : "actual-controller-characterization",
+  "status" : "PASSED",
+  "observations" : {
+    "acquisition_status" : 200,
+    "distinct_refresh_values" : true,
+    "r1_expiry" : "2026-10-29T01:56:55Z",
+    "r2_expiry" : "2026-10-29T05:40:19Z",
+    "r1_replay" : {
+      "http_status" : 200,
+      "result" : true,
+      "issued_access_count" : 1,
+      "access_subject" : "A",
+      "access_session_id" : "refresh-replacement",
+      "credential_response_header_count" : 1
+    }
+  },
+  "assertions" : [ {
+    "name" : "two distinct refresh credentials",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  }, {
+    "name" : "both expiries recorded",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  }, {
+    "name" : "old refresh replay observed",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "Replaced-token single-use policy remains unresolved. The result records that old signed refresh remains accepted." ]
+}

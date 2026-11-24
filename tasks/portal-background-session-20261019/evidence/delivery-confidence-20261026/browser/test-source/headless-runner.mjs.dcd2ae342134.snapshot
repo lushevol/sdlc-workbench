@@ -1,0 +1,20 @@
+import { chromium } from '../../adapters/browser/node_modules/playwright/index.mjs';
+import { createRequire } from 'node:module';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root=process.cwd(),base=path.join(root,'.workbench/session-delivery-20261026'),extensionPath=path.join(base,'browser-extension.cjs'),extension=createRequire(import.meta.url)(extensionPath);
+const [mode,profile,id]=process.argv.slice(2),output=process.env.SESSION_E2E_OUTPUT;await fs.mkdir(output,{recursive:false});
+const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+const record={startedAt:new Date().toISOString(),mode,profile,status:'STARTING',clock:'REAL_WALL_CLOCK',executionScope:'DOM_SERVICE_HEADLESS',nativeVisibilityVerified:false,runnerSha256:hash(await fs.readFile(new URL(import.meta.url))),extensionSha256:hash(await fs.readFile(extensionPath)),limits:['Headless Edge uses actual application, shared Axios, DOM and local service. It does not verify native visibility, frozen-tab recovery or physical UI.']};
+let browser,page;
+try{
+ browser=await chromium.launch({executablePath:'/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',headless:true,args:['--disable-background-networking','--disable-component-update','--disable-sync','--disable-edgeupdater','--disable-updater-scheduler','--disable-features=msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion']});record.browserVersion=browser.version();
+ const context=await browser.newContext();page=await context.newPage();
+ await extension.openPortalSession(process.env.SESSION_E2E_CONFIG,page);record.status='RUNNING';
+ const operation={cancelledLoader:'assertCancelledGenericRequestReleasesLoader',sharingPending:'assertAlreadyPendingActivitySharesRequest',mouse:'assertActivityRenewsSession',keyboard:'assertActivityRenewsSession',scroll:'assertActivityRenewsSession',single:'assertSlowActivitySharesRequest',activityLogout:'assertPendingActivityLogoutCancels',late:'assertLateActivityCannotReplaceManualSuccess'}[mode];
+ if(!operation)throw Error('Unsupported headless regression mode.');record.operation=operation;
+ record.result=await(['mouse','keyboard','scroll'].includes(mode)?extension[operation](mode,page):extension[operation](page));record.status='PASSED';
+}catch(e){record.status='FAILED';record.error=String(e.message).replace(/(?:Bearer\s+)?eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,'[TOKEN]');if(page)await page.screenshot({path:path.join(output,'failed.png')}).catch(()=>{});}
+finally{if(browser)await browser.close();record.completedAt=new Date().toISOString();await fs.writeFile(path.join(output,'run.json'),JSON.stringify(record,null,2)+'\n');}
+console.log(JSON.stringify({output,status:record.status,error:record.error}));process.exitCode=record.status==='PASSED'?0:1;

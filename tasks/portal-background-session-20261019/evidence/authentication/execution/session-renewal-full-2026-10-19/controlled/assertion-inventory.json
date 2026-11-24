@@ -1,0 +1,82 @@
+{
+  "continuous activity renews without an idle gap": [
+    "1000 mousemove events at 1000 ms produce 200 extend requests.",
+    "Adjacent extend requests are exactly 5000 ms apart."
+  ],
+  "activity types share one cadence and capture registration": [
+    "Four activity types share one 5000 ms cadence.",
+    "Listeners register with capture=true and passive=true."
+  ],
+  "each activity type can independently renew": [
+    "Each fresh fixture produces one request after its first event."
+  ],
+  "idle periods do not renew": [
+    "Initial 60000 ms idle produces zero requests.",
+    "60000 ms idle after one event produces no extra request."
+  ],
+  "current session, logout, missing token, and near-expiry guards": [
+    "The next eligible request uses the current replaced token.",
+    "Logout and missing token each prevent extra requests.",
+    "Below 25 seconds blocks extend; exactly 25 seconds permits extend."
+  ],
+  "unmount removes listeners and session timers": [
+    "All four listener sets become empty after unmount.",
+    "After unmount, 7200000 ms produces no extra request and zero timers."
+  ],
+  "idle expiry retains refresh request and prompt": [
+    "Refresh request occurs 25000 ms before expiry.",
+    "showTimeout remains false until expiry, then becomes true."
+  ],
+  "actual relogin returns pending promise and preserves successful result": [
+    "Returned promise is the original transport promise.",
+    "Promise remains pending until controlled resolution.",
+    "Controlled status=200 result propagates unchanged."
+  ],
+  "actual relogin propagates rejection and aborts the older request": [
+    "Second relogin aborts the first signal.",
+    "Second promise rejects with the exact controlled error."
+  ],
+  "Timeout stays open while pending and closes after success": [
+    "Controlled refresh token is present and arms one timer.",
+    "Pending request has loading=true, closure count=0, close analytics count=0.",
+    "After resolution, closure list=[false], loading=false, and timer count=0."
+  ],
+  "Timeout rejection remains retryable and successful retry clears expiry timer": [
+    "Failure has closure count=0, loading=false, one error, one timer.",
+    "Retry sets loading=true.",
+    "Retry success has closure list=[false], loading=false, zero timers, cleared error.",
+    "120000 ms after retry produces zero logout calls."
+  ],
+  "Timeout failure retains refresh expiry logout": [
+    "At refresh expiry minus 2001 ms logout count=0.",
+    "At refresh expiry minus 2000 ms logout count=1."
+  ],
+  "four-hour activity keeps the Home timeout signal absent with mocked expiry updates": [
+    "14400 one-second events span 14400000 ms.",
+    "2880 extend requests have 5000 ms cadence.",
+    "Every request has a mocked store replacement and Home rerender.",
+    "showTimeout remains false at all activity and clock boundaries.",
+    "Refresh request count=0 and modeled logout count=0."
+  ],
+  "mousemove for 15 seconds at 100 ms records eligible extend requests": [
+    "Controlled token is present with at least 30 seconds before initial expiry.",
+    "150 events span 15000 ms.",
+    "Extend requests occur at offsets 0, 5000, and 10000 ms.",
+    "All requests use the controlled token.",
+    "showTimeout remains false."
+  ],
+  "keydown for 15 seconds at 100 ms records eligible extend requests": [
+    "Controlled token is present with at least 30 seconds before initial expiry.",
+    "150 events span 15000 ms.",
+    "Extend requests occur at offsets 0, 5000, and 10000 ms.",
+    "All requests use the controlled token.",
+    "showTimeout remains false."
+  ],
+  "scroll for 15 seconds at 100 ms records eligible extend requests": [
+    "Controlled token is present with at least 30 seconds before initial expiry.",
+    "150 events span 15000 ms.",
+    "Extend requests occur at offsets 0, 5000, and 10000 ms.",
+    "All requests use the controlled token.",
+    "showTimeout remains false."
+  ]
+}

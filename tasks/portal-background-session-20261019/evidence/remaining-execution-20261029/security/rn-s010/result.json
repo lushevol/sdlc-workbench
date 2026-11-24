@@ -1,0 +1,32 @@
+{
+  "case_id" : "RN-S010",
+  "executed_at" : "2026-10-29T01:54:55.363970Z",
+  "execution_level" : "actual-controller-two-instance-isolation",
+  "status" : "PASSED",
+  "observations" : {
+    "logout_replica_1" : {
+      "revocation_entries" : 1,
+      "result" : true,
+      "http_status" : 200
+    },
+    "renewal_replica_2" : {
+      "http_status" : 401,
+      "result" : false,
+      "issued_access_count" : 0,
+      "credential_response_header_count" : 0
+    },
+    "declared_store" : "same in-memory synchronized deny set behind two repository mocks"
+  },
+  "assertions" : [ {
+    "name" : "second controller rejects after shared commit",
+    "expected" : 401,
+    "actual" : 401,
+    "passed" : true
+  }, {
+    "name" : "second controller issues no access",
+    "expected" : 0,
+    "actual" : 0,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "Two controller instances share fixture persistence. This is not database replication or deployment acceptance." ]
+}

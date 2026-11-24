@@ -1,0 +1,381 @@
+FAIL src/pages/Home/common/sessionPending.test.tsx
+  Pending session renewal and recovery
+    ✕ [PEND-01] keeps the prompt open during manual renewal and closes once after valid access arrives (76 ms)
+    ✕ [PEND-02] keeps the prompt open after retryable failure and completes a second attempt (44 ms)
+    ✕ [PEND-03] rejects missing access before store mutation and allows retry (37 ms)
+    ✕ [PEND-04] rejects malformed access before store mutation and allows retry (34 ms)
+    ✕ [PEND-05] rejects expired access before store mutation and allows retry (34 ms)
+    ✕ [PEND-06] rejects missing iat access before store mutation and allows retry (32 ms)
+    ✕ [PEND-07] sends only one relogin for rapid repeated Extend clicks (34 ms)
+    ✕ [PEND-08] permits Logout during pending manual renewal and cancels the held relogin (74 ms)
+    ✕ [PEND-09] waits for scheduled acquisition across access expiry then permits explicit recovery (22 ms)
+    ✕ [PEND-10] prevents an old delayed Logout callback from clearing a newer login (89 ms)
+    ✕ [PEND-11] permits Logout during pending acquisition and discards its later delivery (28 ms)
+    ✕ [PEND-12] rejects a stale rendered Extend control after the refresh cutoff passes without timer delivery (42 ms)
+    ✓ [PEND-13] settles failed pending acquisition and applies the existing logout fallback (7 ms)
+
+  ● Pending session renewal and recovery › [PEND-01] keeps the prompt open during manual renewal and closes once after valid access arrives
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "dialog"
+
+    Here are the accessible roles:
+
+      main:
+
+      Name "":
+      [36m<main[39m
+        [33mdata-testid[39m=[32m"session-workspace"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "Replacement sign-in callback":
+      [36m<button[39m
+        [33mdata-testid[39m=[32m"replacement-login"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, script, style
+    [36m<body[39m
+      [33mstyle[39m=[32m""[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<main[39m
+          [33mdata-testid[39m=[32m"session-workspace"[39m
+        [36m>[39m
+          [0mSession workspace[0m
+        [36m</main>[39m
+        [36m<button[39m
+          [33mdata-testid[39m=[32m"replacement-login"[39m
+        [36m>[39m
+          [0mReplacement sign-in callback[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      151 |     await click("Extend");
+      152 |     expect(requestsTo("relogin")).toHaveLength(1);
+    > 153 |     expect(screen.getByRole("dialog")).toBeInTheDocument();
+          |                   ^
+      154 |     expect(closeTransitions).not.toHaveBeenCalled();
+      155 |     expect(getHooksBase().store.token).toBe(originalAccess);
+      156 |     await finish(pendingTo("relogin")[0], { "single-ui-authorization": renewedAccess });
+
+      at Object.getElementError (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/config.js:37:19)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByRole (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:153:19)
+
+  ● Pending session renewal and recovery › [PEND-02] keeps the prompt open after retryable failure and completes a second attempt
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "dialog"
+
+    Here are the accessible roles:
+
+      main:
+
+      Name "":
+      [36m<main[39m
+        [33mdata-testid[39m=[32m"session-workspace"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "Replacement sign-in callback":
+      [36m<button[39m
+        [33mdata-testid[39m=[32m"replacement-login"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, script, style
+    [36m<body[39m
+      [33mstyle[39m=[32m""[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<main[39m
+          [33mdata-testid[39m=[32m"session-workspace"[39m
+        [36m>[39m
+          [0mSession workspace[0m
+        [36m</main>[39m
+        [36m<button[39m
+          [33mdata-testid[39m=[32m"replacement-login"[39m
+        [36m>[39m
+          [0mReplacement sign-in callback[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      164 |     await click("Extend");
+      165 |     await rejectRetryable(pendingTo("relogin")[0]);
+    > 166 |     expect(screen.getByRole("dialog")).toBeInTheDocument();
+          |                   ^
+      167 |     expect(closeTransitions).not.toHaveBeenCalled();
+      168 |     expect(screen.getByRole("button", { name: "Extend" })).toBeEnabled();
+      169 |     expect(getHooksBase().store.token).toBe(originalAccess);
+
+      at Object.getElementError (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/config.js:37:19)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByRole (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:166:19)
+
+  ● Pending session renewal and recovery › [PEND-03] rejects missing access before store mutation and allows retry
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "dialog"
+
+    Here are the accessible roles:
+
+      main:
+
+      Name "":
+      [36m<main[39m
+        [33mdata-testid[39m=[32m"session-workspace"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "Replacement sign-in callback":
+      [36m<button[39m
+        [33mdata-testid[39m=[32m"replacement-login"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, script, style
+    [36m<body[39m
+      [33mstyle[39m=[32m""[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<main[39m
+          [33mdata-testid[39m=[32m"session-workspace"[39m
+        [36m>[39m
+          [0mSession workspace[0m
+        [36m</main>[39m
+        [36m<button[39m
+          [33mdata-testid[39m=[32m"replacement-login"[39m
+        [36m>[39m
+          [0mReplacement sign-in callback[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      185 |     expect(getHooksBase().store.token).toBe(originalAccess);
+      186 |     expect(getHooksBase().store.expiredIn).toBe((now + accessLifetime) / 1000);
+    > 187 |     expect(screen.getByRole("dialog")).toBeInTheDocument();
+          |                   ^
+      188 |     expect(closeTransitions).not.toHaveBeenCalled();
+      189 |     expect(screen.getByRole("button", { name: "Extend" })).toBeEnabled();
+      190 |     await click("Extend");
+
+      at Object.getElementError (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/config.js:37:19)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByRole (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at src/pages/Home/common/sessionPending.test.tsx:187:19
+
+  ● Pending session renewal and recovery › [PEND-04] rejects malformed access before store mutation and allows retry
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJpbml0aWFsLWFjY2VzcyIsImlhdCI6MTc5Mjg4NjQwMCwiZXhwIjoxNzkyODg2NDMwfQ==.test-signature"
+    Received: "not-a-jwt"
+
+      183 |     await click("Extend");
+      184 |     await finish(pendingTo("relogin")[0], returnedAccess ? { "single-ui-authorization": returnedAccess } : {});
+    > 185 |     expect(getHooksBase().store.token).toBe(originalAccess);
+          |                                        ^
+      186 |     expect(getHooksBase().store.expiredIn).toBe((now + accessLifetime) / 1000);
+      187 |     expect(screen.getByRole("dialog")).toBeInTheDocument();
+      188 |     expect(closeTransitions).not.toHaveBeenCalled();
+
+      at src/pages/Home/common/sessionPending.test.tsx:185:40
+
+  ● Pending session renewal and recovery › [PEND-05] rejects expired access before store mutation and allows retry
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJpbml0aWFsLWFjY2VzcyIsImlhdCI6MTc5Mjg4NjQwMCwiZXhwIjoxNzkyODg2NDMwfQ==.test-signature"
+    Received: "Bearer e30.eyJzdWIiOiJleHBpcmVkLWFjY2VzcyIsImlhdCI6MTc5Mjg4NjQwMCwiZXhwIjoxNzkyODg2NDMwfQ==.test-signature"
+
+      183 |     await click("Extend");
+      184 |     await finish(pendingTo("relogin")[0], returnedAccess ? { "single-ui-authorization": returnedAccess } : {});
+    > 185 |     expect(getHooksBase().store.token).toBe(originalAccess);
+          |                                        ^
+      186 |     expect(getHooksBase().store.expiredIn).toBe((now + accessLifetime) / 1000);
+      187 |     expect(screen.getByRole("dialog")).toBeInTheDocument();
+      188 |     expect(closeTransitions).not.toHaveBeenCalled();
+
+      at src/pages/Home/common/sessionPending.test.tsx:185:40
+
+  ● Pending session renewal and recovery › [PEND-06] rejects missing iat access before store mutation and allows retry
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJpbml0aWFsLWFjY2VzcyIsImlhdCI6MTc5Mjg4NjQwMCwiZXhwIjoxNzkyODg2NDMwfQ==.test-signature"
+    Received: "Bearer e30.eyJzdWIiOiJtaXNzaW5nLWlhdCIsImV4cCI6MTc5Mjg4NzYwMH0=.test-signature"
+
+      183 |     await click("Extend");
+      184 |     await finish(pendingTo("relogin")[0], returnedAccess ? { "single-ui-authorization": returnedAccess } : {});
+    > 185 |     expect(getHooksBase().store.token).toBe(originalAccess);
+          |                                        ^
+      186 |     expect(getHooksBase().store.expiredIn).toBe((now + accessLifetime) / 1000);
+      187 |     expect(screen.getByRole("dialog")).toBeInTheDocument();
+      188 |     expect(closeTransitions).not.toHaveBeenCalled();
+
+      at src/pages/Home/common/sessionPending.test.tsx:185:40
+
+  ● Pending session renewal and recovery › [PEND-07] sends only one relogin for rapid repeated Extend clicks
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 3
+    Received array:  [{"adapter": [Function adapter], "allowAbsoluteUrls": true, "data": "{}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": {"Accept": "application/json, text/plain", "Cache-Control": "no-store", "Content-Type": "application/json", "Single-UI-Refresh": "Bearer e30.eyJzdWIiOiJpbml0aWFsLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature", "X-Content-Type-Options": "nosniff", "X-XSS-Protection": "1;mode:block"}, "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "sessionEpoch": 0, "signal": {}, "timeout": 60000, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"advertiseZstdAcceptEncoding": false, "clarifyTimeoutError": false, "forcedJSONParsing": true, "legacyInterceptorReqResOrdering": true, "silentJSONParsing": true, "validateStatusUndefinedResolves": true}, "url": "/api/auth/v2/sso/relogin", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}, {"adapter": [Function adapter], "allowAbsoluteUrls": true, "data": "{}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": {"Accept": "application/json, text/plain", "Cache-Control": "no-store", "Content-Type": "application/json", "Single-UI-Refresh": "Bearer e30.eyJzdWIiOiJpbml0aWFsLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature", "X-Content-Type-Options": "nosniff", "X-XSS-Protection": "1;mode:block"}, "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "sessionEpoch": 0, "signal": {}, "timeout": 60000, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"advertiseZstdAcceptEncoding": false, "clarifyTimeoutError": false, "forcedJSONParsing": true, "legacyInterceptorReqResOrdering": true, "silentJSONParsing": true, "validateStatusUndefinedResolves": true}, "url": "/api/auth/v2/sso/relogin", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}, {"adapter": [Function adapter], "allowAbsoluteUrls": true, "data": "{}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": {"Accept": "application/json, text/plain", "Cache-Control": "no-store", "Content-Type": "application/json", "Single-UI-Refresh": "Bearer e30.eyJzdWIiOiJpbml0aWFsLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature", "X-Content-Type-Options": "nosniff", "X-XSS-Protection": "1;mode:block"}, "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "sessionEpoch": 0, "signal": {}, "timeout": 60000, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"advertiseZstdAcceptEncoding": false, "clarifyTimeoutError": false, "forcedJSONParsing": true, "legacyInterceptorReqResOrdering": true, "silentJSONParsing": true, "validateStatusUndefinedResolves": true}, "url": "/api/auth/v2/sso/relogin", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}]
+
+      197 |     const button = screen.getByRole("button", { name: "Extend" });
+      198 |     await act(async () => { fireEvent.click(button); fireEvent.click(button); fireEvent.click(button); });
+    > 199 |     expect(requestsTo("relogin")).toHaveLength(1);
+          |                                   ^
+      200 |     expect(closeTransitions).not.toHaveBeenCalled();
+      201 |     await finish(pendingTo("relogin")[0], { "single-ui-authorization": renewedAccess });
+      202 |     expectSuccessfulRenewal();
+
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:199:35)
+
+  ● Pending session renewal and recovery › [PEND-08] permits Logout during pending manual renewal and cancels the held relogin
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Logout"
+
+    Here are the accessible roles:
+
+      main:
+
+      Name "":
+      [36m<main[39m
+        [33mdata-testid[39m=[32m"session-workspace"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "Replacement sign-in callback":
+      [36m<button[39m
+        [33mdata-testid[39m=[32m"replacement-login"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, script, style
+    [36m<body[39m
+      [33mstyle[39m=[32m""[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<main[39m
+          [33mdata-testid[39m=[32m"session-workspace"[39m
+        [36m>[39m
+          [0mSession workspace[0m
+        [36m</main>[39m
+        [36m<button[39m
+          [33mdata-testid[39m=[32m"replacement-login"[39m
+        [36m>[39m
+          [0mReplacement sign-in callback[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      207 |     await click("Extend");
+      208 |     const renewal = pendingTo("relogin")[0];
+    > 209 |     expect(screen.getByRole("button", { name: "Logout" })).toBeEnabled();
+          |                   ^
+      210 |     await click("Logout");
+      211 |     expect(renewal.config.signal?.aborted).toBe(true);
+      212 |     await advance(1000);
+
+      at Object.getElementError (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/config.js:37:19)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByRole (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:209:19)
+
+  ● Pending session renewal and recovery › [PEND-09] waits for scheduled acquisition across access expiry then permits explicit recovery
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      220 |   it("[PEND-09] waits for scheduled acquisition across access expiry then permits explicit recovery", async () => {
+      221 |     const acquisition = await openPromptWithPendingAcquisition();
+    > 222 |     expect(getHooksBase().store.isOnLogout).toBe(false);
+          |                                             ^
+      223 |     expect(screen.getByRole("button", { name: "Extend" })).toBeDisabled();
+      224 |     expect(screen.getByRole("button", { name: "Logout" })).toBeEnabled();
+      225 |     await advance(1001);
+
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:222:45)
+
+  ● Pending session renewal and recovery › [PEND-10] prevents an old delayed Logout callback from clearing a newer login
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"adapter": [Function adapter], "allowAbsoluteUrls": true, "data": "{\"singleUIAuthorization\":\"Bearer e30.eyJzdWIiOiJpbml0aWFsLWFjY2VzcyIsImlhdCI6MTc5Mjg4NjQwMCwiZXhwIjoxNzkyODg2NDMwfQ==.test-signature\"}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": {"Accept": "application/json, text/plain", "Cache-Control": "no-store", "Content-Type": "application/json", "X-Content-Type-Options": "nosniff", "X-XSS-Protection": "1;mode:block"}, "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "sessionEpoch": 2, "timeout": 60000, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"advertiseZstdAcceptEncoding": false, "clarifyTimeoutError": false, "forcedJSONParsing": true, "legacyInterceptorReqResOrdering": true, "silentJSONParsing": true, "validateStatusUndefinedResolves": true}, "url": "/api/auth/v2/sso/logout", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}]
+
+      243 |     expect(getHooksBase().store.token).toBe(newLoginAccess);
+      244 |     await advance(1000);
+    > 245 |     expect(requestsTo("logout")).toHaveLength(0);
+          |                                  ^
+      246 |     expect(getHooksBase().store.token).toBe(newLoginAccess);
+      247 |     expect(localStorage.getItem("SET_TOKEN")).toBe(newLoginAccess);
+      248 |     expect(closeTransitions).not.toHaveBeenCalled();
+
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:245:34)
+
+  ● Pending session renewal and recovery › [PEND-11] permits Logout during pending acquisition and discards its later delivery
+
+    expect(element).toBeEnabled()
+
+    Received element is not enabled:
+      <button class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1rwt2y5-MuiButtonBase-root-MuiButton-root" data-testid="Logout_Btn" disabled="" tabindex="-1" type="button" />
+
+      251 |   it("[PEND-11] permits Logout during pending acquisition and discards its later delivery", async () => {
+      252 |     const acquisition = await openPromptWithPendingAcquisition();
+    > 253 |     expect(screen.getByRole("button", { name: "Logout" })).toBeEnabled();
+          |                                                            ^
+      254 |     await click("Logout");
+      255 |     expect(acquisition.config.signal?.aborted).toBe(true);
+      256 |     await advance(1000);
+
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:253:60)
+
+  ● Pending session renewal and recovery › [PEND-12] rejects a stale rendered Extend control after the refresh cutoff passes without timer delivery
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"adapter": [Function adapter], "allowAbsoluteUrls": true, "data": "{}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": {"Accept": "application/json, text/plain", "Cache-Control": "no-store", "Content-Type": "application/json", "Single-UI-Refresh": "Bearer e30.eyJzdWIiOiJpbml0aWFsLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature", "X-Content-Type-Options": "nosniff", "X-XSS-Protection": "1;mode:block"}, "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "sessionEpoch": 3, "signal": {}, "timeout": 60000, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"advertiseZstdAcceptEncoding": false, "clarifyTimeoutError": false, "forcedJSONParsing": true, "legacyInterceptorReqResOrdering": true, "silentJSONParsing": true, "validateStatusUndefinedResolves": true}, "url": "/api/auth/v2/sso/relogin", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}]
+
+      269 |     jest.setSystemTime(now + 4 * 60 * minute - 1000);
+      270 |     await act(async () => fireEvent.click(button));
+    > 271 |     expect(requestsTo("relogin")).toHaveLength(0);
+          |                                   ^
+      272 |     expect(closeTransitions).not.toHaveBeenCalled();
+      273 |     expect(getHooksBase().store.token).toBe(originalAccess);
+      274 |   });
+
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:271:35)
+
+Test Suites: 1 failed, 1 total
+Tests:       12 failed, 1 passed, 13 total
+Snapshots:   0 total
+Time:        1.338 s
+Ran all test suites matching /src\/pages\/Home\/common\/sessionPending.test.tsx/i.
+Test results written to: ../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/baseline/results.json

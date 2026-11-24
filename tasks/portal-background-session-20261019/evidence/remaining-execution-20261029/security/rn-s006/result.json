@@ -1,0 +1,24 @@
+{
+  "case_id" : "RN-S006",
+  "executed_at" : "2026-10-29T01:54:55.342804Z",
+  "execution_level" : "actual-controller-integration",
+  "status" : "PASSED",
+  "observations" : {
+    "http_status" : 401,
+    "result" : false,
+    "issued_access_count" : 0,
+    "credential_response_header_count" : 0
+  },
+  "assertions" : [ {
+    "name" : "revoked refresh rejected",
+    "expected" : 401,
+    "actual" : 401,
+    "passed" : true
+  }, {
+    "name" : "no access issued",
+    "expected" : 0,
+    "actual" : 0,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service." ]
+}

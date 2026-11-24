@@ -1,0 +1,333 @@
+{
+  "analysis": "Remaining raw and upper-consumer contract gaps after proposed Entity.roleList and Entity.applicationId additions",
+  "created_at": "2026-11-06T09:07:57.130629+08:00",
+  "authorization_source": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md",
+  "assessment_mode": "Read-only source inspection. Proposed additions assessed separately from current pre-edit source. No capture probe, API call, application edit or test execution.",
+  "requested_additions": {
+    "roleList": "CES entitlements.entitlement_name; list of strings",
+    "applicationId": "CES user_data.itam_id; string"
+  },
+  "observed_source_state": {
+    "entity_fields_at_inspection": [
+      "id",
+      "name",
+      "applicationName",
+      "roleId",
+      "roleName",
+      "subjects"
+    ],
+    "new_fields_present_at_inspection": false,
+    "limit": "Parent may apply requested BFF changes after this snapshot. Rebind changed hashes before treating this evidence as the final implementation."
+  },
+  "findings": [
+    {
+      "id": "RCG-01",
+      "class": "semantic contract difference; unavoidable without explicit policy",
+      "priority": "P2",
+      "claim": "A CES role list cannot preserve the old single-role meaning automatically.",
+      "raw_api": "roleList is additive. Legacy roleName and roleId remain unset for aggregate CES entities unless a separate projection is defined. A list does not identify one canonical scalar role.",
+      "upper_consumers": "getUser().role still only reads legacy user.entitlement or X_RATANONE.roleName. Saved filters/views submit a scalar assignee/moduleOwner; PSS_RO restrictions compare one string.",
+      "consequence": "Adding roleList restores available role names but does not resolve role-dependent behavior. First-role or concatenation projections would invent policy.",
+      "owner": "unknown",
+      "next_action": "Keep EMS2 scalar role unchanged. Adapt shared role-aware consumers with explicit multi-role rules and retain the original roleList. Do not infer role-to-action attribution from aggregate grants.",
+      "evidence": [
+        "authenticator",
+        "views",
+        "filters",
+        "view-owner",
+        "role-exclusions",
+        "ces-dto"
+      ],
+      "limit": "No actual new-field execution or role-policy approval assessed."
+    },
+    {
+      "id": "RCG-02",
+      "class": "raw identity difference plus fixable shared-adapter gap",
+      "priority": "P2",
+      "claim": "New applicationId does not restore old entity identity or permission dispatch.",
+      "raw_api": "Entity.name remains the CES application name, rather than X_RATANONE. applicationId carries the ITAM ID as a string. These are distinct from the old EMS2 numeric Entity.id.",
+      "upper_consumers": "hasPermission(code) dispatch still relies on X_RATANONE or entity-name substring matching. getUser().entitlements still keys by entity.name and discards applicationId/roleList.",
+      "consequence": "The two added fields alone leave previously retained local permission failures intact by source prediction.",
+      "owner": "unknown",
+      "next_action": "Retain existing boolean permission APIs and feature/action strings. Resolve selected provider and exact application internally, using applicationId where available. Do not alias CES back to X_RATANONE globally.",
+      "evidence": [
+        "entity",
+        "mapper",
+        "authenticator",
+        "cashflow-import"
+      ],
+      "limit": "Prior capture probe was not repeated. No new runtime result claimed."
+    },
+    {
+      "id": "RCG-03",
+      "class": "raw token representation difference; fixable shared consumer gap",
+      "priority": "P2",
+      "claim": "The entitlement token still encodes name:roleName, not roleList or applicationId.",
+      "raw_api": "buildEntitlementString produces CES_APPLICATION:null for null legacy roleName. Its map cannot represent multiple role names or same-name distinct application IDs. Adding fields to entities does not change this token.",
+      "upper_consumers": "Base decodes that token into user.entitlements. Profile dereferences name:roleName; analytics searches X_RATANONE keys.",
+      "consequence": "Entity fields and legacy token remain separate representations. Token-only consumers do not gain roles or application identity.",
+      "owner": "unknown",
+      "next_action": "Preserve the legacy token field for existing consumers. Teach shared consumers to use structured entities for CES, or design an additive versioned token claim if token-only consumers need the new metadata. Do not silently replace legacy map keys or manufacture per-role action attribution.",
+      "evidence": [
+        "token",
+        "base-login",
+        "profile",
+        "telemetry"
+      ],
+      "limit": "Current Profile token lookup remains aligned with current null key; no current crash inferred from the fields alone."
+    },
+    {
+      "id": "RCG-04",
+      "class": "raw source-specific nullability; fixable base type and display gap",
+      "priority": "P3",
+      "claim": "Legacy numeric IDs, applicationName, and scalar role fields remain unavailable in CES normalization.",
+      "raw_api": "Entity.id, roleId, applicationName, roleName and subject/action IDs are not populated by the CES mapper. applicationId should remain a separate string identity.",
+      "upper_consumers": "Exported base Entity/Subject/Action interfaces require legacy values. Profile labels use applicationName/roleName; keys and ARIA IDs use entity.id.",
+      "consequence": "Type declarations overstate the CES data contract. Profile can display null role labels and reuse null IDs for multiple CES entities.",
+      "owner": "unknown",
+      "next_action": "Declare nullable legacy fields and optional/additive roleList/applicationId. Use provider-aware stable profile keys and display the role list. Do not put ITAM IDs into legacy numeric IDs as a compatibility shortcut.",
+      "evidence": [
+        "mapper",
+        "base-types",
+        "profile",
+        "profile-label"
+      ],
+      "limit": "No browser display verification. Duplicate-ID consequence requires multiple CES entities."
+    },
+    {
+      "id": "RCG-05",
+      "class": "fixable per-tile adapter and metadata gap",
+      "priority": "P2",
+      "claim": "The entity additions do not complete per-tile provider propagation or feature admission semantics.",
+      "raw_api": "Drawers expose entitlementSource and entity names, but subject still comes from ems2_subject. They do not expose entitlementAppId or entitlementAppFeature in this builder.",
+      "upper_consumers": "Base validateTile uses legacy subjects; foreign container mount passes only module/tile/parameters/panelId/tabId. Global hasPermission has no tile context.",
+      "consequence": "Divergent feature names or simultaneous same-feature tiles with different providers cannot be handled safely by the entity fields alone.",
+      "owner": "unknown",
+      "next_action": "Carry authoritative tile/provider/application bindings through shared internals. Keep existing upper signatures when scope resolves. Do not select provider globally or fall back to another provider after denial. Resolve unavoidable ambiguous no-context call sites explicitly.",
+      "evidence": [
+        "drawers",
+        "tile-validator",
+        "base-container",
+        "authenticator",
+        "module-scope"
+      ],
+      "limit": "Current sample admission previously matched; this is a supported future configuration/design boundary, not a new observed failure."
+    },
+    {
+      "id": "RCG-06",
+      "class": "conditional BFF identity merge gap",
+      "priority": "P3",
+      "claim": "Existing merge identity omits applicationId.",
+      "raw_api": "EntityKey consists of name, roleId and roleName. CES entities with equal names and null legacy roles merge subjects. Only the left entity metadata survives.",
+      "consequence": "If distinct ITAM IDs share an application name, adding applicationId alone cannot preserve separation; role lists from merged rows could also be lost if only mapped without merge handling.",
+      "owner": "unknown",
+      "next_action": "Preserve explicit application identity in the merge key or record an enforced application-name uniqueness contract. Merge role lists only within the same confirmed application scope.",
+      "evidence": [
+        "merge"
+      ],
+      "limit": "One application ID in supplied capture. No duplicate-name multi-ID runtime condition established; no application defect confirmed for that capture."
+    }
+  ],
+  "unchanged_or_compatible_boundaries": [
+    {
+      "claim": "The login envelope and entity/subject/action arrays can remain structurally compatible through additive fields.",
+      "evidence": [
+        "entity",
+        "base-login"
+      ],
+      "limit": "Strict external JSON consumers are not inventoried; do not claim universal compatibility."
+    },
+    {
+      "claim": "Existing upper hasPermission(code):boolean signatures and mapped feature/action names need not change in unambiguous scope.",
+      "evidence": [
+        "authenticator",
+        "cashflow-import"
+      ],
+      "limit": "Shared adapters are still required; same-feature mixed-provider static calls remain a design limit."
+    },
+    {
+      "claim": "FMO PORTAL ADMIN scalar helper remains a separate legacy consumer.",
+      "evidence": [
+        "admin-role"
+      ],
+      "limit": "No blanket CES admin migration follows from new fields. Preserve EMS2 behavior until explicitly migrated."
+    }
+  ],
+  "source_bindings": [
+    {
+      "id": "entity",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java",
+      "start": 10,
+      "end": 17,
+      "sha256": "b6ad88b22055a4306257edf37241bc51e0b340baafa3e6aa49e9be66829847dd",
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+    },
+    {
+      "id": "mapper",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "start": 62,
+      "end": 96,
+      "sha256": "3b86de99b181d789ec9804e259f0d1d32a331cd6c483d7056de12ba7148e41f3",
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+    },
+    {
+      "id": "ces-dto",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/dto/Ems3DataEntitlementDto.java",
+      "start": 19,
+      "end": 50,
+      "sha256": "ea8d5bccb54e2caa9d4222521c26cf82f9e83df3ad969cf00b7877268d0f93e5",
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+    },
+    {
+      "id": "token",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "start": 131,
+      "end": 143,
+      "sha256": "c5e50cb1272af3a27354b1a28b3f092999a7011922343284984ef854aee56af3",
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+    },
+    {
+      "id": "merge",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "start": 181,
+      "end": 212,
+      "sha256": "2fb6fd6ec859326f2bf1c2cc290e1cce7e4e8b8b8fbd33339bb22a6219552e71",
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+    },
+    {
+      "id": "drawers",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "start": 208,
+      "end": 225,
+      "sha256": "9677698f3e3ec7a1c412448c6cd2aa1e25b4aff3d6190ee84449c910de223559",
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+    },
+    {
+      "id": "base-types",
+      "path": "repos/ui/mfe-base/src/hooks/model/root.ts",
+      "start": 42,
+      "end": 81,
+      "sha256": "01eb7407967602ae718a2d44d3240d9c2f94e15cbb6da4f083b9b0f8dd604a15",
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a"
+    },
+    {
+      "id": "base-login",
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "start": 65,
+      "end": 95,
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a"
+    },
+    {
+      "id": "tile-validator",
+      "path": "repos/ui/mfe-base/src/utils/common.ts",
+      "start": 260,
+      "end": 311,
+      "sha256": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc",
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a"
+    },
+    {
+      "id": "base-container",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+      "start": 26,
+      "end": 32,
+      "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a"
+    },
+    {
+      "id": "authenticator",
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "start": 6,
+      "end": 105,
+      "sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1",
+      "revision": null
+    },
+    {
+      "id": "role-exclusions",
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "start": 270,
+      "end": 335,
+      "sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1",
+      "revision": null
+    },
+    {
+      "id": "views",
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts",
+      "start": 21,
+      "end": 36,
+      "sha256": "7721a937cc65de5ef651edfbe5312078257d9d01e3d5ed86f3445940b79ca8b0",
+      "revision": null
+    },
+    {
+      "id": "filters",
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/store.ts",
+      "start": 22,
+      "end": 37,
+      "sha256": "7468fc05a6053091224d9200bf4ab8667e732460df552ff4c3feb4d18f8de1f1",
+      "revision": null
+    },
+    {
+      "id": "view-owner",
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/common/useViewNameController.ts",
+      "start": 22,
+      "end": 54,
+      "sha256": "0d786b085d6a37faf5041c0407e45d691514d6e72587f25f6ac24d04ae277d36",
+      "revision": null
+    },
+    {
+      "id": "telemetry",
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts",
+      "start": 38,
+      "end": 77,
+      "sha256": "9033f910b5830a644b1f84bfb4af2270e40a283ac993e9cf750aff2ba320f3e8",
+      "revision": null
+    },
+    {
+      "id": "profile",
+      "path": "repos/ui/mfe-base/src/components/Profile/index.tsx",
+      "start": 99,
+      "end": 134,
+      "sha256": "b6e5602627da98d54c3df39638e6ce129e4c7ec617a2482cdcadbdb2619d3888",
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a"
+    },
+    {
+      "id": "profile-label",
+      "path": "repos/ui/mfe-base/src/components/Profile/util.ts",
+      "start": 1,
+      "end": 5,
+      "sha256": "0f9362bcac116b80d173bf55e389d5e1a2731b8ac9bdff1fa364691bf25959c4",
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a"
+    },
+    {
+      "id": "admin-role",
+      "path": "repos/ui/mfe-base/src/admin/common/utils/index.ts",
+      "start": 3,
+      "end": 10,
+      "sha256": "be595fb158e407938eadc7e0caf2b86a2446b45a21062e8dde2ceadf16d661e7",
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a"
+    },
+    {
+      "id": "cashflow-import",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/ratanutils/index.ts",
+      "start": 1,
+      "end": 7,
+      "sha256": "9df5cbf5a550cb0d7c7d25a8840d3f931b57217b6018012f0b1f00f8ce48ecf3",
+      "revision": null
+    },
+    {
+      "id": "module-scope",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/Main/common/utils.ts",
+      "start": 5,
+      "end": 10,
+      "sha256": "c0c484c47bdc2a3146acb3dbb82faad8a58808adcdc06139d8984ddf08eef134",
+      "revision": null
+    }
+  ],
+  "material_limits": [
+    "Sources reflect the pre-edit mapper/model at their recorded hashes.",
+    "No application source changed by this assessor.",
+    "No browser, backend test, live CES call, or probe executed for this assessment.",
+    "No all-consumer inventory or universal API compatibility claim.",
+    "Role list assignments do not attribute aggregate actions to individual roles."
+  ]
+}

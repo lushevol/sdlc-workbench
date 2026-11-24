@@ -1,0 +1,28 @@
+FAIL src/pages/Home/common/raceComparison.test.tsx
+  ✕ F03: delayed old refresh delivered after-login (5 ms)
+  ○ skipped F02: one millisecond late acquisition with a retained valid refresh
+  ○ skipped F03: delayed old refresh delivered before-login
+
+  ● F03: delayed old refresh delivered after-login
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "session-A"
+    Received: null
+
+      143 |   };
+      144 |   save(observed);
+    > 145 |   expect(observed.recovery_header_session).toBe(expectedFailure ? 'session-A' : 'session-B');
+          |                                            ^
+      146 |   expect(observed.new_session_recovery_succeeded).toBe(!expectedFailure);
+      147 |   expect(observed.new_session_cleared).toBe(expectedFailure);
+      148 | });
+
+      at src/pages/Home/common/raceComparison.test.tsx:145:44
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 skipped, 3 total
+Snapshots:   0 total
+Time:        0.44 s, estimated 1 s
+Ran all test suites within paths "src/pages/Home/common/raceComparison.test.tsx".
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-1/f03/no-acquisition-control/results.json

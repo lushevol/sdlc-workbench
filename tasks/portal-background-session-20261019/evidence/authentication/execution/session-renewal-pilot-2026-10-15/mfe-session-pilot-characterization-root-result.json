@@ -1,0 +1,117 @@
+{
+  "status": "PASSED",
+  "runtime": "v24.16.0",
+  "worktree": "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/mfe-session-pilot-eelyblt2/mfe-base",
+  "source_sha256": {
+    "src/hooks/service/util/getEndpoint.ts": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+    "src/hooks/service/index.ts": "72182d3bb36584e00982377e0137dd6effb527a4c2a24a8ffd89fcaf44b6cf13",
+    "src/hooks/service/util/extend.ts": "1643dbd7f4a124797b77bd89fdd8b965a7b5b0c1c13ee0c0a001b1362229a6ad",
+    "src/pages/Home/common/useController.ts": "cca50a13a8bd05705127e8d25c74db57014be04068ffff59b5a7c3bd5779a272",
+    "src/components/Timeout/common/useController.ts": "61b64dbd341c69ba60bb3836f1ee4b8b8fd2b957ef2119cc80e732f27f215330"
+  },
+  "checks": [
+    {
+      "name": "continuous activity renews without an idle gap",
+      "status": "PASSED",
+      "events": 1000,
+      "elapsed_ms": 1000000,
+      "renewal_calls": 200,
+      "cadence_ms": 5000
+    },
+    {
+      "name": "activity types share one cadence and capture registration",
+      "status": "PASSED",
+      "activity_types": [
+        "mousemove",
+        "mousedown",
+        "keydown",
+        "scroll"
+      ],
+      "shared_calls": 2,
+      "capture_and_passive": true
+    },
+    {
+      "name": "each activity type can independently renew",
+      "status": "PASSED",
+      "independent_types": 4
+    },
+    {
+      "name": "idle periods do not renew",
+      "status": "PASSED",
+      "initial_idle_ms": 60000,
+      "after_activity_idle_ms": 60000,
+      "renewal_calls": 1
+    },
+    {
+      "name": "current session, logout, missing token, and near-expiry guards",
+      "status": "PASSED",
+      "latest_token_used": true,
+      "logout_blocks": true,
+      "missing_token_blocks": true,
+      "below_25s_blocks": true,
+      "exactly_25s_allowed": true
+    },
+    {
+      "name": "unmount removes listeners and session timers",
+      "status": "PASSED",
+      "removed_types": 4,
+      "remaining_timers": 0
+    },
+    {
+      "name": "idle expiry retains refresh request and prompt",
+      "status": "PASSED",
+      "refresh_before_expiry_ms": 25000,
+      "prompt_at_expiry": true,
+      "activity_renewals": 0
+    },
+    {
+      "name": "actual relogin returns pending promise and preserves successful result",
+      "status": "PASSED",
+      "returned_request_identity": true,
+      "pending_until_resolution": true,
+      "success_propagated": true
+    },
+    {
+      "name": "actual relogin propagates rejection and aborts the older request",
+      "status": "PASSED",
+      "request_rejection_propagated": true,
+      "older_request_aborted": true
+    },
+    {
+      "name": "Timeout stays open while pending and closes after success",
+      "status": "PASSED",
+      "open_while_pending": true,
+      "closed_after_success": true,
+      "loading_reset": true
+    },
+    {
+      "name": "Timeout rejection remains retryable and successful retry clears expiry timer",
+      "status": "PASSED",
+      "rejection_keeps_open": true,
+      "rejection_resets_loading": true,
+      "retry_succeeds": true,
+      "successful_retry_clears_timer": true
+    },
+    {
+      "name": "Timeout failure retains refresh expiry logout",
+      "status": "PASSED",
+      "logout_deadline_before_refresh_expiry_ms": 2000,
+      "failure_preserves_deadline": true
+    }
+  ],
+  "failure": null,
+  "mocks": [
+    "React hooks use a deterministic state, ref, effect, and callback model.",
+    "Document listeners use a controlled event registry and capture option checks.",
+    "Date and browser timers use a controlled clock.",
+    "Axios post returns controlled promises and records request arguments.",
+    "JWT decoding, analytics, dispatcher side effects, and logout are controlled inputs.",
+    "waitFor resolves immediately in Timeout characterization."
+  ],
+  "limits": [
+    "Actual changed TypeScript executes after Node stripTypeScriptTypes transformation.",
+    "The harness is not React, jsdom, browser, backend, identity provider, or E2E execution.",
+    "The harness does not prove deployed timeout policy or indefinite backend renewal.",
+    "Jest regressions were added but were not executed because the runner is absent."
+  ]
+}

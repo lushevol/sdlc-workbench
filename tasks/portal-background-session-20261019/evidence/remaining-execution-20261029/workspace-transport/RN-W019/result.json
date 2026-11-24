@@ -1,0 +1,114 @@
+{
+  "id": "RN-W019",
+  "title": "Catalog validation delays Home readiness",
+  "started_at": "2026-10-29T02:07:11.615Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w019",
+  "definition_sha256": "d559d4e5267dcbe4a0df5881922aee517acafbf3170f9cfdd6ec3f82b6577ac4",
+  "status": "BLOCKED",
+  "assertions": [],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239202429,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239204822,
+      "page": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "205ad100432ce4b478b65fa55e423ef25c6f5389763014f8d7e8783c0cd59ed3",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        32,
+        299
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "lines": [
+        24,
+        155
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js"
+  ],
+  "setup_complete": true,
+  "blocker": "Case requires held catalog validation before Home readiness. Current synthetic catalog is delivered atomically at login; dynamic entitlement readiness binding remains unavailable.",
+  "unexecuted_predicates": [
+    "the result records Home readiness and dialog visibility in order",
+    "the protected service records no acceptance of expired access"
+  ],
+  "completed_at": "2026-10-29T02:07:16.627Z",
+  "runner_sha256": "ccd55df493f625e3951c3801cc370cbc68ccc9647ddcd2517dfd84903c61985e",
+  "runner_summary": "../attempt1/summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/pages/Home/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "canonical_definition_source_sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "canonical_definition_source_sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "definition_source_matches": false,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "canonical_definition_source_sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "definition_source_limit": "Canonical source inventory includes dirty Home bytes. Execution uses the immutable candidate and recorded hashes; it does not execute those dirty bytes.",
+  "execution_class": "blocked-not-executed",
+  "owner": "unknown application, transport, or security owner"
+}

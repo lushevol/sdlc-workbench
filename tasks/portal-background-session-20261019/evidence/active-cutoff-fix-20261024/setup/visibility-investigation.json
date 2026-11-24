@@ -1,0 +1,87 @@
+{
+  "recorded_at": "2026-10-24T16:04:57.754533+00:00",
+  "status": "BLOCKED_NATIVE_VISIBILITY",
+  "critical_conclusion": {
+    "action": "Unlock the Mac before another native visibility run.",
+    "owner": "user",
+    "blocked_action": "Reliable browser E2E visibility comparison.",
+    "consequence": "Current setup failures cannot prove application behavior.",
+    "evidence": "native-ui-access.json"
+  },
+  "facts": [
+    {
+      "claim": "Two native tabs shared one normal browser window.",
+      "evidence": "activation-diagnostic-result.json: observations[].subjectWindow and coverWindow"
+    },
+    {
+      "claim": "Focus changed between tabs. Both tabs still reported visible.",
+      "evidence": "activation-diagnostic-result.json: observations[0:6] subject and cover"
+    },
+    {
+      "claim": "Page.bringToFront and Target.activateTarget did not produce hidden visibility.",
+      "evidence": "activation-diagnostic-result.json: observations[0:4]"
+    },
+    {
+      "claim": "Disabling focus emulation did not produce hidden visibility.",
+      "evidence": "activation-diagnostic-result.json: observations[4:6]"
+    },
+    {
+      "claim": "Explicit native-tab creation did not produce hidden visibility.",
+      "evidence": "activation-diagnostic-result.json: observations[6]"
+    },
+    {
+      "claim": "Native UI access reported the Mac locked.",
+      "evidence": "native-ui-access.json"
+    }
+  ],
+  "inferences": [
+    {
+      "claim": "The locked desktop can affect the native visibility conditions.",
+      "limit": "Repeat the same diagnostic after manual unlock before claiming a cause."
+    }
+  ],
+  "next_actions": [
+    {
+      "owner": "user",
+      "action": "Unlock the Mac."
+    },
+    {
+      "owner": "agent",
+      "action": "Repeat the isolated diagnostic. Require genuine hidden and visible transitions."
+    },
+    {
+      "owner": "agent",
+      "action": "Rerun affected original cases after the diagnostic passes. Preserve failed setup attempts."
+    }
+  ],
+  "scope_limits": [
+    "No production source or canonical assertion changed.",
+    "No document visibility property or clock was overridden.",
+    "The diagnostic used data pages without business authentication.",
+    "Browser-upgrade effects remain separate from the confirmed desktop lock."
+  ],
+  "artifacts": [
+    {
+      "path": "activation-diagnostic-result.json",
+      "sha256": "8171f0050d614c13af7133981ee89f5f0282cb860fd8cee0a21d3f969a01e747"
+    },
+    {
+      "path": "activation-diagnostic.mjs.snapshot",
+      "sha256": "bbb7d6dbd711db1b1569918c0b80d6de54f33666008664813ade30f39bca5e68"
+    },
+    {
+      "path": "native-ui-access.json",
+      "sha256": "cbe64dae4fc0eae53260ba04f51ef5acb5313bd84840049b96eceba3aacc49c2"
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

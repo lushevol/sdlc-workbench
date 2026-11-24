@@ -1,0 +1,164 @@
+{
+  "caseId": "REVIEW-E2E-06",
+  "finding": "REVIEW-06",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:43:50.552Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8143",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:43:54.975Z",
+      "method": "Playwright screenshot",
+      "sha256": "c236d0bcbdb4eace22201e04a76ed275b4060c0cc783e14482d39853e1dff241",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "malformed-expiry-final",
+      "file": "malformed-expiry-final.png",
+      "capturedAt": "2026-10-28T02:44:54.930Z",
+      "method": "Playwright screenshot",
+      "sha256": "956e111038eeae87d0f304b44faa378cfa655e7cbf4e2876341e677bf2a57045",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:43:53.686Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:43:53.691Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:43:53.742Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:43:53.753Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:44:28.009Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:44:53.221Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:44:53.223Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:44:53.223Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:44:53.235Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:44:53.246Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:44:53.246Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/logout",
+      "at": "2026-10-28T02:44:54.213Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "at": "2026-10-28T02:44:54.217Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "status": 404,
+      "at": "2026-10-28T02:44:54.230Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "at": "2026-10-28T02:44:54.230Z"
+    }
+  ],
+  "assertions": [
+    "Natural client access expiry with explicitly malformed refresh; actual fallback route and available controls observed."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Refresh JWT payload deliberately omits exp through public setter; signature becomes invalid and inspected local BFF never emits this shape."
+  ],
+  "before": {
+    "at": "2026-10-28T02:43:54.968Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "daaf18ce37026a987907078d6353dd051752948e2fb05ff7596d4e2f3bd0ffd1",
+      "exp": 1793155493,
+      "iat": 1793155433
+    },
+    "refresh": {
+      "sha256": "c7659659ed5b85983b51817d31620495957ef15da71efba4c0287af7da88edb0",
+      "exp": 1793155577,
+      "iat": 1793155433
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:44:54.929Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "accessChanged": true,
+    "refreshChanged": true,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": false,
+    "loginVisible": true,
+    "outcome": null
+  },
+  "impact": "MALFORMED_REFRESH_FORCES_LOGIN",
+  "completedAt": "2026-10-28T02:44:55.007Z",
+  "elapsedMs": 64455
+}

@@ -1,0 +1,3246 @@
+{
+  "caseId": "UAT-BLOTTER-VISIBLE",
+  "runId": "blotter-visible-01",
+  "status": "PASSED",
+  "startedAt": "2026-10-21T08:22:49.389Z",
+  "clock": "REAL_WALL_CLOCK",
+  "target": "http://localhost:8121/",
+  "runnerSha256": "2ea29cd84bef419c174a4bca56335a6c93f0edd83ae4e4c7abc7010ed9b9302b",
+  "fixtureSha256": "8a1d19d1c8b7f60e9aec68ada2244985d727e6decb747158ff8722d8acc36e03",
+  "nativeContextPolicy": "Fresh native Edge process and default profile context; CDP noDefaults=true; no incognito context.",
+  "observationLimits": [
+    "CDP and a passive DOM observer remain attached. Natural browser freezing is not established.",
+    "Local identity, catalog, entitlement, and business response fixtures replace external systems. UAT parity is not established.",
+    "Live notification acquisition returns HTTP 503. Socket traffic and notification-driven updates are unavailable.",
+    "All non-localhost network requests are aborted. External profile photos and services are unavailable."
+  ],
+  "testDoubles": [
+    "Catalog and entitlements are injected into successful real local BFF auth response bodies. Auth headers remain real.",
+    "Only one preseeded workspace mounts the actual Ratan container and actual Cashflow Blotter module.",
+    "Non-auth /api endpoints use disclosed local network fixtures; missing exact fixtures use an empty candidate response."
+  ],
+  "catalog": {
+    "drawers": [
+      {
+        "id": 1,
+        "label": "Local investigation fixture",
+        "tiles": [
+          {
+            "title": "Cashflow Blotter",
+            "container": "@fm/ratan_container",
+            "module": "/cashflow_blotter_cn",
+            "tile": "/cashflow_cn",
+            "emailSupport": "local@example.invalid",
+            "entity": [
+              "X_RATANONE"
+            ],
+            "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "isTemplate": true,
+            "imageDarkTheme": ""
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "id": 1,
+        "name": "X_RATANONE",
+        "applicationName": "LOCAL",
+        "roleId": 1,
+        "roleName": "LOCAL",
+        "subjects": [
+          {
+            "id": 1,
+            "name": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "longName": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "actions": [
+              {
+                "id": 1,
+                "entitlementId": 1,
+                "name": "UI_Read_Access"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "workspace": {
+      "id": "local-blotter-workspace",
+      "label": "Cashflow Blotter",
+      "isActive": true,
+      "containers": [
+        {
+          "title": "Cashflow Blotter",
+          "container": "@fm/ratan_container",
+          "module": "/cashflow_blotter_cn",
+          "tile": "/cashflow_cn",
+          "emailSupport": "local@example.invalid",
+          "entity": [
+            "X_RATANONE"
+          ],
+          "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+          "isTemplate": true,
+          "imageDarkTheme": "",
+          "id": "local-blotter-container",
+          "panelId": "local-blotter-panel",
+          "tabId": "local-blotter-workspace"
+        }
+      ]
+    }
+  },
+  "fixtures": {
+    "storage": {},
+    "responses": [
+      {
+        "pathname": "/api/ratan/rule/v1/fields",
+        "body": {
+          "fields": [
+            {
+              "indexedTerm": "Cashflow.Cashflow_Id",
+              "businessTerm": "Cashflow ID",
+              "dataType": "String",
+              "context": "CASHFLOW_DATA",
+              "scope": "{\"disabledBlotter\":[]}",
+              "valueList": "[]"
+            },
+            {
+              "indexedTerm": "Cashflow.Cashflow_State",
+              "businessTerm": "Cashflow State",
+              "dataType": "String",
+              "context": "CASHFLOW_DATA",
+              "scope": "{\"disabledBlotter\":[]}",
+              "valueList": "[\"WAITING\"]"
+            }
+          ],
+          "version": {
+            "fieldsConfig": 1,
+            "fields": 1
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/rule/v1/fields/versions",
+        "body": {
+          "ratan_suppression_fields_config": {
+            "activedVersion": 1
+          },
+          "ratan_suppression_fields": {
+            "activedVersion": 1
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/stmcn/v1/cashflows",
+        "method": "POST",
+        "body": {
+          "data": {
+            "cashflowUltraQuery": {
+              "totalResult": 0,
+              "pageIndex": 0,
+              "itemsPerPage": 100,
+              "lastPage": true,
+              "results": []
+            },
+            "cashflowUltraQueryByOpensearch": {
+              "totalResult": 0,
+              "pageIndex": 0,
+              "itemsPerPage": 100,
+              "lastPage": true,
+              "results": []
+            },
+            "cashflowUltraQueryCount": {
+              "count": 0
+            },
+            "groupMessages": {
+              "pageInfo": {
+                "totalHits": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/v2/customview/views",
+        "body": []
+      },
+      {
+        "pathname": "/api/ratan/v3/customview/views",
+        "body": []
+      },
+      {
+        "pathname": "/api/ratan/notification/subscriptions/info",
+        "status": 503,
+        "body": {
+          "message": "LOCAL_LIVE_NOTIFICATIONS_UNAVAILABLE"
+        }
+      }
+    ]
+  },
+  "apiResponses": [
+    {
+      "time": 1792570971511,
+      "url": "http://localhost:8121/api/auth/v2/sso/login",
+      "status": 200,
+      "access": {
+        "sha256": "8974105e7e64b6fb53d8d0676c7a226a81e16d22d7c8c3a3679ef0ad6300e3be",
+        "iat": 1792570971,
+        "exp": 1792571031
+      },
+      "refresh": null
+    },
+    {
+      "time": 1792570972836,
+      "url": "http://localhost:8121/api/ratan/da/v1/monitor",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570972883,
+      "url": "http://localhost:8121/api/ratan/rule/v1/fields",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973318,
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973382,
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973382,
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973383,
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973427,
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "status": 503,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973469,
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "status": 503,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973491,
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "status": 200,
+      "access": {
+        "sha256": "010a40520d5014d4878c375338b6cc6b292f9be41aac010179e2fda899ce131e",
+        "iat": 1792570973,
+        "exp": 1792571033
+      },
+      "refresh": null
+    },
+    {
+      "time": 1792570973693,
+      "url": "http://localhost:8121/api/ratan/v2/customview/views",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973867,
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570973890,
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "status": 200,
+      "access": {
+        "sha256": "010a40520d5014d4878c375338b6cc6b292f9be41aac010179e2fda899ce131e",
+        "iat": 1792570973,
+        "exp": 1792571033
+      },
+      "refresh": null
+    },
+    {
+      "time": 1792570974448,
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "status": 503,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570976455,
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "status": 503,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570979461,
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "status": 503,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570981802,
+      "url": "http://localhost:8121/api/ratan/v1/ratan-analytic",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570981825,
+      "url": "http://localhost:8121/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "access": null,
+      "refresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "time": 1792570983465,
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "status": 503,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570983485,
+      "url": "http://localhost:8121/api/ratan/v1/esLogging/production/warn",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "time": 1792570988400,
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "status": 200,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "refresh": null
+    },
+    {
+      "time": 1792571048145,
+      "url": "http://localhost:8121/api/analytics/v1/fmo/print",
+      "status": 200,
+      "access": null,
+      "refresh": null
+    }
+  ],
+  "requests": [
+    {
+      "time": 1792570971476,
+      "requestId": "76924.24",
+      "url": "http://localhost:8121/api/auth/v2/sso/login",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570971564,
+      "requestId": "76924.30",
+      "url": "https://axess.sc.net/scb-axess-cms/api/users/session-local/photo",
+      "method": "GET",
+      "type": "Image",
+      "initiator": {
+        "type": "other",
+        "url": ""
+      }
+    },
+    {
+      "time": 1792570972822,
+      "requestId": "76924.36",
+      "url": "http://localhost:8121/api/ratan/da/v1/monitor",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570972877,
+      "requestId": "76924.43",
+      "url": "http://localhost:8121/api/ratan/rule/v1/fields",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973311,
+      "requestId": "76924.57",
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "method": "POST",
+      "type": "Fetch",
+      "bodyShape": {
+        "keys": [
+          "operationName",
+          "variables",
+          "query"
+        ],
+        "operationName": "SettlementCashflowDataUltraQuery",
+        "query": "query SettlementCashflowDataUltraQuery {\n  cashflowUltraQuery(\n    payload: {filters: {and: [{filters: [{field: \"Cashflow.Cashflow_Sub_State\", operator: EQ, values: \"Pending Operator\"}, {field: \"Cashflow.Payment_Date\", operator: EQ, values: \"2026-10-21\"}]}]}, itemsPerPage: 1000, orderArgs: [], pageIndex: 0, pagingOption: PAGE_INDEX}\n  ) {\n    totalResult\n    pageIndex\n    itemsPerPage\n    lastPage\n    results {\n      Cashflow {\n        Cashflow_Id\n      }\n    }\n  }\n}"
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 228072,
+              "columnNumber": 12
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227775,
+              "columnNumber": 41
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "complete",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231946,
+              "columnNumber": 42
+            },
+            {
+              "functionName": "Concast.start",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231987,
+              "columnNumber": 22
+            },
+            {
+              "functionName": "Concast",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231972,
+              "columnNumber": 18
+            },
+            {
+              "functionName": "QueryManager.getObservableFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226840,
+              "columnNumber": 36
+            },
+            {
+              "functionName": "QueryManager.getResultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226882,
+              "columnNumber": 83
+            },
+            {
+              "functionName": "resultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227210,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "QueryManager.fetchQueryByPolicy",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227273,
+              "columnNumber": 51
+            },
+            {
+              "functionName": "fromVariables",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226952,
+              "columnNumber": 40
+            },
+            {
+              "functionName": "QueryManager.fetchConcastWithInfo",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226994,
+              "columnNumber": 34
+            },
+            {
+              "functionName": "QueryManager.fetchQuery",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226479,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "QueryManager.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226577,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "ApolloClient.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 223902,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "queryGraphql",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 41186,
+              "columnNumber": 21
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26065,
+              "columnNumber": 62
+            },
+            {
+              "functionName": "queryCashflow",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 37805,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9213,
+              "columnNumber": 107
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9227,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitHookEffectListMount",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 27518,
+              "columnNumber": 27
+            },
+            {
+              "functionName": "commitPassiveMountOnFiber",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29532,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_complete",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29483,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_begin",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29460,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitPassiveMountEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29435,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffectsImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31800,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31746,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performSyncWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30776,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushSyncCallbacks",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 14329,
+              "columnNumber": 23
+            },
+            {
+              "functionName": "commitRootImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31721,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "commitRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31423,
+              "columnNumber": 6
+            },
+            {
+              "functionName": "finishConcurrentRender",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30620,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "performConcurrentWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30480,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "workLoop",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2997,
+              "columnNumber": 35
+            },
+            {
+              "functionName": "flushWork",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2967,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performWorkUntilDeadline",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 3257,
+              "columnNumber": 22
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973311,
+      "requestId": "76924.58",
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "method": "POST",
+      "type": "Fetch",
+      "bodyShape": {
+        "keys": [
+          "operationName",
+          "variables",
+          "query"
+        ],
+        "operationName": "SettlementCashflowDataUltraQuery",
+        "query": "query SettlementCashflowDataUltraQuery {\n  cashflowUltraQuery(\n    payload: {filters: {and: [{filters: [{field: \"Cashflow.Cashflow_Sub_State\", operator: EQ, values: \"Pending Verification\"}, {field: \"Cashflow.Payment_Date\", operator: EQ, values: \"2026-10-21\"}]}]}, itemsPerPage: 1000, orderArgs: [], pageIndex: 0, pagingOption: PAGE_INDEX}\n  ) {\n    totalResult\n    pageIndex\n    itemsPerPage\n    lastPage\n    results {\n      Cashflow {\n        Cashflow_Id\n      }\n    }\n  }\n}"
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 228072,
+              "columnNumber": 12
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227775,
+              "columnNumber": 41
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "complete",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231946,
+              "columnNumber": 42
+            },
+            {
+              "functionName": "Concast.start",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231987,
+              "columnNumber": 22
+            },
+            {
+              "functionName": "Concast",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231972,
+              "columnNumber": 18
+            },
+            {
+              "functionName": "QueryManager.getObservableFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226840,
+              "columnNumber": 36
+            },
+            {
+              "functionName": "QueryManager.getResultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226882,
+              "columnNumber": 83
+            },
+            {
+              "functionName": "resultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227210,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "QueryManager.fetchQueryByPolicy",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227273,
+              "columnNumber": 51
+            },
+            {
+              "functionName": "fromVariables",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226952,
+              "columnNumber": 40
+            },
+            {
+              "functionName": "QueryManager.fetchConcastWithInfo",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226994,
+              "columnNumber": 34
+            },
+            {
+              "functionName": "QueryManager.fetchQuery",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226479,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "QueryManager.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226577,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "ApolloClient.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 223902,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "queryGraphql",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 41186,
+              "columnNumber": 21
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26065,
+              "columnNumber": 62
+            },
+            {
+              "functionName": "queryCashflow",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 37805,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9213,
+              "columnNumber": 107
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9227,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitHookEffectListMount",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 27518,
+              "columnNumber": 27
+            },
+            {
+              "functionName": "commitPassiveMountOnFiber",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29532,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_complete",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29483,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_begin",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29460,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitPassiveMountEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29435,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffectsImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31800,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31746,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performSyncWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30776,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushSyncCallbacks",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 14329,
+              "columnNumber": 23
+            },
+            {
+              "functionName": "commitRootImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31721,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "commitRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31423,
+              "columnNumber": 6
+            },
+            {
+              "functionName": "finishConcurrentRender",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30620,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "performConcurrentWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30480,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "workLoop",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2997,
+              "columnNumber": 35
+            },
+            {
+              "functionName": "flushWork",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2967,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performWorkUntilDeadline",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 3257,
+              "columnNumber": 22
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973311,
+      "requestId": "76924.59",
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "method": "POST",
+      "type": "Fetch",
+      "bodyShape": {
+        "keys": [
+          "operationName",
+          "variables",
+          "query"
+        ],
+        "operationName": "SettlementCashflowDataUltraQuery",
+        "query": "query SettlementCashflowDataUltraQuery {\n  cashflowUltraQuery(\n    payload: {filters: {and: [{filters: [{field: \"Cashflow.Cashflow_Sub_State\", operator: EQ, values: \"Pending Operator\"}, {field: \"Cashflow.Payment_Date\", operator: EQ, values: \"2026-10-22\"}]}]}, itemsPerPage: 1000, orderArgs: [], pageIndex: 0, pagingOption: PAGE_INDEX}\n  ) {\n    totalResult\n    pageIndex\n    itemsPerPage\n    lastPage\n    results {\n      Cashflow {\n        Cashflow_Id\n      }\n    }\n  }\n}"
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 228072,
+              "columnNumber": 12
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227775,
+              "columnNumber": 41
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "complete",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231946,
+              "columnNumber": 42
+            },
+            {
+              "functionName": "Concast.start",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231987,
+              "columnNumber": 22
+            },
+            {
+              "functionName": "Concast",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231972,
+              "columnNumber": 18
+            },
+            {
+              "functionName": "QueryManager.getObservableFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226840,
+              "columnNumber": 36
+            },
+            {
+              "functionName": "QueryManager.getResultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226882,
+              "columnNumber": 83
+            },
+            {
+              "functionName": "resultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227210,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "QueryManager.fetchQueryByPolicy",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227273,
+              "columnNumber": 51
+            },
+            {
+              "functionName": "fromVariables",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226952,
+              "columnNumber": 40
+            },
+            {
+              "functionName": "QueryManager.fetchConcastWithInfo",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226994,
+              "columnNumber": 34
+            },
+            {
+              "functionName": "QueryManager.fetchQuery",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226479,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "QueryManager.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226577,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "ApolloClient.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 223902,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "queryGraphql",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 41186,
+              "columnNumber": 21
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26065,
+              "columnNumber": 62
+            },
+            {
+              "functionName": "queryCashflow",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 37805,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9213,
+              "columnNumber": 107
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9227,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitHookEffectListMount",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 27518,
+              "columnNumber": 27
+            },
+            {
+              "functionName": "commitPassiveMountOnFiber",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29532,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_complete",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29483,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_begin",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29460,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitPassiveMountEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29435,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffectsImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31800,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31746,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performSyncWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30776,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushSyncCallbacks",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 14329,
+              "columnNumber": 23
+            },
+            {
+              "functionName": "commitRootImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31721,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "commitRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31423,
+              "columnNumber": 6
+            },
+            {
+              "functionName": "finishConcurrentRender",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30620,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "performConcurrentWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30480,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "workLoop",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2997,
+              "columnNumber": 35
+            },
+            {
+              "functionName": "flushWork",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2967,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performWorkUntilDeadline",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 3257,
+              "columnNumber": 22
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973311,
+      "requestId": "76924.60",
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "method": "POST",
+      "type": "Fetch",
+      "bodyShape": {
+        "keys": [
+          "operationName",
+          "variables",
+          "query"
+        ],
+        "operationName": "SettlementCashflowDataUltraQuery",
+        "query": "query SettlementCashflowDataUltraQuery {\n  cashflowUltraQuery(\n    payload: {filters: {and: [{filters: [{field: \"Cashflow.Cashflow_Sub_State\", operator: EQ, values: \"Pending Verification\"}, {field: \"Cashflow.Payment_Date\", operator: EQ, values: \"2026-10-22\"}]}]}, itemsPerPage: 1000, orderArgs: [], pageIndex: 0, pagingOption: PAGE_INDEX}\n  ) {\n    totalResult\n    pageIndex\n    itemsPerPage\n    lastPage\n    results {\n      Cashflow {\n        Cashflow_Id\n      }\n    }\n  }\n}"
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 228072,
+              "columnNumber": 12
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227775,
+              "columnNumber": 41
+            },
+            {
+              "functionName": "Subscription",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251601,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "subscribe",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 251675,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "complete",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231946,
+              "columnNumber": 42
+            },
+            {
+              "functionName": "Concast.start",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231987,
+              "columnNumber": 22
+            },
+            {
+              "functionName": "Concast",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 231972,
+              "columnNumber": 18
+            },
+            {
+              "functionName": "QueryManager.getObservableFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226840,
+              "columnNumber": 36
+            },
+            {
+              "functionName": "QueryManager.getResultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226882,
+              "columnNumber": 83
+            },
+            {
+              "functionName": "resultsFromLink",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227210,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "QueryManager.fetchQueryByPolicy",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 227273,
+              "columnNumber": 51
+            },
+            {
+              "functionName": "fromVariables",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226952,
+              "columnNumber": 40
+            },
+            {
+              "functionName": "QueryManager.fetchConcastWithInfo",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226994,
+              "columnNumber": 34
+            },
+            {
+              "functionName": "QueryManager.fetchQuery",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226479,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "QueryManager.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 226577,
+              "columnNumber": 20
+            },
+            {
+              "functionName": "ApolloClient.query",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 223902,
+              "columnNumber": 33
+            },
+            {
+              "functionName": "queryGraphql",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 41186,
+              "columnNumber": 21
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26065,
+              "columnNumber": 62
+            },
+            {
+              "functionName": "queryCashflow",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 37805,
+              "columnNumber": 25
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9213,
+              "columnNumber": 107
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/cb2ae439dbb27c8320ce.repos_ui_mfe-cashflow-blotter_src_Cashflow_CN_Main_index_tsx-repos_ui_mfe-cashflow-blotter_sr-5ad8b9.ratan_cashflow_blotter.js",
+              "lineNumber": 9227,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitHookEffectListMount",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 27518,
+              "columnNumber": 27
+            },
+            {
+              "functionName": "commitPassiveMountOnFiber",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29532,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_complete",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29483,
+              "columnNumber": 10
+            },
+            {
+              "functionName": "commitPassiveMountEffects_begin",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29460,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "commitPassiveMountEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 29435,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffectsImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31800,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushPassiveEffects",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31746,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performSyncWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30776,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "flushSyncCallbacks",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 14329,
+              "columnNumber": 23
+            },
+            {
+              "functionName": "commitRootImpl",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31721,
+              "columnNumber": 4
+            },
+            {
+              "functionName": "commitRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 31423,
+              "columnNumber": 6
+            },
+            {
+              "functionName": "finishConcurrentRender",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30620,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "performConcurrentWorkOnRoot",
+              "url": "http://localhost:8121/js/external/react-dom.development.js",
+              "lineNumber": 30480,
+              "columnNumber": 8
+            },
+            {
+              "functionName": "workLoop",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2997,
+              "columnNumber": 35
+            },
+            {
+              "functionName": "flushWork",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 2967,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "performWorkUntilDeadline",
+              "url": "http://localhost:8121/js/external/react.development.js",
+              "lineNumber": 3257,
+              "columnNumber": 22
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973383,
+      "requestId": "76924.68",
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "AbstractXHRObject._start",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169898,
+              "columnNumber": 13
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169787,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973384,
+      "requestId": "76924.69",
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973388,
+      "requestId": "76924.70",
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973398,
+      "requestId": "76924.71",
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973398,
+      "requestId": "76924.72",
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973437,
+      "requestId": "76924.73",
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "AbstractXHRObject._start",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169898,
+              "columnNumber": 13
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169787,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973654,
+      "requestId": "76924.76",
+      "url": "http://localhost:8121/api/ratan/v2/customview/views",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973859,
+      "requestId": "76924.77",
+      "url": "http://localhost:8121/api/ratan/stmcn/v1/cashflows",
+      "method": "POST",
+      "type": "Fetch",
+      "bodyShape": {
+        "keys": [
+          "query",
+          "variables",
+          "operationName"
+        ],
+        "operationName": "SettlementCashflowDataUltraQuery",
+        "query": "\n  query SettlementCashflowDataUltraQuery($payload: RatanUltraQuery!) {\n    cashflowUltraQuery(payload: $payload) {\n      totalResult\n      pageIndex\n      itemsPerPage\n      lastPage\n      results {\n        BCS_Trade_Id,BCS_Parent_Trade_Id,FMO_Comments{FMO_Comment,FMO_Comment_Timestamp,FMO_Comment_Updater},Cashflow{Cashflow_Id,Cashflow_Business_Version,Cashflow_Version,Cashflow_State,Cashflow_Affirmation_Status,Cashflow_Event_Type,Cashflow_Minor_Version,Payment_Currency,Payment_Date,Payment_Type,Payment_Cutoff_Time,Pay_Receive_Indicator,Payment_Amount,Netting_Id,Splitting_Id,Netting_Cuttoff_Date,Payment_Receiver_Party_Reference,Payment_Payer_Party_Reference,Cashflow_Sub_State,Cashflow_Sub_State_Type,Cashflow_Sub_State_Updater,Status_Event_Type,Cashflow_Swift_Message_Standard,Cashflow_Event_Reason},Delivery_Method,Settlement_Method,Trade_Id,Trade_Version,Entity{Booking_Entity_SCI_FMID,Booking_Entity_SCI_FMCODE,Counterparty_SCI_FMID,Counterparty_SCI_FMCODE,Counterparty_SCI_BIC_Net_Flag},Instrument_Common{ISDA_Taxonomy,Source_System_Instrument_Sub_Type,Murex_Product_Strategy},Trade_Original_Source_System_Name,Data_Flow{Data_Source_System},Trade_State\n      }\n    }\n  }\n  "
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 176226,
+              "columnNumber": 17
+            },
+            {
+              "functionName": "makeRequest",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 176379,
+              "columnNumber": 27
+            },
+            {
+              "functionName": "request",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 176284,
+              "columnNumber": 15
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 175810,
+              "columnNumber": 942
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570973875,
+      "requestId": "76924.78",
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570974445,
+      "requestId": "76924.79",
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "AbstractXHRObject._start",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169898,
+              "columnNumber": 13
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169787,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570976452,
+      "requestId": "76924.80",
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "AbstractXHRObject._start",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169898,
+              "columnNumber": 13
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169787,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570979458,
+      "requestId": "76924.81",
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "AbstractXHRObject._start",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169898,
+              "columnNumber": 13
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169787,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570981787,
+      "requestId": "76924.82",
+      "url": "http://localhost:8121/api/auth/v2/sso/refreshtoken",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570981787,
+      "requestId": "76924.83",
+      "url": "http://localhost:8121/api/ratan/v1/ratan-analytic",
+      "method": "POST",
+      "type": "Fetch",
+      "bodyShape": {
+        "keys": [
+          "events"
+        ],
+        "operationName": null,
+        "query": null
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "sender",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26118,
+              "columnNumber": 12
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26150,
+              "columnNumber": 58
+            },
+            {
+              "functionName": "smartSender",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26150,
+              "columnNumber": 45
+            },
+            {
+              "functionName": "send",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26229,
+              "columnNumber": 97
+            },
+            {
+              "functionName": "process",
+              "url": "http://127.0.0.1:8125/ratan_container.js",
+              "lineNumber": 26245,
+              "columnNumber": 13
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570983463,
+      "requestId": "76924.84",
+      "url": "http://localhost:8121/api/ratan/notification/subscriptions/info",
+      "method": "GET",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "AbstractXHRObject._start",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169898,
+              "columnNumber": 13
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+              "lineNumber": 169787,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570983469,
+      "requestId": "76924.85",
+      "url": "http://localhost:8121/api/ratan/v1/esLogging/production/warn",
+      "method": "POST",
+      "type": "XHR",
+      "bodyShape": {
+        "keys": [
+          "env",
+          "level",
+          "logger",
+          "message",
+          "userId",
+          "stacktrace",
+          "timestamp"
+        ],
+        "operationName": null,
+        "query": null
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792570988337,
+      "requestId": "76924.86",
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "method": "POST",
+      "type": "XHR",
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1792571048126,
+      "requestId": "76924.87",
+      "url": "http://localhost:8121/api/analytics/v1/fmo/print",
+      "method": "POST",
+      "type": "XHR",
+      "bodyShape": {
+        "keys": [
+          "singleUIAuthorization",
+          "key",
+          "event",
+          "name",
+          "container",
+          "tile"
+        ],
+        "operationName": null,
+        "query": null
+      },
+      "initiator": {
+        "type": "script",
+        "url": "",
+        "stack": {
+          "callFrames": [
+            {
+              "functionName": "dispatchXhrRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87951,
+              "columnNumber": 14
+            },
+            {
+              "functionName": "xhr",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 87694,
+              "columnNumber": 11
+            },
+            {
+              "functionName": "dispatchRequest",
+              "url": "http://127.0.0.1:8122/base.js",
+              "lineNumber": 89701,
+              "columnNumber": 9
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "time": 1792570971055,
+      "url": "https://fonts.googleapis.com/css",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    },
+    {
+      "time": 1792570971570,
+      "url": "https://axess.sc.net/scb-axess-cms/api/users/session-local/photo",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    },
+    {
+      "time": 1792570973426,
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "time": 1792570973426,
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "time": 1792570973426,
+      "url": "http://localhost:8121/api/auth/v2/sso/extend",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "pageErrors": [],
+  "fixtureHits": [
+    {
+      "time": 1792570971046,
+      "url": "https://fonts.googleapis.com/css",
+      "fixture": "NON_LOCAL_NETWORK_BLOCKED"
+    },
+    {
+      "time": 1792570971509,
+      "pathname": "/api/auth/v2/sso/login",
+      "fixture": "AUTH_BODY_CATALOG_AND_ENTITLEMENTS",
+      "upstreamStatus": 200
+    },
+    {
+      "time": 1792570971567,
+      "url": "https://axess.sc.net/scb-axess-cms/api/users/session-local/photo",
+      "fixture": "NON_LOCAL_NETWORK_BLOCKED"
+    },
+    {
+      "time": 1792570972822,
+      "pathname": "/api/ratan/da/v1/monitor",
+      "fixture": "EMPTY_CANDIDATE_BUSINESS_RESPONSE"
+    },
+    {
+      "time": 1792570972877,
+      "pathname": "/api/ratan/rule/v1/fields",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973305,
+      "pathname": "/api/ratan/stmcn/v1/cashflows",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973306,
+      "pathname": "/api/ratan/stmcn/v1/cashflows",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973306,
+      "pathname": "/api/ratan/stmcn/v1/cashflows",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973308,
+      "pathname": "/api/ratan/stmcn/v1/cashflows",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973383,
+      "pathname": "/api/ratan/notification/subscriptions/info",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973437,
+      "pathname": "/api/ratan/notification/subscriptions/info",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973483,
+      "pathname": "/api/auth/v2/sso/extend",
+      "fixture": "AUTH_BODY_CATALOG_AND_ENTITLEMENTS",
+      "upstreamStatus": 200
+    },
+    {
+      "time": 1792570973483,
+      "pathname": "/api/auth/v2/sso/extend",
+      "fixture": "AUTH_BODY_CATALOG_AND_ENTITLEMENTS",
+      "upstreamStatus": 200
+    },
+    {
+      "time": 1792570973484,
+      "pathname": "/api/auth/v2/sso/extend",
+      "fixture": "AUTH_BODY_CATALOG_AND_ENTITLEMENTS",
+      "upstreamStatus": 200
+    },
+    {
+      "time": 1792570973484,
+      "pathname": "/api/auth/v2/sso/extend",
+      "fixture": "AUTH_BODY_CATALOG_AND_ENTITLEMENTS",
+      "upstreamStatus": 200
+    },
+    {
+      "time": 1792570973664,
+      "pathname": "/api/ratan/v2/customview/views",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973860,
+      "pathname": "/api/ratan/stmcn/v1/cashflows",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570973887,
+      "pathname": "/api/auth/v2/sso/extend",
+      "fixture": "AUTH_BODY_CATALOG_AND_ENTITLEMENTS",
+      "upstreamStatus": 200
+    },
+    {
+      "time": 1792570974446,
+      "pathname": "/api/ratan/notification/subscriptions/info",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570976453,
+      "pathname": "/api/ratan/notification/subscriptions/info",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570979459,
+      "pathname": "/api/ratan/notification/subscriptions/info",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570981790,
+      "pathname": "/api/ratan/v1/ratan-analytic",
+      "fixture": "EMPTY_CANDIDATE_BUSINESS_RESPONSE"
+    },
+    {
+      "time": 1792570983463,
+      "pathname": "/api/ratan/notification/subscriptions/info",
+      "fixture": "EXACT_BUSINESS_FIXTURE"
+    },
+    {
+      "time": 1792570983470,
+      "pathname": "/api/ratan/v1/esLogging/production/warn",
+      "fixture": "EMPTY_CANDIDATE_BUSINESS_RESPONSE"
+    },
+    {
+      "time": 1792570988398,
+      "pathname": "/api/auth/v2/sso/extend",
+      "fixture": "AUTH_BODY_CATALOG_AND_ENTITLEMENTS",
+      "upstreamStatus": 200
+    },
+    {
+      "time": 1792571048127,
+      "pathname": "/api/analytics/v1/fmo/print",
+      "fixture": "EMPTY_CANDIDATE_BUSINESS_RESPONSE"
+    }
+  ],
+  "nativeTabActivations": [],
+  "assertions": [
+    {
+      "name": "DOM observer records Timeout after settled access expiry",
+      "passed": true,
+      "evidence": {
+        "opened": [
+          {
+            "event": "timeout_opened",
+            "time": 1792571048123,
+            "visibility": "visible"
+          }
+        ],
+        "settledExpiry": 1792571048
+      }
+    },
+    {
+      "name": "No successful extension changes settled access expiry",
+      "passed": true,
+      "evidence": {
+        "movingExtensions": [],
+        "finalAccess": {
+          "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+          "iat": 1792570988,
+          "exp": 1792571048
+        },
+        "settledAccess": {
+          "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+          "iat": 1792570988,
+          "exp": 1792571048
+        }
+      }
+    },
+    {
+      "name": "Timeout remains visible at final observation",
+      "passed": true,
+      "evidence": {
+        "timeoutVisible": true
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "label": "opened",
+      "at": "2026-10-21T08:23:01.588Z",
+      "now": 1792570981583,
+      "visibility": "visible",
+      "timeoutVisible": false,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "010a40520d5014d4878c375338b6cc6b292f9be41aac010179e2fda899ce131e",
+        "iat": 1792570973,
+        "exp": 1792571033
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": false,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 1,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:22 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show",
+      "latestRefresh": null,
+      "screenshot": "opened.png"
+    },
+    {
+      "label": "settled",
+      "at": "2026-10-21T08:23:10.326Z",
+      "now": 1792570990321,
+      "visibility": "visible",
+      "timeoutVisible": false,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": false,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:22 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      },
+      "screenshot": "settled.png"
+    },
+    {
+      "label": "progress-1792571000468",
+      "at": "2026-10-21T08:23:20.480Z",
+      "now": 1792571000475,
+      "visibility": "visible",
+      "timeoutVisible": false,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": false,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:22 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "label": "progress-1792571010484",
+      "at": "2026-10-21T08:23:30.502Z",
+      "now": 1792571010493,
+      "visibility": "visible",
+      "timeoutVisible": false,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": false,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:23 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "label": "progress-1792571020507",
+      "at": "2026-10-21T08:23:40.511Z",
+      "now": 1792571020509,
+      "visibility": "visible",
+      "timeoutVisible": false,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": false,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:23 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "label": "progress-1792571030517",
+      "at": "2026-10-21T08:23:50.524Z",
+      "now": 1792571030520,
+      "visibility": "visible",
+      "timeoutVisible": false,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": false,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:23 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "label": "progress-1792571040528",
+      "at": "2026-10-21T08:24:00.548Z",
+      "now": 1792571040536,
+      "visibility": "visible",
+      "timeoutVisible": false,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": false,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:23 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "label": "progress-1792571050550",
+      "at": "2026-10-21T08:24:10.556Z",
+      "now": 1792571050552,
+      "visibility": "visible",
+      "timeoutVisible": true,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          },
+          {
+            "event": "timeout_opened",
+            "time": 1792571048123,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": true,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:23 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect\nYour session has been expired\n\nDo you want to logout or extend the session?\n\nExtend\nLogout",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "label": "progress-1792571053001",
+      "at": "2026-10-21T08:24:13.005Z",
+      "now": 1792571053002,
+      "visibility": "visible",
+      "timeoutVisible": true,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          },
+          {
+            "event": "timeout_opened",
+            "time": 1792571048123,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": true,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:23 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect\nYour session has been expired\n\nDo you want to logout or extend the session?\n\nExtend\nLogout",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      }
+    },
+    {
+      "label": "final",
+      "at": "2026-10-21T08:24:13.009Z",
+      "now": 1792571053007,
+      "visibility": "visible",
+      "timeoutVisible": true,
+      "signInVisible": false,
+      "homeMounted": true,
+      "blotterMounted": true,
+      "gridMounted": true,
+      "access": {
+        "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+        "iat": 1792570988,
+        "exp": 1792571048
+      },
+      "workspaces": [
+        {
+          "id": "local-blotter-workspace",
+          "label": "Cashflow Blotter",
+          "isActive": true,
+          "containers": [
+            {
+              "title": "Cashflow Blotter",
+              "container": "@fm/ratan_container",
+              "module": "/cashflow_blotter_cn",
+              "tile": "/cashflow_cn",
+              "emailSupport": "local@example.invalid",
+              "entity": [
+                "X_RATANONE"
+              ],
+              "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+              "isTemplate": true,
+              "imageDarkTheme": "",
+              "id": "local-blotter-container",
+              "panelId": "local-blotter-panel",
+              "tabId": "local-blotter-workspace"
+            }
+          ]
+        }
+      ],
+      "observation": {
+        "events": [
+          {
+            "event": "observer_attached",
+            "time": 1792570971015,
+            "visibility": "visible"
+          },
+          {
+            "event": "pageshow",
+            "time": 1792570971099,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_visible",
+            "time": 1792570971337,
+            "visibility": "visible"
+          },
+          {
+            "event": "sign_in_hidden",
+            "time": 1792570971547,
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570981758,
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "time": 1792570983307,
+            "visibility": "visible"
+          },
+          {
+            "event": "timeout_opened",
+            "time": 1792571048123,
+            "visibility": "visible"
+          }
+        ],
+        "timeoutVisible": true,
+        "signInVisible": false,
+        "trustedActivity": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "text": "New Tile\nDark\n08:23 UTC\nA\nVersion: PACKAGE_VERSION\nEnv: LOCAL\nAPI Status\nRefresh Page\nQuick Search\nCashflow ID\nTrade ID\nValue Date Range\nCurrency\nSelect...\nProduct Taxonomy\nSelect...\nCounterparty FMCODE\nSCB Booking Entity\nSelect...\nBeneficiary Name\nBeneficiary Account BIC Code\nCashflow State\nSelect...\nCashflow Sub State\nSelect...\nAmount Range (Is)\nClear FiltersSearch\nValue Today\nPending Operator\n0\nPending Verification\n0\nValue Tomorrow\nPending Operator\n0\nPending Verification\n0\nCustom Search/View\nViews\nSelect...\nClear\nCreate Or Modify\nHide Search Bar\nResults\n0/0\nLoad next 1000\nIf more than 1000 records are loaded, column filters below will be applied only within the first 1000 records.\nResize\nSelect\nCashflow ID\nCashflow State\nRelease Timer\nEvent Reason\nNo Rows To Show\nNotification Error\nThe cashflow notification has been interrupted. Please retry when network is stable.\nReconnect\nYour session has been expired\n\nDo you want to logout or extend the session?\n\nExtend\nLogout",
+      "latestRefresh": {
+        "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+        "iat": 1792570981,
+        "exp": 1792571125
+      },
+      "screenshot": "final.png"
+    }
+  ],
+  "nativeBrowser": {
+    "profilePath": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/uat-blotter-browser-20261021/profile-blotter-visible-01",
+    "args": [
+      "--user-data-dir=/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/uat-blotter-browser-20261021/profile-blotter-visible-01",
+      "--remote-debugging-port=0",
+      "--remote-debugging-address=127.0.0.1",
+      "--no-first-run",
+      "--no-default-browser-check",
+      "--disable-background-networking",
+      "--disable-component-update",
+      "--disable-sync",
+      "--disable-edgeupdater",
+      "--disable-updater-scheduler",
+      "--disable-features=msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+      "about:blank"
+    ],
+    "pid": 76878,
+    "status": "CLOSED",
+    "version": "155.0.4283.62"
+  },
+  "measured": {
+    "start": 1792570990466,
+    "settledAccess": {
+      "sha256": "b95a6f6bb59652ac86df28ea959e271cf225ded729859c07fa996eea6bf38415",
+      "iat": 1792570988,
+      "exp": 1792571048
+    },
+    "refresh": {
+      "sha256": "632f2dc2f0463c0a39c48674e87423d56bd62ff57fa4e7e655b0e4d69bb0a8b2",
+      "iat": 1792570981,
+      "exp": 1792571125
+    },
+    "deadline": 1792571053000
+  },
+  "completedAt": "2026-10-21T08:24:13.110Z",
+  "cleanupCompletedAt": "2026-10-21T08:24:13.193Z"
+}

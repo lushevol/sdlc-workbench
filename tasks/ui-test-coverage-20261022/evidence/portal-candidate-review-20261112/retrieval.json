@@ -1,0 +1,511 @@
+{
+  "schema_version": 1,
+  "reviewer": "agent:codex",
+  "reviewed_at": "2026-11-12T16:09:35.392547+00:00",
+  "skill": "evaluate-knowledge-retrieval",
+  "purpose": "Read-only check of candidate knowledge usefulness for nine retained owner answers and one realistic combined requirement query.",
+  "review_independence": "This reader did not author the five evaluated candidate records or the cadence correction. Architecture candidate reviews were performed earlier by the same reader.",
+  "applicability": {
+    "as_of": "2026-11-13",
+    "actors": [
+      "portal user",
+      "portal administrator",
+      "RATAN policy owner",
+      "CPO"
+    ],
+    "environment": "Portal intent; PROD only where explicitly named in retained answer",
+    "selected_state": "candidate/draft; no publication inferred",
+    "selection_rationale": "Latest explicit 12 November answers govern their scope; 15/20 October active-use intent is bounded by the later timeout ceilings.",
+    "published_predecessor_check": "Bounded canonical file inventory found these topics under knowledge/candidates; no promoted counterpart was selected.",
+    "ics_source_questions": "Deferred and nonblocking under latest user instruction."
+  },
+  "canonical_bindings": {
+    "REQ-active-session-renewal": {
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "version": 9,
+      "sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+      "governance_state": "candidate",
+      "status": "draft",
+      "inspected_sections": [
+        "intended-scope",
+        "description",
+        "acceptance-criteria",
+        "rationale"
+      ]
+    },
+    "KT-authentication-and-sessions": {
+      "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+      "version": 10,
+      "sha256": "4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06",
+      "governance_state": "candidate",
+      "status": "draft",
+      "inspected_sections": [
+        "summary",
+        "intended-session-renewal",
+        "authentication-responsibilities",
+        "intended-logout-scope"
+      ]
+    },
+    "KT-sdk-and-entitlements": {
+      "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+      "version": 10,
+      "sha256": "dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe",
+      "governance_state": "candidate",
+      "status": "draft",
+      "inspected_sections": [
+        "permission-revocation-timing",
+        "portal-tile-validation-events"
+      ]
+    },
+    "KT-admin-and-onboarding": {
+      "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+      "version": 4,
+      "sha256": "ccdbb0e15f134a8d97981d1fc8b88955b9bd826a7dcef4c3e423ae17b48fa8f9",
+      "governance_state": "candidate",
+      "status": "draft",
+      "inspected_sections": [
+        "portal-administrator-reads-and-tile-metadata-references",
+        "review-and-activation-workflow"
+      ]
+    },
+    "KT-observability-and-performance": {
+      "path": "knowledge/candidates/observability/KT-observability-and-performance.md",
+      "version": 3,
+      "sha256": "edd20330c29cfddf534f0836ad529c115cb61e39d9f1d53435f106eb2fc3510d",
+      "governance_state": "candidate",
+      "status": "draft",
+      "inspected_sections": [
+        "current-api-loading-limit",
+        "interaction-purpose-and-event-vocabulary"
+      ]
+    }
+  },
+  "inspected_sources": [
+    {
+      "source_id": "SRC-portal-clarification-20261112",
+      "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+      "resource": "conversation:codex/portal-knowledge-ingestion/2026-11-12/answers",
+      "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303",
+      "inspected_ranges": [
+        "complete retained text"
+      ]
+    },
+    {
+      "source_id": "SRC-session-renewal-intent-2026-10-15",
+      "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-renewal-intent-2026-10-15.txt",
+      "resource": "conversation:current/user-reply/session-renewal-intent",
+      "sha256": "d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9",
+      "inspected_ranges": [
+        "complete retained text"
+      ]
+    },
+    {
+      "source_id": "SRC-session-activity-and-idle-intent",
+      "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt",
+      "resource": "conversation:current/user-reply/session-activity-and-idle-intent",
+      "sha256": "a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3",
+      "inspected_ranges": [
+        "complete retained text"
+      ]
+    },
+    {
+      "source_id": "SRC-session-renewal-clarification-20261020",
+      "path": "tasks/portal-background-session-20261019/evidence/correction-20261020/user-request.txt",
+      "resource": "conversation:portal-session-renewal-clarification-20261020",
+      "sha256": "cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba",
+      "inspected_ranges": [
+        "complete retained text"
+      ]
+    },
+    {
+      "source_id": "SRC-confluence-6fb800d3b54f06f7",
+      "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md",
+      "resource": "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md",
+      "sha256": "04d6ef196815349bd9144e81cde136c35b2ffae4a63fff825d89c687ec3fe16c",
+      "inspected_ranges": [
+        "1-47",
+        "90-130",
+        "165-217"
+      ]
+    }
+  ],
+  "answer_checks": [
+    {
+      "user_answer_item": 1,
+      "question": "Who owns and reviews portal policy?",
+      "draft_answer": "RATAN team owns and reviews portal policy under ICS bank security policy.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-authentication-and-sessions",
+          "section": "summary",
+          "locator": "knowledge/candidates/security/KT-authentication-and-sessions.md#summary",
+          "lines": "152-156"
+        },
+        {
+          "record_id": "REQ-active-session-renewal",
+          "section": "intended-scope",
+          "locator": "knowledge/candidates/requirements/REQ-active-session-renewal.md#intended-scope",
+          "lines": "148-154"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 1,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "Recorded owner answer is intent; no authenticated human review or publication approval. ICS source questions are deferred and nonblocking.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 2,
+      "question": "What are the session timeout limits?",
+      "draft_answer": "Idle timeout is at most 15 minutes and absolute timeout at most 60 minutes from portal authentication. Activity and renewal cannot extend the absolute deadline.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "REQ-active-session-renewal",
+          "section": "description",
+          "locator": "knowledge/candidates/requirements/REQ-active-session-renewal.md#description",
+          "lines": "159-166"
+        },
+        {
+          "record_id": "REQ-active-session-renewal",
+          "section": "acceptance-criteria",
+          "locator": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+          "lines": "178-233"
+        },
+        {
+          "record_id": "KT-authentication-and-sessions",
+          "section": "intended-session-renewal",
+          "locator": "knowledge/candidates/security/KT-authentication-and-sessions.md#intended-session-renewal",
+          "lines": "164-180"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 2,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "These are ceilings, not exact settings or individual token lifetimes. Source-dependent ICS recovery questions remain deferred and nonblocking.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 3,
+      "question": "May SSO fall back to OneMFA?",
+      "draft_answer": "No. OneMFA is decommissioned and fallback is prohibited; historical pilot fallback is superseded.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-authentication-and-sessions",
+          "section": "authentication-responsibilities",
+          "locator": "knowledge/candidates/security/KT-authentication-and-sessions.md#authentication-responsibilities",
+          "lines": "231-251"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 3,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "No inference about other authentication paths or deployed enforcement.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 4,
+      "question": "When does entitlement revocation take effect?",
+      "draft_answer": "UI revocation takes effect at next login. API revocation takes effect when the applicable Auth Server Redis cache entry expires: entitlement cache 1 hour; JWT parsing cache 2 hours.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-sdk-and-entitlements",
+          "section": "permission-revocation-timing",
+          "locator": "knowledge/candidates/security/KT-sdk-and-entitlements.md#permission-revocation-timing",
+          "lines": "417-462"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 4,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "No combined deadline, summed 3-hour window, universal 2-hour guarantee, JWT lifetime or immediate already-open-tab refresh rule can be derived. Bind each API to its applicable caches before implementation acceptance.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 5,
+      "question": "What must logout revoke and how soon?",
+      "draft_answer": "Logout should immediately revoke all of the user's portal sessions; identity-provider sessions such as Entra are excluded.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-authentication-and-sessions",
+          "section": "intended-logout-scope",
+          "locator": "knowledge/candidates/security/KT-authentication-and-sessions.md#intended-logout-scope",
+          "lines": "182-202"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 5,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "Session logout revocation is separate from entitlement cache expiry. Logout initiation with already-expired access remains unspecified; no implementation guarantee.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 6,
+      "question": "When must the UI validate tile access?",
+      "draft_answer": "At login, page reload, and session extension when idle, using the entitlement data available for that event.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-sdk-and-entitlements",
+          "section": "portal-tile-validation-events",
+          "locator": "knowledge/candidates/security/KT-sdk-and-entitlements.md#portal-tile-validation-events",
+          "lines": "390-415"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 6,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "Event list does not prove fresh upstream entitlements at every event or immediate revocation in an existing tab.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 7,
+      "question": "What can admins read and may tiles share metadata?",
+      "draft_answer": "Portal admins can read all tenant audit history and configurations. A tile can never reference another tile's metadata.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-admin-and-onboarding",
+          "section": "portal-administrator-reads-and-tile-metadata-references",
+          "locator": "knowledge/candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references",
+          "lines": "231-273"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 7,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "Cross-tenant write/verification permissions, classification of tile-specific fields and shared tenant records remain separate. Read permission does not define required audit event payloads.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 8,
+      "question": "What performance NFR applies?",
+      "draft_answer": "API loading must take at most 5 seconds. The answer imposes no mandatory UI performance metric.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-observability-and-performance",
+          "section": "current-api-loading-limit",
+          "locator": "knowledge/candidates/observability/KT-observability-and-performance.md#current-api-loading-limit",
+          "lines": "162-180"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 8,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "Applicable API scope, workload and measurement start/end remain open before executable acceptance. No percentile or SLA workload is invented.",
+      "needed_correction": "none"
+    },
+    {
+      "user_answer_item": 9,
+      "question": "What is analytics for and how long is PROD data retained?",
+      "draft_answer": "User activity analytics primarily support CPO review of business-product usage; PROD retention is 3 months.",
+      "outcome": "ANSWERED_WITH_LIMITS",
+      "claim_class": "documented user intent",
+      "canonical_refs": [
+        {
+          "record_id": "KT-observability-and-performance",
+          "section": "interaction-purpose-and-event-vocabulary",
+          "locator": "knowledge/candidates/observability/KT-observability-and-performance.md#interaction-purpose-and-event-vocabulary",
+          "lines": "103-124"
+        }
+      ],
+      "source": {
+        "source_id": "SRC-portal-clarification-20261112",
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md",
+        "section": "exact-user-input",
+        "item": 9,
+        "sha256": "b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303"
+      },
+      "confidence": "high for explicit stated intent",
+      "material_limit": "Retention clock and expiry treatment, field allowlist and reader roles remain unspecified. CPO purpose does not itself grant access to identifiable data.",
+      "needed_correction": "none"
+    }
+  ],
+  "combined_requirement_query": {
+    "question": "A new Cashflow tile must keep traders signed in during active use within session limits. If its permission is revoked mid-session, what access boundaries and tile-validation events apply, and what can a portal administrator inspect in the audit trail?",
+    "outcome": "PARTLY_ANSWERED_WITH_EXPLICIT_BOUNDARIES",
+    "canonical_refs": [
+      {
+        "record_id": "REQ-active-session-renewal",
+        "section": "rationale",
+        "locator": "knowledge/candidates/requirements/REQ-active-session-renewal.md#rationale",
+        "lines": "168-174"
+      },
+      {
+        "record_id": "REQ-active-session-renewal",
+        "section": "acceptance-criteria",
+        "locator": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+        "lines": "178-233"
+      },
+      {
+        "record_id": "KT-sdk-and-entitlements",
+        "section": "permission-revocation-timing",
+        "locator": "knowledge/candidates/security/KT-sdk-and-entitlements.md#permission-revocation-timing",
+        "lines": "417-462"
+      },
+      {
+        "record_id": "KT-sdk-and-entitlements",
+        "section": "portal-tile-validation-events",
+        "locator": "knowledge/candidates/security/KT-sdk-and-entitlements.md#portal-tile-validation-events",
+        "lines": "390-415"
+      },
+      {
+        "record_id": "KT-admin-and-onboarding",
+        "section": "portal-administrator-reads-and-tile-metadata-references",
+        "locator": "knowledge/candidates/operations/KT-admin-and-onboarding.md#portal-administrator-reads-and-tile-metadata-references",
+        "lines": "231-273"
+      },
+      {
+        "record_id": "KT-admin-and-onboarding",
+        "section": "review-and-activation-workflow",
+        "locator": "knowledge/candidates/operations/KT-admin-and-onboarding.md#review-and-activation-workflow",
+        "lines": "179-202"
+      }
+    ],
+    "supported_answer": [
+      {
+        "claim": "Mouse, keyboard and scroll activity support renewal when renewal is due, before access expiry and the absolute deadline; no fixed activity cadence or renewal interval is imposed. Session ceilings are 15 minutes idle and 60 minutes absolute.",
+        "source_user_answers": [
+          1,
+          2
+        ],
+        "canonical_criteria": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-8",
+          "AC-9"
+        ]
+      },
+      {
+        "claim": "Manual idle recovery keeps the prompt open while pending or rejected and closes exactly once after success, under the canonical usable-token and deadline conditions.",
+        "source_user_answers": [
+          2
+        ],
+        "additional_sources": [
+          "SRC-session-activity-and-idle-intent",
+          "SRC-session-renewal-clarification-20261020"
+        ],
+        "canonical_criteria": [
+          "AC-5",
+          "AC-6",
+          "AC-7"
+        ]
+      },
+      {
+        "claim": "UI permission loss is required at next login; revalidate tiles at login, reload and idle extension using then-available entitlement data. Do not promise immediate active-tab eviction.",
+        "source_user_answers": [
+          4,
+          6
+        ],
+        "canonical_criteria": [
+          "UI-ENTITLEMENT-REVOCATION-AC-001",
+          "UI-TILE-VALIDATION-AC-001"
+        ]
+      },
+      {
+        "claim": "API permission loss follows expiry of its applicable cache entry: 1 hour entitlement or 2 hours JWT parsing. Do not infer a combined end-to-end deadline.",
+        "source_user_answers": [
+          4
+        ],
+        "canonical_criteria": [
+          "API-ENTITLEMENT-REVOCATION-AC-001"
+        ]
+      },
+      {
+        "claim": "Admins can read audit history/configuration for every tenant; tiles cannot reference each other's metadata.",
+        "source_user_answers": [
+          7
+        ],
+        "canonical_criteria": [
+          "ADMIN-CROSS-TENANT-READ-AC-001",
+          "ADMIN-TILE-METADATA-AC-001"
+        ]
+      }
+    ],
+    "qualified_unknowns": [
+      {
+        "question": "Must an already-open tile lose access on reload or idle extension before the next login?",
+        "reason": "Freshness and active-tab revocation behavior were not specified.",
+        "next_evidence": "Select a current-session behavior only if the new requirement needs it; no missing answer is inferred."
+      },
+      {
+        "question": "Which cache(s) does the new API use and how do they interact across instances?",
+        "reason": "The retained answer supplies separate cache expiry settings, not route/cache bindings.",
+        "next_evidence": "Inspect exact provider/consumer revisions and cache configuration before deriving that API acceptance deadline."
+      },
+      {
+        "question": "Does the audit trail include renewal and entitlement-revocation events, with which payload and retention?",
+        "reason": "Cross-tenant read permission and historical configuration-change history do not establish a security event schema.",
+        "next_evidence": "Define required events, correlation, payload and retention when that audit feature is scoped; do not reuse the analytics retention rule by analogy."
+      }
+    ],
+    "actual_behavior": "Not evaluated. No business requests, assertions, deployment or PROD records were inspected by this case. Canonical criteria are target intent.",
+    "confidence": "High for supported intent; deliberately unresolved for the three missing behavioral contracts.",
+    "needed_canonical_correction": "none"
+  },
+  "summary": {
+    "recorded_answers_evaluated": 9,
+    "recorded_answers_supported_with_limits": 9,
+    "combined_queries_evaluated": 1,
+    "combined_query_disposition": "partly answered because new current-session/cache/audit contracts are not invented",
+    "corrective_findings": 0
+  },
+  "canonical_changes": false,
+  "wiki_changes": false,
+  "publication_approval": false
+}

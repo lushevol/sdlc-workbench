@@ -1,0 +1,150 @@
+{
+  "id": "RN-Q010",
+  "title": "Renewal failure does not complete a workspace request",
+  "started_at": "2026-10-29T02:08:47.658Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-q010",
+  "definition_sha256": "5ceb2ec49e8080e3283389bf1393df1cee138d654ac3aa9701227b462038fc63",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "A remains pending",
+      "actual": "pending",
+      "expected": "pending",
+      "status": "PASSED"
+    },
+    {
+      "label": "A loader remains",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "label": "A no completions",
+      "actual": null,
+      "expected": null,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239201631,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239201810,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "A",
+      "workspace": "W-A",
+      "credential_sha256": "b7cd8e12cb85f6c5471790d93b012269cd3eecc0e47f62f98a29550a631bb753",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239203760
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239203760,
+      "page": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "108d71a2fc0a50fcf291ce94130109711c216c80493e972ce3b1dae4f45b78a8",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/requestLoading.ts",
+      "lines": [
+        9,
+        42
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts",
+      "lines": [
+        8,
+        51
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+  ],
+  "completed_at": "2026-10-29T02:08:52.035Z",
+  "runner_sha256": "ccd55df493f625e3951c3801cc370cbc68ccc9647ddcd2517dfd84903c61985e",
+  "runner_summary": "../attempt1/summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/hooks/service/util/requestLoading.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "canonical_definition_source_sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "canonical_definition_source_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "canonical_definition_source_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "execution_class": "executed",
+  "owner": "unknown application, transport, or security owner"
+}

@@ -1,0 +1,11 @@
+    GROUP  Replay ISO Exception2 without change MT And Exception Still displayed on KR Mx Exception Blotter
+    ${req_body2}  json.Loads  {\"comment\":\"Replay ISO Exception without change MT\"}
+	# PSS acount can't replay Exception
+	${req_header}  Create Dictionary  Single-Ui-Authorization=${token_checker}
+	${response}  RequestsLibrary.POST On Session   website  url=/api/ratan/v1/iso/exception/replay/${trackingId1}/ratanone-swift-service/ISO_KOREA_MUREX_FLOW/${originalExceptionId1}  json=${req_body2}  headers=${req_header}  expected_status=403  allow_redirects=${False}
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.errorMessage
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  ACTION_DENIED
+	# non-PSS acount can replay Exception success
+    ${req_header}  Create Dictionary  Single-Ui-Authorization=${token_maker}
+    ${response}  RequestsLibrary.POST On Session   website  url=/api/ratan/v1/iso/exception/replay/${trackingId1}/ratanone-swift-service/ISO_KOREA_MUREX_FLOW/${originalExceptionId1}  json=${req_body2}  headers=${req_header}  allow_redirects=${False}
+    Run Keyword And Continue On Failure  Should Be Equal  ${response.text}  success

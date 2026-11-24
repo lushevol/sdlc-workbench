@@ -1,0 +1,122 @@
+import { chromium } from '../../adapters/browser/node_modules/playwright/index.mjs';
+import { spawn } from 'node:child_process';
+import { createRequire } from 'node:module';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root=process.cwd();
+const base=path.resolve(root,'.workbench/session-delivery-20261026');
+const extensionPath=process.env.SESSION_EXTENSION || path.resolve(root,'repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs');
+const extension=createRequire(import.meta.url)(extensionPath);
+const [mode='inspect',profile='fast',id=String(Date.now())]=process.argv.slice(2);
+const output=process.env.SESSION_E2E_OUTPUT || path.join(base,'native',id);
+await fs.mkdir(output,{recursive:false});
+const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+const record={startedAt:new Date().toISOString(),mode,profile,pid:process.pid,status:'STARTING',runnerSha256:hash(await fs.readFile(new URL(import.meta.url))),extensionSha256:hash(await fs.readFile(extensionPath)),connection:'Native Microsoft Edge, CDP noDefaults=true, native default context',nativeContextPolicy:'Each suite context uses a separate native Edge process and fresh profile. Each CDP connection uses noDefaults=true and the native default context. No incognito context or focus emulation is created.',nativeVisibilityPolicy:'Foreground content restores its native window and minimizes other controlled native windows. A same-window blank cover minimizes its native window. The driver does not override document visibility.',clock:'REAL_WALL_CLOCK',nativeContexts:[],nativeTabActivations:[],requestFailures:[],responses:[]};
+const save=()=>fs.writeFile(path.join(output,'run.json'),JSON.stringify(record,null,2)+'\n');
+const safe=error=>String(error?.message||error).split(process.env.SESSION_E2E_USERNAME||'__NO_USERNAME__').join('[USERNAME]').split(process.env.SESSION_E2E_PASSWORD||'__NO_PASSWORD__').join('[PASSWORD]').replace(/(?:Bearer\s+)?eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,'[TOKEN]').replace(/https?:\/\/[^\s)"']+/g,value=>{try{const u=new URL(value);return u.origin+u.pathname}catch{return'[URL]'}});
+const nativeBrowsers=[];
+let nextNativeIndex=0;
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+async function closeNative(owned){
+ if(owned.cleanup)return owned.cleanup;
+ owned.cleanup=(async()=>{
+  if(owned.browser)await owned.browser.close().catch(()=>{});
+  if(owned.child.exitCode===null&&owned.child.signalCode===null)owned.child.kill('SIGTERM');
+  await Promise.race([owned.exited,sleep(2000)]);
+  if(owned.child.exitCode===null&&owned.child.signalCode===null){owned.child.kill('SIGKILL');await Promise.race([owned.exited,sleep(2000)]);}
+  await fs.rm(owned.profilePath,{recursive:true,force:true,maxRetries:10,retryDelay:100});
+  owned.metadata.closedAt=new Date().toISOString();owned.metadata.status='CLOSED';
+ })();
+ return owned.cleanup;
+}
+async function launchNative(){
+ const index=nextNativeIndex++;
+ const profilePath=path.join(base,'profiles',id,index===0?'profile':`profile-context-${index}`);
+ await fs.mkdir(path.dirname(profilePath),{recursive:true});
+ await fs.mkdir(profilePath,{recursive:false});
+ const args=[`--user-data-dir=${profilePath}`,'--remote-debugging-port=0','--remote-debugging-address=127.0.0.1','--no-first-run','--no-default-browser-check','--disable-background-networking','--disable-component-update','--disable-sync','--disable-edgeupdater','--disable-updater-scheduler','--disable-features=msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion','about:blank'];
+ const child=spawn('/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',args,{stdio:'ignore'});
+ const metadata={index,profilePath,browserPid:child.pid,args,status:'STARTING',connection:'CDP noDefaults=true, native default context'};
+ const owned={child,profilePath,metadata};
+ owned.exited=new Promise(resolve=>{child.once('exit',resolve);child.once('error',error=>{owned.launchError=error;resolve();});});
+ nativeBrowsers.push(owned);record.nativeContexts.push(metadata);
+ if(index===0){record.browserPid=child.pid;record.args=args;}
+ await save();
+ let port;
+ for(let i=0;i<150;i++){
+  if(owned.launchError)throw owned.launchError;
+  if(child.exitCode!==null||child.signalCode!==null)throw new Error('Native Edge exited during startup.');
+  try{port=Number((await fs.readFile(path.join(profilePath,'DevToolsActivePort'),'utf8')).split('\n')[0])}catch{}
+  if(port>0)break;await sleep(100);
+ }
+ if(!port)throw new Error('Native Edge did not publish a debugging endpoint.');
+ metadata.endpoint=`http://127.0.0.1:${port}`;
+ owned.browser=await chromium.connectOverCDP(metadata.endpoint,{noDefaults:true});
+ metadata.browserVersion=owned.browser.version();metadata.status='CONNECTED';
+ if(index===0){record.endpoint=metadata.endpoint;record.browserVersion=metadata.browserVersion;}
+ const context=owned.browser.contexts()[0];
+ if(!context)throw new Error('Native Edge did not expose its default context.');
+ owned.nativeNewPage=context.newPage.bind(context);
+ context.newPage=async(...args)=>{
+  const nextPage=await owned.nativeNewPage(...args);
+  const nativeBringToFront=nextPage.bringToFront.bind(nextPage);
+  nextPage.bringToFront=async()=>{
+   const setNativeWindow = async (targetOwned, windowState) => {
+    const targetPage=targetOwned.browser.contexts()[0].pages().find(candidate=>!candidate.isClosed()&&candidate.url()!=='about:blank') || targetOwned.browser.contexts()[0].pages().find(candidate=>!candidate.isClosed());
+    if(!targetPage)return;
+    const pageSession=await targetOwned.browser.contexts()[0].newCDPSession(targetPage);
+    const target=(await pageSession.send('Target.getTargetInfo')).targetInfo;
+    const browserSession=await targetOwned.browser.newBrowserCDPSession();
+    const window=await browserSession.send('Browser.getWindowForTarget',{targetId:target.targetId});
+    await browserSession.send('Browser.setWindowBounds',{windowId:window.windowId,bounds:{windowState}});
+    record.nativeWindowTransitions??=[];
+    record.nativeWindowTransitions.push({context:targetOwned.metadata.index,windowState,at:new Date().toISOString(),bounds:await browserSession.send('Browser.getWindowBounds',{windowId:window.windowId})});
+    await pageSession.detach();await browserSession.detach();
+   };
+   const coveredContexts=[];
+   for(const other of nativeBrowsers){
+    if(other===owned||other.cleanup||!other.browser?.isConnected())continue;
+    await setNativeWindow(other,'minimized');
+    coveredContexts.push(other.metadata.index);
+   }
+   if(nextPage.url()==='about:blank'&&context.pages().some(candidate=>candidate!==nextPage&&!candidate.isClosed()&&candidate.url()!=='about:blank')){
+    await setNativeWindow(owned,'minimized');
+   }else{
+    await setNativeWindow(owned,'normal');
+    await nativeBringToFront();
+   }
+   record.nativeTabActivations.push({foregroundContext:owned.metadata.index,coveredContexts,at:new Date().toISOString(),method:'Native window minimize/restore; requested content activation'});
+  };
+  return nextPage;
+ };
+ owned.browser.newContext=async()=>(await launchNative()).context;
+ context.close=async()=>closeNative(owned);
+ await save();
+ return {context};
+}
+let page;
+try{
+ const {context}=await launchNative();
+ page=await context.newPage();
+ page.on('pageerror',e=>{record.pageErrors??=[];record.pageErrors.push(safe(e))});
+ page.on('requestfailed',r=>{try{const u=new URL(r.url());record.requestFailures.push({pathname:u.pathname,error:r.failure()?.errorText,time:Date.now()})}catch{}});
+ page.on('response',r=>{try{const u=new URL(r.url());if(u.pathname.includes('/api/'))record.responses.push({pathname:u.pathname,status:r.status(),time:Date.now()})}catch{}});
+ const configFile=process.env.SESSION_E2E_CONFIG || path.join(base,`config-${profile}.json`);
+ record.configSha256=hash(await fs.readFile(configFile));
+ await extension.openPortalSession(configFile,page);
+ record.status='RUNNING';record.openedAt=new Date().toISOString();await save();
+ if(mode==='inspect'){
+  record.dom=await page.evaluate(()=>({title:document.title,visibility:document.visibilityState,text:document.body.innerText.slice(0,2500),inputs:[...document.querySelectorAll('input')].map(e=>({testid:e.getAttribute('data-testid'),aria:e.getAttribute('aria-label'),type:e.type,placeholder:e.placeholder})),scroll:[...document.querySelectorAll('.MicroWebUI_base_home-tabpanel .tabmain')].map(e=>({client:e.clientHeight,scroll:e.scrollHeight}))}));
+  await page.screenshot({path:path.join(output,'opened.png')});
+ }else{
+  const operation={staleSuccess:'assertStaleRefreshSuccessIsIsolated',staleError:'assertStaleRefreshErrorIsIsolated',delayed:'assertDelayedScheduledRefreshRecovery',natural:'assertNaturalBackgroundRecovery',missing:'observeBackgroundWithoutRefresh',mouse:'assertActivityRenewsSession',keyboard:'assertActivityRenewsSession',scroll:'assertActivityRenewsSession',pending:'assertPendingRenewalCompletes',retry:'assertRejectedRenewalCanRetry',cross:'assertActivityCrossesRefreshExpiry',single:'assertSlowActivitySharesRequest',manualLogout:'assertPendingManualLogoutCancels',activityLogout:'assertPendingActivityLogoutCancels',late:'assertLateActivityCannotReplaceManualSuccess',expired:'assertActualExpiredCredentialDenied',workspace:'observeWorkspaceDescriptorsAfterSignIn',rapid:'assertRapidExtendSharesRequest',keyboardExtend:'assertKeyboardExtendActivation',activityRetry:'assertActivityFailureCanRetry',inconsistent:'assertInconsistentActivityResponseRejected',promptActivity:'assertPromptIgnoresActivity',idleLogout:'assertIdlePromptLogout',visibility:'assertQuickVisibilityRefresh',reload:'assertReloadPreservesRenewedSession'}[mode];
+  if(!operation)throw new Error('Unknown operation mode.');
+  record.operation=operation;await save();
+  record.result=await(['mouse','keyboard','scroll'].includes(mode)?extension[operation](mode,page):extension[operation](page));
+ }
+ record.status='PASSED';
+}catch(error){record.status='FAILED';record.error=safe(error);if(page){record.failureDom=await page.locator('body').innerText().then(s=>s.slice(0,3000)).catch(()=>null);const access=await page.evaluate(()=>localStorage.getItem('SET_TOKEN')).catch(()=>null);record.failureStorage=null;if(typeof access==='string'&&access){let exp=null;try{const claims=JSON.parse(Buffer.from(access.split('.')[1],'base64url').toString('utf8'));if(Number.isFinite(claims.exp))exp=claims.exp;}catch{}record.failureStorage={sha256:hash(access),exp};}await page.screenshot({path:path.join(output,'failed.png'),timeout:10000}).catch(()=>{});}}
+finally{record.completedAt=new Date().toISOString();for(const owned of [...nativeBrowsers].reverse())await closeNative(owned).catch(error=>{record.cleanupErrors??=[];record.cleanupErrors.push(safe(error));});await save();}
+console.log(JSON.stringify({output,status:record.status,error:record.error,dom:record.dom}));
+process.exitCode=record.status==='PASSED'?0:1;

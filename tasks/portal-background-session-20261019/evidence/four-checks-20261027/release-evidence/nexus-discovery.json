@@ -1,0 +1,83 @@
+{
+  "result": {
+    "status": "SUCCEEDED",
+    "connector": "nexus",
+    "tools": [
+      {
+        "name": "nexus_scan_vulnerabilities",
+        "description": "Scan local npm/Node.js or Maven/Java dependencies for security vulnerabilities using Nexus IQ.\nAuto-detects project type from the project directory — reads package.json (npm) or pom.xml (Maven).\nGenerates reports in JSON, Markdown, and HTML formats and opens the HTML in the browser.\n\nChoose the scan mode based on the user prompt keyword:\n  • Prompt says \"Scan\" (no \"Deep\")    → pipeline-aligned mode (default):\n    npm: production dependencies only; Maven: compile + runtime scopes only.\n    sonatype-* proprietary IDs excluded, CVSS < 4.0 excluded — matches what the ADO pipeline flags.\n    Set deepMode=false (or omit).\n  • Prompt says \"Deep Scan\", \"full scan\", \"exhaustive scan\", or \"include dev dependencies\"\n    → exhaustive mode: npm ALL deps including devDependencies; Maven: ALL scopes.\n    Every CVE and sonatype-* finding reported with NO filtering. Set deepMode=true.\n\nFix patterns (the fix step is handled by nexus_fix_vulnerabilities after this tool returns):\n  • \"Scan and fix\"       → run pipeline-aligned scan, then call nexus_fix_vulnerabilities.\n  • \"Deep Scan and fix\" → run exhaustive scan, then call nexus_fix_vulnerabilities.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "applicationId": {
+              "type": "string",
+              "description": "Nexus IQ application public ID (e.g., ITAM__PROD__my-service). The ADO repo name is always the last __-delimited segment."
+            },
+            "projectPath": {
+              "type": "string",
+              "description": "Absolute path to the project directory containing package.json or pom.xml (defaults to current working directory)."
+            },
+            "projectType": {
+              "type": "string",
+              "enum": [
+                "npm",
+                "maven"
+              ],
+              "description": "Project ecosystem: \"npm\" for Node.js/package.json, \"maven\" for Java/pom.xml. Auto-detected when omitted. Required when both package.json and pom.xml are present."
+            },
+            "deepMode": {
+              "type": "boolean",
+              "description": "Set to true when the user says \"Deep Scan\", \"full scan\", \"exhaustive scan\", or \"include dev dependencies\". Deep mode scans ALL deps including devDependencies (npm) or all Maven scopes and reports every finding with no filtering. Omit or set false for a normal pipeline-aligned scan (production deps only, sonatype-* and CVSS < 4.0 excluded)."
+            }
+          },
+          "required": [
+            "applicationId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": false
+      },
+      {
+        "name": "nexus_fix_vulnerabilities",
+        "description": "Automatically remediate vulnerabilities found by nexus_scan_vulnerabilities. Reads the existing nexus-report/nexus-vulnerability-report.json from the current working directory. Supports both npm/Node.js and Maven/Java projects — project type is read from the scan report. npm fix workflow:   Phase A — Direct dependencies: bumps versions in package.json and runs install.   Phase B1 — Yarn upgrade: runs \"yarn upgrade\" (or npm install) to resolve transitive deps via ^ range.   Phase B2 — Parent upgrade: identifies and optionally upgrades parent direct deps. Requires approveParentUpgrades=true.   Phase B3 — Resolutions/overrides: force-pins remaining transitive deps. Requires approveResolutions=true. Maven fix workflow:   Phase A — Direct dependencies: updates <version> tags in pom.xml.   Phase B1 — Skipped (no range-upgrade equivalent for Maven).   Phase B2 — Parent upgrade: runs mvn versions:use-latest-releases for identified parent deps. Requires approveParentUpgrades=true.   Phase B3 — dependencyManagement: adds <dependencyManagement> entries to force transitive versions. Requires approveResolutions=true.   Phase C — Appends a fix summary section to the existing scan reports. Run without approval flags first to see what would be proposed, then re-call with approvals to apply.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "applicationId": {
+              "type": "string",
+              "description": "Nexus IQ public application ID that was previously scanned (used for display only)."
+            },
+            "approveParentUpgrades": {
+              "type": "boolean",
+              "default": false,
+              "description": "Set true to approve and apply Phase B2 — npm: upgrading parent direct dependencies; Maven: running mvn versions:use-latest-releases."
+            },
+            "approveResolutions": {
+              "type": "boolean",
+              "default": false,
+              "description": "Set true to approve and apply Phase B3 — npm: adding resolutions/overrides in package.json; Maven: adding <dependencyManagement> entries in pom.xml."
+            }
+          },
+          "required": [
+            "applicationId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": false
+      }
+    ],
+    "limitations": [
+      "Connector results do not establish approved business behavior.",
+      "Connector results are action evidence, not preserved raw source snapshots."
+    ]
+  },
+  "error": null
+}

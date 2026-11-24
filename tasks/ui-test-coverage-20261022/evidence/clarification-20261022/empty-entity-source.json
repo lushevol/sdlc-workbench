@@ -1,0 +1,44 @@
+{
+  "source_id": "SRC-ui-empty-entity-clarification-20261022",
+  "resource": "conversation:ui-test-coverage-20261022:empty-entity",
+  "revision": "user-answer-20261022-1",
+  "captured_at": "2026-10-22T08:56:22Z",
+  "captured_by": "agent:claude",
+  "response_at": null,
+  "retention_basis": "The coordinating agent supplied the exact AskUserQuestion payload and user-selected answer.",
+  "ask_user_question_payload": {
+    "questions": [
+      {
+        "header": "Empty entity",
+        "question": "What should the portal do when a tile has no configured EMS2 entity?",
+        "multiSelect": false,
+        "options": [
+          {
+            "label": "Deny tile access (Recommended)",
+            "description": "Hide the tile and deny direct tile launch until an EMS2 entity is configured. This does not define application data permissions."
+          },
+          {
+            "label": "Allow eligible portal users",
+            "description": "Treat the tile as available to users who already satisfy the portal-entry rule. Keep application data permissions separate."
+          },
+          {
+            "label": "Ask the policy owner",
+            "description": "Keep this question unresolved until the responsible owner confirms the intended behavior."
+          }
+        ]
+      }
+    ]
+  },
+  "selected_answer": "Deny tile access (Recommended)",
+  "explicit_user_stated_rule": "When a tile has no configured EMS2 entity, hide the tile and deny direct tile launch until an EMS2 entity is configured.",
+  "application_data_permissions": "unchanged; not defined by this answer",
+  "authority": "user-stated intent only",
+  "policy_owner": "unknown",
+  "environment_scope": "unconfirmed",
+  "scope_working_assumption": "The parent disclosed all-environment scope unless an exception applies. The user did not separately confirm this rule's scope.",
+  "limits": [
+    "The portal-entry owner answer does not establish ownership of this separate rule.",
+    "The answer supplies no HTTP status, denial wording, or passing execution.",
+    "Owner authority, approval, publication, and deployed enforcement remain unconfirmed."
+  ]
+}

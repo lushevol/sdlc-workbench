@@ -1,0 +1,34 @@
+{
+  "name": "@sc-node-mcp/ado-core",
+  "version": "1.2.11",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "Azure DevOps connection factory for SC Node MCP sub-packages",
+  "type": "module",
+  "files": [
+    "src/**/*",
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://artifactory.global.standardchartered.com/artifactory/api/npm/npm-release"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./connection": "./src/connection.js"
+  },
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@sc-node-mcp/shared-tests": "^2.10.3",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
+  },
+  "dependencies": {
+    "@sc-node-mcp/core": "^2.16.1",
+    "azure-devops-node-api": "^15.1.0"
+  }
+}

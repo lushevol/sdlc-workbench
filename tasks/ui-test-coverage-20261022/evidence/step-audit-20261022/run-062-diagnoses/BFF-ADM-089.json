@@ -1,0 +1,61 @@
+{
+  "canonicalId": "BFF-ADM-089",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-089",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.671077+00:00",
+  "actualStatus": "failed",
+  "failedStep": "22. Then the alert with severity \"error\" in the portal snackbar displays the agreed message for a stale-record error",
+  "classification": "OBSERVED_STALE_OVERWRITE",
+  "facts": [
+    "The controlled concurrent maker operation saves NEW.",
+    "The later actual UI update returns HTTP 200 and persists STALE.",
+    "The expected stale-record error is absent."
+  ],
+  "owner": "unknown business repository maintainer",
+  "nextAction": "Retain both writes and persisted values. Resolve the proposed concurrency protection requirement.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-089-current-bff-administration-through-actual-ui-1b38e8eba73e-attempt-1/result.json",
+      "sha256": "e6905b2407a87a293184b376d81bca9746edfea0aa7c909e2f3374e4a6d738bb"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-089-current-bff-administration-through-actual-ui-1b38e8eba73e-attempt-1/ui-origin-bff-requests.json",
+      "sha256": "df1ab613b39b73af54de913e1c6dfc23ad500d9d8c9ee4999170990ec0e1d2ab"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-089-current-bff-administration-through-actual-ui-1b38e8eba73e-attempt-1/022-step-22-failure.json",
+      "sha256": "fc3e0e1765ccbf04bb26c9f15f0ba68c5b36c8995faeadb93b3fd5b517e13daf"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-089-current-bff-administration-through-actual-ui-1b38e8eba73e-attempt-1/attachments/025-error-context.md",
+      "sha256": "6c26a88c24a5929cbda588f22cf4d999312fc753bffaf088652c867e672bda93"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-089-current-bff-administration-through-actual-ui-1b38e8eba73e-attempt-1/initial-persisted-records.json",
+      "sha256": "e3fa4e238d3a081f6adb31ea58a5fd24df98041d58c003dfa5c1ebf20fd7a837"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-089-current-bff-administration-through-actual-ui-1b38e8eba73e-attempt-1/persisted-after-submit.json",
+      "sha256": "953798cfdf075648ef25e3f9a918ac1c8dabd286d4ce7ab5571e5e19fa482e38"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-089-current-bff-administration-through-actual-ui-1b38e8eba73e-attempt-1/concurrent-admin-b-maker.json",
+      "sha256": "36289f5f6a3435e317faf0d2f977c411176889b08f53ac2610f804c1b43bc5cc"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ],
+  "lastMutation": {
+    "resource": "tile",
+    "operation": "update",
+    "status": 200,
+    "errorMessage": null
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "candidate": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "open_failures": [
+    {
+      "cases": [
+        "RN-W029",
+        "RN-W030",
+        "RN-W031"
+      ],
+      "failure": "No activity renewal request starts during 15 seconds of repeated mouse, keyboard, or scroll input inside the loaded synthetic workspace.",
+      "observed_impact": "Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated.",
+      "severity": "S4 Minor under the recorded activity backlog direction",
+      "origin": "Inherited source behavior; no new baseline browser comparison in this worker.",
+      "owner": "unknown application owner",
+      "next_action": "Retain the activity gap and its existing user priority; verify renewal with accepted input policy before closing.",
+      "sources": [
+        "../../comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertions": "run-workspace.mjs",
+      "results": [
+        "RN-W029/result.json",
+        "RN-W030/result.json",
+        "RN-W031/result.json"
+      ]
+    },
+    {
+      "cases": [
+        "RN-Q009"
+      ],
+      "failure": "A response transform throws an Error without Axios config. The shared error handler clears every loading request.",
+      "observed_impact": "The global loading indicator disappears while W-B still awaits an undelivered response. W-B data loss or repeated business submission was not demonstrated.",
+      "severity": "S4 Minor observed visual impact; production occurrence remains unknown",
+      "origin": "Inherited by baseline source inspection. The baseline also unconditionally sets global loading false for errors. No paired baseline browser execution is claimed.",
+      "owner": "unknown application owner",
+      "next_action": "Decide acceptability for the observed loading indication gap; preserve request identity when handling transform errors, then rerun concurrent request predicates if correction is authorized.",
+      "sources": [
+        "../../comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L36-L42",
+        "../../comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L50",
+        "baseline/error.response.handler.ts#L40"
+      ],
+      "assertions": "run-workspace.mjs",
+      "result": "RN-Q009/result.json",
+      "screenshot": "RN-Q009/attempt-failed.png",
+      "reachability_limit": "The shared Axios browser path executed with an injected response transform in the retained synthetic module. No production application consumer of a throwing Axios transform was identified in the inspected UI source paths."
+    }
+  ],
+  "baseline_source": {
+    "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "path": "src/hooks/service/util/error.response.handler.ts",
+    "sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3"
+  },
+  "supplemental_transport_limit": "11 source-function probes passed 10 assertions and observed 1 stale callback difference. They do not execute the canonical real socket UI cases.",
+  "product_changes": false
+}

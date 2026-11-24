@@ -1,0 +1,26 @@
+  it("should be true", async () => {
+    const error: AxiosError = {
+      response: {
+        data: {
+          status: "ERROR",
+          errorCode: 0,
+          message: "TOKEN_INVALID_EXPIRED"
+        },
+        status: 0,
+        headers: {},
+        statusText: "",
+        config: config as InternalAxiosRequestConfig,
+      },
+      isAxiosError: false,
+      toJSON: () => JSON.parse("{}"),
+      name: "",
+      message: "",
+      config: config as InternalAxiosRequestConfig,
+      code: "ERROR",
+    }
+    try {
+      await errorHandler(error);
+    } catch (e) {
+      expect(e.response.data.status).toBe("ERROR");
+    }
+  });

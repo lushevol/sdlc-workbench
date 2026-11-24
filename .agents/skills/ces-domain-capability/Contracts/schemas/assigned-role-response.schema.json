@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:workbench:ces:assigned-role-response:1",
+  "title": "CES assigned-role response",
+  "description": "Captured role-level grants. Account identity comes from the request.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "appId",
+      "appName",
+      "entitlementName",
+      "featureActionDtos"
+    ],
+    "properties": {
+      "appId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "appName": {
+        "type": "string",
+        "minLength": 1
+      },
+      "appUID": {
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "itamId": {
+        "description": "Null in the retained SDK sample. Other representations require source evidence."
+      },
+      "itamName": {
+        "type": "string"
+      },
+      "entitlementId": {
+        "type": "string"
+      },
+      "entitlementName": {
+        "type": "string",
+        "minLength": 1
+      },
+      "featureActionDtos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "features",
+            "actions"
+          ],
+          "properties": {
+            "features": {
+              "type": "object",
+              "required": [
+                "featureName"
+              ],
+              "properties": {
+                "featureName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "featureId": {
+                  "type": "integer"
+                },
+                "applicationDto": {
+                  "anyOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "appName"
+                      ],
+                      "properties": {
+                        "appName": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "appUID": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "actions": {
+              "type": "object",
+              "required": [
+                "actionName"
+              ],
+              "properties": {
+                "actionName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "actionId": {
+                  "type": "integer"
+                },
+                "applicationDto": {
+                  "anyOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "appName"
+                      ],
+                      "properties": {
+                        "appName": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "appUID": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

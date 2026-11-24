@@ -1,0 +1,262 @@
+{
+  "id": "RN-D001",
+  "title": "Two same-origin tabs renew concurrently",
+  "started_at": "2026-10-29T02:15:28.759Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-d001",
+  "definition_sha256": "7e13b0b327176256b7d09906d08a63e54c9d8b6c5a160dd0562d256a7b4395e6",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "both-tab observations retained",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "label": "acceptance remains policy blocked",
+      "actual": "BLOCKED_POLICY",
+      "expected": "BLOCKED_POLICY",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239207002,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239210404,
+      "page": "A"
+    },
+    {
+      "endpoint": "validate",
+      "at": 1793239200000,
+      "page": "B"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239200100,
+      "page": "B"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239200750,
+      "page": "A"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239200750,
+      "page": "B"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "4927a61014da0f91cda8bac1aa5e2e05b9c85a4411a0d43d6d06d8ac346bb5b0",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+      "lines": [
+        1,
+        18
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": "Cross-tab renewal coordination and response-order precedence are not defined.",
+  "business_acceptance": "BLOCKED_POLICY",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-a.js"
+  ],
+  "setup_complete": true,
+  "tab_observations": {
+    "A": {
+      "expiry": 1793239260000,
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "workspaces": [
+        {
+          "id": "W-A",
+          "label": "W-A",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "W-B",
+          "label": "W-B",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              }
+            }
+          ]
+        }
+      ],
+      "selected": "W-A",
+      "loading": false,
+      "dialog": false,
+      "logout": false,
+      "props": {
+        "W-A": {
+          "tabId": "W-A",
+          "panelId": "workspaces-tabpanel-1",
+          "parameters": {
+            "fixtureId": "W-A",
+            "record": "trade-X",
+            "autoRequest": false
+          }
+        }
+      },
+      "mounts": {
+        "W-A": 1
+      },
+      "refreshCalls": {},
+      "calls": {},
+      "opens": 0,
+      "closures": 0,
+      "persisted": "[{\"id\":\"W-A\",\"label\":\"W-A\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-A\",\"container\":\"@fm/wt-fixture-a\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-A\",\"title\":\"W-A\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-A\",\"record\":\"trade-X\",\"autoRequest\":false}}]},{\"id\":\"W-B\",\"label\":\"W-B\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-B\",\"container\":\"@fm/wt-fixture-b\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-B\",\"title\":\"W-B\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-B\",\"record\":\"positions-Y\",\"autoRequest\":false}}]}]",
+      "token_sha256": "f1fe285c805c7286ddb236bc40923359d2d325c34cd94a5faf7e356d464b4c1b",
+      "refresh_sha256": "16eac45c6ed3dbe31a76a4ed3147f930114a2f44dcc10f10e511ce9488682d1d",
+      "stored_token_sha256": "f1fe285c805c7286ddb236bc40923359d2d325c34cd94a5faf7e356d464b4c1b",
+      "session_token_sha256": "f1fe285c805c7286ddb236bc40923359d2d325c34cd94a5faf7e356d464b4c1b"
+    },
+    "B": {
+      "expiry": 1793239260000,
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "workspaces": [
+        {
+          "id": "W-A",
+          "label": "W-A",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "W-B",
+          "label": "W-B",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              }
+            }
+          ]
+        }
+      ],
+      "selected": "W-A",
+      "loading": false,
+      "dialog": false,
+      "logout": false,
+      "props": {
+        "W-A": {
+          "tabId": "W-A",
+          "panelId": "workspaces-tabpanel-1",
+          "parameters": {
+            "fixtureId": "W-A",
+            "record": "trade-X",
+            "autoRequest": false
+          }
+        }
+      },
+      "mounts": {
+        "W-A": 1
+      },
+      "refreshCalls": {},
+      "calls": {},
+      "opens": 0,
+      "closures": 0,
+      "persisted": "[{\"id\":\"W-A\",\"label\":\"W-A\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-A\",\"container\":\"@fm/wt-fixture-a\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-A\",\"title\":\"W-A\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-A\",\"record\":\"trade-X\",\"autoRequest\":false}}]},{\"id\":\"W-B\",\"label\":\"W-B\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-B\",\"container\":\"@fm/wt-fixture-b\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-B\",\"title\":\"W-B\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-B\",\"record\":\"positions-Y\",\"autoRequest\":false}}]}]",
+      "token_sha256": "f1fe285c805c7286ddb236bc40923359d2d325c34cd94a5faf7e356d464b4c1b",
+      "refresh_sha256": "16eac45c6ed3dbe31a76a4ed3147f930114a2f44dcc10f10e511ce9488682d1d",
+      "stored_token_sha256": "f1fe285c805c7286ddb236bc40923359d2d325c34cd94a5faf7e356d464b4c1b",
+      "session_token_sha256": "f1fe285c805c7286ddb236bc40923359d2d325c34cd94a5faf7e356d464b4c1b"
+    }
+  },
+  "completed_at": "2026-10-29T02:15:40.885Z"
+}

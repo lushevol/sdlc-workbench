@@ -1,0 +1,416 @@
+# AI SDLC Workbench
+
+A local workbench gives AI agents shared engineering context, relationships, evidence, and executable capabilities.
+Existing repositories, documents, and test engines stay in their original locations.
+
+[PRINCIPLE.md](PRINCIPLE.md) records the project principles.
+[ARCHITECTURE.md](ARCHITECTURE.md) defines the three layers, six core capabilities, workflow, and evolution phases.
+These documents supersede the earlier MVP construction proposal.
+[The workspace design](docs/WORKSPACE_DESIGN.md) applies the owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf).
+
+Status: Phase 1 foundation with workspace catalogs, portable knowledge contracts, and deterministic validation.
+Remote source synchronization, AI governance, complete relationship validation, and behavior verification remain planned.
+Each retained item needs a current consumer, observable benefit, and supporting evidence.
+
+Use [the documentation index](docs/README.md) for the maintained current guides across lifecycle and domain responsibilities.
+Tasks retain incremental work history and supporting evidence; current guides summarize the supported result.
+Use the [business task index](tasks/index.md) to find retained Portal, CES, and SDK work in this source checkout.
+The approved v2 plan and subsequent recorded clarifications control the folder and knowledge contracts.
+
+## Adopt an existing project
+
+Use `$workbench-ready` to set up or restore a workspace and prepare it for your first task.
+Name the workspace, the available repositories, and the first task in your request. [Workbench Ready skill](.agents/skills/workbench-ready/SKILL.md)
+
+> Use `$workbench-ready` to prepare this workspace and trace the callers of the API contract I plan to change.
+
+Read [the brownfield adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary) for supported components and specialized limits.
+Workbench preserves existing layouts and accepts project-defined catalog classifications.
+Shared skills use source evidence and each repository's own commands when specialized extraction is unavailable.
+
+## Start work
+
+Create or reuse an owning task for incremental work under [the scope rules](tasks/README.md#scope).
+Business behavior requirements and defects use intake.
+Workbench configuration, upgrades, tooling, and other harness maintenance use one [lightweight maintenance record](tasks/README.md#lightweight-maintenance-records), with proportionate evidence and checks.
+Maintenance requires no business intake, ACs, readiness, or domain knowledge publication.
+Update affected current guides and [reconcile documentation at handoff](tasks/README.md#keep-current-documentation-synchronized).
+
+For business work, create `tasks/<task-id>/01-intake.md` through the applicable requirement or defect template.
+Follow [the task guide](tasks/README.md) before moving to the next SDLC phase.
+Select its [lifecycle entry route](tasks/README.md#lifecycle-entry-routes): requirements first, existing implementation, or bounded exploration.
+Register supplied code with its actual history. Derive proposed ACs without treating implementation as approved intent.
+Bounded exploration needs scoped `READY`, authorization, observable outcomes, and stop conditions before coding.
+Complete product intent and verification before claiming business acceptance.
+Use its [document order](tasks/README.md#document-order) for task filenames.
+Use three primary inputs: canonical intent in `knowledge/records/`, registered repository code and tests, and investigation results.
+Read existing reports before asking users to repeat available information.
+Use applicable authorized browser, Playwright, or service investigations to resolve material questions.
+Keep new questions, investigation results, reports, and evidence under the same task.
+Reference existing sources with exact revisions and hashes; preserve their original locations.
+
+Only `READY` permits the named next phase with supporting evidence and a recorded rationale.
+`READY_WITH_LIMITS` permits further intake evidence collection only; `NEEDS_CLARIFICATION` blocks the next phase.
+Keep intake readiness separate from business approval.
+The task guide defines agent procedure; the core does not enforce a workflow gate.
+
+## Set up on Windows 11 or macOS
+
+Use the complete source checkout with approved Python >=3.10 and Node 24 LTS already installed.
+Run `setup.cmd` on Windows 11 or `setup.command` on macOS.
+The launcher installs project packages locally and preserves existing configuration.
+Use `--check` for diagnostics or `--core-only` for the core runtime.
+Read [the setup guide](docs/SETUP.md) for platform dependencies, company access, readiness checks, and remaining gaps.
+For restricted networks, prepare an offline dependency bundle on a connected computer with the same target platform and Python.
+Read [dependency analysis](docs/DEPENDENCIES.md) for download domains, live service requirements, and offline limits.
+
+## Install the standalone project manually
+
+Run installation commands from the source checkout with Python 3.10 or newer.
+Generated workspaces contain project records and guides.
+They do not include package source, `pyproject.toml`, or runtime tests.
+Use the installed `ai-sdlc` command to operate a generated workspace.
+The installed package metadata declares the runtime dependencies.
+Specific providers and external tools can require Git or their own environments.
+
+```sh
+python -m pip install .
+ai-sdlc --workspace . status
+ai-sdlc --workspace . skills
+ai-sdlc --workspace . validate
+```
+
+Install the optional Release Clinic tools with `python -m pip install ".[release-clinic]"` from this checkout.
+The extra includes Outlook `.msg` attachment parsing through `extract-msg`.
+Configure their variables in the project root `.env` from [.env.example](.env.example).
+Run `ai-sdlc --workspace . release-clinic doctor` to check local setup.
+Use [release reporting](docs/RELEASE_REPORT.md) to collect release data and render saved evidence into local HTML.
+Read [Release Clinic](docs/RELEASE_CLINIC.md) for collection, reporting, service configuration, and evidence limits.
+
+## Connect external systems
+
+The optional `connector.mcp` provider connects agents to external engineering systems through the existing CLI and MCP interface.
+Manage variables in ignored `.env` at the workspace root.
+Use [.env.example](.env.example) for variable names and [the connector guide](docs/CONNECTORS.md) for installation and exact tool grants.
+Run `npm ci --ignore-scripts --no-audit --no-fund` from this source checkout for Node dependencies.
+`ai-sdlc --workspace . mcp --connectors` lists each granted connector tool as its own MCP tool.
+The project registers this server in `.mcp.json`, `.claude/settings.json`, `.codex/config.toml`, and `opencode.json`.
+
+## Create a workspace
+
+Choose an empty directory and replace `PATH` with its location.
+The initializer creates configuration, catalogs, knowledge schemas and templates, shared skills, and decision documents.
+It also creates `repos/` with the [repository setup guide](repos/README.md).
+It does not require Git or create sample business assets.
+New workspaces receive empty catalogs and provenance, without this project's source snapshots, candidates, findings, or audit history.
+They receive `tasks/README.md` without project task contents.
+
+```sh
+ai-sdlc init PATH
+ai-sdlc --workspace PATH status
+ai-sdlc --workspace PATH skills analyze-requirement
+ai-sdlc --workspace PATH validate
+```
+
+The project structure separates these responsibilities:
+
+| Location | Responsibility |
+| --- | --- |
+| `workspace.yaml` | Workspace identity, settings, and registry references. |
+| `workspace.local.yaml` | Optional ignored repository path overrides for this machine. |
+| `repos/` | Independent Git checkouts and their setup guide. |
+| `docs/` | Stable integrated current documentation across lifecycle and domain responsibilities. |
+| `tasks/` | Incremental business and maintenance work history, decisions, investigation results, and evidence. |
+| `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
+| `knowledge/` | One entry point for canonical records, supporting evidence, and the derived wiki. |
+| `knowledge/records/` | Canonical business-domain Markdown records and navigation; the domain validation and retrieval boundary. |
+| `knowledge/llm-wiki/` | One derived wiki, relative canonical source aliases, native state and wiki visualization; checked through the wiki bridge. |
+| `knowledge/records/candidates/` | Draft domain knowledge awaiting review. |
+| `knowledge/records/requirements/`, `architecture/`, `decisions/` | Reviewed business-domain requirements, architecture, and decisions. |
+| `knowledge/evidence/` | Source snapshots, provenance manifest, governance findings, and immutable audit events. |
+| `core/knowledge/schemas/`, `core/knowledge/templates/` | Reusable record contracts and starting records. |
+| `relationships/` | Requirement-to-code, code-to-test, and service dependency references. |
+| `.agents/skills/` | Canonical knowledge, analysis, verification, onboarding, and dependency procedures. |
+| `.claude/skills/` | Links for Claude Code skill discovery. |
+| `core/` | Single Python runtime and responsibility guides; installed as `ai_sdlc_workbench`. |
+| `adapters/` | Claude Code, Copilot, and MCP integration guidance. |
+| `registry/examples/` | Illustrative records checked against supported catalog contracts. |
+| `tests/` | Checks for supported behavior, consequential boundaries, and confirmed defects. |
+
+## Register existing assets
+
+Read the [registry guide](registry/README.md).
+Edit repository, service, capability, contract, and source catalogs to describe existing assets.
+Edit `registry/tools.yaml` to grant specific operations through providers.
+Repository and capability declarations do not grant execution by themselves.
+Several repositories can support one service or capability.
+One repository can support several services or capabilities.
+
+Candidate contracts retain missing documentation as an explicit gap.
+
+Absolute resource paths can reference assets outside the workspace.
+Relative resource paths resolve against the workspace directory.
+Keep repository Git histories and existing engineering layouts intact.
+Local clones inside the workspace remain an optional arrangement.
+
+Use `repos/` for independent Git clones from any source host.
+The Workbench does not ignore the whole directory.
+Its root Git excludes checkout directories inside repository groups.
+Each checkout owns its Git metadata, remote, branches, and commits.
+
+Register portable paths through `location` in `registry/repositories.yaml`.
+Follow [repository setup](repos/README.md) after workspace initialization.
+The guide covers catalog links, tool paths, application configuration, and transfers to another computer.
+Follow each repository's own setup guide for its dependencies, routing, environment files, and startup commands.
+
+Copy [workspace.local.example.yaml](workspace.local.example.yaml) to ignored `workspace.local.yaml` for machine paths.
+Its `repository_paths` mapping uses registered repository IDs as keys.
+Local overrides change metadata locations in memory.
+They do not rewrite provider configuration or grant operations.
+
+`workspace.yaml` takes precedence when both workspace configuration formats exist.
+Invalid YAML does not fall back to a legacy file.
+Existing `workspace.json` configurations remain supported when YAML is absent.
+The runtime merges tool registry records with inline `resources` and rejects duplicate IDs.
+Restart CLI or MCP processes after configuration changes.
+
+## Preserve and govern knowledge
+
+Use full raw export → filtered source view → canonical knowledge → derived wiki.
+Place complete local Markdown exports in `knowledge/evidence/incoming/YOUR_SOURCE_ID/`.
+Follow [the source import guide](knowledge/evidence/README.md#complete-source-imports). Do not remove unrelated documents manually.
+Keep retained originals under `knowledge/evidence/sources/`. Replace incoming exports without overwriting those snapshots.
+Refresh retains original revisions and records source-page hashes before the agent selects relevant passages.
+
+```sh
+ai-sdlc --workspace . sources refresh --source YOUR_SOURCE_ID --input knowledge/evidence/incoming/YOUR_SOURCE_ID
+ai-sdlc --workspace . sources select --source YOUR_SOURCE_ID --decisions .workbench/ingestion/decisions.json
+ai-sdlc --workspace . sources view --source YOUR_SOURCE_ID --output .workbench/ingestion/filtered/run-1
+ai-sdlc --workspace . sources verify --source YOUR_SOURCE_ID
+```
+
+Follow the [source preparation procedure](.agents/skills/ingest-knowledge/references/source-preparation.md) for registration, decisions, and freshness rules.
+Filtered views use hash-bound source links or exact excerpts. They do not create another authoritative knowledge collection.
+
+Use one `knowledge/` parent with `records/`, `evidence/`, and the existing `llm-wiki/` workspace.
+Keep canonical records in `knowledge/records/` limited to business-domain Markdown and navigation. The sibling `knowledge/evidence/` holds sources and governance; `knowledge/llm-wiki/` holds the derived wiki and its native artifacts. The [knowledge standards](knowledge/README.md) define separate validation responsibilities.
+Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Exclude Workbench maintenance, raw sources, logs, code copies, fixtures, execution results, reports, and intermediate files.
+Keep investigation evidence under its task. Keep source provenance and governance records under `knowledge/evidence/`.
+Use Markdown with YAML frontmatter for portable knowledge documents.
+The contracts follow [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) with Workbench SDLC constraints.
+Use the [knowledge guide](knowledge/README.md), shipped schemas, and templates for actual records.
+Keep original source bytes under `knowledge/evidence/sources/`. Record source identities and hashes in `knowledge/evidence/manifest.yaml`.
+Create candidates and findings before publishing derived knowledge.
+
+Browse local knowledge with the [web reader](docs/SETUP.md#local-knowledge-web-reader):
+
+```sh
+ai-sdlc --workspace PATH knowledge serve --port 8765 --open
+```
+
+The reader preserves canonical and native wiki navigation and embeds the existing wiki graph.
+It limits browsing to `knowledge/`, excluding audit logs and private engine state.
+
+Use `governance_state` for candidate → investigated → verified → published.
+Use contested, stale, or superseded when evidence requires them.
+Keep this lifecycle separate from OKF `status` and test outcomes.
+Important requirements and decisions need recorded human review before publication.
+Never invent approval or reviewer identities.
+
+Requirements use measurable Gherkin acceptance criteria.
+Each criterion states conditions, an action, an observable result, and a measurable expectation.
+Record each governance change in a new YAML event under `knowledge/evidence/audit/`.
+Preserve earlier snapshots, events, and Git history.
+
+Use the [SDLC authoring catalog](core/knowledge/templates/sdlc/README.md) for templates, illustrative samples, and AI completion checks.
+The catalog covers the full lifecycle and ships with generated workspaces.
+Its authoring forms remain separate from the six validated knowledge types.
+
+```sh
+ai-sdlc --workspace PATH validate
+```
+
+The deterministic validator reports `VALID` or `INVALID`, counts, and findings.
+It checks saved contracts and provenance.
+It does not establish business correctness, authenticate a reviewer, or prove passing execution.
+Read [the workspace design](docs/WORKSPACE_DESIGN.md) for folder flow, traceability, and implementation limits.
+
+## Run operations and read evidence
+
+Discover resource IDs, grants, and argument schemas through `status`.
+Replace placeholders with the selected resource, operation, and JSON arguments.
+
+```text
+ai-sdlc --workspace PATH call RESOURCE OPERATION --args JSON
+ai-sdlc --workspace PATH runs
+ai-sdlc --workspace PATH run ACTION_ID
+```
+
+| Provider | Operations |
+| --- | --- |
+| `knowledge.local` | `list`, `search`, `read`, `ingest` |
+| `repository.git` | `status`, `diff`, `branch` |
+| `graph.snapshot` | `coverage`, `patterns`, `relationships`, `services`, `search`, `neighborhood` |
+| `testing.command` | `list`, `run` |
+| `testing.robot` | `list`, `run` |
+| `logs.file` | `search` |
+| `database.sqlite` | `tables`, `query` |
+| `discovery.eureka` | `instances` |
+
+Knowledge operations retain exact file paths and hashes.
+Search uses literal matching; it does not supply automatic ingestion or AI governance.
+Repository operations use the registered independent checkout.
+Test execution uses named command arrays from resource configuration and runs without a shell.
+The test provider retains command output and exit codes without parsing assertion-level coverage.
+The Robot provider retains native reports and separate `PASS`, `FAIL`, and `SKIP` test results.
+It uses the test repository's Python environment.
+Read [Robot testing](docs/ROBOT_TESTING.md) for setup, grants, execution, and evidence limits.
+Use each test repository's documented commands and target environment for business cases.
+The optional source-checkout Playwright harness is described in [setup](docs/SETUP.md#root-playwright-pom-harness).
+
+Resource operations require explicit grants.
+Actions use statuses `RUNNING`, `SUCCEEDED`, `FAILED`, and `DENIED`.
+Provider failures can report `ERROR` or `TIMEOUT` within a failed action.
+The workspace retains records in `.workbench/actions.sqlite3` and evidence files under `.workbench/runs/`.
+A process interruption can leave an action at `RUNNING`; this foundation does not resume it.
+
+Hashes identify retained bytes, not execution authenticity or approved intent.
+A successful action does not establish `VERIFIED` behavior.
+
+Use [behavior evidence review](docs/BEHAVIOR_REVIEW.md) for strict JSON baselines, source freshness checks, immutable saves, and comparisons.
+The `assurance` commands keep contract validity, freshness, declared assertion bindings, and business verification separate.
+Their business verification result always remains `NOT_VERIFIED`.
+Use the [shared review index](docs/REVIEW_INDEX.md) to connect criteria, changes, canonical cases, assertions, and retained results.
+It preserves original outcomes, characterization, declared scope completeness, and evidence limits.
+
+## Shared skills and agent adapters
+
+Use [Workbench hooks](docs/HOOKS.md) for shared session context and scoped completion checks across Codex, Copilot, and Claude Code.
+From the workspace root, install the adapters with `ai-sdlc --workspace . hooks install`.
+Expose installed `ai-sdlc` on the agent's `PATH`; portable registrations discover the workspace from native events.
+Launch Claude with `claude --settings .claude/workbench-hooks.json` to avoid Copilot importing its registration.
+Hooks remain advisory. Bind the active session scope before edits; existing skills retain workflow decisions.
+
+Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.
+Use [Ponytail](.agents/skills/ponytail/SKILL.md) for coding tasks, with `full` mode selected by [project guidance](AGENTS.md#coding-tasks-with-ponytail).
+It selects the smallest complete change and preserves required validation, security, accessibility, and evidence.
+Read it with `ai-sdlc --workspace PATH skills ponytail`, or invoke `$ponytail` when your client supports skills.
+Request `lite`, `ultra`, or `off` in conversation to change its use.
+This project installation adds instructions and a Claude discovery alias; see [setup](docs/SETUP.md#ponytail-coding-skill) and [source attribution](.agents/skills/ponytail/SOURCE.md).
+
+Use [code-review](.agents/skills/code-review/SKILL.md) for actionable defects, exact comparison identities, and test evidence.
+Its local helpers collect change metadata and report redacted secret candidates without changing the reviewed repository.
+Optional structured reports check comparison identity, changed ranges, and complete path accounting.
+Use [release-confidence](.agents/skills/release-confidence/SKILL.md) to assess production readiness from business impact, system impact, reviews, requirements, tests, and operations.
+It reports qualitative confidence and a separate production recommendation.
+Deployment authorization remains a separate recorded decision.
+
+```sh
+ai-sdlc --workspace PATH skills release-confidence
+```
+
+Use [connectors](.agents/skills/connectors/SKILL.md) for external tool setup, root variables, discovery, calls, and access diagnostics.
+Use [the knowledge lifecycle map](docs/KNOWLEDGE_LIFECYCLE.md) to select a major-step parent or a reusable operation.
+Use [evaluate-harness](.agents/skills/evaluate-harness/SKILL.md) when a skill or workflow changes and you need a repeatable baseline/candidate comparison with independent evidence.
+Use [manage-knowledge-lifecycle](.agents/skills/manage-knowledge-lifecycle/SKILL.md) to assess progress, resume authorized work, and identify the next action with its owner and completion condition.
+Invoke `$manage-knowledge-lifecycle` with a collection, record or task scope, or read it with `ai-sdlc --workspace PATH skills manage-knowledge-lifecycle`.
+The six knowledge parents orchestrate source preparation, ingestion, governance, querying, wiki maintenance, and release synchronization.
+Use [prepare-knowledge-sources](.agents/skills/prepare-knowledge-sources/SKILL.md) before ingesting complete raw exports.
+Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
+Use `govern-knowledge` for investigation and publication.
+Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
+Use the [Workbench llm-wiki bridge](.agents/skills/llm-wiki/SKILL.md) to select the knowledge compiler.
+[OpenKB](.agents/skills/openkb/SKILL.md) is primary when both an LLM URL and token are configured.
+Otherwise use the unchanged llm-wiki-agent skill in the current agent development environment, without another model client.
+Both engines maintain one active workspace at `knowledge/llm-wiki/`; retain its existing rich pages and relative canonical-source links.
+Check the shared wiki and generate its original OpenKB graph through the bridge:
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py install
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/records/candidates --output .workbench/wiki/plan.json
+python3 .agents/skills/llm-wiki/scripts/wiki.py verify
+python3 .agents/skills/llm-wiki/scripts/wiki.py run status
+python3 .agents/skills/llm-wiki/scripts/wiki.py graph
+```
+
+The optional OpenKB CLI uses Python 3.13 in `.venv-openkb`, independently of Workbench's runtime.
+Configure `OPENAI_API_BASE` and `LLM_API_KEY` privately to select OpenKB.
+The bridge reads the project KB `.env` and process environment; unrelated global authentication does not select OpenKB.
+The bridge's `compile` command selects native OpenKB compilation with both settings; otherwise follow its llm-wiki-agent procedure.
+Both routes preserve canonical source links and hashes. No route creates a second active wiki.
+Run local source and wiki plans before semantic work. Reviewed unchanged inputs skip repeated processing.
+Use [incremental source processing](.agents/skills/ingest-knowledge/references/source-preparation.md#plan-incremental-canonical-work)
+and [wiki completion receipts](.agents/skills/llm-wiki/references/workflows.md#reviewed-completion-receipts) for commands and reuse limits.
+See [installation and engine selection](docs/SETUP.md#knowledge-wiki-engine-selection) for authentication, graph output, and offline installation.
+Engine selection controls semantic work. Local OpenKB verification and visualization work in either mode without provider credentials.
+
+Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
+It separates automated checks from content review and unresolved evidence.
+Use [gherkin-quality](.agents/skills/gherkin-quality/SKILL.md) for evidence-backed UI scenarios and automation readiness.
+The [Gherkin quality guide](docs/GHERKIN_QUALITY.md) records the proposal decisions, command, evidence contract, and session demonstration.
+Links under `.claude/skills/` expose all canonical skills to Claude Code.
+
+Use the imported [service-dependencies-graph](.agents/skills/service-dependencies-graph/SKILL.md) for static dependency evidence.
+The skill owns extraction, queries, validation, viewer assets, references, and regressions.
+Workbench CLI and MCP integrations invoke its helpers.
+
+```sh
+python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH build
+```
+
+Read generated coverage before interpreting the graph or viewer.
+The installed `ai-sdlc --workspace PATH graph build` command invokes the workspace skill.
+CLI and MCP expose the same files.
+Workspace procedures override bundled procedures with the same ID.
+The two original prototype procedures remain available for compatibility.
+
+Use the [Claude Code](adapters/claude-code/README.md), [Copilot](adapters/copilot/README.md), and [MCP](adapters/mcp/README.md) guides.
+These guides describe integration; they do not change the user's client configuration.
+Native client discovery depends on that client's supported mechanisms.
+The core does not depend on a specific agent, model, or conversation history.
+
+The stdio MCP interface exposes four tools:
+
+| Tool | Purpose |
+| --- | --- |
+| `workbench_status` | Read catalogs, resources, operations, and grants. |
+| `workbench_call` | Invoke one permitted operation and retain evidence. |
+| `workbench_runs` | Read action history or one action record. |
+| `workbench_skills` | List or read shared procedures. |
+
+Add `--connectors` to expose each granted external connector tool as its own MCP tool.
+
+## Provider plugins and limits
+
+Use the [plugin contract](PLUGIN_CONTRACT.md) for provider interfaces and execution limits.
+Installed plugins load only when the workspace enables their entry point names.
+Plugins execute trusted Python code in the workbench process.
+Operation grants control dispatch; they do not sandbox plugins or configured commands.
+
+This foundation requires no dedicated server, database service, or cloud infrastructure.
+SQLite stores local action history through the Python standard library.
+External providers can require network access, credentials, or their own infrastructure.
+Keep credentials outside tracked configuration.
+
+Knowledge and query results have content bounds.
+Test and Git output can consume disk space until timeout.
+Action history has no automatic retention cleanup.
+AI governance, external source adapters, assertion mapping, durable workflows, and platform orchestration require later implementation.
+
+## Validate and distribute
+
+Run tests and wheel builds from the standalone source checkout after installation.
+Run `validate` against the selected source checkout or generated workspace.
+
+```sh
+python -m unittest discover -s tests -v
+python -m pip wheel . --no-deps --wheel-dir dist
+ai-sdlc --workspace . validate
+```
+
+The build includes runtime code, project guidance, configuration, knowledge contracts, shared skills, and adapter guides.
+Workspace initialization copies responsibility guides without runtime code.
+`scaffold.json` defines the shipped workspace files.
+Source checkout and wheel initialization use those same canonical files.
+Automated prose checks do not certify complete ASD-STE100 compliance.

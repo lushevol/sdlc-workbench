@@ -1,0 +1,114 @@
+{
+  "recordedAt": "2026-10-19T18:49:02.094848+00:00",
+  "testEngineBaseRevision": "62f1685a609bce6735bb0c9cec5fe0ee4311e194",
+  "implementationComparison": {
+    "repository": "mfe-base",
+    "base": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+    "head": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a"
+  },
+  "checks": [
+    {
+      "name": "node-syntax",
+      "command": [
+        "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+        "--check",
+        "Tests/ratan/plugin/ui/session/sessionRenewal.cjs"
+      ],
+      "exitCode": 0,
+      "status": "PASSED",
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "commonjs-exports",
+      "command": [
+        "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+        "-e",
+        "const m=require('./Tests/ratan/plugin/ui/session/sessionRenewal.cjs'); process.stdout.write(JSON.stringify(Object.keys(m).filter(k=>typeof m[k]==='function'))+'\\n')"
+      ],
+      "exitCode": 0,
+      "status": "PASSED",
+      "stdout": "[\"openPortalSession\",\"assertActivityRenewsSession\",\"assertPendingRenewalCompletes\",\"assertRejectedRenewalCanRetry\",\"assertActivityCrossesRefreshExpiry\",\"assertNaturalBackgroundRecovery\",\"assertSlowActivitySharesRequest\",\"assertPendingManualLogoutCancels\",\"assertPendingActivityLogoutCancels\",\"assertLateActivityCannotReplaceManualSuccess\",\"assertActualExpiredCredentialDenied\",\"observeBackgroundWithoutRefresh\",\"observeWorkspaceDescriptorsAfterSignIn\"]\n",
+      "stderr": ""
+    },
+    {
+      "name": "robot-static-parse",
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "scripts/workbench.py",
+        "parse",
+        "Tests/ratan/plugin/ui/session/session_renewal.robot"
+      ],
+      "exitCode": 0,
+      "status": "PASSED",
+      "stdout": "{\n  \"command\": \"parse\",\n  \"status\": \"PASSED\",\n  \"file_count\": 1,\n  \"diagnostics\": [],\n  \"limitations\": [\n    \"Syntax parsing only. Imports and variables are not resolved.\",\n    \"Diagnostic text is omitted to prevent source data disclosure.\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "selected-source-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "Tests/ratan/plugin/ui/session"
+      ],
+      "exitCode": 0,
+      "status": "PASSED",
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "robot-extension-keyword-linkage",
+      "status": "PASSED",
+      "caseCount": 14,
+      "limit": "Static names only. Browser execution is separate."
+    },
+    {
+      "name": "example-json-parse",
+      "status": "PASSED"
+    },
+    {
+      "name": "readme-prose-sentence-length",
+      "status": "PASSED",
+      "limit": "20 whitespace-separated words. Code, metadata, and tables are excluded."
+    }
+  ],
+  "sources": [
+    {
+      "path": "Tests/ratan/plugin/ui/session/README.md",
+      "bytes": 8446,
+      "sha256": "b90a81893307132e826e594fde6d66119760476173d3895b965dc47dd90b39a5"
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/config.example.json",
+      "bytes": 1379,
+      "sha256": "e5c15cf71049bc3b99227fdc44d940e0ca5c1b30c9169aecd8b613957192d601"
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "bytes": 44472,
+      "sha256": "cee0de1ead11f67bda22b6305823b448e95cf1e6a88e3b31f1f15f967e8dd6be"
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "bytes": 3800,
+      "sha256": "c474b5f0ea62f2e3b089bb7f52347736799b655fa0b8ad7f0b4aa6cb1d921a8e"
+    }
+  ],
+  "actualBrowserExecution": "NOT_RUN_BY_CODE_AUTHOR",
+  "limits": [
+    "No application code or intake content changed.",
+    "Natural lifecycle cases need at least 30 minutes and a usable actual-token profile.",
+    "Controlled request delays and aborted acquisition are recorded in each result.",
+    "The parent agent owns actual browser execution evidence."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}

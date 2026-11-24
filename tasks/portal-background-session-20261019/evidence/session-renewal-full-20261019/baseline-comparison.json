@@ -1,0 +1,447 @@
+{
+  "schema_version": 1,
+  "story_id": "REQ-active-session-renewal",
+  "changed_records": {
+    "artifacts": [
+      "ART-execution-full-controlled",
+      "ART-test-full-harness",
+      "ART-test-home-jest",
+      "ART-test-relogin-jest"
+    ],
+    "behaviors": [
+      "REQ-active-session-renewal:BEH-01",
+      "REQ-active-session-renewal:BEH-02",
+      "REQ-active-session-renewal:BEH-03",
+      "REQ-active-session-renewal:BEH-04"
+    ],
+    "links": [
+      "LINK-1-ART-code-extend",
+      "LINK-1-ART-code-home",
+      "LINK-1-full-assertion",
+      "LINK-2-ART-code-extend",
+      "LINK-2-ART-code-home",
+      "LINK-2-full-assertion",
+      "LINK-3-ART-code-extend",
+      "LINK-3-ART-code-home",
+      "LINK-3-full-assertion",
+      "LINK-4-ART-code-extend",
+      "LINK-4-ART-code-home",
+      "LINK-4-full-assertion",
+      "LINK-4-home-expiry",
+      "LINK-5-full-assertion",
+      "LINK-6-full-assertion",
+      "LINK-7-full-assertion"
+    ],
+    "executions": [
+      "EXEC-session-renewal-full-controlled"
+    ],
+    "findings": [
+      "FINDING-1-full-backend-success",
+      "FINDING-1-full-human",
+      "FINDING-1-full-system",
+      "FINDING-2-full-backend-success",
+      "FINDING-2-full-human",
+      "FINDING-2-full-system",
+      "FINDING-3-full-backend-success",
+      "FINDING-3-full-human",
+      "FINDING-3-full-system",
+      "FINDING-4-full-human",
+      "FINDING-4-full-response-chain",
+      "FINDING-4-full-slow-cancellation",
+      "FINDING-4-full-system",
+      "FINDING-5-full-real-refresh",
+      "FINDING-5-full-system",
+      "FINDING-6-full-real-refresh",
+      "FINDING-6-full-system",
+      "FINDING-7-full-system"
+    ]
+  },
+  "affected_behaviors": [
+    "REQ-active-session-renewal:BEH-01",
+    "REQ-active-session-renewal:BEH-02",
+    "REQ-active-session-renewal:BEH-03",
+    "REQ-active-session-renewal:BEH-04",
+    "REQ-active-session-renewal:BEH-05",
+    "REQ-active-session-renewal:BEH-06",
+    "REQ-active-session-renewal:BEH-07"
+  ],
+  "before": {
+    "schema_version": 1,
+    "baseline_id": "PILOT-session-renewal-current-20261017",
+    "story_id": "REQ-active-session-renewal",
+    "contract_status": "VALID",
+    "valid": true,
+    "verification": "NOT_VERIFIED",
+    "freshness": "CURRENT",
+    "artifacts": [
+      {
+        "id": "ART-intent-candidate",
+        "freshness": "CURRENT",
+        "record_sha256": "90c44c527def5cab200c7c8fbf4c2dc22762f017a9ff0f97f681d3e37e94dd81"
+      },
+      {
+        "id": "ART-code-endpoint",
+        "freshness": "CURRENT",
+        "record_sha256": "f52e7210558eee4d87040cecba70982bc575c525d763a932056e5b9f6988195e"
+      },
+      {
+        "id": "ART-code-service",
+        "freshness": "CURRENT",
+        "record_sha256": "577e144a5ed50508734e5d31fb5b1467ac63206cf6a2a6d74a0a70a08eb70c82"
+      },
+      {
+        "id": "ART-code-extend",
+        "freshness": "CURRENT",
+        "record_sha256": "8b16875d1e18047cc8530ae709fda9677c111de64346dbd81b52da79ea6b6afa"
+      },
+      {
+        "id": "ART-code-home",
+        "freshness": "CURRENT",
+        "record_sha256": "d8d787e57905c07857ea14074ec410f04ddc9e26c845c3214dfcbf1f0431f084"
+      },
+      {
+        "id": "ART-code-timeout",
+        "freshness": "CURRENT",
+        "record_sha256": "2e0d56d48360cdb7038b0f7608e722240059a1a0d84c74a9268918b3fd1ceb69"
+      },
+      {
+        "id": "ART-test-harness",
+        "freshness": "CURRENT",
+        "record_sha256": "9dbe67921359589ae0c3b2945329bca75495c6415bd7e4b872d22122ae1894ae"
+      },
+      {
+        "id": "ART-test-timeout-jest",
+        "freshness": "CURRENT",
+        "record_sha256": "38dbe97d3b13220faf500276945f413a346d02be3699e85bb4e2535e4a4c56a3"
+      },
+      {
+        "id": "ART-execution-retained",
+        "freshness": "CURRENT",
+        "record_sha256": "e81d4303f83e44d55becf89f8a36ac572a925a30a950469b06fd098c8c8714a9"
+      }
+    ],
+    "executions": [
+      {
+        "id": "EXEC-session-renewal-current-retained",
+        "source_freshness": "CURRENT",
+        "result": "PASSED",
+        "mode": "CONTROLLED_SOURCE",
+        "level": "UNIT",
+        "assertion_bindings": "DECLARED",
+        "verification": "NOT_VERIFIED",
+        "limitations": [
+          "The command is the documented rerun instruction; the original execution argv was not retained.",
+          "PILOT_WORKTREE and OUTPUT_JSON are preserved placeholders from the retained review report.",
+          "This baseline declares assertion bindings; the original result does not record those binding identities.",
+          "The original result does not record its harness hash or full environment configuration.",
+          "React hooks use a deterministic state, ref, effect, and callback model.",
+          "Document listeners use a controlled event registry and capture option checks.",
+          "Date and browser timers use a controlled clock.",
+          "Axios post returns controlled promises and records request arguments.",
+          "JWT decoding, analytics, dispatcher side effects, and logout are controlled inputs.",
+          "waitFor resolves immediately in Timeout characterization.",
+          "Actual changed TypeScript executes after Node stripTypeScriptTypes transformation.",
+          "The harness is not React, jsdom, browser, backend, identity provider, or E2E execution.",
+          "The harness does not prove deployed timeout policy or indefinite backend renewal.",
+          "Jest regressions were added but were not executed because the runner is absent.",
+          "The rerun command uses the retained workspace-relative harness path; it is not the original argv."
+        ]
+      }
+    ],
+    "behaviors": [
+      {
+        "id": "REQ-active-session-renewal:BEH-05",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-06",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-07",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      }
+    ],
+    "metrics": {
+      "behavior_to_code": {
+        "numerator": 3,
+        "denominator": 3,
+        "percentage": 100.0
+      },
+      "behavior_to_test": {
+        "numerator": 3,
+        "denominator": 3,
+        "percentage": 100.0
+      },
+      "current_source_execution": {
+        "numerator": 3,
+        "denominator": 3,
+        "percentage": 100.0
+      }
+    },
+    "diagnostics": [],
+    "limitations": [
+      "Contract validity does not establish source meaning, approval, or assertion coverage.",
+      "Source freshness compares retained bytes with declared Git revisions, not deployed services.",
+      "Assertion bindings are review declarations; original runs do not contain these baseline bindings.",
+      "These operations never grant VERIFIED business behavior or authenticate execution results.",
+      "Knowledge publication and human approval use the existing knowledge governance contracts.",
+      "This is a staged evidence review; no new execution, human approval, or business verification occurred.",
+      "All selected behaviors remain NOT_VERIFIED; human review and supported browser/backend execution remain pending.",
+      "The requirement has seven criteria; this review includes three behaviors and excludes four criteria.",
+      "The required SYSTEM level describes this review scope; it does not record an approved test strategy.",
+      "Endpoint and extend snapshots retain their initial capture paths; their bytes match the selected committed revision.",
+      "The historical comparison holds current code and behavior constant while replacing only the retained run evidence.",
+      "The comparison does not reconstruct a complete earlier assurance state or prove historical improvement.",
+      "ASD writing review remains pending; automatic contract checks do not establish full ASD-STE100 compliance."
+    ]
+  },
+  "after": {
+    "schema_version": 1,
+    "baseline_id": "PILOT-session-renewal-full-20261019",
+    "story_id": "REQ-active-session-renewal",
+    "contract_status": "VALID",
+    "valid": true,
+    "verification": "NOT_VERIFIED",
+    "freshness": "CURRENT",
+    "artifacts": [
+      {
+        "id": "ART-intent-candidate",
+        "freshness": "CURRENT",
+        "record_sha256": "90c44c527def5cab200c7c8fbf4c2dc22762f017a9ff0f97f681d3e37e94dd81"
+      },
+      {
+        "id": "ART-code-endpoint",
+        "freshness": "CURRENT",
+        "record_sha256": "f52e7210558eee4d87040cecba70982bc575c525d763a932056e5b9f6988195e"
+      },
+      {
+        "id": "ART-code-service",
+        "freshness": "CURRENT",
+        "record_sha256": "577e144a5ed50508734e5d31fb5b1467ac63206cf6a2a6d74a0a70a08eb70c82"
+      },
+      {
+        "id": "ART-code-extend",
+        "freshness": "CURRENT",
+        "record_sha256": "8b16875d1e18047cc8530ae709fda9677c111de64346dbd81b52da79ea6b6afa"
+      },
+      {
+        "id": "ART-code-home",
+        "freshness": "CURRENT",
+        "record_sha256": "d8d787e57905c07857ea14074ec410f04ddc9e26c845c3214dfcbf1f0431f084"
+      },
+      {
+        "id": "ART-code-timeout",
+        "freshness": "CURRENT",
+        "record_sha256": "2e0d56d48360cdb7038b0f7608e722240059a1a0d84c74a9268918b3fd1ceb69"
+      },
+      {
+        "id": "ART-test-harness",
+        "freshness": "CURRENT",
+        "record_sha256": "9dbe67921359589ae0c3b2945329bca75495c6415bd7e4b872d22122ae1894ae"
+      },
+      {
+        "id": "ART-test-timeout-jest",
+        "freshness": "CURRENT",
+        "record_sha256": "38dbe97d3b13220faf500276945f413a346d02be3699e85bb4e2535e4a4c56a3"
+      },
+      {
+        "id": "ART-execution-retained",
+        "freshness": "CURRENT",
+        "record_sha256": "e81d4303f83e44d55becf89f8a36ac572a925a30a950469b06fd098c8c8714a9"
+      },
+      {
+        "id": "ART-test-full-harness",
+        "freshness": "CURRENT",
+        "record_sha256": "c817b4299c3cae6811a8f4c1658e3e58a19ad7ff785f13cb1754fccfbf5ce569"
+      },
+      {
+        "id": "ART-execution-full-controlled",
+        "freshness": "CURRENT",
+        "record_sha256": "ca3a04aa44511e6294e4d84d1cd9a20666b5489f0d3faca048001c84e666fceb"
+      },
+      {
+        "id": "ART-test-home-jest",
+        "freshness": "CURRENT",
+        "record_sha256": "285a5b19f60bd0e90e57e81365faf3fb3d5b91f535cc163aa3a0ac76bd960278"
+      },
+      {
+        "id": "ART-test-relogin-jest",
+        "freshness": "CURRENT",
+        "record_sha256": "4fd39344ba31c9d1acb19240af4923a3b3c07e4877fd34e1696784ed2c2e121a"
+      }
+    ],
+    "executions": [
+      {
+        "id": "EXEC-session-renewal-current-retained",
+        "source_freshness": "CURRENT",
+        "result": "PASSED",
+        "mode": "CONTROLLED_SOURCE",
+        "level": "UNIT",
+        "assertion_bindings": "DECLARED",
+        "verification": "NOT_VERIFIED",
+        "limitations": [
+          "The command is the documented rerun instruction; the original execution argv was not retained.",
+          "PILOT_WORKTREE and OUTPUT_JSON are preserved placeholders from the retained review report.",
+          "This baseline declares assertion bindings; the original result does not record those binding identities.",
+          "The original result does not record its harness hash or full environment configuration.",
+          "React hooks use a deterministic state, ref, effect, and callback model.",
+          "Document listeners use a controlled event registry and capture option checks.",
+          "Date and browser timers use a controlled clock.",
+          "Axios post returns controlled promises and records request arguments.",
+          "JWT decoding, analytics, dispatcher side effects, and logout are controlled inputs.",
+          "waitFor resolves immediately in Timeout characterization.",
+          "Actual changed TypeScript executes after Node stripTypeScriptTypes transformation.",
+          "The harness is not React, jsdom, browser, backend, identity provider, or E2E execution.",
+          "The harness does not prove deployed timeout policy or indefinite backend renewal.",
+          "Jest regressions were added but were not executed because the runner is absent.",
+          "The rerun command uses the retained workspace-relative harness path; it is not the original argv."
+        ]
+      },
+      {
+        "id": "EXEC-session-renewal-full-controlled",
+        "source_freshness": "CURRENT",
+        "result": "PASSED",
+        "mode": "CONTROLLED_SOURCE",
+        "level": "UNIT",
+        "assertion_bindings": "DECLARED",
+        "verification": "NOT_VERIFIED",
+        "limitations": [
+          "React hooks use a deterministic state, ref, effect, and callback model.",
+          "Document listeners use a controlled event registry and capture option checks.",
+          "Date and browser timers use a controlled clock.",
+          "Axios post returns controlled promises and records request arguments.",
+          "JWT decoding, analytics, dispatcher side effects, and logout are controlled inputs.",
+          "waitFor resolves immediately in Timeout characterization.",
+          "Refresh token presence is controlled; JWT decoding returns configured exp without token validation.",
+          "Four-hour fixture manually updates access token and expiry after each request; real response handlers do not execute.",
+          "Actual changed TypeScript executes after Node stripTypeScriptTypes transformation.",
+          "The harness is not React, jsdom, browser, backend, identity provider, or E2E execution.",
+          "The harness does not prove deployed timeout policy or indefinite backend renewal.",
+          "This execution does not run Jest assertions.",
+          "Request counts and mocked responses do not prove successful backend renewal.",
+          "Four-hour no-timeout results depend on mocked response/store updates; fresh SSO navigation is unassessed.",
+          "The original command was captured before execution; machine paths describe historical execution only.",
+          "Original input, harness, configuration, Node identity, and five source hashes are retained.",
+          "Baseline assertion identities remain DECLARED; source bindings do not grant business verification."
+        ]
+      }
+    ],
+    "behaviors": [
+      {
+        "id": "REQ-active-session-renewal:BEH-01",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-02",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-03",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-04",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-05",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-06",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      },
+      {
+        "id": "REQ-active-session-renewal:BEH-07",
+        "version": 1,
+        "code_mapped": true,
+        "test_mapped": true,
+        "current_source_execution": true,
+        "verification": "NOT_VERIFIED"
+      }
+    ],
+    "metrics": {
+      "behavior_to_code": {
+        "numerator": 7,
+        "denominator": 7,
+        "percentage": 100.0
+      },
+      "behavior_to_test": {
+        "numerator": 7,
+        "denominator": 7,
+        "percentage": 100.0
+      },
+      "current_source_execution": {
+        "numerator": 7,
+        "denominator": 7,
+        "percentage": 100.0
+      }
+    },
+    "diagnostics": [],
+    "limitations": [
+      "Contract validity does not establish source meaning, approval, or assertion coverage.",
+      "Source freshness compares retained bytes with declared Git revisions, not deployed services.",
+      "Assertion bindings are review declarations; original runs do not contain these baseline bindings.",
+      "These operations never grant VERIFIED business behavior or authenticate execution results.",
+      "Knowledge publication and human approval use the existing knowledge governance contracts.",
+      "All seven candidate criteria are mapped; all complete business behaviors remain NOT_VERIFIED.",
+      "SYSTEM is the required assessment level; no approved test strategy or human review is recorded.",
+      "Sixteen controlled source check groups passed; each group can contain several narrower predicates.",
+      "Current-source execution metrics describe mapped controlled predicates, not complete acceptance criteria.",
+      "Historical artifacts, findings, assertion links, and execution records remain unchanged from the prior baseline.",
+      "Historical fixture and binding gaps describe the original run; the successor improves only explicitly stated evidence.",
+      "The successor records original pre-run bindings, but assurance assertion bindings remain review declarations.",
+      "UAT1 readiness is blocked by missing browser tools, unconfirmed private bindings, and unknown deployed revisions.",
+      "No Jest, browser, backend, identity-provider, or UAT1 business execution passed in this stage.",
+      "Endpoint and extend artifacts preserve their original snapshot paths; hashes match the assessed exact revision.",
+      "ASD writing review remains pending; automated checks cannot establish full ASD-STE100 compliance."
+    ]
+  },
+  "verification": "NOT_VERIFIED",
+  "limitations": [
+    "Both analyses inspect current retained files; counts do not establish historical assurance improvement.",
+    "Changed or removed finding records do not establish approved resolution.",
+    "Contract validity does not establish source meaning, approval, or assertion coverage.",
+    "Source freshness compares retained bytes with declared Git revisions, not deployed services.",
+    "Assertion bindings are review declarations; original runs do not contain these baseline bindings.",
+    "These operations never grant VERIFIED business behavior or authenticate execution results.",
+    "Knowledge publication and human approval use the existing knowledge governance contracts."
+  ]
+}

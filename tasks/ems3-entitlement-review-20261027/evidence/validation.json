@@ -1,0 +1,178 @@
+{
+  "recorded_date": "2026-10-27",
+  "timezone": "Asia/Singapore",
+  "checks": [
+    {
+      "repo": "auth",
+      "check": "context",
+      "command": [
+        "python3",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/review_context.py",
+        "--repo",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+        "--mode",
+        "branch",
+        "--base",
+        "main",
+        "--head",
+        "HEAD"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+      "started_at_utc": "2026-10-27T01:49:16.310925+00:00",
+      "exit_code": 0,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/auth-context.json",
+      "sha256": "9d1e2606b3ebd4f00df0592255567a26b8d23a2a1b4f7e8405ce150ae509fc65"
+    },
+    {
+      "repo": "auth",
+      "check": "scan",
+      "command": [
+        "python3",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/scan_changes.py",
+        "--repo",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+        "--mode",
+        "branch",
+        "--base",
+        "main",
+        "--head",
+        "HEAD"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+      "started_at_utc": "2026-10-27T01:49:16.311463+00:00",
+      "exit_code": 0,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/auth-scan.json",
+      "sha256": "ff3bab78971f8f50a8095d4fc0280ac83f88cce4fd53dfcc872507c9b916ae2e"
+    },
+    {
+      "repo": "auth",
+      "check": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "main...HEAD"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+      "started_at_utc": "2026-10-27T01:49:16.315679+00:00",
+      "exit_code": 0,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/auth-diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "repo": "auth",
+      "check": "yaml",
+      "command": [
+        "ruby",
+        "-e",
+        "require \"yaml\"; YAML.load_file(\"src/main/resources/application.yml\"); puts \"YAML OK\""
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+      "started_at_utc": "2026-10-27T01:49:16.317525+00:00",
+      "exit_code": 0,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/auth-yaml.log",
+      "sha256": "d4d5b6ddeb43bbd163f5a3b0bf38b65aea1414d6ead00ecead0413c451dd2522"
+    },
+    {
+      "repo": "auth",
+      "check": "compile",
+      "command": [
+        "mvn",
+        "-o",
+        "-DskipTests",
+        "compile"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+      "started_at_utc": "2026-10-27T01:49:16.319352+00:00",
+      "exit_code": 1,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/auth-compile.log",
+      "sha256": "590c4db3490fca6c3db85c1812818c8549c23a38a0a75746ca27bdaec421118e"
+    },
+    {
+      "repo": "bff",
+      "check": "context",
+      "command": [
+        "python3",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/review_context.py",
+        "--repo",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+        "--mode",
+        "branch",
+        "--base",
+        "main",
+        "--head",
+        "HEAD"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+      "started_at_utc": "2026-10-27T01:49:16.321896+00:00",
+      "exit_code": 0,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/bff-context.json",
+      "sha256": "c13911c934249c17a9922ed8064e006a0e60a33334c4221814a8f42a43f64199"
+    },
+    {
+      "repo": "bff",
+      "check": "scan",
+      "command": [
+        "python3",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/scan_changes.py",
+        "--repo",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+        "--mode",
+        "branch",
+        "--base",
+        "main",
+        "--head",
+        "HEAD"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+      "started_at_utc": "2026-10-27T01:49:16.366059+00:00",
+      "exit_code": 0,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/bff-scan.json",
+      "sha256": "a1bf780d9bebe528e0879e9b3901ac9f2a8b312558c77f094e14a500054b332e"
+    },
+    {
+      "repo": "bff",
+      "check": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "main...HEAD"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+      "started_at_utc": "2026-10-27T01:49:16.466083+00:00",
+      "exit_code": 2,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/bff-diff-check.log",
+      "sha256": "026a22dda8700882b19fcb406333e1f7e0fc134aa053d5e4d15b1a7ddc8e33cb"
+    },
+    {
+      "repo": "bff",
+      "check": "yaml",
+      "command": [
+        "ruby",
+        "-e",
+        "require \"yaml\"; YAML.load_file(\"src/main/resources/application.yml\"); puts \"YAML OK\""
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+      "started_at_utc": "2026-10-27T01:49:16.483219+00:00",
+      "exit_code": 0,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/bff-yaml.log",
+      "sha256": "d4d5b6ddeb43bbd163f5a3b0bf38b65aea1414d6ead00ecead0413c451dd2522"
+    },
+    {
+      "repo": "bff",
+      "check": "compile",
+      "command": [
+        "mvn",
+        "-o",
+        "-DskipTests",
+        "compile"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+      "started_at_utc": "2026-10-27T01:49:16.555091+00:00",
+      "exit_code": 1,
+      "output": "tasks/ems3-entitlement-review-20261027/evidence/bff-compile.log",
+      "sha256": "a50cb519e3338ab2e7844d7af8177c2563b0f7bd9c3285c9db4549fdb47befbf"
+    }
+  ]
+}

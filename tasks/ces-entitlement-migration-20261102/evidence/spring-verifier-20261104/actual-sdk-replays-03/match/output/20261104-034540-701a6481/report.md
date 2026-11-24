@@ -1,0 +1,62 @@
+# EMS2 to CES SDK verification
+
+**Result: INCOMPLETE.**
+
+Mode: replay. Complete migration verified: false.
+
+Percentages apply only to declared scope. Failed reads and zero denominators do not establish complete coverage.
+
+## Scope
+
+```json
+"Exact original SDK lookup output for the declared account list and configured entities"
+```
+
+## Metrics
+
+```json
+null
+```
+
+## Open gaps and evidence limits
+
+```json
+[ "Complete role definitions beyond assigned accounts remain outside this measurement.", "Resolved data restrictions are not returned by either SDK map.", "Downstream business journeys are not executed by this command." ]
+```
+
+## Complete source bindings and result
+
+```json
+{
+  "startedAt" : "2026-11-04T03:45:40.071015Z",
+  "migrationVerified" : false,
+  "scope" : "Exact original SDK lookup output for the declared account list and configured entities",
+  "limits" : [ "This measures SDK-map parity; it does not certify all enterprise accounts or unassigned role definitions.", "Resolved data policies and real consumer authentication, logout, token renewal, and allowed/denied journeys need separate evidence.", "A completeness declaration records operator input; it does not authenticate its business authority." ],
+  "gaps" : [ "Complete role definitions beyond assigned accounts remain outside this measurement.", "Resolved data restrictions are not returned by either SDK map.", "Downstream business journeys are not executed by this command." ],
+  "accounts" : [ ],
+  "mode" : "replay",
+  "populationDeclaredComplete" : true,
+  "populationSource" : "Built-in synthetic fixture population; not enterprise users",
+  "populationFileSha256" : "fdb463b39e86fc2023150d2763609fd3f6fa0b2d0f915b68d3fbae803500dd9b",
+  "declaredAccounts" : [ "alice", "bob", "service.demo" ],
+  "artifacts" : {
+    "candidate" : {
+      "revision" : "fd9a157e260850b6d9efa10da3223950ea61133a",
+      "sha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "baseline" : {
+      "revision" : "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "sha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    }
+  },
+  "artifactManifestSha256" : "7689cda4a812541baaa2f4cd4b5f3034b1734d8d2c06aa19bbf1eff912817355",
+  "mappingSha256" : "c5c864cc3daed831db072da96c58d0ccb54621305749cf58ec28bb61b7fe47bb",
+  "entities" : [ "LEGACY_APP", "LEGACY_DATA", "LEGACY_SYSTEM" ],
+  "status" : "INCOMPLETE",
+  "error" : "CONFIGURATION_OR_STARTUP_FAILED",
+  "errorCategory" : "SocketException",
+  "finishedAt" : "2026-11-04T03:45:40.091039Z",
+  "exitCode" : 2
+}
+```
+

@@ -1,0 +1,1417 @@
+diff --git a/src/admin/Tile/common/useAudit.tsx b/src/admin/Tile/common/useAudit.tsx
+index c84cc6151b5e6a29f1d72d449917ac39da7492a9..edebf9e8c46bdb06ebf78438da482ba52e4c80a4 100644
+--- a/src/admin/Tile/common/useAudit.tsx
++++ b/src/admin/Tile/common/useAudit.tsx
+@@ -232,6 +232,34 @@ const useAudit = () => {
+           width: 150,
+           readOnly: true,
+         },
++        {
++          field: "entitlementSource",
++          headerName: "Entitlement System (EMS3 = CES)",
++          width: 220,
++          hideable: false,
++          readOnly: true,
++        },
++        {
++          field: "entitlementAppId",
++          headerName: "CES Application ID",
++          width: 180,
++          hideable: false,
++          readOnly: true,
++        },
++        {
++          field: "entitlementAppName",
++          headerName: "CES Application Name",
++          width: 260,
++          hideable: false,
++          readOnly: true,
++        },
++        {
++          field: "entitlementAppFeature",
++          headerName: "CES Feature",
++          width: 260,
++          hideable: false,
++          readOnly: true,
++        },
+       ] as GridColDef[],
+     [store?.timeType]
+   );
+diff --git a/src/admin/Tile/common/useController.tsx b/src/admin/Tile/common/useController.tsx
+index ad574ff6e6c1745ba7669236e19b2d4164572ee0..3b74b31dc25fe052286c038b77a14b9518a451b5 100644
+--- a/src/admin/Tile/common/useController.tsx
++++ b/src/admin/Tile/common/useController.tsx
+@@ -336,6 +336,28 @@ const useController = (_props: TileProps) => {
+           headerName: "Entry Name",
+           width: 100,
+         },
++        {
++          field: "entitlementSource",
++          headerName: "Entitlement System (EMS3 = CES)",
++          width: 220,
++          type: "singleSelect",
++          valueOptions: ["EMS2", "EMS3"],
++        },
++        {
++          field: "entitlementAppId",
++          headerName: "CES Application ID",
++          width: 180,
++        },
++        {
++          field: "entitlementAppName",
++          headerName: "CES Application Name",
++          width: 260,
++        },
++        {
++          field: "entitlementAppFeature",
++          headerName: "CES Feature",
++          width: 260,
++        },
+       ] as GridColDef[],
+     [store?.timeType, importMap, originalCategories]
+   );
+diff --git a/src/admin/Tile/services/ces.test.tsx b/src/admin/Tile/services/ces.test.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..62b03f541cd0de40550cda864b8d1687633c18ae
+--- /dev/null
++++ b/src/admin/Tile/services/ces.test.tsx
+@@ -0,0 +1,33 @@
++import { act, renderHook } from "@testing-library/react";
++import useServices from "./useServices";
++
++const mockPostService = jest.fn();
++jest.mock("../../../hooks/service", () => ({
++  postService: (...args) => mockPostService(...args),
++}));
++jest.mock("../../../hooks/HooksBase", () => ({
++  getHooksBase: () => ({ baseDispatch: jest.fn() }),
++}));
++
++describe("tile migration configuration requests", () => {
++  beforeEach(() => {
++    mockPostService.mockClear();
++    mockPostService.mockResolvedValue({ data: { data: {} } });
++  });
++
++  it.each(["createTile", "updateTile", "verifyTile"])(
++    "TC-FE-CES-004 forwards the CES configuration through %s",
++    async (method) => {
++      const config = {
++        entitlementSource: "EMS3",
++        entitlementAppId: "51358",
++        entitlementAppName: "RATAN_ENTITLEMENT_RULE",
++        entitlementAppFeature: "CASHFLOW",
++      };
++      const { result } = renderHook(() => useServices());
++      await act(async () => { await result.current[method]("test-token", config); });
++      expect(mockPostService).toHaveBeenCalledTimes(1);
++      expect(mockPostService.mock.calls[0][1]).toEqual(expect.objectContaining(config));
++    }
++  );
++});
+diff --git a/src/components/Drawer/common/MenuItem.useController.ts b/src/components/Drawer/common/MenuItem.useController.ts
+index 5606da5ff78671f4f3f17b4692168a3dd5cc0ec1..e71b5fe4ccfc18d1ac49a7aa5bce2f8c68456b3a 100644
+--- a/src/components/Drawer/common/MenuItem.useController.ts
++++ b/src/components/Drawer/common/MenuItem.useController.ts
+@@ -6,6 +6,7 @@ export const getParamter = (parameters) =>
+ export const openTile = (props, tile: TileProps) => () => {
+   props.addTile({
+     ...propsAddTile,
++    applicationTileId: tile.id == null ? undefined : String(tile.id),
+     container: tile.container,
+     emailSupport: tile.emailSupport,
+     entryName: tile.entryName,
+diff --git a/src/components/Profile/index.ces.test.tsx b/src/components/Profile/index.ces.test.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..14b7bceb379044d4c1242dfe3d194523b308afe5
+--- /dev/null
++++ b/src/components/Profile/index.ces.test.tsx
+@@ -0,0 +1,74 @@
++import React from "react";
++import { fireEvent, render, screen } from "@testing-library/react";
++import { RoleComp } from "./index";
++
++jest.mock("../../hooks/provider", () => ({
++  useContext: () => [{ user: { entitlements: {} } }],
++}));
++jest.mock("../../analytics", () => () => ({ ButtonEvent: jest.fn() }));
++
++const entity = {
++  id: null,
++  name: "RATAN_ENTITLEMENT_RULE",
++  applicationId: "51358",
++  applicationName: "RATAN",
++  roleName: null,
++  roleList: ["Role A", "Role B"],
++  subjects: [
++    {
++      id: null,
++      name: "CASHFLOW",
++      entitlementSource: "EMS3",
++      actions: [{ id: null, name: "Export" }],
++    },
++  ],
++};
++
++describe("CES profile rendering", () => {
++  it("TC-FE-CES-011 renders CES actions without a legacy name-role token entry", () => {
++    render(
++      <>
++        {RoleComp(
++          [entity],
++          "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B",
++          jest.fn()
++        )}
++      </>
++    );
++    fireEvent.click(screen.getByRole("button", { name: "CASHFLOW" }));
++    expect(screen.getByText("Export")).toBeInTheDocument();
++  });
++
++  it("TC-FE-CES-011 gives null-ID applications and subjects distinct accessible header IDs", () => {
++    const application = {
++      ...entity,
++      subjects: [
++        entity.subjects[0],
++        { ...entity.subjects[0], name: "NETTING" },
++      ],
++    };
++    render(
++      <>
++        {RoleComp(
++          [application, { ...application, applicationId: "999" }],
++          "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B",
++          jest.fn()
++        )}
++      </>
++    );
++    const headers = Array.from(
++      document.querySelectorAll(
++        '[id^="entity-header-"], [id^="subject-header-"]'
++      )
++    );
++    expect(headers).toHaveLength(6);
++    expect(new Set(headers.map((item) => item.id)).size).toBe(6);
++    headers.forEach((header) => {
++      const panel = document.getElementById(
++        header.getAttribute("aria-controls") ?? ""
++      );
++      expect(panel).toBeInTheDocument();
++      expect(header.closest(".MuiAccordion-root")).toContainElement(panel);
++    });
++  });
++});
+diff --git a/src/components/Profile/index.tsx b/src/components/Profile/index.tsx
+index 4e8a153618e400ce1faa86e86ae09a351970198a..1614463eebf5c94fd8de7e90a6d06bd9b7ef0154 100644
+--- a/src/components/Profile/index.tsx
++++ b/src/components/Profile/index.tsx
+@@ -1,4 +1,4 @@
+-import React, { FC, useState, useEffect } from "react";
++import React, { FC } from "react";
+ import { ProfileProps, RoleProps, SubjectProps } from "./common/interface";
+ import Root, { Accordion } from "./common/style";
+ import { useContext } from "../../hooks/provider";
+@@ -20,7 +20,7 @@ import { DateTimeFormat } from "../../utils/locale";
+ 
+ import useAnalytics from "../../analytics";
+ import { AnalyticsData } from "../../analytics/model";
+-import { getName } from "./util";
++import { getName, getProfileActions } from "./util";
+ const analyticsData: AnalyticsData = { container: "Base", tile: "profile" };
+ 
+ const SubjectComp = ({
+@@ -29,6 +29,7 @@ const SubjectComp = ({
+   handleChange,
+   actionObj,
+ }: SubjectProps) => {
++  const id = React.useId();
+   const name = `${subject.name}`;
+   return (
+     <Accordion
+@@ -38,12 +39,12 @@ const SubjectComp = ({
+     >
+       <AccordionSummary
+         expandIcon={<ExpandMoreIcon />}
+-        aria-controls={`subject-header-${subject.id}`}
+-        id={`subject-header-${subject.id}`}
++        aria-controls={`subject-panel-${id}`}
++        id={`subject-header-${id}`}
+       >
+         <Typography>{name}</Typography>
+       </AccordionSummary>
+-      <AccordionDetails sx={{ ml: 3, p: 0 }}>
++      <AccordionDetails id={`subject-panel-${id}`} sx={{ ml: 3, p: 0 }}>
+         <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+           <Typography
+             variant="subtitle1"
+@@ -73,6 +74,7 @@ const SubjectComp = ({
+ };
+ 
+ const EntityComp = ({ entity, expanded, handleChange }: RoleProps) => {
++  const id = React.useId();
+   const [store] = useContext();
+   const { ButtonEvent } = useAnalytics();
+   const name = React.useMemo(() => getName(entity), [entity]);
+@@ -97,23 +99,22 @@ const EntityComp = ({ entity, expanded, handleChange }: RoleProps) => {
+     >
+       <AccordionSummary
+         expandIcon={<ExpandMoreIcon />}
+-        aria-controls={`entity-header-${entity.id}`}
+-        id={`entity-header-${entity.id}`}
++        aria-controls={`entity-panel-${id}`}
++        id={`entity-header-${id}`}
+       >
+         <Typography>{name}</Typography>
+       </AccordionSummary>
+-      <AccordionDetails>
++      <AccordionDetails id={`entity-panel-${id}`}>
+         <Typography variant="subtitle1" component="div">
+           Subject:
+         </Typography>
+         {expanded === name &&
+-          entity?.subjects?.map((subject: Subject) => {
++          entity?.subjects?.map((subject: Subject, index) => {
+             const entitlements = { ...store?.user?.entitlements };
+-            const actionObj =
+-              entitlements[`${entity.name}:${entity.roleName}`][subject.name];
++            const actionObj = getProfileActions(entity, subject, entitlements);
+             return (
+               <SubjectComp
+-                key={name}
++                key={`${subject.id ?? subject.name}:${index}`}
+                 actionObj={actionObj}
+                 subject={subject}
+                 expanded={expandedSubject}
+@@ -127,10 +128,10 @@ const EntityComp = ({ entity, expanded, handleChange }: RoleProps) => {
+ };
+ 
+ export const RoleComp = (roleArray, expanded, handleChange) => {
+-  return roleArray?.map((entity: Entity) => {
++  return roleArray?.map((entity: Entity, index) => {
+     return (
+       <EntityComp
+-        key={entity.id}
++        key={`${entity.id ?? entity.applicationId}:${index}`}
+         entity={entity}
+         expanded={expanded}
+         handleChange={handleChange}
+@@ -142,12 +143,12 @@ export const RoleComp = (roleArray, expanded, handleChange) => {
+ const Profile: FC<ProfileProps> = ({ open, onClose }) => {
+   const [store] = useContext();
+   const { ButtonEvent } = useAnalytics();
+-  const [functionalProfileArray, setFunctionalProfileArray] = useState<
+-    Entity[]
+-  >([]);
+-  const [entitlementProfileArray, setEntitlementProfileArray] = useState<
+-    Entity[]
+-  >([]);
++  const functionalProfileArray = store?.entities?.filter(
++    (entity: Entity) => entity?.name !== "RATAN_DATA_ENTITLEMENT"
++  );
++  const entitlementProfileArray = store?.entities?.filter(
++    (entity: Entity) => entity?.name === "RATAN_DATA_ENTITLEMENT"
++  );
+   const [expanded, setExpanded] = React.useState<string | false>(false);
+ 
+   const handleChange =
+@@ -160,19 +161,6 @@ const Profile: FC<ProfileProps> = ({ open, onClose }) => {
+       });
+     };
+ 
+-  useEffect(() => {
+-    setTimeout(() => {
+-      const array1: any = store?.entities?.filter(
+-        (entity: Entity) => entity?.name !== "RATAN_DATA_ENTITLEMENT"
+-      );
+-      const array2: any = store?.entities?.filter(
+-        (entity: Entity) => entity?.name === "RATAN_DATA_ENTITLEMENT"
+-      );
+-      setFunctionalProfileArray(array1);
+-      setEntitlementProfileArray(array2);
+-    }, 500);
+-  }, []);
+-
+   const auth_time = (store?.user?.auth_time as number) * 1000;
+   const expiredIn = (store?.expiredIn as number) * 1000;
+   const timeType = store?.timeType?.toUpperCase();
+@@ -298,7 +286,7 @@ const Profile: FC<ProfileProps> = ({ open, onClose }) => {
+           {RoleComp(functionalProfileArray, expanded, handleChange)}
+         </Card>
+ 
+-        {!!entitlementProfileArray.length && (
++        {!!entitlementProfileArray?.length && (
+           <Card data-testid="entitlement-profile-label" elevation={0}>
+             <Typography component="div" variant="h6" sx={{ p: 2 }}>
+               Entitlement User Profile
+diff --git a/src/components/Profile/util.ces.test.ts b/src/components/Profile/util.ces.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..40ef3302564530e6d6673746396b2c345fcc7d8f
+--- /dev/null
++++ b/src/components/Profile/util.ces.test.ts
+@@ -0,0 +1,50 @@
++import { getName, getProfileActions } from "./util";
++
++describe("CES profile labels", () => {
++  it("TC-FE-CES-011 keeps the team label and formats all CES assignments", () => {
++    expect(
++      getName({
++        applicationName: "RATAN",
++        name: "RATAN_ENTITLEMENT_RULE",
++        roleName: null,
++        roleList: ["Role A", "Role B"],
++      })
++    ).toBe("RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B");
++  });
++
++  it("TC-FE-CES-011 preserves the existing EMS2 role label", () => {
++    expect(
++      getName({
++        applicationName: "RATAN",
++        name: "X_RATANONE",
++        roleName: "FMO_OPS",
++      })
++    ).toBe("RATAN :: X_RATANONE :: FMO_OPS");
++  });
++
++  it("TC-FE-CES-011 displays structured CES actions without a legacy token key", () => {
++    const subject = {
++      id: null,
++      name: "CASHFLOW",
++      entitlementSource: "EMS3",
++      actions: [{ name: "Export" }],
++    };
++    expect(
++      getProfileActions(
++        { name: "RATAN_ENTITLEMENT_RULE", roleName: null },
++        subject,
++        {}
++      )
++    ).toEqual(["Export"]);
++  });
++
++  it("TC-FE-CES-011 keeps existing EMS2 token action lookup", () => {
++    expect(
++      getProfileActions(
++        { name: "X_RATANONE", roleName: "OPS" },
++        { name: "CASHFLOW" },
++        { "X_RATANONE:OPS": { CASHFLOW: ["Export"] } }
++      )
++    ).toEqual(["Export"]);
++  });
++});
+diff --git a/src/components/Profile/util.ts b/src/components/Profile/util.ts
+index 023cee46acc3a89eddc4f295d71014320bb5ea2b..0a4b3c4192ae5d20c4b5cb6c492ff6dd78738684 100644
+--- a/src/components/Profile/util.ts
++++ b/src/components/Profile/util.ts
+@@ -1,5 +1,11 @@
+ export const getName = (entity) => {
+-  return `${entity.applicationName ?? "*"} :: ${entity.name} :: ${
+-    entity.roleName
+-  }`;
++  const roles = entity.roleList?.length
++    ? entity.roleList.join(", ")
++    : entity.roleName ?? "*";
++  return `${entity.applicationName ?? "*"} :: ${entity.name} :: ${roles}`;
+ };
++
++export const getProfileActions = (entity, subject, entitlements) =>
++  subject.entitlementSource === "EMS3"
++    ? (subject.actions ?? []).map((action) => action.name)
++    : entitlements?.[`${entity.name}:${entity.roleName}`]?.[subject.name] ?? [];
+diff --git a/src/hooks/dispathcer/ces.test.ts b/src/hooks/dispathcer/ces.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..7835b94ac98f1c6d1f672d92c021c92f6088d3d0
+--- /dev/null
++++ b/src/hooks/dispathcer/ces.test.ts
+@@ -0,0 +1,100 @@
++import useDispatcher from "./index";
++import { ActionType } from "../reducer/util/ActionType";
++
++const mockDispatch = jest.fn();
++let mockStore: any;
++jest.mock("../provider", () => ({
++  useContext: () => [mockStore, mockDispatch],
++}));
++jest.mock("../HooksBase", () => ({
++  getHooksBase: () => ({ store: {}, baseDispatch: jest.fn() }),
++}));
++
++const tile = {
++  id: 101,
++  title: "Cashflow",
++  container: "@fm/ratan",
++  module: "/blotter",
++  tile: "/cashflow",
++  entitlementSource: "EMS3",
++  subject: "CASHFLOW",
++  entity: ["RATAN_ENTITLEMENT_RULE"],
++};
++
++describe("shared tile launch compatibility", () => {
++  beforeEach(() => {
++    mockDispatch.mockClear();
++    mockStore = {
++      entities: [],
++      drawers: [{ tiles: [tile] }],
++      workspaces: [],
++      entitlementRouting: [
++        {
++          tileId: "101",
++          source: "EMS3",
++          entityNames: ["RATAN_ENTITLEMENT_RULE"],
++          applicationId: "51358",
++          features: ["CASHFLOW"],
++        },
++      ],
++    };
++  });
++
++  it("TC-FE-CES-012 preserves database identity and ordinary launch arguments", () => {
++    useDispatcher().dispatchOpenTile({ cashflowId: "C1" }, "cashflow");
++    const action = mockDispatch.mock.calls[0][0];
++    expect(action.type).toBe(ActionType.ADD_WORKSPACE);
++    const container = action.data.workspace.containers[0];
++    expect(container.applicationTileId).toBe("101");
++    expect(container.id).not.toBe("101");
++    expect(container.parameters).toEqual({ cashflowId: "C1" });
++  });
++
++  it("TC-FE-CES-012 rejects a revoked tile without creating a workspace", () => {
++    mockStore.drawers = [];
++    useDispatcher().dispatchOpenTile({}, "cashflow");
++    expect(mockDispatch).toHaveBeenCalledTimes(1);
++    expect(mockDispatch.mock.calls[0][0].type).toBe(ActionType.SET_ERRORMSG);
++  });
++
++  it("TC-FE-CES-003 preserves legacy server-admitted dispatcher behavior", () => {
++    mockStore.drawers = [
++      { tiles: [{ ...tile, entitlementSource: "EMS2", subject: "" }] },
++    ];
++    useDispatcher().dispatchOpenTile({}, "cashflow");
++    expect(mockDispatch.mock.calls[0][0].type).toBe(ActionType.ADD_WORKSPACE);
++  });
++
++  it("TC-FE-CES-012 rejects an ambiguous tile name", () => {
++    mockStore.drawers[0].tiles.push({ ...tile, id: 102 });
++    useDispatcher().dispatchOpenTile({}, "cashflow");
++    expect(mockDispatch.mock.calls[0][0].type).toBe(ActionType.SET_ERRORMSG);
++  });
++
++  it("preserves first-match named launches for duplicate EMS2 tiles", () => {
++    const legacy = { ...tile, entitlementSource: "EMS2", subject: "" };
++    mockStore.drawers = [{ tiles: [legacy, { ...legacy, id: 102 }] }];
++    useDispatcher().dispatchOpenTile({ cashflowId: "C1" }, "cashflow");
++    const action = mockDispatch.mock.calls[0][0];
++    expect(action.type).toBe(ActionType.ADD_WORKSPACE);
++    expect(action.data.workspace.containers[0].applicationTileId).toBe("101");
++    expect(action.data.workspace.containers[0].parameters).toEqual({ cashflowId: "C1" });
++  });
++
++  it("does not choose an arbitrary tile for a mixed-provider name", () => {
++    mockStore.drawers[0].tiles.unshift({ ...tile, entitlementSource: "EMS2", id: 102 });
++    useDispatcher().dispatchOpenTile({}, "cashflow");
++    expect(mockDispatch.mock.calls[0][0].type).toBe(ActionType.SET_ERRORMSG);
++  });
++
++  it("keeps legacy accessibility checks and cashflow launches usable for duplicate routes", () => {
++    const legacy = { ...tile, tile: "/trade", entitlementSource: "EMS2" };
++    mockStore.drawers = [{ label: "Settlement", tiles: [legacy, { ...legacy, id: 102 }] }];
++    expect(useDispatcher().checkRatanTradeBlotterAccessible()).toBe(true);
++    useDispatcher().dispacthOpenCashflow("C1", "/trade");
++    const action = mockDispatch.mock.calls[0][0];
++    expect(action.type).toBe(ActionType.ADD_WORKSPACE);
++    expect(action.data.workspace.containers[0].applicationTileId).toBe("101");
++    expect(action.data.workspace.containers[0].parameters).toEqual({ cashflowId: "C1" });
++  });
++});
+diff --git a/src/hooks/dispathcer/index.ts b/src/hooks/dispathcer/index.ts
+index 4a2917a14ae8740412c72d3919bbb927e797276f..6f7af609ba72e23b71d13f363b6a2dd924e495e3 100644
+--- a/src/hooks/dispathcer/index.ts
++++ b/src/hooks/dispathcer/index.ts
+@@ -5,6 +5,7 @@ import {
+   Tiles,
+ } from "../../components/Drawer/common/interface";
+ import { storeData, uuidv4 } from "../../utils/common";
++import { isCatalogTileAdmitted } from "../../utils/tileAdmission";
+ import { Container, Workspace } from "../model/workspaces";
+ import { useContext } from "../provider";
+ import { ActionType } from "../reducer/util/ActionType";
+@@ -121,6 +122,13 @@ const useDispatcher = () => {
+       const tile = drawers[index].tiles.filter((item: Tile) => {
+         return item.tile === type;
+       });
++      if (
++        (tile.length > 1 && tile.some((item) => item.entitlementSource === "EMS3")) ||
++        !isCatalogTileAdmitted(tile[0], store.entitlementRouting)
++      ) {
++        dispacthError(`Tile ${type} is unauthorized or does not exist`);
++        return;
++      }
+       let props = {};
+       switch (typeof querys) {
+         case "string":
+@@ -140,6 +148,7 @@ const useDispatcher = () => {
+       }
+       const container: any = {
+         ...tile[0],
++        applicationTileId: tile[0].id == null ? undefined : String(tile[0].id),
+         id: uuidv4(),
+         parameters: props,
+       };
+@@ -160,12 +169,16 @@ const useDispatcher = () => {
+       })
+       .filter((ts) => ts.length > 0)
+       .flatMap((ts) => ts);
+-    if (tiles.length === 0) {
++    if (
++      (tiles.length > 1 && tiles.some((item) => item.entitlementSource === "EMS3")) ||
++      !isCatalogTileAdmitted(tiles[0], store.entitlementRouting)
++    ) {
+       dispacthError(`Tile ${tile} is unauthorized or does not exist`);
+       return;
+     }
+     const container: any = {
+       ...tiles[0],
++      applicationTileId: tiles[0].id == null ? undefined : String(tiles[0].id),
+       id: uuidv4(),
+       parameters,
+     };
+@@ -190,7 +203,10 @@ const useDispatcher = () => {
+       })
+       .filter((ts) => ts.length > 0)
+       .flatMap((ts) => ts);
+-    return tiles.length !== 0;
++    return (
++      !(tiles.length > 1 && tiles.some((item) => item.entitlementSource === "EMS3")) &&
++      isCatalogTileAdmitted(tiles[0], store.entitlementRouting)
++    );
+   };
+   const checkCDUPSOutboundBlotterAccessible = () => {
+     return checkTileAccessible("confirmations-outbound");
+diff --git a/src/hooks/model/root.ts b/src/hooks/model/root.ts
+index beedb5a058dbcc1b971d54441210f222d17419e6..aabf079ea1fbbb5775ae693f755a576654ba77a2 100644
+--- a/src/hooks/model/root.ts
++++ b/src/hooks/model/root.ts
+@@ -39,6 +39,13 @@ export interface User {
+   auth_time?: number;
+   entities?: Entity[];
+ }
++export interface EntitlementRoute {
++  tileId: string;
++  source: "EMS2" | "EMS3";
++  entityNames: string[];
++  features: string[];
++  applicationId?: string;
++}
+ export interface Action {
+   name: string;
+   id: number;
+@@ -49,6 +56,7 @@ export interface Subject {
+   id: number;
+   actions: Action[];
+   longName?: string;
++  entitlementSource?: "EMS2" | "EMS3";
+ }
+ export interface Entity {
+   id: number;
+@@ -57,6 +65,8 @@ export interface Entity {
+   roleId: number;
+   roleName: string;
+   subjects: Subject[];
++  applicationId?: string;
++  roleList?: string[];
+ }
+ export interface Tile {
+   title: string;
+@@ -78,6 +88,7 @@ export interface Tile {
+   leftPosition?: string;
+   topPossition?: string;
+   id?: number;
++  entitlementSource?: "EMS2" | "EMS3";
+ }
+ 
+ export interface Tiles {
+@@ -108,6 +119,7 @@ export interface RootModel {
+   drawer?: boolean;
+   timeType?: string;
+   entities?: Entity[] | [];
++  entitlementRouting?: EntitlementRoute[];
+   refreshTab?: object;
+   sseCallback?: object;
+   ssePayload?: SsePayload[];
+@@ -148,6 +160,7 @@ export const initialData: RootModel = {
+   drawer: false,
+   timeType: getLocalStorage().getItem(ActionType.SET_TIME_TYPE) ?? "utc",
+   entities: entities,
++  entitlementRouting: undefined,
+   refreshTab: {},
+   refreshToken: undefined,
+   sseCallback: {},
+diff --git a/src/hooks/model/workspaces.ts b/src/hooks/model/workspaces.ts
+index ff3f6a82150227f979e3bafd40977092fcec29a4..3c4c3360af8f31ade72c7cd175aa5c2d61bde7a9 100644
+--- a/src/hooks/model/workspaces.ts
++++ b/src/hooks/model/workspaces.ts
+@@ -2,6 +2,7 @@ import { uuidv4 } from "../../utils/common";
+ 
+ export interface Container {
+   id: string;
++  applicationTileId?: string;
+   container: string;
+   module: string;
+   tile: string;
+diff --git a/src/hooks/reducer/root.reducers.ts b/src/hooks/reducer/root.reducers.ts
+index 52af99ab0f4840d0d0146ceef049b8189b56609c..f0740bb0c3a9d79d5b76d853c16a4166bb071669 100644
+--- a/src/hooks/reducer/root.reducers.ts
++++ b/src/hooks/reducer/root.reducers.ts
+@@ -17,6 +17,17 @@ const root = (store: RootModel, action: IAction): RootModel => {
+       break;
+     case ActionType.SET_ENTITIES:
+       store.entities = action.data.entities;
++      if (
++        Object.prototype.hasOwnProperty.call(action.data, "entitlementRouting")
++      ) {
++        store.entitlementRouting = action.data.entitlementRouting;
++      }
++      if (store.user) {
++        store.user = {
++          ...store.user,
++          entities: action.data.entities,
++        };
++      }
+       break;
+     case ActionType.SET_ENTITLEMENTS_TOKEN:
+       store.entitlementsToken = action.data.entitlementsToken;
+diff --git a/src/hooks/reducer/root0.reducers.ts b/src/hooks/reducer/root0.reducers.ts
+index 1fe41b982070da364f11f0dc5467bcbdc02bccb2..6e023c5bdedf8241613f2cb240484e1065aaedaa 100644
+--- a/src/hooks/reducer/root0.reducers.ts
++++ b/src/hooks/reducer/root0.reducers.ts
+@@ -34,6 +34,9 @@ const root0 = (store: RootModel, action: IAction): RootModel => {
+       break;
+     case ActionType.CLEAR:
+       store.user = undefined;
++      store.entities = [];
++      store.entitlementRouting = undefined;
++      store.drawers = [];
+       store.token = undefined;
+       store.refreshToken = undefined;
+       store.expiredIn = undefined;
+diff --git a/src/pages/Home/common/Container.test.tsx b/src/pages/Home/common/Container.test.tsx
+index c83e487472ae040bd8de93418db481a2fffc538e..79fffc8fb987ce7642bb23978c280746c6bdec6d 100644
+--- a/src/pages/Home/common/Container.test.tsx
++++ b/src/pages/Home/common/Container.test.tsx
+@@ -4,6 +4,7 @@ import Container from "./Container";
+ import Provider from "../../../hooks/provider";
+ import ThemeProvider from "../../../theme";
+ import { Container as ContainerProps } from "../../../hooks/model/workspaces";
++import { Tile } from "../../../hooks/model/root";
+ afterAll(() => {
+   jest.clearAllMocks();
+ });
+@@ -12,6 +13,19 @@ const Comp = (props: ContainerProps) => {
+ };
+ 
+ describe("Container component", () => {
++  it("mounts CES remotes with the existing upper-application props", async () => {
++    const remote = jest.fn((_props: Record<string, unknown>) => <div data-testid="ces-remote" />);
++    (System.import as jest.Mock).mockResolvedValueOnce({ default: remote });
++    const tile: Tile = { id: 101, container: "@fm/ces-test", module: "/blotter", tile: "/cashflow", entitlementSource: "EMS3", title: "Cashflow", imageDarkTheme: "", emailSupport: "" };
++    render(<Provider data={{ entities: [], drawers: [{ id: 1, label: "Settlement", tiles: [tile] }], entitlementRouting: [
++      { tileId: "101", source: "EMS3", applicationId: "51358", entityNames: ["RATAN_ENTITLEMENT_RULE"], features: ["CASHFLOW"] },
++    ] }}>
++      <Comp {...tile} id="container-1" applicationTileId="101" title="Cashflow" emailSupport="" tabId="tab-1" panelId="panel-1" parameters={{ cashflowId: "C1" }} />
++    </Provider>);
++    await screen.findByTestId("ces-remote");
++    expect(remote.mock.calls[0][0]).toEqual({ module: "/blotter", tile: "/cashflow", parameters: { cashflowId: "C1" }, panelId: "panel-1", tabId: "tab-1" });
++  });
++
+   it("TEMPLATE_CONTAINER should be in the document", () => {
+     render(<Provider data={{ user: { id: "123" }, token: "123", theme: "dark" }}>
+       <ThemeProvider>
+diff --git a/src/pages/Home/common/Container.tsx b/src/pages/Home/common/Container.tsx
+index c0cc8d3a627b18d909eababb9cee786e17e01e5f..76824163ef6c271b9b586c7f7929c81e7c4ef242 100644
+--- a/src/pages/Home/common/Container.tsx
++++ b/src/pages/Home/common/Container.tsx
+@@ -2,30 +2,45 @@ import React, { ReactElement, Suspense } from "react";
+ import { Container as ContainerProps } from "../../../hooks/model/workspaces";
+ import Splash from "../../../components/Splash";
+ import ErrorBoundry from "../../../components/ErrorBoundry";
++import { useContext } from "../../../hooks/provider";
++import { findTile } from "../../../utils/drawer";
++import { canOpenTile } from "../../../utils/common";
+ const AdminModule = React.lazy(() => import("../../../admin"));
+ 
+ const Container: React.FC<ContainerProps> = (
+   props: ContainerProps
+ ): ReactElement => {
++  const [store] = useContext();
++  const tile = findTile(store.drawers, { containers: [props] });
+   const Comp = React.useMemo(
+-    () => React.lazy(() => System.import(props.container)),
+-    []
++    () => React.lazy(() => System.import(tile?.container ?? props.container)),
++    [tile?.container, props.container]
+   );
++  if (
++    !canOpenTile(
++      store.entities,
++      tile,
++      store.drawers,
++      store.entitlementRouting,
++      false
++    )
++  )
++    return <></>;
+   return (
+-    <ErrorBoundry emailSupport={props.emailSupport}>
++    <ErrorBoundry emailSupport={tile.emailSupport}>
+       <Suspense fallback={<Splash />}>
+-        {props.container === "@fm/base" ? (
++        {tile.container === "@fm/base" ? (
+           <AdminModule
+-            module={props.module}
+-            tile={props.tile}
++            module={tile.module}
++            tile={tile.tile}
+             parameters={props.parameters ?? {}}
+             panelId={props.panelId}
+             tabId={props.tabId}
+           />
+         ) : (
+           <Comp
+-            module={props.module}
+-            tile={props.tile}
++            module={tile.module}
++            tile={tile.tile}
+             parameters={props.parameters ?? {}}
+             panelId={props.panelId}
+             tabId={props.tabId}
+diff --git a/src/pages/Home/common/useController.ts b/src/pages/Home/common/useController.ts
+index 4ff785af01ad756a07e63cd0a29b1bed9a137e9a..daca5ba9e5e1d930a9af907bc87697e66b56c5e9 100644
+--- a/src/pages/Home/common/useController.ts
++++ b/src/pages/Home/common/useController.ts
+@@ -287,16 +287,20 @@ const useController = () => {
+         const validWorkspaces = validateWorkspace(
+           store?.workspaces,
+           store.entities,
+-          store.drawers
++          store.drawers,
++          store.entitlementRouting
+         );
+         dispacthWorkspaces(validWorkspaces);
+-        if (validWorkspaces[0]) {
+-          dispacthCurrentWorkspace(validWorkspaces[0]);
++        const currentWorkspace = validWorkspaces.find(
++          (workspace) => workspace.id === store.currentWorkspace?.id
++        ) ?? validWorkspaces[0];
++        if (currentWorkspace) {
++          dispacthCurrentWorkspace(currentWorkspace);
+         }
+       }
+       setValidateWorkspaceReady(true);
+     }
+-  }, [ready]);
++  }, [ready, store.entities, store.drawers, store.entitlementRouting]);
+   return {
+     store,
+     value,
+diff --git a/src/pages/Home/common/useParameters.ts b/src/pages/Home/common/useParameters.ts
+index 0fd7ec470923796337e0e9fe9a7ac39617689e42..7eb32dfad28991086f6b7a8b24bf299c2490ffea 100644
+--- a/src/pages/Home/common/useParameters.ts
++++ b/src/pages/Home/common/useParameters.ts
+@@ -1,7 +1,7 @@
+ import React from "react";
+ import { useContext } from "../../../hooks/provider";
+-import { findTileConfig } from "../../../utils/drawer";
+-import { uuidv4, validateTile } from "../../../utils/common";
++import { findTile, findTileConfig } from "../../../utils/drawer";
++import { uuidv4, canOpenTile } from "../../../utils/common";
+ import { Container } from "../../../hooks/model/workspaces";
+ import useDispatcher from "../../../hooks/dispathcer";
+ import useAnalytics from "../../../analytics";
+@@ -16,6 +16,19 @@ const useParameters = () => {
+     useDispatcher();
+   const addTile = React.useCallback(
+     (inputContainer: Container) => {
++      const currentTile = findTile(store.drawers, {
++        containers: [inputContainer],
++      });
++      if (
++        !canOpenTile(
++          store.entities,
++          currentTile,
++          store.drawers,
++          store.entitlementRouting,
++          false
++        )
++      )
++        return;
+       if (store?.workspaces) {
+         const workspaces = [...store.workspaces];
+         let index = 0;
+@@ -28,6 +41,8 @@ const useParameters = () => {
+         }
+         const container: Container = {
+           ...inputContainer,
++          applicationTileId:
++            currentTile.id == null ? undefined : String(currentTile.id),
+           id: uuidv4(),
+         };
+         const workspace = workspaces[index];
+@@ -44,7 +59,13 @@ const useParameters = () => {
+         TileEvent("open", { name: title, container: containerLabel, tile });
+       }
+     },
+-    [store?.workspaces, store?.currentWorkspace]
++    [
++      store?.workspaces,
++      store?.currentWorkspace,
++      store.drawers,
++      store.entities,
++      store.entitlementRouting,
++    ]
+   );
+   const setParamsAndAddTile = React.useCallback(
+     (tile, parameters_?: string) => {
+@@ -78,13 +99,24 @@ const useParameters = () => {
+       );
+       openTileUtil(
+         tile?.isTemplate,
+-        validateTile(store.entities, tile?.entity, tile?.subject),
++        canOpenTile(
++          store.entities,
++          tile,
++          store.drawers,
++          store.entitlementRouting
++        ),
+         setParamsAndAddTile,
+         tile,
+         parameters_
+       );
+     },
+-    [store?.workspaces, store.entities, addTile, store.drawers]
++    [
++      store?.workspaces,
++      store.entities,
++      addTile,
++      store.drawers,
++      store.entitlementRouting,
++    ]
+   );
+   React.useEffect(() => {
+     const params: any = new URLSearchParams(window.location.search);
+diff --git a/src/pages/Home/common/workspacePreservation.test.tsx b/src/pages/Home/common/workspacePreservation.test.tsx
+index bfaad1256ab1c0ce9373cb0339af1a23175074aa..53cb06362ba1ce0876eb2603270360cc04deaf3a 100644
+--- a/src/pages/Home/common/workspacePreservation.test.tsx
++++ b/src/pages/Home/common/workspacePreservation.test.tsx
+@@ -1,7 +1,8 @@
+ import React from "react";
+ import { act, cleanup, renderHook } from "@testing-library/react";
+-import Provider from "../../../hooks/provider";
++import Provider, { useContext } from "../../../hooks/provider";
+ import { Workspace } from "../../../hooks/model/workspaces";
++import { ActionType } from "../../../hooks/reducer/util/ActionType";
+ import useController from "./useController";
+ 
+ jest.mock("../../../analytics", () => () => ({
+@@ -15,9 +16,13 @@ const clickEvent = (id = "workspace-tab"): React.SyntheticEvent => {
+   container.appendChild(span); span.appendChild(button);
+   return { target: button, stopPropagation: jest.fn() } as unknown as React.SyntheticEvent;
+ };
+-const open = (workspaces: Workspace[]) => renderHook(() => useController(), {
++const open = (workspaces: Workspace[], data = {}) => renderHook(() => {
++  const controller = useController();
++  const [, dispatch] = useContext();
++  return { ...controller, dispatch };
++}, {
+   wrapper: ({ children }) => <Provider data={{ workspaces, currentWorkspace: workspaces[0],
+-    entities: [], drawers: [], token: undefined }}>{children}</Provider>,
++    entities: [], drawers: [], token: undefined, ...data }}>{children}</Provider>,
+ });
+ 
+ describe("Home workspace preservation during session changes", () => {
+@@ -67,4 +72,29 @@ describe("Home workspace preservation during session changes", () => {
+     expect(restored.containers).toEqual([]);
+     expect(result.current.store.currentWorkspace?.id).toBe(restored.id);
+   });
++
++  it("preserves the active workspace when refreshed entitlements still permit it", () => {
++    const first = workspace("workspace-a"); const second = workspace("workspace-b");
++    const { result } = open([first, second]);
++    act(() => result.current.handleChange(clickEvent(), 2));
++    act(() => result.current.dispatch({ type: ActionType.SET_ENTITIES, data: { entities: [] } }));
++    expect(result.current.store.currentWorkspace?.id).toBe(second.id);
++    expect(result.current.store.workspaces?.map(item => item.id)).toEqual([first.id, second.id]);
++  });
++
++  it("selects a retained workspace when the active tile is withdrawn", () => {
++    const first = workspace("workspace-a");
++    const tile = { id: 101, container: "@fm/ratan", module: "/blotter", tile: "/cashflow", entitlementSource: "EMS3" };
++    const second: Workspace = { ...workspace("workspace-b"), containers: [{
++      ...tile, id: "container-b", applicationTileId: "101", title: "Cashflow", emailSupport: "", panelId: "", tabId: "",
++    }] };
++    const { result } = open([first, second], { drawers: [{ tiles: [tile] }], entitlementRouting: [
++      { tileId: "101", source: "EMS3", applicationId: "51358", entityNames: ["RATAN_ENTITLEMENT_RULE"], features: ["CASHFLOW"] },
++    ] });
++    act(() => result.current.handleChange(clickEvent(), 2));
++    expect(result.current.store.currentWorkspace?.id).toBe(second.id);
++    act(() => result.current.dispatch({ type: ActionType.SET_DRAWERS, data: { drawers: [] } }));
++    expect(result.current.store.workspaces?.map(item => item.id)).toEqual([first.id]);
++    expect(result.current.store.currentWorkspace?.id).toBe(first.id);
++  });
+ });
+diff --git a/src/utils/common.ts b/src/utils/common.ts
+index 38f87305c047874b8faa134bfc09e6ba27b2d468..9b8ed0aa0f5e65e5a5fc6424fac3402765c8b8f9 100644
+--- a/src/utils/common.ts
++++ b/src/utils/common.ts
+@@ -9,6 +9,7 @@ import { Entity } from "../hooks/model/root";
+ import { Workspace, firstWorkspace } from "../hooks/model/workspaces";
+ import { Tile } from "../components/Drawer/common/interface";
+ import { findTile } from "./drawer";
++import { isCatalogTileAdmitted } from "./tileAdmission";
+ import { featureScopedEnabled } from "./featureFlagController";
+ import { invalidateSession } from "./sessionEpoch";
+ dayjs.extend(utc);
+@@ -290,16 +291,54 @@ export const validateTile = (
+   return false;
+ };
+ 
+-export const validateWorkspace = (workspaces, entities, drawers) => {
++// The catalog is the current server admission decision; persisted workspace data is only a locator.
++export const canOpenTile = (
++  entities,
++  tile,
++  drawers,
++  entitlementRouting = getHooksBase().store?.entitlementRouting,
++  validateLegacy = true
++): boolean => {
++  if (!tile) return false;
++  const current = findTile(drawers, {
++    containers: [
++      {
++        ...tile,
++        applicationTileId: tile.id == null ? undefined : String(tile.id),
++      },
++    ],
++  });
++  if (!isCatalogTileAdmitted(current, entitlementRouting)) return false;
++  if (current.entitlementSource === "EMS3") return true;
++  // Existing drawer/dispatcher launches rely on server admission. Restore/deep links keep their legacy validator.
++  if (!validateLegacy) return true;
++  if (current.isTemplate) return true;
++  const legacyEntities = (entities ?? []).flatMap((entity) => {
++    const subjects = (entity.subjects ?? []).filter(
++      (subject) =>
++        subject.entitlementSource == null ||
++        subject.entitlementSource === "EMS2"
++    );
++    return subjects.length ||
++      (!entity.applicationId && !entity.subjects?.length)
++      ? [{ ...entity, subjects }]
++      : [];
++  });
++  return validateTile(legacyEntities, current.entity, current.subject);
++};
++
++export const validateWorkspace = (
++  workspaces,
++  entities,
++  drawers,
++  entitlementRouting = getHooksBase().store?.entitlementRouting
++) => {
+   let newWorkspaces = workspaces.reduce((result: any, workspace: Workspace) => {
+     if (workspace.containers.length === 0) {
+       result.push(workspace);
+     } else {
+       const tile: Tile = findTile(drawers, workspace);
+-      if (
+-        tile?.isTemplate ||
+-        validateTile(entities, tile?.entity, tile?.subject)
+-      ) {
++      if (canOpenTile(entities, tile, drawers, entitlementRouting)) {
+         result.push(workspace);
+       }
+     }
+diff --git a/src/utils/drawer.ces.test.ts b/src/utils/drawer.ces.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f6fa6ec1902ca699927b1f55ec1f752dcf04b8b6
+--- /dev/null
++++ b/src/utils/drawer.ces.test.ts
+@@ -0,0 +1,67 @@
++import { findTile } from "./drawer";
++
++const route = {
++  container: "@fm/ratan",
++  module: "/blotter",
++  tile: "/cashflow",
++  entryName: "cashflow",
++};
++const tile = {
++  ...route,
++  id: 101,
++  entity: ["RATAN_ENTITLEMENT_RULE"],
++  subject: "CASHFLOW",
++  entitlementSource: "EMS3",
++};
++const workspace = (container) => ({ containers: [{ ...route, ...container }] });
++
++describe("CES workspace tile identity", () => {
++  it("TC-FE-CES-012 resolves the retained database tile ID", () => {
++    const second = { ...tile, id: 102 };
++    expect(
++      findTile(
++        [{ tiles: [tile, second] }],
++        workspace({ applicationTileId: "102" })
++      )
++    ).toBe(second);
++  });
++
++  it("TC-FE-CES-012 rejects a removed tile even when its old route remains", () => {
++    expect(
++      findTile([{ tiles: [tile] }], workspace({ applicationTileId: "999" }))
++    ).toBeUndefined();
++  });
++
++  it("TC-FE-CES-012 restores a legacy workspace using a unique route", () => {
++    expect(findTile([{ tiles: [tile] }], workspace({}))).toBe(tile);
++  });
++
++  it("TC-FE-CES-012 rejects ambiguous CES routes without retained identity", () => {
++    expect(
++      findTile([{ tiles: [tile, { ...tile, id: 102 }] }], workspace({}))
++    ).toBeUndefined();
++  });
++
++  it("preserves first-match restoration for duplicate EMS2 routes", () => {
++    const legacy = { ...tile, entitlementSource: "EMS2" };
++    expect(
++      findTile([{ tiles: [legacy, { ...legacy, id: 102 }] }], workspace({}))
++    ).toBe(legacy);
++  });
++
++  it("rejects ambiguous mixed-provider routes without retained identity", () => {
++    expect(
++      findTile(
++        [{ tiles: [{ ...tile, entitlementSource: "EMS2" }, { ...tile, id: 102 }] }],
++        workspace({})
++      )
++    ).toBeUndefined();
++  });
++
++  it("rejects duplicate database IDs even for EMS2 tiles", () => {
++    const legacy = { ...tile, entitlementSource: "EMS2" };
++    expect(
++      findTile([{ tiles: [legacy, { ...legacy }] }], workspace({ applicationTileId: "101" }))
++    ).toBeUndefined();
++  });
++});
+diff --git a/src/utils/drawer.ts b/src/utils/drawer.ts
+index 03929f8fd7a64b75db7fff2581b92bea138765b3..4e87406ed73d24aca2c44ffadfc89c43be24e982 100644
+--- a/src/utils/drawer.ts
++++ b/src/utils/drawer.ts
+@@ -2,30 +2,45 @@ import { Tile, Tiles } from "../components/Drawer/common/interface";
+ import { getHooksBase } from "../hooks/HooksBase";
+ 
+ export const findTile = (drawers, workspace) => {
++  const container = workspace?.containers?.[0];
++  if (!container) return undefined;
++  if (container.applicationTileId != null) {
++    const matches = (drawers ?? [])
++      .flatMap((category) => category.tiles ?? [])
++      .filter(
++        (tile) => String(tile.id) === String(container.applicationTileId)
++      );
++    return matches.length === 1 ? matches[0] : undefined;
++  }
+   return findTileConfig(
+     drawers,
+-    workspace.containers[0].container,
+-    workspace.containers[0].module,
+-    workspace.containers[0].tile
++    container.container,
++    container.module,
++    container.tile,
++    container.entryName
+   );
+ };
+ 
+-export const findTileConfig = (drawers, _container, _module, _tile) => {
+-  let aggr: any = undefined;
+-  drawers?.every((category: Tiles) => {
+-    category.tiles?.every((tile: Tile) => {
+-      if (
++export const findTileConfig = (
++  drawers,
++  _container,
++  _module,
++  _tile,
++  _entryName?
++) => {
++  const matches = (drawers ?? [])
++    .flatMap((category: Tiles) => category.tiles ?? [])
++    .filter(
++      (tile: Tile) =>
+         tile.container === _container &&
+         tile.module === _module &&
+-        tile.tile === _tile
+-      ) {
+-        aggr = tile;
+-      }
+-      return !aggr;
+-    });
+-    return !aggr;
+-  });
+-  return aggr;
++        tile.tile === _tile &&
++        (_entryName == null || tile.entryName === _entryName)
++    );
++  return matches.length === 1 ||
++    matches.every((tile) => tile.entitlementSource !== "EMS3")
++    ? matches[0]
++    : undefined;
+ };
+ 
+ export const getSubject = (entities, tile) => {
+diff --git a/src/utils/login.ces.test.ts b/src/utils/login.ces.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..12eb4f49979eb9e4664697a8a8da565ff741d3d4
+--- /dev/null
++++ b/src/utils/login.ces.test.ts
+@@ -0,0 +1,69 @@
++import { handleDrawers, handleEntities, handleUser } from "./login";
++import { ActionType } from "../hooks/reducer/util/ActionType";
++
++const mockDispatch = jest.fn();
++jest.mock("../hooks/HooksBase", () => ({
++  getHooksBase: () => ({ baseDispatch: mockDispatch }),
++}));
++jest.mock("./common", () => ({
++  getJWTPayload: () => "",
++  storeData: jest.fn(),
++  clearStorageWhenLogout: jest.fn(),
++}));
++
++describe("CES login compatibility", () => {
++  beforeEach(() => mockDispatch.mockClear());
++
++  it("TC-FE-CES-010 clears an explicitly empty drawer catalog", () => {
++    handleDrawers({ data: { drawers: [] } } as any);
++    expect(mockDispatch).toHaveBeenCalledWith({
++      type: ActionType.SET_DRAWERS,
++      data: { drawers: [] },
++    });
++  });
++
++  it("TC-FE-CES-010 preserves drawers when the field is omitted", () => {
++    handleDrawers({ data: {} } as any);
++    expect(mockDispatch).not.toHaveBeenCalled();
++  });
++
++  it("TC-FE-CES-010 keeps CES identities and role lists without scalar projection", () => {
++    const entities = [
++      {
++        id: null,
++        name: "RATAN_ENTITLEMENT_RULE",
++        applicationId: "51358",
++        applicationName: "RATAN",
++        roleName: null,
++        roleList: ["Role A", "Role B"],
++        subjects: [
++          { name: "CASHFLOW", entitlementSource: "EMS3", actions: [] },
++        ],
++      },
++    ];
++    handleUser({
++      data: { userInfo: JSON.stringify({ sub: "1481696" }), entities },
++    } as any);
++    const user = mockDispatch.mock.calls[0][0].data.user;
++    expect(user.id).toBe("1481696");
++    expect(user.entities).toBe(entities);
++    expect(user.entities[0].roleName).toBeNull();
++    expect(user.entities[0].roleList).toEqual(["Role A", "Role B"]);
++  });
++
++  it("TC-FE-CES-010 replaces entities and routing from one response", () => {
++    const entitlementRouting = [
++      {
++        tileId: "1",
++        source: "EMS3",
++        features: ["CASHFLOW"],
++        entityNames: ["RATAN_ENTITLEMENT_RULE"],
++        applicationId: "51358",
++      },
++    ];
++    handleEntities({ data: { entities: [], entitlementRouting } } as any);
++    const data = mockDispatch.mock.calls[0][0].data;
++    expect(data.entities).toEqual([]);
++    expect(data.entitlementRouting).toEqual(entitlementRouting);
++  });
++});
+diff --git a/src/utils/login.ts b/src/utils/login.ts
+index bd8716ed22a0ec07d93f75db5ac59eca4089332a..bdd97a8960c783de260366a8ea24b63503e2cf84 100644
+--- a/src/utils/login.ts
++++ b/src/utils/login.ts
+@@ -85,18 +85,21 @@ export const handleUser = (response: AxiosResponse) => {
+ };
+ 
+ export const handleEntities = (response: AxiosResponse) => {
+-  if (response?.data?.entities) {
++  if (Array.isArray(response?.data?.entities)) {
+     const entities = response?.data?.entities;
++    const entitlementRouting = Array.isArray(response?.data?.entitlementRouting)
++      ? response.data.entitlementRouting
++      : undefined;
+     const { baseDispatch } = getHooksBase();
+     baseDispatch({
+       type: ActionType.SET_ENTITIES,
+-      data: { entities },
++      data: { entities, entitlementRouting },
+     });
+   }
+ };
+ 
+ export const handleDrawers = (response: AxiosResponse) => {
+-  if (response?.data?.drawers?.length) {
++  if (Array.isArray(response?.data?.drawers)) {
+     const drawers = response?.data?.drawers;
+     const { baseDispatch } = getHooksBase();
+     baseDispatch({
+diff --git a/src/utils/tileAdmission.ts b/src/utils/tileAdmission.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..8b9831bd77ed9128635e867fe936c1def925c647
+--- /dev/null
++++ b/src/utils/tileAdmission.ts
+@@ -0,0 +1,16 @@
++// Call only with a tile from the current server-authorized catalog.
++export const isCatalogTileAdmitted = (tile, entitlementRouting?): boolean => {
++  if (!tile) return false;
++  if (tile.entitlementSource === "EMS3") {
++    const routes = (
++      Array.isArray(entitlementRouting) ? entitlementRouting : []
++    ).filter(
++      (route) =>
++        route?.tileId != null &&
++        tile.id != null &&
++        String(route.tileId) === String(tile.id)
++    );
++    return routes.length === 1 && routes[0].source === "EMS3";
++  }
++  return tile.entitlementSource == null || tile.entitlementSource === "EMS2";
++};
+diff --git a/src/utils/tileEntitlements.test.ts b/src/utils/tileEntitlements.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..9ace5ef220b953159bf3c99d503236d2b6e35612
+--- /dev/null
++++ b/src/utils/tileEntitlements.test.ts
+@@ -0,0 +1,112 @@
++import { canOpenTile, validateWorkspace } from "./common";
++
++jest.mock("../hooks/HooksBase", () => ({
++  getHooksBase: () => ({ store: {}, baseDispatch: jest.fn() }),
++}));
++
++const tile: any = {
++  id: 101,
++  container: "@fm/ratan",
++  module: "/blotter",
++  tile: "/cashflow",
++  subject: "CASHFLOW",
++  entity: ["RATAN_ENTITLEMENT_RULE"],
++  entitlementSource: "EMS3",
++};
++const drawers = [{ tiles: [tile] }];
++const routing: any[] = [
++  {
++    tileId: "101",
++    source: "EMS3",
++    applicationId: "51358",
++    entityNames: ["RATAN_ENTITLEMENT_RULE"],
++    features: ["CASHFLOW"],
++  },
++];
++const entity = (source: string) => ({
++  name: "RATAN_ENTITLEMENT_RULE",
++  subjects: [{ name: "CASHFLOW", entitlementSource: source, actions: [] }],
++});
++
++describe("per-tile provider admission", () => {
++  it("TC-FE-CES-003 uses CES features when the legacy subject is blank", () => {
++    const current = { ...tile, subject: "" };
++    expect(
++      canOpenTile([], current, [{ tiles: [current] }], routing as any)
++    ).toBe(true);
++  });
++
++  it("TC-FE-CES-003 preserves BFF-authorized CES tiles with no feature requirement", () => {
++    expect(
++      canOpenTile([], tile, drawers, [{ ...routing[0], features: [] }] as any)
++    ).toBe(true);
++  });
++
++  it("TC-FE-CES-003 admits a current BFF-authorized CES tile", () => {
++    expect(canOpenTile([], tile, drawers, routing)).toBe(true);
++  });
++
++  it("TC-FE-CES-003 denies a CES tile absent from the current catalog", () => {
++    expect(canOpenTile([entity("EMS3")], tile, [], routing)).toBe(false);
++  });
++
++  it("TC-FE-CES-003 preserves BFF admission when both feature and legacy subject are blank", () => {
++    const blank = { ...tile, subject: "" };
++    expect(
++      canOpenTile(
++        [],
++        blank,
++        [{ tiles: [blank] }],
++        [{ ...routing[0], features: [""] }]
++      )
++    ).toBe(true);
++  });
++
++  it.each([
++    undefined,
++    [],
++    [{ ...routing[0], source: "EMS2" }],
++    [routing[0], routing[0]],
++    [{ ...routing[0], tileId: "999" }],
++  ])("TC-FE-CES-003 rejects missing, conflicting, or mismatched CES route metadata (%#)", (routes) => {
++    expect(canOpenTile([], tile, drawers, routes)).toBe(false);
++  });
++
++  it("TC-FE-CES-003 denies invalid provider metadata", () => {
++    const invalid = { ...tile, entitlementSource: "OTHER" };
++    expect(canOpenTile([entity("EMS2")], invalid, [{ tiles: [invalid] }])).toBe(
++      false
++    );
++  });
++
++  it("TC-FE-CES-006 excludes CES subjects from EMS2 admission", () => {
++    const legacy = { ...tile, entitlementSource: "EMS2" };
++    expect(canOpenTile([entity("EMS3")], legacy, [{ tiles: [legacy] }])).toBe(
++      false
++    );
++    expect(canOpenTile([entity("EMS2")], legacy, [{ tiles: [legacy] }])).toBe(
++      true
++    );
++  });
++
++  it("TC-FE-CES-003 preserves omitted-source legacy grants", () => {
++    const legacy = { ...tile, entitlementSource: undefined };
++    const grants = [
++      { name: tile.entity[0], subjects: [{ name: tile.subject, actions: [] }] },
++    ];
++    expect(canOpenTile(grants, legacy, [{ tiles: [legacy] }])).toBe(true);
++  });
++
++  it("TC-FE-CES-012 restores a current CES tile and removes it after catalog revocation", () => {
++    const workspace = {
++      id: "workspace",
++      containers: [{ ...tile, id: "instance", applicationTileId: "101" }],
++    };
++    expect(validateWorkspace([workspace], [], drawers, routing)).toEqual([
++      workspace,
++    ]);
++    expect(
++      validateWorkspace([workspace], [], [], routing)[0].containers
++    ).toEqual([]);
++  });
++});

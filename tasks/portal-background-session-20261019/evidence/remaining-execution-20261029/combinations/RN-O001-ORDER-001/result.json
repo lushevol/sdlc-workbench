@@ -1,0 +1,245 @@
+{
+  "case_id": "RN-O001",
+  "instance_id": "RN-O001/ORDER-001",
+  "row_id": "ORDER-001",
+  "inputs": {
+    "row_id": "ORDER-001",
+    "events": "start-A > logout-A > login-B > start-B > reply-B > reply-A",
+    "old_response": "usable",
+    "expected_owner": "B",
+    "outline": "RN-O001"
+  },
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "definition": "../../../../06-test-cases.md#rn-o001",
+  "started_at": "2026-10-29T02:53:17.016Z",
+  "execution_level": "actual-source React/Axios integration in jsdom",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "name": "start-A creates one actual renewal request",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "logout-A clears access",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "name": "login-B installs B subject",
+      "actual": "B",
+      "expected": "B",
+      "status": "PASSED"
+    },
+    {
+      "name": "start-B creates an actual renewal request",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "reply-B installs B subject",
+      "actual": "B",
+      "expected": "B",
+      "status": "PASSED"
+    },
+    {
+      "name": "late A delivery changes zero current authentication fields",
+      "actual": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "onLogout": false,
+        "local": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "session": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic"
+      },
+      "expected": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "onLogout": false,
+        "local": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "session": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic"
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "final installed credential subject equals B",
+      "actual": "B",
+      "expected": "B",
+      "status": "PASSED"
+    }
+  ],
+  "events": [
+    {
+      "event": "start-A",
+      "epoch": 192,
+      "snapshot": {
+        "subject": "A",
+        "unreadable_access": false,
+        "access_sha256": "ff231b6684a22e3d8e26c707f3e5a818d3c932e2075977147c1dbb380e210b06",
+        "refresh_sha256": "481927f868c4afb45906cb63242ebf19eb7ccda84e303cbcbafe99cdf9791a39",
+        "expiry": 1793239260,
+        "iat": 0,
+        "user_sha256": null,
+        "onLogout": false,
+        "local_access_sha256": null,
+        "session_access_sha256": null
+      }
+    },
+    {
+      "event": "logout-A",
+      "epoch": 193,
+      "snapshot": {
+        "subject": null,
+        "unreadable_access": false,
+        "access_sha256": null,
+        "refresh_sha256": null,
+        "user_sha256": null,
+        "onLogout": false,
+        "local_access_sha256": null,
+        "session_access_sha256": null
+      }
+    },
+    {
+      "event": "login-B",
+      "epoch": 195,
+      "snapshot": {
+        "subject": "B",
+        "unreadable_access": false,
+        "access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "refresh_sha256": null,
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "user_sha256": null,
+        "onLogout": false,
+        "local_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "session_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622"
+      }
+    },
+    {
+      "event": "start-B",
+      "epoch": 195,
+      "snapshot": {
+        "subject": "B",
+        "unreadable_access": false,
+        "access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "refresh_sha256": null,
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "user_sha256": null,
+        "onLogout": false,
+        "local_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "session_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622"
+      }
+    },
+    {
+      "event": "reply-B",
+      "epoch": 195,
+      "snapshot": {
+        "subject": "B",
+        "unreadable_access": false,
+        "access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "refresh_sha256": null,
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "user_sha256": null,
+        "onLogout": false,
+        "local_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "session_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622"
+      }
+    },
+    {
+      "event": "reply-A",
+      "epoch": 195,
+      "snapshot": {
+        "subject": "B",
+        "unreadable_access": false,
+        "access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "refresh_sha256": null,
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "user_sha256": null,
+        "onLogout": false,
+        "local_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+        "session_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622"
+      }
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "epoch": 192,
+      "aborted": false,
+      "settled": true,
+      "outcome": "usable",
+      "aborted_at_delivery": true,
+      "epoch_at_delivery": 195
+    },
+    {
+      "url": "/api/auth/v2/sso/logout",
+      "epoch": 192,
+      "aborted": false,
+      "settled": true
+    },
+    {
+      "url": "/api/ssiplus/imeta/logout",
+      "epoch": 192,
+      "aborted": false,
+      "settled": true
+    },
+    {
+      "url": "/api/auth/v2/sso/login",
+      "epoch": 194,
+      "aborted": false,
+      "settled": true,
+      "outcome": "usable",
+      "aborted_at_delivery": false,
+      "epoch_at_delivery": 194
+    },
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "epoch": 195,
+      "aborted": false,
+      "settled": true,
+      "outcome": "usable",
+      "aborted_at_delivery": false,
+      "epoch_at_delivery": 195
+    }
+  ],
+  "blocked_predicates": [],
+  "limits": [
+    "Exact product React Provider, reducers, Timeout hook, session ownership, service helpers, Axios interceptors execute.",
+    "Synthetic unsigned JWTs and controlled Axios adapter replace identity/provider/network responses.",
+    "No real HTTP server, native lifecycle, transport connection, protected business endpoint, or durable mutation service."
+  ],
+  "source_binding": "../source-binding.json",
+  "initial": {
+    "subject": "A",
+    "unreadable_access": false,
+    "access_sha256": "ff231b6684a22e3d8e26c707f3e5a818d3c932e2075977147c1dbb380e210b06",
+    "refresh_sha256": "481927f868c4afb45906cb63242ebf19eb7ccda84e303cbcbafe99cdf9791a39",
+    "expiry": 1793239260,
+    "iat": 0,
+    "user_sha256": null,
+    "onLogout": false,
+    "local_access_sha256": null,
+    "session_access_sha256": null
+  },
+  "acceptance": "Observed proposed invariant only; no business approval.",
+  "completed_at": "2026-10-29T02:53:17.017Z",
+  "final": {
+    "subject": "B",
+    "unreadable_access": false,
+    "access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+    "refresh_sha256": null,
+    "expiry": 1793239320,
+    "iat": 1793239199,
+    "user_sha256": null,
+    "onLogout": false,
+    "local_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+    "session_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622"
+  }
+}

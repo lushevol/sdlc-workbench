@@ -1,0 +1,17 @@
+    rerender();
+
+    expect(mockGetJWTPayload).toHaveBeenCalledWith(mockRefreshToken);
+
+    await act(async () => {
+      jest.advanceTimersByTime(7_999);
+    });
+    expect(mockLogout).not.toHaveBeenCalled();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1);
+    });
+
+    expect(mockLogout).toHaveBeenCalledTimes(1);
+    expect(setOpen).toHaveBeenCalledWith(false);
+  });
+});

@@ -1,0 +1,62 @@
+{
+  "created_at": "2026-10-21T08:10:01.488196+00:00",
+  "stage": "build_setup_only",
+  "wrappers": [
+    {
+      "runtime_path": ".workbench/uat-blotter-browser-20261021/shared.webpack.cjs",
+      "retained_path": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/setup/shared.webpack.cjs",
+      "sha256": "ee82cdf789e80988630e3cc2017b4ca3717eb9899a1f3bb902eb6b431ca1ebcb",
+      "syntax_check_exit_code": 0
+    },
+    {
+      "runtime_path": ".workbench/uat-blotter-browser-20261021/blotter.webpack.cjs",
+      "retained_path": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/setup/blotter.webpack.cjs",
+      "sha256": "b9e60237c14f07ca299ed6bafad0893ea0613b20232c9195d74c62cdace6f054",
+      "syntax_check_exit_code": 0
+    },
+    {
+      "runtime_path": ".workbench/uat-blotter-browser-20261021/ratan.webpack.cjs",
+      "retained_path": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/setup/ratan.webpack.cjs",
+      "sha256": "cb1646a58c45bc3b23f872834ab67139352641d339fe795d3ad2d0d47090572b",
+      "syntax_check_exit_code": 0
+    }
+  ],
+  "sources": [
+    {
+      "repository": "mfe-cashflow-blotter",
+      "root": "repos/ui/mfe-cashflow-blotter",
+      "identity": "supplied filesystem source copy; exact Git revision unavailable",
+      "source_files": 752,
+      "inventory": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/setup/mfe-cashflow-blotter-source-inventory.json",
+      "inventory_sha256": "dbfb3ff5b789dcaf892e195b47faa750cc097cd85342c2cc9eb332102109f9a0",
+      "source_modified_by_build_setup": false
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "root": "repos/ui/mfe-ratan-container",
+      "identity": "supplied filesystem source copy; exact Git revision unavailable",
+      "source_files": 518,
+      "inventory": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/setup/mfe-ratan-container-source-inventory.json",
+      "inventory_sha256": "b939eb19cc62758bf4f4619a90539ed4d9dd95b26f00a436a2339070db02cc89",
+      "source_modified_by_build_setup": false
+    }
+  ],
+  "source_mutations": [],
+  "dependencies": [
+    ".workbench/uat-blotter-browser-20261021/dependencies/node_modules",
+    ".workbench/portal-session-real-20261019/local-mfe/node_modules"
+  ],
+  "ports": {
+    "blotter": 8124,
+    "ratan": 8125
+  },
+  "limits": [
+    "No application execution claim at setup stage.",
+    "Development webpack builds replace original webpack wrapper tooling.",
+    "Babel transpiles modern TSX without type checking or declaration generation.",
+    "No transform-runtime plugin; modern browser target omits required legacy transforms.",
+    "SystemJS externals share React and @fm modules with supplied shell.",
+    "Installed versions may vary within application manifest ranges. AG Grid 32.3.3 meets Blotter range and exceeds Ratan fixed 32.3.0.",
+    "No UAT deployment parity claim."
+  ]
+}

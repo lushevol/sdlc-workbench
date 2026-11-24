@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-09",
+  "method": "Independent source-based review; no application edits or runtime execution",
+  "reviewed_files": [
+    {
+      "file": "tasks/ces-entitlement-migration-20261102/11-zero-upper-change-audit.md",
+      "sha256": "8244a147591116f82784d9a8bbd30a2f1e300ae16281d70704e3533d78234a7b"
+    },
+    {
+      "file": "knowledge/candidates/security/KT-ces-migration-parity.md",
+      "sha256": "9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0"
+    }
+  ],
+  "conclusions": [
+    {
+      "id": "INDEPENDENT-01",
+      "result": "PASS",
+      "claim": "Cashflow role-owned selector impact is conditional. Supplied production page config excludes its builder types. Report does not claim an active Cashflow role-owned-selector failure.",
+      "sources": [
+        "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts:30-45",
+        "repos/ui/mfe-ratan-container/src/ratanstatic/ratanConfig/production/ratanConfig.json:23-41"
+      ]
+    },
+    {
+      "id": "INDEPENDENT-02",
+      "result": "PASS",
+      "claim": "Rules subject constants preserve CES feature names. Supplied effective EMS2/CES grants for user1481696 are access-only; report does not claim maker/checker regression.",
+      "sources": [
+        "repos/ui/mfe-rules/src/Root/routing/index.tsx:54-63",
+        "repos/ui/mfe-rules/src/MoRules/Routing.tsx:83-92",
+        "rules-subject-chain-20261109.json"
+      ]
+    },
+    {
+      "id": "INDEPENDENT-03",
+      "result": "PASS",
+      "claim": "Scalar-role warning correctly identifies primitive equality/membership limits, separates API shape preservation from full multi-role semantics, and leaves ownership policy pending.",
+      "sources": [
+        "repos/ui/mfe-rules/src/MoRules/utils/convert.ts:3-89",
+        "repos/ui/mfe-rules/src/DryRunCenter/CreatePlan/common/utils.ts:26-45,91-110",
+        "repos/ui/mfe-rules/src/MoRules/MoRulesHome.tsx:25-29"
+      ]
+    },
+    {
+      "id": "INDEPENDENT-04",
+      "result": "PASS",
+      "claim": "Candidate knowledge v6 allows provider union with source logs, retains per-tile admission, does not mandate new scope arguments, and does not claim implementation/publication.",
+      "sources": [
+        "knowledge/candidates/security/KT-ces-migration-parity.md:65-82,187-206,272-297,388-400"
+      ]
+    },
+    {
+      "id": "INDEPENDENT-05",
+      "result": "CORRECTION_REQUESTED",
+      "claim": "CA hypothetical database rename causes a feature mismatch, not guaranteed denial. Global container checks can still resolve RATAN_MO_RULE using the MO tile and BFF returns every application feature.",
+      "location": "11-zero-upper-change-audit.md:150",
+      "requested_wording": "Changing the database feature alone to RATAN_CA_RULE leaves CA action calls checking RATAN_MO_RULE. CA-only grants would be ignored; MO grants could still authorize these calls.",
+      "sources": [
+        "repos/ui/mfe-rules/src/Root/routing/index.tsx:55-59",
+        "repos/ui/mfe-rules/src/MoRules/Routing.tsx:83-92",
+        "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts:153-223",
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:61-66,90-105"
+      ]
+    }
+  ],
+  "limits": [
+    "No deployed runtime or user-frequency claims reviewed.",
+    "Backend-specific rows are bound to the separate backend audit; this review focused latest user clarification, Rules, Cashflow shared selectors, and candidate provider intent.",
+    "Reviewed hashes bind pre-final report bytes; later edits need parent reconciliation."
+  ]
+}

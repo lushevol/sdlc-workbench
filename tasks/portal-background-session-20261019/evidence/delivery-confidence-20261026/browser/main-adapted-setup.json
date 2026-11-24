@@ -1,0 +1,90 @@
+{
+  "recorded_at": "2026-10-26T15:59:51.774234+00:00",
+  "case": "E2E-19",
+  "main_ref": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate_ref": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+  "classification": "ADAPTED_SETUP_COMPARISON",
+  "original_main_predicate": "NOT_REACHED",
+  "adapted_main_predicate": "FAILED",
+  "candidate_original_predicate": "FAILED",
+  "setup_adaptation": {
+    "command_environment": {
+      "SESSION_PREPARE_REFRESH": "1",
+      "SESSION_CASE_LABEL": "main-prepared-refresh"
+    },
+    "method": "Call actual exported Service.getRefreshToken against the real local BFF. Wait for public Hooks.getHooks().store.refreshToken.",
+    "given": "A usable refresh credential exists before the late-activity scenario.",
+    "fabricated_credentials": false,
+    "application_source_changed": false,
+    "canonical_predicate_changed": false
+  },
+  "runs": [
+    {
+      "run": "main/main-late-20261026T153539",
+      "raw_status": "FAILED",
+      "predicate_status": "NOT_REACHED",
+      "predicate_reached": false,
+      "controlled_setup": null,
+      "error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "runner_sha256": "dcd2ae342134450f22c28c232d6ff6399bce9b8d0df9b74235708e2ad0203120",
+      "result": "main/main-late-20261026T153539/artifacts/late-activity-after-manual-success-1793028948569/result.json",
+      "result_sha256": "6f2f28cc698144ad9af9e6d6be4baa996f23f21a66a2acab5f35a56bc1b4db63"
+    },
+    {
+      "run": "main/main-late-20261026T155147",
+      "raw_status": "FAILED",
+      "predicate_status": "NOT_REACHED",
+      "predicate_reached": false,
+      "controlled_setup": null,
+      "error": "The actual service must issue refresh credentials before this assertion window.",
+      "runner_sha256": "c113caa3b2ccecc4c0d0fa803628d6ebb670af1f133e3365fff83c9c7cbdf964",
+      "result": "main/main-late-20261026T155147/artifacts/late-activity-after-manual-success-1793029915665/result.json",
+      "result_sha256": "f6bb654f42d392223c560542fbc7922f37b690a3ffae508799459ebb0a613d3e"
+    },
+    {
+      "run": "main-prepared-refresh/main-late-20261026T155405",
+      "raw_status": "FAILED",
+      "predicate_status": "NOT_REACHED",
+      "predicate_reached": false,
+      "controlled_setup": null,
+      "error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "runner_sha256": "22ab8787e31593cd8c9b3d709dbcf8153211a0124e542dd6c92b90ec57c14ff7",
+      "result": null,
+      "result_sha256": null
+    },
+    {
+      "run": "main-prepared-refresh/main-late-20261026T155643",
+      "raw_status": "FAILED",
+      "predicate_status": "FAILED",
+      "predicate_reached": true,
+      "controlled_setup": {
+        "name": "PUBLIC_REAL_REFRESH_PRECONDITION",
+        "method": "Actual exported Service.getRefreshToken acquires usable refresh from the local BFF before the canonical case.",
+        "fabricatedCredentials": false,
+        "nativeLifecycleClaim": false
+      },
+      "error": "Opening the timeout prompt must cancel the earlier activity extension.",
+      "runner_sha256": "9bc9ce04731220fa66360183a2422c4e88c999df7ba9709f479b5ad6c52d27d3",
+      "result": "main-prepared-refresh/main-late-20261026T155643/artifacts/late-activity-after-manual-success-1793030212453/result.json",
+      "result_sha256": "515cb67a372c1a89d86b77121fb5f45ccc8fe1c3b32e24df8a934dba345fe515"
+    }
+  ],
+  "rationale": "Main lacks hidden-tab acquisition. Its scheduled refresh occurs later than the helper ten-second wait. The adapted setup establishes the canonical usable-refresh condition.",
+  "limits": [
+    "This does not count as an unmodified original main E2E-19 execution.",
+    "The first adapted readiness wait incorrectly checked localStorage. The actual main store holds refresh. That harness failure remains retained.",
+    "The conditional cancellation failure is supported. No general lifecycle equivalence is inferred."
+  ],
+  "owner": "unknown application owner",
+  "next_action": "Retain conditional cancellation in the existing backlog disposition. Correct loading cancellation independently.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

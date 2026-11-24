@@ -1,0 +1,7 @@
+    try {
+      await errorHandler(error);
+    } catch (e) {
+      expect(e.response.data.message).toBe("AuthenticationException");
+    }
+    expect(consoleInfo).not.toHaveBeenCalledWith(error.config);
+    consoleInfo.mockRestore();

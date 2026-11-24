@@ -1,0 +1,32 @@
+FAIL src/hooks/service/cancellationPreservation.test.ts
+  Shared service cancellation preservation
+    ✓ [DEL-14] clears the loading state after the final current-session request is canceled (4 ms)
+    ✓ [DEL-19] keeps loading while a replacement request remains pending after cancellation (1 ms)
+    ✓ [DEL-21] keeps loading when a silent request starts and finishes beside pending work (1 ms)
+    ✓ [DEL-22] ignores an old cancellation while the new session request remains pending
+    ✓ [DEL-23] clears loading after a response transform fails without request config
+    ✕ [DEL-24] releases completed loading work when response handling throws (2 ms)
+
+  ● Shared service cancellation preservation › [DEL-24] releases completed loading work when response handling throws
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      179 |     };
+      180 |     await expect(service.get("/api/auth/v2/sso/validate")).rejects.toThrow(SyntaxError);
+    > 181 |     expect(hooks.store.isLoading).toBe(false);
+          |                                   ^
+      182 |     expect(hooks.store.token).toBe("session-a");
+      183 |     await expect(service.get("/api/portfolio/positions")).resolves.toMatchObject({
+      184 |       data: { id: "position" }, status: 200,
+
+      at Object.<anonymous> (src/hooks/service/cancellationPreservation.test.ts:181:35)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        0.6 s, estimated 1 s
+Ran all test suites within paths "src/hooks/service/cancellationPreservation.test.ts".
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/response-handler-red/results.json

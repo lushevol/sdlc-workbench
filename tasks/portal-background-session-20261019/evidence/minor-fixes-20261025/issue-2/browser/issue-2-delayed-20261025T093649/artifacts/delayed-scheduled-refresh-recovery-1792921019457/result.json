@@ -1,0 +1,173 @@
+{
+  "caseId": "delayed-scheduled-refresh-recovery",
+  "status": "PASSED",
+  "startedAt": "2026-10-25T09:36:59.455Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "10b9da9d5dd330fc25bc43c98b76c25f8821b3d95fcb91f976bbd0465b3f6964",
+  "testSourceSha256": "34ee3bbe846bb02065b536b4d3d59269a29389c72d1917de55f7252e30990a7d",
+  "sourceRevisions": {
+    "mfe-base": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "The actual scheduled refresh response is held until one second after current access expiry.",
+    "The real relogin request is held before dispatch, then forwarded with route.fetch()."
+  ],
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "pendingPromptClosures": 0,
+      "completedPromptClosures": 1
+    },
+    {
+      "source": "actual Home 25-second scheduled acquisition",
+      "refreshDeliveredAfterAccessExpiry": true,
+      "pendingExtendDisabled": true,
+      "pendingLogoutEnabled": true,
+      "lateExtendEnabled": true,
+      "actualManualRecoveryCompleted": true
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-25T09:36:59.458Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "pending-acquisition-after-access-expiry",
+      "capturedAt": "2026-10-25T09:37:59.077Z",
+      "file": "pending-acquisition-after-access-expiry.png"
+    },
+    {
+      "phase": "late-credentials-enable-extend",
+      "capturedAt": "2026-10-25T09:38:00.031Z",
+      "file": "late-credentials-enable-extend.png"
+    },
+    {
+      "phase": "pending-prompt",
+      "capturedAt": "2026-10-25T09:38:01.644Z",
+      "file": "pending-prompt.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-25T09:38:08.523Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "heldAccessExpiry": 1792921079000,
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "ff9a301c5fb7642f56f72d5771e34bf7ea8d6e8988cae69c413e33d773127403",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "limitations": [
+    "This shortened real-time control does not establish natural freezing or production configuration parity."
+  ],
+  "completedAt": "2026-10-25T09:38:08.522Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792921019410,
+      "access": {
+        "sha256": "5ddaacc1c08e10abc4d3b6c54611bedce5a580f65170ccbcbd86a5744a7daea8",
+        "exp": 1792921079,
+        "iat": 1792921019
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792921080012,
+      "access": null,
+      "refresh": {
+        "sha256": "c3cc3b25c0d610bef862ac070714401f3f3c589e8a6d3a98906be9d17e7be208",
+        "exp": 1792921198,
+        "iat": 1792921054
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "time": 1792921081706,
+      "access": {
+        "sha256": "ff9a301c5fb7642f56f72d5771e34bf7ea8d6e8988cae69c413e33d773127403",
+        "exp": 1792921141,
+        "iat": 1792921081
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792921088483,
+      "access": {
+        "sha256": "587949ebad820f5ea610d943d9946dbdc2fe60d71899f0d37077954d3de4cfeb",
+        "exp": 1792921148,
+        "iat": 1792921088
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792921087732
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792921011388
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792921087802
+    }
+  ],
+  "initialAccess": {
+    "sha256": "5ddaacc1c08e10abc4d3b6c54611bedce5a580f65170ccbcbd86a5744a7daea8",
+    "exp": 1792921079,
+    "iat": 1792921019
+  },
+  "latestAccess": {
+    "sha256": "587949ebad820f5ea610d943d9946dbdc2fe60d71899f0d37077954d3de4cfeb",
+    "exp": 1792921148,
+    "iat": 1792921088
+  },
+  "refresh": {
+    "sha256": "c3cc3b25c0d610bef862ac070714401f3f3c589e8a6d3a98906be9d17e7be208",
+    "exp": 1792921198,
+    "iat": 1792921054
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-25T09:38:08.382Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

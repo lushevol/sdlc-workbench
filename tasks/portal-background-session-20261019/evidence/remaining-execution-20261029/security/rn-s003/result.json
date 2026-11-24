@@ -1,0 +1,34 @@
+{
+  "case_id" : "RN-S003",
+  "executed_at" : "2026-10-29T01:54:55.332809Z",
+  "execution_level" : "actual-controller-characterization",
+  "status" : "PASSED",
+  "observations" : {
+    "logout" : {
+      "revocation_entries" : 0,
+      "result" : true,
+      "http_status" : 200
+    },
+    "replay" : {
+      "http_status" : 200,
+      "result" : true,
+      "issued_access_count" : 1,
+      "access_subject" : "A",
+      "access_session_id" : "write-failure",
+      "credential_response_header_count" : 1
+    },
+    "events" : [ "revocation-write-entered", "revocation-write-failed", "renewal-validation:active" ]
+  },
+  "assertions" : [ {
+    "name" : "failed write recorded",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  }, {
+    "name" : "replay issued count recorded",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "This observational case records a failure consequence; passing its recording predicates does not establish safe logout." ]
+}

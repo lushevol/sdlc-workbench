@@ -1,0 +1,77 @@
+{
+  "recordedAt": "2026-10-22T06:03:47.260239+00:00",
+  "mode": "READ_ONLY_NO_DOWNLOAD",
+  "results": [
+    {
+      "name": "dry-run",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "install",
+        "--dry-run",
+        "firefox",
+        "webkit"
+      ],
+      "exitCode": 0,
+      "stdout": "dry-run.stdout.txt",
+      "stdoutSha256": "e23da7b3c351b0dd91f15d90e365e0b92e0748ac6dce95a0eeda9f3a2517116d",
+      "stderr": "dry-run.stderr.txt",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "platform",
+      "command": [
+        "sw_vers"
+      ],
+      "exitCode": 0,
+      "stdout": "platform.stdout.txt",
+      "stdoutSha256": "5bb4c33199e7cd997461bc6c78bb13b6f312d7ff1ed36cf14a12974cf09e6522",
+      "stderr": "platform.stderr.txt",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "uname",
+        "-m"
+      ],
+      "exitCode": 0,
+      "stdout": "architecture.stdout.txt",
+      "stdoutSha256": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01",
+      "stderr": "architecture.stderr.txt",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "executables",
+      "command": [
+        "node",
+        "--input-type=module",
+        "-e",
+        "import {firefox,webkit} from \"playwright\";import fs from \"node:fs\";console.log(JSON.stringify([firefox,webkit].map(browser=>({name:browser.name(),executablePath:browser.executablePath(),exists:fs.existsSync(browser.executablePath())})),null,2));"
+      ],
+      "exitCode": 0,
+      "stdout": "executables.stdout.txt",
+      "stdoutSha256": "b697801e689fe9818723ab0eeabd367aee573aa130c38302ba90d93359848e8e",
+      "stderr": "executables.stderr.txt",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "sourceHashes": {
+    "package.json": "112f518e8ee413b0e7f7cfabb2d108880b8625eed13930ea25532c54a8b6033f",
+    "node_modules/playwright-core/browsers.json": "2cfd419f71ac6475d81e1301fa86c34cf2a2a6bae2a0da4b5a2b18310216b6bf",
+    "e2e/browser-config.ts": "3f4a3263d6c180bee25bd972dc7f817fd03a16f2130432fdc6ed84de09c0b748",
+    "e2e/audit.config.ts": "eb70b0f1c514d69bab172b6eb06c9827f9d32fe0d3fde8f42f2a657cdb40a33c",
+    "adapters/browser/browser.mjs": "d70e23642203ceb00181e4aae29404965af4520cb11530eab2546f187aaec942",
+    "adapters/browser/bundle.mjs": "6cf0a39e7c93c0671c42385d83376c3d1c79c08b11c860bb50df7098ead6d35a",
+    "docs/SETUP.md": "55d7a34e472d7af3584cadefb697f45951b92fd5e338ab009fad51edb9651499",
+    "docs/DEPENDENCIES.md": "e10ca7b2c0b52d750ef7ca8f1e635ed86588e5176e8f12f265e51716bb120965"
+  },
+  "conclusions": {
+    "packageSupport": "Firefox157.0rev1555 andWebKit27.2rev2370 supportedforcurrentmacOS26.5arm64",
+    "executables": "ABSENT",
+    "harnessSelection": "Currentrootandadapteracceptonlychromiumandmsedge",
+    "bundle": "Explicitbundlepreparationonlyprovisionschromium; existingbrowsercachecontentsarecopied",
+    "network": "Noartifactdownloadorconnectivitytestperformed",
+    "nextAction": "Explicitruntimeprovisioningandfocusedcrossbrowserconfiguration; updateinstallationanddependencydocs, thenrunallcanonicalbrowsersteps."
+  }
+}

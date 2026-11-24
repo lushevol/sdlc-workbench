@@ -1,0 +1,114 @@
+{
+  "status": "PASSED",
+  "run_at_utc": "2026-10-21T16:53:29.816152+00:00",
+  "environment": {
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "workspace_baseline": "8dd076eac24c1b18b2f44245b3220ebcaf8537e3"
+  },
+  "command": [
+    ".venv/bin/ai-sdlc",
+    "lint",
+    "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+    "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md"
+  ],
+  "exit_code": 0,
+  "artifact_lint": {
+    "schema_version": 1,
+    "status": "PASSED",
+    "valid": true,
+    "artifacts": 2,
+    "findings": [
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "owner_unknown",
+        "severity": "warning",
+        "message": "Artifact owner is unknown. Identify the responsible owner."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "review_pending",
+        "severity": "warning",
+        "message": "Business review remains pending. Record actual review before applicable publication."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "unresolved_content",
+        "severity": "warning",
+        "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "writing_review_pending",
+        "severity": "warning",
+        "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "owner_unknown",
+        "severity": "warning",
+        "message": "Artifact owner is unknown. Identify the responsible owner."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "review_pending",
+        "severity": "warning",
+        "message": "Business review remains pending. Record actual review before applicable publication."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "unresolved_content",
+        "severity": "warning",
+        "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "writing_review_pending",
+        "severity": "warning",
+        "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+      }
+    ],
+    "limitations": [
+      "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+      "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+      "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+      "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+      "Gherkin checks cover an English subset. No business step definitions execute.",
+      "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+    ]
+  },
+  "catalog_checks": {
+    "case_count": 521,
+    "gherkin_scenario_count": 521,
+    "unique_case_ids": 521,
+    "minimum_assertions_per_case": 1,
+    "resolved_local_links": 3052,
+    "checked_source_hashes": 124,
+    "checked_retained_knowledge_identities": 22,
+    "all_business_cases": "NOT_RUN",
+    "errors": []
+  },
+  "document_hashes": {
+    "intake.md": "e819973066ef6668495472728e4785d70ed8bad3600e9cb84c1c58f313d68204",
+    "test-cases.md": "73678b9a3483a1a1dd04da6ec7f43aff949de49058f09d0b6c2babf850960cfb",
+    "evidence/ui-source-inspection.md": "ece95bfbc0719307783708c38b0d017c384d3383d63195623c63f09e6885f5bc",
+    "evidence/session-source-inspection.md": "b7a1d819f9ddf998ab0f061147a19f48757d81230665d8fb28588f4e34d3c1e6",
+    "evidence/admin-boundary-inspection.md": "aa9ff5337ea325d0880b7a8bb794f60e566277ff3b96423cec76a82e3093156a",
+    "evidence/crosscut-inspection.md": "85b3b46814d5862057f1b0dd874fb84fc5f60b5fb4fde5c9bfc5a4c642653407",
+    "evidence/index.md": "38b5a4e485be1efce7c9787bb9ec5f8be73055b5d7c7663354abb21224ffeedc",
+    "evidence/knowledge-inspection.md": "5defcf79f4aa1abc36f1dac7c5cd5c2fd13dd1d9caf90a8b4cbb84bd1a82eca6"
+  },
+  "validation_script": {
+    "command": [
+      "python3",
+      "/tmp/check_ui_catalog.py"
+    ],
+    "sha256": "65d5351284b1cf4ac48cc4238c1190fcf03c17aa6c2d70ce31790fdfdd629d1e",
+    "source": "from pathlib import Path\nfrom collections import Counter\nimport json,re,hashlib,subprocess,sys,datetime,urllib.parse\nroot=Path.cwd();p=root/'tasks/ui-test-coverage-20261022';e=p/'evidence';out=e/'document-checks.json'\nout.write_text('{}\\n') if not out.exists() else None\nerrors=[];link_count=0\ncatalog=(p/'test-cases.md').read_text();inv=json.loads((e/'case-inventory.json').read_text());source=json.loads((e/'source-manifest.json').read_text())\nids=re.findall(r'^#### ([A-Z][A-Z0-9-]+)\\s*$',catalog,re.M)\nif len(ids)!=len(set(ids)):errors.append('Duplicate case headings')\nif ids!=[c['id'] for c in inv['cases']]:errors.append('Case headings do not match inventory order')\nif len(ids)!=inv['total']:errors.append('Inventory total differs from catalog')\nblocks=re.findall(r'```gherkin\\n(.*?)\\n```',catalog,re.S)\nif len(blocks)!=len(ids):errors.append('Scenario count differs from case count')\nfor cid,b in zip(ids,blocks):\n if not all(re.search(r'^\\s*'+k+r'\\s+\\S',b,re.M) for k in ['Given','When','Then']):errors.append(cid+' lacks complete Gherkin')\n if '@'+cid not in b:errors.append(cid+' lacks stable tag')\nfor c in inv['cases']:\n if c['status']!='NOT_RUN' or c['actual_result'] is not None or c['execution_evidence'] is not None:errors.append(c['id']+' has an unsupported result')\n if c['assertion_count']<1 or not c['source_ids']:errors.append(c['id']+' lacks assertions or sources')\nfor key,field in [('by_category','category'),('by_basis','basis'),('by_priority','priority'),('by_status','status')]:\n if dict(Counter(c[field] for c in inv['cases']))!=inv[key]:errors.append(key+' count mismatch')\nfor s in source['sources']:\n f=root/s['path']\n if hashlib.sha256(f.read_bytes()).hexdigest()!=s['sha256']:errors.append('Source hash mismatch: '+s['path'])\nfor s in source.get('retained_knowledge_source_identities',[]):\n if hashlib.sha256((root/s['path']).read_bytes()).hexdigest()!=s['sha256']:errors.append('Knowledge identity hash mismatch: '+s['path'])\nfor f in p.rglob('*.md'):\n for m in re.finditer(r'(?<!!)\\[[^\\]]*\\]\\((<[^>]+>|[^)\\n]+)\\)',f.read_text()):\n  raw=m[1].strip('<>').split(' \"')[0]\n  if re.match(r'^[a-z]+://',raw):continue\n  t,_,anchor=urllib.parse.unquote(raw).partition('#');q=(f.parent/t).resolve() if t else f.resolve();link_count+=1\n  if not q.is_file():errors.append(str(f.relative_to(root))+': missing '+raw);continue\n  if anchor:\n   text=q.read_text(errors='replace')\n   if re.fullmatch(r'L\\d+(?:-L?\\d+)?',anchor):\n    if int(re.search(r'\\d+',anchor)[0])>len(text.splitlines()):errors.append('Invalid line locator: '+raw)\n   elif q.suffix=='.md':\n    heads=re.findall(r'^#{1,6}\\s+(.+?)\\s*#*$',text,re.M)\n    anchors=[re.sub(r'[^\\w\\- ]','',h.replace('`','').lower()).replace(' ','-') for h in heads]+re.findall(r'<a\\s+id=\"([^\"]+)\"',text)\n    if anchor not in anchors:errors.append('Missing anchor: '+raw)\nargs=['.venv/bin/ai-sdlc','lint',str(p/'intake.md'),str(p/'test-cases.md')];r=subprocess.run(args,capture_output=True,text=True)\ntry:lint=json.loads(r.stdout)\nexcept Exception:lint={'stdout':r.stdout,'stderr':r.stderr};errors.append('Lint returned invalid output')\nif r.returncode:errors.append('Artifact lint failed')\n# Diff whitespace checks cover only the completed task after staging.\nchecks={'status':'PASSED' if not errors else 'FAILED','run_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'environment':{'python':sys.version,'workspace_baseline':'8dd076eac24c1b18b2f44245b3220ebcaf8537e3'},'command':args,'exit_code':r.returncode,'artifact_lint':lint,'catalog_checks':{'case_count':len(ids),'gherkin_scenario_count':len(blocks),'unique_case_ids':len(set(ids)),'minimum_assertions_per_case':min(c['assertion_count'] for c in inv['cases']),'resolved_local_links':link_count,'checked_source_hashes':len(source['sources']),'checked_retained_knowledge_identities':len(source.get('retained_knowledge_source_identities',[])),'all_business_cases':'NOT_RUN','errors':errors},'document_hashes':{str(f.relative_to(p)):hashlib.sha256(f.read_bytes()).hexdigest() for f in p.rglob('*.md')},'validation_script':{'command':['python3','/tmp/check_ui_catalog.py'],'sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'source':Path(__file__).read_text()},'limitations':['Document validation does not execute business test cases.','Lint warnings preserve unknown owners, pending business review, unresolved policies, and pending ASD review.','Link and source-hash checks do not authenticate source authority.','Automated checks do not check the complete approved ASD dictionary or grammar rules.']}\nout.write_text(json.dumps(checks,indent=2)+'\\n')\nprint(json.dumps({'status':checks['status'],'case_count':len(ids),'source_hashes':len(source['sources']),'links':link_count,'lint_warnings':len(lint.get('findings',[])),'errors':errors},indent=2))\nraise SystemExit(bool(errors))\n"
+  },
+  "limitations": [
+    "Document validation does not execute business test cases.",
+    "Lint warnings preserve unknown owners, pending business review, unresolved policies, and pending ASD review.",
+    "Link and source-hash checks do not authenticate source authority.",
+    "Automated checks do not check the complete approved ASD dictionary or grammar rules."
+  ]
+}

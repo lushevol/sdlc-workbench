@@ -1,0 +1,643 @@
+{
+  "config": {
+    "argv": [
+      "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config=e2e/audit.config.ts",
+      "auth-final.spec.ts",
+      "--grep",
+      "AUTH-116|AUTH-138|AUTH-144",
+      "--workers=1"
+    ],
+    "configFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.config.ts",
+    "rootDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "snapshotDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "actionTimeout": 8000,
+          "navigationTimeout": 10000,
+          "launchOptions": {
+            "channel": "chromium",
+            "headless": true,
+            "chromiumSandbox": true
+          },
+          "trace": "on",
+          "screenshot": "on",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.reporter.ts",
+        {
+          "output": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "auth-final.spec.ts",
+      "file": "auth-final.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AUTH-138 recovery removes old entity and controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-138"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2941,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as user-a in an isolated browser context",
+                      "duration": 1230
+                    },
+                    {
+                      "title": "2. And the selected fixture tab is labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page",
+                      "duration": 5
+                    },
+                    {
+                      "title": "3. And access A is expired; refresh R expires at controlled time T+600 seconds",
+                      "duration": 6
+                    },
+                    {
+                      "title": "4. And the dialog named \"Your session has been expired\" on the Home page is visible",
+                      "duration": 14
+                    },
+                    {
+                      "title": "5. And the relogin response removes ENTITY-A and its drawer",
+                      "duration": 9
+                    },
+                    {
+                      "title": "6. When User A clicks the button labelled \"Extend\" inside the dialog named \"Your session has been expired\"",
+                      "duration": 31
+                    },
+                    {
+                      "title": "7. And the fixture delivers the accepted recovery response without ENTITY-A",
+                      "duration": 6
+                    },
+                    {
+                      "title": "8. Then previous ENTITY-A application controls are absent from the portal; their component types and exact identities are UNVERIFIED",
+                      "duration": 651
+                    },
+                    {
+                      "title": "9. When User A clicks the icon button with test ID \"${MFE_APP_PREFIX_STYLE}_avatar_IconButton\" in the portal header on the Home page",
+                      "duration": 18
+                    },
+                    {
+                      "title": "10. And User A clicks the menu item containing \"user-a\" inside the menu with DOM ID \"menu-appbar-avatar\"",
+                      "duration": 45
+                    },
+                    {
+                      "title": "11. Then the text \"user-a\" is visible inside the dialog titled \"User Profile\" on the Home page",
+                      "duration": 3
+                    },
+                    {
+                      "title": "12. And the installed entities do not contain ENTITY-A",
+                      "duration": 2
+                    }
+                  ],
+                  "startTime": "2026-10-22T06:54:38.426Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-138"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--69a1f788c33e9127e1a35381d24578c2d25b133a.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--26b149e82068ee9406021f1690b5c95a0c4406e3.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--74fccd7ca40372f45c2131609cbfcd9a713b570f.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--7910b1988b720b222c057db6c778aa5496d954df.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--c0978756832c8b676ffd1079d9fcd44e1096a283.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--ba6c8533830c46d3f2eab4410e5ef12cf0f37b60.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--4b271bb53fb94b5a81b7a79999eafba61d78d374.png"
+                    },
+                    {
+                      "name": "removed-entity-drawer-inspection (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/removed-entity-drawer-inspection-ACTUAL-APPLICATION-LOCAL-SERVICES--0417403fd88526d014a4f8f6a0d7d1c2f4494095.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--ef2f631522ca12fb89f7a7facd151b76e66b9942.png"
+                    },
+                    {
+                      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--cba813e5ed182af00a5b78be779d6856466ef83e.png"
+                    },
+                    {
+                      "name": "step-10 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-10-ACTUAL-APPLICATION-LOCAL-SERVICES--94c3ac5f26cfbf958fb54c6b386eed533ff518e6.png"
+                    },
+                    {
+                      "name": "step-11 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-11-ACTUAL-APPLICATION-LOCAL-SERVICES--dc00567e1c058961a70ed94f522e774196541233.png"
+                    },
+                    {
+                      "name": "step-12 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-12-ACTUAL-APPLICATION-LOCAL-SERVICES--5a557abaf74b9868a22744e97ba5b0483bb46e7a.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--b85a4542fdcda224a411c209598613aae0dd14e3.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-8cda7ce0f5b77d04df58",
+          "file": "auth-final.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "AUTH-144 forged entitlement is rejected by current server",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-144"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2134,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as user-a in an isolated browser context",
+                      "duration": 1400
+                    },
+                    {
+                      "title": "2. And the selected fixture tab is labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page",
+                      "duration": 17
+                    },
+                    {
+                      "title": "3. And the browser forges an ADMIN entitlement in the decoded fixture without a valid issuer signature",
+                      "duration": 42
+                    },
+                    {
+                      "title": "4. When User A activates the admin UI target whose component, identity, and scope are UNVERIFIED",
+                      "duration": 137
+                    },
+                    {
+                      "title": "5. Then the server rejects the attempted admin operation",
+                      "duration": 0
+                    },
+                    {
+                      "title": "6. And the admin-success observation remains absent; its component and exact identity are UNVERIFIED",
+                      "duration": 9
+                    }
+                  ],
+                  "startTime": "2026-10-22T06:54:42.047Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-144"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--f4f06a33c70193ec9d51ba924e712ffb8e126133.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--4b84de85650a843b9c2f03ab40d2ae47a4c4a0b9.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--d77b45a86d51ce7c0e2e6fc1210259a8eec23a55.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--3bdc847b289ec422aab7054b5cf3f6c32c919b3b.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--7059cfa2e09e1e064d78a5bd562b6d4a7e01a1e9.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--35ef5c40646b70129c710cb7892ce7969c32a573.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--fd8bd2c160c89e2e3623f93ed2bced701d0a8bb6.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-e4d1cc199e87adef392f",
+          "file": "auth-final.spec.ts",
+          "line": 76,
+          "column": 1
+        },
+        {
+          "title": "AUTH-116 independent contexts preserve separate server sessions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-116"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3277,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B",
+                      "duration": 1339
+                    },
+                    {
+                      "title": "2. And the dialog named \"Leave Now?\" is visible in CTX-A on the Home page",
+                      "duration": 75
+                    },
+                    {
+                      "title": "3. When User A in browser context \"CTX-A\" clicks the button labelled \"Logout\" inside the dialog named \"Leave Now?\" on the Home page",
+                      "duration": 31
+                    },
+                    {
+                      "title": "4. And the controlled browser clock advances through the 1000-millisecond logout delay",
+                      "duration": 134
+                    },
+                    {
+                      "title": "5. Then the textbox with placeholder \"Enter Username\" on the login page is visible in browser context \"CTX-A\"",
+                      "duration": 4
+                    },
+                    {
+                      "title": "6. And the text input with placeholder \"Enter Password\" on the login page is visible in browser context \"CTX-A\"",
+                      "duration": 3
+                    },
+                    {
+                      "title": "7. And the button labelled \"Sign In\" on the login page is visible in browser context \"CTX-A\"",
+                      "duration": 2
+                    },
+                    {
+                      "title": "8. When CTX-B sends a controlled POST \"/api/auth/v2/sso/validate\" using its separate access credential",
+                      "duration": 14
+                    },
+                    {
+                      "title": "9. Then the CTX-B validation response has result=true and SESSION-B remains installed",
+                      "duration": 3
+                    },
+                    {
+                      "title": "10. And the tab labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page is visible in CTX-B",
+                      "duration": 51
+                    }
+                  ],
+                  "startTime": "2026-10-22T06:54:44.301Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-116"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--de2639b3d2c3848734b1139a7c678b12fd9e27dd.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--490e5d8c77ba8f6b56bc170848378421f6119aa3.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--c1cdf7decdca4bb85218c8b2459d9259fe46aede.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--d45c28ceb3dc7354aa8659d5e5f7f8cf5eff0b9c.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--e8b9f020d83ffd72e2ddad05479ae114ae164f50.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--4ec209f3883e1bbba4333fe94d3cfb26f6d61fcc.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--09605fb91d1e9d23f40e360d45222b090ae04c4f.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--8b155448583da6083f5c7f6ecdd4221b01bc0e7c.png"
+                    },
+                    {
+                      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--1bad1fcd19cafe2eaadc97b06f98dd08342c9c5c.png"
+                    },
+                    {
+                      "name": "CTX-B separate session visible",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/CTX-B-separate-session-visible-6d5021084654af7babb028f9089416a34f1d3b95.png"
+                    },
+                    {
+                      "name": "step-10 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/step-10-ACTUAL-APPLICATION-LOCAL-SERVICES--11dfc7068793e2927d9fcc6dfa1759a0ec8b8a5b.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--fb42c15df67864f01733acc3642a8583f699b529.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/test-finished-2.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-075/playwright-artifacts/auth-final-AUTH-116-indepe-7d344-ve-separate-server-sessions/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-ba4d3840ec8597676b64",
+          "file": "auth-final.spec.ts",
+          "line": 88,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T06:54:38.010Z",
+    "duration": 9835.008,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "id": "RN-B016",
+  "title": "the timezone changes from UTC to Asia/Singapore without changing epoch time",
+  "basis": "observed",
+  "started_at": "2026-10-29T02:05:58.164Z",
+  "status": "PARTIALLY_EXECUTED",
+  "expected": [
+    "the computed access deadline equals its pre-change epoch timestamp"
+  ],
+  "assertions": [
+    {
+      "name": "Singapore timezone fixture",
+      "actual": "Asia/Singapore",
+      "expected": "Asia/Singapore",
+      "status": "PASSED"
+    },
+    {
+      "name": "same epoch computation",
+      "actual": 1793232064416,
+      "expected": 1793232064416,
+      "status": "PASSED"
+    }
+  ],
+  "observations": {
+    "timezone": "Asia/Singapore",
+    "relogin_count": 0
+  },
+  "source_revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "source_refs": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": "110-205",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    }
+  ],
+  "limits": [
+    "Actual Chromium portal, React hooks, reducers, Axios interceptors and services.",
+    "Controlled browser time, synthetic identity and auth responses. Protected peer assertions are fixture-level, not production RSA authorization.",
+    "Native device, VPN, real sleep, independent devices and unavailable target boundaries remain blocked."
+  ],
+  "screenshots": [],
+  "initial": {
+    "expiry": 1793232064416,
+    "isOnLogout": false,
+    "loading": false,
+    "dialog": false,
+    "workspaceIds": [
+      "8e3c33ff-75aa-4d93-a5b0-7007e9cf7bb3"
+    ],
+    "selected": "8e3c33ff-75aa-4d93-a5b0-7007e9cf7bb3",
+    "probe": {
+      "opens": 0,
+      "closures": 0,
+      "events": [],
+      "activity": [],
+      "activeTimers": {
+        "1000000000014": {
+          "delay": 54496,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2826:28\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        },
+        "1000000000017": {
+          "delay": 600,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at setTabPanel (http://127.0.0.1:8342/base.js:74872:14)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2178:63\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000019": {
+          "delay": 29079,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at scheduleAcquisition (http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2872:28)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2894:5\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000020": {
+          "delay": 14400000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2896:49\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        }
+      },
+      "listeners": []
+    },
+    "token_sha256": "81edd85c0154437452d50c59dd1a8de3ae421a2ca9e050ca3080a3df923ae626",
+    "refresh_sha256": "ebf467ad0d8c231f4e81a9ea7909e400ae5c1dfd3007ecb1861657b36e557cd8"
+  },
+  "blocked_predicates": [
+    "A Singapore context ran, but this driver did not change timezone within the same running context. Exact transition remains unexecuted."
+  ],
+  "error": "A Singapore context ran, but this driver did not change timezone within the same running context. Exact transition remains unexecuted.",
+  "completed_at": "2026-10-29T02:06:08.539Z",
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793232004416,
+      "owner_sha256": null
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793232010337,
+      "owner_sha256": null
+    }
+  ]
+}

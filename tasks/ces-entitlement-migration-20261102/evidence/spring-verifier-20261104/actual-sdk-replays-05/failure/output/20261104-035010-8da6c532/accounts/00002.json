@@ -1,0 +1,44 @@
+{
+  "userId" : "bob",
+  "startedAt" : "2026-11-04T03:50:10.324432Z",
+  "baseline" : {
+    "permissions" : {
+      "LEGACY_APP:READER" : {
+        "TRADE" : [ "view", "view", "export" ]
+      }
+    },
+    "requests" : [ {
+      "method" : "GET",
+      "path" : "/ems2/account/{userId}",
+      "stage" : "EMS2_ACCOUNT",
+      "status" : 200,
+      "responseBytes" : 88,
+      "responseSha256" : "d2d74a77bf7bc1f62dc7ecd6764898d2bc8594e61d237ff203535547cce31c39"
+    }, {
+      "method" : "POST",
+      "path" : "/ems2/entitlements",
+      "stage" : "EMS2_ENTITLEMENTS",
+      "status" : 200,
+      "responseBytes" : 482,
+      "responseSha256" : "1930f94cf8dade6dfc4dcc2cf06af84de3ed666b2181e13fc61bff534e24829d"
+    } ],
+    "errors" : [ ],
+    "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+  },
+  "candidate" : {
+    "permissions" : { },
+    "requests" : [ {
+      "method" : "GET",
+      "path" : "/ces/user/{userId}",
+      "stage" : "CES_ASSIGNED_ROLES",
+      "status" : 503,
+      "responseBytes" : 38,
+      "responseSha256" : "963389cfaac01d973ab5eb30fe9e3ec4ed486ec91ecc3f523ab5a6aea681f4a4",
+      "error" : "HTTP_503"
+    } ],
+    "errors" : [ "HTTP_503" ],
+    "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+  },
+  "status" : "UNASSESSED",
+  "finishedAt" : "2026-11-04T03:50:10.337413Z"
+}

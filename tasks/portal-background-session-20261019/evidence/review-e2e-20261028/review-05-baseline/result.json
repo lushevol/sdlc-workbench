@@ -1,0 +1,88 @@
+{
+  "caseId": "REVIEW-E2E-05",
+  "finding": "REVIEW-05",
+  "side": "baseline",
+  "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "status": "SETUP_OR_EXECUTION_FAILED",
+  "startedAt": "2026-10-28T02:42:44.194Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8153",
+  "screenshots": [
+    {
+      "phase": "execution-failed",
+      "file": "execution-failed.png",
+      "capturedAt": "2026-10-28T02:43:03.925Z",
+      "method": "Playwright screenshot",
+      "sha256": "a6109f355e0e0634b54a8ee304dd7e20fdda3b1a0d1fe081f9c1aeefb45b5f27",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:42:47.521Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:42:47.532Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:42:47.664Z"
+    }
+  ],
+  "assertions": [],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Refresh acquisition is held before local BFF dispatch, then released with a disclosed synthetic HTTP503."
+  ],
+  "before": {
+    "at": "2026-10-28T02:42:48.921Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "0d25324bdfa7fda420f0d724c1db3f7e319d3330815d854ea63d183f3f7bb61d",
+      "exp": 1793155427,
+      "iat": 1793155367
+    },
+    "refresh": null,
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "error": "page.screenshot: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n",
+  "failure": {
+    "at": "2026-10-28T02:43:03.925Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "0d25324bdfa7fda420f0d724c1db3f7e319d3330815d854ea63d183f3f7bb61d",
+      "exp": 1793155427,
+      "iat": 1793155367
+    },
+    "refresh": null,
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "completedAt": "2026-10-28T02:43:04.382Z",
+  "elapsedMs": 20188
+}

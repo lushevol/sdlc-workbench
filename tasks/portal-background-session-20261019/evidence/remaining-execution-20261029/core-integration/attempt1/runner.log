@@ -1,0 +1,52 @@
+FAIL src/remaining/core-integration.test.tsx
+  Canonical remaining core integration cases
+    ✓ RN-B001 Activity request boundary at 24999 milliseconds (7 ms)
+    ✓ RN-B002 Activity request boundary at 25000 milliseconds (3 ms)
+    ✓ RN-B003 Activity request boundary at 25001 milliseconds (2 ms)
+    ✓ RN-B004 Manual recovery deadline offset -1 milliseconds (2 ms)
+    ✓ RN-B005 Manual recovery deadline offset 0 milliseconds (2 ms)
+    ✓ RN-B006 Manual recovery deadline offset 1 milliseconds (1 ms)
+    ✓ RN-B007 Refresh reuse boundary offset -1 milliseconds (1 ms)
+    ✓ RN-B008 Refresh reuse boundary offset 0 milliseconds (1 ms)
+    ✓ RN-B009 Refresh reuse boundary offset 1 milliseconds (1 ms)
+    ✓ RN-P001 Relogin rejects missing access header (1 ms)
+    ✓ RN-P002 Relogin rejects empty access header (1 ms)
+    ✓ RN-P003 Relogin rejects unreadable access payload (1 ms)
+    ✓ RN-P004 Relogin rejects missing exp (1 ms)
+    ✓ RN-P005 Relogin rejects string exp (1 ms)
+    ✓ RN-P006 Relogin rejects expired exp (2 ms)
+    ✓ RN-P007 Relogin rejects exp at current time (2 ms)
+    ✓ RN-P008 Relogin rejects missing iat (1 ms)
+    ✓ RN-P009 Relogin rejects zero iat (1 ms)
+    ✓ RN-P010 Relogin rejects negative iat (1 ms)
+    ✓ RN-P011 Relogin rejects iat equals exp (1 ms)
+    ✓ RN-P012 Relogin rejects iat exceeds exp (1 ms)
+    ✓ RN-P013 Relogin rejects nonfinite exp multiplication (1 ms)
+    ✕ RN-P018 conflicting access header casing (96 ms)
+    ✓ RN-R009 1 simultaneous acquisition callers share one pending operation (1 ms)
+    ✓ RN-R010 2 simultaneous acquisition callers share one pending operation (1 ms)
+    ✓ RN-R011 8 simultaneous acquisition callers share one pending operation (1 ms)
+    ✓ RN-R012 64 simultaneous acquisition callers share one pending operation (2 ms)
+    ✓ RN-R013 2 simultaneous manual callers share one pending operation (1 ms)
+    ✓ RN-R014 20 simultaneous manual callers share one pending operation (1 ms)
+
+  ● Canonical remaining core integration cases › RN-P018 conflicting access header casing
+
+    Isolated BFF login unavailable: URLError: <urlopen error [Errno 1] Operation not permitted>
+
+      58 |      if(n===18){
+      59 |       const credentials=JSON.parse(execFileSync('python3',[process.env.CORE_CONFLICT_PROBE!,'login'],{encoding:'utf8',timeout:15000}));
+    > 60 |       if(credentials.error)throw new Error('Isolated BFF login unavailable: '+credentials.error);
+         |                                  ^
+      61 |       actualAccess=credentials.access;jest.setSystemTime(credentials.observed_now_ms);result.live_peer={url:'http://127.0.0.1:8191',login_status:credentials.status,synthetic_identity:true,credentials_retained:false};
+      62 |      }
+      63 |      const beforeAccess=await renderFixture(4*60*60_000,true);
+
+      at Object.<anonymous> (src/remaining/core-integration.test.tsx:60:34)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 28 passed, 29 total
+Snapshots:   0 total
+Time:        1.109 s
+Ran all test suites within paths "src/remaining/core-integration.test.tsx".
+Test results written to: ../../../../../../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-integration/jest-results.json

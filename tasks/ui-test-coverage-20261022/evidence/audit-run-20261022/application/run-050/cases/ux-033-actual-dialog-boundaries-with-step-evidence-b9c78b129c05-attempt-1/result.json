@@ -1,0 +1,1048 @@
+{
+  "caseId": "ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1",
+  "testId": "3e6bfc360e6ff4de970c-4f94ea4ebe22a24ab9be",
+  "title": "UX-033 actual dialog boundaries with step evidence",
+  "source": {
+    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+    "line": 14,
+    "column": 3
+  },
+  "startedAt": "2026-10-22T06:08:43.610Z",
+  "endedAt": "2026-10-22T06:08:53.266Z",
+  "durationMs": 9344,
+  "expectedStatus": "passed",
+  "actualStatus": "failed",
+  "outcome": "unexpected",
+  "assertionsSatisfied": false,
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "canonicalIdsMentioned": [
+    "UX-033"
+  ],
+  "canonicalBusinessExecution": "LOCAL_CONTROLLED_ASSERTIONS",
+  "errors": [
+    {
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root\">Fixture Dialog</div>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0\"\u001b[22m\n",
+      "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root\">Fixture Dialog</div>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0\"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts:54:154\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts:23:31",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+        "column": 154,
+        "line": 54
+      },
+      "snippet": "  52 |       }\n  53 |       if (text.includes('CONTENT-END') && text.includes('reachable')) { const marker = dialog.getByText('CONTENT-END', { exact: true }); await marker.scrollIntoViewIfNeeded(); await expect(marker).toBeInViewport(); return; }\n> 54 |       if (text.includes('Fixture Dialog') && text.includes('visible and reachable')) { await expect(dialog.getByText('Fixture Dialog', { exact: true })).toBeInViewport(); return; }\n     |                                                                                                                                                          ^\n  55 |       if (text.includes('Close') && (text.includes('visible and enabled') || text.includes('visible and reachable'))) {\n  56 |         await close().scrollIntoViewIfNeeded(); await expect(close()).toBeInViewport(); await expect(close()).toBeEnabled(); return;\n  57 |       }"
+    }
+  ],
+  "assertionSteps": [
+    {
+      "title": "Before Hooks",
+      "category": "hook",
+      "durationMs": 272,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"context\"",
+          "category": "fixture",
+          "durationMs": 13,
+          "error": null,
+          "steps": [
+            {
+              "title": "Create context",
+              "category": "pw:api",
+              "durationMs": 9,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"page\"",
+          "category": "fixture",
+          "durationMs": 252,
+          "error": null,
+          "steps": [
+            {
+              "title": "Create page",
+              "category": "pw:api",
+              "durationMs": 251,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"audit\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+            "line": 171,
+            "column": 26
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "1. Given USER-A has an isolated draggable Fixture Dialog at viewport 1366 by 768 CSS pixels",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 3152,
+      "error": null,
+      "steps": [
+        {
+          "title": "Set viewport size",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 26,
+            "column": 20
+          },
+          "durationMs": 26,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Navigate",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/local-app.ts",
+            "line": 41,
+            "column": 14,
+            "function": "openLogin"
+          },
+          "durationMs": 70,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "GET",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/catalog-app.ts",
+            "line": 132,
+            "column": 34
+          },
+          "durationMs": 17,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 662,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 123,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 6,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 9,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEditable\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 31,
+            "column": 38,
+            "function": "LoginPage.fillUsername"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fill \"user-a\"",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 32,
+            "column": 30,
+            "function": "LoginPage.fillUsername"
+          },
+          "durationMs": 26,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEditable\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 37,
+            "column": 38,
+            "function": "LoginPage.fillPassword"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fill \"FixturePass1!\"",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 38,
+            "column": 30,
+            "function": "LoginPage.fillPassword"
+          },
+          "durationMs": 12,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 43,
+            "column": 29,
+            "function": "LoginPage.clickSignInButton"
+          },
+          "durationMs": 51,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 96,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 7,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveText\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/catalog-app.ts",
+            "line": 119,
+            "column": 74,
+            "function": "CatalogApp.expectRoute"
+          },
+          "durationMs": 798,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Reload",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 30,
+            "column": 22
+          },
+          "durationMs": 43,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "GET",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/catalog-app.ts",
+            "line": 132,
+            "column": 34
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 323,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 31,
+            "column": 64
+          },
+          "durationMs": 789,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 34,
+            "column": 30
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 48,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "2. When USER-A drags the text labelled \"Fixture Dialog\" in the dialog with title text \"Fixture Dialog\" on the fixture page until its top-left reaches the viewport origin",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 439,
+      "error": null,
+      "steps": [
+        {
+          "title": "Bounding box",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 42,
+            "column": 34
+          },
+          "durationMs": 15,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Bounding box",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 42,
+            "column": 70
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeTruthy\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 42,
+            "column": 97
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeTruthy\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 42,
+            "column": 125
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Mouse move",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 44,
+            "column": 26
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Mouse down",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 44,
+            "column": 55
+          },
+          "durationMs": 8,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Mouse move",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 44,
+            "column": 80
+          },
+          "durationMs": 369,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Mouse up",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 44,
+            "column": 142
+          },
+          "durationMs": 21,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Bounding box",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 45,
+            "column": 78
+          },
+          "durationMs": 11,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 88,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "3. Then The text labelled \"Fixture Dialog\" in the dialog with title text \"Fixture Dialog\" on the fixture page is visible and reachable",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 5010,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root\">Fixture Dialog</div>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0\"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root\">Fixture Dialog</div>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0\"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts:54:154\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts:23:31",
+        "location": {
+          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+          "column": 154,
+          "line": 54
+        },
+        "snippet": "  52 |       }\n  53 |       if (text.includes('CONTENT-END') && text.includes('reachable')) { const marker = dialog.getByText('CONTENT-END', { exact: true }); await marker.scrollIntoViewIfNeeded(); await expect(marker).toBeInViewport(); return; }\n> 54 |       if (text.includes('Fixture Dialog') && text.includes('visible and reachable')) { await expect(dialog.getByText('Fixture Dialog', { exact: true })).toBeInViewport(); return; }\n     |                                                                                                                                                          ^\n  55 |       if (text.includes('Close') && (text.includes('visible and enabled') || text.includes('visible and reachable'))) {\n  56 |         await close().scrollIntoViewIfNeeded(); await expect(close()).toBeInViewport(); await expect(close()).toBeEnabled(); return;\n  57 |       }"
+      },
+      "steps": [
+        {
+          "title": "Expect \"toBeInViewport\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 54,
+            "column": 154
+          },
+          "durationMs": 5008,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root\">Fixture Dialog</div>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0\"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeInViewport\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeInViewport\" locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"dialog\"]:visible').filter({ has: getByText('Fixture Dialog', { exact: true }) }).getByText('Fixture Dialog', { exact: true })\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root\">Fixture Dialog</div>\u001b[22m\n\u001b[2m       - unexpected value \"viewport ratio 0\"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts:54:154\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts:23:31",
+            "location": {
+              "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+              "column": 154,
+              "line": 54
+            },
+            "snippet": "  52 |       }\n  53 |       if (text.includes('CONTENT-END') && text.includes('reachable')) { const marker = dialog.getByText('CONTENT-END', { exact: true }); await marker.scrollIntoViewIfNeeded(); await expect(marker).toBeInViewport(); return; }\n> 54 |       if (text.includes('Fixture Dialog') && text.includes('visible and reachable')) { await expect(dialog.getByText('Fixture Dialog', { exact: true })).toBeInViewport(); return; }\n     |                                                                                                                                                          ^\n  55 |       if (text.includes('Close') && (text.includes('visible and enabled') || text.includes('visible and reachable'))) {\n  56 |         await close().scrollIntoViewIfNeeded(); await expect(close()).toBeInViewport(); await expect(close()).toBeEnabled(); return;\n  57 |       }"
+          },
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 74,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-03-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "After Hooks",
+      "category": "hook",
+      "durationMs": 263,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"audit\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+            "line": 171,
+            "column": 26
+          },
+          "durationMs": 34,
+          "error": null,
+          "steps": [
+            {
+              "title": "Screenshot",
+              "category": "pw:api",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 132,
+                "column": 24,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 32,
+              "error": null,
+              "steps": []
+            },
+            {
+              "title": "Attach \"failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+              "category": "test.attach",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 141,
+                "column": 27,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 0,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"auditFixture\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 5,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"auditScope\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+            "line": 5,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"page\"",
+          "category": "fixture",
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"context\"",
+          "category": "fixture",
+          "durationMs": 176,
+          "error": null,
+          "steps": [
+            {
+              "title": "Close context",
+              "category": "pw:api",
+              "durationMs": 17,
+              "error": null,
+              "steps": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Worker Cleanup",
+      "category": "hook",
+      "durationMs": 96,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"browser\"",
+          "category": "fixture",
+          "durationMs": 93,
+          "error": null,
+          "steps": []
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "type": "audit-scope",
+      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+    },
+    {
+      "type": "audit-fixture",
+      "description": "Actual portal Profile and exported Dialog components. A controlled SystemJS module supplies the declared isolated dialog or scrollable content. This run checks component behavior; the fixture content is not business output."
+    },
+    {
+      "type": "canonical-case",
+      "description": "UX-033"
+    }
+  ],
+  "frames": {
+    "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/frames.json",
+    "sha256": "3ef097685cc59492702d4abc7a26974d8def02a316070812620f43cf081a91bc",
+    "count": 4,
+    "captureStatus": "CAPTURED"
+  },
+  "screenshotGap": null,
+  "attachments": [
+    {
+      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/playwright-artifacts/dialog-ux-UX-033-actual-dialog-boundaries-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--5341d189a228b7e8b3184976e5c39e4e4ded6c3a.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/attachments/001-step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--5341d189a228b7e8b3184976e5c39e4e4ded6c3a.png",
+      "sha256": "bc3bdf03207b585f689fce1046c97a0806d08c7326eecea8fafc59081eed1643",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/playwright-artifacts/dialog-ux-UX-033-actual-dialog-boundaries-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--dc9de1c463fe20fae74ef9589a11d97404027ee1.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/attachments/002-step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--dc9de1c463fe20fae74ef9589a11d97404027ee1.png",
+      "sha256": "9d95737dea850801d8ce8c4db98649e20be840037883a7900e767fc2d3486d0a",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-03-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/playwright-artifacts/dialog-ux-UX-033-actual-dialog-boundaries-with-step-evidence/attachments/step-03-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--48efa69e0ffd9e19b00380dc256e92d7a9676569.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/attachments/003-step-03-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--48efa69e0ffd9e19b00380dc256e92d7a9676569.png",
+      "sha256": "c312e95be8943578323065b8b75a81bd75246d67805a2bda56bc3f3b10435559",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/playwright-artifacts/dialog-ux-UX-033-actual-dialog-boundaries-with-step-evidence/test-failed-1.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/attachments/004-test-failed-1.png",
+      "sha256": "687726f73213e6b7e98002c24578137f1ffe755e8ff40fb0906d161397bdb5fb",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/playwright-artifacts/dialog-ux-UX-033-actual-dialog-boundaries-with-step-evidence/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--c5174eee1c4d5e47146bcf20209b351966ca3e3d.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/attachments/005-failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--c5174eee1c4d5e47146bcf20209b351966ca3e3d.png",
+      "sha256": "c312e95be8943578323065b8b75a81bd75246d67805a2bda56bc3f3b10435559",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/playwright-artifacts/dialog-ux-UX-033-actual-dialog-boundaries-with-step-evidence/error-context.md",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/attachments/006-error-context.md",
+      "sha256": "b0c36148a2b1e4e4dfa3c683ffd1b6d1c33f9b4861402aed4119b590c7fddf94",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/playwright-artifacts/dialog-ux-UX-033-actual-dialog-boundaries-with-step-evidence/trace.zip",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/attachments/007-trace.zip",
+      "sha256": "9e6dda4a583ed4f6b144dd33e1a8bf4ce866618491482412b09165baef3f73af",
+      "copiedBytesUnchanged": true
+    }
+  ],
+  "limits": [
+    "The recorded assertions and environment binding limit the supported business result."
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-05T16:05:17.404081+00:00",
+  "scope": "Current mfe-base compatibility with BFF CES migration; source/contract inspection and existing tests only",
+  "repository": {
+    "path": "repos/ui/mfe-base",
+    "head": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+    "worktree": "",
+    "inspected_file_sha256": {
+      "src/utils/login.ts": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "src/utils/entities.ts": "d6ef7eb1bc1b961e9d1bdcc596462d71861c005a12f45175d97f2e663ed75932",
+      "src/utils/common.ts": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc",
+      "src/hooks/model/root.ts": "01eb7407967602ae718a2d44d3240d9c2f94e15cbb6da4f083b9b0f8dd604a15",
+      "src/hooks/service/util/succes.response.handler.ts": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "src/pages/Home/common/useParameters.ts": "cce763e30e3a792152b63cc916dfde43b6364f5ea08e1f6dfd941fbc5ceac368",
+      "src/pages/Home/common/useController.ts": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "src/components/Drawer/MenuItem.tsx": "f5409418b6be51718133e23afdb9731fec2ffc666e7621dcb9ff6d1e1bd8cb82",
+      "src/components/Drawer/common/MenuItem.useController.ts": "8583190924a08172e1dbcba6b49d790fe49845b066bd65e2c5eba9e6c2c8c5e5",
+      "src/admin/Tile/common/useController.tsx": "62b586c92942ee7dc62bcaf27ec630a90b82ad5038409e3150e8a8102da6269a",
+      "src/admin/Tile/common/useTableDetail.ts": "2bf4b22926c294c1ea8ab89daeb5d11db80154f4a88dea4f06b2d42858f581d3",
+      "src/admin/Tile/common/useAudit.tsx": "22d656a6e17c66626676df314bf22d08b42eb448f23779df71c265424dd13046",
+      "src/admin/Tile/services/useServices.ts": "ed33d36798f28eef3d552846a47c81ec10f1aa5e8828c305bf873d3fcd402367",
+      "src/admin/common/utils/index.ts": "be595fb158e407938eadc7e0caf2b86a2446b45a21062e8dde2ceadf16d661e7",
+      "src/admin/common/utils/index.test.ts": "00a04916df84a7dbfdb0f2797c1e3e6d295676ecc31bcfff414de4e369779c6c",
+      "src/utils/common.test.ts": "3d28c5eaf36004dfcfecc180fd5ac7ff8c683a2d3401cb36fef6998356e065f1",
+      "src/utils/entities.test.ts": "c4b276b9b1eb83c1c24ce3363ede6be9d9ce279f73d31eea98520273b737cfa6",
+      "src/utils/login.test.ts": "a5d59729b6a5e683202aa84bfcc5d35e450f916c13b053ea9f0fb7dfa844e34a",
+      "src/components/Profile/index.tsx": "b6e5602627da98d54c3df39638e6ce129e4c7ec617a2482cdcadbdb2619d3888"
+    }
+  },
+  "captures": {
+    "tasks/ces-entitlement-migration-20261102/ces migration/login-response.json": "a47b9b46aecf706e9134ad573120f1b7f1b6a8ae8ddfe88b7b87554e2d158b41",
+    "tasks/ces-entitlement-migration-20261102/ces migration/application_tile_1105.csv": "23b23415ebe9def55b854f36e85465b54add2356d5b9fc165cb8c54a15647486"
+  },
+  "findings": [
+    {
+      "id": "BASE-01",
+      "title": "Current sample login and nonblank tile admission already fit normalized contract",
+      "classification": "confirmed source relationship; sample compatibility predicted by source",
+      "confidence": "high",
+      "source": [
+        "src/utils/login.ts:65-95",
+        "src/utils/login.ts:141-158",
+        "src/utils/entities.ts:3-12",
+        "src/utils/common.ts:260-290",
+        "src/hooks/service/util/succes.response.handler.ts:84-95"
+      ],
+      "evidence": "handleUser decodes entitlementsToken JSON and attaches response entities unchanged. Entry compares names from returned drawer entity arrays. Captured CES entity and all 41 returned CES tile entity arrays use RATAN_ENTITLEMENT_RULE. All returned CES subjects are nonblank and match the returned CES entity subjects. X_RATANONE is absent from captured entities.",
+      "consequence": "No blanket login API or decoder replacement is required for this sample.",
+      "next_action": "Retain normalized entity/subject/action contract and validate login, relogin, validate, and extend with mixed EMS2/CES samples.",
+      "owner": "unknown"
+    },
+    {
+      "id": "BASE-02",
+      "title": "Replace legacy tile re-evaluation with a consistent normalized CES admission decision",
+      "classification": "required compatibility change for supported CES configurations; conditional runtime impact",
+      "confidence": "high",
+      "source": [
+        "src/utils/common.ts:265-290",
+        "src/utils/common.ts:293-311",
+        "src/pages/Home/common/useParameters.ts:66-85",
+        "src/pages/Home/common/useController.ts:284-299",
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java:125-146",
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java:212-225"
+      ],
+      "evidence": "BFF checks entitlementAppFeature, but drawer subject remains ems2_subject. Base requires nonempty legacy subject and checks only first matching entity. Source X_RATANONE fallback is scalar-only and does not map CES. CSV tile192 has blank feature and subject, but is absent from this login capture. Other differing-feature and multiple-app cases remain configuration boundaries, not observed sample failures.",
+      "consequence": "A BFF-admitted CES tile can open from drawer yet fail deep-link or saved-workspace retention if old subject is blank or differs from granted CES feature.",
+      "next_action": "Use exact membership in the current BFF-authorized drawer for CES admission, or return an explicit normalized grant decision/feature contract and share one validator across launch and workspace paths. Preserve template and missing-configuration rules. Remove/isolate the legacy X_RATANONE fallback only with EMS2 compatibility evidence.",
+      "owner": "unknown"
+    },
+    {
+      "id": "BASE-03",
+      "title": "Expose and audit the four CES tile configuration fields",
+      "classification": "confirmed frontend management gap",
+      "confidence": "high",
+      "source": [
+        "src/admin/Tile/common/useController.tsx:232-259",
+        "src/admin/Tile/common/useController.tsx:342-360",
+        "src/admin/Tile/common/useAudit.tsx:124-137",
+        "src/admin/Tile/common/useTableDetail.ts:26-48",
+        "src/admin/Tile/services/useServices.ts:66-105",
+        "src/admin/Tile/services/useServices.ts:124-135"
+      ],
+      "evidence": "Columns and new-row defaults omit entitlementSource, entitlementAppId, entitlementAppName, entitlementAppFeature. Audit view omits these fields. Existing fetched rows are cloned and spread, so supplied metadata survives an ordinary edit or verify. BFF /tile/data returns full ApplicationTile including CES properties. No CSV upload/export UI exists in inspected ts/tsx source.",
+      "consequence": "Admin cannot create or change CES routing or review these routing values during maker/checker audit. Ordinary current edits do not establish a source reset defect.",
+      "next_action": "Add source selector and app ID/name/features controls, conditional validation consistent with BFF, explicit defaults, displayed maker/checker/audit fields, and payload preservation assertions. Extend external CSV consumers only when they exist.",
+      "owner": "unknown"
+    },
+    {
+      "id": "BASE-04",
+      "title": "Align shared TypeScript models with mixed-provider nullable metadata",
+      "classification": "required contract maintenance; no current runtime failure established",
+      "confidence": "high",
+      "source": [
+        "src/hooks/model/root.ts:42-80",
+        "src/admin/common/utils/index.ts:3-10"
+      ],
+      "evidence": "CES normalized entity id, applicationName, roleId and roleName are null. Subject id, action id and action entitlementId are also null in the capture. Current Entity/Subject/Action interfaces require legacy nonnull fields. Subject and Tile interfaces omit entitlementSource. Only the admin role helper consumes roleName for access decisions in inspected base source; captured admin remains EMS2 FMO PORTAL ADMIN with RATAN_PROD.",
+      "consequence": "Current types misdescribe real responses and encourage false role-based assumptions.",
+      "next_action": "Add provider union and source markers; make legacy identifiers/role metadata nullable or optional. Keep admin ownership role separate from CES effective feature/action grants. Do not infer roles from appName:null token keys.",
+      "owner": "unknown"
+    }
+  ],
+  "tests": {
+    "command": "BABEL_ENV=test node node_modules/jest/bin/jest.js --runInBand --coverage=false --runTestsByPath src/utils/login.test.ts src/utils/entities.test.ts src/utils/common.test.ts src/admin/common/utils/index.test.ts --json --outputFile <task>/mfe-base-tests.json",
+    "result_file": "mfe-base-tests.json",
+    "sha256": "72c57ce8d4ee995ed9e2677689238a057a32ad294f06c4c667bb25067d4e3646",
+    "summary": {
+      "numTotalTests": 9,
+      "numPassedTests": 9,
+      "numFailedTests": 0,
+      "numPendingTests": 0,
+      "numRuntimeErrorTestSuites": 0,
+      "numTotalTestSuites": 4,
+      "numPassedTestSuites": 4,
+      "success": true
+    },
+    "assertion_evidence": [
+      "common.test.ts:339-351 asserts missing entities denial, subject match, array matching and old scalar X_RATANONE fallback.",
+      "admin/common/utils/index.test.ts:6-55 asserts SUPER_USER extraction and undefined when absent.",
+      "login.test.ts invokes handlers but has no direct assertions for the new capture; getJWTPayload is mocked.",
+      "No focused test was found for entitlementSource or the new mixed-provider shape. Existing routing fixtures contain RATAN_ENTITLEMENT_RULE as a legacy subject, which does not establish CES contract coverage."
+    ],
+    "limit": "Nine existing tests pass across four files. This is a focused subset, not complete candidate unit or migration conformance verification."
+  },
+  "limits": [
+    "No application code edited.",
+    "No new test source created.",
+    "No real browser execution.",
+    "Capture deployment revision, environment and timestamp are unavailable.",
+    "No current live service requests.",
+    "Approved complete migration AC denominator remains unresolved.",
+    "Conditional configuration examples do not establish present production impact."
+  ]
+}

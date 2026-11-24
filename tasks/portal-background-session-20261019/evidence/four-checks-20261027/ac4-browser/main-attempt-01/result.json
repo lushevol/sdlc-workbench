@@ -1,0 +1,86 @@
+{
+  "case_id": "FOUR-AC4-BROWSER",
+  "candidate_commit": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "status": "FAILED",
+  "started_at": "2026-10-27T06:49:01.713Z",
+  "clock": "PLAYWRIGHT_CONTROLLED_BROWSER_CLOCK",
+  "execution_scope": "ACTUAL_UI_WITH_SYNTHETIC_AUTHENTICATION_RESPONSES",
+  "assertions": [
+    {
+      "id": "cycle-1 exact clock",
+      "actual": 1793059815227,
+      "expected": 1793059815227,
+      "status": "PASSED"
+    },
+    {
+      "id": "cycle-1 successful renewal",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "id": "cycle-1 current access remains usable",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "id": "cycle-1 authenticated workspace",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "id": "cycle-1 zero logout/prompt",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    }
+  ],
+  "cycles": [],
+  "requests": [
+    {
+      "name": "login",
+      "at": 1793059214939
+    },
+    {
+      "name": "refreshtoken",
+      "at": 1793059215227,
+      "input_access_valid": true,
+      "refresh_sha256": "369dcc528a80d5475ceb46b5c8b8c13184ccd719dfdaabf76226fbf670ba2c64",
+      "refresh_exp": 1793066415
+    },
+    {
+      "name": "extend",
+      "at": 1793059815227,
+      "input_access_valid": true,
+      "input_access_matches_current": true,
+      "output_exp": 1793060715
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "before.png",
+      "phase": "authenticated assertion baseline",
+      "method": "Playwright page.screenshot",
+      "captured_at": "2026-10-27T06:49:21.056Z"
+    }
+  ],
+  "limits": [
+    "Synthetic authentication credentials and response headers bypass server credential validation.",
+    "Actual MFE composition, DOM, Axios, reducers, Home timers, and trusted mouse events execute unchanged.",
+    "Headless Edge does not establish native tab suspension or PROD parity."
+  ],
+  "browser_version": "156.0.4314.42",
+  "start_clock_ms": 1793059215227,
+  "initial_access": {
+    "sha256": "a9eca04d0f5e2569d6a5bf8ed0c2cb4cf129654a189e0920f2ca83cbb51ffea6",
+    "exp": 1793060114
+  },
+  "initial_refresh": {
+    "sha256": "369dcc528a80d5475ceb46b5c8b8c13184ccd719dfdaabf76226fbf670ba2c64",
+    "exp": 1793066415
+  },
+  "error": "The \"data\" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined",
+  "completed_at": "2026-10-27T06:49:21.149Z"
+}

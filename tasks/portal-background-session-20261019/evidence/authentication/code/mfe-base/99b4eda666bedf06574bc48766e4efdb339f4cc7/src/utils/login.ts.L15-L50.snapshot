@@ -1,0 +1,36 @@
+export const setAuthorization = (token: string) => {
+  const { baseDispatch } = getHooksBase();
+  baseDispatch({
+    type: ActionType.SET_TOKEN,
+    data: { token },
+  });
+  storeData(ActionType.SET_TOKEN, token);
+  const payload = getJWTPayload(token);
+  if (payload != "") {
+    dispacthUserLoginTime(payload);
+  }
+};
+
+export const dispacthUserLoginTime = (payload: JWTPayload) => {
+  if (payload.exp && payload.iat) {
+    const { baseDispatch } = getHooksBase();
+    baseDispatch({
+      type: ActionType.SET_EXPIRED_TOKEN,
+      data: {
+        expiredIn: payload.exp,
+        iat: payload.iat,
+        userLoginTime: new Date(),
+      },
+    });
+  }
+};
+
+const setUser = (user: User) => {
+  const { baseDispatch } = getHooksBase();
+  user.id = user.sub;
+  user.userId = user.sub;
+  baseDispatch({
+    type: ActionType.SET_USER,
+    data: { user },
+  });
+  storeData(ActionType.SET_USER, JSON.stringify(user));

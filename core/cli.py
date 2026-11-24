@@ -1,0 +1,533 @@
+"""Command interface for a local AI-SDLC workspace."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+from .models import WorkbenchError
+from .hook_install import CAPTURE_ONLY_EVENTS, HOOK_EVENTS
+from .runtime import Workbench
+from .workspace import initialize_workspace
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="ai-sdlc", description=__doc__)
+    parser.add_argument("--workspace", help="Workspace directory; defaults to the current directory")
+    commands = parser.add_subparsers(dest="command", required=True)
+    initialize = commands.add_parser("init", help="Create an agent-integrated workspace")
+    initialize.add_argument("path", nargs="?")
+    initialize.add_argument("--name", default="My SDLC workspace")
+    commands.add_parser("status", help="Describe the workspace")
+    knowledge = commands.add_parser("knowledge", help="Browse workspace knowledge")
+    knowledge_commands = knowledge.add_subparsers(dest="knowledge_command", required=True)
+    serve = knowledge_commands.add_parser("serve", help="Serve a local read-only knowledge preview")
+    serve.add_argument("--host", default="127.0.0.1", help="Loopback host only")
+    serve.add_argument("--port", type=int, default=8765)
+    serve.add_argument("--open", action="store_true", help="Open the preview in the default browser")
+    doctor = commands.add_parser("doctor", help="Report local readiness and missing setup without external access")
+    doctor.add_argument("--profile", choices=("core", "all"), default="all")
+    commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
+    hooks = commands.add_parser("hooks", help="Install native client adapters and check explicitly bound session scopes")
+    hook_commands = hooks.add_subparsers(dest="hook_command", required=True)
+    for name in ("install", "uninstall"):
+        operation = hook_commands.add_parser(name)
+        operation.add_argument("--client", action="append", choices=("codex", "copilot", "claude"))
+        if name == "install":
+            operation.add_argument("--python", help="Compatibility check for a local interpreter; hooks use ai-sdlc on PATH")
+    hook_commands.add_parser("status", help="Inspect installed configuration without launching clients")
+    for name in ("bind", "clear", "run"):
+        operation = hook_commands.add_parser(name)
+        operation.add_argument("--client", required=True, choices=("codex", "copilot", "claude"))
+        if name == "run":
+            operation.add_argument("--event", required=True, choices=HOOK_EVENTS)
+        else:
+            operation.add_argument("--session", required=True, help="Native session ID shown by the start hook")
+        if name == "bind":
+            operation.add_argument("--record", required=True, help="Workspace-relative existing living Markdown record")
+            operation.add_argument("--index", help="Workspace-relative shared review index")
+            operation.add_argument("--baseline", help="Workspace-relative behavior evidence baseline")
+            for flag in ("artifact", "case", "watch"):
+                operation.add_argument("--" + flag, action="append", default=[], help="Workspace-relative input file; repeat as needed")
+    learning = commands.add_parser("learning", help="Retrieve and improve scoped Workbench capabilities")
+    learning_commands = learning.add_subparsers(dest="learning_command", required=True)
+    available = learning_commands.add_parser("list", help="Search the capability registry")
+    available.add_argument("--query", default="")
+    available.add_argument("--scope", help="JSON applicability selectors")
+    use = learning_commands.add_parser("use", help="Resolve rules for a capability and exact task scope")
+    use.add_argument("capability_id")
+    use.add_argument("--scope", required=True, help="JSON applicability selectors")
+    use.add_argument("--revision", type=int)
+    for name in ("pending", "conflicts", "diagnose"):
+        learning_commands.add_parser(name)
+    checkpoint = learning_commands.add_parser("checkpoint", help="Extract a structured discovery and reconcile it")
+    checkpoint_source = checkpoint.add_mutually_exclusive_group(required=True)
+    checkpoint_source.add_argument("--input", help="Workspace-relative discovery JSON")
+    checkpoint_source.add_argument("--ado-observation", action="append", help="Artifact observation path; repeat to compare builds")
+    checkpoint.add_argument("--task", help="Workspace-relative living record for artifact observations")
+    for name in ("validate", "promote"):
+        operation = learning_commands.add_parser(name)
+        operation.add_argument("discovery_id")
+        if name == "promote":
+            operation.add_argument("--approval", help="Workspace-relative evidence-bound approval JSON")
+    for name in ("history", "rollback"):
+        operation = learning_commands.add_parser(name)
+        operation.add_argument("capability_id")
+        if name == "rollback":
+            operation.add_argument("--revision", required=True, type=int)
+    ado = learning_commands.add_parser("ado-resolve", help="Resolve an exact Azure DevOps artifact with read grants")
+    ado.add_argument("--resource", dest="resource_id", required=True)
+    for name in ("project", "repository-id", "source-ref", "source-commit", "artifact-name"):
+        ado.add_argument("--" + name, required=name != "artifact-name")
+    for name in ("pipeline-id", "build-id"):
+        ado.add_argument("--" + name, required=True, type=int)
+    sources = commands.add_parser("sources", help="Prepare local source exports with hash-bound selections")
+    source_commands = sources.add_subparsers(dest="source_command", required=True)
+    for name in ("refresh", "select", "plan", "complete", "view", "verify"):
+        operation = source_commands.add_parser(name)
+        operation.add_argument("--source", required=True, help="Registered filesystem source collection ID")
+        if name == "refresh":
+            operation.add_argument("--input", required=True, help="Complete Markdown export inside the workspace")
+            operation.add_argument("--policy", help="Workspace-relative filter policy; defaults to the ingestion skill policy")
+        elif name == "select":
+            operation.add_argument("--decisions", required=True, help="Hash-bound source decisions JSON inside the workspace")
+        elif name == "view":
+            operation.add_argument("--output", required=True, help="New generated view directory inside .workbench/")
+            operation.add_argument("--plan", help="Saved incremental source plan; emit only queued kept pages")
+        elif name == "plan":
+            operation.add_argument("--recipe", default="canonical-v1", help="Canonical processing recipe identity")
+        elif name == "complete":
+            operation.add_argument("--plan", required=True, help="Saved incremental source plan inside the workspace")
+            operation.add_argument("--results", required=True, help="Reviewed processing results JSON inside the workspace")
+    lint = commands.add_parser("lint", help="Check authored SDLC artifacts without loading a workspace")
+    lint.add_argument("paths", nargs="*", help="Markdown artifacts or artifact-only directories")
+    lint.add_argument("--strict", action="store_true", help="Fail on warnings as well as errors")
+    lint.add_argument("--print-schema", action="store_true", help="Print the installed authoring JSON Schema")
+    gherkin = commands.add_parser("gherkin", help="Check Gherkin quality without loading a workspace")
+    gherkin.add_argument("paths", nargs="*", help="Gherkin feature files or Markdown test case documents")
+    gherkin.add_argument("--manifest", help="JSON evidence manifest")
+    gherkin.add_argument("--root", help="Root directory for evidence paths")
+    gherkin.add_argument("--scenario", action="append", metavar="ID", help="Check only selected scenario IDs; repeat for multiple IDs")
+    gherkin.add_argument("--strict", action="store_true", help="Fail on warnings as well as errors")
+    gherkin.add_argument("--require-ready", action="store_true", help="Fail unless cases are ready for automation")
+    gherkin.add_argument("--print-schema", action="store_true", help="Print the installed Gherkin evidence JSON Schema")
+    commands.add_parser("resources", help="List configured resources and capabilities")
+    commands.add_parser("plugins", help="List installed provider plugins")
+    call = commands.add_parser("call", help="Run one resource operation")
+    call.add_argument("resource")
+    call.add_argument("operation")
+    call.add_argument("--args", default="{}", help="Arguments as a JSON object")
+    runs = commands.add_parser("runs", help="List retained action records")
+    runs.add_argument("--limit", type=int, default=20)
+    run = commands.add_parser("run", help="Read one retained action record")
+    run.add_argument("id")
+    skills = commands.add_parser("skills", help="List skills or read one skill")
+    skills.add_argument("id", nargs="?")
+    clinic = commands.add_parser("release-clinic", help="Run Release Clinic with workspace-root settings")
+    clinic_commands = clinic.add_subparsers(dest="clinic_command", required=True)
+    for name in ("doctor", "path"):
+        clinic_commands.add_parser(name, help="Check local setup" if name == "doctor" else "Locate installed tool assets")
+    for name in ("collect", "report", "portfolio", "audit", "serve"):
+        operation = clinic_commands.add_parser(name, add_help=False, prefix_chars="\x00",
+                                               help=f"Run Release Clinic {name}")
+        operation.add_argument("clinic_args", nargs=argparse.REMAINDER)
+    report = commands.add_parser("release-report", help="Collect release data or render a retained report offline")
+    report_commands = report.add_subparsers(dest="report_command", required=True)
+    collect = report_commands.add_parser("collect", help="Collect release-related information through registered connectors")
+    collect.add_argument("release_id", type=int)
+    collect.add_argument("--resource", default="release-report")
+    collect.add_argument("--output-dir", help="Export a portable report bundle into a new workspace directory")
+    collect.add_argument("--resume", help="Revalidate a retained manifest and preserve its source identity")
+    render = report_commands.add_parser("render", help="Render retained evidence without network access")
+    render.add_argument("manifest")
+    render.add_argument("--output", required=True)
+    summary = report_commands.add_parser("summary", help="Render a recorded task assessment from a shared evidence index")
+    summary.add_argument("--input", required=True)
+    summary.add_argument("--output", required=True)
+    verify = report_commands.add_parser("verify", help="Check snapshot identity and all retained evidence hashes")
+    verify.add_argument("manifest")
+    assurance = commands.add_parser("assurance", help="Check behavior evidence without granting business verification")
+    evidence = assurance.add_subparsers(dest="assurance_command", required=True)
+    evidence.add_parser("schema", help="Print the installed behavior review schema")
+    evidence.add_parser("index-schema", help="Print the installed shared review index schema")
+    index = evidence.add_parser("index", help="Validate shared evidence references without granting business verification")
+    index.add_argument("--input", required=True, help="Review index JSON inside the workspace")
+    index.add_argument("--require-current", action="store_true", help="Also fail on stale or unknown evidence")
+    for name in ("coverage", "ledger"):
+        operation = evidence.add_parser(name, help="Calculate coverage matrices" if name == "coverage" else "Reconcile retained browser and unit executions")
+        operation.add_argument("--input", required=True)
+        operation.add_argument("--require-current", action="store_true")
+    questions = evidence.add_parser("questions", help="Find missing answer propagation and stale knowledge references")
+    questions.add_argument("--input", required=True)
+    for name in ("validate", "report", "save"):
+        operation = evidence.add_parser(name, help=f"{name.capitalize()} one behavior evidence baseline")
+        operation.add_argument("--baseline", required=True, help="Baseline JSON inside the workspace")
+        if name == "validate":
+            operation.add_argument("--require-current", action="store_true", help="Also fail on stale or unknown evidence")
+    compare = evidence.add_parser("compare", help="Compare retained baselines from the same story")
+    compare.add_argument("--before", required=True)
+    compare.add_argument("--after", required=True)
+    graph = commands.add_parser("graph", help="Build a validated static dependency graph")
+    graph_commands = graph.add_subparsers(dest="graph_command", required=True)
+    build = graph_commands.add_parser("build", help="Extract, validate, and publish one graph snapshot")
+    build.add_argument("--repos", default="repos", help="Repository directory, relative to the workspace")
+    build.add_argument("--out", default="relationships/service-dependencies/generated", help="Snapshot directory")
+    build.add_argument("--open", action="store_true", help="Open the generated graph viewer")
+    delta = graph_commands.add_parser("compare", help="Compare retained dependency snapshots and current source freshness")
+    delta.add_argument("--baseline", required=True)
+    delta.add_argument("--candidate", required=True)
+    delta.add_argument("--skip-current-check", action="store_true")
+    test = commands.add_parser("test", help="Plan existing runners and inspect execution prerequisites")
+    test_commands = test.add_subparsers(dest="test_command", required=True)
+    for name in ("plan", "preflight"):
+        operation = test_commands.add_parser(name)
+        operation.add_argument("--runner", choices=("registered", "playwright"), default="registered")
+        operation.add_argument("--resource", dest="resource_id")
+        operation.add_argument("--suite", required=True)
+        operation.add_argument("--environment")
+        operation.add_argument("--environments-file")
+        operation.add_argument("--output-dir")
+        operation.add_argument("--checks", "--checks-file", dest="checks_file")
+        if name == "preflight":
+            operation.add_argument("--probe-services", action="store_true")
+    mcp_commands = commands.add_parser("mcp", help="Serve MCP over standard input and output")
+    mcp_commands.add_argument("--connectors", action="store_true",
+                              help="Expose granted external connector tools.")
+    return parser
+
+
+def _print_json(value: object) -> None:
+    print(json.dumps(value, indent=2, ensure_ascii=False))
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = _parser()
+    arguments = parser.parse_args(argv)
+    explicit_workspace = arguments.workspace
+    arguments.workspace = arguments.workspace or str(Path.cwd())
+    try:
+        if arguments.command == "hooks":
+            from .hook_install import hook_status, install_hooks, remove_hooks
+            from .hooks import MAX_INPUT, advisory, bind_scope, clear_scope, discover_workspace, run_hook
+            root = Path(arguments.workspace).expanduser().resolve()
+            if arguments.hook_command == "run":
+                try:
+                    from .assurance import _json
+                    raw = sys.stdin.buffer.read(MAX_INPUT + 1)
+                    if len(raw) > MAX_INPUT:
+                        raise WorkbenchError("The native hook payload exceeds its one-megabyte limit.")
+                    payload = _json(raw)
+                    selected_root = root if explicit_workspace is not None else discover_workspace(payload)
+                    output, diagnostic, code = run_hook(selected_root, arguments.client, arguments.event, payload)
+                except WorkbenchError as error:
+                    output, diagnostic, code = ({}, "", 0) if arguments.event in CAPTURE_ONLY_EVENTS else advisory(arguments.client, str(error))
+                except (OSError, ValueError, UnicodeError, RecursionError):
+                    output, diagnostic, code = ({}, "", 0) if arguments.event in CAPTURE_ONLY_EVENTS else advisory(
+                        arguments.client, "The native payload or local hook state is unavailable or invalid. Check hooks status and bind the scope again.")
+                print(json.dumps(output, ensure_ascii=False))
+                if diagnostic:
+                    print(diagnostic, file=sys.stderr)
+                return code
+            if arguments.hook_command == "install":
+                result = install_hooks(root, arguments.client, python=arguments.python)
+            elif arguments.hook_command == "uninstall":
+                result = remove_hooks(root, arguments.client)
+            elif arguments.hook_command == "status":
+                result = hook_status(root)
+            elif arguments.hook_command == "clear":
+                result = clear_scope(root, arguments.client, arguments.session)
+            else:
+                result = bind_scope(root, arguments.client, arguments.session, arguments.record,
+                                    index=arguments.index, baseline=arguments.baseline,
+                                    artifacts=arguments.artifact, cases=arguments.case, watch=arguments.watch)
+            _print_json(result)
+            return 1 if result["status"] == "INCOMPLETE" else 0
+        if arguments.command == "learning":
+            from .capability_learning import CapabilityRegistry, _command_switch, _validate_scope
+
+            root = Path(arguments.workspace).expanduser().resolve()
+            operation = arguments.learning_command
+            if operation == "diagnose":
+                from .hook_install import hook_status
+                from .learning_events import diagnose_events
+
+                result = {"capture": _command_switch("WORKBENCH_LEARNING_CAPTURE"),
+                          "auto_promotion": _command_switch("WORKBENCH_LEARNING_PROMOTION"),
+                          "hooks": hook_status(root), "events": diagnose_events(root)}
+            elif operation == "ado-resolve":
+                from .capability_ado import artifact_scope, resolve_artifact
+
+                workbench = Workbench(root)
+                selectors = {key: getattr(arguments, key)
+                             for key in ("resource_id", "project", "pipeline_id", "repository_id", "source_ref")}
+                name = arguments.artifact_name
+                scope = artifact_scope(workbench, **selectors)
+                if name is None:
+                    rules = CapabilityRegistry(root).use("ado-deploy-artifact", scope)["rules"]
+                    name = next((rule["value"] for rule in rules if rule["key"] == "artifact-name"), None)
+                result = resolve_artifact(workbench, **selectors, build_id=arguments.build_id,
+                                          source_commit=arguments.source_commit, artifact_name=name,
+                                          expected_scope=scope, require_unique=arguments.artifact_name is None)
+            else:
+                registry = CapabilityRegistry(root)
+                if operation in {"list", "use"}:
+                    from .assurance import _json
+
+                    try:
+                        scope = _json(arguments.scope.encode()) if arguments.scope is not None else None
+                    except (ValueError, UnicodeError, RecursionError):
+                        raise WorkbenchError("Supply scope as a JSON object.") from None
+                    if scope is not None:
+                        _validate_scope(scope)
+                    result = (registry.available(arguments.query, scope) if operation == "list"
+                              else registry.use(arguments.capability_id, scope, arguments.revision))
+                elif operation in {"pending", "conflicts"}:
+                    result = registry.pending(conflicts=operation == "conflicts")
+                elif operation == "checkpoint":
+                    if arguments.input:
+                        if arguments.task:
+                            raise WorkbenchError("Include the task in the discovery JSON when using --input.")
+                        result = registry.checkpoint(arguments.input)
+                    else:
+                        result = registry.ado_checkpoint(arguments.ado_observation, arguments.task)
+                elif operation == "validate":
+                    result = registry.validate(arguments.discovery_id)
+                elif operation == "promote":
+                    result = registry.promote(arguments.discovery_id, arguments.approval)
+                elif operation == "history":
+                    result = registry.history(arguments.capability_id)
+                else:
+                    result = registry.rollback(arguments.capability_id, arguments.revision)
+            _print_json(result)
+            if operation == "validate" and result["status"] in {"INVALID_EVIDENCE", "CONFLICT", "GOVERNANCE_REQUIRED"}:
+                return 1
+            return 0
+        if arguments.command == "sources":
+            from .ingestion.incremental import complete_sources, plan_sources
+            from .ingestion.sources import apply_selections, refresh_sources, render_sources, verify_sources
+            root = Path(arguments.workspace).expanduser().resolve()
+            if arguments.source_command == "refresh":
+                result = refresh_sources(root, arguments.source, arguments.input, arguments.policy)
+            elif arguments.source_command == "select":
+                result = apply_selections(root, arguments.source, arguments.decisions)
+            elif arguments.source_command == "view":
+                result = render_sources(root, arguments.source, arguments.output, plan_path=arguments.plan)
+            elif arguments.source_command == "plan":
+                result = plan_sources(root, arguments.source, arguments.recipe)
+            elif arguments.source_command == "complete":
+                result = complete_sources(root, arguments.source, arguments.plan, arguments.results)
+            else:
+                result = verify_sources(root, arguments.source)
+            _print_json(result)
+            return 1 if arguments.source_command == "verify" and result["status"] != "READY" else 0
+        if arguments.command == "test":
+            from .test_preflight import plan_test_execution, preflight_test_execution
+            root = Path(arguments.workspace).expanduser().resolve()
+            plan = plan_test_execution(root, **{key: getattr(arguments, key) for key in (
+                "runner", "resource_id", "suite", "environment", "environments_file", "output_dir", "checks_file")})
+            result = plan if arguments.test_command == "plan" else preflight_test_execution(
+                plan, root, probe_services=arguments.probe_services)
+            _print_json(result)
+            return 0 if result["status"] in {"PLANNED", "READY"} else 1
+        if arguments.command == "doctor":
+            from .doctor import doctor
+            result = doctor(Path(arguments.workspace), profile=arguments.profile)
+            _print_json(result)
+            return 0 if result["status"] == "READY" else 1
+        if arguments.command == "release-clinic":
+            from .release_clinic import run
+            return run(Path(arguments.workspace), arguments.clinic_command, getattr(arguments, "clinic_args", []))
+        if arguments.command == "release-report":
+            root = Path(arguments.workspace).expanduser().resolve()
+            if arguments.report_command == "summary":
+                from .release_report_render import render_review_summary
+                output = Path(arguments.output).expanduser()
+                result = render_review_summary(arguments.input, root, output if output.is_absolute() else root / output)
+                _print_json({"status": "SUCCEEDED", "output_path": str(result)})
+                return 0
+            if arguments.report_command == "collect":
+                from .release_report import collect_release_report
+                result = collect_release_report(arguments.release_id, root, resource_id=arguments.resource,
+                                                output_dir=arguments.output_dir, resume=arguments.resume)
+                _print_json(result)
+                return 0 if result["status"] == "SUCCEEDED" else 1
+            manifest = Path(arguments.manifest).expanduser()
+            if not manifest.is_absolute():
+                manifest = root / manifest
+            if arguments.report_command == "render":
+                from .release_report_render import render_release_report
+                output = Path(arguments.output).expanduser()
+                if not output.is_absolute():
+                    output = root / output
+                result = render_release_report(manifest, output)
+                _print_json({"status": "SUCCEEDED", "output_path": str(result)})
+            else:
+                from .release_report_contract import read_release_report
+                snapshot = read_release_report(manifest)
+                _print_json({"status": "VALID", "source": snapshot["source"],
+                             "collection_status": snapshot["collection_status"]})
+            return 0
+        if arguments.command == "init":
+            path = initialize_workspace(arguments.path or arguments.workspace, name=arguments.name)
+            _print_json({"workspace": str(path), "status": "INITIALIZED"})
+            return 0
+        if arguments.command == "validate":
+            from .validation import validate_workspace
+            result = validate_workspace(Path(arguments.workspace).expanduser().resolve())
+            _print_json(result)
+            return 0 if result["valid"] else 1
+        if arguments.command == "lint":
+            from .artifact_lint import artifact_schema, lint_artifacts
+            if arguments.print_schema:
+                if arguments.paths or arguments.strict:
+                    raise WorkbenchError("Use --print-schema without artifact paths or --strict.")
+                _print_json(artifact_schema())
+                return 0
+            result = lint_artifacts(arguments.paths, strict=arguments.strict)
+            _print_json(result)
+            return 0 if result["valid"] else 1
+        if arguments.command == "gherkin":
+            from .gherkin_quality import check_gherkin, evidence_schema
+            if arguments.print_schema:
+                if (arguments.paths or arguments.manifest is not None or arguments.root is not None or arguments.scenario is not None
+                        or arguments.strict or arguments.require_ready):
+                    raise WorkbenchError("Use --print-schema without paths or other Gherkin options.")
+                _print_json(evidence_schema())
+                return 0
+            if not arguments.paths:
+                parser.error("gherkin requires at least one input path unless --print-schema is selected")
+            check_options = {"manifest": arguments.manifest, "root": arguments.root, "strict": arguments.strict}
+            if arguments.scenario is not None:
+                check_options["scenario_ids"] = arguments.scenario
+            result = check_gherkin(arguments.paths, **check_options)
+            if arguments.require_ready and not result["automation_ready"]:
+                result["exit_code"] = 1
+            _print_json(result)
+            return result["exit_code"]
+        if arguments.command == "assurance":
+            from .assurance import analyze_baseline, compare_baselines, local_path, read_baseline, save_baseline, schema
+            if arguments.assurance_command == "index-schema":
+                from .review_index import schema as index_schema
+                _print_json(index_schema())
+                return 0
+            if arguments.assurance_command in {"index", "coverage", "ledger", "questions"}:
+                from .review_index import analyze_index, read_index
+                root = Path(arguments.workspace).expanduser().resolve()
+                value = Path(arguments.input).expanduser()
+                if value.is_absolute():
+                    try:
+                        value = value.relative_to(root)
+                    except ValueError:
+                        raise WorkbenchError("Select review index inputs inside the workspace.") from None
+                payload = read_index(local_path(root, value.as_posix()))
+                if arguments.assurance_command == "questions":
+                    from .question_reconciliation import reconcile_questions
+                    result = reconcile_questions(payload, root)
+                    _print_json(result)
+                    return 0 if result["status"] == "REFERENCES_COMPLETE" else 1
+                if arguments.assurance_command == "coverage":
+                    from .review_coverage import analyze_coverage
+                    result = analyze_coverage(payload, root)
+                elif arguments.assurance_command == "ledger":
+                    from .review_coverage import build_case_ledger
+                    result = build_case_ledger(payload, root)
+                else:
+                    result = analyze_index(payload, root)
+                _print_json(result)
+                return 0 if result["valid"] and (not arguments.require_current or result["freshness"] == "CURRENT") else 1
+            if arguments.assurance_command == "schema":
+                _print_json(schema())
+                return 0
+            root = Path(arguments.workspace).expanduser().resolve()
+
+            def baseline(value):
+                path = Path(value).expanduser()
+                if path.is_absolute():
+                    try:
+                        value = path.relative_to(root).as_posix()
+                    except ValueError:
+                        raise WorkbenchError("Select baseline inputs inside the workspace.") from None
+                return read_baseline(local_path(root, value))
+
+            if arguments.assurance_command == "compare":
+                _print_json(compare_baselines(baseline(arguments.before), baseline(arguments.after), root))
+                return 0
+            payload = baseline(arguments.baseline)
+            result = analyze_baseline(payload, root)
+            if arguments.assurance_command == "save":
+                result["saved_path"] = save_baseline(payload, root).relative_to(root).as_posix()
+            _print_json(result)
+            return 0 if result["valid"] and (not getattr(arguments, "require_current", False)
+                                            or result["freshness"] == "CURRENT") else 1
+        if arguments.command == "graph":
+            from .relationships.skill import load_graph_tool
+            root = Path(arguments.workspace).expanduser().resolve()
+            from .workspace import load_workspace
+            load_workspace(root)
+            if arguments.graph_command == "compare":
+                options = ["--workspace", str(root), "--baseline", arguments.baseline, "--candidate", arguments.candidate]
+                if arguments.skip_current_check:
+                    options.append("--skip-current-check")
+                return load_graph_tool("snapshot_delta", root).main(options)
+            build_graph = load_graph_tool("generate_all_graphs", root).main
+            options = ["--workspace", str(root), "--repos", arguments.repos, "--out", arguments.out]
+            if arguments.open:
+                options.append("--open")
+            try:
+                return build_graph(options)
+            except (ValueError, subprocess.CalledProcessError) as error:
+                raise WorkbenchError("Graph generation failed. Inspect diagnostics; the previous snapshot remains available.") from error
+        if arguments.command == "knowledge":
+            from .knowledge_web import serve
+            return serve(arguments.workspace, host=arguments.host, port=arguments.port, open_browser=arguments.open)
+        workbench = Workbench(arguments.workspace)
+        if arguments.command in {"status", "resources", "plugins"}:
+            description = workbench.describe()
+            _print_json(description if arguments.command == "status" else
+                        description["resources" if arguments.command == "resources" else "providers"])
+        elif arguments.command == "call":
+            try:
+                payload = json.loads(arguments.args)
+            except json.JSONDecodeError as error:
+                raise WorkbenchError("Arguments must contain valid JSON.") from error
+            if not isinstance(payload, dict):
+                raise WorkbenchError("Arguments must be a JSON object.")
+            result = workbench.call(arguments.resource, arguments.operation, payload)
+            _print_json(result)
+            return 0 if result.get("status") == "SUCCEEDED" else 1
+        elif arguments.command == "runs":
+            if not 1 <= arguments.limit <= 100:
+                raise WorkbenchError("The run limit must be between 1 and 100.")
+            _print_json(workbench.runs(arguments.limit))
+        elif arguments.command == "run":
+            _print_json(workbench.run(arguments.id))
+        elif arguments.command == "skills":
+            if arguments.id:
+                print(workbench.skill_read(arguments.id))
+            else:
+                _print_json(workbench.skill_list())
+        elif arguments.command == "mcp":
+            from .mcp import serve
+            serve(workbench, connectors=arguments.connectors)
+        return 0
+    except WorkbenchError as error:
+        if arguments.command == "mcp":
+            print("The MCP workspace could not load. Check its configuration.", file=sys.stderr)
+        else:
+            _print_json({"error": {"code": "WORKBENCH_ERROR", "message": str(error)}})
+        return 1
+    except OSError:
+        if arguments.command == "mcp":
+            print("The MCP workspace could not access its resource.", file=sys.stderr)
+        else:
+            _print_json({"error": {"code": "IO_ERROR", "message": "The operation could not access its resource."}})
+        return 1
+    except KeyboardInterrupt:
+        return 130
+
+
+if __name__ == "__main__":
+    sys.exit(main())

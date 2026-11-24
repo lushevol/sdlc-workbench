@@ -1,0 +1,40 @@
+schema_version: 1
+services:
+- id: single-ui-web
+  name: Single UI Web
+  repository_ids:
+  - mfe-root-config
+  - mfe-base
+  responsibility: Compose the frontend shell, shared modules, and application containers.
+  description: Implementation-derived application grouping. Deployment identity and
+    active gateway routes remain unknown.
+  source_ids:
+  - mfe-root-config-git
+  - mfe-base-git
+  provides_contract_ids:
+  - single-ui-base-module
+  - single-ui-shared-http
+  consumes_contract_ids:
+  - single-ui-base-module
+  - single-ui-container-props
+  - single-ui-shared-http
+  - single-ui-sso-token-family
+  - single-ui-importmap-admin
+  - single-ui-category-tile-admin
+  - single-ui-analytics-proxy
+- id: single-ui-bff-api
+  name: Single UI BFF API
+  repository_ids:
+  - single-ui-bff
+  responsibility: Declare authentication, application administration, import-map,
+    and analytics HTTP endpoints.
+  description: Controller declarations identify these interfaces. Source inspection
+    does not establish deployed reachability.
+  source_ids:
+  - single-ui-bff-git
+  provides_contract_ids:
+  - single-ui-sso-token-family
+  - single-ui-importmap-admin
+  - single-ui-active-importmap
+  - single-ui-category-tile-admin
+  - single-ui-analytics-proxy

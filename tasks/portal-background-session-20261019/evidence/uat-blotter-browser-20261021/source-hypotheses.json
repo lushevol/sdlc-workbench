@@ -1,0 +1,367 @@
+{
+  "captured_at": "2026-10-21T08:03:06.429831+00:00",
+  "kind": "source-hypothesis-receipt",
+  "scope": "Cashflow Blotter missing timeout dialog; direct source inspection only.",
+  "runtime_candidate": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "comparison_base": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "uat_deployment_identity": "unknown",
+  "application_mutations": false,
+  "executions": "NOT_RUN by this source-investigation agent; parent owns browser execution.",
+  "facts": [
+    {
+      "id": "SF1",
+      "claim": "Home schedules the prompt at access-token exp and reconciles access/refresh expiry on visibility return.",
+      "source_indexes": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "id": "SF2",
+      "claim": "Unrelated loader and business-state updates do not change the scalar token/exp/ready popup dependencies.",
+      "source_indexes": [
+        0
+      ]
+    },
+    {
+      "id": "SF3",
+      "claim": "Base reducer updates hooksBase and public hooks on each action. Cashflow Blotter creates a Redux Provider, not another base Provider.",
+      "source_indexes": [
+        6,
+        7,
+        8,
+        15
+      ]
+    },
+    {
+      "id": "SF4",
+      "claim": "Successful /extend response changes access token and exp, resetting the popup deadline. Ordinary business responses and refresh-token acquisition do not enter this access-token handling branch.",
+      "source_indexes": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "id": "SF5",
+      "claim": "Previously visited workspace children remain mounted when their panels become hidden.",
+      "source_indexes": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "SF6",
+      "claim": "Blotter and Dashboard have separate routes. Blotter installs fulfilled-GraphQL session-extension middleware.",
+      "source_indexes": [
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "id": "SF7",
+      "claim": "Blotter notification STOMP/SockJS heartbeats, buffered publishing, and local row updates do not call the inspected GraphQL extension middleware.",
+      "source_indexes": [
+        18,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "SF8",
+      "claim": "The Dashboard has a two-minute repeat-query loop. It requires that separate tile to have mounted.",
+      "source_indexes": [
+        23,
+        24
+      ]
+    },
+    {
+      "id": "SF9",
+      "claim": "Timeout starts logout immediately when no refresh exists; logout proceeds after a one-second wait. A late observation can miss the prompt.",
+      "source_indexes": [
+        2
+      ]
+    },
+    {
+      "id": "SF10",
+      "claim": "A TOKEN_INVALID_EXPIRED error clears credentials and routes away from Home, bypassing sustained prompt observation.",
+      "source_indexes": [
+        12,
+        13
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "SH1",
+      "hypothesis": "Actual access expiry keeps moving because eligible extensions occur.",
+      "confidence": "Plausible; no UAT traffic retained.",
+      "control": "Capture only redacted request identity, extension count, access exp, current time, and dialog state. Compare Blotter-only idle against actual loaded-tile traffic.",
+      "decisive_result": "Repeated successful /extend responses move exp before its deadline; blocking that cause in an authorized local control permits expiry."
+    },
+    {
+      "id": "SH2",
+      "hypothesis": "A previously opened background tile continues renewal while Blotter is selected.",
+      "confidence": "Source-supported mechanism; occurrence unknown.",
+      "control": "Fresh session with only Blotter versus visit the renewing tile, then switch to Blotter. Retain mounted tile inventory and request initiators.",
+      "decisive_result": "Hidden mounted tile renews credentials; removing that tile stops those renewals and permits the prompt."
+    },
+    {
+      "id": "SH3",
+      "hypothesis": "The prompt appears briefly and auto-logout precedes the user return.",
+      "confidence": "Source-supported under missing/expired refresh; actual session outcome unknown.",
+      "control": "Observe DOM plus analytics modal-open/close events around expiry. Record later Sign in and credential-cleared state separately.",
+      "decisive_result": "Prompt creation followed by one-second logout, rather than never-created prompt."
+    },
+    {
+      "id": "SH4",
+      "hypothesis": "Actual deployed artifact or token lifetime differs from inspected source/defaults.",
+      "confidence": "Unknown.",
+      "control": "Bind loaded base artifact URL/hash, module versions, session exp timing, and import-map identity. Do not retain raw credentials.",
+      "decisive_result": "Deployed code or actual exp differs from the locally reviewed source/expected deadline."
+    },
+    {
+      "id": "SH5",
+      "hypothesis": "The popup timer is suppressed despite fixed expired access.",
+      "confidence": "Not explained by inspected scalar dependencies.",
+      "control": "Fresh Blotter-only session, no post-init renewal, known access exp, usable long refresh. Observe continuously across visible idle and return from hidden state.",
+      "decisive_result": "No dialog after fixed expiry with Home still mounted and credentials unchanged would isolate a lifecycle/runtime defect."
+    }
+  ],
+  "bounded_search": {
+    "paths": [
+      "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN",
+      "repos/ui/mfe-cashflow-blotter/src/Root"
+    ],
+    "patterns": [
+      "pollingInterval",
+      "refetchOn",
+      "setInterval",
+      "setTimeout",
+      "queryGraphql",
+      "ExtendTokenService",
+      "extendToken"
+    ],
+    "result": "No recurring GraphQL poll or automatic focus refetch found in these Blotter paths. This does not establish absence from deployed modules."
+  },
+  "sources": [
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": "90-102,104-186",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": "51-56,110-127",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "lines": "25-60",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/components/Timeout/index.tsx",
+      "lines": "14-26",
+      "sha256": "e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/components/TabPanel/index.tsx",
+      "lines": "9-37",
+      "sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/utils/drawer.ts",
+      "lines": "47-67",
+      "sha256": "cfedf4c4f8c1b3876f039c748b3444acc8085b2311d59b9e92465f13a1176a66",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/provider/index.tsx",
+      "lines": "17-30",
+      "sha256": "1290c3bde3c18540d5d7a9e98ccf505751acfd4d6201763409fd583d3d278749",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/reducer/index.ts",
+      "lines": "9-19",
+      "sha256": "d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/HooksBase.ts",
+      "lines": "10-23",
+      "sha256": "8e83e861d8e0babf1b3ccc202d94df349a9da1c55490a9413e2190f2e81c324a",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+      "lines": "8-31",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": "25-41",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "lines": "13-36",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts",
+      "lines": "29-31",
+      "sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-base",
+      "path": "repos/ui/mfe-base/src/routing/index.tsx",
+      "lines": "9-25",
+      "sha256": "28bd1faeb75203695e6f102ad65b543432f2d413f87bb64ed3a2bac6ddc1ec9e",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "revision_limit": null
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/routing/index.tsx",
+      "lines": "37-48",
+      "sha256": "d3b6d29d375265882526357d9ef2d41c827347f165268c7d9508dc2516263585",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/index.tsx",
+      "lines": "9-17",
+      "sha256": "0f0fbd52a2a8d67cd5c7c905e7997edcec8d16a3e0fa5e0b620122a5dc5972ac",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/store/index.ts",
+      "lines": "19-28",
+      "sha256": "f2927d414dcc7267b8a29fccc33a272ce4a4edb8a46495f4d4251180184aca77",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.ts",
+      "lines": "7-12",
+      "sha256": "faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/App.tsx",
+      "lines": "170-215",
+      "sha256": "99c05a1581e1e39d6a5e0d68d43b898e5672a35efb82876f4b1e8e8b91ee49c4",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/index.tsx",
+      "lines": "15-25",
+      "sha256": "5a1ce2463f6ad4566f3b1468cd117b275822961ca5a0e846ac201ccf8b480762",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/stomp.ts",
+      "lines": "37-39,95-108,144-161",
+      "sha256": "181b11c48c6f48c7c6ec145dac6cc5ac26882d08341474bd7f7dbd2f63ae38b1",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/CashflowNotificationPool.ts",
+      "lines": "55-59,76-80",
+      "sha256": "4513db48524429d6789b74124efba7702e173bc7008b83c59d54e0db24921f5a",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/store/actions/cashflowAction.ts",
+      "lines": "218-227,554-694",
+      "sha256": "3680cfe6c609e4716c0cfc2cb9b95dbd3fc3f1d8e8236034ac9356c0d519bf25",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/components/Dashboard/index.tsx",
+      "lines": "20-36",
+      "sha256": "cb42fa47a761d0f9d53662a155dd366889f8c9c227948fad4e72c454112cb75b",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/components/Dashboard/const.ts",
+      "lines": "1",
+      "sha256": "0d6eb524fdb1f09bb6e70d13b18be7f84b0f2f77c25b291fc2e7ef2b6d9deef1",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts",
+      "lines": "162-167",
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent Git revision unknown."
+    }
+  ],
+  "limits": [
+    "No UAT browser/network evidence was inspected by this agent.",
+    "Source predictions do not establish actual deployment behavior.",
+    "Earlier Dashboard attribution is inapplicable to a fresh Blotter-only session. Hidden prior tiles remain an untested conditional mechanism."
+  ]
+}

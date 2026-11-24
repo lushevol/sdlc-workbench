@@ -1,0 +1,34 @@
+const workspacesDefault = getLocalStorage().getItem(ActionType.SET_WORKSPACES)
+  ? JSON.parse(getLocalStorage().getItem(ActionType.SET_WORKSPACES) ?? "[]")
+  : [firstWorkspace()];
+
+const entities: Entity[] = getLocalStorage().getItem(ActionType.SET_ENTITIES)
+  ? JSON.parse(getLocalStorage().getItem(ActionType.SET_ENTITIES) ?? "[]")
+  : [];
+
+export const initialData: RootModel = {
+  user: getLocalStorage().getItem(ActionType.SET_USER)
+    ? JSON.parse(getLocalStorage().getItem(ActionType.SET_USER) ?? "{}")
+    : undefined,
+  token: getLocalStorage().getItem(ActionType.SET_TOKEN) ?? undefined,
+  errorMsg: undefined,
+  isLoading: true,
+  theme: getLocalStorage().getItem(ActionType.SET_THEME) ?? "dark",
+  isOpenFin: false,
+  expiredIn: 0,
+  userLoginTime: undefined,
+  iat: 0,
+  clientBus: undefined,
+  workspaces: workspacesDefault,
+  currentWorkspace: workspacesDefault[0],
+  drawer: false,
+  timeType: getLocalStorage().getItem(ActionType.SET_TIME_TYPE) ?? "utc",
+  entities: entities,
+  refreshTab: {},
+  refreshToken: undefined,
+  sseCallback: {},
+  ssePayload: [],
+  entitlementsToken: undefined,
+  isOnLogout: false,
+  drawers: [],
+  rootVersion: "",

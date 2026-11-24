@@ -1,0 +1,473 @@
+{
+  "schema_version": 1,
+  "assessment": "session-renewal-UAT-readiness",
+  "created_at": "2026-10-19T04:41:03.191149+00:00",
+  "status": "BLOCKED",
+  "business_verification": "NOT_VERIFIED",
+  "previous_assessment": {
+    "path": ".workbench/session-renewal-full-20261019/readiness/readiness.json",
+    "sha256": "613507705a7eeb1080f2e21177bc217ad23c6943170e525f44bc6ad1c9005f21",
+    "preserved": true
+  },
+  "selection": {
+    "business_environment": "UAT",
+    "source": "User instruction relayed by root agent.",
+    "uat_instance": null,
+    "reviewer": null,
+    "human_approval_recorded": false
+  },
+  "discovery": {
+    "argv": [
+      ".venv/bin/ai-sdlc",
+      "--workspace",
+      ".",
+      "status"
+    ],
+    "status": "SUCCEEDED",
+    "path": ".workbench/session-renewal-full-20261019/readiness/status-UAT.json",
+    "sha256": "c0cf21c96dd43dac721b184d15f793dfea93aa779be9fb95a52b68d2cf2bd29a",
+    "selected_resource_schemas": [
+      {
+        "id": "ratan-test-engine",
+        "kind": "testing",
+        "provider": "testing.robot",
+        "environment": "local-offline",
+        "allowed_operations": [
+          "list",
+          "run"
+        ],
+        "operations": [
+          {
+            "name": "list",
+            "description": "List registered Robot suites.",
+            "input_schema": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            },
+            "mutating": false,
+            "allowed": true
+          },
+          {
+            "name": "run",
+            "description": "Execute a registered Robot suite and retain its results.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "suite": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "dry_run": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "suite"
+              ],
+              "additionalProperties": false
+            },
+            "mutating": true,
+            "allowed": true
+          }
+        ]
+      },
+      {
+        "id": "ratan-test-engine-checks",
+        "kind": "testing",
+        "provider": "testing.command",
+        "environment": "local-offline",
+        "allowed_operations": [
+          "list",
+          "run"
+        ],
+        "operations": [
+          {
+            "name": "list",
+            "description": "List named configured test suites.",
+            "input_schema": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            },
+            "mutating": false,
+            "allowed": true
+          },
+          {
+            "name": "run",
+            "description": "Run a named configured test suite.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "suite": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "suite"
+              ],
+              "additionalProperties": false
+            },
+            "mutating": true,
+            "allowed": true
+          }
+        ]
+      },
+      {
+        "id": "ratan-test-engine-repository",
+        "kind": "repository",
+        "provider": "repository.git",
+        "environment": "local",
+        "allowed_operations": [
+          "status",
+          "diff"
+        ],
+        "operations": [
+          {
+            "name": "status",
+            "description": "Inspect the configured checkout status.",
+            "input_schema": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            },
+            "mutating": false,
+            "allowed": true
+          },
+          {
+            "name": "diff",
+            "description": "Read a Git diff for specified revisions or files.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "head": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            },
+            "mutating": false,
+            "allowed": true
+          },
+          {
+            "name": "branch",
+            "description": "Create a branch without switching the checkout.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "start_point": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false
+            },
+            "mutating": true,
+            "allowed": false
+          }
+        ]
+      }
+    ],
+    "selected_catalog_declarations": [
+      {
+        "id": "ratan-test-engine",
+        "kind": "testing",
+        "provider": "testing.robot",
+        "environment": "local-offline",
+        "config": {
+          "path": "repos/testing/ratan-test-engine",
+          "python": ".venv/bin/python",
+          "suites": {
+            "offline-smoke": "Tests/workbench/offline.robot"
+          }
+        },
+        "allowed_operations": [
+          "list",
+          "run"
+        ]
+      },
+      {
+        "id": "ratan-test-engine-checks",
+        "kind": "testing",
+        "provider": "testing.command",
+        "environment": "local-offline",
+        "config": {
+          "path": "repos/testing/ratan-test-engine",
+          "suites": {
+            "doctor": [
+              ".venv/bin/python",
+              "scripts/workbench.py",
+              "doctor"
+            ],
+            "doctor-full": [
+              ".venv/bin/python",
+              "scripts/workbench.py",
+              "doctor",
+              "--profile",
+              "full"
+            ],
+            "inventory": [
+              ".venv/bin/python",
+              "scripts/workbench.py",
+              "inventory"
+            ],
+            "parse": [
+              ".venv/bin/python",
+              "scripts/workbench.py",
+              "parse",
+              "Tests/workbench/offline.robot"
+            ],
+            "parse-all": [
+              ".venv/bin/python",
+              "scripts/workbench.py",
+              "parse"
+            ],
+            "unit": [
+              ".venv/bin/python",
+              "-m",
+              "unittest",
+              "discover",
+              "-s",
+              "Tests/workbench",
+              "-v"
+            ]
+          }
+        },
+        "allowed_operations": [
+          "list",
+          "run"
+        ]
+      },
+      {
+        "id": "ratan-test-engine-repository",
+        "kind": "repository",
+        "provider": "repository.git",
+        "environment": "local",
+        "config": {
+          "path": "repos/testing/ratan-test-engine"
+        },
+        "allowed_operations": [
+          "status",
+          "diff"
+        ]
+      }
+    ]
+  },
+  "private_configuration_presence": [
+    {
+      "path": ".env",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/data/properties.yaml",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/data/certificate.yaml",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Resources/data/language.yaml",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Resources/data/config/config.py",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Resources/data/keypair",
+      "exists": true,
+      "content_read": false
+    }
+  ],
+  "uat_configuration_filenames": [
+    {
+      "configuration_path": "repos/testing/ratan-test-engine/Tests/ratan/data/env_uat1_decrypt.yaml",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "configuration_path": "repos/testing/ratan-test-engine/Tests/ratan/data/env_uat2_decrypt.yaml",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "configuration_path": "repos/testing/ratan-test-engine/Tests/ratan/data/env_uat4_decrypt.yaml",
+      "exists": true,
+      "content_read": false
+    },
+    {
+      "configuration_path": "repos/testing/ratan-test-engine/Tests/ratan/data/env_uat6_decrypt.yaml",
+      "exists": true,
+      "content_read": false
+    }
+  ],
+  "required_variable_names": [
+    {
+      "names": [
+        "ENV",
+        "SECRET"
+      ],
+      "source": "repos/testing/ratan-test-engine/Tests/ratan/workspace/ui/__import__.resource:42",
+      "purpose": "Select the environment file before Robot resolves suite imports.",
+      "values_inspected": false
+    },
+    {
+      "names": [
+        "USERNAME_MO",
+        "PASSWORD_MO"
+      ],
+      "source": "repos/testing/ratan-test-engine/Tests/ratan/workspace/ui/BAU-UI-RP.robot:7",
+      "purpose": "Authenticate the selected test account.",
+      "values_inspected": false
+    },
+    {
+      "names": [
+        "LOGIN_URL",
+        "MARKETS_OPERATIONS_ONE"
+      ],
+      "source": "repos/testing/ratan-test-engine/Resources/keywords/business_common.resource:1814-1827",
+      "purpose": "Open the portal and identify its authenticated page.",
+      "values_inspected": false
+    },
+    {
+      "names": [
+        "SECURITY_SOURCE",
+        "TEST_PORTAL_URL",
+        "TEST_PORTAL_CERTIFICATE_ENDPOINT"
+      ],
+      "source": "repos/testing/ratan-test-engine/Resources/keywords/commonBiz.resource:24-46",
+      "purpose": "Control conditional certificate retrieval during suite setup.",
+      "values_inspected": false
+    },
+    {
+      "names": [
+        "BIZ",
+        "BROWSER",
+        "HEADLESSENABLE",
+        "STORAGE"
+      ],
+      "source": "repos/testing/ratan-test-engine/Resources/keywords/playwright.resource:18-44;117-146",
+      "purpose": "Select browser execution and persisted session behavior.",
+      "values_inspected": false
+    }
+  ],
+  "missing_fields": [
+    {
+      "field": "uat_instance",
+      "status": "UNSPECIFIED",
+      "evidence": "Four UAT configuration filenames exist. The user selected UAT without an instance.",
+      "owner": "unknown",
+      "next_action": "Select the intended UAT instance through its owning environment process."
+    },
+    {
+      "field": "requirements_reviewer",
+      "status": "UNSPECIFIED",
+      "evidence": "The user supplied no reviewer identity.",
+      "owner": "unknown",
+      "next_action": "Record an authorized human review for all seven acceptance criteria."
+    },
+    {
+      "field": "robot_environment_binding",
+      "status": "UNCONFIGURED",
+      "evidence": "The native Robot resource has no variable_files declaration. The source defaults ENV to stg.",
+      "owner": "unknown",
+      "next_action": "Supply an ignored YAML variable file with approved ENV and SECRET bindings."
+    },
+    {
+      "field": "uat_credentials_and_endpoint",
+      "status": "UNCONFIRMED",
+      "evidence": "Private configuration files exist. Their contents were not read.",
+      "owner": "unknown",
+      "next_action": "Confirm the required names in the approved UAT configuration without publishing values."
+    },
+    {
+      "field": "uat_resource",
+      "status": "NOT_REGISTERED",
+      "evidence": "Registered testing resources use local-offline. Native Robot exposes offline-smoke only.",
+      "owner": "unknown",
+      "next_action": "Register a dedicated UAT scenario with explicit operations and retained results."
+    },
+    {
+      "field": "scenario_execution_scope",
+      "status": "UNCONFIGURED",
+      "evidence": "Robot run arguments accept suite and dry_run. BAU-UI-RP includes unrelated cashflow creation.",
+      "owner": "unknown",
+      "next_action": "Provide a dedicated suite or scoped command for the approved session-renewal cases."
+    },
+    {
+      "field": "setup_certificate_source",
+      "status": "UNCONFIRMED",
+      "evidence": "CERTIFICATE INITIAL can contact the test portal during suite setup.",
+      "owner": "unknown",
+      "next_action": "Confirm approved certificate sourcing and external effects before UAT execution."
+    },
+    {
+      "field": "runtime_readiness",
+      "status": "BLOCKED",
+      "evidence": "The prior assessment found missing Jest and Browser wrapper dependencies.",
+      "owner": "unknown",
+      "next_action": "Provision the supported runtimes before attempting the selected UAT suite."
+    }
+  ],
+  "execution": {
+    "uat_business_tests_run": 0,
+    "network_requests": 0,
+    "packages_installed": 0,
+    "credentials_read": false,
+    "root_env_contents_read": false,
+    "private_configuration_contents_read": false,
+    "live_resource_calls": []
+  },
+  "limits": [
+    "UAT selection does not establish endpoint access or a complete environment binding.",
+    "Private file existence does not establish usable credentials, token validity, or approval.",
+    "Root .env existence does not bind Robot scalar variables.",
+    "The prior readiness assessment remains unchanged.",
+    "No external system was contacted."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

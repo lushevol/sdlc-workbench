@@ -1,0 +1,204 @@
+{
+  "caseId": "REVIEW-E2E-17",
+  "finding": "REVIEW-17",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:46:17.822Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8143",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:46:25.994Z",
+      "method": "Playwright screenshot",
+      "sha256": "b082cdc75fedd51c70db2914f73de84d29d5eec294a38cabde8afe73521eea67",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "manual-renewal-held",
+      "file": "manual-renewal-held.png",
+      "capturedAt": "2026-10-28T02:47:21.354Z",
+      "method": "Playwright screenshot",
+      "sha256": "c2aff51d713e9940c032c11b84161168f01fa22b4b3ffbe651978b695fe1f47d",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "late-renewal-provider-decision",
+      "file": "late-renewal-provider-decision.png",
+      "capturedAt": "2026-10-28T02:49:22.815Z",
+      "method": "Playwright screenshot",
+      "sha256": "13a056984b20f9acd5abd3d064a399ab768a899553bf824e61a6e923e33d4e6f",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:46:21.474Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:46:21.483Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:46:24.774Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:46:24.781Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:46:56.006Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:46:56.025Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:21.026Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:21.028Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:21.334Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "at": "2026-10-28T02:47:21.334Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:21.349Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:49:18.019Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:49:18.019Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:49:18.037Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:49:18.052Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/logout",
+      "at": "2026-10-28T02:49:19.018Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "at": "2026-10-28T02:49:19.019Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "status": 404,
+      "at": "2026-10-28T02:49:19.037Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "at": "2026-10-28T02:49:19.043Z"
+    }
+  ],
+  "assertions": [
+    "Request start before actual refresh expiry, delayed service dispatch beyond expiry, actual provider result and final UI observed."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Relogin request is held before service dispatch until one second after actual refresh JWT expiry; real BFF decides validity."
+  ],
+  "before": {
+    "at": "2026-10-28T02:46:25.993Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "9adb8f70d8520b744631c234a96ea8d1eff9142c46ef4fd5603b1b947d5a0f90",
+      "exp": 1793155641,
+      "iat": 1793155581
+    },
+    "refresh": {
+      "sha256": "935a01d33e3d644b7fa00382ced964fa22d4fddb7f95bb59d0dbb7b7b6fe0610",
+      "exp": 1793155728,
+      "iat": 1793155584
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "refreshDeadline": "2026-10-28T02:49:20.000Z",
+  "provider": {
+    "status": 401,
+    "result": false
+  },
+  "after": {
+    "at": "2026-10-28T02:49:22.813Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "accessChanged": true,
+    "refreshChanged": true,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": false,
+    "loginVisible": true,
+    "outcome": null
+  },
+  "protected": {
+    "called": false,
+    "reason": "NO_ACCESS"
+  },
+  "impact": "EXPIRED_REFRESH_DENIED_BY_LOCAL_BFF",
+  "completedAt": "2026-10-28T02:49:22.896Z",
+  "elapsedMs": 185074
+}

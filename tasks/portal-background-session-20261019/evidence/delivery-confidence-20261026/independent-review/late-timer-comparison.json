@@ -1,0 +1,71 @@
+{
+  "case_id": "ADV-M1-COINCIDENT",
+  "canonical_case": "DEL20 (integration owned by test worker)",
+  "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate": {
+    "exit_code": 1,
+    "assertions_passed": 4,
+    "observation": "late-timer-initial-candidate-observation.json",
+    "jest": "late-timer-initial-candidate-jest.json",
+    "stdout": "late-timer-initial-candidate.stdout.txt",
+    "acquisition_requests": 0,
+    "replacement_refresh_retained": false,
+    "extend_enabled_at_expiry": false,
+    "signed_out": true,
+    "logout_requests": 2,
+    "execution": "late-timer-initial-candidate-execution.json"
+  },
+  "test_source": "delayedTimerTie.initial.test.tsx",
+  "test_sha256": "482df1288aa3089a6c70f13cce28e4e48332addc49d5bb46ec9b8484565c033d",
+  "setup": {
+    "visible": true,
+    "access_remaining_ms": 60000,
+    "refresh_remaining_ms": 60000,
+    "clock_displacement_ms": 1,
+    "scheduled_acquisition_delay_ms": 35000,
+    "time_after_expiry_ms": 1001
+  },
+  "main": {
+    "exit_code": 0,
+    "assertions_passed": 8,
+    "observation": "late-timer-initial-main-observation.json",
+    "jest": "late-timer-initial-main-jest.json",
+    "stdout": "late-timer-initial-main.stdout.txt",
+    "acquisition_requests": 1,
+    "replacement_refresh_retained": true,
+    "extend_enabled_at_expiry": true,
+    "signed_out": false,
+    "logout_requests": 0,
+    "execution": "late-timer-initial-main-execution.json"
+  },
+  "intended": "Retain a scheduled acquisition after slight callback delay. Preserve the separate restriction against acquiring through a late page-return replay.",
+  "limits": [
+    "The controlled wall-clock displacement models lateness. It does not measure native timer jitter.",
+    "Equal starting expiries are synthetic. Inspected token endpoints permit independent access and refresh deadlines.",
+    "The experiment observes recovery availability and forced logout. It does not click Extend or execute a live provider.",
+    "The final canonical test worker records its complete normal-suite command and content manifest."
+  ],
+  "evidence_sha256": {
+    "late-timer-candidate-jest.json": "a5f467385cef8e1b2774d10637401029e9e63b379f0d3e71a364d7643c577bc3",
+    "late-timer-candidate-observation.json": "a092b316151bd035a7e8806eb6b61765541bbbf40c55d4cbd88acc9d937a47e8",
+    "late-timer-candidate.stdout.txt": "5f0c830102708805f452a6b91e95a901628fb6898d73edf63f95891e60e97735",
+    "late-timer-initial-candidate-execution.json": "6c0327b1a135d5b8c0e01bfb980aa751c30cb6d5b55e301bf3004312a9cf8594",
+    "late-timer-initial-candidate-jest.json": "b40f62e6b627712f63bca34dba0dcc2f889a515b95753851e8af9ef40384bf36",
+    "late-timer-initial-candidate-observation.json": "d8dfd56291b908ee7b3155d7a1330fee20c20488609afc7000f4ab5628da048e",
+    "late-timer-initial-candidate.stdout.txt": "95079e89f33a7d25918fd6c8ef6da01ad2964d1557acfa5d82a5d730970d68ee",
+    "late-timer-initial-commands.json": "e0e668b9aec79b902013fc3e711ccd415d7f68d35be3c28b28c28845e6845a75",
+    "late-timer-initial-main-execution.json": "70f06cbe375df0f9241381aefbef31894a77353b3cab664bd0f24939fb9e8d74",
+    "late-timer-initial-main-jest.json": "345993440190d7e7eb43811a39a030a47b12b0b9213fc55981d51bc8b2f9c0bf",
+    "late-timer-initial-main-observation.json": "bdf75723432b6640cce12a3f934331930fcdd9b0ee1d9953507f965b1dffed2a",
+    "late-timer-initial-main.stdout.txt": "a08f32a6d0db47c753d4b1d5219f38a53a9954fe3cd267965892b6c7dd88fa32",
+    "late-timer-inputs.json": "0ab6ffc590cc3add1a7a02e371789c7959fed048a78991fcf1b4f93089449cfb",
+    "late-timer-main-jest.json": "9e2141790621fe2fdaa1e039f56c7f55e26ee1d02645e8aa415493c7000d62a3",
+    "late-timer-main-observation.json": "406ddfc84e8d1d941b865de599422c38b6d4f8b42a221712c92c56ce95e1dbc3",
+    "late-timer-main.stdout.txt": "e768e1cf11f9428ead3392d0fe9d4677d96344bab8efc5e5dddb8a1362a575b3"
+  },
+  "natural_matching_expiry_occurrence": "NOT_OBSERVED",
+  "initial_states_byte_equal": true,
+  "command_metadata": "late-timer-initial-commands.json",
+  "provider_default_lifetime_control": "late-timer-provider-comparison.json",
+  "provider_control_test_sha256": "9f43f74fee05efb1065465ccc7afda71ac1551defc5ad7add2b8ce2af84c02ef"
+}

@@ -1,0 +1,102 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: admin-ux.spec.ts >> UI-RISK-009 administration source risk with live evidence
+- Location: e2e/audit-specs/admin-ux.spec.ts:171:3
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e7]:
+      - img "Markets Operations One logo" [ref=e9]
+      - generic [ref=e10]:
+        - generic [ref=e11] [cursor=pointer]:
+          - img "new tile" [ref=e13]
+          - generic [ref=e14]: New Tile
+        - generic [ref=e15]:
+          - img "dark" [ref=e17]
+          - generic [ref=e19]:
+            - text: dark
+            - checkbox "Theme Switch" [ref=e22] [cursor=pointer]
+        - group [ref=e26]:
+          - generic [ref=e27]: 05:38 UTC
+          - checkbox "Time Switch" [checked] [ref=e30] [cursor=pointer]
+        - button "User Profiles" [ref=e34] [cursor=pointer]:
+          - generic [ref=e35]: A
+        - button "Share Feedback" [ref=e37] [cursor=pointer]
+    - main [ref=e41]:
+      - tablist "workspaces" [ref=e45]:
+        - tab [selected] [ref=e47] [cursor=pointer]:
+          - region "Category" [ref=e48]:
+            - textbox "Workspace Name" [ref=e52]: Category
+            - button "refresh" [ref=e53]
+        - button "Add Workspace" [ref=e57] [cursor=pointer]
+      - tabpanel [ref=e62]:
+        - generic [ref=e65]:
+          - button "Create New Category" [ref=e66] [cursor=pointer]
+          - grid [ref=e68]:
+            - button "Export" [ref=e70] [cursor=pointer]
+            - generic [ref=e74]:
+              - rowgroup [ref=e75]:
+                - row [ref=e76]:
+                  - columnheader "Actions" [ref=e77]
+                  - columnheader "Category Label" [ref=e80] [cursor=pointer]
+                  - columnheader "Owner" [ref=e83] [cursor=pointer]
+                  - columnheader "Verified?" [ref=e86] [cursor=pointer]
+                  - columnheader "Updated At" [ref=e89] [cursor=pointer]
+                  - columnheader "Updated By" [ref=e92] [cursor=pointer]
+                  - columnheader "Record Id" [ref=e95] [cursor=pointer]
+                  - columnheader "Order No" [ref=e98] [cursor=pointer]
+              - rowgroup [ref=e101]:
+                - row [ref=e102]:
+                  - cell [ref=e103]:
+                    - menu [ref=e104]:
+                      - menuitem "Edit" [ref=e105] [cursor=pointer]
+                      - menuitem "Verify" [ref=e108] [cursor=pointer]
+                      - menuitem "Deactivate" [disabled]
+                      - menuitem "Audit" [active] [ref=e111] [cursor=pointer]
+                  - cell "Fixture Category" [ref=e114]
+                  - cell "TEST_OWNER" [ref=e115]
+                  - cell [ref=e116]
+                  - cell "Oct 22, 2026, 12:05:00 AM" [ref=e119]
+                  - cell "UI-ADMIN-01" [ref=e121]
+                  - cell "101" [ref=e122]
+                  - cell "7" [ref=e123]
+                - row [ref=e125]:
+                  - cell [ref=e126]:
+                    - menu [ref=e127]:
+                      - menuitem "Edit" [ref=e128] [cursor=pointer]
+                      - menuitem "Verify" [ref=e131] [cursor=pointer]
+                      - menuitem "Deactivate" [disabled]
+                      - menuitem "Audit" [ref=e134] [cursor=pointer]
+                  - cell "Other Category" [ref=e137]
+                  - cell "TEST_OWNER" [ref=e138]
+                  - cell [ref=e139]
+                  - cell "Oct 22, 2026, 12:05:00 AM" [ref=e142]
+                  - cell "UI-ADMIN-01" [ref=e144]
+                  - cell "102" [ref=e145]
+                  - cell "7" [ref=e146]
+            - generic [ref=e150]:
+              - paragraph [ref=e151]: "Rows per page:"
+              - generic [ref=e152]:
+                - 'combobox "Rows per page: 20" [ref=e153] [cursor=pointer]': "20"
+                - textbox [aria-hidden]: "20"
+              - paragraph [ref=e154]: 1–2 of 2
+              - generic [ref=e155]:
+                - button "Go to previous page" [disabled]
+                - button "Go to next page" [disabled]
+  - tooltip "Open Audit" [ref=e156]
+```

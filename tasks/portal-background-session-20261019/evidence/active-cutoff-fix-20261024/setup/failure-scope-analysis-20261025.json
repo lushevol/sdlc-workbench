@@ -1,0 +1,650 @@
+{
+  "id": "ANALYSIS-issue1-failure-scope-20261025",
+  "recorded_at": "2026-10-24T23:46:56.164223+00:00",
+  "critical_conclusion": "The eleven retained failures have unchanged first errors outside the corrected refresh-expiry branch.",
+  "owner": "unknown application owner",
+  "next_action": "Complete the native refresh-boundary comparison. Retain separate defects for unchanged failing paths.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "scope": "Source review of eleven retained FAILED cases from the initial candidate checkpoint. The independent native queue can add later results.",
+  "locator_root": "Workbench workspace root",
+  "application_base_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "application_candidate_revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+  "business_execution_performed": false,
+  "sources": [
+    {
+      "id": "home-controller",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+      "lines": [
+        [
+          60,
+          87
+        ],
+        [
+          118,
+          132
+        ],
+        [
+          179,
+          185
+        ]
+      ]
+    },
+    {
+      "id": "home-view",
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "lines": [
+        [
+          56,
+          56
+        ],
+        [
+          127,
+          127
+        ]
+      ]
+    },
+    {
+      "id": "manual-service",
+      "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+      "revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "sha256": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc",
+      "lines": [
+        [
+          89,
+          105
+        ]
+      ]
+    },
+    {
+      "id": "activity-service",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+      "revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "lines": [
+        [
+          8,
+          27
+        ]
+      ]
+    },
+    {
+      "id": "timeout-controller",
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "lines": [
+        [
+          25,
+          41
+        ],
+        [
+          54,
+          61
+        ]
+      ]
+    },
+    {
+      "id": "logout-service",
+      "path": "repos/ui/mfe-base/src/services/index.ts",
+      "revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+      "lines": [
+        [
+          20,
+          31
+        ]
+      ]
+    },
+    {
+      "id": "original-assertions",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "source_repository_path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984"
+    },
+    {
+      "id": "candidate-requirement-v4",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "version": 4,
+      "governance_state": "candidate",
+      "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "lines": [
+        [
+          137,
+          154
+        ],
+        [
+          158,
+          184
+        ]
+      ],
+      "authority_limit": "The requirement records user intent. Candidate governance does not establish publication or deployment approval."
+    },
+    {
+      "id": "existing-historical-first-failure-review",
+      "path": "tasks/portal-background-session-20261019/evidence/case-e2e-match-review-20261024/report.md",
+      "sha256": "803b12d2ba9959ab3ec40bda1534676deb7b1fd1d04ab965bd60c8dcf078f52e",
+      "lines": [
+        [
+          65,
+          82
+        ]
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "id": "continuous-activity",
+      "case_ids": [
+        "E2E-01",
+        "E2E-02",
+        "E2E-03",
+        "E2E-08"
+      ],
+      "classification": "Existing requirement-to-implementation gap.",
+      "source_cause": "Home restarts a five-second mouse debounce. Home binds no keyboard or scroll renewal handler.",
+      "source_refs": [
+        {
+          "source": "home-controller",
+          "lines": [
+            60,
+            68
+          ]
+        },
+        {
+          "source": "home-view",
+          "lines": [
+            56,
+            56
+          ]
+        }
+      ],
+      "consequence": "Continuous mouse events postpone extension. Keyboard and scroll events have no dedicated renewal path.",
+      "scope_limit": "E2E-08 reaches zero held requests. It cannot establish whether a pending request would be shared.",
+      "issue1_relation": "The correction changes refresh expiry reconciliation. It changes neither input binding nor debounce scheduling.",
+      "policy_limit": "Candidate requirement AC-1 through AC-3 requires renewal during continuous input. Implementation clarification did not change that policy.",
+      "owner": "unknown application owner",
+      "next_action": "Address input coverage and scheduling in a separate authorized change."
+    },
+    {
+      "id": "manual-renewal-completion",
+      "case_ids": [
+        "E2E-04",
+        "E2E-05",
+        "E2E-10",
+        "E2E-13",
+        "E2E-17"
+      ],
+      "classification": "Known existing completion defect.",
+      "source_cause": "relogin starts its POST without returning the promise. Timeout awaits undefined, then closes the prompt.",
+      "source_refs": [
+        {
+          "source": "manual-service",
+          "lines": [
+            89,
+            104
+          ]
+        },
+        {
+          "source": "timeout-controller",
+          "lines": [
+            54,
+            60
+          ]
+        }
+      ],
+      "consequence": "Held and rejected renewal requests lose their visible recovery prompt before valid completion.",
+      "scope_limit": "E2E-13 passes prompt-activity checks first. E2E-17 fails before explicit Logout or cancellation checks.",
+      "issue1_relation": "Every observed refresh credential remains valid beyond case completion. The changed expired-refresh branch is unnecessary here.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve pending, rejected, keyboard, and cancellation prerequisites before correcting completion handling."
+    },
+    {
+      "id": "rapid-extend-control",
+      "case_ids": [
+        "E2E-09"
+      ],
+      "classification": "UI wait failure strongly explained by the known completion defect.",
+      "source_cause": "The first Extend activation closes Timeout immediately. The second activation cannot locate the removed control.",
+      "source_refs": [
+        {
+          "source": "manual-service",
+          "lines": [
+            89,
+            104
+          ]
+        },
+        {
+          "source": "timeout-controller",
+          "lines": [
+            54,
+            60
+          ]
+        },
+        {
+          "source": "original-assertions",
+          "lines": [
+            345,
+            348
+          ]
+        }
+      ],
+      "consequence": "The case cannot establish rapid-input request sharing.",
+      "scope_limit": "The first actual failure is a locator wait. It does not prove duplicate requests.",
+      "issue1_relation": "The source and lifecycle show early manual completion. Refresh replacement does not change that path.",
+      "owner": "unknown application owner",
+      "next_action": "Retain the rendered pending control before verifying a second rapid activation."
+    },
+    {
+      "id": "activity-logout-cancellation",
+      "case_ids": [
+        "E2E-18"
+      ],
+      "classification": "Existing cancellation failure.",
+      "source_cause": "Home teardown clears timers. Logout clears storage. Neither inspected path aborts the pending extension controller.",
+      "source_refs": [
+        {
+          "source": "home-controller",
+          "lines": [
+            69,
+            87
+          ]
+        },
+        {
+          "source": "logout-service",
+          "lines": [
+            20,
+            30
+          ]
+        },
+        {
+          "source": "activity-service",
+          "lines": [
+            8,
+            27
+          ]
+        }
+      ],
+      "consequence": "The browser does not report the required request cancellation within ten seconds.",
+      "scope_limit": "The later 401 occurs during cleanup. Token restoration and late-response overwrite remain untested.",
+      "issue1_relation": "The run observes no refresh credential. The corrected refresh-expiry branch cannot explain this cancellation result.",
+      "owner": "unknown application owner",
+      "next_action": "Verify cancellation ownership and late-response rejection in a separate scoped correction."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "E2E-01",
+      "mode": "mouse",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-01"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-mouse-20261024T155628/artifacts/result.json",
+        "sha256": "64947df9dbed7a4f41f44384d07c6455d91552f8f26483bbb2d2718e239c2f58"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-mouse-20261020T142055/artifacts/result.json",
+        "sha256": "23d5fc5c67d5a5212b0a4e1c367fb0403dfd6e55a88db369f91bb83b0a155bf4"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 256,
+      "first_failing_predicate": "Successful renewal must finish within the 15-second continuous mouse interval.",
+      "observed_result": "No successful renewal completed during the assertion window.",
+      "raw_error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "later_untested_boundaries": "No within-window expiry advance or protected validation was verified.",
+      "refresh_at_finish": "No refresh credential observed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-02",
+      "mode": "keyboard",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-02"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-keyboard-20261024T155659/artifacts/result.json",
+        "sha256": "e58a34da27691be873c9ef2ae037ca8c47af1c0577e24654c386bb6d64bb3f07"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-keyboard-20261020T142128/artifacts/result.json",
+        "sha256": "57b7bf8902b82ae67b7a5be360c38dbfef800d98b5d3e0e4f097ebc2ec798566"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 256,
+      "first_failing_predicate": "Successful renewal must finish within the 15-second continuous keyboard interval.",
+      "observed_result": "No successful renewal completed during the assertion window.",
+      "raw_error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "later_untested_boundaries": "No within-window expiry advance or protected validation was verified.",
+      "refresh_at_finish": "No refresh credential observed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-03",
+      "mode": "scroll",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-03"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-scroll-20261024T155731/artifacts/result.json",
+        "sha256": "4d339c5fc3b93a90cec2b160b4cdd43e149d4f3a5cc6bf667bbfd0f430430686"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-scroll-20261020T142155/artifacts/result.json",
+        "sha256": "db0919baef1360b6113fb2bec119e726e72b31feb6a239f26f5586fa8ff56a0c"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 256,
+      "first_failing_predicate": "Successful renewal must finish within the 15-second continuous scroll interval.",
+      "observed_result": "Only a setup extension completed before the assertion window.",
+      "raw_error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "later_untested_boundaries": "No within-window expiry advance or protected validation was verified.",
+      "refresh_at_finish": "No refresh credential observed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-08",
+      "mode": "single",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-08"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-single-20261024T161702/artifacts/result.json",
+        "sha256": "f3df2ec086a00b2a3d5ad644d7163a34cb60ebf9dbd51641b3f2812e31be688a"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-single-20261020T142711/artifacts/result.json",
+        "sha256": "64e09b412e885dd08fe9dbae2bd4b7d4f817919b6f3d8c8946a454029d61adca"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 721,
+      "first_failing_predicate": "Repeated activity must share exactly one pending extension.",
+      "observed_result": "The held request count was zero.",
+      "raw_error": "The same access token must share one pending extension during repeated activity.\n\n0 !== 1\n",
+      "later_untested_boundaries": "Same-token sharing, cancellation, completion, and protected validation were not reached.",
+      "refresh_at_finish": "No refresh credential observed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-04",
+      "mode": "pending",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-04"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-pending-20261024T155803/artifacts/result.json",
+        "sha256": "185346302a4c79473f382f0106ab61a91c5307fc15c8d406cc7d8f9dc6bbf5b9"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-pending-20261020T142222/artifacts/result.json",
+        "sha256": "53e97491cb15f5205e1867d422d99e421cda8512cb6d32ddbf80d5895b33e1e8"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 290,
+      "first_failing_predicate": "The timeout prompt must remain visible while renewal remains pending.",
+      "observed_result": "The prompt closed before the held request completed.",
+      "raw_error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "later_untested_boundaries": "Successful completion, exact token installation, and protected validation were not reached.",
+      "refresh_at_finish": "Observed refresh credential remained valid after this case completed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-05",
+      "mode": "retry",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-05"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-retry-20261024T155915/artifacts/result.json",
+        "sha256": "c7a4c197c6112c70612f2cd5aa83f987819fea1d061bff1b8bbc80b836a122f9"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-retry-20261020T142329/artifacts/result.json",
+        "sha256": "65a8a8ff1fe79e0e9aaba109d9e2d61ddfc5a7808a457fe7cceaeb55677eb07a"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 329,
+      "first_failing_predicate": "Rejected renewal must leave the timeout prompt visible.",
+      "observed_result": "The prompt closed after Extend selected the rejected request.",
+      "raw_error": "Rejected renewal must leave the prompt visible.\n\nfalse !== true\n",
+      "later_untested_boundaries": "A successful retry and its protected validation were not reached.",
+      "refresh_at_finish": "Observed refresh credential remained valid after this case completed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-09",
+      "mode": "rapid",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-09"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-rapid-20261024T161757/artifacts/result.json",
+        "sha256": "684732aa1296af079ee8dba5a17c9f54710056fdb947db2321b23984fbc3e706"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-rapid-20261020T143143/artifacts/result.json",
+        "sha256": "3d6ea4bc288ae94dc1f227fc2fb33a762740b0fcf9348e7c5d4df2a834fc4000"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 347,
+      "first_failing_predicate": "The driver must locate Extend for a second rapid activation.",
+      "observed_result": "locator.boundingBox timed out after the first activation closed the prompt.",
+      "raw_error": "locator.boundingBox: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"Extend_Btn\"]')\u001b[22m\n",
+      "later_untested_boundaries": "Second activation, request sharing, completion, and protected validation were not reached.",
+      "refresh_at_finish": "Observed refresh credential remained valid after this case completed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-10",
+      "mode": "keyboardExtend",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-10"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-keyboardExtend-20261024T162010/artifacts/result.json",
+        "sha256": "5c13156758ce6646ce7a87d416c9932052053595b6d2c841f29869de6662cbe4"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-keyboardExtend-20261020T143319/artifacts/result.json",
+        "sha256": "941ac827994c511e90a66ab59428e2c8b1a253956971c926f8ddfc0e8be043bf"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 290,
+      "first_failing_predicate": "Keyboard Extend must retain the prompt while renewal remains pending.",
+      "observed_result": "The prompt closed before the held request completed.",
+      "raw_error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "later_untested_boundaries": "Successful keyboard renewal and protected validation were not reached.",
+      "refresh_at_finish": "Observed refresh credential remained valid after this case completed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-13",
+      "mode": "promptActivity",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-13"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-promptActivity-20261024T162425/artifacts/result.json",
+        "sha256": "e7e4a7161cbfbce51f4fa6c674480d7b66c710abba9e4ab577b0af62ce6fa13d"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-promptActivity-20261020T143514/artifacts/result.json",
+        "sha256": "a1bcee51b748b387a0bdf31c30131a786460b1dba0cf9cad9351aa7add5626c2"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 290,
+      "first_failing_predicate": "The later manual renewal must retain the prompt while its request remains pending.",
+      "observed_result": "Prompt activity assertions passed. The subsequent held manual renewal closed the prompt early.",
+      "raw_error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "later_untested_boundaries": "Later renewal completion, exact token installation, and protected validation were not reached.",
+      "refresh_at_finish": "Observed refresh credential remained valid after this case completed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-17",
+      "mode": "manualLogout",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-17"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-manualLogout-20261024T162738/artifacts/result.json",
+        "sha256": "2b03a1b4add7ab97b708017fabccdb52c04e58cea9dd9fe65d792084d41b3575"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/artifacts/result.json",
+        "sha256": "eed7e1aa58d5b478b7c9f3a4b82ac95b540517092b0b32455e09969cdbf3b0a3"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 773,
+      "first_failing_predicate": "Pending manual renewal must keep the timeout prompt visible.",
+      "observed_result": "The prompt closed before the held relogin response reached the browser.",
+      "raw_error": "Pending renewal must keep the timeout prompt visible.\n\nfalse !== true\n",
+      "later_untested_boundaries": "Explicit Logout, cancellation, late delivery, and token restoration assertions were not reached.",
+      "refresh_at_finish": "Observed refresh credential remained valid after this case completed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    },
+    {
+      "case_id": "E2E-18",
+      "mode": "activityLogout",
+      "case_definition": {
+        "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+        "anchor": "e2e-18"
+      },
+      "prior_outcome": "FAILED",
+      "candidate_outcome": "FAILED",
+      "candidate_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-activityLogout-20261024T162917/artifacts/result.json",
+        "sha256": "95bcc3788908c9854634226293f6ccd17b4032c208c639a763e0b102d9ca06b6"
+      },
+      "prior_result": {
+        "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/artifacts/result.json",
+        "sha256": "271e5e6f6cff6f98b6678d8567de5a5c5d09ea62cc7a19800ded5d34abdfb201"
+      },
+      "first_error_unchanged": true,
+      "first_failing_assertion_source": "original-assertions",
+      "first_failing_source_line": 806,
+      "first_failing_predicate": "Logout or Home unmount must cancel the pending activity extension within ten seconds.",
+      "observed_result": "No matching browser cancellation was observed. A later cleanup-path response returned 401.",
+      "raw_error": "Logout or Home unmount must cancel the pending extension request.",
+      "later_untested_boundaries": "Late delivery, token restoration, and Home restoration assertions were not reached.",
+      "refresh_at_finish": "No refresh credential observed.",
+      "source_cause_grade": "Source-backed inference. The exact controller statements were not traced dynamically.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve the first failing predicate before a separately scoped correction."
+    }
+  ],
+  "issue1_target": {
+    "case_id": "E2E-06",
+    "classification": "The direct original E2E candidate for a FAILED-to-PASSED transition.",
+    "source_refs": [
+      {
+        "source": "home-controller",
+        "lines": [
+          118,
+          132
+        ]
+      },
+      {
+        "source": "original-assertions",
+        "lines": [
+          601,
+          638
+        ]
+      }
+    ],
+    "reason": "The case sustains access through the initial refresh expiry and requires replacement refresh credentials without Timeout.",
+    "status_limit": "This source prediction does not assign an outcome to the independent current browser queue.",
+    "other_cases": [
+      "E2E-07 recovers with usable refresh credentials. Its manual completion defect remains outside issue 1.",
+      "E2E-15 and E2E-16 were historical passes. They check regression boundaries.",
+      "E2E-19 checks cancellation before late activity delivery. Issue 1 does not add that cancellation.",
+      "E2E-21 has unresolved missing-credential policy. It remains an observation."
+    ]
+  },
+  "verification": {
+    "all_eleven_first_errors_match_prior": true,
+    "candidate_source_bytes_match_exact_commit": true,
+    "retained_result_hashes_match_inventory": true,
+    "no_case_completed_after_an_observed_refresh_expiry": true,
+    "method": "Read retained JSON and exact committed source. Compare hashes, first errors, and credential expiry timestamps.",
+    "tests_or_browsers_started": false,
+    "live_inventory_or_progress_written": false
+  },
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "This analysis describes the eleven retained failures. It does not freeze later queue outcomes.",
+    "Historical and candidate browsers differ. Matching failures support unchanged behavior without proving identical runtime causes.",
+    "Source-backed causes remain inferences where exact callback-to-request execution was not retained.",
+    "Native setup failures require separate validity classification. They cannot count as business failures.",
+    "A passing source review or helper regression does not establish business execution or release approval.",
+    "No PROD deployment identity, configuration parity, or production frequency is established."
+  ]
+}

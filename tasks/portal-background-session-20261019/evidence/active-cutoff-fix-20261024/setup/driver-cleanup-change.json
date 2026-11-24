@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-24T15:59:25.480691+00:00",
+  "scope": "Native browser profile cleanup only. Original business assertions remain unchanged.",
+  "before": {
+    "path": "browser-runner.mjs.snapshot",
+    "sha256": "5eb880f3f4d0370d5710f64c901ff8c7956f778d1214cc7416d9c18ac9239846"
+  },
+  "after": {
+    "path": "browser-runner.cleanup-retry.mjs.snapshot",
+    "sha256": "4e25a4261981228e5a009b43f67c7b9ede3a06ecda14ebbfe7104c3d82250010"
+  },
+  "diff": "--- before/browser-runner.mjs\n+++ after/browser-runner.mjs\n@@ -25,7 +25,7 @@\n   if(owned.child.exitCode===null&&owned.child.signalCode===null)owned.child.kill('SIGTERM');\n   await Promise.race([owned.exited,sleep(2000)]);\n   if(owned.child.exitCode===null&&owned.child.signalCode===null){owned.child.kill('SIGKILL');await Promise.race([owned.exited,sleep(2000)]);}\n-  await fs.rm(owned.profilePath,{recursive:true,force:true});\n+  await fs.rm(owned.profilePath,{recursive:true,force:true,maxRetries:10,retryDelay:100});\n   owned.metadata.closedAt=new Date().toISOString();owned.metadata.status='CLOSED';\n  })();\n  return owned.cleanup;\n",
+  "change": "Use ten bounded removal retries with a 100-millisecond retry delay.",
+  "reason": "Native Edge profile writers can outlive the first removal attempt. ENOTEMPTY masked the natural case result.",
+  "assertion_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "assertion_bytes_changed": false,
+  "business_predicates_changed": false,
+  "validation": {
+    "changed_lines": 1,
+    "driver_syntax_check": "PASSED"
+  },
+  "limits": [
+    "Already loaded native processes retain their original driver bytes.",
+    "Raw failed cleanup evidence remains unchanged."
+  ]
+}

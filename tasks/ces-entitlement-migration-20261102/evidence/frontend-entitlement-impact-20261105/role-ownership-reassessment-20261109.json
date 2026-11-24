@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-09",
+  "evidence_class": "static-source-and-supplied-captures",
+  "live_execution": false,
+  "source_revision_note": "Container baseline 647e6b3e703e5144ab4b37c4b43aa22a28dfdd07; current 72a446f1a6b2be4a44a4dad6df7c4c37530cae85. Consumer directories are file snapshots; hashes identify their bytes.",
+  "files": {
+    "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts": "8e7368605c16ed20c0b68e20487972137318c1159f0fdd6bf7ad3c8fa758d0f2",
+    "repos/ui/mfe-ratan-container/src/ratanutils/componentEnabling.ts": "f9c941f2697477760c491940c54778bece6560e232a9b9147d76f31c1d3a7d3a",
+    "repos/ui/mfe-ratan-container/src/ratanstatic/ratanConfig/production/ratanConfig.json": "3960262d73bab13f1787e7cb00a83b6314edce2f8233bb2fe05d113f0d00c687",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts": "fc04e0969b2bc73c9cdde55e81677caa31fe4f6eb9cbc2722a3d6dab55fac268",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/store.ts": "654aca77353f6ac43d82fee6e46f0fa8b5a8aa58551c0f21276ae8a8df945cfc",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/common/useViewNameController.ts": "0d786b085d6a37faf5041c0407e45d691514d6e72587f25f6ac24d04ae277d36",
+    "repos/ui/mfe-trades/src/Trade/components/TradeDataGrid/common/RightClickMenuBuilder.tsx": "efed061a771d30140330268dbd238e22de354f7749746cb13e8b56676b6296ac",
+    "repos/ui/mfe-trades/src/Trade/components/TradeDataGrid/common/BaseTradeDataGrid.tsx": "71c3d82651015e2470ba9aec2a89477d01f90acacce0708ace656a2a369fac1f",
+    "repos/ui/mfe-trades/src/utils/filter.ts": "a7d0e48c3f83a8d2ee3c43d54581408bb43cdaa131fa0d2f65615a1b82b9c1d7",
+    "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts": "02eceebcc4cf1c7046776b730f9779a65d4b9ca92e7fba22032efd0d28f171c4",
+    "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts": "e6419242c777cf9eede5bcd84aad138f430bf330765b6a67a3d9c5aafcc7ef9c",
+    "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/BulkFixExceptions/utils/filter.ts": "32c3103f89b5116238fd8d77eab6275775ef664eef57f8f5bbb807abcc152db7",
+    "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CustomSearchView/index.tsx": "a8e030c030da6cff31051490f00efabfcf5a463856c2cbd39417a2a0905645f5",
+    "repos/ui/mfe-rules/src/MoRules/utils/convert.ts": "7b2c5e8753bc3d7744529ab437adc85ffede7dec37666610b6b5b62212d21b14",
+    "repos/ui/mfe-rules/src/MoRules/MoRulesHome.tsx": "395c07275f1489a3beab34e9bdfa5de3671263da11af1cfe272e26444a7b6ddd",
+    "repos/ui/mfe-rules/src/DryRunCenter/CreatePlan/common/utils.ts": "d8478e8ba142cced9010506af953908b165832b5e7d0069811cb2ad30c1eab9b",
+    "repos/ui/mfe-rules/src/DryRunCenter/CreatePlan/PlanScheduleComp.tsx": "97d2fcf3f11a231af1653c0331f669ae973fce096e40a91e19dc1ed2b6ee3f52",
+    "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts": "9033f910b5830a644b1f84bfb4af2270e40a283ac993e9cf750aff2ba320f3e8"
+  },
+  "claims": [
+    {
+      "id": "ROLE-ROOT",
+      "source": "authenticator.ts:27-65",
+      "finding": "getUser keeps legacy scalar fallback and X_RATANONE.roleName. It never converts CES roleList into role. Baseline uses same scalar projection; current adapter adds CES detection. Pure CES may have undefined role; mixed responses may preserve a legacy scalar instead.",
+      "remedy": "Reviewed compatibility-role mapping can preserve existing consumers only when one scalar role has the required meaning. Picking first CES entitlement or joining names cannot preserve membership and profile behavior for arbitrary multiple roles."
+    },
+    {
+      "id": "CASHFLOW-PROFILE",
+      "source": "MultiExceptions/common/utils.ts:1072-1074;hooks/useData.ts:683-703;BulkFixExceptions/utils/filter.ts:46-60,297-314;services/index.ts:128-133",
+      "finding": "Active single PendingVerification and bulk Checker flows pass scalar role as authorization-limit profile. Undefined yields undefined path segment. Multiple comma roles produce a new unmatched profile unless backend defines it. HTTP/backend result unexecuted."
+    },
+    {
+      "id": "TRADES-CONFIRM",
+      "source": "RightClickMenuBuilder.tsx:352-383;BaseTradeDataGrid.tsx:147",
+      "finding": "Active View Confirmation menu builder requires scalar role in four legacy values. Undefined or comma-joined role fails includes and hides menu."
+    },
+    {
+      "id": "RULES-ROLE",
+      "source": "MoRules/utils/convert.ts:3-19,22-89;MoRulesHome.tsx:25-29;DryRunCenter/CreatePlan/common/utils.ts:8-54,91-110;PlanScheduleComp.tsx:36,119",
+      "finding": "Scalar role selects MO default business flow, filters visible rule types, and defines Dry Run shared-filter queries and grouping. Missing scalar drops role-restricted options; multi-role union cannot be represented generally by one existing equality-tested string."
+    },
+    {
+      "id": "SAVED-ROLE",
+      "source": "ViewSelector/store.ts:30-45,83-92,125-141;FilterSelector/store.ts:31-46,83-92,128-144;ViewSelector/common/useViewNameController.ts:44-52",
+      "finding": "When role builders enabled, reads query assignee/moduleOwner using scalar role; new role-owned writes derive moduleOwner from scalar role. CES writes remain explicitly blocked by prior user decision. Known private writes can continue. Role-owned queries existed in baseline; new write holds expose the unresolved ownership decision safely.",
+      "remedy": "Shared container can read all mapped role names using backend list support or authorized fanout/dedup, without upper changes. New single moduleOwner still needs explicit policy or selection. Preserve pending hold until resolved."
+    },
+    {
+      "id": "CASHFLOW-SAVED-REFINEMENT",
+      "source": "CustomSearchView/index.tsx:18,68-74;componentEnabling.ts:30-44;production/ratanConfig.json:16-42",
+      "finding": "Cashflow CN passes CASHFLOW_CN_VIEW_BUILDER. Production snapshot disables View_Builder_POC globally with exceptions that exclude Cashflow types; thus its shared view path uses owner=id, not role. Cashflow uses custom NewFilterBuilder directly for filters. Prior blanket claim about Cashflow shared role-owned selectors is overstated. Runtime config remains unverified."
+    },
+    {
+      "id": "TRADES-ALIAS",
+      "source": "utils/filter.ts:5-11;utils/filter.test.ts;CES login-response.json:2041-2044",
+      "finding": "handleUserRule has no production caller found, tests only. Adding RATAN_ENTITLEMENT_RULE lets find recognize a key, but CES roleName remains null and roleList is separate. Prefix change alone cannot recover roles. No active issue requiring unused code additions."
+    },
+    {
+      "id": "PSS-HOLD",
+      "source": "authenticator.ts:278-282,460-466,508-512",
+      "finding": "Settlement CLIENT_DATA close/replay explicitly returns false for CES before action check because PSS_RO exclusion aggregation is unresolved. These shared helpers have no source callers in the three inspected upper snapshots; other exported consumers may be affected.",
+      "remedy": "Agree role-exclusion precedence or use authoritative action grant if policy states grant already embodies exclusion. Implement in shared helper; no caller API change required."
+    },
+    {
+      "id": "TELEMETRY",
+      "source": "Analysis/v2/User/utils.ts:38-44,71-77",
+      "finding": "Analytics profile reads X_RATANONE colon token. Pure CES token does not match, so profile becomes blank. This affects telemetry labeling rather than demonstrated app usability.",
+      "remedy": "Shared analytics can display mapped roles or roleList; preserve business scalar getUser separately."
+    }
+  ]
+}

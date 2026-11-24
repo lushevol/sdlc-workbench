@@ -1,0 +1,279 @@
+{
+  "id": "MINOR-session-unit-typecheck-rerun-20261020",
+  "recorded_at": "2026-10-20T14:30:24.493797+00:00",
+  "repository_id": "mfe-base",
+  "branch": "feature/session-refresh-minor",
+  "commit": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+  "parent_commit": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+  "unit_summary": {
+    "success": false,
+    "numTotalTestSuites": 116,
+    "numPassedTestSuites": 115,
+    "numFailedTestSuites": 1,
+    "numTotalTests": 412,
+    "numPassedTests": 411,
+    "numFailedTests": 1
+  },
+  "unit_exit_code": 1,
+  "unit_result": "full-result.json",
+  "unit_run": "full-run.json",
+  "unit_log": "full.log",
+  "failed_assertions": [
+    {
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "title": "Session lifecycle across browser minimize and return Given a hide request is slow, When access expires before its response arrives, Then the dialog stays open until manual Extend",
+      "assertion_line": 364,
+      "assertion": "expect(getHooksBase().store.token).toBe(responseAccessToken)",
+      "observed": "The store retained the initial access token after the manual Extend action.",
+      "expected": "The store contains the renewed response access token.",
+      "source_refs": [
+        "failing_assertion",
+        "timeout_state",
+        "timeout_controls",
+        "loading_button"
+      ],
+      "source_explanation_kind": "SOURCE_BACKED_INFERENCE",
+      "source_explanation": [
+        "Timeout starts logout and sets loading when no refresh token exists at mount.",
+        "The loading button disables Extend.",
+        "The mount-only effect does not respond when delayed refresh credentials arrive."
+      ],
+      "consequence": "The controlled late-refresh recovery journey fails on the selected branch.",
+      "owner": "unknown",
+      "next_action": "Review the pending-refresh and timeout control path. Preserve this failing regression before an authorized fix.",
+      "limits": [
+        "The execution uses JSDOM, fake timers, and a controlled Axios adapter.",
+        "The failure does not establish deployed environment behavior."
+      ]
+    }
+  ],
+  "typecheck_status": "FAILED",
+  "typecheck_exit_code": 2,
+  "typecheck_run": "typecheck-run.json",
+  "typecheck_log": "typecheck.log",
+  "typecheck_diagnostics": [
+    {
+      "path": "src/pages/Home/index.test.tsx",
+      "line": 183,
+      "column": 30,
+      "code": "TS2322",
+      "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'.",
+      "source_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "source_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "same_file_bytes_as_parent": true,
+      "last_line_change_commit": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "classification": "UNCHANGED_FROM_IMMEDIATE_PARENT_BUT_CHANGE_DERIVED_FROM_INITIAL_BASELINE",
+      "signature_source_ref": "event_signature",
+      "owner": "unknown",
+      "next_action": "Review the changed event interface and test caller fixtures. Restore a passing declared typecheck.",
+      "baseline_limit": "Exact initial source passed with current installed dependencies. Historical dependencies remain untested. No extra immediate-parent execution occurred.",
+      "comparison_scopes": {
+        "immediate_parent": {
+          "revision": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+          "status": "UNCHANGED_SOURCE"
+        },
+        "initial_baseline": {
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "typecheck_status": "PASSED",
+          "current_diagnostic_status": "INTRODUCED_AFTER_INITIAL_BASELINE",
+          "interface_change_revision": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+          "explanation": "The event parameter changed from implicit any to React.SyntheticEvent. Existing fabricated event targets no longer satisfy the exposed parameter type."
+        }
+      }
+    },
+    {
+      "path": "src/pages/Home/index.test.tsx",
+      "line": 184,
+      "column": 30,
+      "code": "TS2322",
+      "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'.",
+      "source_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "source_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "same_file_bytes_as_parent": true,
+      "last_line_change_commit": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "classification": "UNCHANGED_FROM_IMMEDIATE_PARENT_BUT_CHANGE_DERIVED_FROM_INITIAL_BASELINE",
+      "signature_source_ref": "event_signature",
+      "owner": "unknown",
+      "next_action": "Review the changed event interface and test caller fixtures. Restore a passing declared typecheck.",
+      "baseline_limit": "Exact initial source passed with current installed dependencies. Historical dependencies remain untested. No extra immediate-parent execution occurred.",
+      "comparison_scopes": {
+        "immediate_parent": {
+          "revision": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+          "status": "UNCHANGED_SOURCE"
+        },
+        "initial_baseline": {
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "typecheck_status": "PASSED",
+          "current_diagnostic_status": "INTRODUCED_AFTER_INITIAL_BASELINE",
+          "interface_change_revision": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+          "explanation": "The event parameter changed from implicit any to React.SyntheticEvent. Existing fabricated event targets no longer satisfy the exposed parameter type."
+        }
+      }
+    }
+  ],
+  "full_production_build": {
+    "status": "NOT_RUN",
+    "declared_command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "configuration_presence": {
+      ".env.server": true,
+      ".env.mfe": true,
+      ".env.local": true,
+      ".env.cloud": true,
+      ".storybook": false
+    },
+    "reason": "Storybook configuration is absent. Environment files exist, but their values and production suitability were not inspected.",
+    "environment_file_values_or_contents_retained": false,
+    "limit": "No production webpack, server, Storybook, or declaration build result is claimed."
+  },
+  "source_binding": {
+    "input_record": "execution-inputs.json",
+    "input_record_sha256": "50135cfab83457dbf80eb66b0dd43a61df17858e11e1d86691eabc09f9f1fab0",
+    "selected_input_file_count": 346,
+    "all_input_hashes_match_commit": true,
+    "input_files_different_from_parent": [],
+    "all_input_hashes_unchanged_after_unit": true,
+    "all_input_hashes_unchanged_after_typecheck": true,
+    "build_cache_path": "tsconfig.tsbuildinfo",
+    "pre_existing_cache_sha256": "0dad40c38a19a3858acf1eb011bd1dcdb65f9e5ead347b89357ab2605bd944cc",
+    "cache_hash_after_unit": "0dad40c38a19a3858acf1eb011bd1dcdb65f9e5ead347b89357ab2605bd944cc",
+    "cache_hash_after_typecheck": "0dad40c38a19a3858acf1eb011bd1dcdb65f9e5ead347b89357ab2605bd944cc",
+    "pre_existing_cache_modification_preserved": true,
+    "pre_existing_git_status": [
+      " M tsconfig.tsbuildinfo"
+    ],
+    "final_git_status": [
+      " M tsconfig.tsbuildinfo"
+    ]
+  },
+  "sources": {
+    "failing_assertion": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "start_line": 324,
+      "end_line": 365,
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "78ab0f5315a1d5c6eab73433fa55f3440c17d25f7ef89ee350240d3dac0164f1",
+      "matches_parent_revision": true
+    },
+    "timeout_state": {
+      "repository_id": "mfe-base",
+      "path": "src/components/Timeout/common/useController.ts",
+      "start_line": 25,
+      "end_line": 60,
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "matches_parent_revision": true
+    },
+    "timeout_controls": {
+      "repository_id": "mfe-base",
+      "path": "src/components/Timeout/index.tsx",
+      "start_line": 29,
+      "end_line": 44,
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2",
+      "matches_parent_revision": true
+    },
+    "loading_button": {
+      "repository_id": "mfe-base",
+      "path": "src/components/LoadingButton/index.tsx",
+      "start_line": 6,
+      "end_line": 24,
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "89dc97920127a6ba801cf5c9f87c227fa259593a26b25b85cb242273298cbc97",
+      "matches_parent_revision": true
+    },
+    "home_event_binding": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/index.tsx",
+      "start_line": 55,
+      "end_line": 57,
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "matches_parent_revision": true
+    },
+    "existing_fixed_cutoff_assertion": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "start_line": 428,
+      "end_line": 447,
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "887d051860b58ef58ddfaaca009b4ceea4cd0905d80e9dfaeb89e1e54a2c95ff",
+      "matches_parent_revision": true
+    },
+    "event_signature": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/common/useController.ts",
+      "start_line": 36,
+      "end_line": 44,
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "matches_parent_revision": true
+    }
+  },
+  "assertion_limits": [
+    "Passing existing tests do not establish all requirement version4 criteria.",
+    "Home currently binds mouse movement only. Keyboard and scroll browser behavior require separate evidence.",
+    "The existing fixed-cutoff test expects a prompt after refresh expiry. It is not an assertion of indefinite active renewal.",
+    "The installed private toolkit version is0.0.7-local-mock. This run does not establish integration with the production toolkit.",
+    "Existing dependencies are reused. No clean installation or external provider is exercised.",
+    "ForceExit bounds existing open handles. A clean process shutdown is not established."
+  ],
+  "automated_checks": {
+    "source_binding_passed": true,
+    "parent_source_identity_checked": true,
+    "pre_existing_cache_preserved": true,
+    "run_log_and_result_hashes_match": true,
+    "diagnostic_count_checked": true,
+    "initial_baseline_execution_passed": true,
+    "event_interface_evolution_inspected": true
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "initial_baseline_typecheck": {
+    "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "status": "PASSED",
+    "exit_code": 0,
+    "run_record": "initial-baseline-typecheck-run.json",
+    "run_record_sha256": "7a5b3509c10dee342c0adf7c24320c90a7d7142c2fa4aa2ff3615c883e1ae2e6",
+    "log": "initial-baseline-typecheck.log",
+    "log_sha256": "b58603cf4530a21c1451e44bcbcee228b85fa61675ce07c52a6622bdac5d97c1",
+    "same_installed_typescript": "4.9.5",
+    "environment_files_copied": false,
+    "limit": "Current installed dependencies are shared. Historical installation is not recreated."
+  },
+  "interface_evolution": [
+    {
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "path": "src/pages/Home/common/useController.ts",
+      "sha256": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+      "signature_line": 32,
+      "signature": "const handleChange = (event, newValue: number) => {"
+    },
+    {
+      "revision": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+      "path": "src/pages/Home/common/useController.ts",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "signature_line": 36,
+      "signature": "const handleChange = (event: React.SyntheticEvent, newValue: number) => {"
+    },
+    {
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "path": "src/pages/Home/common/useController.ts",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "signature_line": 36,
+      "signature": "const handleChange = (event: React.SyntheticEvent, newValue: number) => {"
+    }
+  ]
+}

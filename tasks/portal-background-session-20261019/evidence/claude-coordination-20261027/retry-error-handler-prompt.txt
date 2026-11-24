@@ -1,0 +1,92 @@
+Review this change independently using only the supplied diff and final source. No tools are available. Return at most two concrete findings, 150 words maximum. State trigger, consequence, and uncertainty. If none, state NO CONFIRMED FINDING.
+Base: f025513f696476a9cc8162681410cbd21e029bcb
+Candidate: e0030f5cf920b715f5831faf7df86cb9789b6d0f
+Path: src/hooks/service/util/error.response.handler.ts
+===== DIFF =====
+diff --git a/src/hooks/service/util/error.response.handler.ts b/src/hooks/service/util/error.response.handler.ts
+index 51648b3..7de2780 100644
+--- a/src/hooks/service/util/error.response.handler.ts
++++ b/src/hooks/service/util/error.response.handler.ts
+@@ -2,8 +2,18 @@ import { AxiosError } from "axios";
+ import { getHooksBase } from "../../HooksBase";
+ import { ActionType } from "../../reducer/util/ActionType";
+ import { clearStorageWhenLogout } from "../../../utils/common";
++import { isStaleSessionRequest } from "../../../utils/sessionEpoch";
++import { finishRequestLoading } from "./requestLoading";
+ 
+ export const errorHandler = (error: AxiosError): unknown => {
++  if (
++    isStaleSessionRequest(error.config) ||
++    error.code === "ERR_CANCELED" ||
++    error.config?.signal?.aborted
++  ) {
++    finishRequestLoading(error.config);
++    return Promise.reject(error);
++  }
+   const { baseDispatch } = getHooksBase();
+   if (
+     error.code !== "ERR_CANCELED" &&
+@@ -37,6 +47,6 @@ export const errorHandler = (error: AxiosError): unknown => {
+     }
+     baseDispatch({ type: ActionType.SET_ERRORMSG, data: { errorMsg: msg } });
+   }
+-  baseDispatch({ type: ActionType.SET_IS_LOADING, data: { isLoading: false } });
++  finishRequestLoading(error.config);
+   return Promise.reject({ ...error });
+ };
+
+===== FINAL SOURCE =====
+import { AxiosError } from "axios";
+import { getHooksBase } from "../../HooksBase";
+import { ActionType } from "../../reducer/util/ActionType";
+import { clearStorageWhenLogout } from "../../../utils/common";
+import { isStaleSessionRequest } from "../../../utils/sessionEpoch";
+import { finishRequestLoading } from "./requestLoading";
+
+export const errorHandler = (error: AxiosError): unknown => {
+  if (
+    isStaleSessionRequest(error.config) ||
+    error.code === "ERR_CANCELED" ||
+    error.config?.signal?.aborted
+  ) {
+    finishRequestLoading(error.config);
+    return Promise.reject(error);
+  }
+  const { baseDispatch } = getHooksBase();
+  if (
+    error.code !== "ERR_CANCELED" &&
+    !error?.config?.url?.includes("/logout") &&
+    !error?.config?.url?.includes("/api/analytics/") &&
+    !error?.config?.url?.includes("/api/sse/")
+  ) {
+    let msg = `${error?.config?.url} : ${error.message}`;
+    if (
+      error?.response?.data ||
+      error.message === "Network Error" ||
+      error.message === "Request failed with status code 401"
+    ) {
+      let data: any = error?.response?.data;
+      msg =
+        data?.message ||
+        data?.errorMessage ||
+        `Error happened, service is unavailable, pls check with support team: ${error?.config?.url}: API request failed`;
+      if (typeof data === "string") {
+        msg = data;
+      }
+    }
+    if (msg?.includes("TOKEN_INVALID_EXPIRED")) {
+      clearStorageWhenLogout(baseDispatch);
+      msg = "Expired Session, please login again.";
+    }
+    if (msg?.includes("AuthenticationException")) {
+      console.info(error?.config);
+      msg =
+        "Invalid username and password combination or SSO service is unavailable.";
+    }
+    baseDispatch({ type: ActionType.SET_ERRORMSG, data: { errorMsg: msg } });
+  }
+  finishRequestLoading(error.config);
+  return Promise.reject({ ...error });
+};
+
+===== END =====

@@ -1,0 +1,152 @@
+{
+  "artifact_kind": "knowledge-reconciliation",
+  "id": "CES-FUNCTION-DEFINITION-KNOWLEDGE-20261118",
+  "recorded_at": "2026-11-18T03:45:53.160227+00:00",
+  "status": "COMPLETED_CANDIDATE_RECONCILIATION",
+  "affected_scope": "CES migration parity candidate, one candidate navigation row, appended exact user source, one new immutable event, and scoped evidence.",
+  "risk": "Low document-change risk. Intended behavior changed; no CES execution or production mutation occurred.",
+  "record": {
+    "id": "KT-ces-migration-parity",
+    "path": "knowledge/records/candidates/security/KT-ces-migration-parity.md",
+    "previous_version": 7,
+    "previous_sha256": "4219cce4fc398a863cefff482bd3ff57a8533ccb1e23404e6c1729a2583a131f",
+    "previous_revision": "bfc1b2d87ebbd4d8a326a35c5ecaeb4b37ef5241",
+    "version": 8,
+    "sha256": "48d2517b5821f33179dbafe81ba4adba9bab91ba260594c39fa884538dac63c5",
+    "governance_state": "candidate",
+    "status": "draft",
+    "verified": []
+  },
+  "changes": [
+    "Functional profile definition rename updates every assigned affected account to the approved new name and removes the old name.",
+    "Deleting the only functional profile without replacement empties every affected account value; no fallback is inferred.",
+    "Changes limited to non-functional assignment grants, assignment removals, definition renames, or definition deletions preserve both assigned and empty functional values.",
+    "Immediate and five-second checks now explicitly cover confirmed functional definition changes as well as assignment changes.",
+    "No approved replacement role literal is supplied. The rename target remains an execution parameter.",
+    "Prior account-type rules, source exceptions, empty-value uncertainty, CES NFR uncertainty, caller projections, and saved-item ownership remain unchanged."
+  ],
+  "criteria": {
+    "added": [
+      "FUNC-PROFILE-AC-006",
+      "FUNC-PROFILE-AC-007",
+      "FUNC-PROFILE-AC-008"
+    ],
+    "extended": [
+      "FUNC-PROFILE-AC-004",
+      "FUNC-PROFILE-AC-005"
+    ],
+    "unchanged": [
+      "FUNC-PROFILE-AC-001",
+      "FUNC-PROFILE-AC-002",
+      "FUNC-PROFILE-AC-003"
+    ],
+    "parent_case_mapping": {
+      "TC-FUNC-016": "FUNC-PROFILE-AC-006",
+      "TC-FUNC-017": "FUNC-PROFILE-AC-007",
+      "TC-FUNC-008": "FUNC-PROFILE-AC-008"
+    }
+  },
+  "sources": [
+    {
+      "id": "SRC-ces-function-entitlement-eight-areas-20261118",
+      "resource": "conversation:ces-entitlement-migration-20261102:function-entitlement-eight-areas-20261118",
+      "revision": "sha256:9995f08c1ec69b37acf53ad581284ff684f25bedd7a5c43e6dd001ce936b654f",
+      "sha256": "9995f08c1ec69b37acf53ad581284ff684f25bedd7a5c43e6dd001ce936b654f",
+      "snapshot": "tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-excel-20261118/eight-tab-user-input.md"
+    }
+  ],
+  "navigation": {
+    "path": "knowledge/records/candidates/index.md",
+    "sha256": "8fa03d4035a9b353731bf0de2ded00c4e26d917c56fca695c88a83eaed726b62",
+    "scope": "Only the CES migration parity row changed."
+  },
+  "provenance": {
+    "manifest": "knowledge/evidence/manifest.yaml",
+    "appended_source_records": 1,
+    "prior_manifest_byte_prefix_unchanged": true,
+    "prior_audit_events_unchanged": 252,
+    "new_audit_event": {
+      "path": "knowledge/evidence/audit/AUD-20261118-KT-ces-migration-parity-v8.yaml",
+      "sha256": "a8016565186b62493e7eb678dce6135c9467ec2651391d124d82bb0a94f8a4ef",
+      "status": "RECORDED"
+    }
+  },
+  "checks": {
+    "baseline": {
+      "path": ".workbench/ingestion/ces-function-definition-20261118/baseline.json",
+      "sha256": "5bba9511f9e13f8d92fa222f84a475484bada82adf4d01b14d7b91cbab7c1ef4",
+      "status": "PASSED"
+    },
+    "prepared": {
+      "path": ".workbench/ingestion/ces-function-definition-20261118/prepared-final.json",
+      "sha256": "55036987d7830dd6642c7498506f984edee641f3afe462e2b6dd0c98c96162ad",
+      "status": "PREPARED"
+    },
+    "sealed_final": {
+      "path": ".workbench/ingestion/ces-function-definition-20261118/final.json",
+      "sha256": "3ae5a6af84f1be8d7db2c05a94f3425f47715b9eddb70a519f21dbaac6056c40",
+      "status": "PASSED"
+    },
+    "workspace_validation": {
+      "path": ".workbench/ingestion/ces-function-definition-20261118/workspace-validation.json",
+      "sha256": "15f2e2d79f0fe97174e8b2c3e7def4fe7891199915d6711b0c31360df0137e2a",
+      "status": "VALID"
+    }
+  },
+  "check_counts": {
+    "local_links": 155,
+    "new_audit_events": 1,
+    "raw_files": 1417,
+    "manifest_records": 1637,
+    "audit_files": 253,
+    "selected_documents": 2,
+    "changed_governed_documents": 1,
+    "git_blobs": 0,
+    "findings": 0,
+    "deferred_findings": 0,
+    "unchecked_heading_fragments": 26
+  },
+  "diff_check": "PASSED",
+  "semantic_review": {
+    "path": "tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-excel-20261118/eight-tab-knowledge-claim-review.json",
+    "sha256": "53cc28c986e77a59cde389b03d780f24cdd3acf64fd6601a4e31cbd1fc468785",
+    "status": "PASSED"
+  },
+  "source_planning": {
+    "status": "NOT_APPLICABLE_TO_NON_COLLECTION_INPUT",
+    "route": "Retained conversation input registered directly, with the existing scoped ingestion harness plan. No collection selection or source-processing receipt is claimed.",
+    "prior_route_evidence": "tasks/ces-entitlement-migration-20261102/evidence/function-entitlement-20261117/knowledge-reconciliation.json",
+    "plan": ".workbench/ingestion/ces-function-definition-20261118/plan.yaml",
+    "plan_sha256": "6bcb5cf3ff58ab1514c0758f461be364482657bcddf37d4dfc043511db635962",
+    "sources_view": "NOT_RUN",
+    "sources_complete": "NOT_APPLICABLE"
+  },
+  "remaining": {
+    "empty_api_value": "UNRESOLVED",
+    "approved_rename_literal": "EXECUTION_PARAMETER_NOT_SUPPLIED",
+    "ces_propagation_nfr": "UNCONFIRMED; five seconds is the user-selected test target",
+    "ces_clock_origin_contract": "UNCONFIRMED; CES confirmation receipt is the test convention",
+    "production_source_exceptions": "UNRESOLVED; retained in owning task",
+    "caller_projection_and_saved_item_ownership": "UNRESOLVED; prior deferral retained",
+    "human_review_and_publication": "PENDING; no approval or promotion",
+    "asd_review": "PENDING",
+    "wiki": "NOT_RUN; canonical input changed; derived freshness remains pending",
+    "implementation_provisioning_and_live_execution": "NOT_RUN"
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not establish complete writing review."
+    ]
+  },
+  "limits": [
+    "Final integrity checks passed for the selected two documents and one exact new source.",
+    "The harness leaves heading fragments unchecked. The new exact-user-input anchor exists in the saved source.",
+    "Agent semantic review supplies no human approval or executed CES behavior evidence.",
+    "No workbook, case catalog, stage record, evidence index, Git staging, or commit was edited by this worker."
+  ]
+}

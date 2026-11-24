@@ -1,0 +1,1 @@
+![](https://confluence.global.standardchartered.com/download/attachments/2678206227/RatanOne-2023-314-02.png?api=v2)

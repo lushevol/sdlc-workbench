@@ -1,0 +1,57 @@
+{
+  "case_id": "RN-S025",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:06:24.282Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "runner_sha256": "f531aeb52bee03e244395e1f755c107decf6859708b87fb318be5ee5a1ba6222",
+  "assertions": [
+    {
+      "name": "old refresh does not replace B refresh",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "name": "current user remains B",
+      "actual": "B",
+      "expected": "B",
+      "passed": true
+    }
+  ],
+  "observations": {
+    "document_csp_present": false
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235605495,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235605674
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235605674
+    },
+    {
+      "endpoint": "login",
+      "at": 1793235605674,
+      "fixture_subject": "B"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "40347312069c15608afaacd458b24d96ee270f8e71e2b4a7da4120cf686d528a"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+  ],
+  "completed_at": "2026-10-29T02:06:30.248Z"
+}

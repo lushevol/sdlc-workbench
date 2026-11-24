@@ -1,0 +1,172 @@
+{
+  "caseId": "rejected-renewal-retry",
+  "status": "PASSED",
+  "startedAt": "2026-10-19T19:22:18.303Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "f6983029b26919fee547929231fb995c57f648f863d424eb59fc09dadd9d8d9a",
+  "testSourceSha256": "41d3ee444936039f1ec09cdca12bee8a3fdca5d25d2c5ec741c753e5c43a8b3a",
+  "sourceRevisions": {
+    "mfe-base": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "The first relogin request receives a controlled transport failure. The retry uses the actual service.",
+    "The real relogin request is held before dispatch, then forwarded with route.fetch()."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [
+    {
+      "rejectedAttempt": true,
+      "failedPromptClosures": 0,
+      "retryEnabled": true
+    },
+    {
+      "pendingPromptClosures": 0,
+      "completedPromptClosures": 1
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-19T19:22:18.304Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "expired-prompt",
+      "capturedAt": "2026-10-19T19:23:18.298Z",
+      "file": "expired-prompt.png"
+    },
+    {
+      "phase": "rejected-prompt",
+      "capturedAt": "2026-10-19T19:23:18.439Z",
+      "file": "rejected-prompt.png"
+    },
+    {
+      "phase": "pending-prompt",
+      "capturedAt": "2026-10-19T19:23:20.088Z",
+      "file": "pending-prompt.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-19T19:23:26.499Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "ed76a501b8784110a5768560db8a2ea33b872e47d85ec0cd9a6310b1ad381e85",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "completedAt": "2026-10-19T19:23:26.496Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792437738254,
+      "access": {
+        "sha256": "7d6f8c3e8b3a5cf77727ffbc0bd692467d0102d741265f41d7da7f675231e233",
+        "exp": 1792437798,
+        "iat": 1792437738
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792437773026,
+      "access": null,
+      "refresh": {
+        "sha256": "b6143b04d8fa42dcef80b5c98bce9de637b2579fb27e9c1b6f14cc3c6e2161e7",
+        "exp": 1792437917,
+        "iat": 1792437773
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "time": 1792437800183,
+      "access": {
+        "sha256": "ed76a501b8784110a5768560db8a2ea33b872e47d85ec0cd9a6310b1ad381e85",
+        "exp": 1792437860,
+        "iat": 1792437800
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792437806455,
+      "access": {
+        "sha256": "482be69bd1829e3923d051dd3a938f0170f2f8046fd9bdab840e9d23837f9a74",
+        "exp": 1792437866,
+        "iat": 1792437806
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [
+    {
+      "pathname": "/api/auth/v2/sso/relogin",
+      "time": 1792437798419,
+      "error": "net::ERR_FAILED"
+    }
+  ],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792437806211
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792437736376
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792437806288
+    }
+  ],
+  "initialAccess": {
+    "sha256": "7d6f8c3e8b3a5cf77727ffbc0bd692467d0102d741265f41d7da7f675231e233",
+    "exp": 1792437798,
+    "iat": 1792437738
+  },
+  "latestAccess": {
+    "sha256": "482be69bd1829e3923d051dd3a938f0170f2f8046fd9bdab840e9d23837f9a74",
+    "exp": 1792437866,
+    "iat": 1792437806
+  },
+  "refresh": {
+    "sha256": "b6143b04d8fa42dcef80b5c98bce9de637b2579fb27e9c1b6f14cc3c6e2161e7",
+    "exp": 1792437917,
+    "iat": 1792437773
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-19T19:23:26.370Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

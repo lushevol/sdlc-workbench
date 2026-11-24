@@ -1,0 +1,753 @@
+{
+  "recorded_date": "2026-10-29 Asia/Singapore",
+  "scope": "All current failed cases and ten retained historical failure or impact rows.",
+  "severity_definitions": {
+    "S2": "High: conditional loss of core availability or authenticated access control. Does not establish frequency or production reachability.",
+    "S3": "Moderate: limited service or recovery degradation with unmeasured user consequence.",
+    "S4": "Minor/backlog: selected requirement or cleanup mismatch without demonstrated core-user blockage.",
+    "UNKNOWN": "No defensible actual user-impact level is established. Do not invent a precise level.",
+    "authority": "Existing user S4 ratings are retained. Other ratings are analyst proposals, not organizational risk acceptance. Priority and severity remain separate."
+  },
+  "current_failed_cases": 15,
+  "prior_retained_rows": 10,
+  "unresolved_verification_rows": 4,
+  "total_rows": 28,
+  "cases": [
+    {
+      "case_id": "RN-S002",
+      "finding_id": "SEC-01",
+      "definition": "06-test-cases.md#rn-s002",
+      "failure_point": "Expired-access Logout reports 200/result=true but writes zero revocation entries; replay of valid same-session refresh returns 200 and issues access. Expected replay rejection: 401.",
+      "observed_user_impact": "The isolated server path leaves the logged-out session renewable. The valid-access control revokes and rejects replay.",
+      "conditional_user_impact": "A party already holding a copied valid refresh credential could recover authenticated access after apparent logout in a matching deployment. Credential theft and production access were not demonstrated.",
+      "severity": "S2 high security impact, conditional; P1 investigation/correction priority",
+      "severity_authority": "P1 is the existing security-review analyst proposal. S2 is this audit's proposed user-impact classification; no organizational severity policy or human acceptance exists.",
+      "origin": "Inherited BFF validation order. Not a demonstrated new frontend bypass.",
+      "acceptability": "Not acceptable for security sign-off on current evidence. Correct and verify the revocation path, or provide inspected proof that the selected deployment prevents the trigger. No exception is recorded.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L370-L383",
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L340-L367"
+      ],
+      "assertion_link": "evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java#L110-L125",
+      "result_link": "evidence/comprehensive-renewal-20261028/expired-logout-case.json",
+      "control_result_link": "evidence/comprehensive-renewal-20261028/valid-logout-case.json",
+      "result_status": "FAILED",
+      "execution_revision": "BFF 19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "latest_candidate_applicability": "BFF source bound directly to the failing controlled execution. Frontend 66c6411 passes do not resolve server revocation.",
+      "owner": "unknown authentication owner",
+      "next_action": "Correct revocation through a reviewed authenticated credential path, preserve forged-JWT rejection, and retain server, browser, and replica regression evidence.",
+      "limits": [
+        "Actual controller, RSA verification, and session-service logic; mocked repository, entitlement, and servlet dependencies. No HTTP server, browser, external provider, or production test.",
+        "Security suite reports 12 passed and one failed. Java process exit 0 is not passing status: the Python wrapper returns failure from the failed-assertion count."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "REVIEW-E2E-01",
+      "finding_id": "REVIEW-01",
+      "definition": "06-test-cases.md#review-e2e-01",
+      "failure_point": "Replacement login completes 61 ms after Logout click, inside the one-second delay. The epoch guard protects replacement access but leaves the old dialog open. Extend is disabled; a second Logout starts no request.",
+      "observed_user_impact": "BFF-valid replacement access returns protected validation HTTP 200, but the visible recovery actions cannot recover the workspace in the controlled browser flow.",
+      "conditional_user_impact": "A supported in-place replacement-login caller with this timing could leave a user unable to continue through the dialog. Supported deployed caller and workaround remain unknown.",
+      "severity": "S2 high availability impact conditional; P2",
+      "severity_authority": "Existing analyst proposal. Production reachability remains unknown.",
+      "origin": "New session guard in historical candidate e0030f5; baseline closes the dialog by clearing the replacement session.",
+      "acceptability": "Not ready for positive review sign-off. Establish supported caller applicability, then correct and verify ownership if reachable. Do not claim universal production blockage.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L103-L145"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs",
+      "result_link": "evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json",
+      "control_result_link": "evidence/review-e2e-20261028/final-focused/review-01-baseline/result.json",
+      "result_status": "COMPLETED_WITH_LOCAL_IMPACT",
+      "execution_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "latest_candidate_applicability": "66c6411 Timeout source differs by analytics/effect lint maintenance. Relevant logoutStarted and epoch-guard logic is unchanged by exact Git comparison; persistence is a source prediction, not a new 66c6411 reproduction.",
+      "owner": "unknown application owner",
+      "next_action": "Trace supported replacement-login callers. Close stale dialog ownership when applicable and rerun the paired case.",
+      "limits": [
+        "Public in-place login models a consumer; it does not establish a deployed caller.",
+        "The diagnostic runner records COMPLETED because it observed the impact. This is not an additional failure within the 27-case business inventory."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "E2E-01",
+      "definition": "06-test-cases.md#e2e-01",
+      "failure_point": "Zero successful renewal within the 15-second continuous mouse interval. The five-second trailing debounce resets during continuous mouse movement.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; exact backlog scope retained on 2026-10-27.",
+      "origin": "Inherited: baseline and historical candidate fail.",
+      "acceptability": "Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32",
+      "result_link": "evidence/four-checks-20261027/e2e/native-mouse-20261027T064442/artifacts/activity-mouse-1793083491523/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain known limitation. Implement and verify the precise activity target when scheduled.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "E2E-02",
+      "definition": "06-test-cases.md#e2e-02",
+      "failure_point": "Zero successful renewal within the 15-second continuous keyboard interval. No keyboard event renewal binding exists.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; exact backlog scope retained on 2026-10-27.",
+      "origin": "Inherited: baseline and historical candidate fail.",
+      "acceptability": "Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32",
+      "result_link": "evidence/four-checks-20261027/e2e/native-keyboard-20261027T064514/artifacts/activity-keyboard-1793083523326/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain known limitation. Implement and verify the precise activity target when scheduled.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "E2E-03",
+      "definition": "06-test-cases.md#e2e-03",
+      "failure_point": "Zero successful renewal within the 15-second continuous scroll interval. No scroll event renewal binding exists.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; exact backlog scope retained on 2026-10-27.",
+      "origin": "Inherited: baseline and historical candidate fail.",
+      "acceptability": "Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32",
+      "result_link": "evidence/four-checks-20261027/e2e/native-scroll-20261027T064546/artifacts/activity-scroll-1793083554616/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain known limitation. Implement and verify the precise activity target when scheduled.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "E2E-08",
+      "definition": "06-test-cases.md#e2e-08",
+      "failure_point": "Expected one pending extension after 12 seconds of continuous movement; observed zero.",
+      "observed_user_impact": "The sequence never starts renewal. The case stops before it can test request sharing.",
+      "conditional_user_impact": "A user relying on continuous movement can still reach expiry. Sharing correctness and later recovery are not established by this failed run.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "Analyst proposal in existing issue catalogue.",
+      "origin": "Inherited prerequisite failure: baseline and historical candidate start zero requests.",
+      "acceptability": "Backlog candidate within inherited activity scope. Do not count this as proof of a request-sharing defect.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-08.cjs#L15-L24",
+      "result_link": "evidence/four-checks-20261027/e2e/native-single-20261027T065231/artifacts/slow-activity-single-flight-1793083961157/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Separate the activity prerequisite from pending-request sharing; retain both outcomes.",
+      "limits": [
+        "No protected-response, logout, or lost-work assertion executes after the first failure."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "BROWSER-SHARING-PENDING",
+      "definition": "06-test-cases.md#browser-sharing-pending",
+      "failure_point": "Expected one already pending same-token request; observed two requests and one cancellation after another activity event.",
+      "observed_user_impact": "The original pending renewal is canceled and replaced. Duplicate request work is observed.",
+      "conditional_user_impact": "Repeated activity on a slow connection could delay renewal and increase service load. User blocking and session loss remain unmeasured.",
+      "severity": "S3 moderate conditional; P4 backlog",
+      "severity_authority": "Analyst proposal; inherited sharing behavior retained by user backlog scope.",
+      "origin": "Inherited: baseline and historical candidate both show two requests and one cancellation.",
+      "acceptability": "Backlog retained. Acceptability of delay under representative latency remains unproved.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L55-L70",
+      "result_link": "evidence/four-checks-20261027/e2e/headless-sharingPending-20261027T064826/artifacts/BROWSER-SHARING-PENDING-1793083716933/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain backlog and measure renewal success under representative latency before claiming no user impact.",
+      "limits": [
+        "DOM/service headless boundary. Later original-response completion and protected-access predicates did not execute."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "E2E-12",
+      "definition": "06-test-cases.md#e2e-12",
+      "failure_point": "An extension response with result=false still installs its authorization header.",
+      "observed_user_impact": "Client credential state changes despite the negative response body.",
+      "conditional_user_impact": "An inconsistent provider response could cause confusing renewal state or an interruption. No valid-provider occurrence, unauthorized access, or user loss was demonstrated.",
+      "severity": "UNKNOWN; P3 investigation",
+      "severity_authority": "Existing analyst classification: severity unknown. Evidence cannot support a precise user severity.",
+      "origin": "Origin unconfirmed by execution; baseline source also installs the header before checking response body.",
+      "acceptability": "Acceptability unknown until the supported provider contract and actual consequence are established.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L85-L99",
+        "evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts#L13-L43"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-12.cjs#L12-L31",
+      "result_link": "evidence/four-checks-20261027/e2e/native-inconsistent-20261027T065615/artifacts/inconsistent-activity-response-rejected-1793084182571/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Check whether a supported provider can emit this shape; verify that negative-body responses preserve intended client state.",
+      "limits": [
+        "Controlled fixture replaces the body while retaining a valid access header. No paired baseline run. Later retry and protected-call checks did not execute."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "E2E-18",
+      "definition": "06-test-cases.md#e2e-18",
+      "failure_point": "Pending activity request is not canceled after Logout and Home unmount.",
+      "observed_user_impact": "The browser request remains pending after the UI leaves the active session.",
+      "conditional_user_impact": "Residual service work can continue. Restoration of access or Home after the late response was not tested because the cancellation prerequisite failed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; backlog scope retained.",
+      "origin": "Inherited: baseline and historical candidate fail cancellation.",
+      "acceptability": "Backlog retained. This failed assertion does not prove authentication restoration.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26",
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-18.cjs#L17-L29",
+      "result_link": "evidence/four-checks-20261027/e2e/native-activityLogout-20261027T070124/artifacts/pending-activity-home-unmount-cancellation-1793084494188/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain cancellation limit; verify stale completion separately before asserting restoration risk.",
+      "limits": [
+        "Logout and Home unmount occur together. Stale-session guards exist; later late-response assertions did not run."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "E2E-19",
+      "definition": "06-test-cases.md#e2e-19",
+      "failure_point": "Earlier activity request is not canceled when the timeout prompt opens.",
+      "observed_user_impact": "Old request remains pending behind the expiry prompt.",
+      "conditional_user_impact": "A later completion could interfere with manual recovery, but token overwrite and extra closure were not observed in this run.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; backlog scope retained.",
+      "origin": "Likely inherited: adapted baseline and candidate fail; original baseline setup did not reach the assertion.",
+      "acceptability": "Backlog retained. Do not label the unexecuted overwrite predicate a confirmed failure.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26",
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-19.cjs#L19-L34",
+      "result_link": "evidence/four-checks-20261027/e2e/native-late-20261027T070159/artifacts/late-activity-after-manual-success-1793084525224/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain cancellation limit and execute a separate stale-versus-manual completion check.",
+      "limits": [
+        "The case stops before manual renewal, held-token delivery, token preservation, and closure assertions."
+      ],
+      "evidence_period": "prior-retained"
+    },
+    {
+      "case_id": "RN-S023",
+      "definition": "06-test-cases.md#rn-s023",
+      "failure_point": "Conflicting duplicate refresh headers for A/B result in HTTP200 and one access credential for A, rather than zero.",
+      "observed_user_impact": "An ambiguous multi-value input is accepted according to its first value in the mock servlet. Gateway normalization and organizational rejection policy remain unknown.",
+      "conditional_user_impact": "Production reachability and business consequences remain unverified.",
+      "severity": "UNKNOWN; proposed ambiguous-input policy needs review. Do not label demonstrated cross-account takeover.",
+      "acceptability": "Acceptance is unknown until policy and gateway behavior are reviewed.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L336-L366"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/security/RemainingSecurityProbe.java#L148",
+      "result_link": "evidence/remaining-execution-20261029/security/rn-s023/result.json",
+      "owner": "unknown authentication and security owners",
+      "next_action": "Review duplicate-header policy and test the current HTTP/gateway path before acceptance.",
+      "origin": "The selected BFF dependency receives this input; no claim of a new frontend regression.",
+      "evidence_period": "current",
+      "result_status": "FAILED",
+      "limits": [
+        "Actual source under isolated controls; gateway and production reachability remain unknown."
+      ]
+    },
+    {
+      "case_id": "RN-S035",
+      "definition": "06-test-cases.md#rn-s035",
+      "failure_point": "Shared Axios request to an external HTTPS fixture includes Single-UI-Authorization.",
+      "observed_user_impact": "A same-origin consumer using the public shared client for an external destination can send portal access credentials toward that destination. The fixture intercepted transport; no third party received credentials.",
+      "conditional_user_impact": "Production reachability and business consequences remain unverified.",
+      "severity": "S2 High conditional, analyst proposal. A supported external-destination caller and effective deployment controls remain unknown.",
+      "acceptability": "Resolve applicable exposure before security acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/security/browser-security.mjs#L82-L85",
+      "result_link": "evidence/remaining-execution-20261029/security/rn-s035/result.json",
+      "owner": "unknown shared-client and security owners",
+      "next_action": "Establish supported destination policy and caller reachability; verify that external destinations receive no portal credentials.",
+      "origin": "Authorization-header attachment is unchanged from frontend baseline f025513f to66c6411. Existing shared-client risk.",
+      "evidence_period": "current",
+      "result_status": "FAILED",
+      "limits": [
+        "Actual source under isolated controls; gateway and production reachability remain unknown."
+      ]
+    },
+    {
+      "case_id": "RN-S037",
+      "definition": "06-test-cases.md#rn-s037",
+      "failure_point": "A configured nonempty skip header reaches the protected synthetic SDK handler without any JWT.",
+      "observed_user_impact": "An untrusted caller that reaches a configured skip-header route can bypass JWT validation in this SDK filter fixture. Gateway stripping and real business-service reachability remain unverified.",
+      "conditional_user_impact": "Production reachability and business consequences remain unverified.",
+      "severity": "S2 High conditional, analyst proposal. This fixture establishes handler invocation, not unauthorized real business records.",
+      "acceptability": "Resolve applicable exposure before security acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L72"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/security/RemainingSecurityProbe.java#L153",
+      "result_link": "evidence/remaining-execution-20261029/security/rn-s037/result.json",
+      "owner": "unknown SDK, gateway, and security owners",
+      "next_action": "Verify trusted gateway header stripping and route isolation. Reject forged public skip headers through the actual composed service.",
+      "origin": "Current SDK dependency control flow; outside the frontend release delta. Historical baseline relationship not asserted.",
+      "evidence_period": "current",
+      "result_status": "FAILED",
+      "limits": [
+        "Actual source under isolated controls; gateway and production reachability remain unknown."
+      ]
+    },
+    {
+      "case_id": "RN-W029",
+      "definition": "06-test-cases.md#rn-w029",
+      "failure_point": "No activity renewal request starts during 15 seconds of repeated mouse, keyboard, or scroll input inside the loaded synthetic workspace.",
+      "observed_user_impact": "Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated.",
+      "conditional_user_impact": "Later expiry can interrupt work; actual logout and lost work remain unobserved.",
+      "severity": "S4 Minor under the recorded activity backlog direction",
+      "acceptability": "Existing recorded activity backlog remains deferred within its stated scope.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137",
+      "result_link": "evidence/remaining-execution-20261029/workspace-transport/RN-W029/result.json",
+      "owner": "unknown application owner",
+      "next_action": "Retain the activity gap and its existing user priority; verify renewal with accepted input policy before closing.",
+      "origin": "Inherited source behavior; no new baseline browser comparison in this worker.",
+      "evidence_period": "current",
+      "result_status": "FAILED",
+      "limits": [
+        "Synthetic workspace and controlled browser time; no production-frequency claim."
+      ]
+    },
+    {
+      "case_id": "RN-W030",
+      "definition": "06-test-cases.md#rn-w030",
+      "failure_point": "No activity renewal request starts during 15 seconds of repeated mouse, keyboard, or scroll input inside the loaded synthetic workspace.",
+      "observed_user_impact": "Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated.",
+      "conditional_user_impact": "Later expiry can interrupt work; actual logout and lost work remain unobserved.",
+      "severity": "S4 Minor under the recorded activity backlog direction",
+      "acceptability": "Existing recorded activity backlog remains deferred within its stated scope.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137",
+      "result_link": "evidence/remaining-execution-20261029/workspace-transport/RN-W030/result.json",
+      "owner": "unknown application owner",
+      "next_action": "Retain the activity gap and its existing user priority; verify renewal with accepted input policy before closing.",
+      "origin": "Inherited source behavior; no new baseline browser comparison in this worker.",
+      "evidence_period": "current",
+      "result_status": "FAILED",
+      "limits": [
+        "Synthetic workspace and controlled browser time; no production-frequency claim."
+      ]
+    },
+    {
+      "case_id": "RN-W031",
+      "definition": "06-test-cases.md#rn-w031",
+      "failure_point": "No activity renewal request starts during 15 seconds of repeated mouse, keyboard, or scroll input inside the loaded synthetic workspace.",
+      "observed_user_impact": "Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated.",
+      "conditional_user_impact": "Later expiry can interrupt work; actual logout and lost work remain unobserved.",
+      "severity": "S4 Minor under the recorded activity backlog direction",
+      "acceptability": "Existing recorded activity backlog remains deferred within its stated scope.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137",
+      "result_link": "evidence/remaining-execution-20261029/workspace-transport/RN-W031/result.json",
+      "owner": "unknown application owner",
+      "next_action": "Retain the activity gap and its existing user priority; verify renewal with accepted input policy before closing.",
+      "origin": "Inherited source behavior; no new baseline browser comparison in this worker.",
+      "evidence_period": "current",
+      "result_status": "FAILED",
+      "limits": [
+        "Synthetic workspace and controlled browser time; no production-frequency claim."
+      ]
+    },
+    {
+      "case_id": "RN-Q009",
+      "definition": "06-test-cases.md#rn-q009",
+      "failure_point": "A response transform throws an Error without Axios config. The shared error handler clears every loading request.",
+      "observed_user_impact": "The global loading indicator disappears while W-B still awaits an undelivered response. W-B data loss or repeated business submission was not demonstrated.",
+      "conditional_user_impact": "A misleading readiness indication is observed. Repeat business submission remains unproved.",
+      "severity": "S4 Minor observed visual impact; production occurrence remains unknown",
+      "acceptability": "Observed minor defect; human acceptance remains unrecorded.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L36-L42",
+        "evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L50",
+        "evidence/remaining-execution-20261029/workspace-transport/baseline/error.response.handler.ts#L40"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L149",
+      "result_link": "evidence/remaining-execution-20261029/workspace-transport/RN-Q009/result.json",
+      "owner": "unknown application owner",
+      "next_action": "Decide acceptability for the observed loading indication gap; preserve request identity when handling transform errors, then rerun concurrent request predicates if correction is authorized.",
+      "origin": "Inherited by baseline source inspection. The baseline also unconditionally sets global loading false for errors. No paired baseline browser execution is claimed.",
+      "evidence_period": "current",
+      "result_status": "FAILED",
+      "limits": [
+        "The shared Axios browser path executed with an injected response transform in the retained synthetic module. No production application consumer of a throwing Axios transform was identified in the inspected UI source paths."
+      ]
+    },
+    {
+      "case_id": "RN-A001",
+      "status": "FAILED",
+      "classification": "APPLICATION_TARGET_FAILURE",
+      "failure_point": "Continuous mouse input resets the five-second trailing debounce. Zero successful renewals occurred during the 15-second interval.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "acceptability": "Recorded activity backlog disposition remains. This run supplies no new acceptance or approval.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt3.mjs#L107",
+      "result_link": "evidence/remaining-execution-20261029/core-browser-attempt3/RN-A001/result.json",
+      "owner": "unknown portal application owner",
+      "next_action": "Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation.",
+      "origin": "Inherited activity handling; this run does not establish a new release regression.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted."
+      ],
+      "definition": "06-test-cases.md#rn-a001",
+      "evidence_period": "current",
+      "result_status": "FAILED"
+    },
+    {
+      "case_id": "RN-A002",
+      "status": "FAILED",
+      "classification": "APPLICATION_TARGET_FAILURE",
+      "failure_point": "The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "acceptability": "Recorded activity backlog disposition remains. This run supplies no new acceptance or approval.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104",
+      "result_link": "evidence/remaining-execution-20261029/core-browser/RN-A002/result.json",
+      "owner": "unknown portal application owner",
+      "next_action": "Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation.",
+      "origin": "Inherited activity handling; this run does not establish a new release regression.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted."
+      ],
+      "definition": "06-test-cases.md#rn-a002",
+      "evidence_period": "current",
+      "result_status": "FAILED"
+    },
+    {
+      "case_id": "RN-A003",
+      "status": "FAILED",
+      "classification": "APPLICATION_TARGET_FAILURE",
+      "failure_point": "The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "acceptability": "Recorded activity backlog disposition remains. This run supplies no new acceptance or approval.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104",
+      "result_link": "evidence/remaining-execution-20261029/core-browser/RN-A003/result.json",
+      "owner": "unknown portal application owner",
+      "next_action": "Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation.",
+      "origin": "Inherited activity handling; this run does not establish a new release regression.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted."
+      ],
+      "definition": "06-test-cases.md#rn-a003",
+      "evidence_period": "current",
+      "result_status": "FAILED"
+    },
+    {
+      "case_id": "RN-A004",
+      "status": "FAILED",
+      "classification": "APPLICATION_TARGET_FAILURE",
+      "failure_point": "Continuous mixed input resets mouse debounce; keyboard and scroll have no independent renewal binding. Zero successful renewals occurred during the 15-second interval.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "acceptability": "Recorded activity backlog disposition remains. This run supplies no new acceptance or approval.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104",
+      "result_link": "evidence/remaining-execution-20261029/core-browser/RN-A004/result.json",
+      "owner": "unknown portal application owner",
+      "next_action": "Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation.",
+      "origin": "Inherited activity handling; this run does not establish a new release regression.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted."
+      ],
+      "definition": "06-test-cases.md#rn-a004",
+      "evidence_period": "current",
+      "result_status": "FAILED"
+    },
+    {
+      "case_id": "RN-A005",
+      "status": "FAILED",
+      "classification": "APPLICATION_TARGET_FAILURE",
+      "failure_point": "The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "acceptability": "Recorded activity backlog disposition remains. This run supplies no new acceptance or approval.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt2.mjs#L106",
+      "result_link": "evidence/remaining-execution-20261029/core-browser-attempt2/RN-A005/result.json",
+      "owner": "unknown portal application owner",
+      "next_action": "Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation.",
+      "origin": "Inherited activity handling; this run does not establish a new release regression.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted."
+      ],
+      "definition": "06-test-cases.md#rn-a005",
+      "evidence_period": "current",
+      "result_status": "FAILED"
+    },
+    {
+      "case_id": "RN-A006",
+      "status": "FAILED",
+      "classification": "APPLICATION_TARGET_FAILURE",
+      "failure_point": "The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "acceptability": "Recorded activity backlog disposition remains. This run supplies no new acceptance or approval.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104",
+      "result_link": "evidence/remaining-execution-20261029/core-browser/RN-A006/result.json",
+      "owner": "unknown portal application owner",
+      "next_action": "Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation.",
+      "origin": "Inherited activity handling; this run does not establish a new release regression.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted."
+      ],
+      "definition": "06-test-cases.md#rn-a006",
+      "evidence_period": "current",
+      "result_status": "FAILED"
+    },
+    {
+      "case_id": "RN-A013",
+      "status": "FAILED",
+      "classification": "APPLICATION_TARGET_FAILURE",
+      "failure_point": "The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "acceptability": "Recorded activity backlog disposition remains. This run supplies no new acceptance or approval.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt2.mjs#L106",
+      "result_link": "evidence/remaining-execution-20261029/core-browser-attempt2/RN-A013/result.json",
+      "owner": "unknown portal application owner",
+      "next_action": "Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation.",
+      "origin": "Inherited activity handling; this run does not establish a new release regression.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted."
+      ],
+      "definition": "06-test-cases.md#rn-a013",
+      "evidence_period": "current",
+      "result_status": "FAILED"
+    },
+    {
+      "case_id": "RN-L004",
+      "status": "PARTIALLY_EXECUTED",
+      "raw_status": "FAILED",
+      "classification": "VERIFICATION_BASELINE_UNRESOLVED",
+      "failure_point": "All-DOM mounted listener equality differs: 329 before; 327 after.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "acceptability": "Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits.",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179",
+      "result_link": "evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L004/result.json",
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "origin": "The measured shell states differ. It is not a confirmed release regression.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete."
+      ],
+      "definition": "06-test-cases.md#rn-l004",
+      "evidence_period": "current",
+      "result_status": "PARTIALLY_EXECUTED"
+    },
+    {
+      "case_id": "RN-L005",
+      "status": "PARTIALLY_EXECUTED",
+      "raw_status": "FAILED",
+      "classification": "VERIFICATION_BASELINE_UNRESOLVED",
+      "failure_point": "All-DOM mounted listener equality differs: 329 before; 337 after.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "acceptability": "Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits.",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179",
+      "result_link": "evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L005/result.json",
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "origin": "The measured shell states differ. It is not a confirmed release regression.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete."
+      ],
+      "definition": "06-test-cases.md#rn-l005",
+      "evidence_period": "current",
+      "result_status": "PARTIALLY_EXECUTED"
+    },
+    {
+      "case_id": "RN-L006",
+      "status": "PARTIALLY_EXECUTED",
+      "raw_status": "FAILED",
+      "classification": "VERIFICATION_BASELINE_UNRESOLVED",
+      "failure_point": "All-DOM mounted listener equality differs: 329 before; 337 after.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "acceptability": "Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits.",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179",
+      "result_link": "evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L006/result.json",
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "origin": "The measured shell states differ. It is not a confirmed release regression.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete."
+      ],
+      "definition": "06-test-cases.md#rn-l006",
+      "evidence_period": "current",
+      "result_status": "PARTIALLY_EXECUTED"
+    },
+    {
+      "case_id": "RN-L010",
+      "status": "PARTIALLY_EXECUTED",
+      "raw_status": "FAILED",
+      "classification": "VERIFICATION_BASELINE_UNRESOLVED",
+      "failure_point": "All-DOM mounted listener equality differs: 344 before; 336 after.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "acceptability": "Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits.",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_link": "evidence/remaining-execution-20261029/core-browser-attempt7/runner.mjs#L180",
+      "result_link": "evidence/remaining-execution-20261029/core-browser-attempt7/RN-L010/result.json",
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "origin": "The measured shell states differ. It is not a confirmed release regression.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete."
+      ],
+      "definition": "06-test-cases.md#rn-l010",
+      "evidence_period": "current",
+      "result_status": "PARTIALLY_EXECUTED"
+    }
+  ],
+  "current_failure_ids": [
+    "RN-A001",
+    "RN-A002",
+    "RN-A003",
+    "RN-A004",
+    "RN-A005",
+    "RN-A006",
+    "RN-A013",
+    "RN-Q009",
+    "RN-S002",
+    "RN-S023",
+    "RN-S035",
+    "RN-S037",
+    "RN-W029",
+    "RN-W030",
+    "RN-W031"
+  ],
+  "missing_current_failures": [],
+  "prior_audit_sha256": "1bdac0d44be330af8ca23003ef0126f201ae7d099d01b4f7e759fc794933ad46"
+}

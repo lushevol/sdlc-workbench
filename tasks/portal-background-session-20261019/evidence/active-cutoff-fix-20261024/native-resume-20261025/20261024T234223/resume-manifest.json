@@ -1,0 +1,235 @@
+{
+  "id": "RESUME-NATIVE-BATCH-active-cutoff-fix-20261025",
+  "recorded_at": "2026-10-25T00:23:17.536349+00:00",
+  "status": "STOPPED_AFTER_MISSING_BEFORE_NATURAL",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "scope": "Resume cases after the passing native visibility preflight. Natural was blocked when the Mac relocked during the missing observation.",
+  "capture_execution": {
+    "path": "native-resume-20261025/20261024T234223/execution.json",
+    "sha256": "1811a0110511dd7b2e102f624f44ec50adb492702e59ba5ce259675fcc8cd88f",
+    "status": "STOPPED_AFTER_MISSING",
+    "queue_pid": 69788,
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-resume.py",
+      "--preflight",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json"
+    ],
+    "preflight_sha256": "90bf698d0fde4be1868201597054d38e391f6448d19fdd2b74e9dc79cc187977",
+    "queue_source_sha256": "fa76f1d349a88896489a15d7fdc844ac2f5bdac954e6a38969585a2e72a53acb",
+    "outputs": [
+      {
+        "path": "launcher.stdout.log",
+        "sha256": "4a9a0f30ddfee74f0e62e28315b6143354d2d8cc7c43f0e82dfbf7aa010c42a4"
+      },
+      {
+        "path": "queue.stdout-stderr.log",
+        "sha256": "cb3b24728d19d35695c0638a3054a1ac3876989b505b3b912750431a9648e4fd"
+      }
+    ]
+  },
+  "native_completions": [
+    {
+      "finished": "cross",
+      "status": "PASSED",
+      "exit_code": 0,
+      "error": null,
+      "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-cross-20261024T234223/run.json"
+    },
+    {
+      "finished": "cross",
+      "status": "FAILED",
+      "exit_code": 1,
+      "error": "The authenticated portal must remain available.\n\nfalse !== true\n",
+      "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/baseline-cross-20261024T234541/run.json"
+    },
+    {
+      "finished": "late",
+      "status": "FAILED",
+      "exit_code": 1,
+      "error": "Opening the timeout prompt must cancel the earlier activity extension.",
+      "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-late-20261024T234822/run.json"
+    },
+    {
+      "finished": "visibility",
+      "status": "PASSED",
+      "exit_code": 0,
+      "error": null,
+      "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-visibility-20261024T234941/run.json"
+    },
+    {
+      "finished": "reload",
+      "status": "PASSED",
+      "exit_code": 0,
+      "error": null,
+      "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-reload-20261024T235007/run.json"
+    },
+    {
+      "finished": "missing",
+      "status": "PASSED",
+      "exit_code": 0,
+      "error": null,
+      "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-missing-20261024T235037/run.json",
+      "retained_manually_after_parent_stop": true
+    }
+  ],
+  "entries": [
+    {
+      "id": "E2E-06",
+      "mode": "cross",
+      "run": {
+        "path": "browser/cutoff-cross-20261024T234223/run.json",
+        "sha256": "06f35b0c98c854fb4001917f419d6dd8b00fda445c9789ea1a6ceb62c982ecf1"
+      },
+      "result": {
+        "path": "browser/cutoff-cross-20261024T234223/artifacts/result.json",
+        "sha256": "565ae575b445e77893edb5afda3958f137d83f52c49dd136af0ef948be22bd69"
+      },
+      "business_outcome": "PASSED",
+      "transition": "FAILED \u2192 PASSED",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "execution_scope": null,
+      "environment_limit": null,
+      "scope_evidence": null,
+      "started_at": "2026-10-24T23:42:23.588Z",
+      "completed_at": "2026-10-24T23:45:39.178Z",
+      "runner_status": "PASSED",
+      "native_exit_code": 0
+    },
+    {
+      "id": "E2E-15",
+      "mode": "visibility",
+      "run": {
+        "path": "browser/cutoff-visibility-20261024T234941/run.json",
+        "sha256": "4177d5cb6ce6a76fbef4e0ba102fbd7c68c420bd1ced038ba7c176a4bd6b52cd"
+      },
+      "result": {
+        "path": "browser/cutoff-visibility-20261024T234941/artifacts/result.json",
+        "sha256": "9196a72aa98dd211b61a1aac6df5340727ca5c45fcd0e07478dd4c549f5ab1df"
+      },
+      "business_outcome": "PASSED",
+      "transition": "PASSED \u2192 PASSED",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "execution_scope": null,
+      "environment_limit": null,
+      "scope_evidence": null,
+      "started_at": "2026-10-24T23:49:42.077Z",
+      "completed_at": "2026-10-24T23:50:05.002Z",
+      "runner_status": "PASSED",
+      "native_exit_code": 0
+    },
+    {
+      "id": "E2E-16",
+      "mode": "reload",
+      "run": {
+        "path": "browser/cutoff-reload-20261024T235007/run.json",
+        "sha256": "3d68e0c28d89c8c7a74ee7c6f6d844a2d0f393af99c22bbcee6a6c8534d4e45b"
+      },
+      "result": {
+        "path": "browser/cutoff-reload-20261024T235007/artifacts/result.json",
+        "sha256": "bb0e1bd3ca1dc3bb1574632351b53588f973099ad5ae78d903f4399cd8362fe1"
+      },
+      "business_outcome": "PASSED",
+      "transition": "PASSED \u2192 PASSED",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "execution_scope": null,
+      "environment_limit": null,
+      "scope_evidence": null,
+      "started_at": "2026-10-24T23:50:07.296Z",
+      "completed_at": "2026-10-24T23:50:35.252Z",
+      "runner_status": "PASSED",
+      "native_exit_code": 0
+    },
+    {
+      "id": "E2E-19",
+      "mode": "late",
+      "run": {
+        "path": "browser/cutoff-late-20261024T234822/run.json",
+        "sha256": "480e4e26b68de4698a9f5657b3223796750a81e69eb003a1ab9bf093cff7591d"
+      },
+      "result": {
+        "path": "browser/cutoff-late-20261024T234822/artifacts/result.json",
+        "sha256": "11b4381614e813c170e53dd5cf2a1e87a0ee4b1d046e886678d57b2535c5befc"
+      },
+      "business_outcome": "FAILED",
+      "transition": "FAILED \u2192 FAILED",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "execution_scope": null,
+      "environment_limit": null,
+      "scope_evidence": null,
+      "started_at": "2026-10-24T23:48:22.780Z",
+      "completed_at": "2026-10-24T23:49:39.759Z",
+      "runner_status": "FAILED",
+      "native_exit_code": 1
+    },
+    {
+      "id": "E2E-21",
+      "mode": "missing",
+      "run": {
+        "path": "browser/cutoff-missing-20261024T235037/run.json",
+        "sha256": "2245196f3da72b239c363f287141a89c8425a054310e7c073f6e9c0621e10abe"
+      },
+      "result": {
+        "path": "browser/cutoff-missing-20261024T235037/artifacts/result.json",
+        "sha256": "54f4dadda4c93e44bf7ceb3701ed9182179d32dad8d1995862c63bcef9842e98"
+      },
+      "business_outcome": "OBSERVATION_ONLY",
+      "transition": "OBSERVATION_ONLY \u2192 OBSERVATION_ONLY",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "execution_scope": "NATIVE_LIFECYCLE_OBSERVATION",
+      "environment_limit": "Fresh unlock preflight passed before this run; Mac relocked during wait. No physical UI conclusion is claimed.",
+      "scope_evidence": {
+        "path": "setup/visibility-preflight.json",
+        "sha256": "90bf698d0fde4be1868201597054d38e391f6448d19fdd2b74e9dc79cc187977"
+      },
+      "started_at": "2026-10-24T23:50:37.540Z",
+      "completed_at": "2026-10-25T00:20:56.140Z",
+      "runner_status": "PASSED",
+      "native_exit_code": 0
+    }
+  ],
+  "counterfactual": {
+    "id": "E2E-06",
+    "result": {
+      "path": "browser/baseline-cross-20261024T234541/artifacts/result.json",
+      "sha256": "0cca422685eae6f0bc2ed85230e7c0d6c6ad5f1ba4b5e554a11d8773f399106a"
+    },
+    "business_outcome": "FAILED",
+    "comparison_valid": true
+  },
+  "candidate_counts": {
+    "PASSED": 6,
+    "FAILED": 12,
+    "EXECUTION_ERROR": 1,
+    "DIAGNOSTIC_FAILED": 1,
+    "OBSERVATION_ONLY": 2,
+    "NOT_RUN": 0
+  },
+  "eligible_completed_cases": 21,
+  "pending_cases": [
+    "E2E-07"
+  ],
+  "natural_launched": false,
+  "native_execution_active": false,
+  "stopping_reason": "Mac IOConsoleLocked=true during missing case. Parent queue stopped after missing retained.",
+  "validation": {
+    "capture_command_bound": true,
+    "preflight_hash_bound": true,
+    "all_resumed_raw_hashes_match": true,
+    "native_exit_status_matches": true,
+    "missing_result_retained": true,
+    "natural_prevented": true
+  },
+  "limitations": [
+    "Missing is observation-only and does not establish business recovery policy.",
+    "Natural frozen-tab case is not executed in this resume.",
+    "Fresh unlock and visibility preflight are required before natural."
+  ]
+}

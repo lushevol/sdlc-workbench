@@ -1,0 +1,65 @@
+Exception in thread "main" java.lang.IllegalStateException: Could not initialize plugin: interface org.mockito.plugins.MockMaker (alternate: null)
+	at org.mockito.internal.configuration.plugins.PluginLoader$1.invoke(PluginLoader.java:85)
+	at jdk.proxy2/jdk.proxy2.$Proxy3.isTypeMockable(Unknown Source)
+	at org.mockito.internal.util.MockUtil.typeMockabilityOf(MockUtil.java:78)
+	at org.mockito.internal.util.MockCreationValidator.validateType(MockCreationValidator.java:22)
+	at org.mockito.internal.creation.MockSettingsImpl.validatedSettings(MockSettingsImpl.java:275)
+	at org.mockito.internal.creation.MockSettingsImpl.build(MockSettingsImpl.java:236)
+	at org.mockito.internal.MockitoCore.mock(MockitoCore.java:82)
+	at org.mockito.Mockito.mock(Mockito.java:2104)
+	at org.mockito.Mockito.mock(Mockito.java:2019)
+	at SecurityLogoutProbe.main(SecurityLogoutProbe.java:45)
+Caused by: java.lang.IllegalStateException: Internal problem occurred, please report it. Mockito is unable to load the default implementation of class that is a part of Mockito distribution. Failed to load interface org.mockito.plugins.MockMaker
+	at org.mockito.internal.configuration.plugins.DefaultMockitoPlugins.create(DefaultMockitoPlugins.java:105)
+	at org.mockito.internal.configuration.plugins.DefaultMockitoPlugins.getDefaultPlugin(DefaultMockitoPlugins.java:79)
+	at org.mockito.internal.configuration.plugins.PluginLoader.loadPlugin(PluginLoader.java:75)
+	at org.mockito.internal.configuration.plugins.PluginLoader.loadPlugin(PluginLoader.java:49)
+	at org.mockito.internal.configuration.plugins.PluginRegistry.<init>(PluginRegistry.java:29)
+	at org.mockito.internal.configuration.plugins.Plugins.<clinit>(Plugins.java:26)
+	at org.mockito.internal.MockitoCore.<clinit>(MockitoCore.java:71)
+	at org.mockito.Mockito.<clinit>(Mockito.java:1683)
+	... 1 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at org.mockito.internal.configuration.plugins.DefaultMockitoPlugins.create(DefaultMockitoPlugins.java:103)
+	... 8 more
+Caused by: org.mockito.exceptions.base.MockitoInitializationException: 
+Could not initialize inline Byte Buddy mock maker.
+
+It appears as if your JDK does not supply a working agent attachment mechanism.
+Java               : 17
+JVM vendor name    : Homebrew
+JVM vendor version : 17.0.19+0
+JVM name           : OpenJDK 64-Bit Server VM
+JVM version        : 17.0.19+0
+JVM info           : mixed mode, sharing
+OS name            : Mac OS X
+OS version         : 26.5
+
+	at org.mockito.internal.creation.bytebuddy.InlineDelegateByteBuddyMockMaker.<init>(InlineDelegateByteBuddyMockMaker.java:260)
+	at org.mockito.internal.creation.bytebuddy.InlineByteBuddyMockMaker.<init>(InlineByteBuddyMockMaker.java:23)
+	... 14 more
+Caused by: java.lang.IllegalStateException: Error during attachment using: net.bytebuddy.agent.ByteBuddyAgent$AttachmentProvider$Compound@7d3a22a9
+	at net.bytebuddy.agent.ByteBuddyAgent.install(ByteBuddyAgent.java:611)
+	at net.bytebuddy.agent.ByteBuddyAgent.install(ByteBuddyAgent.java:584)
+	at net.bytebuddy.agent.ByteBuddyAgent.install(ByteBuddyAgent.java:536)
+	at net.bytebuddy.agent.ByteBuddyAgent.install(ByteBuddyAgent.java:513)
+	at org.mockito.internal.creation.bytebuddy.InlineDelegateByteBuddyMockMaker.<clinit>(InlineDelegateByteBuddyMockMaker.java:133)
+	... 15 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at net.bytebuddy.agent.Attacher.install(Attacher.java:102)
+	at net.bytebuddy.agent.ByteBuddyAgent.install(ByteBuddyAgent.java:606)
+	... 19 more
+Caused by: com.sun.tools.attach.AttachNotSupportedException: Unable to open socket file /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/.java_pid15884: target process 15884 doesn't respond within 10500ms or HotSpot VM not loaded
+	at jdk.attach/sun.tools.attach.VirtualMachineImpl.<init>(VirtualMachineImpl.java:102)
+	at jdk.attach/sun.tools.attach.AttachProviderImpl.attachVirtualMachine(AttachProviderImpl.java:58)
+	at jdk.attach/com.sun.tools.attach.VirtualMachine.attach(VirtualMachine.java:207)
+	... 25 more

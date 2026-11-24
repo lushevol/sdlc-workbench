@@ -1,0 +1,95 @@
+{
+  "recorded_at": "2026-10-25T09:27:02.265803+00:00",
+  "status": "COMPLETED",
+  "valid_browser_comparisons": 2,
+  "failed_to_passed": 2,
+  "baseline_ref": "ae8213f2963047e7c126d01f4003cee1236abc25",
+  "candidate_ref": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+  "scope": "Native Edge; actual local authentication service; native minimize/restore; controlled delivery holds.",
+  "cases": [
+    {
+      "case_id": "FIX-OWNERSHIP-BROWSER-SUCCESS",
+      "mode": "staleSuccess",
+      "transition": "FAILED_TO_PASSED",
+      "baseline": {
+        "ref": "ae8213f2963047e7c126d01f4003cee1236abc25",
+        "summary": "issue-1-baseline/browser/issue-1-baseline-staleSuccess-20261025T091652/case-summary.json",
+        "summary_sha256": "156c7536864a1c6885334b5136276a003095749ba302c5d5b629d7022b5e6f79",
+        "result": "issue-1-baseline/browser/issue-1-baseline-staleSuccess-20261025T091652/artifacts/stale-refresh-success-isolation-1792919817894/result.json",
+        "result_sha256": "239ffb0a67ee26cfaebf560f3e700b7353227f67f5ed161b6b3bda002fe12253",
+        "status": "FAILED",
+        "error": "Session B must make its own acquisition; it must not reuse session-A refresh credentials.",
+        "test_source_sha256": "99991ff2e63a5637b48fb8852a51be989e70dc7c8e19316adfa43274bab83f24",
+        "late_delivery": "FULFILL_ATTEMPT_COMPLETED",
+        "actual_stale_service_status": null,
+        "protected_validation": null
+      },
+      "candidate": {
+        "ref": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+        "summary": "issue-1/browser/issue-1-staleSuccess-20261025T091802/case-summary.json",
+        "summary_sha256": "4b6028c3431474a59936d17fbf4d6bc1cfcefedd6f61e6093a909fd0e45371ab",
+        "result": "issue-1/browser/issue-1-staleSuccess-20261025T091802/artifacts/stale-refresh-success-isolation-1792919888523/result.json",
+        "result_sha256": "a4dadac43705ec4ad2f3368f123137d29b196ff86938c395e8ddd6b217bf1f34",
+        "status": "PASSED",
+        "error": null,
+        "test_source_sha256": "99991ff2e63a5637b48fb8852a51be989e70dc7c8e19316adfa43274bab83f24",
+        "late_delivery": "FULFILL_ATTEMPT_COMPLETED",
+        "actual_stale_service_status": null,
+        "protected_validation": {
+          "status": 200,
+          "tokenSha256": "9a75de42b2b69c8a4c4004f737d12dc137a4649b9f57fada38918baa1d62af6d",
+          "jsonPath": "result",
+          "configuredAssertionPassed": true,
+          "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+        }
+      }
+    },
+    {
+      "case_id": "FIX-OWNERSHIP-BROWSER-ERROR",
+      "mode": "staleError",
+      "transition": "FAILED_TO_PASSED",
+      "baseline": {
+        "ref": "ae8213f2963047e7c126d01f4003cee1236abc25",
+        "summary": "issue-1-baseline/browser/issue-1-baseline-staleError-20261025T091716/case-summary.json",
+        "summary_sha256": "ea7f0f132f8e16848fee21cded009d0e66f6c8d6335860327621919214525d59",
+        "result": "issue-1-baseline/browser/issue-1-baseline-staleError-20261025T091716/artifacts/stale-refresh-error-isolation-1792919842006/result.json",
+        "result_sha256": "2b79d961cdaa8d2df756d66f1cd1ec5f4de2ea771d1cbaf9c0fc69f98ba66e43",
+        "status": "FAILED",
+        "error": "Old session-A success or error must preserve session-B access.\n+ actual - expected\n\n+ 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'\n- 'd94bb9ac7ed9296feaac46e5850a13d3da660c8aaed4b6924a9116d6d3034c0e'\n",
+        "test_source_sha256": "99991ff2e63a5637b48fb8852a51be989e70dc7c8e19316adfa43274bab83f24",
+        "late_delivery": "FULFILL_ATTEMPT_COMPLETED",
+        "actual_stale_service_status": 401,
+        "protected_validation": null
+      },
+      "candidate": {
+        "ref": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+        "summary": "issue-1/browser/issue-1-staleError-20261025T091825/case-summary.json",
+        "summary_sha256": "9ce8d0dee3a4260015b384e6218ac2933956ea85a00263ce17643a46089e8ce2",
+        "result": "issue-1/browser/issue-1-staleError-20261025T091825/artifacts/stale-refresh-error-isolation-1792919912773/result.json",
+        "result_sha256": "49bd9f0337e26a9fd7b825bd97993ec7cff5f618bef16fa4765fa26a82925611",
+        "status": "PASSED",
+        "error": null,
+        "test_source_sha256": "99991ff2e63a5637b48fb8852a51be989e70dc7c8e19316adfa43274bab83f24",
+        "late_delivery": "FULFILL_ATTEMPT_COMPLETED",
+        "actual_stale_service_status": 401,
+        "protected_validation": {
+          "status": 200,
+          "tokenSha256": "e62c7a2f756f10d7262535c3e66044136b3f2b4a6cf600358caf74725bb35d6e",
+          "jsonPath": "result",
+          "configuredAssertionPassed": true,
+          "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+        }
+      }
+    }
+  ],
+  "excluded_attempts": [
+    "issue-1-baseline-staleSuccess-20261025T090251",
+    "issue-1-baseline-staleError-20261025T090313"
+  ],
+  "exclusion_reason": "Cover-tab setup failed before acquisition. No business comparison permitted.",
+  "limits": [
+    "Local fixtures do not establish PROD configuration or deployment parity.",
+    "Controlled held delivery does not establish production frequency.",
+    "Natural freezing was not asserted."
+  ]
+}

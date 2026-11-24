@@ -1,0 +1,929 @@
+{
+  "recorded_at": "2026-10-30T05:06:43.126623+00:00",
+  "scope": "Plain-language presentation copy only. Existing results, priorities, and evidence remain unchanged.",
+  "source_refs": [
+    {
+      "path": "evidence/report-impact-priority-20261029/issue-priority-audit.json",
+      "sha256": "3689b4e0c808e87c657c2e303f28128fd455432df974b639c533735133b175f3"
+    },
+    {
+      "path": "evidence/report-clarity-20261029/execution-reason-audit.json",
+      "sha256": "e5cfc9e5f695d20f84a0fb80c1718088f18037afc323b07bdb14369265af8fea"
+    },
+    {
+      "path": "evidence/report-readable-issues-20261030/case-copy.json",
+      "sha256": "aa2b244aa691b868a8cbd672c045aab144a031e2c899f23d94951e12332a15be"
+    },
+    {
+      "path": "evidence/report-readable-issues-20261030/editorial-copy.json",
+      "sha256": "8f60acd3ff880ec4d9d316887395a1cfda3617c93e97453d4b7408e29887fa6f"
+    }
+  ],
+  "groups": [
+    {
+      "id": "failed-activity",
+      "title": "Mouse, keyboard, and scroll activity did not renew the session",
+      "reason": "Continuous mouse movement keeps restarting the five-second timer. Keyboard and scroll actions have no session-renewal connection.",
+      "user_impact": "The session did not renew during these tests. Later sign-out, interrupted work, and lost work were not observed.",
+      "next_action": "Keep these cases in the backlog. Repeat them when the agreed activity behavior is implemented."
+    },
+    {
+      "id": "failed-logout",
+      "title": "Signing out did not stop the session from being renewed",
+      "reason": "The server reported successful sign-out but did not invalidate the saved credential used to renew the session.",
+      "user_impact": "The same valid credential obtained new access after sign-out. Production exposure has not been verified.",
+      "next_action": "Fix sign-out so the saved credential cannot renew access. Otherwise, prove this release cannot reach the failing path."
+    },
+    {
+      "id": "failed-loading",
+      "title": "The loading indicator disappeared before all work finished",
+      "reason": "One request failed while another was waiting. Error handling removed the loading indication for both requests.",
+      "user_impact": "The screen appeared ready while work remained pending. No session interruption, repeated submission, or data loss was demonstrated.",
+      "next_action": "Keep the visual defect in the backlog. Raise its priority if it causes a blocked action or incorrect saved data."
+    },
+    {
+      "id": "failed-ambiguous-header",
+      "title": "A request with two different renewal credentials was accepted",
+      "reason": "The server used the first credential instead of rejecting the conflicting values. The rejection rule still needs review.",
+      "user_impact": "The test received access for the first identity. It did not demonstrate access to another user\u2019s account.",
+      "next_action": "Agree how conflicting credentials must be handled. Then test the complete request through the real server entry point."
+    },
+    {
+      "id": "failed-external-header",
+      "title": "A request to another website included the portal sign-in credential",
+      "reason": "The shared request code added the portal credential to a request addressed to an external test website.",
+      "user_impact": "The test stopped the request before delivery. No external website received the credential.",
+      "next_action": "Find whether supported application code makes such requests. Check that external destinations never receive portal credentials."
+    },
+    {
+      "id": "failed-skip-header",
+      "title": "A special request setting skipped the sign-in check",
+      "reason": "A configured request header let the test service continue without a valid sign-in credential.",
+      "user_impact": "The test reached a protected test function. Access to real business data was not demonstrated.",
+      "next_action": "Check whether public requests can set this header. Verify that real services reject attempts to bypass sign-in."
+    },
+    {
+      "id": "partial-business-combinations",
+      "title": "Combined scenarios did not check real business saves",
+      "reason": "The tests checked browser and session behavior. No real business service or saved-transaction record was available.",
+      "user_impact": "The tests did not prove whether unauthorized or duplicate saves are prevented. They did not demonstrate a harmful save.",
+      "next_action": "Repeat these scenarios with a real business action. Check permissions and server records for each completed save."
+    },
+    {
+      "id": "partial-listener-baseline",
+      "title": "The cleanup comparison used different page states",
+      "reason": "Notifications and other page elements differed before and after the test. Their event-handler counts could not be compared fairly.",
+      "user_impact": "No memory leak, repeated action, forced sign-out, or unusable screen was proved.",
+      "next_action": "Repeat the comparison with matching page contents. Check that unused event handlers and timers are removed."
+    },
+    {
+      "id": "partial-signed-service",
+      "title": "The browser renewed access, but real server access was not checked",
+      "reason": "The browser accepted the test credential. The replacement test service did not perform the real server\u2019s security checks.",
+      "user_impact": "The result does not prove that users can open protected business services after renewal.",
+      "next_action": "Repeat each case with valid credentials from the real sign-in service. Confirm access as the correct user."
+    },
+    {
+      "id": "partial-native-equivalence",
+      "title": "Real browser suspension and private-window behavior remain unchecked",
+      "reason": "The tests imitated some browser conditions. They did not complete the required suspension or normal/private-window session sequence.",
+      "user_impact": "No disruptive user effect was demonstrated. Behavior in the specified real browser conditions remains unknown.",
+      "next_action": "Repeat the complete sequence in the specified browser mode. Check session recovery and access to protected services."
+    },
+    {
+      "id": "partial-transport",
+      "title": "The tests did not include the real live-update connection",
+      "reason": "The tests used local observations or imitated notifications. The actual connected application and receiving service were unavailable.",
+      "user_impact": "Renewal and credential handling during real updates or reconnects remain unverified. No production failure was demonstrated.",
+      "next_action": "Connect the real application to an isolated test service. Check messages, reconnection, session renewal, and credential handling."
+    },
+    {
+      "id": "partial-server-state",
+      "title": "Browser observations were not checked against real saved records",
+      "reason": "The browser checks ran, but real application records and server completion records were unavailable.",
+      "user_impact": "The tests cannot confirm saved-data integrity, one completed save, or completion after a tab closes.",
+      "next_action": "Repeat with the real application. Compare browser actions with the server\u2019s saved records and completion history."
+    },
+    {
+      "id": "partial-diagnostics",
+      "title": "A test credential appeared in debugging output",
+      "reason": "A failed renewal printed a test credential in the browser console. Exported logs and their readers were not checked.",
+      "user_impact": "The test does not establish whether real credentials reach unauthorized readers. Exposure remains unverified.",
+      "next_action": "Identify which logs leave the browser and who can read them. Check that sensitive credentials are removed."
+    },
+    {
+      "id": "partial-four-hour",
+      "title": "Four simulated hours passed, but the real sign-in service was not used",
+      "reason": "The test advanced the clock through four hours. It used replacement sign-in and protected-service responses.",
+      "user_impact": "No local sign-in prompt appeared. Continued access with the real sign-in provider remains unverified.",
+      "next_action": "Repeat the interval with the real sign-in provider and protected service. Record any new sign-in prompt and its cause."
+    },
+    {
+      "id": "blocked-stream-services",
+      "title": "The required live-message services were unavailable",
+      "reason": "The test environment lacked the actual live-update application, signed-in connection, or server delivery records.",
+      "user_impact": "Message delivery, reconnection, duplication, and access after sign-out could not be checked. This does not prove an application failure.",
+      "next_action": "Provide the required test application and message service. Check the expected users, messages, and permission rules."
+    },
+    {
+      "id": "blocked-business-app",
+      "title": "The required application or user permissions were unavailable",
+      "reason": "The environment lacked a required application, supported host, separate user permissions, or protected business records.",
+      "user_impact": "The tests could not check data separation, removed permissions, or host-specific behavior. No application failure was demonstrated.",
+      "next_action": "Provide the specified application setup and protected records. Use separate test users with the required permissions."
+    },
+    {
+      "id": "blocked-native-environment",
+      "title": "The required browser, device, or desktop condition was unavailable",
+      "reason": "The runner could not perform the specified touch, keyboard-input, crash, sleep, VPN, multiple-device, or desktop sequence.",
+      "user_impact": "Recovery in these real conditions remains unknown. Imitated browser events do not prove the same behavior.",
+      "next_action": "Run each case in its specified environment. Check restored sessions and protected access after the event."
+    },
+    {
+      "id": "blocked-http-security",
+      "title": "The real browser and server security setup was unavailable",
+      "reason": "The tests lacked the required website, request headers, cookies, shared sign-out handling, or caching server.",
+      "user_impact": "Cross-site access, embedded pages, shared sign-out, and cached-data separation remain unchecked. No user failure was demonstrated.",
+      "next_action": "Provide an isolated copy of the relevant server setup. Test the actual browser and server rules together."
+    },
+    {
+      "id": "blocked-write-worker",
+      "title": "The required saving, upload, or background-work service was unavailable",
+      "reason": "The test environment lacked the specified business action, upload service, progress updates, background task, or saved-result record.",
+      "user_impact": "Duplicate saves, upload permissions, background activity after sign-out, and cached user data remain unchecked.",
+      "next_action": "Provide the real test service and server records. Verify permissions, completion, cancellation, and separation between users."
+    },
+    {
+      "id": "blocked-tls",
+      "title": "A secure-connection failure could not be tested",
+      "reason": "The local service used an unencrypted connection. No controlled HTTPS certificate or connection failure was available.",
+      "user_impact": "The tests cannot confirm secure rejection or prove that credentials avoid an unencrypted fallback.",
+      "next_action": "Provide a controlled HTTPS service with the required failure. Check rejection and safe handling of sign-in credentials."
+    },
+    {
+      "id": "blocked-runner-binding",
+      "title": "The complete service or repeated-recovery test was unavailable",
+      "reason": "Some browser actions ran. Real server checks or the exact repeated sign-in and page-cleanup sequence were missing.",
+      "user_impact": "Reloading or reconnecting alone does not prove protected access, expired-credential rejection, or cleanup across repeated recoveries.",
+      "next_action": "Provide the real server checks and required repeated sequence. Complete the missing access and cleanup checks."
+    }
+  ],
+  "reviews": [
+    {
+      "id": "REVIEW-01",
+      "title": "A new session can remain trapped behind the old expiry dialog",
+      "what_happened": "A replacement sign-in completed while sign-out was still waiting. The old expiry dialog remained open.",
+      "reason": "The code protected the new session but left the old dialog unchanged. Extend was disabled, and Logout did nothing.",
+      "user_impact": "The valid new session could not continue through the visible recovery controls in this browser test.",
+      "missing_check": "A supported production path that replaces the session in place has not been identified.",
+      "priority_reason": "P2 remains because the test demonstrated unusable recovery controls. Production reachability remains unknown.",
+      "next_action": "Find whether a supported application can trigger this timing. If so, close the old dialog and repeat the test.",
+      "limits": "The browser test used an earlier candidate. Relevant current code is unchanged, but the current candidate was not rerun.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-02",
+      "title": "Renewal rejects credentials without the expected time fields",
+      "what_happened": "Test responses supplied credentials with an unsupported format or missing creation time. Renewal rejected them.",
+      "reason": "The new checks require usable creation and expiry times. The inspected local sign-in provider supplies those fields.",
+      "user_impact": "A valid retry succeeded in the same dialog. A supported response that prevents recovery was not demonstrated.",
+      "missing_check": "The deployed provider\u2019s supported credential format still needs confirmation.",
+      "priority_reason": "P3 remains because the failed inputs were test substitutes and valid retry recovered.",
+      "next_action": "Confirm the provider\u2019s supported response format. Raise priority if a valid response prevents session renewal.",
+      "limits": "The browser checked controlled response substitutions. Production provider behavior was not verified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-03",
+      "title": "A failed new sign-in cleared renewal data, but recovery succeeded",
+      "what_happened": "Starting a new sign-in cleared the old renewal credential. That new sign-in then failed.",
+      "reason": "The session changed before the new sign-in completed. The portal later obtained a renewal credential again.",
+      "user_impact": "Extend recovered the session and protected access succeeded. The suspected recovery block was not reproduced.",
+      "missing_check": "The complete range of supported failed-sign-in paths remains untested.",
+      "priority_reason": "P4 remains because the demonstrated browser sequence recovered successfully.",
+      "next_action": "Retain the successful recovery result. Raise priority if a supported failed-sign-in path leaves the user unable to continue.",
+      "limits": "This is an earlier controlled browser comparison. Production frequency and behavior remain unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-04",
+      "title": "Direct credential replacement can leave old renewal data behind",
+      "what_happened": "Test code directly replaced the access credential. The previous renewal credential remained.",
+      "reason": "This direct update skips the normal new-sign-in transition. No supported application using that update was found.",
+      "user_impact": "The test used one identity. Access to another user\u2019s account or records was not demonstrated.",
+      "missing_check": "A supported caller and a test with two distinct users are still needed.",
+      "priority_reason": "P3 remains because a consequential user effect has not been demonstrated.",
+      "next_action": "Find supported code that replaces credentials directly. Test a complete transition between two separate users.",
+      "limits": "This observation used an earlier candidate and one local identity. Production reachability remains unknown.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-05",
+      "title": "Extend waits while renewal credentials are being obtained",
+      "what_happened": "The request for a renewal credential remained pending. The dialog disabled Extend while waiting for it.",
+      "reason": "The portal waits for the request to finish before allowing another renewal attempt.",
+      "user_impact": "Logout remained available. When the pending request failed, the user reached Sign In.",
+      "missing_check": "Actual waiting time during browser suspension remains unverified.",
+      "priority_reason": "P3 remains because an unusable dialog or unlimited wait was not demonstrated.",
+      "next_action": "Measure real waiting time if supported use shows prolonged or unusable recovery.",
+      "limits": "The browser held the request in a controlled test. Production delays were not measured.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-06",
+      "title": "An invalid credential without an expiry time caused sign-out",
+      "what_happened": "The test supplied a renewal credential without an expiry time and with an invalid signature. The portal signed out.",
+      "reason": "The portal cannot determine a safe renewal window from that credential. The inspected local provider never creates this format.",
+      "user_impact": "Sign-out was observed for the invalid test input. Forced sign-out from a valid supported credential was not demonstrated.",
+      "missing_check": "Confirm that the deployed provider follows the inspected validity rules.",
+      "priority_reason": "P3 remains because the disruptive result used an invalid input that the inspected provider does not issue.",
+      "next_action": "Check supported credential rules. Raise priority if a valid provider response unexpectedly signs the user out.",
+      "limits": "The response was deliberately altered in a controlled browser test. Production occurrence remains unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-07",
+      "title": "Recovery still worked when the page opened near credential expiry",
+      "what_happened": "The page opened with less than 25 seconds of access remaining and a usable renewal credential.",
+      "reason": "The candidate did not immediately repeat the missed scheduled request. Manual Extend still obtained usable access.",
+      "user_impact": "Renewal and protected access succeeded. The suspected recovery block was not reproduced.",
+      "missing_check": "Other timing conditions remain outside this test.",
+      "priority_reason": "P4 remains because the tested recovery succeeded.",
+      "next_action": "Retain the successful recovery result. Investigate further if a supported timing condition disrupts the session.",
+      "limits": "This was an earlier controlled browser comparison. The result does not establish every production timing condition.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-08",
+      "title": "A file-loading setting may point to the user\u2019s own computer",
+      "what_happened": "The inspected build setting can use a local computer address for additional application files.",
+      "reason": "The source rule already existed. Its effective value in a deployed build was not available.",
+      "user_impact": "A matching file-loading failure was not demonstrated. Users could be affected only if a released build uses that address.",
+      "missing_check": "The actual settings and file addresses used by a relevant deployment remain unknown.",
+      "priority_reason": "P3 remains because no applicable application-loading failure has been shown.",
+      "next_action": "Inspect the effective setting when a matching deployment or supported loading failure becomes available.",
+      "limits": "This is a configuration concern from code inspection. Release artifacts are outside this report\u2019s scope.",
+      "owner": "Release or maintenance owner not assigned."
+    },
+    {
+      "id": "REVIEW-09",
+      "title": "A setting names a development version of another application",
+      "what_happened": "The source configuration refers to another application at a development address.",
+      "reason": "No supported application was identified that actually loads that address.",
+      "user_impact": "The setting alone does not demonstrate a broken application or a user reaching the wrong version.",
+      "missing_check": "The actual consuming application and deployed address remain unidentified.",
+      "priority_reason": "P3 remains because no affected user journey has been demonstrated.",
+      "next_action": "Identify application code that uses the setting before treating it as a release blocker.",
+      "limits": "This is a source-configuration observation. The deployed application setup was not verified.",
+      "owner": "Release or maintenance owner not assigned."
+    },
+    {
+      "id": "REVIEW-10",
+      "title": "A request-size setting evaluates to one byte",
+      "what_happened": "The inspected setting allows only one byte of request data when interpreted by the existing parser.",
+      "reason": "No supported server operation that uses this limit was identified.",
+      "user_impact": "The setting could reject larger requests if such an operation uses it. No rejected business action was demonstrated.",
+      "missing_check": "A supported operation using the setting and its effective deployment value remain unknown.",
+      "priority_reason": "P3 remains because the code calculation has no demonstrated user consequence.",
+      "next_action": "Identify a supported operation using the limit. Check its actual request size and observable result.",
+      "limits": "The parser calculation was inspected. No matching live business operation was tested.",
+      "owner": "Release or maintenance owner not assigned."
+    },
+    {
+      "id": "REVIEW-11",
+      "title": "Some external build instructions were unavailable",
+      "what_happened": "The build refers to instructions stored elsewhere. Their exact contents were unavailable for inspection.",
+      "reason": "The missing instructions prevent a complete build review. They do not establish a broken application.",
+      "user_impact": "No user failure was demonstrated by this missing information.",
+      "missing_check": "The exact external instructions remain unavailable.",
+      "priority_reason": "P4 remains because this is a review gap outside the requested source assessment.",
+      "next_action": "Keep the gap recorded. Revisit it during an authorized build assessment or after a demonstrated runtime failure.",
+      "limits": "Release artifacts and deployment-build verification are outside this report\u2019s scope.",
+      "owner": "Release or maintenance owner not assigned."
+    },
+    {
+      "id": "REVIEW-12",
+      "title": "The suspected stuck loading indicator did not occur",
+      "what_happened": "The browser received the tested sign-in error. The loading indicator cleared and Sign In remained usable.",
+      "reason": "The actual tested error path did not reproduce the suspected persistent loading state.",
+      "user_impact": "No blocked sign-in action was observed. Other delayed-response sequences remain unchecked.",
+      "missing_check": "A different supported sequence that leaves the indicator stuck has not been demonstrated.",
+      "priority_reason": "P4 remains because the tested recovery worked.",
+      "next_action": "Retain this recovery result. Investigate another sequence if it visibly prevents an action.",
+      "limits": "This earlier browser result covers one sign-in error sequence. It does not cover every delayed response.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-13",
+      "title": "One failed request can hide another request\u2019s loading indicator",
+      "what_happened": "Current testing showed the loading indicator disappear while a separate request was still waiting.",
+      "reason": "Some errors do not identify the failed request. The shared cleanup then removes every request\u2019s loading indication.",
+      "user_impact": "The observed effect is visual. No forced sign-out, unusable action, duplicate save, or data loss was demonstrated.",
+      "missing_check": "The frequency and user consequence in supported production flows remain unknown.",
+      "priority_reason": "P4 remains because no material user disruption was demonstrated.",
+      "next_action": "Track the visual defect in the backlog. Raise priority if it causes a blocked action or incorrect saved data.",
+      "limits": "This finding overlaps RN-Q009. The original review had not reached this error; the later test demonstrated the visual effect.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-14",
+      "title": "Applications must handle responses canceled after a session changes",
+      "what_happened": "A response from an earlier session is rejected as canceled after the session changes.",
+      "reason": "The new session protection rejects old results. Application code must handle that cancellation.",
+      "user_impact": "Known local application code handles the cancellation. No affected user journey was identified.",
+      "missing_check": "No supported application that mishandles the canceled response has been identified.",
+      "priority_reason": "P3 remains because a real downstream failure has not been demonstrated.",
+      "next_action": "Find a supported application that fails to handle cancellation before raising priority.",
+      "limits": "The code behavior was inspected. A failing external application was not available for execution.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-15",
+      "title": "Applications must handle failed renewal requests",
+      "what_happened": "The renewal helper now reports a rejected request to the application that called it.",
+      "reason": "The expiry dialog handles this failure. Other applications must also handle it if they use the helper.",
+      "user_impact": "No external application or unusable user journey was identified. The known expiry dialog handles the error.",
+      "missing_check": "A supported application that fails to handle renewal errors has not been identified.",
+      "priority_reason": "P3 remains because no consequential user failure has been demonstrated.",
+      "next_action": "Investigate supported applications if an unhandled renewal error causes a user-visible failure.",
+      "limits": "This is an interface change found in code review. No affected external application was tested.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-16",
+      "title": "Canceled requests return a different error object",
+      "what_happened": "Cancellation returns the original error object. Other failures return a copied error object.",
+      "reason": "The difference matters only to application code that depends on the exact object being returned.",
+      "user_impact": "No application with that dependency was found. No user effect was demonstrated.",
+      "missing_check": "An affected supported application has not been identified.",
+      "priority_reason": "P4 remains because the difference has no demonstrated business effect.",
+      "next_action": "Keep this code-interface difference in the backlog. Reassess if a supported application fails because of it.",
+      "limits": "This is a code-level observation. No affected consumer was available for a user-flow test.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-17",
+      "title": "A renewal response arriving after expiry still restored access",
+      "what_happened": "The service accepted renewal before expiry. Its successful response reached the browser after the deadline.",
+      "reason": "The browser installed the accepted credential and protected access succeeded. A much longer delay separately reached a timeout.",
+      "user_impact": "The suspected recovery failure was not reproduced for the accepted late response.",
+      "missing_check": "Other provider timing rules and production delays remain unverified.",
+      "priority_reason": "P4 remains because the tested late response restored usable access.",
+      "next_action": "Retain the successful result. Raise priority if a supported delayed response interrupts the session.",
+      "limits": "This was an earlier controlled browser comparison. It does not establish every provider\u2019s late-renewal policy.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "REVIEW-18",
+      "title": "A formatting ignore rule contains a typo",
+      "what_happened": "The ignore rule misspells the package lockfile name.",
+      "reason": "No tracked file or formatting command affected by this typo was found.",
+      "user_impact": "No business behavior or user journey was affected in the retained evidence.",
+      "missing_check": "No applicable file or command has been identified.",
+      "priority_reason": "P4 remains because this is a maintenance issue without demonstrated user impact.",
+      "next_action": "Correct the rule when relevant maintenance is scheduled.",
+      "limits": "This finding concerns development formatting only. It is not an application-session test.",
+      "owner": "Release or maintenance owner not assigned."
+    }
+  ],
+  "issues": [
+    {
+      "id": "RN-S002",
+      "title": "Signing out does not fully end the session",
+      "what_happened": "The server reported successful sign-out. The same valid refresh credential could still obtain new access after the access credential expired.",
+      "reason": "The sign-out code did not record that the session had ended. It recorded zero entries to prevent further renewal.",
+      "user_impact": "Someone already holding a copied refresh credential could regain access after sign-out. No real account compromise was demonstrated.",
+      "missing_check": "Show that sign-out prevents further renewal, or show that this release cannot reach the failing code.",
+      "priority_reason": "P1 remains because the test proves a broken sign-out security boundary. This is the release blocker.",
+      "next_action": "Correct the sign-out code or prove it cannot affect this release. Then repeat the renewal attempt after sign-out.",
+      "limits": "The test ran real server authentication code with stand-in storage and other services. It did not test a production deployment.",
+      "owner": "Authentication owner not assigned."
+    },
+    {
+      "id": "REVIEW-E2E-01",
+      "title": "An old timeout window can block a new session",
+      "what_happened": "A new login succeeded before an earlier sign-out action finished. The old timeout window stayed open with unusable buttons.",
+      "reason": "The code protected the new login from the old sign-out action. It did not close the old timeout window.",
+      "user_impact": "The browser test left a valid new session behind a window that could not recover the workspace.",
+      "missing_check": "Confirm whether a supported application can start a new login during this short sign-out delay.",
+      "priority_reason": "P2 remains because the browser test showed blocked recovery. Whether a deployed application can trigger it remains unknown.",
+      "next_action": "Check supported login flows. If this timing is possible, correct the timeout window and repeat the browser test.",
+      "limits": "The browser test used an earlier candidate. The relevant logic is unchanged, but the current candidate was not retested.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "E2E-01",
+      "title": "Moving the mouse continuously did not start session renewal",
+      "what_happened": "The test moved the mouse repeatedly for 15 seconds. No renewal succeeded.",
+      "reason": "Every mouse movement restarts a five-second waiting period. Continuous movement prevents renewal from starting.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "E2E-02",
+      "title": "Typing continuously did not start session renewal",
+      "what_happened": "The test typed repeatedly for 15 seconds. No renewal succeeded.",
+      "reason": "The portal does not start activity-based renewal when the user types.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "E2E-03",
+      "title": "Scrolling continuously did not start session renewal",
+      "what_happened": "The test scrolled repeatedly for 15 seconds. No renewal succeeded.",
+      "reason": "The portal does not start activity-based renewal when the user scrolls.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "E2E-08",
+      "title": "Continuous mouse movement prevented the request-sharing test from starting",
+      "what_happened": "The test expected one renewal request after 12 seconds of mouse movement. No request started.",
+      "reason": "Each movement restarted the waiting period. The test stopped before checking whether later activity reused a pending request.",
+      "user_impact": "No interrupted session or lost work was observed. Sharing and recovery behavior remain unchecked in this run.",
+      "missing_check": "First start a renewal request. Then check whether further activity reuses it and whether renewal completes successfully.",
+      "priority_reason": "P4 remains because the test did not demonstrate session interruption or an unusable application.",
+      "next_action": "Keep the activity gap in the backlog. Test request sharing separately after renewal starts.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "BROWSER-SHARING-PENDING",
+      "title": "Further activity canceled a waiting renewal and started another request",
+      "what_happened": "The test expected one pending request. It observed two requests and one cancellation after further activity.",
+      "reason": "The renewal code replaced the existing request instead of reusing it.",
+      "user_impact": "Repeated activity could delay renewal or increase server work. An interrupted session was not observed.",
+      "missing_check": "Check whether the session renews successfully on a slow connection. Measure any resulting wait or interruption.",
+      "priority_reason": "P4 remains because duplicate request work has no demonstrated disruptive user consequence.",
+      "next_action": "Keep the issue in the backlog. Test completed renewal under realistic network delays.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "E2E-12",
+      "title": "A response marked unsuccessful still changed the session credential",
+      "what_happened": "The test response said renewal failed but included a valid access credential. The portal installed that credential.",
+      "reason": "The shared response handler read the credential before the application rejected the unsuccessful response.",
+      "user_impact": "The session data changed despite the failure response. Unauthorized access, forced sign-out, and lost work were not demonstrated.",
+      "missing_check": "Confirm whether the real sign-in provider can send this inconsistent response. Complete retry and protected-access checks.",
+      "priority_reason": "P3 remains because this used an altered response. A supported response causing user disruption has not been shown.",
+      "next_action": "Check supported provider responses. Verify that an unsuccessful response leaves the session in its intended state.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified. The test changed the response body. Later retry and protected-access checks did not run.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "E2E-18",
+      "title": "A renewal request remained pending after sign-out",
+      "what_happened": "The user signed out and left the Home page. The pending activity-renewal request was not canceled.",
+      "reason": "Leaving the active session did not cancel that request.",
+      "user_impact": "Unneeded server work could continue. The test did not show restored access, forced sign-out, or lost work.",
+      "missing_check": "Check what happens when the late response arrives. This run stopped before that response was tested.",
+      "priority_reason": "P4 remains because the pending request caused no demonstrated session disruption or unusable application.",
+      "next_action": "Keep the cancellation gap in the backlog. Test the late response separately before claiming that it restores access.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "E2E-19",
+      "title": "An earlier renewal request remained pending behind the timeout window",
+      "what_happened": "The timeout window opened while an activity-renewal request was waiting. The old request remained pending.",
+      "reason": "Opening the timeout window did not cancel that earlier request.",
+      "user_impact": "A late response might interfere with manual recovery. This run did not observe overwritten credentials or an incorrect window closure.",
+      "missing_check": "Complete manual renewal, then deliver the earlier response. Check that the valid session and window state remain correct.",
+      "priority_reason": "P4 remains because the test did not demonstrate a disrupted session or failed recovery.",
+      "next_action": "Keep the cancellation gap in the backlog. Complete a separate test of the old response after successful manual renewal.",
+      "limits": "This earlier test was not rerun on the current candidate. The relevant code is unchanged. Production consequences remain unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "RN-S023",
+      "title": "The server accepted conflicting refresh credentials in one request",
+      "what_happened": "The test sent two different refresh credentials. The server used the first and issued access for that user.",
+      "reason": "The server accepted the first value instead of rejecting the ambiguous request, as the proposed test expected.",
+      "user_impact": "The test did not show access to another user's account. The required rejection rule and production request handling remain unconfirmed.",
+      "missing_check": "The agreed duplicate-header rule and the deployed gateway's handling of multiple values.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Agree the rule for conflicting values. Test it through the real gateway before escalating this issue.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Authentication and security owner not yet assigned."
+    },
+    {
+      "id": "RN-S035",
+      "title": "An external request included the portal access credential",
+      "what_happened": "The shared request code added the portal access credential to a request addressed to an external test destination.",
+      "reason": "The request code added the credential without restricting it to a trusted portal destination.",
+      "user_impact": "A supported external request could disclose access credentials. The test intercepted the request, so no external server received them.",
+      "missing_check": "Whether a supported application sends such requests, and whether its destination can actually receive the credential.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Check supported external destinations and outgoing requests. Raise priority if a real external receiver can obtain the credential.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Shared-client and security owner not yet assigned."
+    },
+    {
+      "id": "RN-S037",
+      "title": "A configured request header skipped the sign-in check",
+      "what_happened": "The test supplied a configured bypass header without a login credential. The test-only protected handler still ran.",
+      "reason": "The server authentication filter treats this configured header as permission to skip credential validation.",
+      "user_impact": "An untrusted caller could bypass authentication if the real route accepts that header. Actual protected business data was not accessed.",
+      "missing_check": "Whether the public gateway removes forged bypass headers and whether a real protected route is reachable.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Test a forged header through the actual gateway and protected service. Escalate if an unauthenticated caller gains access.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Sdk, gateway, and security owner not yet assigned."
+    },
+    {
+      "id": "RN-W029",
+      "title": "Mouse movement in an open workspace did not start session renewal",
+      "what_happened": "The test moved the mouse inside the open workspace for 15 seconds. No renewal request started.",
+      "reason": "Continuous movement keeps restarting the five-second waiting period.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Application owner not yet assigned."
+    },
+    {
+      "id": "RN-W030",
+      "title": "Typing in an embedded module did not start session renewal",
+      "what_happened": "The test typed inside an embedded module for 15 seconds. No renewal request started.",
+      "reason": "Typing in the module does not start activity-based renewal.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Application owner not yet assigned."
+    },
+    {
+      "id": "RN-W031",
+      "title": "Scrolling in a workspace grid did not start session renewal",
+      "what_happened": "The test scrolled inside the workspace grid for 15 seconds. No renewal request started.",
+      "reason": "Scrolling in the grid does not start activity-based renewal.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Application owner not yet assigned."
+    },
+    {
+      "id": "RN-Q009",
+      "title": "The loading indicator disappeared before another request finished",
+      "what_happened": "One request failed while another request was still waiting. The loading indicator disappeared.",
+      "reason": "The error did not identify its request. The shared error handler cleared loading status for every request.",
+      "user_impact": "Users could think loading has finished too soon. The test did not show blocked work, repeated transactions, or data loss.",
+      "missing_check": "Loading must remain visible until the other request finishes.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Track this visual defect in the backlog. Preserve each request's loading status when handling this error.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Application owner not yet assigned."
+    },
+    {
+      "id": "RN-A001",
+      "title": "Moving the mouse continuously did not start session renewal",
+      "what_happened": "The test moved the mouse repeatedly for 15 seconds. No renewal succeeded.",
+      "reason": "Every mouse movement restarts a five-second waiting period. Continuous movement prevents renewal from starting.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "RN-A002",
+      "title": "Typing continuously did not start session renewal",
+      "what_happened": "The test typed repeatedly for 15 seconds. No renewal succeeded.",
+      "reason": "The portal does not start activity-based renewal when the user types.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "RN-A003",
+      "title": "Scrolling continuously did not start session renewal",
+      "what_happened": "The test scrolled repeatedly for 15 seconds. No renewal succeeded.",
+      "reason": "The portal does not start activity-based renewal when the user scrolls.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "RN-A004",
+      "title": "Mixed mouse, keyboard, and scroll activity did not start session renewal",
+      "what_happened": "The test alternated mouse movement, typing, and scrolling for 15 seconds. No renewal succeeded.",
+      "reason": "Mouse movement repeatedly resets the waiting period. Keyboard and scroll actions do not start their own renewal.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "RN-A005",
+      "title": "Keyboard-only navigation did not start session renewal",
+      "what_happened": "The test navigated with the keyboard for 15 seconds. No renewal succeeded.",
+      "reason": "Keyboard navigation does not start activity-based renewal.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "RN-A006",
+      "title": "Scrolling inside an embedded application did not start session renewal",
+      "what_happened": "The test scrolled inside an embedded application pane for 15 seconds. No renewal succeeded.",
+      "reason": "Scrolling inside the pane does not start activity-based renewal.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "RN-A013",
+      "title": "Holding a key did not start session renewal",
+      "what_happened": "The test held a key during the 15-second interval. No renewal succeeded.",
+      "reason": "Repeated keyboard input does not start activity-based renewal.",
+      "user_impact": "The tested activity did not start session renewal. Later sign-out, work interruption, and lost work were not observed.",
+      "missing_check": "A successful renewal during the stated 15-second activity interval.",
+      "priority_reason": "The test did not show an interrupted session or an unusable app. Keep this as a backlog item.",
+      "next_action": "Keep the activity gap in the backlog. Raise its priority if a supported user journey demonstrates session interruption.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal application owner not yet assigned."
+    },
+    {
+      "id": "RN-L004",
+      "title": "Cleanup after 1,000 successful recoveries is not confirmed",
+      "what_happened": "All 1,000 recovery cycles completed. The number of browser event handlers changed from 329 to 327.",
+      "reason": "The before-and-after screens differed because assets, notifications, or popovers changed. Their event-handler counts cannot be compared fairly.",
+      "user_impact": "The count difference does not prove a memory leak or repeated actions. No interrupted session or unusable screen was demonstrated.",
+      "missing_check": "A comparison of the same screen state, event handlers, and timers before and after the cycles.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Repeat the cleanup check with matching screen states after notifications and loading have settled.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal verification owner not yet assigned."
+    },
+    {
+      "id": "RN-L005",
+      "title": "Cleanup after two failed-then-successful renewals is not confirmed",
+      "what_happened": "Both recovery cycles completed. The number of browser event handlers changed from 329 to 337.",
+      "reason": "The before-and-after screens differed because assets, notifications, or popovers changed. Their event-handler counts cannot be compared fairly.",
+      "user_impact": "The count difference does not prove a memory leak or repeated actions. No interrupted session or unusable screen was demonstrated.",
+      "missing_check": "A comparison of the same screen state, event handlers, and timers before and after the cycles.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Repeat the cleanup check with matching screen states after notifications and loading have settled.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal verification owner not yet assigned."
+    },
+    {
+      "id": "RN-L006",
+      "title": "Cleanup after ten failed-then-successful renewals is not confirmed",
+      "what_happened": "All ten recovery cycles completed. The number of browser event handlers changed from 329 to 337.",
+      "reason": "The before-and-after screens differed because assets, notifications, or popovers changed. Their event-handler counts cannot be compared fairly.",
+      "user_impact": "The count difference does not prove a memory leak or repeated actions. No interrupted session or unusable screen was demonstrated.",
+      "missing_check": "A comparison of the same screen state, event handlers, and timers before and after the cycles.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Repeat the cleanup check with matching screen states after notifications and loading have settled.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal verification owner not yet assigned."
+    },
+    {
+      "id": "RN-L010",
+      "title": "Cleanup after 100 workspace switches is not confirmed",
+      "what_happened": "The workspace switches completed. The number of browser event handlers changed from 344 to 336.",
+      "reason": "The before-and-after screens differed because assets, notifications, or popovers changed. Their event-handler counts cannot be compared fairly.",
+      "user_impact": "The count difference does not prove a memory leak or repeated actions. No interrupted session or unusable screen was demonstrated.",
+      "missing_check": "A comparison of the same screen state, event handlers, and timers before and after the cycles.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Repeat the cleanup check with matching screen states after notifications and loading have settled.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Portal verification owner not yet assigned."
+    },
+    {
+      "id": "RN-R020",
+      "title": "A delayed error can clear a renewed session",
+      "what_happened": "An earlier request returned an expired-session error after renewal succeeded. The app then removed the newly renewed access and refresh credentials.",
+      "reason": "The app treated the delayed error as a failure of the renewed session. It displayed a sign-in-again error.",
+      "user_impact": "Users could be asked to sign in again after successful renewal. An actual forced logout was not observed.",
+      "missing_check": "Confirm that a supported server can return this error at this time. Then check the complete browser journey.",
+      "priority_reason": "P2 remains because the test removed valid renewed credentials. Whether real services produce this sequence remains unknown.",
+      "next_action": "Repeat the sequence with a supported server and application. Check that an old error cannot erase a valid renewed session.",
+      "limits": "The test ran the app's session code with controlled responses and a test clock. It used no live business service.",
+      "owner": "Application and authentication owners not assigned."
+    },
+    {
+      "id": "RN-S003",
+      "title": "Sign-out reported success when saving the session revocation failed",
+      "what_happened": "Saving the sign-out record failed. The server still reported success, and the same valid renewal credential obtained new access.",
+      "reason": "Sign-out success did not require a saved record that prevented further session renewal.",
+      "user_impact": "Someone already holding the valid renewal credential could regain access after apparent sign-out. Production exposure remains unverified.",
+      "missing_check": "Show that sign-out reliably prevents renewal, or reports failure when it cannot end the session.",
+      "priority_reason": "P1 remains because this demonstrates the same broken sign-out security boundary as RN-S002. It is not a separate blocker.",
+      "next_action": "Correct sign-out handling. Repeat the storage-failure test and confirm that subsequent renewal is rejected.",
+      "limits": "This retained local observation proves behavior under controlled conditions. Production reachability and frequency remain unverified.",
+      "owner": "Authentication owner not assigned."
+    },
+    {
+      "id": "RN-S004",
+      "title": "Sign-out without an access credential left renewal possible",
+      "what_happened": "The request omitted the access credential. The server reported successful sign-out, but the valid renewal credential still obtained access.",
+      "reason": "The sign-out path did not invalidate the session when the access credential was missing.",
+      "user_impact": "The apparently ended session remained renewable. A person already holding its valid renewal credential could regain access.",
+      "missing_check": "Confirm the credentials required for supported sign-out. Show that accepted sign-out requests prevent subsequent renewal.",
+      "priority_reason": "P1 remains because this demonstrates another path through the RN-S002 sign-out failure. It is not a separate blocker.",
+      "next_action": "Verify the supported sign-out request. Correct session revocation and repeat the renewal attempt.",
+      "limits": "This retained local observation does not prove production reachability or credential theft.",
+      "owner": "Authentication owner not assigned."
+    },
+    {
+      "id": "RN-S029",
+      "title": "Directly replacing access left the previous user\u2019s renewal data behind",
+      "what_happened": "Test code replaced access directly. The old renewal credential and displayed user identity remained.",
+      "reason": "The direct update did not perform the complete transition between users.",
+      "user_impact": "Session data referred to different identities in the test. Access to another user\u2019s real records was not demonstrated.",
+      "missing_check": "Find supported application code using this direct update. Test a complete transition with real, separate users and protected records.",
+      "priority_reason": "P3 remains because no deployed caller or cross-account business access has been demonstrated.",
+      "next_action": "Trace supported direct updates. Verify that changing users replaces all session data together.",
+      "limits": "The browser used substitute credentials. Production reachability and complete user consequences remain unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "RN-S032",
+      "title": "A failed replacement sign-in cleared the previous renewal credential",
+      "what_happened": "The replacement sign-in failed. The previous renewal credential was gone, and Extend was disabled in the observed prompt.",
+      "reason": "Starting the replacement sign-in changed session data before that sign-in completed.",
+      "user_impact": "That observation did not establish a lasting recovery failure. An earlier paired browser test recovered successfully.",
+      "missing_check": "Complete the supported failed-sign-in journey. Check whether the user can regain protected access.",
+      "priority_reason": "P3 remains because the full journey has not shown a persistently unusable session.",
+      "next_action": "Complete recovery with the supported sign-in service before treating the observed state as session disruption.",
+      "limits": "This retained local observation covers one point in the flow. Production frequency and lasting user effects remain unverified.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "RN-S044",
+      "title": "A test access credential appeared in the console; exported logs remain unchecked",
+      "what_happened": "A failed credential-acquisition request produced a console message containing a test access credential.",
+      "reason": "The test had no application log exporter or agreed rule for removing credentials from exported logs.",
+      "user_impact": "A console exposure was observed. Exported disclosure and access by unauthorized readers were not demonstrated.",
+      "missing_check": "The actual exported log content, its readers, and the required removal of credentials.",
+      "priority_reason": "The test does not prove that users experience a problem. Keep this as planned follow-up.",
+      "next_action": "Identify the exported logs and their readers. Verify that credentials are removed before raising the priority.",
+      "limits": "The checks used controlled test conditions. They do not establish behavior in production.",
+      "owner": "Diagnostics and security owner not yet assigned."
+    },
+    {
+      "id": "RN-C002",
+      "title": "Two altered renewal responses installed unreadable access credentials",
+      "what_happened": "Two combined tests supplied malformed renewal responses. The portal stored access credentials it could not read.",
+      "reason": "The client accepted malformed response data from the replacement sign-in service.",
+      "user_impact": "The stored session data was unusable for the tested reading check. Later interruption or forced sign-out was not measured.",
+      "missing_check": "Confirm whether supported providers can send these responses. Complete the journey through protected access or recovery.",
+      "priority_reason": "P3 remains because real provider occurrence and disruptive user consequences have not been verified.",
+      "next_action": "Check supported response formats. Complete the affected user journeys before raising the priority.",
+      "limits": "The combined cases used altered responses and remain partial. They do not establish production occurrence.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "VERIFICATION-GAPS",
+      "title": "Some required checks and links remain incomplete",
+      "what_happened": "Several checks lack complete observations, clear case labels, provider review, or evidence from the intended environment.",
+      "reason": "The retained tests and mappings do not establish every required outcome.",
+      "user_impact": "Missing verification does not itself demonstrate an application failure. The affected behavior remains uncertain.",
+      "missing_check": "Complete the relevant missing checks, including real four-hour sign-in behavior, application-state preservation, and supported provider responses.",
+      "priority_reason": "P3 remains because these gaps do not independently prove session interruption or an unusable application.",
+      "next_action": "Keep the gaps visible. Prioritize a missing check when it resolves a demonstrated material issue or mandatory release condition.",
+      "limits": "The report cannot claim full behavior coverage or production equivalence from incomplete checks.",
+      "owner": "Application and test owners not assigned."
+    },
+    {
+      "id": "GL-01",
+      "title": "The loading-indicator cancellation defect is closed locally",
+      "what_happened": "The local correction passed the retained cancellation check.",
+      "reason": "The tested correction resolved the loading-indicator defect within that check.",
+      "user_impact": "This control record has no remaining demonstrated user failure.",
+      "missing_check": "No open check remains within this local control. Wider acceptance remains separate.",
+      "priority_reason": "The issue remains closed locally. No open defect priority is assigned.",
+      "next_action": "Retain the correction and passing cancellation evidence.",
+      "limits": "This confirms the retained local check. It does not establish deployment or human acceptance.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "GL-02",
+      "title": "The missed request for renewal credentials is fixed locally",
+      "what_happened": "The local correction passed the retained timer check.",
+      "reason": "The tested correction resolved the missed scheduled action within that check.",
+      "user_impact": "This control record has no remaining demonstrated user failure.",
+      "missing_check": "No open check remains within this local control. Wider acceptance remains separate.",
+      "priority_reason": "The issue remains closed locally. No open defect priority is assigned.",
+      "next_action": "Retain the correction and passing timer evidence.",
+      "limits": "This confirms the retained local check. It does not establish deployment or human acceptance.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "GL-03",
+      "title": "The report does not verify the packaged release",
+      "what_happened": "The report assesses source code. It does not identify or verify the package that would be deployed.",
+      "reason": "Release artifacts are outside the requested assessment.",
+      "user_impact": "This missing package evidence does not itself demonstrate a user failure.",
+      "missing_check": "Package identity remains unverified within this report. It requires a separate assessment if requested.",
+      "priority_reason": "P4 remains because this is outside the requested scope and has no demonstrated user effect.",
+      "next_action": "Keep the scope limit visible. Assess the packaged release only within an applicable authorized request.",
+      "limits": "Source-code findings do not prove which package is deployed. Deployment permission remains separate.",
+      "owner": "Release or decision owner not assigned."
+    },
+    {
+      "id": "GL-04",
+      "title": "The target environment\u2019s settings and application versions remain unverified",
+      "what_happened": "Effective settings and versions of connected applications were not fully established for the target environment.",
+      "reason": "The report lacks matching environment information.",
+      "user_impact": "Missing settings or version information alone does not demonstrate an application failure.",
+      "missing_check": "Identify the effective settings and connected versions needed to decide whether a specific material issue applies.",
+      "priority_reason": "P3 remains because no user failure is established by this information gap alone.",
+      "next_action": "Investigate the relevant settings when they determine a specific issue\u2019s effect on users.",
+      "limits": "This is a source assessment. It does not verify the complete deployed environment.",
+      "owner": "Release or decision owner not assigned."
+    },
+    {
+      "id": "GL-05",
+      "title": "Session recovery has not been verified in the target environment",
+      "what_happened": "Matching session-recovery evidence from the intended environment was unavailable.",
+      "reason": "Local results do not establish recovery under the target environment\u2019s actual services and settings.",
+      "user_impact": "Recovery in that environment remains unverified. The missing test does not itself prove a disrupted session.",
+      "missing_check": "Run the required recovery check in the intended environment when it resolves a material issue or mandatory condition.",
+      "priority_reason": "P3 remains because missing environment evidence is not a demonstrated application failure.",
+      "next_action": "Keep the environment limit visible. Prioritize the check according to the specific user risk it resolves.",
+      "limits": "This record concerns missing verification. It does not establish a new runtime defect.",
+      "owner": "Release or decision owner not assigned."
+    },
+    {
+      "id": "GL-06",
+      "title": "Operational checks and monitoring evidence remain unavailable",
+      "what_happened": "The report lacks the relevant operational checks and monitoring results.",
+      "reason": "The retained source assessment does not include complete operating evidence.",
+      "user_impact": "The missing evidence does not establish a runtime failure or interrupted user session.",
+      "missing_check": "Review the applicable operating checks and monitoring during the separate operational decision.",
+      "priority_reason": "P3 remains because this gap has no demonstrated user failure.",
+      "next_action": "Keep the operational decision separate. Escalate a specific runtime failure or mandatory condition when evidence establishes it.",
+      "limits": "The report assesses source code. It does not confirm production operation.",
+      "owner": "Release or decision owner not assigned."
+    },
+    {
+      "id": "GL-07",
+      "title": "Business acceptance has not been recorded",
+      "what_happened": "No recorded business acceptance was available for this assessment.",
+      "reason": "The report\u2019s technical findings do not supply human acceptance.",
+      "user_impact": "Missing acceptance is a decision gap. It does not demonstrate a technical defect or user harm.",
+      "missing_check": "Obtain and retain the applicable business acceptance through the responsible owner.",
+      "priority_reason": "P3 remains for follow-up. This record does not add a technical release blocker.",
+      "next_action": "Assign the acceptance owner. Record the decision separately from test results and deployment permission.",
+      "limits": "No acceptance is inferred from this report. The responsible owner remains unassigned.",
+      "owner": "Release or decision owner not assigned."
+    },
+    {
+      "id": "GL-08",
+      "title": "Deployment permission has not been recorded",
+      "what_happened": "The report contains no authorization to deploy this release.",
+      "reason": "Technical recommendations and deployment permission are separate decisions.",
+      "user_impact": "This missing authorization is not an application defect. It does not describe a user-facing failure.",
+      "missing_check": "Obtain the required deployment authorization before deploying.",
+      "priority_reason": "No defect priority applies. Reclassifying issues does not grant deployment permission.",
+      "next_action": "Record deployment authorization separately with the responsible decision owner.",
+      "limits": "This report grants no deployment permission. The authorizing owner remains unassigned.",
+      "owner": "Release or decision owner not assigned."
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

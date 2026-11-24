@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-31T04:22:24.093650+00:00",
+  "source_kind": "local_development",
+  "run": "runs/2026-10-31T04-09-19-922Z",
+  "uat": {
+    "status": "NOT_RUN",
+    "source_kind": null,
+    "required_observations": null,
+    "metric": "N/A",
+    "limit": "No remote UAT inventory, source queries, deployment bindings, or logs were collected."
+  },
+  "local_metrics": {
+    "required_observations": 6,
+    "experiment_definition_supported": 6,
+    "acquired": 5,
+    "bound": 5,
+    "analyzed": 6,
+    "evidence_assessed": 5,
+    "passing_behavior": 5
+  },
+  "candidate_cases": {
+    "passed": 3,
+    "failed": 0,
+    "assertions_passed": 56,
+    "events": 192
+  },
+  "baseline_comparison": {
+    "candidate": {
+      "renewal_response_sequence": 18,
+      "close_requested_sequence": 21,
+      "installed_reducer_sequence": 23,
+      "close_requested_before_response": false,
+      "failed_assertions": []
+    },
+    "baseline": {
+      "renewal_response_sequence": 19,
+      "close_requested_sequence": 18,
+      "installed_reducer_sequence": 20,
+      "close_requested_before_response": true,
+      "failed_assertions": [
+        {
+          "name": "pending dialog stays visible",
+          "actual": false,
+          "expected": true,
+          "status": "FAILED"
+        },
+        {
+          "name": "pending zero closure",
+          "actual": 1,
+          "expected": 0,
+          "status": "FAILED"
+        }
+      ]
+    }
+  },
+  "observations": [
+    {
+      "id": "OBS-01",
+      "case": "RN-X002",
+      "mode": "e2e",
+      "essential_path": "manual-renewal-pending",
+      "intent_status": "recorded-user-intent-candidate",
+      "experiment_definition_supported": true,
+      "acquired": true,
+      "bound": true,
+      "analyzed": true,
+      "evidence_assessed": true,
+      "passing_behavior": true,
+      "matched_event_sequences": {
+        "timeout.extend.accepted": [
+          15
+        ],
+        "renewal.service.start": [
+          16
+        ]
+      },
+      "missing_or_unbound_events": [],
+      "result_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/result.json",
+      "result_sha256": "0cba3c51ed1f17b561a470e61d6e01cfd55626d098429e27c6d28050e3b4f48a",
+      "log_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/application-events.ndjson",
+      "log_sha256": "4382a9da4ffdc8b984f8938aec63246b2855a61b878eb7865ec232c82ccee011",
+      "limit": "Experiment definitions do not establish reviewed product AC conformance."
+    },
+    {
+      "id": "OBS-02",
+      "case": "RN-X002",
+      "mode": "e2e",
+      "essential_path": "manual-renewal-success",
+      "intent_status": "recorded-user-intent-candidate",
+      "experiment_definition_supported": true,
+      "acquired": true,
+      "bound": true,
+      "analyzed": true,
+      "evidence_assessed": true,
+      "passing_behavior": true,
+      "matched_event_sequences": {
+        "auth.response.received": [
+          18
+        ],
+        "session.state_transition": [
+          23
+        ],
+        "timeout.renewal.success": [
+          20
+        ],
+        "timeout.prompt.close_requested": [
+          21
+        ]
+      },
+      "missing_or_unbound_events": [],
+      "result_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/result.json",
+      "result_sha256": "0cba3c51ed1f17b561a470e61d6e01cfd55626d098429e27c6d28050e3b4f48a",
+      "log_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/application-events.ndjson",
+      "log_sha256": "4382a9da4ffdc8b984f8938aec63246b2855a61b878eb7865ec232c82ccee011",
+      "limit": "Experiment definitions do not establish reviewed product AC conformance."
+    },
+    {
+      "id": "OBS-03",
+      "case": "RN-X001",
+      "mode": "representative_usage",
+      "essential_path": "renewal-failure-retry",
+      "intent_status": "recorded-user-intent-candidate",
+      "experiment_definition_supported": true,
+      "acquired": true,
+      "bound": true,
+      "analyzed": true,
+      "evidence_assessed": true,
+      "passing_behavior": true,
+      "matched_event_sequences": {
+        "auth.response.error": [
+          18,
+          39,
+          60,
+          81,
+          102,
+          123
+        ],
+        "timeout.renewal.failed": [
+          20,
+          41,
+          62,
+          83,
+          104,
+          125
+        ]
+      },
+      "missing_or_unbound_events": [],
+      "result_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/result.json",
+      "result_sha256": "cd54db3ebd7774606e39187c5ab48561f4fb0ac9c66791ceb7a9b993ecc0c6d7",
+      "log_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/application-events.ndjson",
+      "log_sha256": "355be570647d054bef68db3e69fb71252c6c03453d03e5e06271405ab44da763",
+      "limit": "Experiment definitions do not establish reviewed product AC conformance."
+    },
+    {
+      "id": "OBS-04",
+      "case": "RN-X001",
+      "mode": "representative_usage",
+      "essential_path": "repeated-renewal-success",
+      "intent_status": "recorded-user-intent-candidate",
+      "experiment_definition_supported": true,
+      "acquired": true,
+      "bound": true,
+      "analyzed": true,
+      "evidence_assessed": true,
+      "passing_behavior": true,
+      "matched_event_sequences": {
+        "timeout.renewal.success": [
+          28,
+          49,
+          70,
+          91,
+          112,
+          133
+        ],
+        "session.state_transition": [
+          31,
+          52,
+          73,
+          94,
+          115,
+          136
+        ],
+        "timeout.prompt.close_requested": [
+          29,
+          50,
+          71,
+          92,
+          113,
+          134
+        ]
+      },
+      "missing_or_unbound_events": [],
+      "result_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/result.json",
+      "result_sha256": "cd54db3ebd7774606e39187c5ab48561f4fb0ac9c66791ceb7a9b993ecc0c6d7",
+      "log_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/application-events.ndjson",
+      "log_sha256": "355be570647d054bef68db3e69fb71252c6c03453d03e5e06271405ab44da763",
+      "limit": "Experiment definitions do not establish reviewed product AC conformance."
+    },
+    {
+      "id": "OBS-05",
+      "case": "RN-X003",
+      "mode": "e2e",
+      "essential_path": "logout-during-renewal",
+      "intent_status": "proposed-security-diagnostic",
+      "experiment_definition_supported": true,
+      "acquired": true,
+      "bound": true,
+      "analyzed": true,
+      "evidence_assessed": true,
+      "passing_behavior": true,
+      "matched_event_sequences": {
+        "timeout.logout.accepted": [
+          19
+        ],
+        "session.invalidated": [
+          20,
+          26
+        ],
+        "session.state_transition": [
+          27
+        ]
+      },
+      "missing_or_unbound_events": [],
+      "result_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/result.json",
+      "result_sha256": "9feed413099fdc330ea48138d0c3eb89861660ad38cac81130aae861747f6565",
+      "log_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/application-events.ndjson",
+      "log_sha256": "0a0d9a6791d99dc60cb0897c11a5cae721dc605048710d519cd31e01eea36db9",
+      "limit": "Experiment definitions do not establish reviewed product AC conformance."
+    },
+    {
+      "id": "OBS-06",
+      "case": "RN-X003",
+      "mode": "e2e",
+      "essential_path": "stale-response-handler",
+      "intent_status": "proposed-security-diagnostic",
+      "experiment_definition_supported": true,
+      "acquired": false,
+      "bound": false,
+      "analyzed": true,
+      "evidence_assessed": false,
+      "passing_behavior": null,
+      "matched_event_sequences": {
+        "auth.response.discarded": []
+      },
+      "missing_or_unbound_events": [
+        "auth.response.discarded"
+      ],
+      "result_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/result.json",
+      "result_sha256": "9feed413099fdc330ea48138d0c3eb89861660ad38cac81130aae861747f6565",
+      "log_ref": "runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/application-events.ndjson",
+      "log_sha256": "0a0d9a6791d99dc60cb0897c11a5cae721dc605048710d519cd31e01eea36db9",
+      "limit": "Relogin was canceled. The retained discarded response concerns logout; stale renewal delivery remains unexercised. The discard event omits path correlation required by this analyzer; instrumentation must identify the request before a future run can qualify this row."
+    }
+  ],
+  "console_signal_categories": {
+    "react_or_css_development_warning": 30,
+    "http_404": 76,
+    "controlled_503": 6
+  },
+  "limits": [
+    "Local controlled pilot only, not UAT.",
+    "Representative usage is a scripted six-cycle workload with empty workspace descriptors.",
+    "Synthetic credentials and controlled browser clock follow existing canonical case setup.",
+    "The stale-response handler might remain unexercised when abort prevents response delivery.",
+    "No claim of full requirement, branch, unit, backend-current-source, or production verification.",
+    "Console 404s lack endpoint correlation in this capture; their originating operation remains unknown.",
+    "React development warnings occur with the toolkit substitute; target occurrence and user impact remain unverified.",
+    "A close request precedes reducer commit after response validation. It does not establish early visible closure."
+  ],
+  "analysis_script_sha256": "bad802137070cceadfc3c254228954fb634a82ee878b0c12f5c00cc605117ffa"
+}

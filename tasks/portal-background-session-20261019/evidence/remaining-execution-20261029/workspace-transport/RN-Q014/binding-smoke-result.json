@@ -1,0 +1,109 @@
+{
+  "id": "RN-Q014",
+  "title": "Loader false header preserves current credential assignment",
+  "started_at": "2026-10-29T02:01:11.157Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "definition": "../../../06-test-cases.md#rn-q014",
+  "definition_sha256": "3e9c3635e7d3ee13ba4a931599741b1ef90bf37cc93cf98aeb8ab5a24d177f6c",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "loading suppressed",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "label": "credential still assigned",
+      "actual": "da0388d1749ae2117422d8d3f1a1ab67ea5965276558712fd0e39b33ad189c9f",
+      "expected": "da0388d1749ae2117422d8d3f1a1ab67ea5965276558712fd0e39b33ad189c9f",
+      "status": "PASSED"
+    },
+    {
+      "label": "principal still User A",
+      "actual": "User A",
+      "expected": "User A",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239204497,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239207387,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "A",
+      "workspace": "W-A",
+      "credential_sha256": "da0388d1749ae2117422d8d3f1a1ab67ea5965276558712fd0e39b33ad189c9f",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239209337
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "205ad100432ce4b478b65fa55e423ef25c6f5389763014f8d7e8783c0cd59ed3",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/requestLoading.ts",
+      "lines": [
+        9,
+        42
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "console_errors": [
+    "Using kebab-case for css properties in objects is not supported. Did you mean WebkitTextFillColor?",
+    "Warning: A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components%s \n    at input\n    at http://127.0.0.1:8342/base.js:1069:66\n    a",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s fullWidth fullwidth \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:",
+    "Warning: Received `%s` for a non-boolean attribute `%s`.\n\nIf you want to write it to the DOM, pass a string instead: %s=\"%s\" or %s={value.toString()}.\n\nIf you used to conditionally omit it with %s={condition && value}, pass %s={condition ? value : undefined} instead.%s false indicator indicator false indicator indicator indicator \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s selectionFollowsFocus selectionfollowsfocus \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http:/",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s textColor textcolor \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:",
+    "Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <button> button \n    at button\n    at http://127.0.0.1:8342/base.js:1069:66\n    at ButtonBase (http://127.0.0.1:8342/base.js:4812:87)\n    at http://127.0.0.1:8342/base.js:1069:66\n    at IconButton (http://127.0.0.1:8342/base.js:11584:87)\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tooltip (http://1",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s tabId tabid \n    at div\n    at TabPanel (http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000g",
+    "The pseudo class \":first-child\" is potentially unsafe when doing server-side rendering. Try changing it to \":first-of-type\".",
+    "The pseudo class \":first-child\" is potentially unsafe when doing server-side rendering. Try changing it to \":first-of-type\".",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "completed_at": "2026-10-29T02:01:20.556Z"
+}

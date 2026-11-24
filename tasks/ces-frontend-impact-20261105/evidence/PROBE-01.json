@@ -1,0 +1,106 @@
+{
+  "id": "PROBE-01",
+  "captured_at": "2026-11-05T03:28:50.278Z",
+  "fixture": {
+    "oldEntities": [
+      {
+        "name": "X_RATANONE",
+        "roleName": "PSS_USER",
+        "subjects": [
+          {
+            "name": "Legacy Trade Tile",
+            "longName": "Legacy Trade Tile",
+            "entitlementSource": "EMS2",
+            "actions": [
+              {
+                "name": "F_Custom_View_Builder_Private"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "newEntities": [
+      {
+        "name": "RATAN_ENTITLEMENT_RULE",
+        "roleName": null,
+        "subjects": [
+          {
+            "name": "RATAN_TRADE_BLOTTER",
+            "longName": "RATAN_TRADE_BLOTTER",
+            "entitlementSource": "EMS3",
+            "actions": [
+              {
+                "name": "F_Custom_View_Builder_Private"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "legacyTile": {
+      "id": 42,
+      "container": "@fm/ratan_container",
+      "module": "/ratan",
+      "tile": "/trade",
+      "title": "Trade",
+      "entity": [
+        "X_RATANONE"
+      ],
+      "subject": "Legacy Trade Tile",
+      "entitlementSource": "EMS2"
+    },
+    "cesTile": {
+      "id": 42,
+      "container": "@fm/ratan_container",
+      "module": "/ratan",
+      "tile": "/trade",
+      "title": "Trade",
+      "entity": [
+        "RATAN_ENTITLEMENT_RULE"
+      ],
+      "subject": "Legacy Trade Tile",
+      "entitlementSource": "EMS3"
+    },
+    "workspace": {
+      "id": "saved-trade",
+      "containers": [
+        {
+          "container": "@fm/ratan_container",
+          "module": "/ratan",
+          "tile": "/trade"
+        }
+      ]
+    }
+  },
+  "actual": {
+    "oldValid": true,
+    "newValid": false,
+    "oldRestored": [
+      {
+        "id": "saved-trade",
+        "containers": [
+          {
+            "container": "@fm/ratan_container",
+            "module": "/ratan",
+            "tile": "/trade"
+          }
+        ]
+      }
+    ],
+    "newRestored": [
+      {
+        "id": "blank-fixture",
+        "containers": []
+      }
+    ],
+    "newDeepLinkOpenCount": 0
+  },
+  "observation_assertion": "PASSED",
+  "business_verification": "NOT_ESTABLISHED",
+  "limits": [
+    "Actual frontend function bodies; synthetic BFF-shaped payloads.",
+    "BFF Java, network, React lifecycle, storage and browser were not executed.",
+    "firstWorkspace is a deterministic blank fixture; removal is tested, real blank workspace fields are not."
+  ]
+}

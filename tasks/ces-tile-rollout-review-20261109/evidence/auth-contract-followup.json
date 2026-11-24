@@ -1,0 +1,114 @@
+{
+  "date": "2026-11-10",
+  "review_scope": "Existing API and exposed contract compatibility for auth migration",
+  "request_source": "user-followup-20261110.md#exact-user-input",
+  "base": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+  "head": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
+  "conclusion": "No additional confirmed direct schema, method, or endpoint break found in the inspected auth boundary. This is bounded source evidence, not complete upper-application compatibility.",
+  "unchanged_contract_sources": [
+    {
+      "path": "src/main/java/com/scb/auth/login/dto/AuthenticationResponseDto.java",
+      "base_sha256": "df9d0de480589162e4e776769c4a2a6e2c974f695919f779de69dd0158022947",
+      "head_sha256": "df9d0de480589162e4e776769c4a2a6e2c974f695919f779de69dd0158022947",
+      "unchanged": true
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entity/ratan/RatanEntitlement.java",
+      "base_sha256": "ed80296bcf103ff7ad7ae2c28e56e892ea25fc07d159c4bb9632f9449b2d3625",
+      "head_sha256": "ed80296bcf103ff7ad7ae2c28e56e892ea25fc07d159c4bb9632f9449b2d3625",
+      "unchanged": true
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entity/UserInfo.java",
+      "base_sha256": "b5670ff9759afcdff4a7aac3430852bf14774c1c4e753b65155edb5ef0658942",
+      "head_sha256": "b5670ff9759afcdff4a7aac3430852bf14774c1c4e753b65155edb5ef0658942",
+      "unchanged": true
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+      "base_sha256": "5d227baf629361cf792568b1db10e947eb67cdd05cf5c28efb19400ad177c95b",
+      "head_sha256": "5d227baf629361cf792568b1db10e947eb67cdd05cf5c28efb19400ad177c95b",
+      "unchanged": true
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/controller/LoginController.java",
+      "base_sha256": "d8d3aacff8ec5aab0a95db1e62b902d8d12c40b3c1e69a891cbc3dc82d58db8a",
+      "head_sha256": "d8d3aacff8ec5aab0a95db1e62b902d8d12c40b3c1e69a891cbc3dc82d58db8a",
+      "unchanged": true
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/controller/v2/V2LoginController.java",
+      "base_sha256": "4b2b6250a04d08d6dca8a04c1c23fcc1c5fff98fd3fcbd173e7ec045fb73b360",
+      "head_sha256": "4b2b6250a04d08d6dca8a04c1c23fcc1c5fff98fd3fcbd173e7ec045fb73b360",
+      "unchanged": true
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/jwtparser/JwtParserCoordinator.java",
+      "base_sha256": "a413ed3eff5d51468bbef8e3ffd93fc98cfb217ab384b2f153a42f23b3a6fc8b",
+      "head_sha256": "a413ed3eff5d51468bbef8e3ffd93fc98cfb217ab384b2f153a42f23b3a6fc8b",
+      "unchanged": true
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/jwtparser/convertor/JwtConvertor.java",
+      "base_sha256": "68561e07ea933d73ac1a6704bda4b1c6302cb8d8bd6426bf4235247af1b7a95e",
+      "head_sha256": "68561e07ea933d73ac1a6704bda4b1c6302cb8d8bd6426bf4235247af1b7a95e",
+      "unchanged": true
+    }
+  ],
+  "candidate_source_sha256": {
+    "src/main/java/com/scb/auth/login/jwtparser/convertor/JwtConvertorForNewUse.java": "2e9bbcfcfc171bac76a1b303eca9692585f905719209f54b9e68ab5ed6d5a5f2",
+    "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java": "922c8220b61264e0fd2fb0221b7d616ca2628b663a3deab48177012667bda157",
+    "src/main/java/com/scb/auth/login/entitlement/mapper/LegacyEntitlementMapper.java": "3fa7d95d8e898dd79b65126aa7afce83330d558d8a1cebdb93af31a1211703be",
+    "src/main/java/com/scb/auth/login/service/LoginService.java": "8b7459f00bb5d2e9aba9caf17aa41c091bd229ae06eb3854cb7cd0b1c53aa9a2",
+    "src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java": "a6fd52424c5774110113f376e00994e0a8431cc8dc4d6a90a5197579ff1aaf81",
+    "src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java": "9fdabae67687371678e359b7104e3527ada2b5718e56de263f7e0805b7ced3c2"
+  },
+  "contract_classification": [
+    {
+      "kind": "preserved-shape",
+      "claim": "AuthenticationResponseDto continues to expose entitlement as a JSON-encoded string and userInfo as UserInfo. InnerConvert and FMAA response assembly are unchanged.",
+      "source": "src/main/java/com/scb/auth/login/dto/AuthenticationResponseDto.java:12-13; controller/AuthenticationController.java:148-157,178-192"
+    },
+    {
+      "kind": "preserved-shape",
+      "claim": "RatanEntitlement and JWT InternalUserEntitlement retain role, actions, and dataEntitlementRoles names and scalar/list types. CES projection adapts into RatanEntitlement.",
+      "source": "src/main/java/com/scb/auth/login/entity/ratan/RatanEntitlement.java:14-17; jwtparser/convertor/JwtConvertorForNewUse.java:138-142,270-277; entitlement/mapper/LegacyEntitlementMapper.java:19-24"
+    },
+    {
+      "kind": "preserved-format",
+      "claim": "The login action cache remains a JSON list read by existing action-authentication endpoints. The new cache publisher validates and serializes the existing field rather than requiring a caller change.",
+      "source": "src/main/java/com/scb/auth/login/service/LoginService.java:164-178; controller/v2/V2LoginController.java:162-167"
+    },
+    {
+      "kind": "conditional-semantic-gap",
+      "claim": "CES legacy projection requires one distinct mapped scalar role and nonempty functional actions. Missing or conflicting mappings reject CES conversion; multiple entitlement names alone do not imply a rejection.",
+      "source": "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java:47-57,64-100; jwtparser/convertor/JwtConvertorForNewUse.java:80-84,128-146",
+      "disposition": "Existing scalar-role policy and no-grant policy questions. No added confirmed defect without account/mapping intent evidence."
+    },
+    {
+      "kind": "conditional-semantic-gap",
+      "claim": "Auth selects provider by user and migration mode, with no tile ID. Frontend provider-union permission intent does not demonstrate this backend source has equivalent grant inventories.",
+      "source": "src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java:35-65,78-83",
+      "disposition": "Validate old/CES effective backend decisions for remaining EMS2 tiles before user migration. No request to change existing API signatures."
+    },
+    {
+      "kind": "conditional-cache-correctness-defect",
+      "claim": "AUTH-R1 preserves a stale role/action projection after a configuration revision change until TTL expiry. It changes decision meaning under the stated trigger, not the external response shape.",
+      "source": "auth-review.json; auth-mapping-probe.json",
+      "disposition": "Keep conditional P2 and existing bounds. Correct internally without changing upper calls."
+    }
+  ],
+  "knowledge_reference": {
+    "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+    "version": 6,
+    "status": "candidate/draft; no publication approval inferred",
+    "scope": "Existing caller APIs remain the migration objective. Mapped feature/action permission union is allowed. Scalar role mapping remains unresolved."
+  },
+  "limits": [
+    "No new broad tests or service calls ran for this follow-up.",
+    "No direct production caller of this auth response was established in the selected checkouts. Frontend getUser() contracts must not be attributed to this service by name similarity.",
+    "Response syntax preservation alone does not prove unchanged role/action/data-role meaning or no new authentication failures.",
+    "Prior Maven suite remains blocked by private dependency resolution; no additional execution success inferred."
+  ],
+  "created_at": "2026-11-09T16:12:33.792683+00:00"
+}

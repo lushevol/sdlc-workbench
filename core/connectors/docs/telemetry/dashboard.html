@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SC Node MCP — Telemetry Dashboard</title>
+  <style>
+    /* ── CSS Custom Properties (light + dark) ── */
+    :root {
+      --bg-page:      #f8f9fa;
+      --bg-card:      #ffffff;
+      --bg-header:    #ffffff;
+      --bg-sidebar:   #ffffff;
+      --text-primary: #202124;
+      --text-secondary: #5f6368;
+      --text-on-primary: #ffffff;
+      --border:       #e8eaed;
+      --shadow:       0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:    0 4px 12px rgba(0,0,0,.08);
+      --primary:      #4285f4;
+      --primary-dark: #1a73e8;
+      --google-red:   #ea4335;
+      --google-yellow:#fbbc04;
+      --google-green: #34a853;
+      --google-blue:  #4285f4;
+      --chip-bg:      #e8f0fe;
+      --chip-text:    #1967d2;
+      --table-stripe: #f8f9fa;
+      --radius:       12px;
+      --radius-sm:    8px;
+    }
+
+    [data-theme="dark"] {
+      --bg-page:      #1a1a2e;
+      --bg-card:      #16213e;
+      --bg-header:    #0f3460;
+      --bg-sidebar:   #16213e;
+      --text-primary: #e8eaed;
+      --text-secondary: #9aa0a6;
+      --border:       #2d2d44;
+      --shadow:       0 1px 3px rgba(0,0,0,.3);
+      --shadow-md:    0 4px 12px rgba(0,0,0,.3);
+      --chip-bg:      #1e3a5f;
+      --chip-text:    #8ab4f8;
+      --table-stripe: #1e2d45;
+    }
+
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      min-height: 100vh;
+      transition: background .2s, color .2s;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+      transition: background .2s, border-color .2s;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--google-blue) 0%, var(--google-green) 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -.5px;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .header-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .time-filter {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px;
+      transition: background .2s, border-color .2s;
+    }
+
+    .time-filter button {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .time-filter button.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .time-filter button:not(.active):hover {
+      background: var(--border);
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--text-secondary);
+      transition: all .15s;
+    }
+
+    .theme-toggle:hover { background: var(--bg-page); }
+
+    .last-updated {
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── Main layout ── */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+    }
+
+    /* ── KPI Cards ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 540px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: background .2s, border-color .2s, box-shadow .2s;
+    }
+
+    .kpi-card:hover { box-shadow: var(--shadow-md); }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .kpi-card:nth-child(1)::before { background: var(--google-blue); }
+    .kpi-card:nth-child(2)::before { background: var(--google-green); }
+    .kpi-card:nth-child(3)::before { background: var(--google-red); }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .kpi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: var(--chip-bg);
+      color: var(--chip-text);
+    }
+
+    .kpi-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 36px;
+      opacity: .1;
+    }
+
+    .mb-16 { margin-bottom: 16px; }
+
+    /* ── Chart card ── */
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      transition: background .2s, border-color .2s;
+    }
+
+    .chart-card:hover { box-shadow: var(--shadow-md); }
+
+    .chart-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .chart-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .chart-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* ── CSS Bar Chart ── */
+    .bar-chart-wrap { display: flex; flex-direction: column; gap: 6px; }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 32px;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bar-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bar-track {
+      height: 20px;
+      background: var(--bg-page);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #4285f4;
+      border-radius: 3px;
+      min-width: 2px;
+    }
+
+    [data-theme="dark"] .bar-fill { background: #8ab4f8; }
+
+    .bar-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .1s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+
+    tbody tr:nth-child(even) { background: var(--table-stripe); }
+
+    tbody tr:hover { background: var(--chip-bg); }
+
+    tbody td {
+      padding: 10px 16px;
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    .td-secondary { color: var(--text-secondary); font-size: 12px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .badge-blue   { background: #e8f0fe; color: #1967d2; }
+    .badge-green  { background: #e6f4ea; color: #137333; }
+    .badge-yellow { background: #fef9e7; color: #7d4e00; }
+    .badge-red    { background: #fce8e6; color: #c5221f; }
+
+    [data-theme="dark"] .badge-blue   { background: #1e3a5f; color: #8ab4f8; }
+    [data-theme="dark"] .badge-green  { background: #1e3a2a; color: #81c995; }
+    [data-theme="dark"] .badge-yellow { background: #3a2f1a; color: #fdd663; }
+
+    .hidden { display: none; }
+
+    .kpi-version-value { font-size: 22px; font-weight: 400; }
+
+    .span-2 { grid-column: span 2; }
+    [data-theme="dark"] .badge-red    { background: #3a1e1e; color: #f28b82; }
+
+    .rank {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* ── Error / empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-state h2 { font-size: 20px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
+    .empty-state p  { font-size: 14px; line-height: 1.6; }
+    .empty-state code {
+      display: inline-block;
+      margin-top: 12px;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--primary);
+    }
+
+    /* ── Loading ── */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      gap: 16px;
+      color: var(--text-secondary);
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Section heading ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      padding-left: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ Header ════════════════════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">SC</div>
+    <div>
+      <div class="header-title">SC Node MCP</div>
+      <div class="header-subtitle">Telemetry Dashboard</div>
+    </div>
+  </div>
+
+  <div class="header-controls">
+    <div class="time-filter" id="timeFilter">
+      <button class="active" data-days="7">7d</button>
+      <button data-days="30">30d</button>
+      <button data-days="90">90d</button>
+      <button data-days="0">All</button>
+    </div>
+    <div class="last-updated" id="lastUpdated"></div>
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
+  </div>
+</header>
+
+<!-- ══ Main ══════════════════════════════════════════════════════════════════ -->
+<main class="main" id="main">
+  <div class="loading" id="loadingState">
+    <div class="spinner"></div>
+    <span>Loading telemetry data…</span>
+  </div>
+
+  <div id="content" class="hidden">
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Sessions</div>
+        <div class="kpi-value" id="kpiTotal">—</div>
+        <div class="kpi-badge" id="kpiTotalBadge"></div>
+        <div class="kpi-icon">📊</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Unique Users</div>
+        <div class="kpi-value" id="kpiUsers">—</div>
+        <div class="kpi-badge" id="kpiUsersBadge"></div>
+        <div class="kpi-icon">👥</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Active This Week</div>
+        <div class="kpi-value" id="kpiWeek">—</div>
+        <div class="kpi-badge" id="kpiWeekBadge"></div>
+        <div class="kpi-icon">📅</div>
+      </div>
+    </div>
+
+    <!-- Sessions bar chart -->
+    <p class="section-label">Sessions Over Time</p>
+    <div class="chart-card mb-16">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title" id="sessionsTitle">Daily Sessions</div>
+          <div class="chart-subtitle">Number of server starts per day</div>
+        </div>
+      </div>
+      <div class="bar-chart-wrap" id="barChart"></div>
+    </div>
+
+    <!-- Latest Versions by Package -->
+    <p class="section-label">Latest Versions by Package</p>
+    <div class="chart-card mb-16">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Package Versions</div>
+          <div class="chart-subtitle">Most recent version seen for each package in the selected period</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="tableVersions">
+          <thead>
+            <tr>
+              <th>Package</th>
+              <th>Latest Version</th>
+              <th>Last Seen</th>
+            </tr>
+          </thead>
+          <tbody id="tableVersionsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Users -->
+    <p class="section-label">Users</p>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Top Users</div>
+          <div class="chart-subtitle">By total sessions in selected period</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="tableUsers">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>User</th>
+              <th>Sessions</th>
+              <th>Last Seen</th>
+            </tr>
+          </thead>
+          <tbody id="tableUsersBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div id="errorState" class="chart-card hidden">
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h2>No telemetry data found</h2>
+      <p>
+        The dashboard couldn't load <code>data/usage.log</code>.<br />
+        Run the following command to fetch the latest data:
+      </p>
+      <code>yarn telemetry</code>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+/* ════════════════════════════════════════════════════════════════════════════
+   Data loading
+════════════════════════════════════════════════════════════════════════════ */
+/** Normalise a record so it always has a `versions` object map.
+ * Old-format records have `version` (string) and `toolsEnabled` (array);
+ * new-format records have `versions` (object). Both formats co-exist in the log.
+ */
+function normaliseRecord(r) {
+  if (r.versions && typeof r.versions === 'object' && !Array.isArray(r.versions)) return r;
+  const name = (Array.isArray(r.toolsEnabled) && r.toolsEnabled[0]) || 'unknown';
+  return { ...r, versions: { [name]: r.version ?? 'unknown' } };
+}
+
+async function loadData() {
+  const res = await fetch('data/usage.log');
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const text = await res.text();
+  return text.trim().split('\n').filter(Boolean).map(line => normaliseRecord(JSON.parse(line)));
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Filtering
+════════════════════════════════════════════════════════════════════════════ */
+let ALL_RECORDS = [];
+let activeDays = 7;
+
+function filterRecords(days) {
+  if (days === 0) return ALL_RECORDS;
+  const cutoff = new Date(Date.now() - days * 86400 * 1000);
+  return ALL_RECORDS.filter(r => new Date(r.timestamp) >= cutoff);
+}
+
+/* Returns the ISO date (YYYY-MM-DD) of the Monday starting the week of dateStr */
+function weekLabel(dateStr) {
+  const d = new Date(dateStr);
+  const day = d.getUTCDay();
+  const diff = d.getUTCDate() - day + (day === 0 ? -6 : 1);
+  const mon = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), diff));
+  return mon.toISOString().slice(0, 10);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Render
+════════════════════════════════════════════════════════════════════════════ */
+function render(records) {
+  // ── KPIs ──────────────────────────────────────────────────────────────────
+  const totalSessions = records.length;
+  const uniqueUsers = new Set(records.map(r => r.user)).size;
+
+  const weekCutoff = new Date(Date.now() - 7 * 86400 * 1000);
+  const activeWeek = new Set(ALL_RECORDS.filter(r => new Date(r.timestamp) >= weekCutoff).map(r => r.user)).size;
+
+  document.getElementById('kpiTotal').textContent = totalSessions.toLocaleString();
+  document.getElementById('kpiTotalBadge').textContent = `${totalSessions} sessions`;
+  document.getElementById('kpiUsers').textContent = uniqueUsers.toLocaleString();
+  document.getElementById('kpiUsersBadge').textContent = `${uniqueUsers} distinct`;
+  document.getElementById('kpiWeek').textContent = activeWeek.toLocaleString();
+  document.getElementById('kpiWeekBadge').textContent = 'unique users';
+
+  // ── Sessions bar chart — daily ≤ 30d, weekly otherwise ───────────────────
+  const useWeekly = activeDays === 0 || activeDays > 30;
+  const bucketMap = {};
+  records.forEach(r => {
+    const key = useWeekly ? weekLabel(r.timestamp) : r.timestamp.slice(0, 10);
+    bucketMap[key] = (bucketMap[key] || 0) + 1;
+  });
+  const buckets = Object.keys(bucketMap).sort();
+  const maxVal = Math.max(...buckets.map(k => bucketMap[k]), 1);
+
+  document.getElementById('sessionsTitle').textContent = useWeekly ? 'Weekly Sessions' : 'Daily Sessions';
+  document.getElementById('barChart').innerHTML = buckets.map(key => {
+    const pct = ((bucketMap[key] / maxVal) * 100).toFixed(1);
+    return `<div class="bar-row">
+      <span class="bar-label">${escHtml(key)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      <span class="bar-count">${bucketMap[key]}</span>
+    </div>`;
+  }).join('');
+
+  // ── Latest Versions by Package table ─────────────────────────────────────
+  const pkgMap = {};
+  records.forEach(r => {
+    Object.entries(r.versions).forEach(([pkg, ver]) => {
+      if (!pkgMap[pkg] || r.timestamp > pkgMap[pkg].lastSeen) {
+        pkgMap[pkg] = { version: ver, lastSeen: r.timestamp };
+      }
+    });
+  });
+  const sortedPkgs = Object.keys(pkgMap).sort();
+  document.getElementById('tableVersionsBody').innerHTML = sortedPkgs.map(pkg => {
+    const { version: ver, lastSeen } = pkgMap[pkg];
+    const lastSeenFmt = new Date(lastSeen).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    return `<tr>
+        <td><strong>${escHtml(pkg)}</strong></td>
+        <td><span class="badge badge-blue">v${escHtml(ver)}</span></td>
+        <td class="td-secondary">${lastSeenFmt}</td>
+      </tr>`;
+  }).join('');
+
+  // ── Top users table ──────────────────────────────────────────────────────
+  const userMap = {};
+  records.forEach(r => {
+    if (!userMap[r.user]) userMap[r.user] = { sessions: 0, lastSeen: r.timestamp };
+    userMap[r.user].sessions++;
+    if (r.timestamp > userMap[r.user].lastSeen) {
+      userMap[r.user].lastSeen = r.timestamp;
+    }
+  });
+
+  const topUsers = Object.entries(userMap)
+    .sort((a, b) => b[1].sessions - a[1].sessions)
+    .slice(0, 10);
+
+  const tbody = document.getElementById('tableUsersBody');
+  tbody.innerHTML = topUsers.map(([user, d], i) => {
+    const lastSeen = new Date(d.lastSeen).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    return `<tr>
+        <td><span class="rank">${i + 1}</span></td>
+        <td><strong>${escHtml(user)}</strong></td>
+        <td>${d.sessions.toLocaleString()}</td>
+        <td class="td-secondary">${lastSeen}</td>
+      </tr>`;
+  }).join('');
+}
+
+function escHtml(str) {
+  return String(str)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Init
+════════════════════════════════════════════════════════════════════════════ */
+async function init() {
+  try {
+    ALL_RECORDS = await loadData();
+    const ts = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('lastUpdated').textContent = `Updated ${ts}`;
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('content').classList.remove('hidden');
+    render(filterRecords(activeDays));
+  } catch {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').classList.remove('hidden');
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Time filter
+════════════════════════════════════════════════════════════════════════════ */
+document.getElementById('timeFilter').addEventListener('click', e => {
+  if (!e.target.dataset.days) return;
+  activeDays = Number(e.target.dataset.days);
+  document.querySelectorAll('#timeFilter button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  render(filterRecords(activeDays));
+});
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Theme toggle
+════════════════════════════════════════════════════════════════════════════ */
+const themeBtn = document.getElementById('themeToggle');
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('mcp-telemetry-theme', theme); } catch { /* ignore */ }
+  if (ALL_RECORDS.length) render(filterRecords(activeDays));
+}
+
+themeBtn.addEventListener('click', () => {
+  applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+// Restore persisted theme
+try {
+  const saved = localStorage.getItem('mcp-telemetry-theme');
+  if (saved === 'dark' || saved === 'light') applyTheme(saved);
+} catch { /* ignore */ }
+
+// Start
+await init();
+</script>
+</body>
+</html>

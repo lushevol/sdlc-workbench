@@ -1,0 +1,356 @@
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:4: trailing whitespace.
++import com.scb.sso.singleuibff.dto.config.EntitlementSource;
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:87: trailing whitespace.
++                validateEntitlementConfigForUpdate(requestOfApplicationTile);
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:88: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:105: trailing whitespace.
++                applicationTile.setEntitlementSource(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:106: trailing whitespace.
++                    requestOfApplicationTile.getEntitlementSource() == null
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:107: trailing whitespace.
++                        ? EntitlementSource.EMS2
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:108: trailing whitespace.
++                        : requestOfApplicationTile.getEntitlementSource());
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:109: trailing whitespace.
++                applicationTile.setEntitlementAppId(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:110: trailing whitespace.
++                    requestOfApplicationTile.getEntitlementAppId());
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:111: trailing whitespace.
++                applicationTile.setEntitlementAppName(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:112: trailing whitespace.
++                    requestOfApplicationTile.getEntitlementAppName());
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:158: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:159: trailing whitespace.
++            validateEntitlementConfig(requestOfApplicationTile);
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:160: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:182: trailing whitespace.
++                .entitlementSource(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:183: trailing whitespace.
++                    requestOfApplicationTile.getEntitlementSource() == null
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:184: trailing whitespace.
++                        ? EntitlementSource.EMS2
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:185: trailing whitespace.
++                        : requestOfApplicationTile.getEntitlementSource())
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:186: trailing whitespace.
++                .entitlementAppId(requestOfApplicationTile.getEntitlementAppId())
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:187: trailing whitespace.
++                .entitlementAppName(requestOfApplicationTile.getEntitlementAppName())
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:274: trailing whitespace.
++    private void validateEntitlementConfig(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:275: trailing whitespace.
++        RequestOfApplicationTile request)
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:276: trailing whitespace.
++        throws RecordNotCreatedException {
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:277: trailing whitespace.
++        EntitlementSource source = request.getEntitlementSource() == null
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:278: trailing whitespace.
++            ? EntitlementSource.EMS2
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:279: trailing whitespace.
++            : request.getEntitlementSource();
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:280: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:281: trailing whitespace.
++        if (source == EntitlementSource.EMS3
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:282: trailing whitespace.
++            && (StringUtils.isBlank(request.getEntitlementAppId())
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:283: trailing whitespace.
++                || StringUtils.isBlank(request.getEntitlementAppName())
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:284: trailing whitespace.
++                || StringUtils.isBlank(request.getEms2Entities()))) {
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:285: trailing whitespace.
++            throw RecordNotCreatedException.builder()
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:286: trailing whitespace.
++                .message(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:287: trailing whitespace.
++                    "EMS3 tile requires entitlementAppId, " +
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:288: trailing whitespace.
++                        "entitlementAppName and ems2Entities")
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:289: trailing whitespace.
++                .build();
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:290: trailing whitespace.
++        }
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:291: trailing whitespace.
++    }
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:292: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:293: trailing whitespace.
++    private void validateEntitlementConfigForUpdate(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:294: trailing whitespace.
++        RequestOfApplicationTile request)
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:295: trailing whitespace.
++        throws RecordNotUpdatedException {
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:296: trailing whitespace.
++        EntitlementSource source = request.getEntitlementSource() == null
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:297: trailing whitespace.
++            ? EntitlementSource.EMS2
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:298: trailing whitespace.
++            : request.getEntitlementSource();
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:299: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:300: trailing whitespace.
++        if (source == EntitlementSource.EMS3
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:301: trailing whitespace.
++            && (StringUtils.isBlank(request.getEntitlementAppId())
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:302: trailing whitespace.
++                || StringUtils.isBlank(request.getEntitlementAppName())
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:303: trailing whitespace.
++                || StringUtils.isBlank(request.getEms2Entities()))) {
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:304: trailing whitespace.
++            throw RecordNotUpdatedException.builder()
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:305: trailing whitespace.
++                .message(
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:306: trailing whitespace.
++                    "EMS3 tile requires entitlementAppId, " +
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:307: trailing whitespace.
++                        "entitlementAppName and ems2Entities")
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:308: trailing whitespace.
++                .build();
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:309: trailing whitespace.
++        }
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:310: trailing whitespace.
++    }
+src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java:311: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java:30: trailing whitespace.
++    // CES fields
+src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java:31: trailing whitespace.
++    private EntitlementSource entitlementSource;
+src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java:32: trailing whitespace.
++    private String entitlementAppId;
+src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java:33: trailing whitespace.
++    private String entitlementAppName;
+src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java:34: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java:3: trailing whitespace.
++import com.scb.sso.singleuibff.dto.config.EntitlementSource;
+src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java:31: trailing whitespace.
++    // CES fields
+src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java:32: trailing whitespace.
++    private EntitlementSource entitlementSource = EntitlementSource.EMS2;
+src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java:33: trailing whitespace.
++    private String entitlementAppId;
+src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java:34: trailing whitespace.
++    private String entitlementAppName;
+src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java:35: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:3: trailing whitespace.
++import com.scb.sso.singleuibff.dto.config.EntitlementSource;
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:78: trailing whitespace.
++    // CES fields
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:79: trailing whitespace.
++    @Enumerated(EnumType.STRING)
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:80: trailing whitespace.
++    @Column(name = "entitlement_source", nullable = false)
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:81: trailing whitespace.
++    @Builder.Default
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:82: trailing whitespace.
++    private EntitlementSource entitlementSource = EntitlementSource.EMS2;
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:83: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:84: trailing whitespace.
++    @Column(name = "entitlement_app_id", length = 64)
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:85: trailing whitespace.
++    private String entitlementAppId;
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:86: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:87: trailing whitespace.
++    @Column(name = "entitlement_app_name", length = 255)
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:88: trailing whitespace.
++    private String entitlementAppName;
+src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java:89: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/service/v1/implementation/OUDAuthenticationService.java:32: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/service/v1/implementation/OUDAuthenticationService.java:83: trailing whitespace.
++            String userText = oudUtil.getEncode(String.format(DECODE_PW_PREFIX, oudProperties.getPw()),
+src/main/java/com/scb/sso/singleuibff/service/v1/implementation/OUDAuthenticationService.java:84: trailing whitespace.
++                String.format(DECODE_PW_PREFIX, oudProperties.getId()));
+src/main/java/com/scb/sso/singleuibff/service/v1/implementation/OUDAuthenticationService.java:95: trailing whitespace.
++
+src/main/java/com/scb/sso/singleuibff/service/v2/implementation/EMS2AuthorizationImplementation.java:83: trailing whitespace.
++            log.error("fetchDataEntitlementRoles, e: {}", e.getMessage(), e);
+src/main/java/com/scb/sso/singleuibff/service/v2/implementation/EMS2AuthorizationImplementation.java:118: trailing whitespace.
++            log.error("getRawEntitlements, e: {}", e.getMessage(), e);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:4: trailing whitespace.
++import com.scb.sso.singleuibff.dto.config.EntitlementSource;
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:30: trailing whitespace.
++import static org.mockito.Mockito.*;
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:356: trailing whitespace.
++    void testCreateEms3_shouldRejectMissingEntitlementConfig() {
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:357: trailing whitespace.
++        Map<String, String> payload = new HashMap<>();
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:358: trailing whitespace.
++        payload.put("sub", "123");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:359: trailing whitespace.
++        payload.put("ems2Role", "RATAN_ADMIN");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:360: trailing whitespace.
++        when(adminModuleUtil.validate(any(), any())).thenReturn(payload);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:361: trailing whitespace.
++        when(applicationCategoryService.getById(any())).thenReturn(Optional.of(getApplicationCategory()));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:362: trailing whitespace.
++        when(importMapService.getById(any())).thenReturn(Optional.of(getImportMap()));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:363: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:364: trailing whitespace.
++        RequestOfApplicationTile request = getRequestOfApplicationTile();
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:365: trailing whitespace.
++        request.setEntitlementSource(EntitlementSource.EMS3);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:366: trailing whitespace.
++        request.setTitle("title");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:367: trailing whitespace.
++        request.setModule("module");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:368: trailing whitespace.
++        request.setTile("tile");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:369: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("title", "")).thenReturn("title");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:370: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("module", "")).thenReturn("module");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:371: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("tile", "")).thenReturn("tile");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:372: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("X_RATANONE", "")).thenReturn("X_RATANONE");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:373: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:374: trailing whitespace.
++        mockMvc.perform(post("/v1/fmo/admin/tile/create")
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:375: trailing whitespace.
++            .content(objectMapper.writeValueAsString(request))
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:376: trailing whitespace.
++            .contentType(MediaType.APPLICATION_JSON))
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:377: trailing whitespace.
++            .andExpect(MockMvcResultMatchers.status().isBadRequest());
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:378: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:379: trailing whitespace.
++        verify(applicationTileService, never()).create(any());
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:380: trailing whitespace.
++    }
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:381: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:382: trailing whitespace.
++    @SneakyThrows
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:383: trailing whitespace.
++    @Test
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:384: trailing whitespace.
++    void testCreateEms3_shouldPersistEntitlementConfig() {
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:385: trailing whitespace.
++        Map<String, String> payload = new HashMap<>();
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:386: trailing whitespace.
++        payload.put("sub", "123");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:387: trailing whitespace.
++        payload.put("ems2Role", "RATAN_ADMIN");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:388: trailing whitespace.
++        when(adminModuleUtil.validate(any(), any())).thenReturn(payload);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:389: trailing whitespace.
++        when(applicationCategoryService.getById(any())).thenReturn(Optional.of(getApplicationCategory()));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:390: trailing whitespace.
++        when(importMapService.getById(any())).thenReturn(Optional.of(getImportMap()));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:391: trailing whitespace.
++        when(applicationTileService.create(any())).thenReturn(getApplicationTile());
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:392: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:393: trailing whitespace.
++        RequestOfApplicationTile request = getRequestOfApplicationTile();
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:394: trailing whitespace.
++        request.setEntitlementSource(EntitlementSource.EMS3);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:395: trailing whitespace.
++        request.setEntitlementAppId("51358");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:396: trailing whitespace.
++        request.setEntitlementAppName("RATAN_ENTITLEMENT_RULE");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:397: trailing whitespace.
++        request.setEms2Entities("X_RATANONE");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:398: trailing whitespace.
++        request.setTitle("title");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:399: trailing whitespace.
++        request.setModule("module");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:400: trailing whitespace.
++        request.setTile("tile");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:401: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("title", "")).thenReturn("title");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:402: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("module", "")).thenReturn("module");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:403: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("tile", "")).thenReturn("tile");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:404: trailing whitespace.
++        when(adminModuleUtil.checkIfNull("X_RATANONE", "")).thenReturn("X_RATANONE");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:405: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:406: trailing whitespace.
++        mockMvc.perform(post("/v1/fmo/admin/tile/create")
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:407: trailing whitespace.
++            .content(objectMapper.writeValueAsString(request))
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:408: trailing whitespace.
++            .contentType(MediaType.APPLICATION_JSON))
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:409: trailing whitespace.
++            .andExpect(MockMvcResultMatchers.status().isOk());
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:410: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:411: trailing whitespace.
++        verify(applicationTileService).create(argThat((ApplicationTile tile) -> tile.getEntitlementSource() == EntitlementSource.EMS3
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:412: trailing whitespace.
++            && "51358".equals(tile.getEntitlementAppId())
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:413: trailing whitespace.
++            && "RATAN_ENTITLEMENT_RULE".equals(tile.getEntitlementAppName())
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:414: trailing whitespace.
++            && "X_RATANONE".equals(tile.getEms2Entities())));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:415: trailing whitespace.
++    }
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:416: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:417: trailing whitespace.
++    @SneakyThrows
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:418: trailing whitespace.
++    @Test
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:452: trailing whitespace.
++    void testUpdateEms3_shouldRejectMissingEntitlementConfig() {
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:453: trailing whitespace.
++        Map<String, String> payload = new HashMap<>();
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:454: trailing whitespace.
++        payload.put("sub", "123");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:455: trailing whitespace.
++        payload.put("ems2Role", "RATAN_ADMIN");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:456: trailing whitespace.
++        when(adminModuleUtil.validate(any(), any())).thenReturn(payload);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:457: trailing whitespace.
++        when(applicationTileService.getById(any())).thenReturn(Optional.of(getApplicationTile()));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:458: trailing whitespace.
++        when(applicationCategoryService.getById(any())).thenReturn(Optional.of(getApplicationCategory()));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:459: trailing whitespace.
++        when(importMapService.getById(any())).thenReturn(Optional.of(getImportMap()));
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:460: trailing whitespace.
++        when(adminModuleUtil.checkEms2Role(any(), any(), any(), any())).thenReturn(false);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:461: trailing whitespace.
++        when(adminModuleUtil.validateChecker(any(), any())).thenReturn(false);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:462: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:463: trailing whitespace.
++        RequestOfApplicationTile request = getRequestOfApplicationTile();
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:464: trailing whitespace.
++        request.setMode("update");
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:465: trailing whitespace.
++        request.setEntitlementSource(EntitlementSource.EMS3);
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:466: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:467: trailing whitespace.
++        mockMvc.perform(post("/v1/fmo/admin/tile/update")
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:468: trailing whitespace.
++            .content(objectMapper.writeValueAsString(request))
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:469: trailing whitespace.
++            .contentType(MediaType.APPLICATION_JSON))
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:470: trailing whitespace.
++            .andExpect(MockMvcResultMatchers.status().isBadRequest());
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:471: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:472: trailing whitespace.
++        verify(applicationTileService, never()).update(any());
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:473: trailing whitespace.
++    }
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:474: trailing whitespace.
++
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:475: trailing whitespace.
++    @SneakyThrows
+src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java:476: trailing whitespace.
++    @Test

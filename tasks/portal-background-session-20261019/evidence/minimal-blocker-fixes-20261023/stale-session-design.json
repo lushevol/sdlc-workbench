@@ -1,0 +1,282 @@
+{
+  "schema": "minimal-blocker-design/v1",
+  "finding_id": "F-03",
+  "title": "Prevent refresh credentials from crossing session boundaries",
+  "status": "PROPOSED_NOT_APPLIED",
+  "critical_conclusion": {
+    "action": "Add generation ownership before response side effects.",
+    "consequence": "An old refresh response can contaminate a new login without ownership checks.",
+    "owner": "mfe-base owner; named owner unknown",
+    "evidence": [
+      "refresh-service",
+      "success-handler",
+      "error-handler",
+      "login-mutators",
+      "set-token-reducer"
+    ]
+  },
+  "source_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "source_inspection": "Read-only exact-source review. No source changes or test execution.",
+  "facts": [
+    "The refresh request record has access-token and controller fields. It has no session generation.",
+    "The success handler writes refresh headers before any ownership check.",
+    "The error handler can clear the active session after an old expired-token error.",
+    "SET_TOKEN preserves refresh credentials. The reducer assertion requires this behavior for access rotation.",
+    "Fresh login and access extension share handleLogin. They need different boundary behavior.",
+    "Axios has one registered request interceptor in current source.",
+    "Installed Axios supports synchronous request interceptors.",
+    "The shared service instance is exported. Registration-level stamping covers its current direct callers.",
+    "getRefreshToken currently swallows rejection. Home currently ignores its result."
+  ],
+  "decision": [
+    "Use a module generation. Keep it independent from access-token rotation.",
+    "Stamp every request synchronously before Axios dispatch.",
+    "Advance generation at fresh-login request start and clear refresh credentials.",
+    "Advance generation again when a fresh-login response supplies access credentials.",
+    "The second boundary rejects old-access requests started during pending login.",
+    "Advance generation before logout clears storage.",
+    "Reject stale success and error results before every store mutation.",
+    "Keep controller identity checks in final cleanup.",
+    "Keep access-token equality as a deduplication key only.",
+    "Expose a current-generation pending promise for Timeout. Do not start acquisition from that helper.",
+    "Return Promise<void> consistently. Propagate acquisition failure to recovery consumers."
+  ],
+  "snippets": {
+    "new-session-epoch-helper": "// Proposed new file: src/utils/sessionEpoch.ts\nimport type { AxiosRequestConfig } from \"axios\";\n\ndeclare module \"axios\" {\n  interface AxiosRequestConfig<D = any, P = any> {\n    sessionEpoch?: number;\n  }\n}\n\nlet sessionEpoch = 0;\nexport const currentSessionEpoch = () => sessionEpoch;\nexport const invalidateSession = () => ++sessionEpoch;\nexport const isFreshLogin = (url = \"\") =>\n  /\\/auth\\/v[23]\\/sso\\/login(?:[?#]|$)/.test(url);\nexport const isStaleSession = (config?: AxiosRequestConfig) =>\n  config?.sessionEpoch !== undefined &&\n  config.sessionEpoch !== currentSessionEpoch();",
+    "synchronous-registration": "// src/hooks/service/config.ts: replace the existing registration.\nservice.interceptors.request.use(requestHandler, undefined, {\n  synchronous: true,\n});",
+    "request-boundary": "// At requestHandler entry, after reading getHooksBase().\n// Import currentSessionEpoch, invalidateSession, isFreshLogin.\nif (isFreshLogin(request.url)) {\n  invalidateSession();\n  baseDispatch({\n    type: ActionType.SET_REFRESH_TOKEN,\n    data: { refreshToken: undefined },\n  });\n}\nrequest.sessionEpoch = currentSessionEpoch();\n// Keep the existing request handler body.",
+    "success-boundary": "// Add CanceledError import and epoch helpers.\n// Add setRefreshToken to the existing utils/login imports.\n// At successHandler entry, before every handle* call or dispatch.\nif (isStaleSession(response.config) || response.config.signal?.aborted) {\n  return Promise.reject(new CanceledError(\"Session changed\", response.config));\n}\nconst isLoginWithAccess = isFreshLogin(response.config.url) &&\n  (response.headers[\"single-ui-authorization\"] ||\n   response.headers[\"Single-UI-Authorization\"]);\nif (isLoginWithAccess) {\n  // Invalidate requests started while login still used the previous access token.\n  response.config.sessionEpoch = invalidateSession();\n  setRefreshToken(undefined);\n}\n// Keep the existing handleDrawers/handleEntities/handleUser/handleLogin flow.\n// Keep /extend and /relogin outside this boundary.",
+    "error-boundary": "// At errorHandler entry, before reading baseDispatch or clearing storage.\nif (isStaleSession(error.config) || error.code === \"ERR_CANCELED\") {\n  return Promise.reject(error);\n}\n// Keep the existing error handler body.",
+    "logout-boundary": "// Import invalidateSession from ./sessionEpoch.\nexport const clearStorageWhenLogout = (dispacth: React.Dispatch<IAction>) => {\n  invalidateSession();\n  clearLocalStorage(dispacth, [\n    ActionType.SET_TOKEN,\n    ActionType.SET_USER,\n    ActionType.SET_EXPIRED_TOKEN,\n    ActionType.SET_ENTITIES,\n  ]);\n};",
+    "pending-acquisition-contract": "// src/hooks/service/index.ts: add epoch to the existing record.\nlet refreshTokenRequest:\n  | {\n      sessionEpoch: number;\n      accessToken: string | undefined;\n      controller: AbortController;\n      promise: Promise<void>;\n    }\n  | undefined;\n\nexport const getPendingRefreshToken = (): Promise<void> | undefined => {\n  const request = refreshTokenRequest;\n  return request &&\n    request.sessionEpoch === currentSessionEpoch() &&\n    !request.controller.signal.aborted\n    ? request.promise\n    : undefined;\n};",
+    "acquisition-changes": "export const getRefreshToken = (): Promise<void> => {\n  const { store } = getHooksBase();\n  // Keep the current expiry parsing and three-hour reuse rule.\n  // Replace its bare return with: return Promise.resolve();\n\n  const pending = getPendingRefreshToken();\n  if (pending && refreshTokenRequest?.accessToken === store.token) {\n    return pending;\n  }\n\n  signal.getRefreshToken?.abort();\n  const controller = new AbortController();\n  const sessionEpoch = currentSessionEpoch();\n  signal.getRefreshToken = controller;\n  const promise = service.post(\n    getEndPoint(\"/auth/v2/sso/refreshtoken\"),\n    { singleUIAuthorization: store.token },\n    { signal: controller.signal }\n  ).then(() => undefined).finally(() => {\n    if (refreshTokenRequest?.controller === controller) {\n      refreshTokenRequest = undefined;\n    }\n    if (signal.getRefreshToken === controller) {\n      signal.getRefreshToken = undefined;\n    }\n  });\n  refreshTokenRequest = {\n    sessionEpoch, accessToken: store.token, controller, promise,\n  };\n  return promise;\n};",
+    "home-promise-consumer": "// Home useController: replace the fire-and-forget acquisition call.\nvoid getRefreshToken().catch((error) => {\n  if (error?.code !== \"ERR_CANCELED\") console.error(\"Refresh failed\", error);\n});"
+  },
+  "integration_notes": [
+    "The helper has no application imports. This avoids service and logout utility cycles.",
+    "Keep generic Axios type parameters D and P. The installed Axios definitions include both.",
+    "The success guard must precede handleDrawers, handleEntities, handleUser, handleLogin, and handleRefreshToken.",
+    "The error guard must precede TOKEN_INVALID_EXPIRED handling and loader dispatch.",
+    "Use the existing reducer actions. Do not add generation side effects inside reducers.",
+    "A failed login retains the previous access state. Its cleared refresh token can be acquired again.",
+    "A successful login clears refresh again. Requests created during login cannot contaminate that session.",
+    "Do not increment generation for extend, relogin, validate, or SET_TOKEN.",
+    "getPendingRefreshToken must not require access-token equality. Same-session extension can rotate access.",
+    "The synchronous registration requires every active request interceptor to remain synchronous.",
+    "Future asynchronous interceptors require dispatch-time metadata capture instead.",
+    "Timeout integration belongs to the sibling blocker proposal.",
+    "The acquisition snippet retains its existing expiry branch. The comment marks that unchanged branch explicitly."
+  ],
+  "rejected_shortcuts": [
+    {
+      "proposal": "Abort the previous request only.",
+      "reason": "Abort cannot establish ownership for already queued success or error callbacks."
+    },
+    {
+      "proposal": "Compare current and captured access tokens before applying refresh.",
+      "reason": "Access extension rotates access within the same session."
+    },
+    {
+      "proposal": "Clear refresh on every SET_TOKEN.",
+      "reason": "This removes valid refresh credentials during same-session rotation."
+    },
+    {
+      "proposal": "Stamp generation in the existing asynchronous request interceptor.",
+      "reason": "An old request could receive a new generation after a boundary."
+    },
+    {
+      "proposal": "Advance generation only when login starts.",
+      "reason": "Old-access acquisition during pending login could survive into the new session."
+    },
+    {
+      "proposal": "Clear the whole session when login starts.",
+      "reason": "This changes failed-login behavior beyond the needed refresh fix."
+    }
+  ],
+  "required_verification": [
+    "Hold A refresh success. Logout, then login B. Deliver A success. Assert B refresh remains unchanged.",
+    "Deliver old expired-token error after B login. Assert B remains authenticated.",
+    "Start A refresh while B login is pending. Complete B login first. Assert A refresh is rejected.",
+    "Complete the pending A refresh first. Then complete B login. Assert B starts without A refresh.",
+    "Start two fresh logins. Complete them in reverse order. Assert only the current attempt installs credentials.",
+    "Rotate access with extend during one session. Assert refresh remains available.",
+    "Complete a same-session acquisition after access rotation. Assert epoch ownership remains valid.",
+    "Abort an old acquisition. Start a replacement. Assert old cleanup preserves the replacement record.",
+    "Reject a current acquisition. Assert Timeout sees rejection and Home has no unhandled rejection.",
+    "Check future interceptor registration. Assert generation capture still occurs before a logout boundary."
+  ],
+  "limits": [
+    "No snippet was applied, typechecked, built, or executed.",
+    "This design does not prove server revocation, rotation, or refresh contract behavior.",
+    "The late-response expectation is source-based review inference. It has no independent approved policy source.",
+    "No new PROD recommendation follows from this proposal alone.",
+    "Synchronous registration changes dispatch timing. Verify current service consumers before applying.",
+    "A separately created Axios instance is outside this shared interceptor protection.",
+    "Cross-tab coordination is outside the demonstrated single-page race."
+  ],
+  "source_evidence": [
+    {
+      "id": "refresh-service",
+      "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+      "lines": [
+        23,
+        105
+      ],
+      "sha256": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc"
+    },
+    {
+      "id": "axios-registration",
+      "path": "repos/ui/mfe-base/src/hooks/service/config.ts",
+      "lines": [
+        1,
+        22
+      ],
+      "sha256": "f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266"
+    },
+    {
+      "id": "request-handler",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        1,
+        53
+      ],
+      "sha256": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d"
+    },
+    {
+      "id": "success-handler",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        25,
+        50
+      ],
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a"
+    },
+    {
+      "id": "error-handler",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts",
+      "lines": [
+        6,
+        41
+      ],
+      "sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3"
+    },
+    {
+      "id": "login-mutators",
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "lines": [
+        13,
+        129
+      ],
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+    },
+    {
+      "id": "logout-boundary",
+      "path": "repos/ui/mfe-base/src/utils/common.ts",
+      "lines": [
+        51,
+        78
+      ],
+      "sha256": "93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764"
+    },
+    {
+      "id": "login-callers",
+      "path": "repos/ui/mfe-base/src/services/index.ts",
+      "lines": [
+        10,
+        41
+      ],
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118"
+    },
+    {
+      "id": "access-extension",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+      "lines": [
+        8,
+        31
+      ],
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669"
+    },
+    {
+      "id": "home-caller",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        126,
+        141
+      ],
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb"
+    },
+    {
+      "id": "set-token-reducer",
+      "path": "repos/ui/mfe-base/src/hooks/reducer/root0.reducers.ts",
+      "lines": [
+        1,
+        52
+      ],
+      "sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6"
+    },
+    {
+      "id": "set-refresh-reducer",
+      "path": "repos/ui/mfe-base/src/hooks/reducer/root.reducers.ts",
+      "lines": [
+        1,
+        15
+      ],
+      "sha256": "a7e320684486df01253fa03a094c6ccdb31a2b616d2ed704f773a17cd02f93b8"
+    },
+    {
+      "id": "rotation-assertion",
+      "path": "repos/ui/mfe-base/src/hooks/reducer/index.test.tsx",
+      "lines": [
+        44,
+        53
+      ],
+      "sha256": "bcf00c559c28cbe366aafdc8e654dafea5a92a77c2ecc0178b2ff23cfa15bedb"
+    },
+    {
+      "id": "acquisition-assertions",
+      "path": "repos/ui/mfe-base/src/hooks/service/refreshToken.test.ts",
+      "lines": [
+        1,
+        300
+      ],
+      "sha256": "7e5ba4d16b487e4479e83139280fc11c9463478f99aa7f5d3e7552e93b67bd20"
+    },
+    {
+      "id": "axios-types",
+      "path": "repos/ui/mfe-base/node_modules/axios/index.d.ts",
+      "lines": [
+        613,
+        616
+      ],
+      "sha256": "2368a31d44ccc59758e3b3c682fee74e820b08fad98623905a85092018c06e3b"
+    },
+    {
+      "id": "axios-dispatch",
+      "path": "repos/ui/mfe-base/node_modules/axios/lib/core/Axios.js",
+      "lines": [
+        166,
+        220
+      ],
+      "sha256": "61c8224d3d4806f72d80644c7fa4ce7bbd0934d78d97ac91f3ab974d420aa407"
+    },
+    {
+      "id": "user-request",
+      "path": "tasks/portal-background-session-20261019/evidence/minimal-blocker-fixes-20261023/user-request.txt",
+      "lines": [
+        1,
+        3
+      ],
+      "sha256": "ac6390c73e8e454b6eef3d13a0f2587b0ee1f63e056bb8f1d293de0a61470f87"
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

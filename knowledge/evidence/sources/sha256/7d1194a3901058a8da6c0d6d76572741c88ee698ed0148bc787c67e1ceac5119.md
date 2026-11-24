@@ -1,0 +1,1 @@
+2026-03-23 Confirmed with Synthia ,SLATE cashflow will be cashflow suppressed ,then rest of static is not required. Only Cashflow Suppression rule is required.

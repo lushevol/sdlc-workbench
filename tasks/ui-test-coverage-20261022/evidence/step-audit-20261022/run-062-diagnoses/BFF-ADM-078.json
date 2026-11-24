@@ -1,0 +1,47 @@
+{
+  "canonicalId": "BFF-ADM-078",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-078",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.629154+00:00",
+  "actualStatus": "failed",
+  "failedStep": "14. When the controlled database event removes Category 101 before submission",
+  "classification": "HARNESS_REFERENCE_DELETE_BLOCKED",
+  "facts": [
+    "Seeded Tile 101 references Category 101.",
+    "The controlled Category 101 delete fails before submission.",
+    "The runtime log reports an application_tile foreign-key violation at 2026-10-22T14:05:41.340+08:00."
+  ],
+  "owner": "Codex harness maintainer",
+  "nextAction": "Use an empty initial target grid for this creation-only probe. Keep database foreign-key constraints active.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-078-current-bff-administration-through-actual-ui-7146412ed617-attempt-1/result.json",
+      "sha256": "130bdc36d183bf917d247e4c5f5e61f6424d0ac4e53cb050a1882e1d514ef1b3"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-078-current-bff-administration-through-actual-ui-7146412ed617-attempt-1/014-step-14-failure.json",
+      "sha256": "c9c33727ba0466a378b731817b91a9fa84c91cca7ecc1c8f46e8ad4e2e9ae78e"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-078-current-bff-administration-through-actual-ui-7146412ed617-attempt-1/attachments/017-error-context.md",
+      "sha256": "55ef595ae0a60c9aa7fcf580b100e4a890b56c9f1992ac6f25b00175302833f6"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-078-current-bff-administration-through-actual-ui-7146412ed617-attempt-1/initial-persisted-records.json",
+      "sha256": "e78eaa5c8722c9dda3280b6da61186d618cee4428ea683e631353ecf016dedb0"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/run-062-diagnoses/BFF-ADM-078-runtime-excerpt.txt",
+      "sha256": "03774198ec006ace3bcd3623ff8e7753a827311e9e9004bab134f6e3498ebc72"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ]
+}

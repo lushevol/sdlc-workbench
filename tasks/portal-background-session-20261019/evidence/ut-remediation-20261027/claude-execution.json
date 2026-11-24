@@ -1,0 +1,86 @@
+{
+  "recorded_at": "2026-10-27T05:54:16.309946+00:00",
+  "tool": "Claude Code",
+  "version": "2.1.310",
+  "configured_model": "deepseek-v4-flash",
+  "anthropic_claude_model_used": false,
+  "permissions": "All tools and MCP disabled. Source-only prompts. Network used for provider response.",
+  "completed_roles": [
+    "independent review",
+    "focused adversarial verification"
+  ],
+  "attempts": [
+    {
+      "role": "initial independent",
+      "response": "claude-independent-response.json",
+      "prompt": "claude-independent-prompt.txt",
+      "success": false,
+      "duration_ms": 182093,
+      "response_sha256": "ddd28eeef99b0605b83f9c153a01b01e075310f324217845da4aa9dd2fb23552",
+      "prompt_sha256": "d39f3cf53cbc48d86a1ee9621d25ad7d84e15b504bbf4e5ba3e03c6a70d7a777",
+      "scope": "V1 or V2 proposal as identified in prompt",
+      "error": "API Error: Unable to connect to API (EPERM)"
+    },
+    {
+      "role": "large independent retry",
+      "response": "claude-independent-connected-response.json",
+      "prompt": "claude-independent-prompt.txt",
+      "success": false,
+      "duration_ms": 406877,
+      "response_sha256": "e2bef31782b7e70c2835043ce254a4d00d4934530bea6e68e2e565ea3f191c5f",
+      "prompt_sha256": "d39f3cf53cbc48d86a1ee9621d25ad7d84e15b504bbf4e5ba3e03c6a70d7a777",
+      "scope": "V1 or V2 proposal as identified in prompt",
+      "error": "API Error: Claude's response exceeded the 16384 output token maximum. To configure this behavior, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment variable."
+    },
+    {
+      "role": "large adversarial",
+      "response": "claude-adversarial-response.json",
+      "prompt": "claude-adversarial-prompt.txt",
+      "success": false,
+      "duration_ms": 412362,
+      "response_sha256": "a3b56a46698f66b7c433a5845b3f18e1f12ae21f0e4479ca7ef1c4c7963ca5db",
+      "prompt_sha256": "d0014e8713782faad081e221b611306084eb65fd3225db7cf7df1cb929f6c5cf",
+      "scope": "V1 or V2 proposal as identified in prompt",
+      "error": "API Error: Claude's response exceeded the 16384 output token maximum. To configure this behavior, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment variable."
+    },
+    {
+      "role": "completed independent",
+      "response": "claude-independent-compact-response.json",
+      "prompt": "claude-independent-compact-prompt.txt",
+      "success": true,
+      "duration_ms": 63553,
+      "response_sha256": "b39d01c3c996ffe68cb3fe1721aa940415afc92e717ab953783af3029e25daf1",
+      "prompt_sha256": "cf0e9619b238ded36f2f775fbf4b74f0f8623f32aecdbef00588c9fe67fbf27e",
+      "scope": "V1 or V2 proposal as identified in prompt",
+      "error": null
+    },
+    {
+      "role": "compact adversarial retry",
+      "response": "claude-adversarial-compact-response.json",
+      "prompt": "claude-adversarial-compact-prompt.txt",
+      "success": false,
+      "duration_ms": 419785,
+      "response_sha256": "f413f3978ba32bdc15513aa9ec7c520b3b62cc54e8e8d51e30810b5512fd5d6a",
+      "prompt_sha256": "de29ddb1849830f5c133fd45cbfed9ab1eaee56c03310eee57cec8255a25d5a9",
+      "scope": "V1 or V2 proposal as identified in prompt",
+      "error": "API Error: Claude's response exceeded the 16384 output token maximum. To configure this behavior, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment variable."
+    },
+    {
+      "role": "completed focused adversarial",
+      "response": "claude-final-challenge-response.json",
+      "prompt": "claude-final-challenge-prompt.txt",
+      "success": true,
+      "duration_ms": 19801,
+      "response_sha256": "e0b441d2d48b452efa1e49bd9d8b1d00793f5bdec3998caab3571ea9000e46b3",
+      "prompt_sha256": "e3dab165e5975cc11f3c7543eb088f6a0d983fdce08bc9e42931a5de621dc7d0",
+      "scope": "Final v3 invariants",
+      "error": null
+    }
+  ],
+  "reconciliation": "claude-reconciliation.md",
+  "limits": [
+    "Independent compact review used the v2 patch. Final focused adversarial review used final v3 invariant snippets.",
+    "Successful output is reviewed by Codex, not accepted as authority.",
+    "Broad adversarial requests exceeded the provider output limit and supplied no usable review."
+  ]
+}

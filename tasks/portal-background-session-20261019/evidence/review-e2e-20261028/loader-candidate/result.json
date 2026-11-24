@@ -1,0 +1,209 @@
+{
+  "caseId": "REVIEW-12",
+  "variant": "TOKEN_INVALID_EXPIRED_ROUTE",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:43:03.406Z",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "comparisonSide": "candidate",
+  "targetOrigin": "http://127.0.0.1:8143",
+  "clock": "REAL_WALL_CLOCK",
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "predicate": "Actual public shared-service request publishes loading and renders actual PageLoader",
+      "passed": true
+    },
+    {
+      "predicate": "Actual authentication error clears access and rejects the request",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "file": "before.png",
+      "capturedAt": "2026-10-28T02:43:09.420Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "580facd258b73867f9042ada2679a5c34b97271cceeb79a5a6e9ce29373dee0b",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    },
+    {
+      "phase": "request-pending",
+      "file": "request-pending.png",
+      "capturedAt": "2026-10-28T02:43:09.560Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "e80a1fd34b51e8151b326c3b74e8ad3b7f9798d479fac1ef45e388bc5dd36dce",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    },
+    {
+      "phase": "response-settled",
+      "file": "response-settled.png",
+      "capturedAt": "2026-10-28T02:43:09.608Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "19acc9a7f9a73fd5e3a46b6df90c74ad65a5571092f612b03e97fe03530f610e",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    },
+    {
+      "phase": "final-route-and-loader",
+      "file": "final-route-and-loader.png",
+      "capturedAt": "2026-10-28T02:43:12.528Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "28b02be84382cc644faef97fa2d6f374ca709ef0fbc28981c65b555a2061648b",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    }
+  ],
+  "observations": {
+    "before": {
+      "authenticated": true,
+      "refreshPresent": false,
+      "isLoading": false,
+      "loaderVisible": false,
+      "signInVisible": false,
+      "usernameTopElementIsLoader": false,
+      "outcome": null,
+      "elapsedMs": 4,
+      "timeline": [
+        {
+          "elapsedMs": 1,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        }
+      ]
+    },
+    "pending": {
+      "authenticated": true,
+      "refreshPresent": false,
+      "isLoading": true,
+      "loaderVisible": true,
+      "signInVisible": false,
+      "usernameTopElementIsLoader": false,
+      "outcome": null,
+      "elapsedMs": 146,
+      "timeline": [
+        {
+          "elapsedMs": 1,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 123,
+          "authenticated": true,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": false
+        }
+      ]
+    },
+    "settled": {
+      "authenticated": false,
+      "refreshPresent": false,
+      "isLoading": true,
+      "loaderVisible": true,
+      "signInVisible": true,
+      "usernameTopElementIsLoader": false,
+      "outcome": {
+        "rejected": true,
+        "code": "ERR_BAD_REQUEST",
+        "status": 401
+      },
+      "elapsedMs": 195,
+      "timeline": [
+        {
+          "elapsedMs": 1,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 123,
+          "authenticated": true,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 194,
+          "authenticated": false,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": true
+        }
+      ]
+    },
+    "after": {
+      "authenticated": false,
+      "refreshPresent": false,
+      "isLoading": false,
+      "loaderVisible": false,
+      "signInVisible": true,
+      "usernameTopElementIsLoader": false,
+      "outcome": {
+        "rejected": true,
+        "code": "ERR_BAD_REQUEST",
+        "status": 401
+      },
+      "elapsedMs": 3086,
+      "timeline": [
+        {
+          "elapsedMs": 1,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 123,
+          "authenticated": true,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 194,
+          "authenticated": false,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": true
+        },
+        {
+          "elapsedMs": 198,
+          "authenticated": false,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": true
+        }
+      ],
+      "waitAfterSettlementMs": 2500,
+      "signInInputActionable": true
+    }
+  },
+  "testDoubles": [
+    "One local diagnostic GET receives synthetic HTTP 401 with errorMessage TOKEN_INVALID_EXPIRED. No application function, reducer, interceptor, epoch value, or dispatch is replaced."
+  ],
+  "limits": [
+    "A synthetic diagnostic response exercises the existing authentication-error branch. It does not prove production response frequency.",
+    "This branch can be corrected by normal Login mounting and loader reset; absence of persistence disproves this specific impact claim.",
+    "Paired baseline/candidate execution is required for change attribution."
+  ],
+  "impactDisposition": "PERSISTENT_LOADER_NOT_REPRODUCED",
+  "tangibleImpact": "Sign-in input remains actionable after normal route recovery.",
+  "apiEvents": [
+    {
+      "event": "request",
+      "pathname": "/api/review-findings/loading-expired",
+      "at": "2026-10-28T02:43:09.531Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/review-findings/loading-expired",
+      "status": 401,
+      "at": "2026-10-28T02:43:09.596Z"
+    }
+  ],
+  "completedAt": "2026-10-28T02:43:12.636Z"
+}

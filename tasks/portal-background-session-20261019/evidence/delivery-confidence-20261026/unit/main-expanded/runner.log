@@ -1,0 +1,240 @@
+FAIL src/pages/Home/common/sessionPending.test.tsx
+  ● Pending session renewal and recovery › [DEL-04] discards an old manual renewal success after replacement login
+
+    expect(received).toBeUndefined()
+
+    Received: "Bearer e30.eyJzdWIiOiJpbml0aWFsLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature"
+
+      293 |     const oldRenewal = pendingTo("relogin")[0];
+      294 |     await act(async () => fireEvent.click(screen.getByTestId("replacement-login")));
+    > 295 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+          |                                               ^
+      296 |     await finish(pendingTo("login")[0], { "single-ui-authorization": newLoginAccess });
+      297 |     if (outcome === "success") {
+      298 |       await finish(oldRenewal, { "single-ui-authorization": renewedAccess });
+
+      at src/pages/Home/common/sessionPending.test.tsx:295:47
+
+  ● Pending session renewal and recovery › [DEL-05] discards an old manual renewal error after replacement login
+
+    expect(received).toBeUndefined()
+
+    Received: "Bearer e30.eyJzdWIiOiJpbml0aWFsLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature"
+
+      293 |     const oldRenewal = pendingTo("relogin")[0];
+      294 |     await act(async () => fireEvent.click(screen.getByTestId("replacement-login")));
+    > 295 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+          |                                               ^
+      296 |     await finish(pendingTo("login")[0], { "single-ui-authorization": newLoginAccess });
+      297 |     if (outcome === "success") {
+      298 |       await finish(oldRenewal, { "single-ui-authorization": renewedAccess });
+
+      at src/pages/Home/common/sessionPending.test.tsx:295:47
+
+  ● Pending session renewal and recovery › [DEL-06] accepts valid manual renewal already pending when the refresh recovery deadline passes
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "dialog"
+
+    Here are the accessible roles:
+
+      main:
+
+      Name "":
+      [36m<main[39m
+        [33mdata-testid[39m=[32m"session-workspace"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "Replacement sign-in callback":
+      [36m<button[39m
+        [33mdata-testid[39m=[32m"replacement-login"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, script, style
+    [36m<body[39m
+      [33mstyle[39m=[32m""[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<main[39m
+          [33mdata-testid[39m=[32m"session-workspace"[39m
+        [36m>[39m
+          [0mSession workspace[0m
+        [36m</main>[39m
+        [36m<button[39m
+          [33mdata-testid[39m=[32m"replacement-login"[39m
+        [36m>[39m
+          [0mReplacement sign-in callback[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      317 |     await click("Extend");
+      318 |     await advance(4 * 60 * minute);
+    > 319 |     expect(screen.getByRole("dialog")).toBeInTheDocument();
+          |                   ^
+      320 |     expect(closeTransitions).not.toHaveBeenCalled();
+      321 |     expect(requestsTo("logout")).toHaveLength(0);
+      322 |     const lateAccess = token("late-renewal", Date.now() + 20 * minute, Date.now());
+
+      at Object.getElementError (../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/config.js:37:19)
+      at ../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at ../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByRole (../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:319:19)
+
+  ● Pending session renewal and recovery › [DEL-07] applies logout after failed manual renewal when recovery credentials have expired
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      336 |     expect(requestsTo("relogin")).toHaveLength(1);
+      337 |     await advance(1000);
+    > 338 |     expect(requestsTo("logout")).toHaveLength(1);
+          |                                  ^
+      339 |     expect(getHooksBase().store.token).toBeUndefined();
+      340 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+      341 |     expect(closeTransitions).toHaveBeenCalledTimes(1);
+
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:338:34)
+
+  ● Pending session renewal and recovery › [DEL-08] clears the current session after a manual renewal rejects invalid credentials
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: called with 0 arguments
+
+      356 |     expect(getHooksBase().store.errorMsg).toBe("Expired Session, please login again.");
+      357 |     expect(screen.getByText("Signed out")).toBeInTheDocument();
+    > 358 |     expect(closeTransitions).not.toHaveBeenCalled();
+          |                                  ^
+      359 |   });
+      360 | });
+      361 |
+
+      at Object.<anonymous> (src/pages/Home/common/sessionPending.test.tsx:358:34)
+
+FAIL src/pages/Home/common/sessionOwnership.test.tsx
+  ● Session ownership across logout and fresh login › [DEL-01] clears prior refresh immediately when Entra login starts
+
+    expect(received).toBeUndefined()
+
+    Received: "Bearer e30.eyJzdWIiOiJvbGQtc2Vzc2lvbi1yZWZyZXNoIiwiaWF0IjoxNzkyODg2NDAwLCJleHAiOjE3OTI4ODY0MDF9.test-signature"
+
+      303 |     const login = pending.find(({ config }) => config.url === "/api/auth/v3/sso/login");
+      304 |     expect(login).toBeDefined();
+    > 305 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+          |                                               ^
+      306 |     expect(getHooksBase().store.token).toBe(initialAccess);
+      307 |     await finish(login!, { "single-ui-authorization": nextAccess });
+      308 |     expect(getHooksBase().store.token).toBe(nextAccess);
+
+      at Object.<anonymous> (src/pages/Home/common/sessionOwnership.test.tsx:305:47)
+
+  ● Session ownership across logout and fresh login › [DEL-02] preserves the newest of two fresh logins after old success
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJuZXctc2Vzc2lvbi1hY2Nlc3MiLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5Mjg4NzYwMH0=.test-signature"
+    Received: "Bearer e30.eyJzdWIiOiJvbGQtc2Vzc2lvbi1hY2Nlc3MiLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5Mjg4NzMwMH0=.test-signature"
+
+      325 |       await failExpired(olderLogin);
+      326 |     }
+    > 327 |     expect(getHooksBase().store.token).toBe(nextAccess);
+          |                                        ^
+      328 |     expect(getHooksBase().store.expiredIn).toBe((now + 20 * minute) / 1000);
+      329 |     expect(localStorage.getItem("SET_TOKEN")).toBe(nextAccess);
+      330 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+
+      at src/pages/Home/common/sessionOwnership.test.tsx:327:40
+
+  ● Session ownership across logout and fresh login › [DEL-03] preserves the newest of two fresh logins after old error
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJuZXctc2Vzc2lvbi1hY2Nlc3MiLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5Mjg4NzYwMH0=.test-signature"
+    Received: undefined
+
+      325 |       await failExpired(olderLogin);
+      326 |     }
+    > 327 |     expect(getHooksBase().store.token).toBe(nextAccess);
+          |                                        ^
+      328 |     expect(getHooksBase().store.expiredIn).toBe((now + 20 * minute) / 1000);
+      329 |     expect(localStorage.getItem("SET_TOKEN")).toBe(nextAccess);
+      330 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+
+      at src/pages/Home/common/sessionOwnership.test.tsx:327:40
+
+FAIL src/hooks/service/sessionCompatibility.test.ts
+  ● Shared service compatibility across renewal › [DEL-10] accepts pending protected responses after same-session access rotation
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJzZXNzaW9uLXJlZnJlc2giLCJpYXQiOjE3OTI5NzI4MDAsImV4cCI6MTc5Mjk4NzIwMH0=.test"
+    Received: undefined
+
+      92 |     await rotation;
+      93 |     expect(hooks.store.token).toBe(rotatedAccess);
+    > 94 |     expect(hooks.store.refreshToken).toBe(refresh);
+         |                                      ^
+      95 |     succeed(pending[0], { id: "position-a" });
+      96 |     await expect(response).resolves.toMatchObject({ data: { id: "position-a" }, status: 200 });
+      97 |     expect(hooks.store.token).toBe(rotatedAccess);
+
+      at Object.<anonymous> (src/hooks/service/sessionCompatibility.test.ts:94:38)
+
+FAIL src/pages/Home/common/workspacePreservation.test.tsx
+  ● Home workspace preservation during session changes › [DEL-15] preserves current workspace when a stale tab index is selected
+
+    TypeError: Cannot read properties of undefined (reading 'label')
+
+      40 |       let container = "base";
+      41 |       let tile = "home";
+    > 42 |       let title = workspace.label;
+         |                             ^
+      43 |       setDetail(workspace, title, container, tile);
+      44 |       TabEvent("click", {
+      45 |         name: "select workspace",
+
+      at Object.handleChange (src/pages/Home/common/useController.ts:42:29)
+      at src/pages/Home/common/workspacePreservation.test.tsx:31:30
+      at ../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:64:24
+      at act (../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2512:16)
+      at actWithWarning (../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at Object.<anonymous> (src/pages/Home/common/workspacePreservation.test.tsx:31:8)
+
+  ● Home workspace preservation during session changes › [DEL-16] selects the next workspace after deleting the first selected workspace
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "workspace-b"
+    Received: undefined
+
+      39 |     act(() => result.current.remove(first)(clickEvent() as React.MouseEvent));
+      40 |     expect(result.current.store.workspaces?.map(item => item.id)).toEqual([second.id]);
+    > 41 |     expect(result.current.store.currentWorkspace?.id).toBe(second.id);
+         |                                                       ^
+      42 |     expect(JSON.parse(localStorage.getItem("SET_WORKSPACES")!)).toEqual([second]);
+      43 |   });
+      44 |
+
+      at Object.<anonymous> (src/pages/Home/common/workspacePreservation.test.tsx:41:55)
+
+PASS src/hooks/service/cancellationPreservation.test.ts
+
+Test Suites: 4 failed, 1 passed, 5 total
+Tests:       11 failed, 22 skipped, 9 passed, 42 total
+Snapshots:   0 total
+Time:        1.408 s
+Ran all test suites within paths "src/pages/Home/common/sessionOwnership.test.tsx", "src/pages/Home/common/sessionPending.test.tsx", "src/hooks/service/sessionCompatibility.test.ts", "src/hooks/service/cancellationPreservation.test.ts", "src/pages/Home/common/workspacePreservation.test.tsx".
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/main-expanded/results.json

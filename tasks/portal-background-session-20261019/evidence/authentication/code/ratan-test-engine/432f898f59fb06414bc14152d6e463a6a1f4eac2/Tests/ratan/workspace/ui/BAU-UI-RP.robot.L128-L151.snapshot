@@ -1,0 +1,24 @@
+I login with username <${USERNAME}> and password <${PASSWORD}>
+    [Documentation]    Helper keyword I login with username <${USERNAME}> and password <${PASSWORD}>:
+    ...    run Element Operate -> Wait For Elements State; verify expected system behavior after execution; execution;
+    ...    result matches business expectation.
+    # Login Ratanone
+    Element Operate  
+    ...  Username=1||${USERNAME}
+    ...  Password=1||${PASSWORD}
+    ...  Sign In||-1=0
+    Wait For Elements State  selector="${MARKETS_OPERATIONS_ONE}"
+
+I click <${TILE NAME}> Tile
+    [Documentation]    Helper keyword I click <${TILE NAME}> Tile:
+    ...    run Click Tile; verify expected system behavior after execution; confirm execution result matches business;
+    ...    expectation.
+    # Open Tile
+    Click Tile  "${TILE NAME}"
+
+I should see the tile page success
+    [Documentation]    Helper keyword I should see the tile page success:
+    ...    run Wait For Elements State -> Waiting for Element Hidden; verify expected system behavior after execution;
+    ...    confirm execution result matches business expectation.
+    Wait For Elements State  selector=${_common_currentTab} >> "Search"
+    Waiting for Element Hidden  text=/loading...|Please wait.../

@@ -1,0 +1,41 @@
+{
+  "started_at": "2026-10-22T05:33:46.599174+00:00",
+  "pid": 82962,
+  "listen": "127.0.0.1:8090",
+  "context_path": "/api/auth",
+  "source_revision": "834b4155232222347220e47139a502ee43a9cbdf",
+  "clock": "REAL_WALL_CLOCK",
+  "effective_timeouts": {
+    "access_minutes": 1,
+    "refresh_minutes": 2,
+    "refresh_extra_seconds": 24,
+    "absolute_minutes": 60
+  },
+  "substitutes": [
+    "synthetic OUD identity",
+    "actual category/tile/importmap services and JPA repositories",
+    "fixed local EMS2 admin role entitlements",
+    "no-op analytics",
+    "isolated H2 memory database instead of PostgreSQL",
+    "isolated Spring bootstrap without private starters"
+  ],
+  "real_paths": [
+    "JwtAuthenticationController",
+    "JwtTokenUtil RSA generation and verification",
+    "SessionServiceImplementation",
+    "ApplicationSessionRepo with real JPA/H2"
+  ],
+  "private_keys": "generated only in process memory",
+  "log_policy": "request route/timing/status and issued-token hashes/claims; no raw tokens or private keys",
+  "status": "READY",
+  "health": {
+    "absolute_minutes": 60,
+    "access_minutes": 1,
+    "scope": "actual BFF controller/JWT/session code with local fixtures",
+    "status": "UP",
+    "remote_access": "DISABLED",
+    "database": "isolated H2 memory; actual JPA session repository",
+    "refresh_extra_seconds": 24,
+    "refresh_minutes": 2
+  }
+}

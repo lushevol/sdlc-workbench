@@ -1,0 +1,1 @@
+../../../../real-world-tests-20261022/rw-480-schedule-01-stack/binding-009-root.webpack.cjs

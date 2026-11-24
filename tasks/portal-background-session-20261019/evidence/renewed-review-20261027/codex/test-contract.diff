@@ -1,0 +1,63 @@
+diff --git a/src/hooks/service/index2.test.ts b/src/hooks/service/index2.test.ts
+index 1e669a6..38d603b 100644
+--- a/src/hooks/service/index2.test.ts
++++ b/src/hooks/service/index2.test.ts
+@@ -38,15 +38,15 @@ jest.mock('../../utils/common', () => {
+ });
+ 
+ describe("Service Util", () => {
+-  it("should be true", () => {
++  it("should be true", async () => {
+     extend(undefined, false, "123");
+     extend(25000, false, "123");
+     getRefreshToken();
+-    relogin();
++    await expect(relogin()).rejects.toEqual({});
+     signal.getRefreshToken = new AbortController();
+     signal.relogin = new AbortController();
+     getRefreshToken();
+-    relogin();
++    await expect(relogin()).rejects.toEqual({});
+     const { store } = getHooksBase();
+     store.expiredIn = (new Date().getTime() / 1000) + 10000;
+     extend(store.expiredIn, false, "123");
+diff --git a/src/hooks/service/util/index.test.ts b/src/hooks/service/util/index.test.ts
+index 2031579..5255d10 100644
+--- a/src/hooks/service/util/index.test.ts
++++ b/src/hooks/service/util/index.test.ts
+@@ -38,10 +38,10 @@ jest.mock('../../../utils/common', () => {
+   }
+ });
+ describe("Extend Token Util", () => {
+-  it("should be true", () => {
++  it("should be true", async () => {
+     extend(25000, false, "123");
+     getRefreshToken();
+-    relogin();
++    await expect(relogin()).rejects.toEqual({});
+   });
+   it("should be true", () => {
+     global.window = Object.create(window);
+diff --git a/src/hooks/service/util/succes.response.handler.test.ts b/src/hooks/service/util/succes.response.handler.test.ts
+index 734734d..281e1cb 100644
+--- a/src/hooks/service/util/succes.response.handler.test.ts
++++ b/src/hooks/service/util/succes.response.handler.test.ts
+@@ -72,7 +72,7 @@ describe("error.response.handler", () => {
+     const result = await successHandler(data);
+     expect(result.data.result).toBe("success");
+   });
+-  it("should be true", async () => {
++  it("rejects relogin without renewed access", async () => {
+     const data: AxiosResponse = {
+       config: {
+         ...config,
+@@ -83,8 +83,7 @@ describe("error.response.handler", () => {
+       statusText: "",
+       headers: {},
+     }
+-    const result = await successHandler(data);
+-    expect(result.data.result).toBe("success");
++    await expect(successHandler(data)).rejects.toMatchObject({ code: "ERR_BAD_RESPONSE" });
+   });
+   it("should be true", async () => {
+     const data: AxiosResponse = {

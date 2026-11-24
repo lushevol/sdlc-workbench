@@ -1,0 +1,49 @@
+{
+  "case_id": "RN-B003",
+  "definition": "../../../../06-test-cases.md#rn-b003",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "User A has access remaining 25001 milliseconds",
+    "logout is false and the activity endpoint is isolated"
+  ],
+  "when": [
+    "the fixture invokes the shared activity renewal function once"
+  ],
+  "then": [
+    "the activity POST count equals 1"
+  ],
+  "assertions": [
+    {
+      "name": "activity POST count at 25001 milliseconds",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/extend",
+      "method": "post",
+      "signal_aborted": false
+    }
+  ],
+  "blocked_predicates": [],
+  "execution_level": "actual-source component integration in jsdom",
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Exact React Provider, reducers, mounted Timeout hook, service helpers, and Axios request/response interceptors execute.",
+    "Network responses and JWT payloads are controlled fixture inputs. Cryptographic validity is not established by the client probes.",
+    "No native browser lifecycle, real UI rendering, transport, or business mutations execute."
+  ],
+  "final": {
+    "access_sha256": "bffa6dd2cc47d82b7c49b0be39df7c42aee8ef5fb8978fe65e0debd0bb9ea8df",
+    "refresh_sha256": "75687923407a58474fb6dd8fdddff1802037d9f36d4ad7dc42edd442ff4b3152",
+    "expiry": 1793239225.001,
+    "iat": 0,
+    "logout": false,
+    "closures": 0
+  },
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

@@ -1,0 +1,57 @@
+export const handleLogin = (response: AxiosResponse) => {
+  if (
+    response?.headers &&
+    (response?.headers["Single-UI-Authorization"] ||
+      response?.headers["single-ui-authorization"])
+  ) {
+    const token = `${
+      response.headers["Single-UI-Authorization"] ??
+      response.headers["single-ui-authorization"]
+    }`;
+    setAuthorization(token);
+  }
+};
+
+export const handleUser = (response: AxiosResponse) => {
+  if (response?.data?.userInfo) {
+    const userInfo = JSON.parse(response?.data?.userInfo);
+    if (response?.data?.entitlementsToken) {
+      const payload = getJWTPayload("B " + response?.data?.entitlementsToken);
+      if (payload != "" && payload.entitlements != null) {
+        userInfo.entitlements = JSON.parse(payload.entitlements);
+      }
+    }
+    userInfo.entities = response?.data?.entities ?? [];
+    userInfo.id = userInfo.sub;
+    userInfo.fullName = userInfo.fullName ?? userInfo.sub;
+    userInfo.name = userInfo.sub;
+    userInfo.userId = userInfo.sub;
+    if (userInfo.oud) {
+      userInfo.oud = JSON.parse(userInfo.oud);
+      userInfo.fullName = userInfo.oud.fullName;
+    }
+    setUser(userInfo);
+  }
+};
+
+export const handleEntities = (response: AxiosResponse) => {
+  if (response?.data?.entities) {
+    const entities = response?.data?.entities;
+    const { baseDispatch } = getHooksBase();
+    baseDispatch({
+      type: ActionType.SET_ENTITIES,
+      data: { entities },
+    });
+  }
+};
+
+export const handleDrawers = (response: AxiosResponse) => {
+  if (response?.data?.drawers?.length) {
+    const drawers = response?.data?.drawers;
+    const { baseDispatch } = getHooksBase();
+    baseDispatch({
+      type: ActionType.SET_DRAWERS,
+      data: { drawers },
+    });
+  }
+};

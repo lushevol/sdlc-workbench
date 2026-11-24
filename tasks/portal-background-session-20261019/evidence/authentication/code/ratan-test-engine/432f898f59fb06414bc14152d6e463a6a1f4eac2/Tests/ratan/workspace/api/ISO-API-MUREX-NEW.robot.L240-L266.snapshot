@@ -1,0 +1,27 @@
+    GROUP  Check ISO Exception1 displayed on KR Mx Exception Blotter
+    GET RATAN TOKEN  token_maker=${USERNAME_FMO_KR_OPS1}|${PASSWORD_FMO_KR_OPS1}  token_checker=${USERNAME_FMO_KR_PSS_RO}|${PASSWORD_FMO_KR_PSS_RO}
+	${req_host}  Set Variable  ${URL}
+	${req_header}  Create Dictionary  Single-Ui-Authorization=${token_maker}
+	${req_body1}  json.Loads  {\"current\":0,\"pageSize\":100,\"businessFlow\":\"ISO_KOREA_MUREX_FLOW\",\"exceptionCategory\":\"ISO_PROCESS_EXCEPTION\"}
+	RequestsLibrary.Create Session  website  url=${req_host}
+	${response}  RequestsLibrary.POST On Session    website    url=/api/ratan/v1/rep/exceptions/page  json=${req_body1}  headers=${req_header}  allow_redirects=${False}
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.repExceptionList[?(@.trackingId=='${trackingId0}')].description
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  Unsupported MT type.
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.repExceptionList[?(@.trackingId=='${trackingId0}')].originalExceptionId
+	VAR  ${originalExceptionId0}  ${result}
+    END
+
+	GROUP  Close ISO Exception1 and disappeared on KR Mx Exception Blotter
+    ${req_body2}  json.Loads  {\"comment\":\"Close ISO Exception\"}
+	${req_header}  Create Dictionary  Single-Ui-Authorization=${token_checker}
+	# PSS acount can't close Exception
+	${response}  RequestsLibrary.POST On Session   website  url=/api/ratan/v1/iso/exception/close/${trackingId0}/ratanone-swift-service/ISO_KOREA_MUREX_FLOW/${originalExceptionId0}  json=${req_body2}  headers=${req_header}  expected_status=403  allow_redirects=${False}
+    ${status}  ${result}  jsonGetObject  ${response.json()}  $.errorMessage
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  ACTION_DENIED
+	${req_header}  Create Dictionary  Single-Ui-Authorization=${token_maker}
+    ${response}  RequestsLibrary.POST On Session   website  url=/api/ratan/v1/iso/exception/close/${trackingId0}/ratanone-swift-service/ISO_KOREA_MUREX_FLOW/${originalExceptionId0}  json=${req_body2}  headers=${req_header}  allow_redirects=${False}
+    Run Keyword And Continue On Failure  Should Be Equal  ${response.text}  success
+	sleep  2s
+	${response}  RequestsLibrary.POST On Session    website    url=/api/ratan/v1/rep/exceptions/page  json=${req_body1}  headers=${req_header}  allow_redirects=${False}
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.repExceptionList[?(@.trackingId=='${trackingId0}')].description
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  null

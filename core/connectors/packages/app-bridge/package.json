@@ -1,0 +1,56 @@
+{
+  "name": "@sc-node-mcp/app-bridge",
+  "version": "1.0.7",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "MCP server for browser automation via Selenium WebDriver 4.x (Chrome & Edge)",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "sc-node-mcp-app-bridge": "src/index.js"
+  },
+  "files": [
+    "src/**/*",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "registry": "https://artifactory.global.standardchartered.com/artifactory/api/npm/npm-release"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./tools": "./src/tools.js",
+    "./prompts": "./src/prompts.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist",
+    "clean": "rm -rf dist",
+    "start": "node src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "mcp",
+    "selenium",
+    "webdriver",
+    "browser-automation",
+    "chrome",
+    "edge",
+    "standard-chartered"
+  ],
+  "author": "Standard Chartered",
+  "license": "ISC",
+  "dependencies": {
+    "@sc-node-mcp/core": "^2.16.1",
+    "selenium-webdriver": "^4.27.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@sc-node-mcp/shared-tests": "^2.10.3",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
+  }
+}

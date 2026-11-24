@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-cashflow-group-validation-p3.md

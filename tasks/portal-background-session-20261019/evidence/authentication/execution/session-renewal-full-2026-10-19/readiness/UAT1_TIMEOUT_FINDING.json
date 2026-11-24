@@ -1,0 +1,42 @@
+{
+  "id": "UAT1-WORKSPACE-TIMEOUT-CONTRACT",
+  "recorded_at": "2026-10-19T04:44:35.087170+00:00",
+  "status": "CONFIRMED_CONFIGURATION_BLOCKER",
+  "evidence": [
+    {
+      "path": ".workbench/session-renewal-full-20261019/readiness/proposed-UAT1-schema-validation.json",
+      "sha256": "df64e52f8830e63f79ecb543e1e48d0afd4ff726218cfac08212817b542747bc"
+    },
+    {
+      "path": "core/schemas/workspace.schema.json",
+      "field": "timeout_seconds",
+      "maximum": 300
+    },
+    {
+      "path": "core/providers/common.py",
+      "function": "timeout",
+      "maximum": 3600
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/workspace/ui/BAU-UI-RP.robot",
+      "prompt_wait_seconds": 960
+    }
+  ],
+  "consequence": "The proposed 1800-second workspace cannot load under the inspected schema. Existing permitted timeouts cannot cover the original scenario wait.",
+  "owner": "unknown",
+  "next_action": "Resolve the supported timeout contract before activating the proposed UAT1 workspace.",
+  "limits": [
+    "No business test execution occurred.",
+    "The proposal remains a draft with no grants."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "FAILED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

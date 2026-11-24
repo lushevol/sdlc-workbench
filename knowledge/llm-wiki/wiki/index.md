@@ -1,0 +1,220 @@
+# Knowledge Base Index
+
+This wiki and its saved explorations are derived from candidate/draft Workbench records. Their source authority remains unconfirmed, and compilation does not publish knowledge or establish implemented behavior or business acceptance. Reopen the canonical records and their evidence before using a claim for an engineering decision.
+
+Exact canonical paths, record versions, lifecycle states, and SHA-256 source bindings are recorded in [source-manifest.json](../source-manifest.json). The `sources/` entries link to those canonical records; changes to compiled pages do not promote the records.
+
+## Documents
+- [[summaries/KT-settlement-payment-amount-adjustment]] (short) — Compares the Day 2 and Korea migration designs for manual payment amount adjustments.
+- [[summaries/KT-settlement-auto-netting]] (short) — Documents scheduled cash settlement auto-netting rules, grouping, outcomes, and unresolved policy differences.
+- [[summaries/KT-day2-auto-netting-service-design]] (short) — Summarizes proposed lifecycle and netting service boundaries, APIs, persistence, and rule mappings.
+- [[summaries/KT-settlement-ccil-netting]] (short) — Documents CCIL workflow proposals, dated IRS examples, and unresolved rule conflicts.
+- [[summaries/KT-settlement-cashflow-identity-and-stella-write-back]] (short) — Documents cashflow ID design and unresolved Stella write-back rules.
+- [[summaries/KT-settlement-amendment-reversal-rebook-exceptions]] (short) — Covers proposed reversal and rebook exceptions and the missing cashflow link after amendment.
+- [[summaries/KT-settlement-cpn-netting]] (short) — Historical China Day 1 and Payment Lake proposals for CPN eligibility, manual review, and lifecycle rules.
+- [[summaries/KT-settlement-group-blotter-controls]] (short) — Group Blotter action eligibility, batch processing predicates, expected outcomes, and field projections.
+- [[summaries/KT-settlement-korea-trade-confirmation]] (short) — Korea Murex COMP proposals for the RATAN payment confirmation gate and tactical transport.
+- [[summaries/INT-KT-ratan-cashflow-settlement-interfaces]] (short) — Selected RATAN accounting, cashflow, settlement, and SSI interfaces; Korea transport remains unresolved.
+- [[summaries/KT-settlement-lms-feed]] (short) — LMS release and settlement baseline with later receipt-event and entity-scope proposals.
+- [[summaries/KT-day2-swap-agent]] (short) — Summarizes proposed Swap Agent netting, suppression, and release controls for selected flows.
+- [[summaries/KT-ces-migration-parity]] (short) — Defines intended EMS2-to-CES permission parity, per-tile migration, and frontend compatibility rules.
+- [[summaries/KT-authentication-and-sessions]] (short) — RATAN policy ownership, Entra sign-in, portal session ceilings, and the logout target.
+- [[summaries/REQ-active-session-renewal]] (short) — Candidate v9: activity-driven renewal within credential deadlines and manual recovery within the session ceilings; no fixed activity cadence.
+- [[summaries/KT-release-operations]] (short) — Portal and tenant teams coordinate release planning, configuration promotion, and readiness.
+- [[summaries/KT-admin-and-onboarding]] (short) — Tenant onboarding, cross-tenant administrator reads, tile metadata boundaries, and maker-checker review.
+- [[summaries/KT-observability-and-performance]] (short) — Five-second API loading limit, three-month PROD analytics retention, and historical measurements.
+- [[summaries/KT-application-interoperability]] (short) — Portal interoperability via FDC3/OpenFin: caller-provider duties and evidence limits.
+- [[summaries/KT-architecture-evolution]] (short) — Maps historical UI evaluations, experiments, and platform proposals with unresolved decisions.
+- [[summaries/KT-portal-purpose]] (short) — Summarizes the post-trade portal's purpose, shared capabilities, and draft or proposed scope.
+- [[summaries/KT-frontend-composition]] (short) — Documents a four-layer microfrontend model, ownership rules, and onboarding flow.
+- [[summaries/ARC-portal-service-relationships]] (short) — Maps the four-layer portal MFE stack, ingress, BFF, SDK, and RATAN auth responsibilities with evidence limits.
+- [[summaries/KT-sdk-and-entitlements]] (short) — SDK integration, CES migration, portal entry, tile validation, and permission-revocation timing.
+- [[summaries/INT-KT-murex-ratan-feed-lifecycle]] (short) — Preserves selected Murex 2.11 feed, conversion, eligibility, recovery, and migration proposals with cohort-specific conflicts.
+- [[summaries/KT-ratan-entity-and-currency-onboarding-controls]] (short) — Summarizes configuration-led entity and currency onboarding controls while preserving dated checklist differences and unresolved owners.
+- [[summaries/KT-settlement-cn-workflow]] (short) — Maps historical CN workflow, demo expectations, and migration proposals while keeping dates, conflicts, and execution limits visible.
+- [[summaries/INT-KT-payment-accounting-contracts]] (short) — Keeps Aspire, eBBS, Korea OLTP, interim TLM, and accounting API proposals separate by destination and milestone.
+- [[summaries/KT-uber-strategic-cash-settlement-p3]] (short) — Summarizes selected Uber integration, compatibility, recovery, segregation, and cutover designs as historical proposals.
+- [[summaries/KT-settlement-cashflow-lifecycle]] (short) — Summarizes the proposed cashflow state and version model while retaining unresolved transition and suppression conflicts.
+- [[summaries/KT-day2-cashflow-splitting]] (short) — Captures proposed FMRP manual and threshold-based cashflow splitting controls, with unresolved scope and lifecycle outcomes.
+- [[summaries/KT-ratan-settlement-integration-checklist-scope]] (short) — Lists selected RATAN settlement integration requests and their scopes without treating checklist entries as activation evidence.
+- [[summaries/KT-ratan-trade-migration-controls]] (short) — Summarizes proposed Murex and Stella migration payment controls, environment differences, and reconciliation gates.
+- [[summaries/KT-platform-cashflow-processing-contracts]] (short) — Collects historical lifecycle, holding, SSI, fixing, LIEN, IRS, confirmation, and payment-adjustment design proposals.
+- [[summaries/OPS-A-KT-SSI-AND-NOSTRO]] (short) — Collects dated SSI and Nostro requests across CN, HK/TW, Prime UK, and Korea while retaining unresolved hierarchy and scope differences.
+- [[summaries/KT-settlement-beneficiary-bic-netting]] (short) — Summarizes beneficiary-BIC netting eligibility, matching, resultant, and affirmation proposals with key differences unresolved.
+- [[summaries/KT-ratan-data-entitlement-and-access]] (short) — Separates RATAN business-data visibility from tile access and records conflicting role, country-scope, and system-path proposals.
+- [[summaries/KT-day2-nostro-centralization-and-rfi]] (short) — Summarizes proposed SSI+ Nostro centralization, upload, and RFI stamping behavior while retaining technical and functional conflicts.
+- [[summaries/INT-KT-indonesia-reference-data-and-rule-sync]] (short) — Preserves Indonesia RDM compensation and rule-synchronization proposals, including distinct API, timing, eligibility, and retry rules.
+- [[summaries/KT-settlement-failed-cashflow-recovery]] (short) — Summarizes proposed scheduled failure and reinstatement workflows with date-choice, maker-checker, and accounting differences retained.
+- [[summaries/KT-cashflow-group-validation-p3]] (short) — Summarizes proposed cashflow-group completeness, ordered release, amendment pairing, and producer-specific trade validation.
+- [[summaries/KT-day2-inter-entity-netting]] (short) — Summarizes proposed inter-entity eligibility, reciprocal matching, netting, and linked withdrawal rules with scope unresolved.
+- [[summaries/KT-ratan-trade-control-expansion-intent]] (short) — Summarizes selected trade-control expansion requests for FXO, C&A/Falcon, option expiry, detective rules, and scoped null-entity display.
+- [[summaries/KT-settlement-processing-and-exception-controls]] (short) — Collects historical settlement exception, suppression, precheck, acknowledgement, and last-mile control descriptions.
+- [[summaries/INT-KT-cashflow-amendment-and-release-controls]] (short) — Summarizes candidate amendment classifications, READY action boundaries, and payment release gates.
+- [[summaries/KT-settlement-ssi-form-validation]] (short) — Records candidate SSI form fields, conditional SWIFT formats, purpose rules, and adhoc transition conflicts.
+- [[summaries/KT-platform-uber-migration-contracts]] (short) — Preserves alternative Uber migration, lifecycle ownership, caller compatibility, and mixed-history transaction proposals.
+- [[summaries/KT-settlement-feeds-p3]] (short) — Keeps settlement feed status, timing, retries, storage, and destination-specific accounting variants distinct.
+- [[summaries/KT-day2-auto-dvp]] (short) — Summarizes candidate AutoDVP receipt matching, closure predicates, exceptions, and evidence-retention gaps.
+- [[summaries/KT-day2-hkcs-hau-settlement]] (short) — Preserves HKCS HAU settlement, calendar, SWIFT-message, onboarding, and cancellation-source differences.
+- [[summaries/KT-settlement-auto-netting-static-controls]] (short) — Records candidate auto-netting static access, validation, execution-key, STP, and rule-refresh controls.
+- [[summaries/KT-lock-concurrency-p3]] (short) — Compares candidate cashflow-lock ownership, atomicity, retry, timeout, and migration contracts.
+- [[summaries/KT-static-data-cache-p3]] (short) — Preserves candidate static-data sources, cache-aside responsibilities, FileIT transfer behavior, and middleware alternatives.
+- [[summaries/KT-product-agnostic-aggregation-20261115]] (short) — Preserves product-agnostic aggregation predicates, placement alternatives, and the separate SGD-to-SGO proposal.
+- [[summaries/KT-platform-strategic-ssi-stamping]] (short) — Summarizes candidate strategic SSI stamping, result identity, cashflow reuse, concurrency, and Razor exchange proposals.
+- [[summaries/KT-day2-ssi-validation-and-selection]] (short) — Preserves candidate SSI receive predicates, adhoc exception sequence, maker-checker fields, and selected-ID behavior.
+- [[summaries/KT-ratan-nostro-golden-source-proposal]] (short) — Distinguishes Nostro account classes and records an unapproved NAMS-to-RDM golden-source proposal.
+- [[summaries/INT-KT-uk-murex-batch-contract]] (short) — Preserves UK Murex payment bands, batch-file sequencing, exception variants, and unresolved replay behavior.
+- [[summaries/KT-settlement-hold-and-manual-fail]] (short) — Separates candidate Hold exit, manual-fail approval, eligibility, and scheduled AutoFail transitions.
+- [[summaries/ARC-uber-open-search-routing-20261115]] (short) — Preserves proposed OpenSearch query budgets, staged PostgreSQL fallback, reconciliation, model alignment, and recovery.
+- [[summaries/KT-ratan-technical-recovery-exceptions]] (short) — Summarizes temporary PSS recovery limits, approval and ticket controls, remediation triggers, and escalation proposals.
+- [[summaries/KT-ratan-dated-migration-runbooks]] (short) — Separates dated China and UK migration runbook steps from current controls and completed execution evidence.
+- [[summaries/KT-day2-cross-border-debit]] (short) — Records candidate receive-side Cross Border Debit MT202 eligibility, mapping, and overlap questions.
+- [[summaries/KT-settlement-non-economic-amendments]] (short) — Summarizes candidate non-economic comparison fields, settlement identity handling, and later economic amendment behavior.
+- [[summaries/KT-advanced-search-p3]] (short) — Preserves candidate advanced-search nesting, LogicFilter rule conflicts, pagination limits, and endpoint proposals.
+- [[summaries/KT-settlement-event-sequencing]] (short) — Summarizes candidate trade and cashflow event order, batch completion, post-release branches, and mapping gaps.
+- [[summaries/KT-ratan-strategic-settlement-goals]] (short) — Records source-stated goals for in-house strategic settlement and declared currency/entity dependencies.
+- [[summaries/KT-ratan-trade-date-and-exception-audit-display]] (short) — Preserves a dated null trade-date display request and scoped exception audit-comment statements.
+- [[summaries/KT-ratan-uber-queue-partitioning]] (short) — Records an Uber queue-partition proposal and source-specific filter examples without claiming a passing routing test.
+- [[summaries/KT-settlement-monitoring-and-touchpoints]] (short) — Summarizes candidate settlement MIS measures, missing-SSI monitoring, and a staged automation roadmap.
+- [[summaries/KT-settlement-manual-netting]] (short) — Summarizes candidate manual netting, resultant, validation, and un-net proposals with unresolved conflicts.
+- [[summaries/INT-KT-fxu-integration-contract]] (short) — Summarizes FX utilization phases, controls, interfaces, accounting, and unresolved contract variants.
+- [[summaries/KT-settlement-ssi-stamping-and-selection]] (short) — Summarizes candidate trade and cashflow SSI selection, notification, correction, and interface proposals.
+- [[summaries/INT-KT-indonesia-regional-architecture]] (short) — Summarizes candidate Indonesia regional data, access, integration, UI, and cutover proposals.
+- [[summaries/KT-settlement-multi-exception-control]] (short) — Summarizes candidate multi-exception review and bulk-processing conditions, limits, and open conflicts.
+- [[summaries/INT-KT-ratan-reference-and-control-interfaces]] (short) — Summarizes source-specific RATAN reference, control, valuation, confirmation, and TIS interface responsibilities.
+- [[summaries/KT-settlement-cashflow-blotter-actions]] (short) — Summarizes candidate FMRP and BCS cashflow actions, display rules, historical paths, and version limits.
+- [[summaries/KT-platform-query-performance]] (short) — Summarizes candidate query, batch, queue, UI, and database performance proposals with unresolved measures.
+- [[summaries/ARC-platform-cashflow-data-query]] (short) — Summarizes candidate cashflow query modeling, projections, notifications, partial errors, and history proposals.
+- [[summaries/KT-day2-manual-entity-settlement]] (short) — Summarizes candidate manual-entity roster, release cutoffs, regional controls, and onboarding exceptions.
+- [[summaries/KT-platform-openfin-fdc3-design]] (short) — Summarizes candidate FDC3 and OpenFin intent, context, entitlement, onboarding, and browser integration proposals.
+- [[summaries/KT-ces-entitlement-control-20261115]] (short) — Summarizes candidate CES data-entitlement scope, enforcement, cache, error, reconciliation, and session proposals.
+- [[summaries/KT-ratan-static-maker-checker-controls]] (short) — Summarizes candidate BIC and netting static maker-checker lifecycle and rule-refresh boundaries.
+- [[summaries/KT-settlement-interest-and-nds-netting]] (short) — Summarizes candidate IRS fixing gates, interest aggregation, and NDS netting scope and lifecycle proposals.
+- [[summaries/KT-rule-service-p3]] (short) — Summarizes archived NSTP rule governance, domain boundaries, versioned APIs, engine choices, and migration risks.
+- [[summaries/KT-settlement-exception-workflow-20261115]] (short) — Summarizes candidate settlement exception workflow, affirmation, recovery, and batch contract differences.
+- [[summaries/INT-KT-regional-recovery-and-payload-storage]] (short) — Summarizes candidate regional failover, messaging recovery, object payload storage, and recovery target alternatives.
+- [[summaries/ARC-platform-cashflow-data-exposure]] (short) — Summarizes candidate external cashflow query, entitlement, transport, field, and SSI-usage data contracts.
+- [[summaries/KT-day2-self-service-entity-onboarding]] (short) — Summarizes candidate self-service entity configuration, review, API, data ownership, and country-specific fields.
+- [[summaries/KT-day2-email-affirmation]] (short) — Summarizes candidate trade and email affirmation publication, response classification, correction, and transport rules.
+- [[summaries/KT-settlement-hold-unhold]] (short) — Summarizes candidate cashflow hold, separate-user unhold, profile limits, and lifecycle conflicts.
+- [[summaries/KT-settlement-trade-control-utilities]] (short) — Summarizes separate candidate C&A, FX-replication, option-fixing, and trade-validation proposals.
+- [[summaries/KT-settlement-cashflow-monitoring]] (short) — Summarizes candidate settlement dashboard counters, group investigation paths, and timer predicates.
+- [[summaries/KT-settlement-korea-payment-routing]] (short) — Summarizes candidate Korea Murex-to-RATAN routing, ENISIS acknowledgements, and TIS payment-query conditions.
+- [[summaries/ARC-settlement-platform-p3]] (short) — Summarizes candidate settlement service boundaries, orchestration, persistence, audit, and shared-infrastructure proposals.
+- [[summaries/KT-ratan-performance-and-capacity-intent]] (short) — Summarizes dated RATAN dashboard latency, capacity assumptions, test levels, and execution-plan limits.
+- [[summaries/KT-static-config-governance-p3]] (short) — Summarizes candidate static-configuration onboarding, maker-checker APIs, versioning, and frontend freshness proposals.
+- [[summaries/KT-settlement-trade-validation-and-confirmation]] (short) — Summarizes candidate trade-validation visibility, source-specific states, bypass scopes, and affirmation exceptions.
+- [[summaries/KT-settlement-profile-authorization-limits]] (short) — Summarizes candidate legacy USD profile limits, FX conversion, static maintenance, and action-visibility proposals.
+- [[summaries/KT-ratan-business-rule-governance]] (short) — Summarizes candidate strategic business-rule approval, maintenance, suppression, and dated release scope.
+- [[summaries/KT-settlement-payment-enrichment]] (short) — Summarizes candidate Nostro refresh, receipt ordering enrichment, SCI mapping, and India LEI payment rules.
+- [[summaries/KT-settlement-aggregation-intent]] (short) — Summarizes candidate IRS settlement aggregation actions, schedule counting, grouping, and resultant behavior.
+- [[summaries/KT-settlement-security-p3]] (short) — Summarizes candidate settlement network controls, Indonesia isolation, identity migration, and API alternatives.
+- [[summaries/KT-day2-high-value-payment-control]] (short) — Summarizes candidate high-value payment scope, profile limits, STP metadata, and outbound service proposals.
+- [[summaries/KT-settlement-clearing-and-swap-agent-boundaries]] (short) — Summarizes candidate clearing-payment safeguards, Swap Agent splits, accounting mappings, and empty-flow proposals.
+- [[summaries/KT-ratan-portal-onboarding-scope]] (short) — Summarizes candidate RATAN Portal branding, SSO, desktop, confirmation, and tenant tile onboarding requests.
+- [[summaries/INT-KT-entity-and-reference-data-design]] (short) — Summarizes candidate entity configuration consolidation and RDM holiday message ingestion proposals.
+- [[summaries/KT-ratan-dr-operations]] (short) — Summarizes the candidate RATAN WAT-to-ARK and ARK-to-WAT recovery checklist and timing limits.
+- [[summaries/INT-KT-regional-gateway-design-alternatives]] (short) — Summarizes a deprecated Indonesia gateway consolidation option and a separate gateway resilience proposal.
+- [[summaries/KT-ratan-payment-rounding-intent]] (short) — Summarizes dated RATAN payment-rounding responsibility, source amounts, persisted values, and unresolved semantics.
+- [[summaries/KT-day2-query-validation]] (short) — Summarizes candidate query predicates, operator limits, invalid-filter handling, and UI conditions.
+- [[summaries/INT-KT-indonesia-timezone-contract]] (short) — Separates the candidate UTC runtime target from field-level local and UTC timestamp proposals.
+- [[summaries/KT-settlement-trade-lien-controls]] (short) — Summarizes candidate LIEN propagation, maker-checker, cashflow-state, and reprocessing rules.
+- [[summaries/KT-day2-fmsgw-deletion-settlement]] (short) — Summarizes candidate final-status triggers and cover-message aggregation conditions.
+- [[summaries/KT-settlement-regional-swift-customization]] (short) — Collects candidate regional payment-message mappings and their incomplete or conflicting fields.
+- [[summaries/KT-settlement-global-rates-design-boundaries]] (short) — Summarizes candidate Global Rates ownership, event, booking, and settlement-method proposals.
+- [[summaries/KT-settlement-fx-utilization-responsibilities]] (short) — Summarizes candidate FX utilization, accounting, SWIFT suppression, status, and remaining-amount duties.
+
+## Concepts
+- [[concepts/cashflow-netting-grouping-and-outcomes]] — Auto-netting groups cashflows by rule identity and execution-key values, then handles the resulting cashflow or unmatched items.
+- [[concepts/auto-netting-scheduling]] — How eligible cashflows are queued and processed by scheduled auto-netting jobs.
+- [[concepts/auto-netting-rule-selection]] — How matching cashflows are assigned to a rule for scheduled auto-netting.
+- [[concepts/release-window-governance]] — Candidate release-window scheduling and responsibilities, preserving unresolved duration and urgent-release confirmation rules.
+- [[concepts/ces-role-multiplicity]] — CES assignments can hold multiple roles, which cannot be collapsed into one scalar role for legacy callers.
+- [[concepts/permission-check-provider-union]] — Existing hasPermission(code) calls accept a mapped grant from either EMS2 or CES, with the provider logged.
+- [[concepts/per-tile-provider-selection]] — Each portal tile selects EMS2 or CES entitlement admission independently, without forcing other tiles to migrate.
+- [[concepts/ems2-to-ces-permission-mapping]] — How EMS2 roles, entities, subjects, and actions map to CES entitlements, applications, features, and actions with parity rules.
+- [[concepts/identity-profile-attribute-migration]] — Risk that user profile attribute values change between identity providers during SSO migration, affecting downstream logic.
+- [[concepts/machine-to-machine-authentication]] — How non-human callers authenticate via client credentials, service accounts, and bank IDs, distinct from UI SSO.
+- [[concepts/token-lifecycle-and-timeout-policy]] — Portal idle and absolute session ceilings, individual credential lifetimes, and historical timing proposals.
+- [[concepts/session-expiry-prompt-recovery]] — How the expiry prompt behaves across pending, success, and rejection renewal states.
+- [[concepts/session-activity-renewal]] — Mouse, keyboard, and scroll activity renew the portal session within its absolute deadline.
+- [[concepts/tenant-production-readiness]] — Separating technical deployment evidence from business activation before a tenant goes live.
+- [[concepts/configuration-promotion]] — Moving Portal catalog and tile configuration from Development to UAT and Production.
+- [[concepts/ems2-entitlement-provisioning]] — How EMS2 creates and assigns entity, action, role, and subject records, and how they map to CES.
+- [[concepts/maker-checker-verification-workflow]] — Two-person review that verifies an un-verified admin record before activation.
+- [[concepts/admin-catalog-configuration]] — Portal admin functions that maintain module mappings, drawer categories, and tiles as versioned configuration
+- [[concepts/mfe-cache-strategy]] — Revalidate layer entry files and long-cache hashed assets to speed loads, but updates still need a refresh.
+- [[concepts/frontend-performance]] — API loading intent, historical frontend measurements, and capacity evidence.
+- [[concepts/interaction-analytics]] — Portal activity analytics for CPO review, event design, and three-month PROD retention.
+- [[concepts/cross-application-authentication-handoff]] — Passing an authenticated identity from one application to another so users avoid repeated logins.
+- [[concepts/interoperability-contract-governance]] — How intent names, context schemas, versions, and readiness gates are agreed and verified across caller and provider teams.
+- [[concepts/intent-based-application-interoperability]] — Portal-mediated sharing of context and intent requests between applications via FDC3 on OpenFin.
+- [[concepts/component-library-selection]] — Evaluating and choosing a shared UI component library for the portal's microfrontends.
+- [[concepts/realtime-notification-delivery]] — Proposed single-connection-per-user delivery of notifications across portal tiles, still experimental.
+- [[concepts/build-tool-migration]] — Proposed migration of portal React builds from Webpack to Rspack or Vite, constrained by SystemJS loading.
+- [[concepts/portal-tile-workspace-model]] — Portal tile/workspace model with intent-mediated navigation and context handoff.
+- [[concepts/application-ownership]] — How platform and tenant teams divide delivery, catalog, and release accountability.
+- [[concepts/shared-dependency-governance]] — Rules and practices controlling shared code, library versions, and module interfaces across teams.
+- [[concepts/frontend-onboarding]] — How an application team registers containers and tiles and proves release readiness.
+- [[concepts/identity-provider-delegation]] — How the portal defers authentication to external identity providers and authorization to EMS2/EMS3, and what remains unproven.
+- [[concepts/portal-ingress-path]] — The reported DNS-to-Nginx-to-API-gateway-to-BFF route serving the post-trade portal.
+- [[concepts/microfrontend-layering]] — The portal's four-tier frontend composition model and how tiers load and share code.
+- [[concepts/portal-entry-and-tile-authorization]] — Two-layer portal access model: portal entry plus per-tile admission by EMS2 or CES provider.
+- [[concepts/entitlement-retrieval]] — How downstream services obtain a user's entitlements from EMS2 or CES, including provider-union checks and entity fields.
+- [[concepts/single-ui-sdk-authentication]] — How the Single UI SDK validates portal JWTs and exposes authenticated user context to downstream services.
+- [[concepts/ssi-instruction-selection-and-stamping]] — How candidate SSI data is owned, validated, selected, and stamped across settlement flows.
+- [[concepts/cashflow-amendment-classification-and-release]] — How candidate amendment classes affect cashflow identity, status, downstream publication, and release controls.
+- [[concepts/accounting-delivery-and-status-write-back]] — Connects destination accounting milestones, producer updates, version correlation, and unresolved payment-amount contracts.
+- [[concepts/netting-types-and-resultants]] — Connects type-specific grouping, resultant identity, approval, and release boundaries across netting proposals.
+
+## Entities
+- [[entities/ratan]] (organization) — Legacy team and shared container whose EMS2 entity X_RATANONE maps to CES application RATAN_ENTITLEMENT_RULE (itam_id 51358).
+- [[entities/ddr]] (product) — FSSDS Data Distribution and Reporting product requested for Portal integration to show downstream report distribution.
+- [[entities/vpa]] (product) — Post-trade product whose Fix Link and Trade Monitor tiles were requested for Portal release.
+- [[entities/cdups]] (product) — Confirmation-management product whose Portal tile was requested via a Markets Operations One change request.
+- [[entities/fss]] (organization) — Tenant organization requesting multiple Portal tiles, including gating, SSI, custody, and collateral capabilities.
+- [[entities/fmaa]] (product) — Authentication component issuing client-credential tokens for portal admin uploads and machine-to-machine callers.
+- [[entities/entra]] (product) — Microsoft identity platform selected for Portal SSO without OneMFA fallback.
+- [[entities/admin-module]] (product) — Portal product where tenant catalog configuration (module map, drawer, tile) is uploaded and promoted across environments.
+- [[entities/markets-operations-one-release]] (event) — Release program governing Portal and tenant release windows, scope, and readiness gating.
+- [[entities/flyway]] (product) — Database migration tool whose retained SQL defines the portal admin catalog schema draft.
+- [[entities/apache-jmeter]] (product) — Open-source load testing tool referenced as the execution vehicle for Portal throughput tests.
+- [[entities/kibana]] (product) — Kibana is the dashboard tool documented for Portal interaction analytics and usage monitoring.
+- [[entities/openfin]] (product) — Desktop runtime and platform product referenced in Portal materials for application hosting and onboarding phases.
+- [[entities/spring-boot]] (product) — Java backend framework used in portal notification experiments and a proposed version upgrade.
+- [[entities/graphql]] (product) — A query language used in portal notification experiments over SSE and WebSocket.
+- [[entities/webpack]] (product) — JavaScript module bundler named as the incumbent tool in the portal's build-tool migration research.
+- [[entities/vite]] (product) — Frontend build tool recommended in the portal's build-tool research for new or simpler applications.
+- [[entities/rspack]] (product) — Rust-based JavaScript bundler recommended for incremental migration from Webpack in the portal.
+- [[entities/ag-grid]] (product) — Data-grid product evaluated in a 2023 UI library comparison against MUI and Ant Design.
+- [[entities/ant-design]] (product) — A React component library evaluated alongside MUI and AG Grid in the TPT UI library comparison.
+- [[entities/fdc3]] (product) — Cross-application interoperability standard used with OpenFin in the FMO Post Trade Portal.
+- [[entities/mui]] (product) — React component library evaluated for shared theming in the portal.
+- [[entities/react]] (product) — JavaScript UI library used across the portal's microfrontend layers and standalone templates.
+- [[entities/systemjs]] (product) — Module loader in the portal microfrontend design and a constraint on build-tool migration.
+- [[entities/single-spa]] (product) — Single-SPA is the microfrontend orchestration framework that mounts the portal's registered shell.
+- [[entities/ems3]] (product) — Entitlement provider reported in the portal and used as the CES wire value in the migration contract.
+- [[entities/api-gateway]] (product) — Ingress product said to forward portal requests from Nginx to application services.
+- [[entities/nginx]] (product) — Web server and reverse proxy at the portal ingress edge and tenant connectivity boundary.
+- [[entities/ratan-auth-server]] (product) — Service reported to delegate authentication and authorization; Entra SPN and EMS3 support remain unconfirmed in the inspected Auth Server copy.
+- [[entities/single-ui-bff]] (product) — Portal backend-for-frontend for auth, sessions, admin, entitlements, analytics, and CES metadata.
+- [[entities/mfe-cashflow-blotter]] (product) — Feature tile microfrontend in the RATAN portal that renders cashflow blotter views.
+- [[entities/mfe-ratan-container]] (product) — RATAN container microfrontend (mfe-ratan-container): the third portal layer, its routing, and migration duties
+- [[entities/mfe-base]] (product) — MFE Base is the Single-SPA shell layer supplying themes, routing, sessions, and the shared permission and request APIs.
+- [[entities/mfe-root-config]] (product) — First microfrontend layer: portal HTML entry, import map, and Single-SPA bootstrap.
+- [[entities/portal-team]] (organization) — Portal entry and tile responsibilities, draft release duties, and their relationship to RATAN policy ownership.
+- [[entities/fmo-post-trade-portal]] (product) — SCB post-trade portal product: entry, tile authorization, microfrontend composition, admin, release, and session policy.
+- [[entities/ces]] (product) — Successor entitlement service to EMS2, supplying CES roles and application identity to consumers.
+- [[entities/ems2]] (product) — EMS2 is the legacy entitlement system defining portal application entities, roles, subjects, and actions.
+- [[entities/single-ui-sdk]] (product) — Java library for validating portal JWTs and retrieving entitlements.
+- [[entities/cash-settlement-ratan]] (product) — Settlement-processing system with source-scoped lifecycle, netting, instruction, query, and downstream accounting responsibilities.
+- [[entities/murex]] (product) — Producer with distinct Murex 2.11, regional adaptor, operational DOI, and Korea settlement contracts.
+- [[entities/stella]] (product) — Upstream cashflow and version owner in source-scoped lifecycle and FX status-write-back proposals.
+- [[entities/uber]] (product) — Named trade and cashflow snapshot contract with migration, validation, temporal, and recovery proposals.
+
+## Explorations
+- [[explorations/how-should-the-portal-preserve-an-active-session-across-refr]] — Historical renewal analysis with a notice pointing to the current session ceilings.
+- [[explorations/what-candidate-mapping-rules-map-ems2-roles-and-entitlements]] — Candidate EMS2-to-CES mapping rules, parity limits, and unresolved role/data-source gaps.
+- [[explorations/what-are-the-portal-frontend-composition-layers-and-ownershi]] — Frontend layers, ownership boundaries, and deployment-evidence limits.
+- [[explorations/which-responsibilities-belong-to-portal-and-tenant-teams-for]] — Draft Portal/tenant responsibilities for routing, release, validation, and rollback.
+- [[explorations/what-candidate-interoperability-contract-and-openfin-fdc3-co]] — Candidate caller/provider contract and OpenFin/FDC3 readiness gaps.
+- [[explorations/what-telemetry-and-performance-or-capacity-evidence-exists-f]] — Historical telemetry and capacity analysis with the current API target and PROD retention noted.

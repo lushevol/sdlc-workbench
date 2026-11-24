@@ -1,0 +1,18 @@
+from pathlib import Path
+import os, re, subprocess, sys, json, datetime
+root=Path.cwd();base=root/'.workbench/session-minor-rerun-20261020'
+source=(root/'.workbench/session-post-change-20261020/bff-fast/runner/local/portalsession/LocalSessionApplication.java').read_text()
+env=os.environ.copy()
+for field,key in [('USER','SESSION_E2E_USERNAME'),('PASSWORD','SESSION_E2E_PASSWORD')]:
+ env[key]=re.search(r'public static final String '+field+r'="([^"]+)"',source).group(1)
+modes=sys.argv[1:] or ['mouse','keyboard','scroll','pending','retry','cross','single','manualLogout','activityLogout','late','expired','workspace','rapid','keyboardExtend','activityRetry','inconsistent','promptActivity','idleLogout','visibility','reload']
+for mode in modes:
+ identity='minor-'+mode+'-'+datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S')
+ profile='natural' if mode in ['natural','missing','naturalImmediate'] else 'fast'
+ print(json.dumps({'starting':mode,'id':identity,'profile':profile}),flush=True)
+ log=base/(identity+'.log')
+ with log.open('w') as out:
+  run=subprocess.run(['node',str(base/'natural-immediate-runner.mjs'),mode,profile,identity],env=env,stdout=out,stderr=subprocess.STDOUT)
+ evidence=base/'native'/identity/'run.json'
+ record=json.loads(evidence.read_text()) if evidence.exists() else {}
+ print(json.dumps({'finished':mode,'status':record.get('status'),'exit_code':run.returncode,'error':record.get('error'),'evidence':str(evidence)}),flush=True)

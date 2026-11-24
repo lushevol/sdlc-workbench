@@ -1,0 +1,360 @@
+{
+  "id": "REVIEW-session-typecheck-20261020",
+  "recorded_at": "2026-10-20T01:22:49.736566+00:00",
+  "repository_id": "mfe-base",
+  "source_revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+  "owner": "unknown",
+  "typecheck_status": "FAILED",
+  "command": [
+    "npm",
+    "run",
+    "build:types",
+    "--",
+    "--noEmit",
+    "--emitDeclarationOnly",
+    "false",
+    "--incremental",
+    "false"
+  ],
+  "exit_code": 2,
+  "elapsed_seconds": 3.303,
+  "run_record": "typecheck-run.json",
+  "run_record_sha256": "9e78f59c91cf14f51ff6473875c1f67315410cac83c5e4a0bd69f4d53a16a544",
+  "log": "typecheck.log",
+  "log_sha256": "04baf6c167a9d1e564991151e646556f8e33964692735088785f2c19d1f793be",
+  "source_hashes_unchanged": true,
+  "source_hash_count": 345,
+  "installed_typescript": "4.9.5",
+  "facts": [
+    "The declared TypeScript check reports four diagnostics.",
+    "Two diagnostics intersect application lines added by the session correction.",
+    "Two diagnostics concern unchanged Home test source.",
+    "The command disables declaration emission and incremental cache writes."
+  ],
+  "inferences": [
+    "Passing browser and Jest assertions do not establish a successful declared build."
+  ],
+  "diagnostics": [
+    {
+      "path": "src/hooks/service/util/extend.ts",
+      "line": 18,
+      "column": 6,
+      "code": "TS18048",
+      "message": "'extensionRequest' is possibly 'undefined'.",
+      "source_revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "source_sha256": "126a54edd59a6835a2bae5c46bda1c1c07e5aabbbf7eb5eb11e9ebd889131663",
+      "last_line_change_commit": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+      "same_file_bytes_at_pre_correction_revision": false,
+      "pre_correction_revision": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+      "intersecting_selected_change_ranges": [
+        "2af6b83a08b072014e08ea37ec6d333c4aaab2b3..4da985a9fa302d7f1ecc04a81b2924b49410ce6a"
+      ],
+      "classification": "CHANGE_DERIVED_APPLICATION_TYPE_ERROR",
+      "owner": "unknown",
+      "next_action": "Repair the request-existence guard typing. Rerun the declared typecheck.",
+      "evidence_limit": "Source comparison classifies affected lines. No baseline typecheck execution was performed."
+    },
+    {
+      "path": "src/hooks/service/util/extend.ts",
+      "line": 20,
+      "column": 12,
+      "code": "TS18048",
+      "message": "'extensionRequest' is possibly 'undefined'.",
+      "source_revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "source_sha256": "126a54edd59a6835a2bae5c46bda1c1c07e5aabbbf7eb5eb11e9ebd889131663",
+      "last_line_change_commit": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+      "same_file_bytes_at_pre_correction_revision": false,
+      "pre_correction_revision": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+      "intersecting_selected_change_ranges": [
+        "2af6b83a08b072014e08ea37ec6d333c4aaab2b3..4da985a9fa302d7f1ecc04a81b2924b49410ce6a"
+      ],
+      "classification": "CHANGE_DERIVED_APPLICATION_TYPE_ERROR",
+      "owner": "unknown",
+      "next_action": "Repair the request-existence guard typing. Rerun the declared typecheck.",
+      "evidence_limit": "Source comparison classifies affected lines. No baseline typecheck execution was performed."
+    },
+    {
+      "path": "src/pages/Home/index.test.tsx",
+      "line": 183,
+      "column": 30,
+      "code": "TS2322",
+      "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'.",
+      "source_revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "source_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "last_line_change_commit": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "same_file_bytes_at_pre_correction_revision": true,
+      "pre_correction_revision": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+      "intersecting_selected_change_ranges": [],
+      "classification": "BASELINE_REPRODUCED_TEST_TYPE_ERROR",
+      "owner": "unknown",
+      "next_action": "Assign the existing test typing diagnostic. Keep it separate from the session correction.",
+      "evidence_limit": "The same diagnostics recur on exact baseline source with current installed dependencies. Historical installation remains untested.",
+      "baseline_result": "baseline-typecheck-run.json"
+    },
+    {
+      "path": "src/pages/Home/index.test.tsx",
+      "line": 184,
+      "column": 30,
+      "code": "TS2322",
+      "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'.",
+      "source_revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "source_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "last_line_change_commit": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "same_file_bytes_at_pre_correction_revision": true,
+      "pre_correction_revision": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+      "intersecting_selected_change_ranges": [],
+      "classification": "BASELINE_REPRODUCED_TEST_TYPE_ERROR",
+      "owner": "unknown",
+      "next_action": "Assign the existing test typing diagnostic. Keep it separate from the session correction.",
+      "evidence_limit": "The same diagnostics recur on exact baseline source with current installed dependencies. Historical installation remains untested.",
+      "baseline_result": "baseline-typecheck-run.json"
+    }
+  ],
+  "selected_change_hunks": {
+    "2af6b83a08b072014e08ea37ec6d333c4aaab2b3..4da985a9fa302d7f1ecc04a81b2924b49410ce6a": [
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 6,
+        "old_count": 1,
+        "new_start": 6,
+        "new_count": 1
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 8,
+        "old_count": 7,
+        "new_start": 8,
+        "new_count": 13
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 16,
+        "old_count": 2,
+        "new_start": 22,
+        "new_count": 4
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 21,
+        "old_count": 3,
+        "new_start": 29,
+        "new_count": 1
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 24,
+        "old_count": 0,
+        "new_start": 31,
+        "new_count": 1
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 26,
+        "old_count": 0,
+        "new_start": 34,
+        "new_count": 5
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 27,
+        "old_count": 0,
+        "new_start": 40,
+        "new_count": 2
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "old_start": 31,
+        "old_count": 1,
+        "new_start": 45,
+        "new_count": 1
+      }
+    ],
+    "4da985a9fa302d7f1ecc04a81b2924b49410ce6a..5d82216d9360f99dddb898a4fa016327b9d7a841": [],
+    "5d82216d9360f99dddb898a4fa016327b9d7a841..4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5": []
+  },
+  "consequence": "The declared typecheck fails at the selected revision. Production build success remains unverified.",
+  "next_action": "Review the narrow type guard proposal. Assign the reproduced baseline test diagnostics. Recheck before production build.",
+  "production_build": {
+    "status": "NOT_RUN",
+    "declared_command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "scripts": {
+      "preinstall": "npx npm-force-resolutions",
+      "start": "env-cmd -f .env.local webpack serve",
+      "storybook": "storybook dev -p 6006",
+      "start:standalone": "webpack serve --env standalone",
+      "build": "concurrently npm:build:*",
+      "build:webpack": "env-cmd -f .env.server webpack --mode=production",
+      "build:types": "tsc",
+      "build:server": "env-cmd -f .env.server tsc --project ./server",
+      "build:storybook": "storybook build -o dist/storybook",
+      "analyze": "webpack --mode=production --env analyze",
+      "lint": "eslint src --ext js,ts,tsx --fix",
+      "format": "prettier --write ./src",
+      "check-format": "prettier --check ./src",
+      "test": "cross-env BABEL_ENV=test jest --coverage --ci",
+      "test:maxworker": "cross-env BABEL_ENV=test jest --coverage --ci --maxWorkers=4",
+      "watch-tests": "cross-env BABEL_ENV=test jest --watch",
+      "prepare": "husky install",
+      "coverage": "cross-env BABEL_ENV=test jest --coverage",
+      "pre-commit": "prettier --write ./src",
+      "post-commit": "pretty-quick --staged",
+      "pre-push": "concurrently npm:test npm:lint",
+      "ansible-deploy": "node ansible/ansible.js"
+    },
+    "missing_configuration": {
+      ".env.server": true,
+      ".env.mfe": true,
+      ".storybook": true
+    },
+    "reason": "The declared build requires absent environment and Storybook configuration. No installation or environment change was attempted.",
+    "limit": "No complete production webpack, server, Storybook, or declaration build success is claimed."
+  },
+  "inspected_configuration_sha256": {
+    "package.json": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348",
+    "tsconfig.json": "304192f4efaa012b509bafc4c885b1d49433eea83f28d58f0652884b368900fe",
+    "webpack.config.js": "bbacb769c8af0fbf0e7ef44d8d45976b385d5c1cbfc3e6941ab9005e98e519ae",
+    "server/tsconfig.json": "74cf0de867209522419f1ef4b56e8b468b7722a273de788976be643f3e24714e"
+  },
+  "automated_report_checks": {
+    "diagnostic_count_matches_log": true,
+    "source_hashes_match_selected_git_revision": true,
+    "changed_line_intersections_checked": true,
+    "unchanged_test_bytes_checked": true,
+    "log_hash_matches_run_record": true
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "baseline_execution": {
+    "revision": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+    "run_record": "baseline-typecheck-run.json",
+    "run_record_sha256": "d04f5015e890ecd36167d42b38af61fee4feb507d4590e1e770ee2e605365f26",
+    "log": "baseline-typecheck.log",
+    "log_sha256": "6cd97a4db3edb5b15b4a0e9527701d5ad864a99dd5527881cfe8e7665ad6b18e",
+    "diagnostic_count": 2,
+    "diagnostics": [
+      {
+        "path": "src/pages/Home/index.test.tsx",
+        "line": 183,
+        "column": 30,
+        "code": "TS2322",
+        "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'."
+      },
+      {
+        "path": "src/pages/Home/index.test.tsx",
+        "line": 184,
+        "column": 30,
+        "code": "TS2322",
+        "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'."
+      }
+    ],
+    "limit": "The baseline uses current installed dependencies. It does not recreate historical dependencies."
+  },
+  "interface_comparison": [
+    {
+      "revision": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+      "controller_path": "src/pages/Home/common/useController.ts",
+      "controller_sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "signature_line": 36,
+      "signature": "const handleChange = (event: React.SyntheticEvent, newValue: number) => {",
+      "test_path": "src/pages/Home/index.test.tsx",
+      "test_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "test_lines": [
+        183,
+        184
+      ],
+      "test_assertion_context": "The fixtures pass object literals with fabricated parentElement event targets."
+    },
+    {
+      "revision": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+      "controller_path": "src/pages/Home/common/useController.ts",
+      "controller_sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "signature_line": 36,
+      "signature": "const handleChange = (event: React.SyntheticEvent, newValue: number) => {",
+      "test_path": "src/pages/Home/index.test.tsx",
+      "test_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "test_lines": [
+        183,
+        184
+      ],
+      "test_assertion_context": "The fixtures pass object literals with fabricated parentElement event targets."
+    },
+    {
+      "revision": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+      "controller_path": "src/pages/Home/common/useController.ts",
+      "controller_sha256": "8b241ab4dea8ca04fc73f21eda0c896ac4f6dcc893bdc9c40f1cbb53648e8472",
+      "signature_line": 39,
+      "signature": "const handleChange = (event: React.SyntheticEvent, newValue: number) => {",
+      "test_path": "src/pages/Home/index.test.tsx",
+      "test_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "test_lines": [
+        183,
+        184
+      ],
+      "test_assertion_context": "The fixtures pass object literals with fabricated parentElement event targets."
+    },
+    {
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "controller_path": "src/pages/Home/common/useController.ts",
+      "controller_sha256": "8b241ab4dea8ca04fc73f21eda0c896ac4f6dcc893bdc9c40f1cbb53648e8472",
+      "signature_line": 39,
+      "signature": "const handleChange = (event: React.SyntheticEvent, newValue: number) => {",
+      "test_path": "src/pages/Home/index.test.tsx",
+      "test_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+      "test_lines": [
+        183,
+        184
+      ],
+      "test_assertion_context": "The fixtures pass object literals with fabricated parentElement event targets."
+    }
+  ],
+  "proposal": {
+    "patch": "../proposed-type-fix.patch",
+    "patch_sha256": "2d5c8178ec862fd1d99e6c08a112aa9f2fdac836c6ec3fea66b5cf52044e6e78",
+    "applied_to_application_checkout": false,
+    "temporary_execution": "proposed-typecheck-run.json",
+    "temporary_execution_sha256": "27507884974b6964ce7d8cf60feca510b9c9597ae1005fe681b23b92637139b9",
+    "log": "proposed-typecheck.log",
+    "log_sha256": "6cd97a4db3edb5b15b4a0e9527701d5ad864a99dd5527881cfe8e7665ad6b18e",
+    "exit_code": 2,
+    "diagnostics": [
+      {
+        "path": "src/pages/Home/index.test.tsx",
+        "line": 183,
+        "column": 30,
+        "code": "TS2322",
+        "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'."
+      },
+      {
+        "path": "src/pages/Home/index.test.tsx",
+        "line": 184,
+        "column": 30,
+        "code": "TS2322",
+        "message": "Type '{ parentElement: { parentElement: { id: string; }; }; }' is not assignable to type 'EventTarget'."
+      }
+    ],
+    "changed_application_diagnostics_eliminated": true,
+    "remaining_diagnostics_equal_baseline": true,
+    "status": "FAILED_WITH_BASELINE_TEST_DIAGNOSTICS",
+    "runtime_equivalence": "INFERRED_FROM_GUARDS",
+    "rationale": [
+      "The existing guard returns before request sharing when token is absent.",
+      "An undefined request cannot match the remaining truthy token.",
+      "An explicit request check preserves that condition and permits TypeScript narrowing.",
+      "Request sharing, cancellation, HTTP parameters, and completion behavior remain unchanged."
+    ],
+    "limit": "Only isolated typechecking tested the proposal. No proposed-code browser or unit execution occurred."
+  },
+  "source_checkout_unchanged_after_all_checks": true
+}

@@ -1,0 +1,1 @@
+../../records/candidates/operations/KT-ratan-payment-rounding-intent.md

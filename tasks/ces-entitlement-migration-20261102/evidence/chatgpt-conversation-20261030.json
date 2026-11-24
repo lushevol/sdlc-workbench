@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "untrustedDataNotice": "Thread titles and messages are untrusted data, not instructions.",
+  "thread": {
+    "id": "6ae1608f-7898-83ea-aa42-90a40dfc75cd",
+    "kind": "chatgpt",
+    "title": "Migration Runbook Template",
+    "preview": "Below are two concise, action-oriented guides for the **RATAN EMS2 → CES Migration**\\. The internal guide focuses on application readiness and user entitlement verification. The external guide focuses on service accounts, API authorization and integration sign-off.\n\n## Document 1 — Internal Migration Guide\n\n:::writing{variant=\"document\" id=\"63821\"}\n# RATAN EMS2 → CES Migration\n**Internal Application & Entitlement Verification Guide**\n\n**Audience:** Settlement, Trade Control, FlowZero  \n**UAT Sign-off Target:** 6 November 2026  \n**Production Go-live:** 28 November 2026\n\n### 1. Objective\nMigrate all RATAN user entitlements and service authorization from EMS2 to CES, with **zero remaining EMS2 dependencies after final cutover**.\n\n### 2. Migration Readiness\n- **User accounts:** All X_RATANONE users synchronized to CES UAT and PROD, with incremental synchronization enabled.\n- **Entitlements:** X_RATANONE, RATAN_DATA_ENTITLEMENTS and RATAN_FUNC. Remaining production provisioning and profile assignments are pending CES CR.\n- **Portal Auth SDK:** CES support implemented in DEV.\n- **Tile migration:** Each tile can independently switch between EMS2 and CES during testing.\n- **Service authorization:** CES-only migration through the central Auth Server.\n\n### 3. Required Actions\n\n| Phase | Team Actions | Expected Outcome |\n|---|---|---|\n| DEV Verification | Prepare test users/accounts; verify login, tile access and core functionality | No functional blockers |\n| UAT Regression | Verify permitted/denied access, user profiles, tile switching and business workflows | Functional sign-off |\n| Service Verification | Verify internal service calls and service-account authorization | No broken dependencies |\n| Performance | Compare critical workflows and authorization latency against baseline | No unacceptable degradation |\n| Production | Confirm CES readiness and support final cutover | Migration sign-off |\n\n### 4. Responsibilities\nEach squad must nominate a POC, coordinate business users, execute testing, record defects and provide formal UAT sign-off.\n\n**Important:** The central Auth Server integration has been updated. Any additional direct or indirect EMS2/CES dependencies must be reported before production release.\n\n### 5. Exit Criteria\n- All critical workflows and permissions verified.\n- No unresolved critical/high-severity migration defects.\n- UAT sign-off received from Settlement, Trade Control and FlowZero.\n- All tiles ready for CES-only operation by 28 November.\n:::\n\n## Document 2 — External Integration Guide\n\n:::writing{variant=\"document\" id=\"63822\"}\n# RATAN EMS2 → CES Migration\n**External Service Integration & Authorization Guide**\n\n**Audience:** Upstream/downstream system owners, API consumers and integration teams  \n**UAT Sign-off Target:** 6 November 2026  \n**Production Go-live:** 28 November 2026\n\n### 1. Objective\nMigrate authorization for **all service accounts calling RATAN-exposed APIs** from EMS2 to CES.\n\nThe migration is CES-only. EMS2 compatibility will not be retained for service authorization after cutover.\n\n### 2. CES Readiness\n- **UAT:** Service authorization accounts and RATAN_FUNC entitlements have been onboarded.\n- **Production:** Service-account and RATAN_FUNC onboarding is pending CES production CR.\n- **Integration:** RATAN central Auth Server has been updated to support CES.\n\n### 3. Required Actions\n\n| Phase | Integration Team Actions | Expected Outcome |\n|---|---|---|\n| Dependency Confirmation | Identify upstream/downstream services, API endpoints, service accounts and POCs | Complete dependency inventory |\n| DEV Verification | Execute smoke tests against available DEV integration | No blocking issues |\n| UAT Integration | Verify authorized and unauthorized API calls, business flows and service identities | Successful integration regression |\n| Sign-off | Submit test evidence, identify issues and confirm readiness | Formal UAT sign-off |\n| Production | Coordinate with RATAN for CES cutover and post-release verification | No EMS2 authorization dependency |\n\n### 4. Important Considerations\n- Confirm that all required service accounts and permissions are configured correctly in CES.\n- Verify both successful and denied authorization scenarios.\n- Highlight any direct EMS2 integration or authorization mechanism outside RATAN's central Auth Server.\n- Report any configuration, connectivity or functional changes required on the consumer side.\n\n### 5. Exit Criteria\n- All identified API consumers and critical service calls verified.\n- Required CES service entitlements available in production.\n- Integration owners have provided UAT sign-off.\n- No unresolved critical/high-severity authorization defects.\n\n**Action Required:** Please nominate your integration POC, confirm your service-account dependencies and arrange testing to support the 6 November UAT target.\n:::\n\n## Key distinction\n\n|  | Internal Guide | External Guide |\n|--------|--------|--------|\n| Primary focus | User access and application functionality | Service-to-service API authorization |\n| Testing owners | Settlement, Trade Control, FlowZero | Upstream/downstream system owners |\n| Migration mechanism | Per-tile EMS2/CES selection | CES-only service authorization |\n| Sign-off | Business/application owners | Integration/system owners |\n| Final requirement | All RATAN tiles on CES | All RATAN API consumers authorized through CES |\n\nBoth guides use the same release target, but hold different teams accountable for their respective verification and sign-off.",
+    "status": {
+      "type": "idle"
+    },
+    "cwd": null,
+    "createdAt": 1793155215.973862,
+    "updatedAt": 1793241187.041001
+  },
+  "page": {
+    "order": "newest_first",
+    "limit": 10,
+    "nextCursor": null,
+    "hasMore": false
+  },
+  "turns": [
+    {
+      "id": "d37bb048-d6ff-4e24-a27a-27c7257b4301",
+      "status": "completed",
+      "error": null,
+      "startedAt": 1793240229.717,
+      "completedAt": 1793240283.737453,
+      "durationMs": null,
+      "items": [
+        {
+          "type": "userMessage",
+          "id": "d37bb048-d6ff-4e24-a27a-27c7257b4301",
+          "content": [
+            {
+              "type": "text",
+              "text": "generate a short but powerful document for internal guide and external guide"
+            }
+          ]
+        },
+        {
+          "type": "agentMessage",
+          "id": "27c02ac6-f0e7-4daf-ba81-568988216f7c",
+          "text": "Below are two concise, action-oriented guides for the **RATAN EMS2 → CES Migration**\\. The internal guide focuses on application readiness and user entitlement verification. The external guide focuses on service accounts, API authorization and integration sign-off.\n\n## Document 1 — Internal Migration Guide\n\n:::writing{variant=\"document\" id=\"63821\"}\n# RATAN EMS2 → CES Migration\n**Internal Application & Entitlement Verification Guide**\n\n**Audience:** Settlement, Trade Control, FlowZero  \n**UAT Sign-off Target:** 6 November 2026  \n**Production Go-live:** 28 November 2026\n\n### 1. Objective\nMigrate all RATAN user entitlements and service authorization from EMS2 to CES, with **zero remaining EMS2 dependencies after final cutover**.\n\n### 2. Migration Readiness\n- **User accounts:** All X_RATANONE users synchronized to CES UAT and PROD, with incremental synchronization enabled.\n- **Entitlements:** X_RATANONE, RATAN_DATA_ENTITLEMENTS and RATAN_FUNC. Remaining production provisioning and profile assignments are pending CES CR.\n- **Portal Auth SDK:** CES support implemented in DEV.\n- **Tile migration:** Each tile can independently switch between EMS2 and CES during testing.\n- **Service authorization:** CES-only migration through the central Auth Server.\n\n### 3. Required Actions\n\n| Phase | Team Actions | Expected Outcome |\n|---|---|---|\n| DEV Verification | Prepare test users/accounts; verify login, tile access and core functionality | No functional blockers |\n| UAT Regression | Verify permitted/denied access, user profiles, tile switching and business workflows | Functional sign-off |\n| Service Verification | Verify internal service calls and service-account authorization | No broken dependencies |\n| Performance | Compare critical workflows and authorization latency against baseline | No unacceptable degradation |\n| Production | Confirm CES readiness and support final cutover | Migration sign-off |\n\n### 4. Responsibilities\nEach squad must nominate a POC, coordinate business users, execute testing, record defects and provide formal UAT sign-off.\n\n**Important:** The central Auth Server integration has been updated. Any additional direct or indirect EMS2/CES dependencies must be reported before production release.\n\n### 5. Exit Criteria\n- All critical workflows and permissions verified.\n- No unresolved critical/high-severity migration defects.\n- UAT sign-off received from Settlement, Trade Control and FlowZero.\n- All tiles ready for CES-only operation by 28 November.\n:::\n\n## Document 2 — External Integration Guide\n\n:::writing{variant=\"document\" id=\"63822\"}\n# RATAN EMS2 → CES Migration\n**External Service Integration & Authorization Guide**\n\n**Audience:** Upstream/downstream system owners, API consumers and integration teams  \n**UAT Sign-off Target:** 6 November 2026  \n**Production Go-live:** 28 November 2026\n\n### 1. Objective\nMigrate authorization for **all service accounts calling RATAN-exposed APIs** from EMS2 to CES.\n\nThe migration is CES-only. EMS2 compatibility will not be retained for service authorization after cutover.\n\n### 2. CES Readiness\n- **UAT:** Service authorization accounts and RATAN_FUNC entitlements have been onboarded.\n- **Production:** Service-account and RATAN_FUNC onboarding is pending CES production CR.\n- **Integration:** RATAN central Auth Server has been updated to support CES.\n\n### 3. Required Actions\n\n| Phase | Integration Team Actions | Expected Outcome |\n|---|---|---|\n| Dependency Confirmation | Identify upstream/downstream services, API endpoints, service accounts and POCs | Complete dependency inventory |\n| DEV Verification | Execute smoke tests against available DEV integration | No blocking issues |\n| UAT Integration | Verify authorized and unauthorized API calls, business flows and service identities | Successful integration regression |\n| Sign-off | Submit test evidence, identify issues and confirm readiness | Formal UAT sign-off |\n| Production | Coordinate with RATAN for CES cutover and post-release verification | No EMS2 authorization dependency |\n\n### 4. Important Considerations\n- Confirm that all required service accounts and permissions are configured correctly in CES.\n- Verify both successful and denied authorization scenarios.\n- Highlight any direct EMS2 integration or authorization mechanism outside RATAN's central Auth Server.\n- Report any configuration, connectivity or functional changes required on the consumer side.\n\n### 5. Exit Criteria\n- All identified API consumers and critical service calls verified.\n- Required CES service entitlements available in production.\n- Integration owners have provided UAT sign-off.\n- No unresolved critical/high-severity authorization defects.\n\n**Action Required:** Please nominate your integration POC, confirm your service-account dependencies and arrange testing to support the 6 November UAT target.\n:::\n\n## Key distinction\n\n|  | Internal Guide | External Guide |\n|--------|--------|--------|\n| Primary focus | User access and application functionality | Service-to-service API authorization |\n| Testing owners | Settlement, Trade Control, FlowZero | Upstream/downstream system owners |\n| Migration mechanism | Per-tile EMS2/CES selection | CES-only service authorization |\n| Sign-off | Business/application owners | Integration/system owners |\n| Final requirement | All RATAN tiles on CES | All RATAN API consumers authorized through CES |\n\nBoth guides use the same release target, but hold different teams accountable for their respective verification and sign-off."
+        }
+      ]
+    },
+    {
+      "id": "aa007a0a-cf55-4d71-9710-754a6abb00c1",
+      "status": "completed",
+      "error": null,
+      "startedAt": 1793233254.7840738,
+      "completedAt": 1793233267.474622,
+      "durationMs": null,
+      "items": [
+        {
+          "type": "userMessage",
+          "id": "aa007a0a-cf55-4d71-9710-754a6abb00c1",
+          "content": [
+            {
+              "type": "text",
+              "text": "Good. I also need a notice email for internal service. We have three squads in internal. One is settlement. One is trade control. One is Flow Zero. So please make a draft for them that announce that we are going to do this migration from the whole RATHAN level, including all RATHAN users and all RATHAN entitlements to CES and all accounts calling RATHAN exposed service. Okay? And there are some key points that we have now enabled. We have done the migration on Dev, and please, for each team, please set up the verification process and the verification accounts to have a first trial on the Dev, first to see if the main functionality is working and not blocked. Then we will prompt to UAT for each team to do the official regression and involve their users to do UAT to verify. And the whole process expected to do in one week. Okay? The second one is that confirm with CES that all users which have extra time one entitlements has already been onboarded to UAT and production, and they will have all the job to sync up the users. So ideally, we will have all users onboarded already for the each environment. So please double check with the users' permission. The third one is that we provide the independent switching for each tile to CES. Each tile can have its own process to switch to CES or back to EMS2 for testing. But eventually all Ratan tiles will set to CES as the last release. The last one is that for service call, we will totally migrate to CES for testing and onboarding and release. Now we only touched the auth server as a central authorization service. If you have any dependencies on CES in some other ways, please raise to us. We will check and remedy accordingly. We expect that for the final release in November, there will be no EMF2 dependency in whole Ratan anymore. This is the principle."
+            }
+          ]
+        },
+        {
+          "type": "agentMessage",
+          "id": "ef51ed01-81a1-403e-9f89-79e2767bc542",
+          "text": ":::writing{variant=\"email\" id=\"58314\" subject=\"Action Required: RATAN EMS2 to CES Migration – DEV Verification &amp; UAT Sign-off\"}\nHi Teams,\n\nWe are proceeding with the **RATAN-wide entitlement migration from EMS2 to CES**, covering all RATAN users, user entitlements, and service accounts accessing RATAN-exposed APIs.\n\nThe migration has been implemented in **DEV**, and we would like to engage the **Settlement, Trade Control, and FlowZero** squads to start verification and prepare for UAT.\n\n### 1. DEV Verification & UAT\n\nEach squad is requested to:\n\n- Identify the relevant POCs, test users, and service accounts.\n- Perform an initial smoke test in DEV to confirm that core functionality and service calls are not blocked by the CES integration.\n- Arrange business users to perform formal regression testing in UAT, covering user access, entitlement permissions, and service authorization.\n- Provide UAT sign-off once verification is completed.\n\n**Target: Complete DEV verification, UAT regression, and sign-off by Friday, 6 November.** Please highlight any resource or testing constraints early.\n\n### 2. User & Entitlement Onboarding\n\nCES has confirmed that all user accounts under **X_RATANONE** have been synchronized to both UAT and production, with incremental synchronization jobs in place.\n\nHowever, entitlement profiles and assignments still need to be verified. Please ensure that your test users have the expected permissions and report any discrepancies.\n\nThe remaining production entitlement onboarding will be coordinated with the CES team through their release CR.\n\n### 3. Independent Tile Migration\n\nThe Portal now supports **independent entitlement source selection for each tile**.\n\n- Each tile can independently switch between EMS2 and CES during verification.\n- Teams can control their testing and migration sequence without affecting other tiles.\n- All RATAN tiles are expected to operate on CES for the final November release.\n\n### 4. Service Authorization Migration\n\nFor internal and external systems calling RATAN-exposed services, service authorization will be **fully migrated to CES**, without retaining EMS2 compatibility.\n\nPlease verify all relevant upstream, downstream, and internal service calls, including service-account permissions, and confirm that the integrations function as expected.\n\nThe current implementation covers our **central Auth Server**. If your application has other direct or indirect dependencies on EMS2 or CES outside this integration, please highlight them so we can assess and address any gaps.\n\n### 5. Production Target\n\nOur target is to complete the RATAN-wide migration by **28 November 2026**, with **no remaining EMS2 dependencies across RATAN**.\n\nThis includes user entitlement control, service authorization, and any additional dependencies identified during testing.\n\nYour support is essential to ensure a smooth migration. Please confirm your testing POC and planned verification activities, and raise any blockers or concerns as early as possible.\n\nThanks,\nRATAN Team\n:::\n\nI deliberately distinguished **user-account synchronization** \\(confirmed by CES) from **entitlement provisioning and profile assignments** \\(still requiring verification). This avoids giving the squads the impression that all production permissions are already migrated.\n\nThe email also makes the two deadlines explicit: **6 November for testing and sign-off**, and **28 November for production migration**\\."
+        }
+      ]
+    },
+    {
+      "id": "4ca9129d-15cf-4f08-a5d9-76052c0b0741",
+      "status": "completed",
+      "error": null,
+      "startedAt": 1793201475.116,
+      "completedAt": 1793201533.76463,
+      "durationMs": null,
+      "items": [
+        {
+          "type": "userMessage",
+          "id": "4ca9129d-15cf-4f08-a5d9-76052c0b0741",
+          "content": [
+            {
+              "type": "text",
+              "text": "Let's continue refining the runbook.\n\nFirst, regarding User Entitlement Control and Service Authorization, we need to onboard the corresponding accounts to CES. For user accounts at this stage, that means all users in EMS2 under X_RATANONE. We've confirmed with CES that these users are already fully synchronized in both UAT and production, and they have scheduled tasks in place to sync any incremental changes in real time. For Service Authorization, we've recently submitted a new request for this. It's already in UAT, but not yet in production; we need them to use their corresponding CRs to push it to production.\n\nSecond, for entitlement onboarding: similarly, user entitlements onboarding covers all X_RATANONE and RATAN_DATA_ENTITLEMENTS. All entitlement data needs to be in production, including X_RATANONE, RATAN_DATA_ENTITLEMENTS, and RATAN_FUNC. Currently, only RATAN_DATA_ENTITLEMENTS have been pushed to production, so we need their CR to push the remaining entitlements to production and assign the corresponding users to their correct profiles. As for Service Authorization, specifically RATAN_FUNC, I just mentioned that this needs to be moved to production; right now, it's only deployed in UAT.\n\nNext is user involvement in UAT testing. This UAT is split into two parts:\n\n1. User entitlements (for human users): They need to log in to the portal and access the corresponding entitlements. For RATAN, these users are from Settlement, Trade, and FlowZero. We need to involve them in UAT and get their sign-off.\n2. Service Authorization: For the upstream and downstream systems corresponding to these service accounts, we need to involve them in integration testing and get their sign-off.\n\nThe first part depends entirely on the CES release schedule; we expect them to deploy to production by mid-November. The second part, the UAT, depends on user availability, and we expect to wrap it up within a week, specifically by next Friday."
+            }
+          ]
+        },
+        {
+          "type": "agentMessage",
+          "id": "8c582fa8-32b9-4ea3-8c2e-197a67cc9a52",
+          "text": "## EMS2 → CES Migration — Updated Runbook\n\nThe important change is to distinguish **CES onboarding readiness** from **Portal migration readiness**\\. Some CES data is already available, so we should track only the outstanding production dependencies rather than treating everything as a new onboarding task.\n\n### 1\\. Confirmed CES readiness\n\n| Item | UAT | Production |\n|--------|--------|--------|\n| X\\_RATANONE user accounts | Synced | Synced |\n| Incremental user synchronization | Configured | Configured |\n| RATAN\\_DATA\\_ENTITLEMENTS | Available | Deployed |\n| X\\_RATANONE entitlements | To verify | Pending CES CR |\n| User-to-profile assignments | To verify | Pending |\n| Service accounts | Onboarded | Pending CES CR |\n| RATAN\\_FUNC service entitlements | Deployed | Pending CES CR |\n\nThe outstanding CES production release therefore needs to cover X\\_RATANONE entitlements, correct user-profile assignments, service accounts and RATAN\\_FUNC authorization data.\n\n### 2\\. Key milestones\n\n| Deadline | Milestone |\n|--------|--------|\n| **28 Oct** | Complete Portal Auth SDK, independent tile selection and backend CES authorization development |\n| **30 Oct** | Confirm all internal/external service dependencies, POCs and UAT participants |\n| **6 Nov** | Settlement, Trade and FlowZero user UAT; internal/external service integration UAT; performance testing and sign-offs |\n| **13 Nov** | Proposed CES production provisioning target (mid-November) |\n| **27 Nov** | Complete CES and Portal CR approvals and production go/no-go |\n| **28 Nov** | Production go-live |\n| **4 Dec** | Cleanup, monitoring and handover |\n\nCES provisioning depends on the CES team's release schedule. UAT depends on Settlement, Trade, FlowZero and service-consumer availability. These can proceed in parallel using CES UAT, without waiting for production provisioning.\n\n## Updated single-sheet runbook\n\n**CES Migration Runbook — Revised**\n\n1 worksheet · 16 essential checkpoints · Updated readiness and deadlines\n\n[Download Excel](sandbox:/mnt/data/CES_Migration_Runbook_Refined_2026-10-28.xlsx)\n\n[Download CSV alternative](sandbox:/mnt/data/CES_Migration_Runbook_Refined_2026-10-28.csv)\n\nI've kept the milestone structure concise and added confirmed readiness statuses, outstanding CES provisioning requirements, UAT participants, internal service-call verification, and separate CES/Portal CR responsibilities.\n\n**Two items to manage closely\\:**\n\n- **CES production readiness\\:** Obtain confirmation of the mid-November release date and the specific entitlements, accounts and profile assignments covered by the CES CRs.\n- **UAT readiness\\:** Confirm Settlement, Trade, FlowZero and internal/external service-consumer participants immediately so the 6 November sign-off target is achievable.\n\nThe workbook is verified as a valid Excel file and retains the **28 November production go-live** target."
+        }
+      ]
+    },
+    {
+      "id": "0c32aa98-689c-41fb-80b3-cb3e3356eca8",
+      "status": "completed",
+      "error": null,
+      "startedAt": 1793169141.571,
+      "completedAt": 1793169273.017123,
+      "durationMs": null,
+      "items": [
+        {
+          "type": "userMessage",
+          "id": "0c32aa98-689c-41fb-80b3-cb3e3356eca8",
+          "content": [
+            {
+              "type": "text",
+              "text": "draw a gantte diagram for timeline arrangement"
+            }
+          ]
+        },
+        {
+          "type": "agentMessage",
+          "id": "d2af78de-76a4-4801-aebb-64f44ccccd32",
+          "text": "## EMS2 → CES Migration — Gantt Timeline\n\n![EMS2 to CES Migration Gantt Chart](sandbox:/mnt/data/CES_Migration_Gantt.png)\n\n[View PNG](sandbox:/mnt/data/CES_Migration_Gantt.png)  [Download SVG](sandbox:/mnt/data/CES_Migration_Gantt.svg)\n\nThe diagram covers both workstreams and their six milestones, with these key deadlines\\:\n\n- **28 October\\:** Development completion, including Auth SDK CES support.\n- **18 November\\:** QA, performance testing and UAT sign-off.\n- **25 November\\:** CES production provisioning target.\n- **28 November\\:** Production go-live, subject to CES and Portal CR approvals.\n- **4 December\\:** Post-production cleanup and handover.\n\nThe intermediate dates are proposed planning targets. The two production CRs remain separate, while both workstreams share the same go-live deadline.\n\n**Critical dependency\\:** CES UAT provisioning must be completed before the corresponding authorization tests can be signed off."
+        }
+      ]
+    },
+    {
+      "id": "7411605f-b61e-4937-83f2-055864c76c9a",
+      "status": "completed",
+      "error": null,
+      "startedAt": 1793166724.949,
+      "completedAt": 1793166787.862333,
+      "durationMs": null,
+      "items": [
+        {
+          "type": "userMessage",
+          "id": "7411605f-b61e-4937-83f2-055864c76c9a",
+          "content": [
+            {
+              "type": "text",
+              "text": "Don't have to so complex, covers all in one sheet, I mainly care about essential milestones."
+            }
+          ]
+        },
+        {
+          "type": "agentMessage",
+          "id": "70233f75-da2d-4b59-a5e5-e1a239ca0a06",
+          "text": "I've simplified the runbook to **one Excel sheet with 12 essential milestones**, covering both migration workstreams.\n\n**EMS2 → CES Migration — Simplified Runbook**\n\nExcel · 1 worksheet · 12 milestones\n\n[Download Excel](sandbox:/mnt/data/CES_Migration_One_Sheet_Milestones.xlsx)\n\n[Download CSV instead](sandbox:/mnt/data/CES_Migration_One_Sheet_Milestones.csv) if Excel still won't open.\n\n### Milestone summary\n\n| Milestone | Target |\n|--------|--------|\n| 1\\. Dependency identification | 30 Oct |\n| 2\\. CES onboarding (UAT &amp; PROD) | 25 Nov |\n| 3\\. Development completion | **28 Oct (today)** |\n| 4\\. QA, UAT &amp; performance testing | 18 Nov |\n| 5\\. Production CR &amp; go-live | **28 Nov** |\n| 6\\. Cleanup &amp; handover | 4 Dec |\n\nThese six milestones apply to both user entitlements and service authorization, with separate rows for each.\n\nThe sheet retains the critical technical deliverables, owners, dependencies, target dates and statuses. Intermediate dates are proposed; development is marked **Due today**, not completed.\n\nNo additional worksheets, detailed task breakdowns or dashboards."
+        }
+      ]
+    }
+  ],
+  "attachments": []
+}

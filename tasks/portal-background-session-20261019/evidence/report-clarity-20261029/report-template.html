@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Session Refresh · Results and reasons</title>
+<style>
+:root{--ink:#18303e;--muted:#526571;--bg:#f5f4f0;--line:#d9e0df;--red:#a72739;--amber:#885b12;--teal:#176b5c}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,sans-serif}
+main{max-width:1100px;padding:34px 28px 50px;margin:auto}h1{font-size:clamp(30px,4.5vw,45px);line-height:1.13;letter-spacing:-.035em;margin:8px 0 20px}h2{font-size:25px;letter-spacing:-.02em;margin:36px 0 8px}h3{font-size:17px;line-height:1.35;margin:0}p{margin:8px 0}.eyebrow{text-transform:uppercase;font-size:12px;letter-spacing:.12em;font-weight:750;color:var(--muted)}
+a{color:#0c627a;text-underline-offset:3px}.note,.section-intro{color:var(--muted);font-size:14px}.decision{background:white;padding:20px 24px;border-left:5px solid var(--red);border-radius:0 10px 10px 0}.badge,.status{display:inline-block;border-radius:99px;padding:3px 10px;font-weight:750;font-size:12px}.badge,.failed{background:#fbe6e9;color:var(--red)}.partial{background:#fff0d4;color:var(--amber)}.blocked{background:#e9edf0;color:#526571}.passed{background:#e1f2ec;color:var(--teal)}.status{margin:7px 0;display:table}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 12px}.stat{background:white;border:1px solid var(--line);border-radius:9px;padding:16px}.stat b{display:block;font-size:31px;line-height:1.1}.stat span{font-size:16px;font-weight:750}.stat p{font-size:13px;color:var(--muted);margin:7px 0 0}.stat a{font-size:13px}.metric-line{background:#e9efeb;border-radius:8px;padding:12px 16px;margin:14px 0}.metric-line strong{color:var(--teal)}
+nav{display:flex;flex-wrap:wrap;gap:8px 18px;margin:20px 0;padding-bottom:16px;border-bottom:1px solid var(--line);font-size:14px}section{scroll-margin-top:14px}.reason-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.reason-card{background:white;border:1px solid var(--line);padding:17px 19px;border-radius:10px;font-size:14px}.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px}.count{white-space:nowrap;font-size:12px;font-weight:750;background:#eaf0ef;border-radius:99px;padding:4px 9px}.reason-card p{margin:8px 0}.reason-card details{margin:8px 0}summary{cursor:pointer;color:#1d5264;font-weight:650}button{font:inherit;cursor:pointer}.text-button{background:none;border:0;padding:8px 0 0;color:#0c627a;text-decoration:underline;text-underline-offset:3px;font-size:13px}
+table{width:100%;border-collapse:collapse;background:white;margin-top:14px;font-size:14px}th{background:#e7edeb;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em}td,th{padding:15px 17px;vertical-align:top;border-bottom:1px solid var(--line)}td:first-child{width:30%}td p{margin:5px 0}.ac-table td:first-child{width:31%}.coverage{background:white;border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin:24px 0}.coverage summary{font-size:18px}.coverage p{max-width:85ch}.historical{margin:22px 0;padding:14px 18px;border:1px solid var(--line);background:#fff;border-radius:8px}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;background:#e8eeeb;padding:16px;border-radius:9px;margin-top:16px}label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:750}input,select{font:15px system-ui;padding:9px 11px;border:1px solid #b7c6c8;border-radius:5px;background:white;color:var(--ink)}input{min-width:280px}button.secondary{padding:9px 13px;border:1px solid #9cb1b4;border-radius:5px;background:white;font-size:14px}button:disabled{opacity:.45;cursor:default}.pagination{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:12px 0;font-size:14px}.case-row[hidden]{display:none!important}.case-row details{margin:9px 0}.source-links{display:flex;gap:12px 22px;flex-wrap:wrap;margin-top:14px;font-size:14px}footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.empty{padding:20px;background:white}code{font-size:.9em;overflow-wrap:anywhere}
+@media(max-width:800px){main{padding:24px 18px}.reason-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.ac-table,.ac-table tbody,.ac-table tr,.ac-table td,.case-table,.case-table tbody,.case-table tr,.case-table td{display:block}.ac-table thead,.case-table thead{display:none}.ac-table td:first-child,.case-table td:first-child{width:auto;border-bottom:0;padding-bottom:0}.ac-table td:last-child,.case-table td:last-child{padding-top:4px}.status{display:inline-block;margin-left:8px}input{min-width:0;width:100%}.controls label{flex:1 1 220px}.decision{padding:18px}.count{font-size:11px}}
+@media print{nav,.controls,.pagination,.text-button{display:none}body{background:white}.case-row[hidden]{display:none!important}}
+</style></head><body><main>
+<div class="eyebrow">Session Refresh · 29 October 2026 · Release report</div>
+<h1>Release is on hold.<br>Here is what failed and what remains unverified.</h1>
+<section class="decision" aria-label="Release conclusion"><span class="badge">NO_GO · Do not release on this evidence</span>
+<p><b>The main blocker is logout revocation.</b> The current controller reports successful logout but still accepts valid refresh credentials after access expires.</p>
+<p>A holder of copied refresh credentials could regain authentication. <b>Severity: High, conditional.</b> Production exposure is unverified.</p>
+<p><b>Next action:</b> authentication and security owners must correct the failure or prove it inapplicable, then rerun the checks.</p>
+<p class="note">Owner: unknown. <a href="10-release-confidence.md#failure-rn-s002">Evidence and impact</a>.
+High confidence supports this hold. The full assessment records decision certainty as 100/100; that does not mean release readiness.</p></section>
+<div class="stats" aria-label="Case execution totals">
+<div class="stat"><b>182</b><span>Passed</span><p>The stated checks passed in their recorded test environment.</p></div>
+<div class="stat"><b style="color:var(--red)">15</b><span>Failed</span><p>An executed check did not meet its expected result.</p><a href="#failed-reasons">See failure reasons ↓</a></div>
+<div class="stat"><b style="color:var(--amber)">199</b><span>Partial</span><p>Some checks ran. Required proof is still missing.</p><a href="#partial-reasons">See missing proof ↓</a></div>
+<div class="stat"><b>71</b><span>Blocked</span><p>A required check could not run or finish.</p><a href="#blocked-reasons">See blockers ↓</a></div>
+</div>
+<p class="note"><b>Total: 467 cases.</b> This includes 16 earlier results and 451 cases addressed in the latest run.
+Only 197 cases reached a complete pass or fail result. Partial and blocked cases remain unverified.</p>
+<div class="metric-line"><strong>All 471 current unit tests passed across 123 suites.</strong> There were zero failures or skips.
+<a href="evidence/remaining-execution-20261029/full-unit-execution.json">Unit evidence</a>.</div>
+<p class="note"><b>Acceptance criteria:</b> 3 passed, 3 failed, 1 partial. Full behavior coverage remains unknown.
+<a href="#acceptance-criteria">See why</a>.</p>
+<p class="note"><b>Code review:</b> 36 changed files received historical review, with the later Timeout change also inspected.
+A complete independent review of the current candidate is unavailable. <a href="10-release-confidence.md#metrics-summary">Review limits</a>.</p>
+<nav aria-label="Report sections"><a href="#failed-reasons">Failures</a><a href="#partial-reasons">Partial cases</a><a href="#blocked-reasons">Blocked cases</a><a href="#acceptance-criteria">Acceptance criteria</a><a href="#coverage-meaning">What 12/12 meant</a><a href="#case-explorer">Find a case</a></nav>
+@@REASON_SECTIONS@@
+<section id="acceptance-criteria"><h2>Why the acceptance criteria failed or remain partial</h2>
+<p class="section-intro">An acceptance criterion (AC) defines an expected user outcome. Several cases can check one criterion.
+Three criteria pass in the controlled local tests, three fail, and one is partial.</p>
+<table class="ac-table"><thead><tr><th>Expected user outcome</th><th>Result, reason, and missing proof</th></tr></thead><tbody>@@AC_ROWS@@</tbody></table>
+<p class="note">Passing criteria cover the stated local conditions. Requirement review and production acceptance remain separate.</p></section>
+<section id="coverage-meaning" class="coverage"><h2 style="margin-top:0">What “changed paths with selected tests” meant</h2>
+<p><b>It meant: each of 12 changed runtime source files has at least one relevant passing test.</b></p>
+<p>“Path” was a file name, such as the Timeout controller. “Selected” meant the reviewer inspected specific checks for that file.</p>
+<p>For example, a test checks that successful renewal closes the timeout dialog exactly once.
+That test does not prove every timing condition, error path, or user journey in the file.</p>
+<p><b>12/12 counts files with some passing test evidence. Complete coverage of changed behavior is still unknown.</b></p>
+<p>The loading helper has passing tests, but <a href="10-release-confidence.md#failure-rn-q009">RN-Q009</a> reveals another failing behavior in that file.</p>
+<details><summary>See the denominator and exact mappings</summary><p>The comparison has 36 changed paths: 12 runtime source files and 24 test or configuration paths.
+Six runtime files change behavior. Six support maintenance.</p><p><a href="09-renewal-coverage.md#code-change-to-test-case-coverage">Twelve files, inspected checks, and execution evidence</a></p></details></section>
+@@HISTORICAL@@
+<section id="case-explorer"><h2>Find the reason for any failed, partial, or blocked case</h2>
+<p class="section-intro">All 285 cases are included below. Filter by result or search an ID, title, or reason.</p>
+<div class="controls"><label>Result<select id="status-filter"><option value="FAILED">Failed · 15</option><option value="PARTIALLY_EXECUTED">Partial · 199</option><option value="BLOCKED">Blocked · 71</option><option value="ALL">All · 285</option></select></label>
+<label>Search<input id="case-search" type="search" placeholder="Case ID or words, such as renewal or transport"></label>
+<button class="secondary" id="reset-filter">Clear filters</button></div>
+<div class="pagination"><span id="case-count" aria-live="polite"></span><div><button class="secondary" id="previous-page">Previous</button> <button class="secondary" id="next-page">Next</button></div></div>
+<p id="group-filter-label" class="note" hidden></p>
+<table class="case-table"><thead><tr><th>Case and result</th><th>Reason and next step</th></tr></thead><tbody>@@CASE_ROWS@@</tbody></table><p id="no-results" class="empty" hidden>No cases match these filters.</p>
+<noscript><p>Enable JavaScript to filter cases. All case explanations remain visible below.</p></noscript></section>
+<section><h2>Supporting documents</h2><div class="source-links"><a href="10-release-confidence.md">Full release assessment</a><a href="08-test-execution-renewal.md">Execution report</a><a href="09-renewal-coverage.md">SDLC coverage matrices</a><a href="06-test-cases.md">Case definitions</a><a href="evidence/report-clarity-20261029/validation.json">Report validation</a></div></section>
+<footer>Assessment source: frontend 66c6411ade58 · BFF 19f484efbbfb · SDK b0aa82005e7f.<br>
+This update explains existing results. It adds no test execution or deployment approval. Release artifacts remain excluded.<br>
+Automated checks and human writing review remain separate. ASD writing review: PENDING.</footer>
+</main><script>
+(()=>{const rows=[...document.querySelectorAll('.case-row')],status=document.querySelector('#status-filter'),search=document.querySelector('#case-search');let page=0,group=null;const size=20;
+function render(){const query=search.value.trim().toLowerCase(),matches=rows.filter(r=>(status.value==='ALL'||r.dataset.status===status.value)&&(!group||r.dataset.group===group)&&(!query||r.dataset.search.includes(query)));const max=Math.max(0,Math.ceil(matches.length/size)-1);page=Math.min(page,max);rows.forEach(r=>r.hidden=true);matches.slice(page*size,(page+1)*size).forEach(r=>r.hidden=false);document.querySelector('#case-count').textContent=matches.length?`Showing ${page*size+1}–${Math.min((page+1)*size,matches.length)} of ${matches.length} cases`:'0 cases';document.querySelector('#previous-page').disabled=page===0;document.querySelector('#next-page').disabled=page>=max;document.querySelector('#no-results').hidden=matches.length>0;const label=document.querySelector('#group-filter-label');label.hidden=!group;if(group)label.textContent='Showing the reason group you selected. Clear filters to see other cases.';}
+status.addEventListener('change',()=>{page=0;group=null;render();});search.addEventListener('input',()=>{page=0;render();});document.querySelector('#reset-filter').addEventListener('click',()=>{page=0;group=null;status.value='ALL';search.value='';render();});document.querySelector('#previous-page').addEventListener('click',()=>{page--;render();});document.querySelector('#next-page').addEventListener('click',()=>{page++;render();});document.querySelectorAll('.group-button').forEach(b=>b.addEventListener('click',()=>{group=b.dataset.group;page=0;status.value='ALL';search.value='';render();document.querySelector('#case-explorer').scrollIntoView({behavior:'smooth'});}));render();})();
+</script></body></html>

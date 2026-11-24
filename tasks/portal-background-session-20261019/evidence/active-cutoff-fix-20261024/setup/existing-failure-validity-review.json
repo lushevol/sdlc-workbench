@@ -1,0 +1,393 @@
+{
+  "id": "REVIEW-original-five-dom-failures-20261024",
+  "recorded_at": "2026-10-24T16:20:10.793456+00:00",
+  "critical_conclusions": [
+    "Keep all five reached assertion failures. Their retained setup supports the stated DOM and request scope.",
+    "Do not infer physical foreground interaction or native lifecycle validity from these results."
+  ],
+  "reviewed_cases": [
+    {
+      "id": "E2E-01",
+      "mode": "mouse",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "scope": "Observed DOM, protocol input, storage, and authentication-request predicates only.",
+      "raw_result": {
+        "path": "browser/cutoff-mouse-20261024T155628/artifacts/result.json",
+        "sha256": "64947df9dbed7a4f41f44384d07c6455d91552f8f26483bbb2d2718e239c2f58"
+      },
+      "raw_run": {
+        "path": "browser/cutoff-mouse-20261024T155628/run.json",
+        "sha256": "cc7db4df39706651dc7329e9f8a7b3f5c771ccd35b31b6e571d54805ac593190"
+      },
+      "assertion_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 265,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "56217ca626e7e2bcc1c794db0892236ce5fc84aedeb04de3527fb60cd2681e3c"
+      },
+      "helper_sources": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "observed_setup": [
+        "Setup renewal requests settled before the activity interval.",
+        "The access-validity setup assertion completed before the failed renewal assertion.",
+        "The trusted-event count assertion completed before the failed renewal assertion.",
+        "The retained lifecycle shows visible pageshow and no hidden event."
+      ],
+      "reached_failed_predicate": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "classification": "FAILED",
+      "rationale": "The renewal-count business assertion failed during the original activity window.",
+      "environment_limit": "The lock onset is unknown. Current lock evidence cannot establish when these earlier intervals became locked."
+    },
+    {
+      "id": "E2E-02",
+      "mode": "keyboard",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "scope": "Observed DOM, protocol input, storage, and authentication-request predicates only.",
+      "raw_result": {
+        "path": "browser/cutoff-keyboard-20261024T155659/artifacts/result.json",
+        "sha256": "e58a34da27691be873c9ef2ae037ca8c47af1c0577e24654c386bb6d64bb3f07"
+      },
+      "raw_run": {
+        "path": "browser/cutoff-keyboard-20261024T155659/run.json",
+        "sha256": "616cded910fc36bc2e7370acb21facd76698354d6aad474cb5965c70ee836832"
+      },
+      "assertion_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 265,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "56217ca626e7e2bcc1c794db0892236ce5fc84aedeb04de3527fb60cd2681e3c"
+      },
+      "helper_sources": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "observed_setup": [
+        "Setup renewal requests settled before the activity interval.",
+        "The access-validity setup assertion completed before the failed renewal assertion.",
+        "The trusted-event count assertion completed before the failed renewal assertion.",
+        "The retained lifecycle shows visible pageshow and no hidden event."
+      ],
+      "reached_failed_predicate": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "classification": "FAILED",
+      "rationale": "The renewal-count business assertion failed during the original activity window.",
+      "environment_limit": "The lock onset is unknown. Current lock evidence cannot establish when these earlier intervals became locked."
+    },
+    {
+      "id": "E2E-03",
+      "mode": "scroll",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "scope": "Observed DOM, protocol input, storage, and authentication-request predicates only.",
+      "raw_result": {
+        "path": "browser/cutoff-scroll-20261024T155731/artifacts/result.json",
+        "sha256": "4d339c5fc3b93a90cec2b160b4cdd43e149d4f3a5cc6bf667bbfd0f430430686"
+      },
+      "raw_run": {
+        "path": "browser/cutoff-scroll-20261024T155731/run.json",
+        "sha256": "4150cd3afa9ec30e516494dc95ca4c6211d8e9f5c7919c9e75210e076b82b9af"
+      },
+      "assertion_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 265,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "56217ca626e7e2bcc1c794db0892236ce5fc84aedeb04de3527fb60cd2681e3c"
+      },
+      "helper_sources": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "observed_setup": [
+        "Setup renewal requests settled before the activity interval.",
+        "The access-validity setup assertion completed before the failed renewal assertion.",
+        "The trusted-event count assertion completed before the failed renewal assertion.",
+        "The retained lifecycle shows visible pageshow and no hidden event."
+      ],
+      "reached_failed_predicate": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "classification": "FAILED",
+      "rationale": "The renewal-count business assertion failed during the original activity window.",
+      "environment_limit": "The lock onset is unknown. Current lock evidence cannot establish when these earlier intervals became locked."
+    },
+    {
+      "id": "E2E-04",
+      "mode": "pending",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "scope": "Observed DOM, protocol input, storage, and authentication-request predicates only.",
+      "raw_result": {
+        "path": "browser/cutoff-pending-20261024T155803/artifacts/result.json",
+        "sha256": "185346302a4c79473f382f0106ab61a91c5307fc15c8d406cc7d8f9dc6bbf5b9"
+      },
+      "raw_run": {
+        "path": "browser/cutoff-pending-20261024T155803/run.json",
+        "sha256": "bd99a519f09bb9680161a835ae246b449feb5a5d64aa3100f8dd2cc555fc3754"
+      },
+      "assertion_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingRenewalCompletes",
+        "line": 313,
+        "end_line": 318,
+        "assertion_lines": [],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "419112c760277de910a518d412f1d7fcd8d0bb8eeb555fa92e138c3418e874d6"
+      },
+      "helper_sources": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "observed_setup": [
+        "The idle prompt and Extend became DOM-visible.",
+        "The actual service supplied refresh credentials with more than 30 seconds remaining.",
+        "The original idlePrompt assertions completed before the failed prompt assertion.",
+        "The retained lifecycle shows prompt opening and premature closure."
+      ],
+      "reached_failed_predicate": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "classification": "FAILED",
+      "rationale": "The pending request reached its hold before the prompt assertion failed.",
+      "environment_limit": "The lock onset is unknown. Current lock evidence cannot establish when these earlier intervals became locked."
+    },
+    {
+      "id": "E2E-05",
+      "mode": "retry",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "scope": "Observed DOM, protocol input, storage, and authentication-request predicates only.",
+      "raw_result": {
+        "path": "browser/cutoff-retry-20261024T155915/artifacts/result.json",
+        "sha256": "c7a4c197c6112c70612f2cd5aa83f987819fea1d061bff1b8bbc80b836a122f9"
+      },
+      "raw_run": {
+        "path": "browser/cutoff-retry-20261024T155915/run.json",
+        "sha256": "dce5e76fbdf0d940c7143b248b46a14bc81061742c3143891dbaf1381c9fba27"
+      },
+      "assertion_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertRejectedRenewalCanRetry",
+        "line": 320,
+        "end_line": 335,
+        "assertion_lines": [
+          329,
+          330
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "d39feee980ed79d9154466425e17a6e7d1b6d0a139f7dfcdbfbd06050a04c3d0"
+      },
+      "helper_sources": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "observed_setup": [
+        "The idle prompt and Extend became DOM-visible.",
+        "The actual service supplied refresh credentials with more than 30 seconds remaining.",
+        "The original idlePrompt assertions completed before the failed prompt assertion.",
+        "The retained lifecycle shows prompt opening and premature closure."
+      ],
+      "reached_failed_predicate": "Rejected renewal must leave the prompt visible.\n\nfalse !== true\n",
+      "classification": "FAILED",
+      "rationale": "The first request reached its controlled abort before the rejected-prompt assertion failed.",
+      "environment_limit": "The lock onset is unknown. Current lock evidence cannot establish when these earlier intervals became locked."
+    }
+  ],
+  "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+  "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "new_browser_execution": false,
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "The review follows exact helper control flow and retained execution facts. It does not reconstruct unknown lock onset."
+  ]
+}

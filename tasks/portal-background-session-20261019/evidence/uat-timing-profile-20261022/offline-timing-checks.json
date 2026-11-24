@@ -1,0 +1,40 @@
+{
+  "caseId": "offline-timing-preflight-regressions",
+  "status": "PASSED",
+  "startedAt": "2026-10-22T02:01:12.400082+00:00",
+  "completedAt": "2026-10-22T02:01:12.478650+00:00",
+  "command": [
+    "node",
+    "--test",
+    "Tests/ratan/plugin/ui/session/offline/timing.test.cjs"
+  ],
+  "workingDirectory": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine",
+  "exitCode": 0,
+  "stdout": "\u2714 an eight-hour issued access fails a fifteen-minute profile even while unexpired (0.852583ms)\n\u2714 matching access passes with independent absent deadline evidence and unbound deployment (0.074209ms)\n\u2714 explicit refresh and absolute expectations require observed claims (0.102208ms)\n\u2714 refresh can expire before access and absolute lifetime starts at auth_time (0.069625ms)\n\u2714 invalid epoch claims and milliseconds cannot pass (0.122333ms)\n\u2714 clock tolerance uses a bounded measurement and never treats old iat as current server time (0.083375ms)\n\u2714 comparable service Date skew fails; cached, absent, and slow samples stay explicitly incomparable (0.984708ms)\n\u2714 profiles require explicit purpose, units, tolerances, and named expectations (1.182834ms)\n\u2714 later issued access mismatch fails while a declared negative response is separately excluded (0.148083ms)\n\u2714 the timer observer preserves native delays, IDs, receivers, arguments, cancellation, and firing (0.624583ms)\n\u2714 failed lifetime setup saves exact mismatch evidence without raw JWT bytes (3.690542ms)\n\u2714 invalid profile and credential-bearing navigation errors both leave scrubbed failed setup evidence (3.964666ms)\n\u2139 tests 12\n\u2139 suites 0\n\u2139 pass 12\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 51.230291\n",
+  "stderr": "",
+  "sourceFiles": [
+    {
+      "path": "Tests/ratan/plugin/ui/session/support/timing.cjs",
+      "sha256": "bbf4c955e879f69bc4497fb3260003bbb4c7fd7a0c28f97319cc7ba88da73211"
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/support/session.cjs",
+      "sha256": "a2aa811c4a7b09dbc42833d83b9803e1672e302cbbf3582f48726511bf029fcd"
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/config.example.json",
+      "sha256": "07279d6b7fdc36a27434ff12f21332e49f8487aec11e6275cfaf058a646fe833"
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/offline/timing.test.cjs",
+      "sha256": "ec83893e16e19debd429ee13645b5344662f736893d9d7ee938e08d3dc686df1"
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/support/common.cjs",
+      "sha256": "5ba040b66b4ea13bfd7662a0e90aa5d2fe38af062175a6ef664f13a9de0e83e7"
+    }
+  ],
+  "limits": [
+    "Offline Node checks use an isolated browser stub and native-timer contract stub. They do not establish live application behavior."
+  ]
+}

@@ -1,0 +1,7 @@
+- [CN Code Review Session History](https://confluence.global.standardchartered.com/display/DSP/CN+Code+Review+Session+History)
+- [Cashflow mockup tool](https://confluence.global.standardchartered.com/display/DSP/Cashflow+mockup+tool)
+- [EBBS code merge for Jun 15th go-live](https://confluence.global.standardchartered.com/display/DSP/EBBS+code+merge+for+Jun+15th+go-live)
+- [Java Coding Guidelines（WIP)](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3287985278)
+- [Quill's handover on block leave (20 Aug - 1 Sep, 2025)](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3443559133)
+- [Settlement UI Quality Assurance (Draft)](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3293840756)
+- [Testing SpringData with Embedded PostgreSQL](https://confluence.global.standardchartered.com/display/DSP/Testing+SpringData+with+Embedded+PostgreSQL)

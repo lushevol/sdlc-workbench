@@ -1,0 +1,179 @@
+{
+  "id": "RN-W032",
+  "title": "Read-only monitoring of inactive workspace updates",
+  "started_at": "2026-10-29T02:08:13.912Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w032",
+  "definition_sha256": "da1bf135037ede55a5b7dc5ae8482131dd6269d622e0b037fafd6b3b56b06752",
+  "status": "BLOCKED",
+  "assertions": [
+    {
+      "label": "observations retain access outcomes",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "label": "acceptance remains blocked",
+      "actual": "BLOCKED_POLICY",
+      "expected": "BLOCKED_POLICY",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239201203,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239202588,
+      "page": "A"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239220538,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "expired-passive",
+      "workspace": "W-A",
+      "credential_sha256": "4df20d4a98fdc34560fbffb39a1bbafd42aaf95e46867b544b547f76718e3084",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239268538
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "44574bf7871062661933b9f796af2644fd7e0b7f0b29de28983414e29d1e8077",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/TabPanel/index.tsx",
+      "lines": [
+        13,
+        46
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts",
+      "lines": [
+        126,
+        240
+      ],
+      "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/stomp.ts",
+      "lines": [
+        26,
+        141
+      ],
+      "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+      "sha256": "181b11c48c6f48c7c6ec145dac6cc5ac26882d08341474bd7f7dbd2f63ae38b1",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": "Passive server notifications and hidden-workspace activity eligibility remain undefined.",
+  "business_acceptance": "BLOCKED_POLICY",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+  ],
+  "passive_notifications": [
+    {
+      "id": "passive-0",
+      "at": 1793239204538
+    },
+    {
+      "id": "passive-1",
+      "at": 1793239220538
+    },
+    {
+      "id": "passive-2",
+      "at": 1793239236538
+    },
+    {
+      "id": "passive-3",
+      "at": 1793239252538
+    }
+  ],
+  "observations": {
+    "renewals": 1,
+    "dialog": false,
+    "native_input_events": 0,
+    "validation": {
+      "status": "fulfilled",
+      "data": {
+        "result": true,
+        "principal": "User A",
+        "requestId": "expired-passive",
+        "record": "trade-X",
+        "operationId": "expired-passive"
+      }
+    }
+  },
+  "blocker": "Synthetic fixture callback observations completed. A real passive-notification transport/consumer is not configured.",
+  "completed_at": "2026-10-29T02:08:16.755Z",
+  "runner_sha256": "ccd55df493f625e3951c3801cc370cbc68ccc9647ddcd2517dfd84903c61985e",
+  "runner_summary": "../attempt1/summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/pages/Home/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "canonical_definition_source_sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/components/TabPanel/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "canonical_definition_source_sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "execution_class": "partial-blocked",
+  "owner": "unknown application, transport, or security owner"
+}

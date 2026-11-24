@@ -1,0 +1,172 @@
+# ado_field_config.yaml
+# ---------------------------------------------------------------------------
+# ADO Work Item field key mappings for AutoTDAScript.py
+#
+# This file controls which fields are fetched from ADO for each work item type.
+# Edit this file when your team's ADO custom field names differ from the defaults,
+# without needing to change AutoTDAScript.py itself.
+#
+# Field key format:
+#   "fields-<FieldReferenceName>"  — fetches a field from the work item's fields dict
+#   "id"                           — fetches the top-level work item ID
+#
+# How to find a field reference name:
+#   Open any work item in ADO → click the three-dot menu → Developer → Field Reference Name
+#   e.g. "Custom.POApproval", "System.State", "Microsoft.VSTS.Common.AcceptanceCriteria"
+# ---------------------------------------------------------------------------
+
+
+# Fields fetched from the Release work item.
+# Includes intermediate fields (PT links, testing type, pipeline runs) that are
+# used internally during processing and then stripped before JSON output — see
+# remove_release_level_keys below.
+release_wi_keys:
+  - id
+  - fields-Custom.ApplicationID
+  - fields-System.State
+  - fields-System.Title
+  - fields-Custom.POApproval
+  - fields-Custom.TSOApproval
+  - fields-Custom.TSUOApproval
+  - fields-Custom.CHGID
+  - fields-Custom.ADOCHGID
+  - fields-Custom.ImpactedCountries
+  - fields-Custom.AIGandRollbackdocumentLink
+  - fields-Custom.ReleasePTPlanDocumentLink
+  - fields-Custom.ReleasePTReportDocumentLink
+  - fields-Custom.RationaleforNotdoingPerformanceTesting
+  - fields-Custom.Testingtypeinscope
+  - fields-Custom.LatestPipelineRuns
+  # ---------------------------------------------------------------------------
+  # Change Manifest fields — populated by some teams directly on the Release WI
+  # instead of (or in addition to) separate Confluence pages.
+  # If absent from the ADO response, extract_fields() returns 'NOT FOUND' gracefully.
+  # ---------------------------------------------------------------------------
+  - fields-Custom.ImplementationPlan
+  - fields-Custom.BackoutPlan
+  - fields-Custom.PITPlan
+  # Some teams instead embed the PIT Confluence/SC Wiki page link somewhere in
+  # this free-form field — possibly alongside other narrative review notes,
+  # and not guaranteed to be an auto-converted <a href> hyperlink (may just be
+  # pasted/typed as plain text) — rather than relying on the version-templated
+  # pit_url in stream_config.yaml or the plain-text PITPlan field above.
+  # Confirmed accessible via ADO's Work Item Type Fields API (name: "Review
+  # Comments") 2026-10-09. Parsed via extract_fields()'s
+  # _MIXED_TEXT_LINK_FIELDS handling (see release.py's
+  # extract_urls_from_rich_text()), which catches both anchor-wrapped AND
+  # bare-text URLs rather than assuming a strict hyperlink.
+  - fields-Custom.ReviewComments
+  # Check 5: rationale for not performing regression testing.
+  # Update the field reference name below if your ADO instance uses a different field.
+  - fields-Custom.RationaleforNotdoingRegression
+
+
+# Fields to remove from the release-level dict before it is written to the output JSON.
+# These are intermediate fields consumed during processing (PT links, testing type,
+# latest pipeline run HTML) and do not belong in the final report payload.
+# Must be listed without the "fields-" prefix.
+remove_release_level_keys:
+  - Custom.ReleasePTPlanDocumentLink
+  - Custom.ReleasePTReportDocumentLink
+  - Custom.RationaleforNotdoingPerformanceTesting
+  - Custom.Testingtypeinscope
+  - Custom.LatestPipelineRuns
+  - Custom.RationaleforNotdoingRegression
+
+
+# Fields fetched from Application work items (approval expiry dates and
+# document links used for the optional post-approval edit check).
+application_wi_keys:
+  - fields-System.Title
+  - fields-System.State
+  - fields-Custom.ApplicationArchitectureApprovalExpiryDate
+  - fields-Custom.ASRMApprovalExpiryDate
+  - fields-Custom.NFRApprovalExpiryDate
+  - fields-Custom.TEMApprovalExpiryDate
+  - fields-Custom.TestStrategyApprovalExpiryDate
+  # Document links — fetched as HTML (same pattern as AIGandRollbackdocumentLink);
+  # extract_fields() calls return_hyperlinks() on these automatically.
+  # Only used when application_confluence_post_approval_check_enabled: true.
+  - fields-Custom.ApplicationArchitectureDocumentLink
+  - fields-Custom.NFRDocumentLink
+  - fields-Custom.TestStrategyDocumentLink
+  - fields-Custom.ASRMDocumentLink
+  - fields-Custom.TestEnvironmentDocumentLink
+
+
+# Fields fetched from Bug work items.
+# System.Description and Microsoft.VSTS.Common.AcceptanceCriteria are fetched
+# so their raw text (HTML-stripped, truncated) can be reviewed for clarity/
+# sufficiency as an INFORMATIONAL finding only — not a gate. If a Bug work
+# item type in your ADO instance does not have Acceptance Criteria, this
+# field resolves to 'NOT FOUND' gracefully and is skipped in the report.
+bug_wi_keys:
+  - id
+  - fields-System.State
+  - fields-Custom.TestPhase
+  - fields-Custom.ImpactedEnvironment
+  - fields-System.Description
+  - fields-Microsoft.VSTS.Common.AcceptanceCriteria
+
+
+# ---------------------------------------------------------------------------
+# Story work item field names
+# ---------------------------------------------------------------------------
+# These fields are fetched for every Story linked to the release.
+# Listed as plain ADO field reference names (no "fields-" prefix).
+# If your team uses different custom field names, update them here.
+story_type_field:         "Custom.StoryType"
+story_application_id_field: "Custom.ApplicationID"
+
+
+# ---------------------------------------------------------------------------
+# Test case field names
+# ---------------------------------------------------------------------------
+# ADO field reference name for the testing type classification on a Test Case.
+# This field controls which traceability bucket a test case is counted in
+# (System Testing / Integration Testing / Acceptance Testing / Performance Testing).
+# Update if your ADO Test Case work item type uses a different field name.
+test_type_field: "Custom.TestType"
+
+
+# ---------------------------------------------------------------------------
+# Genie tag conventions
+# ---------------------------------------------------------------------------
+# Tags applied to Genie scenarios that indicate a scenario belongs to a
+# particular testing type.  The script collects these tags to determine
+# automated regression coverage per story.
+#
+# system_test_tags / integration_test_tags:
+#   List of Genie tags (case-sensitive) that mark a scenario as a System Test
+#   or Integration Test respectively.  These are used to collect scenario-level
+#   tag statistics from the Genie regression report.
+#
+# story_link_prefix:
+#   Prefix used in Genie scenario tags to link a scenario to an ADO story ID.
+#   e.g. "@AB#" means a tag of "@AB#12345678" links the scenario to story 12345678.
+#   This is used to populate the Automated Testing coverage in the traceability map.
+genie_system_test_tags:
+  - "@tt_ST"
+  - "@tt_st"
+
+genie_integration_test_tags:
+  - "@tt_IT"
+  - "@tt_it"
+
+genie_story_link_prefix: "@AB#"
+
+
+# ---------------------------------------------------------------------------
+# ServiceNow field names
+# ---------------------------------------------------------------------------
+# Fields to extract from each SNOW change record returned by the API.
+# These must match the field names in your ServiceNow change record response.
+# Update if your SNOW instance uses different field names.
+snow_fields:
+  - short_description
+  - description
+  - type
+  - state
+  - impact
+  - priority
+  - risk

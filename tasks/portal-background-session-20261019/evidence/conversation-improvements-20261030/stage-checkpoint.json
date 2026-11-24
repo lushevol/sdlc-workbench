@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-10-30T15:49:53.193194+00:00",
+  "phase": "READY",
+  "scope": "Paired local actual-controller logout and refresh replay verification at exact BFF baseline and candidate revisions.",
+  "authorization": "user-input.md",
+  "application_changes_authorized": false,
+  "production_access_authorized": false,
+  "executed_revisions": {
+    "baseline": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+    "candidate": "134a340472f29d2a4136e07e516690de6a18e323"
+  },
+  "execution_status": "COMPLETED_WITH_ASSERTION_FAILURES",
+  "counts": {
+    "PASSED": 2,
+    "FAILED": 2,
+    "ERROR": 0
+  },
+  "case_instances": 4,
+  "source_inputs_compared_to_git": 107,
+  "canonical_integrity": "PASSED_UNCHANGED",
+  "local_stage_disposition": "COMPLETE; application failures and external contract dependencies remain visible.",
+  "result_report": "02-paired-verification-report.md",
+  "comparison": "paired-comparison.json",
+  "contract_dispositions": "contract-dispositions.json",
+  "validation": "validation.json",
+  "release_assessment": "NOT_PERFORMED",
+  "business_acceptance": "NOT_ESTABLISHED",
+  "limits": [
+    "Actual controller, RSA JWT verification, and session-service sources are compiled from each pinned export.",
+    "Repository persistence uses an in-memory deny set. Entitlements, drawers, and filter collaborators are mocked.",
+    "Both revisions use the identical Java probe and assertions; reflection adapts only the renamed entitlement mock API.",
+    "Servlet mocks replace HTTP transport. There is no browser, gateway, provider, real database, replica, or protected business service.",
+    "Cached public verification dependencies use Spring/Tomcat overrides; private starters are absent. Production runtime equivalence is NOT_ESTABLISHED.",
+    "Cached application classes are stale at 834b4155232222347220e47139a502ee43a9cbdf. Executed selected sources and transitively compiled inputs are pinned and hashed.",
+    "No business source, production state, credentials, or deployment is changed."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "case_id" : "RN-S039",
+  "executed_at" : "2026-10-29T01:54:55.378225Z",
+  "execution_level" : "actual-sdk-filter-servlet-integration",
+  "status" : "PASSED",
+  "observations" : {
+    "verified_attribute_subject" : "A",
+    "returned_b_only_records" : 0,
+    "untrusted_userId_header" : "B"
+  },
+  "assertions" : [ {
+    "name" : "authorization attribute subject equals signed user",
+    "expected" : "A",
+    "actual" : "A",
+    "passed" : true
+  }, {
+    "name" : "synthetic authorized handler returns no B records",
+    "expected" : 0,
+    "actual" : 0,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "Synthetic handler consumes the SDK-verified request attribute. Independent business services that read untrusted headers instead are outside this case result." ]
+}

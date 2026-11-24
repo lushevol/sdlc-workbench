@@ -1,0 +1,1 @@
+\\cnopipfil99\FMSD_China\FMSD support\PSS\BPMS\01.Training\02.RATAN

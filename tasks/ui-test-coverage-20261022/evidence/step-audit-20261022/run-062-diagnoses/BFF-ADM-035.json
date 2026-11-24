@@ -1,0 +1,61 @@
+{
+  "canonicalId": "BFF-ADM-035",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-035",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.524549+00:00",
+  "actualStatus": "failed",
+  "failedStep": "12. Then the Import Map data grid with column \"Record Id\" contains exactly one row with the create response Record Id on the Import Map administration page",
+  "classification": "HARNESS_FIXTURE_COLLISION",
+  "facts": [
+    "Initial Import Map 101.key_name and submitted keyName both equal container-035.",
+    "The submitted Path contains exactly 255 ASCII a characters.",
+    "The runtime log reports SQLState 23505 for import_map_key_name_key at 2026-10-22T13:58:47.820+08:00."
+  ],
+  "owner": "Codex harness maintainer",
+  "nextAction": "Keep new-form defaults separate from existing seed records. Give the existing row a distinct unique key.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-035-current-bff-administration-through-actual-ui-1f7054356c97-attempt-1/result.json",
+      "sha256": "b1d6fd71f672fd3a56efdfec19cc6de2730b4c8488ce82a9536b4fdf6232e819"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-035-current-bff-administration-through-actual-ui-1f7054356c97-attempt-1/ui-origin-bff-requests.json",
+      "sha256": "32b3b1c446a784df025058cf2f069dd54c49546c3f28c59370008da35c0db25c"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-035-current-bff-administration-through-actual-ui-1f7054356c97-attempt-1/012-step-12-failure.json",
+      "sha256": "4a9bdbba82c531643f4212453a41d5e97d83b93f4bbe491fb00e24128803cfd9"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-035-current-bff-administration-through-actual-ui-1f7054356c97-attempt-1/attachments/015-error-context.md",
+      "sha256": "d2e06dd65ea4fdd6d29bf562ffebf58884777dd676787eac466cd338a7677299"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-035-current-bff-administration-through-actual-ui-1f7054356c97-attempt-1/initial-persisted-records.json",
+      "sha256": "b00bf166e247797578ed5e40ad2d9ca0f6025cb947e2e41d9df3c8d91cf65dbb"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-035-current-bff-administration-through-actual-ui-1f7054356c97-attempt-1/persisted-after-submit.json",
+      "sha256": "3d4148406545e7d9bc90ddfbc33adeff4e0f8e43c60c0364dc2a1779aa004edc"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/run-062-diagnoses/BFF-ADM-035-runtime-excerpt.txt",
+      "sha256": "32ad7666e7ff76a78906df20e4d099e1daace5e2461ae893b49736c206b250d3"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ],
+  "lastMutation": {
+    "resource": "importmap",
+    "operation": "create",
+    "status": 400,
+    "errorMessage": "Record not created."
+  }
+}

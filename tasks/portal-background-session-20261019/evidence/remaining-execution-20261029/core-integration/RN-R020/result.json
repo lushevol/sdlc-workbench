@@ -1,0 +1,89 @@
+{
+  "case_id": "RN-R020",
+  "definition": "../../../../06-test-cases.md#rn-r020",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:53:20.444Z",
+  "given": [
+    "User A has an isolated session",
+    "a stale unauthorized response arrives after successful renewal"
+  ],
+  "when": [
+    "the fixture delivers the unauthorized response"
+  ],
+  "then": [
+    "the trace records whether the renewed session is cleared by the old response"
+  ],
+  "policy_open": true,
+  "execution_level": "Actual React/source integration in jsdom",
+  "assertions": [
+    {
+      "name": "session has renewed access before unauthorized delivery",
+      "actual": "A",
+      "expected": "A",
+      "status": "PASSED"
+    },
+    {
+      "name": "trace records whether old response cleared the renewed session",
+      "actual": "boolean",
+      "expected": "boolean",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/fixture/protected-read",
+      "method": "get",
+      "epoch": 7,
+      "at": 1793239200000
+    },
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "method": "post",
+      "epoch": 7,
+      "at": 1793239200000
+    }
+  ],
+  "orders": [],
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Actual React Provider, mounted Timeout hook, reducers, services, and Axios interceptors execute.",
+    "Synthetic credentials, controlled adapter, and fake clock isolate the declared predicates.",
+    "No native browser, real network, live protected business service, or production environment executes.",
+    "Passing observational cases do not approve unresolved policy."
+  ],
+  "unauthorized_observation": {
+    "renewed": {
+      "subject": "A",
+      "access_sha256": "b5312d04a56ad0c4e647f26ef5600e34b1eb8b92cc04cea2a8942db6099ba9d4",
+      "refresh_sha256": "75687923407a58474fb6dd8fdddff1802037d9f36d4ad7dc42edd442ff4b3152",
+      "expiry": 1793239320,
+      "iat": 1793239199,
+      "logout": false,
+      "closures": 0,
+      "epoch": 7
+    },
+    "after": {
+      "subject": null,
+      "access_sha256": null,
+      "refresh_sha256": null,
+      "logout": false,
+      "error": "Expired Session, please login again.",
+      "closures": 0,
+      "epoch": 8
+    },
+    "renewed_session_cleared": true,
+    "same_epoch_request": true,
+    "meaning": "Old access request remains in the same session epoch. Its TOKEN_INVALID_EXPIRED failure clears the renewed session in this controlled source flow."
+  },
+  "final": {
+    "subject": null,
+    "access_sha256": null,
+    "refresh_sha256": null,
+    "logout": false,
+    "error": "Expired Session, please login again.",
+    "closures": 0,
+    "epoch": 8
+  },
+  "completed_at": "2026-10-29T02:53:20.446Z"
+}

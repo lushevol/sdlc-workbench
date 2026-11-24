@@ -1,0 +1,54 @@
+{
+  "status": "READY_FOR_LOCAL_BOUNDARY_AUDIT",
+  "sourceRevision": "834b4155232222347220e47139a502ee43a9cbdf",
+  "exactJavaSources": 122,
+  "compiledExactJavaSources": 112,
+  "bootstrapSources": 1,
+  "runtime": "SpringBoot3 isolated bootstrap instead of productionBoot4 config",
+  "database": "PostgreSQL18.4 disposable, all11migrationfiles unchanged",
+  "realPaths": [
+    "Auth controller",
+    "RSA512 signing and verification",
+    "Session revocation repository",
+    "Category/tile/importmap controllers and services",
+    "JPA save and immutable audit repositories",
+    "AuthFilterExecutor and AdminModuleUtil filtering"
+  ],
+  "substitutes": [
+    "Synthetic OUD/MFA/Entra identity boundaries",
+    "Controlled EMS2 entitlements",
+    "No-op or fault-injected analytics",
+    "External EMS3 filter disabled; current AuthFilterExecutor remains real"
+  ],
+  "attemptEvidence": {
+    "attempt-06/LocalSessionApplication.java": "dede3a769318768267c5d18056603a8a4b02a20ba723cbf3734461e17246ffed",
+    "attempt-06/build.stderr.txt": "2b3d02266e4ccfe65a59038d0b1d53fb2a116610cbebf522ccce417e5caf9bfd",
+    "attempt-06/build.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt-06/build_local.py": "cd4f784f598e67e02f442a1c97a7e6bccde9d537372b37cc0c514ec05682e907",
+    "attempt-06/migration-execution.json": "ddde58accddb1dbcfae25a4946718f3d94348f0cb9d300fccce4f240e95b752f",
+    "attempt-06/migration-manifest.json": "5a76a11b837e9e9c3783ebc8fcda20856772f0581884f1455a3dab62304f8c12",
+    "attempt-06/runtime-start.json": "ff361ef0eb9887e9fdee5891f796e8bea92772f43360cb2bafe356d98e4622bf",
+    "attempt-06/runtime.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt-06/runtime.stdout.log": "ab958c95290032aa6465f41757585544be1cb1b59fc7b85223343657250963a7",
+    "attempt-06/source-build-manifest.json": "3804696cb226efbdb3e04407164ef459305e5a85e0a459fa4516c8c7e4dbae9a",
+    "attempt-06/start_local.py": "64155674c73e9045f46a131726aa6a78b530218a2b43b5efc82d75258153bbe2"
+  },
+  "activeAttempt": "attempt-06",
+  "runtimeCreatorAdapter": "Jackson creator mixins for exact Drawer and FilterRule DTO constructor compatibility under isolated Boot3; business DTO bytes unchanged",
+  "historicalEvidenceLimits": [
+    {
+      "path": "attempt-04/smoke-admin-result.json",
+      "note": "Historical result limit text says H2. The current PG migration/build/runtime evidence and attempt06 supersede that environment description. Bytes preserved."
+    }
+  ],
+  "finalProvenance": {
+    "recordedAt": "2026-10-22T06:57:57.525495+00:00",
+    "snapshot": "final-runtime/manifest.json",
+    "snapshotSha256": "283d7a5a21628a9bc5385fe2276ca6c4640eb9771ca07917e97c51659e85d354",
+    "sourceValidation": "final-source-validation.json",
+    "sourceValidationStatus": "PASSED"
+  },
+  "runtimeState": "STOPPED_AFTER_COMPLETED_LOCAL_AUDIT",
+  "shutdownEvidence": "shutdown.json",
+  "shutdownHealthEvidence": "shutdown-health.json"
+}

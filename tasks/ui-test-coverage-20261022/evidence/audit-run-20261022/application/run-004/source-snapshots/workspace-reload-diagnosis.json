@@ -1,0 +1,38 @@
+{
+  "capturedAt": "2026-10-22T04:19:22.202749+00:00",
+  "classification": "HARNESS_SESSION_FIXTURE_GAP",
+  "cause": "The login route issued an unsigned browser fixture token. Reload sent this token to the actual local BFF validate route, which returned401.",
+  "consequence": "The reload returned to login. The failed attempts do not establish workspace restoration behavior.",
+  "owner": "UI audit harness maintainer",
+  "nextAction": "Control the validate response within the same explicitly accepted browser session fixture. Preserve application source and failed evidence.",
+  "sourceSnapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-004/source-snapshots/workspace-edges.spec.ts.pre-validate-fixture.snapshot",
+  "sourceSha256": "243e44823896bc39d99b5de297dd56a15097317d18c3166fa9c778b990542e5d",
+  "evidence": [
+    {
+      "case": "ui-shl-010-restore-renamed-workspace-after-reload-19c4f5e0755f-attempt-1",
+      "trace": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-004/cases/ui-shl-010-restore-renamed-workspace-after-reload-19c4f5e0755f-attempt-1/attachments/006-trace.zip",
+      "traceSha256": "a8b91cfef6b2103ce967e96258a84ce5fbe830e85feaf3f41bf1c0af3ba5e7ba",
+      "validationRequests": [
+        {
+          "url": "http://localhost:8128/api/auth/v2/sso/validate",
+          "method": "POST",
+          "status": 401,
+          "contentType": "application/json"
+        }
+      ]
+    },
+    {
+      "case": "ui-shl-016-deleted-workspace-stays-absent-after-reload-543d1e2de021-attempt-1",
+      "trace": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-004/cases/ui-shl-016-deleted-workspace-stays-absent-after-reload-543d1e2de021-attempt-1/attachments/007-trace.zip",
+      "traceSha256": "38e295ed0f7b749b617d2d99110771e15ca37012d043ead094d02c03ffd9a4d4",
+      "validationRequests": [
+        {
+          "url": "http://localhost:8128/api/auth/v2/sso/validate",
+          "method": "POST",
+          "status": 401,
+          "contentType": "application/json"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "started_at": "2026-10-24T23:37:57.176917+00:00",
+  "source": "Independent service check after preserved user continuation.",
+  "resume_plan": {
+    "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/resume-plan.json",
+    "sha256": "bd24b1ecaf870a2acf79b0146722a5dc6c923495593f4400f7f29db1b8eb007b"
+  },
+  "commands": [
+    {
+      "argv": [
+        "ps",
+        "-Ao",
+        "pid=,ppid=,command="
+      ],
+      "exit_code": 0,
+      "checked_at": "2026-10-24T23:37:57.198845+00:00"
+    },
+    {
+      "operation": "Python urllib.request.urlopen",
+      "urls": [
+        "http://127.0.0.1:8102/base.js",
+        "http://127.0.0.1:8103/",
+        "http://127.0.0.1:8101/",
+        "http://127.0.0.1:8112/base.js",
+        "http://127.0.0.1:8113/",
+        "http://127.0.0.1:8091/api/auth/local/health",
+        "http://127.0.0.1:8088/api/auth/local/health"
+      ],
+      "timeout_seconds": 15
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "repos/ui/mfe-base",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "repos/ui/mfe-base",
+        "show",
+        "HEAD:src/pages/Home/common/useController.ts"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "repos/ui/mfe-base",
+        "show",
+        "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85:src/pages/Home/common/useController.ts"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "repos/ui/mfe-root-config",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "repos/ui/mfe-root-config",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "repos/ui/mfe-base",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0
+    },
+    {
+      "operation": "Python pathlib file reads and SHA-256 comparison",
+      "scope": "339 candidate source files,339 baseline source files,132 shared BFF classes,6 fast override classes."
+    },
+    {
+      "operation": "Python urllib.request.urlopen",
+      "urls": [
+        "http://127.0.0.1:8102/d550bc34c93ed1cf4b59.src_pages_Home_index_tsx.base.js.map",
+        "http://127.0.0.1:8112/9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js.map"
+      ],
+      "timeout_seconds": 15
+    }
+  ],
+  "service_health": {
+    "candidate-mfe": {
+      "url": "http://127.0.0.1:8102/base.js",
+      "checked_at": "2026-10-24T23:37:57.210020+00:00",
+      "status": 200,
+      "bytes": 4763577,
+      "sha256": "6dff20353399fdd25078880b243b9c23b3ba1772d22b1edb0742120973ef4b3d"
+    },
+    "candidate-root-fast": {
+      "url": "http://127.0.0.1:8103/",
+      "checked_at": "2026-10-24T23:37:57.210237+00:00",
+      "status": 200,
+      "bytes": 1634,
+      "sha256": "05b69370fbec2d662ef5fa5a11d911ff9f4a2f1f929771a23641e9b74d49770f"
+    },
+    "candidate-root-natural": {
+      "url": "http://127.0.0.1:8101/",
+      "checked_at": "2026-10-24T23:37:57.210396+00:00",
+      "status": 200,
+      "bytes": 1634,
+      "sha256": "05b69370fbec2d662ef5fa5a11d911ff9f4a2f1f929771a23641e9b74d49770f"
+    },
+    "baseline-mfe": {
+      "url": "http://127.0.0.1:8112/base.js",
+      "checked_at": "2026-10-24T23:37:57.210539+00:00",
+      "status": 200,
+      "bytes": 4763577,
+      "sha256": "505b9b9c79e64f8203b2521911dd14a0cbf3c2207610df2a44762c7510fc53dc"
+    },
+    "baseline-root-fast": {
+      "url": "http://127.0.0.1:8113/",
+      "checked_at": "2026-10-24T23:37:57.210824+00:00",
+      "status": 200,
+      "bytes": 1634,
+      "sha256": "05b69370fbec2d662ef5fa5a11d911ff9f4a2f1f929771a23641e9b74d49770f"
+    },
+    "fast-bff": {
+      "url": "http://127.0.0.1:8091/api/auth/local/health",
+      "checked_at": "2026-10-24T23:37:57.210941+00:00",
+      "status": 200,
+      "bytes": 262,
+      "sha256": "331212d5c22c776bbf4ac63eb6e159149de11e49c03af1721c164e4f18a4958a",
+      "health": {
+        "status": "UP",
+        "scope": "actual BFF controller/JWT/session code with local fixtures",
+        "access_minutes": 1,
+        "absolute_minutes": 60,
+        "refresh_minutes": 2,
+        "refresh_extra_seconds": 24,
+        "database": "isolated H2 memory; actual JPA session repository",
+        "remote_access": "DISABLED"
+      }
+    },
+    "natural-bff": {
+      "url": "http://127.0.0.1:8088/api/auth/local/health",
+      "checked_at": "2026-10-24T23:37:57.211109+00:00",
+      "status": 200,
+      "bytes": 265,
+      "sha256": "a7233145364f07cf9359d239d10adc11c338ae110224df3e7d35be3a55bc6bff",
+      "health": {
+        "absolute_minutes": 60,
+        "access_minutes": 15,
+        "scope": "actual BFF controller/JWT/session code with local fixtures",
+        "status": "UP",
+        "remote_access": "DISABLED",
+        "database": "isolated H2 memory; actual JPA session repository",
+        "refresh_extra_seconds": 24,
+        "refresh_minutes": 225
+      }
+    }
+  },
+  "source_bindings": {
+    "candidate": {
+      "commit": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "working_home_sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+      "committed_home_sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+      "fixture_home_sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+      "served_map": "d550bc34c93ed1cf4b59.src_pages_Home_index_tsx.base.js.map",
+      "served_map_sha256": "c7960c57f9e3eff79deb9c6b6e7d56359818e1120e0dc5d7af622a32440cdb59",
+      "served_home": [
+        {
+          "source": "webpack://base/./src/pages/Home/common/useController.ts",
+          "sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6"
+        }
+      ],
+      "served_matches_fixture": true,
+      "source_mismatches_vs_current_repo_except_selected_home": []
+    },
+    "baseline": {
+      "commit": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "committed_home_sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "fixture_home_sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "served_map": "9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js.map",
+      "served_map_sha256": "825f28b4214a5003faa1d1f6e944445500587e62dd12029aa3d98c5984702dd5",
+      "served_home": [
+        {
+          "source": "webpack://base/./src/pages/Home/common/useController.ts",
+          "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb"
+        }
+      ],
+      "served_matches_fixture": true,
+      "source_mismatches_vs_current_repo_except_selected_home": []
+    },
+    "mfe-root-config_repository": {
+      "head": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+      "status": ""
+    },
+    "mfe-base_repository": {
+      "head": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "status": "M tsconfig.tsbuildinfo"
+    }
+  },
+  "processes": {
+    "active_automated_cases": [],
+    "unresolved_run_records": [],
+    "mfe": {
+      "declared_pid": 44942,
+      "running": true,
+      "declared_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/mfe/node_modules/webpack/bin/webpack.js",
+        "serve",
+        "--config",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/mfe/mfe.local.webpack.cjs"
+      ],
+      "actual_command": "webpack",
+      "actual_command_sha256": "2575ee3a445c57834e5b37c1364751d6e5c2c6d3cfacf7e15f7b716db21b8718",
+      "runtime_record_sha256": "3c2343e75ace5a63be01cafbe639acb15914a01d820851ad55bf22d7feb4b5b0"
+    },
+    "root-fast": {
+      "declared_pid": 44910,
+      "running": true,
+      "declared_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-root-config/node_modules/webpack/bin/webpack.js",
+        "serve",
+        "--config",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/root-fast/root.webpack.cjs"
+      ],
+      "actual_command": "webpack",
+      "actual_command_sha256": "2575ee3a445c57834e5b37c1364751d6e5c2c6d3cfacf7e15f7b716db21b8718",
+      "runtime_record_sha256": "030f49c179d0871049b61b9432c57f644e95f56beb343e3224c6111c23aeeed8"
+    },
+    "root-natural": {
+      "declared_pid": 44958,
+      "running": true,
+      "declared_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-root-config/node_modules/webpack/bin/webpack.js",
+        "serve",
+        "--config",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/root-natural/root.webpack.cjs"
+      ],
+      "actual_command": "webpack",
+      "actual_command_sha256": "2575ee3a445c57834e5b37c1364751d6e5c2c6d3cfacf7e15f7b716db21b8718",
+      "runtime_record_sha256": "3e218b988bf3b1922e3944127d47cffd8986571ec55e04becbbe7612d82bf424"
+    },
+    "bff-fast": {
+      "declared_pid": 44944,
+      "running": true,
+      "declared_command": [
+        "/opt/homebrew/opt/openjdk@17/bin/java",
+        "-Djava.net.useSystemProxies=false",
+        "-cp",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/bff-fast/classes:/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-bff/classes:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.3.4/spring-boot-starter-web-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter/3.3.4/spring-boot-starter-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot/3.3.4/spring-boot-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.3.4/spring-boot-autoconfigure-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.3.4/spring-boot-starter-logging-3.3.4.jar:/Users/lushevol/.m2/repository/ch/qos/logback/logback-classic/1.5.8/logback-classic-1.5.8.jar:/Users/lushevol/.m2/repository/ch/qos/logback/logback-core/1.5.8/logback-core-1.5.8.jar:/Users/lushevol/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.23.1/log4j-to-slf4j-2.23.1.jar:/Users/lushevol/.m2/repository/org/apache/logging/log4j/log4j-api/2.23.1/log4j-api-2.23.1.jar:/Users/lushevol/.m2/repository/org/slf4j/jul-to-slf4j/2.0.16/jul-to-slf4j-2.0.16.jar:/Users/lushevol/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/lushevol/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.3.4/spring-boot-starter-json-3.3.4.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.17.2/jackson-datatype-jdk8-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.17.2/jackson-datatype-jsr310-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.17.2/jackson-module-parameter-names-2.17.2.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.3.4/spring-boot-starter-tomcat-3.3.4.jar:/Users/lushevol/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.39/tomcat-embed-core-10.1.39.jar:/Users/lushevol/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.30/tomcat-embed-el-10.1.30.jar:/Users/lushevol/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.30/tomcat-embed-websocket-10.1.30.jar:/Users/lushevol/.m2/repository/org/springframework/spring-web/6.1.14/spring-web-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-beans/6.1.13/spring-beans-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/spring-webmvc/6.1.14/spring-webmvc-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-context/6.1.14/spring-context-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-expression/6.1.13/spring-expression-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.3.4/spring-boot-starter-data-jpa-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.3.4/spring-boot-starter-jdbc-3.3.4.jar:/Users/lushevol/.m2/repository/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar:/Users/lushevol/.m2/repository/org/springframework/spring-jdbc/6.1.13/spring-jdbc-6.1.13.jar:/Users/lushevol/.m2/repository/org/hibernate/orm/hibernate-core/6.5.3.Final/hibernate-core-6.5.3.Final.jar:/Users/lushevol/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/lushevol/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/lushevol/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/Users/lushevol/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/lushevol/.m2/repository/io/smallrye/jandex/3.1.2/jandex-3.1.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/Users/lushevol/.m2/repository/net/bytebuddy/byte-buddy/1.14.19/byte-buddy-1.14.19.jar:/Users/lushevol/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/Users/lushevol/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/Users/lushevol/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/Users/lushevol/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/Users/lushevol/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/lushevol/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/lushevol/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/Users/lushevol/.m2/repository/org/springframework/data/spring-data-jpa/3.3.4/spring-data-jpa-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/data/spring-data-commons/3.3.4/spring-data-commons-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/spring-orm/6.1.13/spring-orm-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/spring-tx/6.1.13/spring-tx-6.1.13.jar:/Users/lushevol/.m2/repository/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar:/Users/lushevol/.m2/repository/org/springframework/spring-aspects/6.1.13/spring-aspects-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-data-ldap/3.3.4/spring-boot-starter-data-ldap-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/data/spring-data-ldap/3.3.4/spring-data-ldap-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/ldap/spring-ldap-core/3.2.6/spring-ldap-core-3.2.6.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.3.4/spring-boot-starter-aop-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/spring-aop/6.1.13/spring-aop-6.1.13.jar:/Users/lushevol/.m2/repository/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-actuator/3.3.4/spring-boot-starter-actuator-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-actuator-autoconfigure/3.3.4/spring-boot-actuator-autoconfigure-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-actuator/3.3.4/spring-boot-actuator-3.3.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-observation/1.13.4/micrometer-observation-1.13.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-commons/1.13.4/micrometer-commons-1.13.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-jakarta9/1.13.4/micrometer-jakarta9-1.13.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-core/1.13.4/micrometer-core-1.13.4.jar:/Users/lushevol/.m2/repository/org/hdrhistogram/HdrHistogram/2.2.2/HdrHistogram-2.2.2.jar:/Users/lushevol/.m2/repository/org/latencyutils/LatencyUtils/2.0.3/LatencyUtils-2.0.3.jar:/Users/lushevol/.m2/repository/org/flywaydb/flyway-database-postgresql/10.10.0/flyway-database-postgresql-10.10.0.jar:/Users/lushevol/.m2/repository/org/flywaydb/flyway-core/10.10.0/flyway-core-10.10.0.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.17.2/jackson-dataformat-toml-2.17.2.jar:/Users/lushevol/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/Users/lushevol/.m2/repository/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar:/Users/lushevol/.m2/repository/org/checkerframework/checker-qual/3.42.0/checker-qual-3.42.0.jar:/Users/lushevol/.m2/repository/com/auth0/java-jwt/4.3.0/java-jwt-4.3.0.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar:/Users/lushevol/.m2/repository/com/google/guava/guava/33.3.1-jre/guava-33.3.1-jre.jar:/Users/lushevol/.m2/repository/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar:/Users/lushevol/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/lushevol/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/lushevol/.m2/repository/com/google/errorprone/error_prone_annotations/2.28.0/error_prone_annotations-2.28.0.jar:/Users/lushevol/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/Users/lushevol/.m2/repository/org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar:/Users/lushevol/.m2/repository/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar:/Users/lushevol/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar:/Users/lushevol/.m2/repository/org/jasypt/jasypt/1.9.3/jasypt-1.9.3.jar:/Users/lushevol/.m2/repository/org/jetbrains/annotations/24.1.0/annotations-24.1.0.jar:/Users/lushevol/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.3.4/spring-boot-starter-test-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-test/3.3.4/spring-boot-test-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.3.4/spring-boot-test-autoconfigure-3.3.4.jar:/Users/lushevol/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/Users/lushevol/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/Users/lushevol/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/Users/lushevol/.m2/repository/net/minidev/json-smart/2.5.1/json-smart-2.5.1.jar:/Users/lushevol/.m2/repository/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.jar:/Users/lushevol/.m2/repository/org/ow2/asm/asm/9.6/asm-9.6.jar:/Users/lushevol/.m2/repository/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3.jar:/Users/lushevol/.m2/repository/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/Users/lushevol/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.3/junit-jupiter-5.10.3.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.3/junit-jupiter-api-5.10.3.jar:/Users/lushevol/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/lushevol/.m2/repository/org/junit/platform/junit-platform-commons/1.10.3/junit-platform-commons-1.10.3.jar:/Users/lushevol/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.3/junit-jupiter-params-5.10.3.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.3/junit-jupiter-engine-5.10.3.jar:/Users/lushevol/.m2/repository/org/junit/platform/junit-platform-engine/1.10.3/junit-platform-engine-1.10.3.jar:/Users/lushevol/.m2/repository/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.jar:/Users/lushevol/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar:/Users/lushevol/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/lushevol/.m2/repository/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.jar:/Users/lushevol/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/Users/lushevol/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/lushevol/.m2/repository/org/springframework/spring-core/6.1.14/spring-core-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-jcl/6.1.13/spring-jcl-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/spring-test/6.1.13/spring-test-6.1.13.jar:/Users/lushevol/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/lushevol/.m2/repository/com/h2database/h2/2.4.240/h2-2.4.240.jar",
+        "local.portalsession.LocalSessionApplication",
+        "--server.port=8091"
+      ],
+      "actual_command": "/opt/homebrew/opt/openjdk@17/bin/java -Djava.net.useSystemProxies=false -cp /Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/bff-fast/classes:/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-bff/classes:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.3.4/spring-boot-starter-web-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter/3.3.4/spring-boot-starter-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot/3.3.4/spring-boot-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.3.4/spring-boot-autoconfigure-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.3.4/spring-boot-starter-logging-3.3.4.jar:/Users/lushevol/.m2/repository/ch/qos/logback/logback-classic/1.5.8/logback-classic-1.5.8.jar:/Users/lushevol/.m2/repository/ch/qos/logback/logback-core/1.5.8/logback-core-1.5.8.jar:/Users/lushevol/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.23.1/log4j-to-slf4j-2.23.1.jar:/Users/lushevol/.m2/repository/org/apache/logging/log4j/log4j-api/2.23.1/log4j-api-2.23.1.jar:/Users/lushevol/.m2/repository/org/slf4j/jul-to-slf4j/2.0.16/jul-to-slf4j-2.0.16.jar:/Users/lushevol/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/lushevol/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.3.4/spring-boot-starter-json-3.3.4.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.17.2/jackson-datatype-jdk8-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.17.2/jackson-datatype-jsr310-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.17.2/jackson-module-parameter-names-2.17.2.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.3.4/spring-boot-starter-tomcat-3.3.4.jar:/Users/lushevol/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.39/tomcat-embed-core-10.1.39.jar:/Users/lushevol/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.30/tomcat-embed-el-10.1.30.jar:/Users/lushevol/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.30/tomcat-embed-websocket-10.1.30.jar:/Users/lushevol/.m2/repository/org/springframework/spring-web/6.1.14/spring-web-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-beans/6.1.13/spring-beans-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/spring-webmvc/6.1.14/spring-webmvc-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-context/6.1.14/spring-context-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-expression/6.1.13/spring-expression-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.3.4/spring-boot-starter-data-jpa-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.3.4/spring-boot-starter-jdbc-3.3.4.jar:/Users/lushevol/.m2/repository/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar:/Users/lushevol/.m2/repository/org/springframework/spring-jdbc/6.1.13/spring-jdbc-6.1.13.jar:/Users/lushevol/.m2/repository/org/hibernate/orm/hibernate-core/6.5.3.Final/hibernate-core-6.5.3.Final.jar:/Users/lushevol/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/lushevol/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/lushevol/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/Users/lushevol/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/lushevol/.m2/repository/io/smallrye/jandex/3.1.2/jandex-3.1.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/Users/lushevol/.m2/repository/net/bytebuddy/byte-buddy/1.14.19/byte-buddy-1.14.19.jar:/Users/lushevol/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/Users/lushevol/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/Users/lushevol/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/Users/lushevol/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/Users/lushevol/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/lushevol/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/lushevol/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/Users/lushevol/.m2/repository/org/springframework/data/spring-data-jpa/3.3.4/spring-data-jpa-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/data/spring-data-commons/3.3.4/spring-data-commons-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/spring-orm/6.1.13/spring-orm-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/spring-tx/6.1.13/spring-tx-6.1.13.jar:/Users/lushevol/.m2/repository/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar:/Users/lushevol/.m2/repository/org/springframework/spring-aspects/6.1.13/spring-aspects-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-data-ldap/3.3.4/spring-boot-starter-data-ldap-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/data/spring-data-ldap/3.3.4/spring-data-ldap-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/ldap/spring-ldap-core/3.2.6/spring-ldap-core-3.2.6.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.3.4/spring-boot-starter-aop-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/spring-aop/6.1.13/spring-aop-6.1.13.jar:/Users/lushevol/.m2/repository/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-actuator/3.3.4/spring-boot-starter-actuator-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-actuator-autoconfigure/3.3.4/spring-boot-actuator-autoconfigure-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-actuator/3.3.4/spring-boot-actuator-3.3.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-observation/1.13.4/micrometer-observation-1.13.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-commons/1.13.4/micrometer-commons-1.13.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-jakarta9/1.13.4/micrometer-jakarta9-1.13.4.jar:/Users/lushevol/.m2/repository/io/micrometer/micrometer-core/1.13.4/micrometer-core-1.13.4.jar:/Users/lushevol/.m2/repository/org/hdrhistogram/HdrHistogram/2.2.2/HdrHistogram-2.2.2.jar:/Users/lushevol/.m2/repository/org/latencyutils/LatencyUtils/2.0.3/LatencyUtils-2.0.3.jar:/Users/lushevol/.m2/repository/org/flywaydb/flyway-database-postgresql/10.10.0/flyway-database-postgresql-10.10.0.jar:/Users/lushevol/.m2/repository/org/flywaydb/flyway-core/10.10.0/flyway-core-10.10.0.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.17.2/jackson-dataformat-toml-2.17.2.jar:/Users/lushevol/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/Users/lushevol/.m2/repository/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar:/Users/lushevol/.m2/repository/org/checkerframework/checker-qual/3.42.0/checker-qual-3.42.0.jar:/Users/lushevol/.m2/repository/com/auth0/java-jwt/4.3.0/java-jwt-4.3.0.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar:/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar:/Users/lushevol/.m2/repository/com/google/guava/guava/33.3.1-jre/guava-33.3.1-jre.jar:/Users/lushevol/.m2/repository/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar:/Users/lushevol/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/lushevol/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/lushevol/.m2/repository/com/google/errorprone/error_prone_annotations/2.28.0/error_prone_annotations-2.28.0.jar:/Users/lushevol/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/Users/lushevol/.m2/repository/org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar:/Users/lushevol/.m2/repository/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar:/Users/lushevol/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar:/Users/lushevol/.m2/repository/org/jasypt/jasypt/1.9.3/jasypt-1.9.3.jar:/Users/lushevol/.m2/repository/org/jetbrains/annotations/24.1.0/annotations-24.1.0.jar:/Users/lushevol/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.3.4/spring-boot-starter-test-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-test/3.3.4/spring-boot-test-3.3.4.jar:/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.3.4/spring-boot-test-autoconfigure-3.3.4.jar:/Users/lushevol/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/Users/lushevol/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/Users/lushevol/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/Users/lushevol/.m2/repository/net/minidev/json-smart/2.5.1/json-smart-2.5.1.jar:/Users/lushevol/.m2/repository/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.jar:/Users/lushevol/.m2/repository/org/ow2/asm/asm/9.6/asm-9.6.jar:/Users/lushevol/.m2/repository/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3.jar:/Users/lushevol/.m2/repository/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/Users/lushevol/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.3/junit-jupiter-5.10.3.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.3/junit-jupiter-api-5.10.3.jar:/Users/lushevol/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/lushevol/.m2/repository/org/junit/platform/junit-platform-commons/1.10.3/junit-platform-commons-1.10.3.jar:/Users/lushevol/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.3/junit-jupiter-params-5.10.3.jar:/Users/lushevol/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.3/junit-jupiter-engine-5.10.3.jar:/Users/lushevol/.m2/repository/org/junit/platform/junit-platform-engine/1.10.3/junit-platform-engine-1.10.3.jar:/Users/lushevol/.m2/repository/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.jar:/Users/lushevol/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar:/Users/lushevol/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/lushevol/.m2/repository/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.jar:/Users/lushevol/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/Users/lushevol/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/lushevol/.m2/repository/org/springframework/spring-core/6.1.14/spring-core-6.1.14.jar:/Users/lushevol/.m2/repository/org/springframework/spring-jcl/6.1.13/spring-jcl-6.1.13.jar:/Users/lushevol/.m2/repository/org/springframework/spring-test/6.1.13/spring-test-6.1.13.jar:/Users/lushevol/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/lushevol/.m2/repository/com/h2database/h2/2.4.240/h2-2.4.240.jar local.portalsession.LocalSessionApplication --server.port=8091",
+      "actual_command_sha256": "9ccf5726e1603b1cafe3a57b5f8aab53b8136ba7b713c3df9a33afa32cb50217",
+      "runtime_record_sha256": "e5d8a36d4f16ae074f51e6d658249e681be4ec3a0b4f5f3010f3eafb85d68579"
+    },
+    "baseline-mfe": {
+      "declared_pid": 53081,
+      "running": true,
+      "declared_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/baseline-mfe/node_modules/webpack/bin/webpack.js",
+        "serve",
+        "--config",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/baseline-mfe/mfe.local.webpack.cjs"
+      ],
+      "actual_command": "webpack",
+      "actual_command_sha256": "2575ee3a445c57834e5b37c1364751d6e5c2c6d3cfacf7e15f7b716db21b8718",
+      "runtime_record_sha256": "9fa4ad19bc1f59775b625bc6bc0266db7fb63c54d7209e0c5f4d1a3f9fc6a835"
+    },
+    "baseline-root-fast": {
+      "declared_pid": 53185,
+      "running": true,
+      "declared_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-root-config/node_modules/webpack/bin/webpack.js",
+        "serve",
+        "--config",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/baseline-root-fast/root.webpack.cjs"
+      ],
+      "actual_command": "webpack",
+      "actual_command_sha256": "2575ee3a445c57834e5b37c1364751d6e5c2c6d3cfacf7e15f7b716db21b8718",
+      "runtime_record_sha256": "0edece77ef8461a42755ba6f46f768b9dceee146f7d47bc92d12c42bf03df1d6"
+    },
+    "preexisting_natural_bff": {
+      "expected_pid": 98667,
+      "running": true,
+      "actual_command_sha256": "033cf7afc25ab50e0ec2d396bf5cf92b714602aa88d122214104d7754419da34",
+      "command_prefix": "/opt/homebrew/opt/openjdk@17/bin/java -Djava.net.useSystemProxies=false",
+      "preserved": true
+    }
+  },
+  "blocking_conditions": [],
+  "limits": [
+    "No native browser was launched or controlled.",
+    "Health and source checks establish local fixtures only.",
+    "The Mac unlock and genuine visibility preflight remain separate.",
+    "Existing processes, including the natural BFF, were preserved."
+  ],
+  "completed_at": "2026-10-24T23:38:19.614269+00:00",
+  "status": "PASSED",
+  "bff_class_identity": {
+    "shared": {
+      "folder": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-bff/classes",
+      "expected_files": 132,
+      "missing_files": [],
+      "changed_files": [],
+      "matches_initial_runtime_binding": true
+    },
+    "fast_override": {
+      "folder": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-post-change-20261020/bff-fast/classes",
+      "expected_files": 6,
+      "missing_files": [],
+      "changed_files": [],
+      "matches_initial_runtime_binding": true
+    },
+    "natural_build_manifest": {
+      "path": ".workbench/portal-session-real-20261019/local-bff/source-build-manifest.json",
+      "sha256": "a587e01b89b32d281f695f661747ea26b2f46740c21dc4f095287c2d89cee11a"
+    }
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

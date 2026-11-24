@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-platform-cashflow-processing-contracts.md

@@ -1,0 +1,97 @@
+{
+  "recorded_at": "2026-11-06T08:12:52.382603+00:00",
+  "status": "IMPLEMENTED_WITH_VERIFICATION_LIMITS",
+  "baseline_head": "c114b9c67f7bd6a2afc8a4394b4c372e2aea2e2d",
+  "candidate_commit": null,
+  "contract": {
+    "field": "entitlementRouting",
+    "type": "Array<{tileId:string,source:EMS2|EMS3,entityNames:string[],features:string[],applicationId?:string}>",
+    "source": "Same active category/tile/import-map rows used for drawer authorization; provider from actual controlled IDs.",
+    "contains_denied_bindings": true,
+    "grant_data_exposed": false
+  },
+  "changes": [
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "sha256": "fcfdf57d6147f484edc1645da85dd04c99f73852dbe996ec9e4856142c2340b9"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/response/ResponseOfAuthenticate.java",
+      "sha256": "b039e6b097325b4b8916868152035b9320213b5f69f9a57dc41458298fcac347"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "sha256": "b4d289d8efc0d6f88afe6d7f4408197434b046569538d2effc2e01e4f5a722c4"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/EntitlementRouting.java",
+      "sha256": "6423636e6d216e6925f9caaeefee2ef32636a08cb15c962c6d9368e11fbba46c"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/util/AdminModuleUtilTest.java",
+      "sha256": "faf6d0950db285d876a3ea016ba51b9b1a755d8b007c57f53b36c4f17b1c1f8b"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/util/EntitlementRoutingTest.java",
+      "sha256": "b9c83f2ffcd9deffff8d5a4abe4dd976003ab28d95744d77caf8843bb897ea26"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java",
+      "sha256": "f4cf6c22c1e769853315c290f9b13a173a01c0babafd69a586ba1bfdc59feb62"
+    }
+  ],
+  "tests_first": "bff-tests-first.json",
+  "baseline_execution": {
+    "path": "bff-drawer-baseline/result.json",
+    "found": 18,
+    "passed": 17,
+    "failed": 1,
+    "failing_method": "getAuthorizedDrawer_shouldExposeEffectiveEms2SourceDuringRollback"
+  },
+  "candidate_execution": {
+    "path": "bff-routing-candidate/result.json",
+    "found": 28,
+    "passed": 28,
+    "failed": 0,
+    "skipped": 0,
+    "aborted": 0
+  },
+  "controller_review": {
+    "endpoints": [
+      "v2/sso/login",
+      "v3/sso/login",
+      "v2/sso/validate",
+      "v2/sso/relogin"
+    ],
+    "result": "All four entitlement-bearing success responses forward the common buildEntities routing catalog.",
+    "evidence_class": "STATIC_SOURCE_INSPECTION",
+    "execution": "NOT_RUN"
+  },
+  "owning_maven": {
+    "path": "bff-maven-baseline.json",
+    "status": "BLOCKED",
+    "reason": "Two private 6.3.1 starter artifacts absent from offline dependency cache; no Maven suite tests executed."
+  },
+  "whitespace_check": "PASSED",
+  "formatting_note": "Normalize touched ResponseOfAuthenticate.java from CRLF to LF so new lines pass whitespace checks.",
+  "limits": [
+    "Focused selected-source Java17/JUnit/Jackson/Lombok execution uses real cached dependencies.",
+    "No private starter or application source stubs.",
+    "Spring dependency isolation uses cached 6.1.13 rather than every explicit BFF override.",
+    "Controller integration, full Maven suite, live CES calls, and deployment are not verified."
+  ],
+  "identity_mapper_execution": {
+    "baseline_path": "bff-identity-candidate/result.json",
+    "baseline_found": 34,
+    "baseline_passed": 33,
+    "baseline_failed": 1,
+    "baseline_failure": "Identity fixture did not provide CES user_data.itam_id although assertion expected 51358.",
+    "correction": "Provide UserData.itamId=51358 in that fixture; retain all assertions and production mapper behavior.",
+    "path": "bff-identity-final/result.json",
+    "found": 34,
+    "passed": 34,
+    "failed": 0,
+    "skipped": 0,
+    "aborted": 0
+  }
+}

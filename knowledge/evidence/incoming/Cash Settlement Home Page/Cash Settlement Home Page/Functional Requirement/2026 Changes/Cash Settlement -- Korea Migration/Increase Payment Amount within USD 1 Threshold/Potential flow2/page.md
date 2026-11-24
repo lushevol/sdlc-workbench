@@ -1,0 +1,1 @@
+After reject action, if status back to pending operator with exception

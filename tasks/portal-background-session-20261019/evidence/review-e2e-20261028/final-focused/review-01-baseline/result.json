@@ -1,0 +1,271 @@
+{
+  "caseId": "REVIEW-E2E-01",
+  "finding": "REVIEW-01",
+  "side": "baseline",
+  "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:53:21.746Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8153",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:53:30.466Z",
+      "method": "Playwright screenshot",
+      "sha256": "24615d74da512fc4ee004469775232c36b2c0071e1714f7b36c15cc63828979e",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "expired-dialog",
+      "file": "expired-dialog.png",
+      "capturedAt": "2026-10-28T02:54:24.144Z",
+      "method": "Playwright screenshot",
+      "sha256": "54d8258ca3cdab9a65bae31f420d0c2074a073ad8c0b2b29faa022fe324619ac",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "replacement-session",
+      "file": "replacement-session.png",
+      "capturedAt": "2026-10-28T02:54:25.745Z",
+      "method": "Playwright screenshot",
+      "sha256": "2a94972ed2cbf947b7c4918a322b0ed4846770b6601943cfc148218c7e68fe04",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "logout-action-final",
+      "file": "logout-action-final.png",
+      "capturedAt": "2026-10-28T02:54:25.816Z",
+      "method": "Playwright screenshot",
+      "sha256": "2a94972ed2cbf947b7c4918a322b0ed4846770b6601943cfc148218c7e68fe04",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:53:24.955Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:53:24.962Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:53:29.249Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:53:29.258Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:53:59.008Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:53:59.042Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:54:24.027Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:54:24.040Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:54:24.223Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:54:24.223Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:54:24.224Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:54:24.231Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:54:24.231Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:54:24.232Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/logout",
+      "at": "2026-10-28T02:54:25.215Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "at": "2026-10-28T02:54:25.215Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "status": 404,
+      "at": "2026-10-28T02:54:25.220Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "at": "2026-10-28T02:54:25.221Z"
+    }
+  ],
+  "assertions": [
+    "Replacement login finished against the local BFF within old Logout delay; final rendered dialog and both action outcomes inspected."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller."
+  ],
+  "homeReadyAt": "2026-10-28T02:53:29.247Z",
+  "before": {
+    "at": "2026-10-28T02:53:30.466Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "61d2595d4142d769e508d8bb850f4ae59e1aca116f0c95614336a3f36c5ff4ae",
+      "exp": 1793156064,
+      "iat": 1793156004
+    },
+    "refresh": {
+      "sha256": "e766226337c83a6354e31e5811214d970ac323e52aee2c02bb89ef81700c0360",
+      "exp": 1793156153,
+      "iat": 1793156009
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "prompt": {
+    "at": "2026-10-28T02:54:24.144Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "61d2595d4142d769e508d8bb850f4ae59e1aca116f0c95614336a3f36c5ff4ae",
+      "exp": 1793156064,
+      "iat": 1793156004
+    },
+    "refresh": {
+      "sha256": "575484e24f5baf7fb4405277383e74f55ae05062b11bb2196bebe48fe4ab8d28",
+      "exp": 1793156183,
+      "iat": 1793156039
+    },
+    "accessChanged": false,
+    "refreshChanged": true,
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "logoutClickedAt": "2026-10-28T02:54:24.175Z",
+  "afterReplacement": {
+    "at": "2026-10-28T02:54:25.744Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "accessChanged": true,
+    "refreshChanged": true,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": false,
+    "loginVisible": true,
+    "outcome": {
+      "replacementLoginStatus": 200,
+      "result": true,
+      "replacementCompletedAt": 1793156064242,
+      "replacementInstalled": true
+    }
+  },
+  "protected": {
+    "called": false,
+    "reason": "NO_ACCESS"
+  },
+  "after": {
+    "at": "2026-10-28T02:54:25.816Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "accessChanged": true,
+    "refreshChanged": true,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": false,
+    "loginVisible": true,
+    "outcome": {
+      "replacementLoginStatus": 200,
+      "result": true,
+      "replacementCompletedAt": 1793156064242,
+      "replacementInstalled": true
+    }
+  },
+  "replacementTiming": {
+    "completedAfterLogoutClickMs": 67,
+    "installedAtCompletion": true
+  },
+  "impact": "REPLACEMENT_SESSION_CLEARED",
+  "loadedScripts": [
+    "http://127.0.0.1:8153/js/external/runtime.min.js",
+    "http://127.0.0.1:8153/js/external/amd.min.js",
+    "http://127.0.0.1:8153/js/external/system.min.js",
+    "http://127.0.0.1:8153/js/external/import-map-overrides.js",
+    "http://127.0.0.1:8153/importmaplocal.json",
+    "http://127.0.0.1:8153/config.js",
+    "http://127.0.0.1:8153/js/external/single-spa.dev.js",
+    "http://127.0.0.1:8152/base.js",
+    "http://127.0.0.1:8153/js/external/react.development.js",
+    "http://127.0.0.1:8153/js/external/react-dom.development.js",
+    "http://127.0.0.1:8152/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+    "http://127.0.0.1:8152/0cbdce07564b0239cb04.src_pages_Home_index_tsx.base.js"
+  ],
+  "completedAt": "2026-10-28T02:54:25.880Z",
+  "elapsedMs": 64134
+}

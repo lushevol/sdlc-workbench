@@ -1,0 +1,1 @@
+../../../records/candidates/interoperability/KT-platform-openfin-fdc3-design.md

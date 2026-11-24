@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AUTH-072</title><style>body{font:15px/1.5 system-ui,sans-serif;color:#18212d;margin:24px auto;padding:0 24px;max-width:1400px;background:#f7f9fc}a{color:#1354a4}h1,h2{line-height:1.2}.callout{border-left:5px solid #a66100;padding:12px 18px;background:#fff2d6}table{border-collapse:collapse;width:100%;background:white}th,td{padding:8px 12px;border-bottom:1px solid #d3d9e2;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#e9eef6}.PASS{color:#14613b}.FAIL{color:#a21724}.BLOCKED_NOT_EXECUTED{color:#835000}.badge{font-weight:700;white-space:nowrap}input,select{font:inherit;padding:8px;margin:8px}article,details{padding:16px;margin:18px 0;background:white;border:1px solid #d3d9e2;border-radius:6px}.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}figure{margin:0;border:1px solid #d3d9e2;padding:10px}img{max-width:100%;height:auto;background:#e9eef6}code,pre{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#eff3f8;padding:12px}small{font-size:12px}dt{font-weight:700}dd{margin:0 0 8px}footer{margin-top:30px;border-top:1px solid #d3d9e2;padding-top:18px}.muted{color:#526075}summary{cursor:pointer;font-weight:700}</style><body><p><a href="../index.html">All canonical cases</a></p><h1>AUTH-072: Activity cutoff with 29999 milliseconds at return</h1><p class="callout"><strong>Business acceptance remains unverified. Owner: unknown. Review the canonical definition and fixture limits before acceptance.</strong></p><p>Local predicate: <span class="badge BLOCKED_NOT_EXECUTED">BLOCKED_NOT_EXECUTED</span>. Canonical quality: UNVERIFIED.</p><p><a href="../../../../test-cases.md#auth-072">Canonical Gherkin definition</a>. Definition version: 2. SHA-256: <code>960c275e11dc470fbe53c54d63c6debef0c61fb15823c36c4a800e3ad8c05384</code>.</p><details><summary>Canonical Gherkin steps</summary><pre>Feature: Activity
+  @AUTH-072
+  Scenario: Activity cutoff with 29999 milliseconds at return
+    Given User A is authenticated as user-a in an isolated browser context
+    And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page
+    And refresh R is valid; access A has exactly 29999 milliseconds remaining
+    When User A moves the mouse over the tablist named &quot;workspaces&quot; on the Home page
+    And the controlled browser clock advances exactly 5 seconds without further mouse movement
+    Then the browser records exactly 0 new POST requests to &quot;/api/auth/v2/sso/extend&quot;
+    And the browser records exactly 0 new POST requests to &quot;/api/auth/v2/sso/relogin&quot;
+    And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible</pre></details><p>Preflight reasons: NO_COMPLETE_REAL_APPLICATION_BINDING, CANONICAL_REVIEW_OR_EVIDENCE_UNRESOLVED.</p><p>Planned essential canonical frames: 2. Plan completeness requires separate review.</p><p>No actual application attempt was retained. No screenshot is claimed.</p><footer><details><summary>Writing review</summary><pre>{
+  &quot;standard&quot;: &quot;ASD-STE100&quot;,
+  &quot;automated_check&quot;: &quot;PASSED&quot;,
+  &quot;asd_review&quot;: &quot;PENDING&quot;,
+  &quot;reviewer&quot;: null,
+  &quot;reviewed_at&quot;: null,
+  &quot;limitations&quot;: [
+    &quot;Automated checks do not check the complete approved dictionary or grammar rules.&quot;
+  ]
+}</pre></details></footer></body></html>

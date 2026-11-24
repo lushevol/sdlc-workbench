@@ -1,0 +1,192 @@
+{
+  "recorded_at": "2026-10-28T02:35:18.113097+00:00",
+  "activity": "Read-only browser-runner inventory; no browser or service launched.",
+  "input_ref": "tasks/portal-background-session-20261019/evidence/user-input-20261028-review-e2e-proof.txt",
+  "repositories": {
+    "repos/testing/ratan-test-engine": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+    "repos/ui/mfe-base": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+  },
+  "sources": [
+    {
+      "path": "repos/testing/ratan-test-engine/AGENTS.md",
+      "sha256": "3da672f13e447c4f1bd2c7fa156a7fdbb04ec28cd660fae4e02b906b46a24f95"
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/docs/WORKBENCH.md",
+      "sha256": "1fc1bb142918031aade119696779ec48bb7a4b5db3cb6c79a9e10ddbd42707d6"
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/README.md",
+      "sha256": "69b0c8f97459aaae5311a22ea85e5e7276fbeadef9570ec0a1aea8afd38cf7a9"
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/session.cjs",
+      "sha256": "1c7d5c1157966f01653f8a26069dc90d0c811a430883d8920100ac5fa339b0d5"
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs",
+      "sha256": "07cd4629f776b53a9ab56e84ce55d433d1683d51aaf2b59709b825b71e1d2e53"
+    },
+    {
+      "path": ".workbench/session-delivery-20261026/browser-runner.mjs",
+      "sha256": "9bc9ce04731220fa66360183a2422c4e88c999df7ba9709f479b5ad6c52d27d3"
+    },
+    {
+      "path": ".workbench/session-delivery-20261026/headless-runner.mjs",
+      "sha256": "dcd2ae342134450f22c28c232d6ff6399bce9b8d0df9b74235708e2ad0203120"
+    },
+    {
+      "path": ".workbench/session-delivery-20261026/browser-extension.cjs",
+      "sha256": "d72773ce5666b83d873ad30be6be8a7273f692f7a62f88ef7ff2aa10efdc90f5"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/four-checks-20261027/e2e/start-stack.py",
+      "sha256": "7c39f7beb125d09471dae55bdb0fff2439a6079620cbc41f98bba55ad2b6ab37"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/root.tsx",
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/index.ts",
+      "sha256": "1365490b4a6b81357709e12bffce60ae47a693e00de9dfc7053c9d0c196e59f9"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/HooksBase.ts",
+      "sha256": "8e83e861d8e0babf1b3ccc202d94df349a9da1c55490a9413e2190f2e81c324a"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+    }
+  ],
+  "cli": {
+    "command": ".venv/bin/ai-sdlc --workspace . status",
+    "result": "PASSED",
+    "global_command": "ai-sdlc unavailable on current PATH"
+  },
+  "dependencies": {
+    "playwright": "adapters/browser/node_modules/playwright",
+    "browser": "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+    "test_python": "repos/testing/ratan-test-engine/.venv/bin/python",
+    "availability": "All three paths exist; execution not attempted."
+  },
+  "listeners": {
+    "observed_node_ports": [
+      58291,
+      16322,
+      8115,
+      8109,
+      50444,
+      50452,
+      8018
+    ],
+    "observed_java_ports": [
+      8088,
+      8089
+    ],
+    "final_stack_ports_not_listening": [
+      8091,
+      8142,
+      8143,
+      8141
+    ],
+    "method": "lsof -nP -iTCP -sTCP:LISTEN; process command inspection denied by sandbox"
+  },
+  "reusable_runner": {
+    "path": ".workbench/session-delivery-20261026/browser-runner.mjs",
+    "command_template": "SESSION_E2E_CONFIG=<new-config-path> SESSION_E2E_OUTPUT=<new-nonexistent-output> node .workbench/session-delivery-20261026/browser-runner.mjs <mode> fast <unique-id>",
+    "modes": [
+      "staleSuccess",
+      "staleError",
+      "delayed",
+      "pending",
+      "retry",
+      "single",
+      "manualLogout",
+      "activityLogout",
+      "late",
+      "cancelledLoader",
+      "sharingPending",
+      "cross",
+      "rapid",
+      "keyboardExtend",
+      "activityRetry",
+      "inconsistent",
+      "promptActivity",
+      "idleLogout",
+      "visibility",
+      "reload"
+    ],
+    "optional_env": [
+      "SESSION_EXTENSION",
+      "SESSION_PREPARE_REFRESH=1"
+    ],
+    "browser_context": "Separate native Edge process and fresh profile per context; CDP noDefaults=true; no incognito context; no document-visibility override.",
+    "output": "run.json plus immediate case artifacts and screenshots",
+    "caution": "Use a new output directory and unique profile ID. Do not overwrite retained evidence."
+  },
+  "headless_runner": {
+    "path": ".workbench/session-delivery-20261026/headless-runner.mjs",
+    "modes": [
+      "cancelledLoader",
+      "sharingPending",
+      "mouse",
+      "keyboard",
+      "scroll",
+      "single",
+      "activityLogout",
+      "late"
+    ],
+    "scope": "Actual DOM, shared Axios, local service; no native lifecycle or physical UI claim."
+  },
+  "final_stack": {
+    "starter": "tasks/portal-background-session-20261019/evidence/four-checks-20261027/e2e/start-stack.py",
+    "runtime_source": ".workbench/ut-final-cancellation-20261027/source",
+    "mfe_port": 8142,
+    "fast_root_port": 8143,
+    "natural_root_port": 8141,
+    "fast_bff_port": 8091,
+    "caution": "Retained starter writes fixed old evidence paths. Adapt new output ownership before reuse."
+  },
+  "login_setup": {
+    "function": "openPortalSession(configFile,page)",
+    "module": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/session.cjs",
+    "credentials": "Configured usernameEnv/passwordEnv names only; values read from inherited environment; do not put values in arguments or evidence.",
+    "selectors": {
+      "username": "[data-testid=Username] input",
+      "password": "[data-testid=password] input",
+      "sign_in": "button[data-testid$=\"_login\"]",
+      "ready": "[aria-label=workspaces]"
+    },
+    "requires": [
+      "Exact declared mfe-base and single-ui-bff full hashes",
+      "Named timingProfile with expected issued lifetimes",
+      "Read-only protected response predicate",
+      "Artifact output directory"
+    ],
+    "timing": "Real wall clock; setup checks exp-iat and service Date observations."
+  },
+  "public_browser_api": {
+    "import": "const base = await System.import('@fm/base')",
+    "state": "base.Hooks.getHooks().store",
+    "refresh": "base.Service.getRefreshToken()",
+    "login": "base.Service.postService(\"/auth/v2/sso/login\",data)",
+    "set_authorization": "base.LoginUtil.setAuthorization(token)",
+    "set_refresh": "base.LoginUtil.setRefreshToken(token)",
+    "dispatch_limit": "Hooks exports store/setStore only. Actual React dispatch is internal HooksBase. setAuthorization alone does not begin a session epoch or clear refresh; use real login to test the complete fresh-login lifecycle."
+  },
+  "existing_stale_dialog_proof": {
+    "path": "tasks/portal-background-session-20261019/evidence/claude-coordination-20261027/reconciliation/stale-modal-probe/staleModalProbe.test.tsx",
+    "scope": "Jest/JSDOM synthetic login button; Home kept mounted. No browser or production reachability proof."
+  },
+  "limitations": [
+    "The 22-case Robot suite uses actual portal and local authentication services, but other business responses can be fixture controlled by stack configuration.",
+    "Eight historical review diagnostics are separate Jest drivers, not the 22-case real-browser suite.",
+    "Local shortened-control profiles, substituted toolkit modules, and synthetic responses cannot establish production parity.",
+    "Declared source revisions need served-byte bindings before reuse.",
+    "A headless browser cannot prove natural visibility, browser suspension, or physical UI behavior.",
+    "No startup download or installation is needed for these available dependencies.",
+    "No browser, service, or business suite was launched during this inventory."
+  ]
+}

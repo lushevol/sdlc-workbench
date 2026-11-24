@@ -1,0 +1,185 @@
+{
+  "recorded_at": "2026-10-29T00:57:24.105926+00:00",
+  "scope": "Independent read-only security and release-decision audit. No fresh business execution. Release artifacts excluded.",
+  "request": "tasks/portal-background-session-20261019/evidence/user-input-20261029-refresh-release-report.txt",
+  "identities": {
+    "mfe_current_candidate": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+    "mfe_previous_tested_candidate": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+    "bff_candidate": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+    "bff_baseline": "091c9d16c13f285a78463ff0235c21b152844b61",
+    "sdk_candidate": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+  },
+  "controller_security_execution": {
+    "declared_cases": 13,
+    "passed": 12,
+    "failed": 1,
+    "status": "FAILED",
+    "failed_case": "RN-S002",
+    "compile_exit": 0,
+    "java_process_exit": 0,
+    "runner_semantics": "Java main serializes case results; outer Python runner returns nonzero when any case security assertion fails. A successful Java process does not establish passing security behavior.",
+    "initial_attempt": "security-probe-execution-initial.json",
+    "initial_failure": "Mockito attachment failed before assertions; subclass mock maker permitted final execution."
+  },
+  "sec01": {
+    "finding": "SEC-01",
+    "case": "RN-S002",
+    "case_definition": "06-test-cases.md#rn-s002",
+    "finding_definition": "07-security-review-renewal.md#sec-01",
+    "setup": "Synthetic user owns expired access and an unexpired correctly signed refresh credential for one session identifier. RSA verification and actual controller/session logic execute.",
+    "steps": [
+      "Submit expired access to logout.",
+      "Observe HTTP-style controller response and revocation repository.",
+      "Submit the same valid refresh credential to relogin.",
+      "Assert replay rejection and absence of new access."
+    ],
+    "expected": "Completed logout revokes this session; subsequent relogin returns 401 and issues no access.",
+    "observed": {
+      "case_id": "RN-S002",
+      "expired_access": true,
+      "logout_status": 200,
+      "logout_result": true,
+      "blacklist_entries": 0,
+      "relogin_status": 200,
+      "relogin_result": true,
+      "new_access_issued": true,
+      "expected_relogin_status": 401,
+      "security_assertion_passed": false
+    },
+    "valid_access_control": {
+      "case_id": "RN-S001",
+      "expired_access": false,
+      "logout_status": 200,
+      "logout_result": true,
+      "blacklist_entries": 1,
+      "relogin_status": 401,
+      "relogin_result": false,
+      "new_access_issued": false,
+      "expected_relogin_status": 401,
+      "security_assertion_passed": true
+    },
+    "source_cause": "logout calls retrieveUserInfoFromToken, which validates expiry before extracting the session identifier. Expired access throws before sessionService.create. The catch logs and continues to success. relogin accepts a valid refresh when no revoked session record exists.",
+    "source_links": [
+      "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L370-L383",
+      "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L336-L366",
+      "evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L99",
+      "evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L125-L130",
+      "evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L30"
+    ],
+    "assertion_link": "evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java#L112-L125",
+    "result_link": "evidence/comprehensive-renewal-20261028/expired-logout-case.json",
+    "origin": "INHERITED_BFF_DEFECT; inspected baseline and current control flow validate expiry before revocation and still report success.",
+    "baseline_comparison": "security-review.json records matching control flow ignoring logs and whitespace; independently inspected exact baseline and candidate controller source.",
+    "priority": "P1 conditional analyst proposal retained from existing security review.",
+    "severity_proposal": "High / S2 conditional analyst rating; serious continued-authentication exposure when another party holds a copied valid refresh. No official organizational severity policy was found.",
+    "severity_limits": "No credential theft, unauthorized business action, financial loss, target exposure, or production frequency was demonstrated. A critical S1 rating would need broader supported consequence or policy.",
+    "user_impact": "A user can believe logout ended their session while a holder of the copied refresh can regain authenticated access as that user until refresh expiry or another effective revocation. Protected business access after issuance was not exercised.",
+    "acceptability_advice": "NOT_ACCEPTABLE_FOR_POSITIVE_SECURITY_OR_RELEASE_RECOMMENDATION on the matching source composition. Inherited origin is not an accepted waiver. Correct revocation or prove the release path is not applicable with a reviewed effective mitigation, then reassess.",
+    "owner": "unknown authentication and security owners",
+    "next_action": "Use a reviewed authenticated revocation path without trusting unverified JWT payloads. Verify expired-access logout, refresh replay, valid-access control, browser flow, and replica behavior.",
+    "closure_evidence": "Matching server and browser evidence must show the same-session refresh rejected after logout, with no issued access. Preserve rejection of forged credentials and actual policy scope.",
+    "confidence": "HIGH for declared isolated path; production applicability UNKNOWN",
+    "limits": [
+      "Actual controller/JWT/session-service classes; repository and entitlement dependencies mocked. Servlet requests and responses mocked.",
+      "No HTTP server, browser, live provider, production, or multi-replica verification.",
+      "Frontend clears its local credentials, but local clearing cannot revoke a copied refresh credential."
+    ]
+  },
+  "unit_release_condition": {
+    "current_66c6411": "UNKNOWN_COMPLETE_EXECUTION; 157/157 selected tests pass across 10 suites. Complete application unit suite was not rerun.",
+    "historical_e0030f5": "471/471 complete tests pass at the older source identity.",
+    "changed_boundary": "66c6411 changes Timeout mount-time analytics callback retention and removes void call wrappers. Low qualitative maintenance risk does not establish byte identity or full-suite matching execution.",
+    "effect": "Missing complete matching unit execution prevents GO; a material server failure already supports NO_GO precedence.",
+    "action": "Bind final candidate and execute complete applicable unit inventory with zero failures; preserve source and assertion bindings."
+  },
+  "recommended_scoped_decision": {
+    "production_recommendation": "DO_NOT_RECOMMEND",
+    "release_status": "NO_GO",
+    "can_go": false,
+    "evidence_confidence_score": 100,
+    "confidence_level": "HIGH",
+    "controlling_dimension": "SEC-01 server revocation 5/5 FAILED. Direct current source-bound execution proves the local material failure.",
+    "score_basis": "20 times lowest controlling score 5. This is certainty in the source-composition hold, not completeness, deployment applicability, readiness, or incident probability.",
+    "remaining_gaps": "Full current-source unit execution, browser supported caller, broad unrun cases, target transports and unresolved policy remain visible. They cannot offset the demonstrated failure.",
+    "alternative_if_scope_excludes_bff": "A frontend-only impact assessment could isolate the inherited BFF defect as an external residual risk. That exclusion must be explicit and source-backed; do not silently inherit the user's P4 backlog decision for this newly found P1 security issue."
+  },
+  "checked_security_source_hashes": [
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+      "git_bytes_match": true
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+      "git_bytes_match": true
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v1/implementation/SessionServiceImplementation.java",
+      "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "sha256": "548150730664b0417dcc115ede889b74536a207938a2912e7da2231d6184b41e",
+      "git_bytes_match": true
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationService.java",
+      "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "sha256": "16f809f730ccfc3a5d8a678445a2a2d71ce4c14d3090e745c611af799cab62b2",
+      "git_bytes_match": true
+    }
+  ],
+  "provenance": [
+    {
+      "path": "tasks/portal-background-session-20261019/07-security-review-renewal.md",
+      "sha256": "43fa725a56d4e55819f9a65f306e5ad1facbdbec172ad3f7993440afbf755b71"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/08-test-execution-renewal.md",
+      "sha256": "007be6c31f4bc779a2d45d6193636c79c29a060cfac28f3531a915a4473637d9"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/06-timeout-lint.md",
+      "sha256": "c3c9160ae65adaccec52dee4ab1c9609e8c52ad5d0a2876e75dffacf8d8036a9"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/security-review.json",
+      "sha256": "42a7e340d805765b3cb58e05d7c7b843c14ee43f5b95cd5f5d3d6a93ebb50168"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/security-probe-execution.json",
+      "sha256": "05e734511b305b6b0206e6def4a874fac0572fabb440eb87bf86ac023038aa63"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/expired-logout-case.json",
+      "sha256": "c20da15ddc4af87640939c2be8af9cedb41714f21b9f107a15f0504067c6be2f"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/valid-logout-case.json",
+      "sha256": "fa6e1bf2e45a309ab0e0567a438de37e4f509e4289dc10a3cf00c2d3774655a6"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java",
+      "sha256": "7632719ec4efc6797f44a9834a9701bc7ebc9af7ce0c9750b7301e973384fb08"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/run_security_probe.py",
+      "sha256": "a2ec10ecb874ac99e115f184e923b989a8e0b40840fd1804f9d3936db743e5bb"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/unit-execution.json",
+      "sha256": "43c02c723243b292116209b09cc0ad64b95446ff8918fe5a2f68e75943904101"
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Checked JSON invariants, exact committed source hashes, probe hashes, and retained result values.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

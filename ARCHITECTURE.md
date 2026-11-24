@@ -1,0 +1,595 @@
+# AI SDLC Workbench architecture
+
+Decision date: 14 October 2026.
+Authority: The owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf) and [PRINCIPLE.md](PRINCIPLE.md).
+Status: Accepted target architecture with deterministic workspace and knowledge validation.
+Local Markdown source preparation is implemented. Remote synchronization, AI governance, and complete behavior verification remain planned.
+
+## Architectural boundary
+
+The workbench owns engineering context, relationships, evidence, and executable capabilities.
+AI agents use these capabilities to reason, plan, implement, and verify existing business systems.
+Existing SDLC assets retain their original locations and ownership.
+The workbench maintains references, relationships, and derived context.
+It preserves raw sources before interpretation and separates candidates, findings, and published knowledge.
+
+The standalone package must run without the parent analysis harness.
+Its runtime code must not import the parent harness or require parent-relative command paths.
+Existing agents provide reasoning in Phase 1.
+A dedicated interface and agent orchestration belong to Phase 3.
+
+## Brownfield scope
+
+The core connects existing assets across source hosts, business domains, and application languages.
+Specialized extraction and external integrations retain explicit coverage limits.
+Read [the adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary) before selecting components for another project.
+
+## Three layers
+
+| Layer | Responsibility | Interfaces or assets |
+| --- | --- | --- |
+| 1. AI interface | Give agents access to shared workbench capabilities. | Claude Code, GitHub Copilot, shared skills, CLI, and MCP adapters. |
+| 2. SDLC Workbench core | Manage context, knowledge quality, relationships, verification, workflows, and executable tools. | The six core capabilities below. |
+| 3. Existing SDLC assets | Supply source intent, implementation, test definitions, and observations. | Requirements, acceptance criteria, decisions, design, repositories, test engines, CI/CD, and runtime observations. |
+
+All interfaces must use the same core contracts and execution grants.
+
+## Six core capabilities
+
+| Capability | Target responsibility | Foundation and remaining work |
+| --- | --- | --- |
+| Context Registry | Discover capabilities, repositories, services, contracts, sources, and tools. | Six catalogs establish separate identities and references. Automatic discovery remains incremental. |
+| Knowledge Governance | Assess source reliability, consistency, freshness, and completeness. | Schemas, templates, provenance checks, and audit records support agent procedures. AI governance remains planned. |
+| Relationship Engine | Connect requirements, architecture, implementation, and tests through evidence links. | Static graph and behavior-review reference checks are implemented. Automatic mapping remains planned. |
+| Verification Engine | Identify gaps and compare expected behavior with implementation and observations. | Tool execution and source freshness checks retain evidence. Automated business verification remains planned. |
+| Workflow Engine | Coordinate reusable engineering operations through shared skills. | Skills provide procedures for external agents. A durable workflow runner remains planned. |
+| Tool Registry | Discover and invoke existing engineering and verification tools. | Registered resource operations use existing providers, operation grants, and retained action records. |
+
+Catalog records establish declared resources and locations.
+They do not prove an execution path, deployed service, or complete discovery coverage.
+An action record establishes the retained operation result within its stated limits.
+It does not establish requirement coverage or approved business intent.
+
+## Workbench concept
+
+The three layers connect intended behavior, implementation, and observations through shared evidence.
+The six capability areas retain the implementation limits in the table above.
+Arrows describe relationships and agent procedures; they do not imply an automatic workflow runner.
+
+```mermaid
+flowchart TB
+    subgraph Interface["1. AI interface"]
+        Agents["Existing AI agents"] --> Access["Shared skills and native adapters<br/>CLI and MCP"]
+    end
+    subgraph Core["2. SDLC Workbench core"]
+        Context["Context Registry<br/>Asset identities and source locations"]
+        Governance["Knowledge Governance<br/>Provenance, review and audit checks"]
+        Relationships["Relationship Engine<br/>Source-backed links and extraction limits"]
+        Verification["Verification Engine<br/>Compare intended and evidenced behavior"]
+        Workflow["Workflow Engine<br/>Agent procedures; durable runner planned"]
+        Tools["Tool Registry<br/>Providers and explicit operation grants"]
+    end
+    Access --> Workflow
+    Workflow --> Context
+    Workflow --> Governance
+    Workflow --> Relationships
+    Workflow --> Verification
+    Workflow --> Tools
+    Owners["Human owners<br/>Clarify intent and record required review or decisions"]
+    Owners -.-> Governance
+    subgraph Assets["3. Existing SDLC assets retain their owners and locations"]
+        Intent["INTENT<br/>Domain rules, requirements, ACs and target design"]
+        Reality["REALITY<br/>Repositories, implementation and test definitions"]
+        Observed["OBSERVED<br/>Test results, CI/CD and runtime observations"]
+        Intent -->|"Design and implement"| Reality
+        Reality -->|"Execute and observe"| Observed
+        Observed --> Compare["Compare intent, code, assertions and observations"]
+        Compare -->|"Implementation defect"| Reality
+        Compare -->|"Assertion or execution gap"| Observed
+        Compare -->|"Sourced intent change and required review"| Intent
+    end
+    Context -.-> Intent
+    Governance -.-> Intent
+    Relationships -.-> Reality
+    Verification -.-> Compare
+    Tools -->|"Granted operations in existing tools"| Reality
+    Tools -->|"Retained operation results"| Observed
+    Evidence["Shared evidence foundation<br/>Exact source revisions, inspected assertions, environment identities,<br/>retained results, provenance and unresolved limits"]
+    Intent -.-> Evidence
+    Reality -.-> Evidence
+    Observed -.-> Evidence
+```
+
+The feedback loops refine intent, implementation, and verification separately.
+An implementation defect changes conformance evidence; it does not change the intended rule.
+A change to intent needs its own source, version, provenance, and required human review.
+Knowledge review, wiki freshness, passing execution, business acceptance, and deployment authorization remain different facts.
+See the [full SDLC lifecycle](#full-sdlc-lifecycle), [knowledge lifecycles](docs/KNOWLEDGE_LIFECYCLE.md#three-connected-lifecycles), and [evidence traceability](docs/WORKSPACE_DESIGN.md#traceability).
+
+## Project construction
+
+The standalone project root is the current `workbench/` directory.
+
+```text
+workbench/
+├── PRINCIPLE.md
+├── ARCHITECTURE.md
+├── README.md
+├── AGENTS.md
+├── workspace.yaml
+├── workspace.local.example.yaml
+├── workspace.local.yaml              # Ignored machine paths; optional.
+├── repos/                            # Visible independent Git checkouts.
+│   └── README.md                    # Placement and registration guide.
+├── tasks/
+│   ├── README.md                    # Business intake and lightweight maintenance procedures.
+│   └── <task-id>/                   # Incremental work history and supporting evidence.
+├── registry/
+│   ├── repositories.yaml
+│   ├── services.yaml
+│   ├── capabilities.yaml
+│   ├── contracts.yaml
+│   ├── sources.yaml
+│   ├── tools.yaml
+│   └── examples/                    # Catalog examples checked against registry contracts.
+├── knowledge/                      # One parent; distinct content responsibilities.
+│   ├── records/                    # Canonical business-domain Markdown and navigation.
+│   │   ├── candidates/
+│   │   ├── requirements/
+│   │   ├── architecture/
+│   │   ├── decisions/
+│   │   └── repository-profiles/
+│   ├── evidence/                   # Supporting sources, provenance, and governance.
+│   │   ├── incoming/               # Ignored replaceable complete exports, grouped by collection.
+│   │   ├── sources/                # Retained original source snapshots.
+│   │   ├── selections/             # Hash-bound source filtering decisions.
+│   │   ├── processing/             # Reviewed canonical processing receipts.
+│   │   ├── manifest.yaml           # Source identities, revisions, and hashes.
+│   │   ├── findings/               # Investigation and governance records.
+│   │   └── audit/                  # Immutable governance events.
+│   ├── integrations/               # Technical domain contracts, workflows, tools, and background.
+│   └── llm-wiki/                   # Single derived wiki, canonical aliases, and local engine state.
+├── relationships/
+│   ├── requirement-code/
+│   ├── code-test/
+│   └── service-dependencies/
+├── .agents/
+│   └── skills/                        # Canonical shared skills.
+│       ├── analyze-requirement/
+│       ├── ingest-knowledge/
+│       ├── govern-knowledge/
+│       ├── query-knowledge/
+│       ├── impact-analysis/
+│       ├── verify-implementation/
+│       ├── detect-gaps/
+│       ├── service-dependencies-graph/
+│       ├── repository-onboarding/
+│       └── validate-sdlc-documents/
+├── .claude/
+│   └── skills/                        # Links to canonical skills for Claude Code.
+├── core/                           # Single Python runtime and responsibility guides.
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── runtime.py
+│   ├── workspace.py
+│   ├── providers/
+│   ├── context/
+│   ├── knowledge/                   # Reusable schemas and templates.
+│   ├── ingestion/
+│   ├── understanding/
+│   ├── governance/
+│   ├── relationships/
+│   ├── evidence/
+│   └── execution/
+├── adapters/
+│   ├── sources/
+│   ├── claude-code/
+│   ├── copilot/
+│   └── mcp/
+├── tests/
+├── docs/                           # Stable, integrated current lifecycle and domain documentation.
+└── pyproject.toml
+```
+
+The six responsibility roots are `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
+`tasks/` retains incremental work history and evidence for business changes and Workbench maintenance.
+Business behavior changes use intake; harness maintenance uses a [lightweight record](tasks/README.md#lightweight-maintenance-records) without business gates or domain knowledge records.
+`docs/` supplies the stable, integrated current view across the adopting system's lifecycles and domains, including Workbench operation.
+Update its existing sections as supported changes become current and reconcile them at task handoff.
+Keep canonical business intent in `knowledge/records/`; link it from documentation without duplicating its authority.
+Read [documentation ownership](docs/WORKSPACE_DESIGN.md#documentation-ownership) for current views, task history, and source responsibilities.
+The tree defines the project construction and ownership boundaries.
+It does not assert that every target engine already exists.
+Local checkouts and generated evidence can use configured paths inside or outside this root.
+Read [the workspace design](docs/WORKSPACE_DESIGN.md) for each folder's role, data flow, and traceability diagrams.
+
+### Workspace and registry
+
+`workspace.yaml` defines workspace identity, settings, and catalog references.
+`registry/repositories.yaml` records repository identifiers, names, and locations.
+`registry/services.yaml` records service identifiers, names, and locations.
+`registry/capabilities.yaml` records capability identifiers, names, and locations.
+`registry/contracts.yaml` records documented or candidate component interfaces with exact source locators.
+`registry/sources.yaml` records technical or context sources and their access mode.
+
+These catalogs describe existing assets without moving them.
+Keep repository, service, and capability identities separate.
+Services and capabilities can reference several repositories.
+Repositories can support several services or capabilities.
+
+Independent Git checkouts from any source host can use the visible `repos/` directory.
+Workbench Git tracks repository guides and excludes grouped checkout directories through `/repos/*/*/`.
+Each checkout owns its `.git`, remotes, branches, and commits.
+For custom flat checkout paths, add exact entries to the Workbench `.gitignore`.
+
+Track portable relative checkout locations in `registry/repositories.yaml`.
+Read [the repository guide](repos/README.md) for placement and registration.
+Stage harness files explicitly. Do not use `git add repos/`.
+
+Optional `workspace.local.yaml` maps registered repository IDs through `repository_paths`.
+The file uses `schema_version: 1` and remains ignored by Git.
+Relative local paths resolve against the workspace directory.
+Overrides replace metadata locations in memory and leave executable provider paths and grants unchanged.
+
+`registry/tools.yaml` stores executable resource records.
+The optional `connector.mcp` provider invokes external system tools through the existing resource boundary.
+Its Node bridge reads the selected workspace's root `.env` and enforces exact tool grants through the Python provider.
+The optional connector source remains separate from generated workspaces and the Python wheel.
+Read [the connector guide](docs/CONNECTORS.md) for installation and evidence limits.
+Each executable record selects a provider, environment, configuration, and permitted operations.
+The runtime resolves these records through its existing provider registry.
+An empty operation grant denies execution for that resource.
+
+Keep the metadata catalogs separate from executable resource configuration.
+A repository metadata record alone does not grant Git operations.
+A test-engine metadata record alone does not grant test execution.
+Legacy `workspace.json` supports existing prototype workspaces during migration.
+Use `workspace.yaml` for new workspaces.
+
+### Knowledge
+
+`knowledge/` groups canonical records, supporting evidence, and one derived wiki.
+Only `knowledge/records/` contains curated business-domain Markdown records and navigation.
+It describes requirements, intended rules, ideal behavior, contracts, and target business-system architecture.
+Business-system technical explanations qualify when they describe intended domain behavior or responsibilities.
+Independent task gap Markdown compares that intent with exact implementation, deployment evidence, and observed execution.
+Actual behavior cannot redefine intended knowledge. See [the content boundary](knowledge/README.md#intended-behavior-and-independent-gaps).
+Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
+Its candidates retain draft domain claims before review.
+Its published directories hold reviewed domain knowledge with evidence references.
+
+`knowledge/evidence/incoming/COLLECTION/` holds replaceable complete exports and remains ignored.
+`knowledge/evidence/sources/` retains original snapshots outside the canonical record tree.
+Keep these lifecycles separate within the evidence area. New exports must not overwrite retained snapshot bytes.
+`knowledge/evidence/manifest.yaml` records their identities, revisions, locators, retrieval times, and hashes.
+Task-generated logs, execution captures, investigation reports, and incident excerpts belong under the owning task.
+The source manifest can reference those task paths while retaining stable source identities and hashes.
+An authorized relocation preserves prior manifest bytes and records old-to-new locators without rewriting audit history.
+`knowledge/evidence/findings/` retains governance findings, conflicts, missing evidence, and open questions.
+`core/knowledge/` supplies reusable schemas and templates.
+Domain knowledge can remain in registered external sources.
+Do not relocate authoritative source documents solely to match this directory tree.
+
+New initialization creates this consolidated layout. Existing workspaces with the former `knowledge/` canonical root and `evidence/knowledge/manifest.yaml` remain supported until explicitly migrated.
+The shared runtime resolves the active layout from the unique source manifest location. Both manifest locations are ambiguous; a consolidated manifest without `knowledge/records/` is incomplete. Diagnose either condition instead of merging inputs or silently falling back.
+Canonical discovery selects the resolved record root; evidence and wiki operations use their own roots and validation contracts.
+
+The optional [local reader](docs/SETUP.md#local-knowledge-web-reader) serves knowledge through the installed Python runtime.
+It keeps canonical records, native wiki pages, and retained sources in separate navigation collections.
+Its catalog excludes audit logs, processing state, and documents outside `knowledge/`.
+Bundled browser assets render Markdown and embed the existing OpenKB graph in a sandboxed frame.
+Reads do not dispatch retained actions or change knowledge lifecycle state.
+
+`KnowledgeTopic` records connect background, domain terms, workflows, and historical explanations across sources.
+Classified drafts live under `knowledge/records/candidates/<classification>/` with a project-specific `index.md`.
+The ingestion skill supplies review and ingestion modes for agent-assisted operation.
+Classification does not establish approved intent or source authority.
+The installed ingestion harness checks retained history, locators, execution source hashes, and prepared content.
+Semantic classification and source review remain agent responsibilities.
+
+The source pipeline is complete raw export → filtered source view → canonical knowledge → derived wiki.
+`ai-sdlc sources` imports registered local Markdown collections and records selections under `knowledge/evidence/selections/`.
+It preserves prior snapshots and manifest records, then generates exact excerpts or links in ignored working storage.
+Each selection binds source-page SHA-256, original ranges, policy hash, and governing context hashes.
+Every generated link also records the source identity and output hash.
+Local file-level plans separate selection review from pending canonical processing.
+Compact receipts bind completed processing to source, policy, context, recipe, and checked output hashes.
+Full planning baselines remain in ignored working storage. Planned views emit only queued kept pages.
+Affected records include declared dependents and prior outputs when sources withdraw claims.
+These checks support scoped review; incomplete relationship declarations require broader semantic discovery.
+
+Changed pages require review, including prior exclusions. Missing input does not trigger downstream deletion.
+Knowledge synthesis and review follow source preparation. The wiki continues consuming canonical records.
+See [source preparation](.agents/skills/ingest-knowledge/references/source-preparation.md) for the supported commands and limits.
+
+Use [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) and the shipped Workbench schemas and templates.
+Record source ownership, revision, and approval state when available.
+Assess missing, conflicting, ambiguous, and outdated information before using it as intent.
+After material clarification, update the affected knowledge record and provenance before the next handoff.
+Keep the answer source, scope, version, review state, and task knowledge-update log consistent.
+Use measurable Gherkin acceptance criteria for requirements.
+Track candidate → investigated → verified → published through `governance_state`.
+Keep contested, stale, and superseded knowledge visible.
+
+Important requirements and decisions require recorded human review before publication.
+Keep OKF `status` and `verified` separate from Workbench lifecycle and business execution results.
+Do not fabricate approvals or reviewer identities.
+
+Retain each governance event in a new YAML file under `knowledge/evidence/audit/`.
+Preserve earlier events and Git history.
+An event binds the item version, content hash, actor, and supporting evidence.
+Deterministic validation checks saved records and provenance.
+It does not authenticate a reviewer or decide business correctness.
+Automatic source adapters and AI governance require later implementation.
+
+### Relationships
+
+`relationships/requirement-code/` owns mappings from requirements to implementation.
+`relationships/code-test/` owns mappings from implementation to test assertions.
+`relationships/service-dependencies/` owns dependency relationships and references to generated graph evidence.
+Keep consumer and provider evidence for confirmed service links.
+Keep uncertain boundaries unresolved or identified as inferences.
+
+Target relationship records identify their endpoints, source locators, revisions, evidence, and analysis scope.
+Generated graphs must retain source identities, freshness information, and coverage limits.
+Static declarations do not prove runtime execution.
+
+The [canonical graph skill](.agents/skills/service-dependencies-graph/SKILL.md) owns extraction, resolution, validation, queries, and visualization.
+Keep graph enhancements inside that skill.
+Its helpers require no parent harness.
+The installed `graph build` command delegates to the skill through a thin adapter.
+The `graph.snapshot` provider delegates checksum-validated queries through existing CLI and MCP resource grants.
+The graph contains source-backed runtime, business architecture, code, and package dependency relationships.
+Bounded queries and the viewer navigate the same dependency snapshot and its source evidence.
+Behavior-review baselines check declared relationships, evidence hashes, and exact Git source bytes.
+They preserve immutable saves and support on-demand comparison through the installed CLI.
+Their business verification result remains `NOT_VERIFIED`.
+Read the [behavior review guide](docs/BEHAVIOR_REVIEW.md) for the supported contract and limits.
+Automatic mapping and complete behavior verification remain planned.
+
+### Core implementation ownership
+
+`core/` contains the single Python runtime and its responsibility guides.
+Packaging maps this directory to the installed `ai_sdlc_workbench` package.
+`core/context/` owns catalog loading, and `core/governance/` owns deterministic knowledge validation.
+Shared CLI, MCP, dispatch, models, and providers remain in this runtime.
+Do not maintain a duplicate runtime under `src/`.
+
+Generated workspaces receive core responsibility guides without core runtime source.
+They receive `tasks/README.md` without project task contents.
+Initialization copies all canonical skills with their helpers and supporting resources.
+Initialization creates Claude skill links, empty catalogs, and empty provenance.
+It does not copy live project configuration or knowledge records.
+
+| Ownership area | Current implementation | Target extension |
+| --- | --- | --- |
+| `core/context/` | Catalog loading, supported by shared workspace loading, models, and provider registration. | Governed discovery and source context. |
+| `core/ingestion/` | Local Markdown source import, hash-bound selection views, source contracts, and deterministic ingestion checkpoints. | Remote source adapters and synchronization. |
+| `core/understanding/` | Candidate templates and agent interpretation procedures. | Automatic extraction and evidence-backed synthesis. |
+| `core/governance/` | Deterministic knowledge validation and audit contracts. | AI governance and durable review workflows. |
+| `core/relationships/` | Relationship ownership, stored references, and thin graph skill loading. | Evidence-backed mapping and relationship validation. |
+| `core/evidence/` | Retained resource action records and result hashes in `store.py`. | Shared source, relationship, baseline, and verification evidence contracts. |
+| `core/execution/` | Operation dispatch in `runtime.py` and existing provider implementations. | Coordinated workflows and integrated verification tools. |
+
+The current runtime retains resource action evidence only.
+It does not yet maintain a complete requirement-to-code-to-test verification baseline.
+
+### Skills and adapters
+
+Capability learning extends the existing context registry and agent workflows.
+Native hooks record bounded lifecycle metadata. The current agent extracts claims at task checkpoints.
+Deterministic validation binds claims to retained evidence and reconciles them with current scoped rules.
+The registry journal stores complete reviewed revisions. Rollback appends a revision that restores earlier rules.
+Skills consume these rules through stable capability identities and refer to existing contracts and canonical knowledge.
+Only allowlisted read-only improvements qualify for automatic promotion.
+See the [capability learning guide](docs/CAPABILITY_LEARNING.md) for scope, promotion, and operational controls.
+
+`.agents/skills/` owns all shared engineering procedures.
+The [knowledge lifecycle map](docs/KNOWLEDGE_LIFECYCLE.md) defines six knowledge orchestrators and their reusable operation skills.
+Source preparation, canonical governance, and derived wiki freshness retain separate completion boundaries.
+Existing runtime and wiki engines retain hashing, validation, locks, and source lifecycle mechanics.
+The procedures ingest knowledge, govern knowledge, analyze requirements, assess impact, verify implementation, and detect gaps.
+They also supply repository onboarding, document validation, and dependency graph analysis.
+Their inputs, outputs, evidence requirements, and limits must remain independent of the AI client.
+Procedure execution can require an external agent and registered tools.
+
+`workbench-ready` coordinates existing setup, repository onboarding, graph freshness checks, and verification prerequisites.
+It starts the first requested task when the evidence supports that task. [Workbench Ready skill](.agents/skills/workbench-ready/SKILL.md)
+
+`.agents/skills/repository-onboarding/` owns the imported repository assessment procedure and static helpers.
+Use it to locate responsibilities, components, contracts, tests, and agent readiness with exact source evidence.
+It stages outputs outside target checkouts and keeps proposed metadata separate from live catalogs.
+Source observations establish neither approved intent nor passing business execution.
+The skill does not execute business code, publish knowledge, or register execution grants.
+Use existing ingestion and governance procedures for authorized knowledge changes.
+
+`.agents/skills/service-dependencies-graph/` owns the imported dependency graph capability.
+Its scripts and tools support direct execution.
+Its packaged helpers supply the same implementation to Workbench adapters.
+CLI and MCP skill discovery use the canonical `.agents/skills/` location.
+All canonical skills have discovery links under `.claude/skills/`.
+Initialization creates forwarding `SKILL.md` files when the platform denies directory links.
+
+`adapters/claude-code/` exposes the shared procedures to Claude Code.
+`adapters/copilot/` exposes the same procedures to GitHub Copilot.
+`adapters/mcp/` defines access through the existing MCP runtime.
+`adapters/sources/` defines the future source integration boundary.
+Adapters must reuse core dispatch and retained evidence.
+They must not create separate business rules, grants, or verification claims.
+
+## Core workflow
+
+This workflow applies to business behavior requirements and defects in existing repositories.
+Harness maintenance uses a lightweight task record with code, current documentation, applicable validation, and Git review.
+For mixed requests, apply task intake to the business scope. Follow [the scope rules](tasks/README.md#scope).
+
+**Receive → Discover → Understand → Relate → Analyze → Execute → Verify**
+
+This sequence describes engineering concerns. Existing artifacts can enter through the [lifecycle entry routes](tasks/README.md#lifecycle-entry-routes).
+Requirements-first work refines intent before product implementation.
+Supplied implementation enters as evidence, with actual dates and exact revisions.
+Bounded exploration can establish scoped `READY` before complete product ACs, using defined experiment boundaries and existing authorization.
+All routes retain independent intent review, implementation evidence, execution outcomes, and acceptance decisions.
+
+1. Receive the business requirement or issue in `tasks/<task-id>/01-intake.md` through the applicable template.
+2. Discover relevant capabilities, repositories, services, knowledge, investigation results, and tools.
+3. Understand expected behavior and current behavior through source review, questions, and applicable investigations.
+4. Relate expected behaviors to affected services, code, and tests through evidence links.
+5. Analyze change impact, inconsistent information, implementation gaps, and test gaps.
+6. Execute registered tools, bounded experiments, or product implementation within the owning repositories and their assessed stage boundaries.
+7. Verify expected, implemented, and observed behavior. Retain evidence and unresolved gaps.
+
+Follow [the task guide](tasks/README.md) for intake questions, evidence indexing, and readiness decisions.
+Keep new investigation results, question logs, reports, and evidence under the task.
+Reference existing authoritative sources, raw snapshots, and audit events without relocation.
+Use exact code revisions, inspected assertions, and applicable authorized browser or service observations.
+Knowledge, registered repository code and tests, and investigation results are the three primary intake inputs.
+Reports provide investigation evidence; independent repositories retain business code and tests.
+
+Intake remains open until evidence resolves material uncertainties for the named next phase.
+Only `READY` permits that phase with a recorded evidence rationale.
+`READY_WITH_LIMITS` permits further intake evidence collection only; `NEEDS_CLARIFICATION` blocks the next phase.
+Readiness does not establish business approval or knowledge publication.
+An exploration decision permits only its recorded experiment. It does not establish product conformance or deployment authorization.
+Code-derived requirements remain proposals until intent evidence and applicable review support them.
+This is an agent procedure, not an executable core gate or durable workflow runner.
+
+Preserve raw source evidence before drafting candidates.
+Investigate findings and obtain required human review before publication.
+Record governance changes through append-only audit event files and Git history.
+
+Use exact repository revisions when analyzing code changes.
+Read the cited source before treating retrieved text as authoritative evidence.
+Inspect assertions before claiming test coverage.
+Retain execution identities before claiming observed behavior.
+Keep facts, inferences, and unresolved questions separate throughout the workflow.
+
+### Full SDLC lifecycle
+
+Business work can enter with a requirement, existing implementation, or a bounded exploration question.
+The [task entry routes](tasks/README.md#lifecycle-entry-routes) select the next phase from actual evidence, without inventing a completed history.
+The diagram includes design, implementation, review, test execution, release assessment, and their separate feedback routes.
+For mixed requests, apply the business controls to the business scope and the maintenance route to its supporting tooling.
+
+```mermaid
+flowchart TB
+    Requirement["Requirement or business issue"] --> Intake
+    Existing["Existing code, PR or tests<br/>Exact revisions and actual dates"] --> Intake
+    Question["Bounded exploration question"] --> Intake
+    Maintenance["Harness maintenance only"] --> MaintenanceRecord["Lightweight maintenance record<br/>Scoped changes and current documentation"]
+    MaintenanceRecord --> MaintenanceCheck["Review affected consumers<br/>Run applicable checks and retain results"]
+    subgraph Business["Business behavior scope"]
+        Intake["Preserve user input and evidence index"] --> Investigate["Discover sources and consumers<br/>Relate intent, old behavior and current evidence"]
+        Investigate --> Refine["Resolve material intent questions<br/>Refine requirements, target design and Gherkin ACs"]
+        Refine --> Ready{"READY for the named phase<br/>within existing authorization?"}
+        Ready -->|"Material uncertainty or missing authority"| Investigate
+        Ready -->|"Defined experiment only"| Explore["Run the bounded experiment<br/>Retain assertions, observations and limits"]
+        Explore --> Investigate
+        Ready -->|"Design and implementation scope"| Design["Assess design, impact and exposed contracts"]
+        Ready -->|"Review supplied implementation"| Review
+        Design --> Implement["Implement the scoped change<br/>or reconcile supplied implementation"]
+        Implement --> Review["Review code and affected callers<br/>Compare baseline and candidate"]
+        Review --> Prepare["Map ACs, code changes and test assertions<br/>Check case and environment readiness"]
+        Prepare --> Run["Run existing authorized test tools<br/>Save each completed case immediately"]
+        Run --> Compare{"Compare intended, implemented<br/>and observed behavior"}
+        Compare -->|"Implementation defect"| Implement
+        Compare -->|"Assertion or execution gap"| Prepare
+        Compare -->|"Intent gap or missing evidence"| Investigate
+        Compare -->|"Supported conformance within stated limits"| Release["Assess release confidence<br/>Business and system impact, tests and operational evidence"]
+        Release --> Decision{"Required acceptance and human<br/>deployment authorization recorded?"}
+        Decision -->|"Authorized delivery scope"| Deploy["Use the owning delivery process"]
+        Deploy --> Observe["Retain deployment and representative usage evidence"]
+        Observe --> Feedback{"Classify the resulting change or gap"}
+        Feedback -->|"Defect or missing evidence"| Investigate
+        Feedback -->|"Sourced intent change"| Knowledge["Version affected canonical intent<br/>Apply required review, publication and audit procedure"]
+        Refine -.->|"When intent changes"| Knowledge
+        Knowledge --> Investigate
+    end
+    Handoff["Scoped handoff<br/>Outcomes, open gaps, owner and next action"]
+    MaintenanceCheck --> Handoff
+    Decision -->|"Pending decision or limited scope"| Handoff
+    Observe --> Handoff
+```
+
+`READY_WITH_LIMITS` permits further intake evidence collection only; `NEEDS_CLARIFICATION` blocks the named next phase.
+`READY` does not grant new edit, execution, publication, or deployment authority.
+Independent phases can reuse suitable existing evidence; supplied code need not be written again to follow this view.
+The maintenance route has no business intake or knowledge publication gate.
+Release recommendations, actual business acceptance, knowledge publication, and human deployment authorization remain separate recorded decisions.
+Remote UAT logs and production observations require their own build, environment, configuration, time-window, and correlation bindings.
+This is a procedure for agents and owners. The current runtime does not enforce these gates, run the complete lifecycle, or authenticate approvals.
+
+## Seven concerns within the architecture
+
+| SDLC concern | Workspace representation |
+| --- | --- |
+| Domain knowledge | Capability context, registered sources, knowledge references, and governance checks. |
+| Requirements | `knowledge/records/requirements/` and requirement-to-code relationships. |
+| System design | `knowledge/records/architecture/`, `knowledge/records/decisions/`, and service context. |
+| Source repositories | `registry/repositories.yaml` and registered Git tools. Local clones remain optional. |
+| Service Dependencies Graph | `relationships/service-dependencies/` and registered graph-generation or query tools. |
+| E2E engine | Registered existing test engine, case references, execution tools, and retained observations. |
+| SDLC skills | Canonical procedures in `.agents/skills/`, exposed through adapters and Claude links. |
+
+An E2E engine can remain a separate checkout at its existing location.
+The current command provider can run configured suites and retain their output.
+Assertion mapping and complete E2E behavior verification require further implementation.
+Demonstration fixtures do not establish business-system verification.
+
+## Evolution phases
+
+| Phase | Delivery scope | Completion evidence |
+| --- | --- | --- |
+| 1. Agent-Integrated Workbench | Local workspace, structured context, relationship records, shared skills, Claude Code, and Copilot integration. | Agents discover registered assets and invoke existing tools through shared interfaces with retained evidence. |
+| 2. Governed SDLC Workbench | Automated knowledge maintenance, cross-repository traceability, evidence validation, and integrated verification workflows. | One versioned requirement maps through code and assertions to retained execution evidence. Governance checks expose unresolved gaps. |
+| 3. Independent AI SDLC Platform | Dedicated interface, agent orchestration, managed workspaces, workflow automation, and enterprise governance. | The platform operates these capabilities through its own interface while retaining the same core contracts. |
+
+The foundation stage creates the Phase 1 construction and preserves existing resource operations.
+It does not complete all Phase 1 acceptance evidence or the later phases.
+Clean initialization creates workspace configuration and responsibility directories.
+It ships `repos/README.md` and empty catalogs.
+It does not clone repositories.
+
+Registry examples live under `registry/examples/` and illustrate validated catalog contracts.
+Tests retain private fixtures only when they check supported behavior or consequential boundaries.
+The project removes the public calculator demonstration and dashboard because they have no established current consumer.
+Later phases describe possible direction and do not authorize speculative implementation.
+
+## Validation and unresolved inputs
+
+Validate YAML configuration, catalog identities, references, local mappings, knowledge contracts, and source provenance.
+Use `ai-sdlc --workspace PATH validate` for deterministic checks.
+Check executable grants, shared skill access, and retained operation evidence through relevant regressions.
+Check CLI and MCP behavior against the same runtime.
+Install the package outside the parent checkout and check that shipped resources remain available.
+
+Target macOS and Windows portability. Record the platforms actually tested.
+
+Business source locations, repository identities, engine configuration, and approved verification environments remain project-specific inputs.
+Missing inputs must produce explicit limits or unresolved states.
+Do not invent remotes, deployment identities, business rules, or passing E2E results.
+
+## Implementation scope and risk
+
+This stage merges runtime ownership, relocates catalog examples, and removes the public demonstration and dashboard.
+CLI and MCP continue to share the same core runtime and grants.
+Qualitative risk is moderate because package mapping, initialization, and imports affect CLI, MCP, providers, and distributed workspace files.
+This standalone project has no GitNexus index.
+Review callers, imports, configuration paths, tests, and package initialization directly.
+Do not substitute an unrelated repository index or invent a numerical risk score.
+
+## Output review
+
+```json
+{
+  "asd_review": "PENDING",
+  "automated_check": "PASSED",
+  "findings": [],
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ],
+  "reviewed_at": null,
+  "reviewer": null,
+  "standard": "ASD-STE100"
+}
+```

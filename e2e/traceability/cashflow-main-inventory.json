@@ -1,0 +1,925 @@
+{
+  "schema_version": 1,
+  "source_repositories": [
+    {
+      "id": "mfe-cashflow-blotter",
+      "revision": null,
+      "identity": "Filesystem source copy; SHA-256 identifies inspected bytes."
+    },
+    {
+      "id": "mfe-ratan-container",
+      "revision": null,
+      "identity": "Filesystem source copy; SHA-256 identifies inspected bytes."
+    }
+  ],
+  "scope": "Cashflow_CN main blotter and imported main search/view/grid controls. Dialog workflow controls have a separate inventory.",
+  "runtime_verification": "NOT_RUN",
+  "controls": [
+    {
+      "id": "quick-search",
+      "scope": "root .kp--quick_search",
+      "identities": {
+        "fields": {
+          "Cashflow ID": "cashflowIDSearch",
+          "Trade ID": "tradeIDSearch",
+          "Original Trade ID": "originalTradeIDSearch",
+          "Value Date Range": "valueDateRangeSearch",
+          "Currency": "currencyAutoComplete",
+          "Product Taxonomy": "productTaxonomySearch",
+          "Counterparty FMCODE": "counterpartyFMCODESearch",
+          "Counterparty FMID": "counterpartyFMIDSearch",
+          "SCB Booking Entity": "sCBBookingEntitySearch",
+          "SCB Booking Entity FMID": "sCBBookingEntityFMIDSearch",
+          "Beneficiary Name": "beneficiaryNameSearch",
+          "Beneficiary Account BIC Code": "beneficiaryAccountBICCodeSearch",
+          "Cashflow State": "cashflowStateSearch",
+          "Cashflow Sub State": "cashflowSubStateSearch"
+        },
+        "buttons": [
+          "Search",
+          "Clear Filters"
+        ],
+        "dynamic_field_label": "dynamickLabel",
+        "dynamic_field_choices": [
+          [
+            "Trade ID",
+            "Original Trade ID"
+          ],
+          [
+            "Counterparty FMCODE",
+            "Counterparty FMID"
+          ],
+          [
+            "SCB Booking Entity",
+            "SCB Booking Entity FMID"
+          ]
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/config/ratanConfig/local/cashflowQuickSearchConfig.ts",
+          "lines": [
+            112,
+            389
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/QuickSearchComponents/ItemsComponent.tsx",
+          "lines": [
+            29,
+            349
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FieldLabel/index.tsx",
+          "lines": [
+            85,
+            138
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratanutils/utils.ts",
+          "lines": [
+            383,
+            386
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+          "lines": [
+            64,
+            165
+          ]
+        }
+      ],
+      "conditional": null,
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "amount",
+      "scope": "quick-search",
+      "identities": {
+        "operator_labels": [
+          "Amount Range (Is)",
+          "Amount Range (Between)",
+          "Amount Range (Greater Than)",
+          "Amount Range (Less Than)"
+        ],
+        "inputs": [
+          "amountValueEQ",
+          "amountValueLaterOrBefore",
+          "amountStart",
+          "amountEnd"
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/QuickSearch/AmountItem.tsx",
+          "lines": [
+            10,
+            183
+          ]
+        }
+      ],
+      "conditional": null,
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "preset-query",
+      "scope": "root",
+      "identities": {
+        "test_id_suffixes": [
+          "preset_query_count/value_today_pending_operator",
+          "preset_query_count/value_today_pending_verification",
+          "preset_query_count/value_tmr_pending_operator",
+          "preset_query_count/value_tmr_pending_verification"
+        ],
+        "periods": [
+          "Value Today",
+          "Value Tomorrow",
+          "Value till Monday"
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/PresetQueryCount/index.tsx",
+          "lines": [
+            60,
+            100
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/PresetQueryCount/QueryCount.tsx",
+          "lines": [
+            90,
+            110
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+          "lines": [
+            64,
+            165
+          ]
+        }
+      ],
+      "conditional": null,
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "quick-filters",
+      "scope": "root",
+      "identities": {
+        "test_ids": [
+          "quickFilterDays",
+          "quickFilterTaxonomy",
+          "quickFilterNstpException",
+          "quickFilterBookingEntity",
+          "quickFilterCashflowStatus",
+          "quickFilterSubStatus",
+          "quickFilterSubStatusType",
+          "quickFilterSettlementMethod",
+          "quickFilterBicNet"
+        ],
+        "clear_all": "/cashflow_blotter_cn/cashflow_cn/quick_filter/clear_all_btn",
+        "options": "/cashflow_blotter_cn/cashflow_cn/quick_filter/${plattenStr(field)}/${plattenStr(option)}"
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/QuickFilters/index.tsx",
+          "lines": [
+            382,
+            915
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+          "lines": [
+            64,
+            165
+          ]
+        }
+      ],
+      "conditional": "Enable_Search_Bar",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "custom-search",
+      "scope": "root",
+      "identities": {
+        "test_ids": [
+          "select-fliter",
+          "/advanced_search/entry_selector/clear_btn",
+          "/advanced_search/entry_selector/setting_btn"
+        ],
+        "dialog": "Custom Search",
+        "dialog_fields": [
+          "Filter Name",
+          "Private",
+          "Search filters"
+        ],
+        "dialog_actions": [
+          "new-filter-btn",
+          "Duplicate this filter",
+          "/advanced_search/preview_dialog/delete_btn",
+          "/advanced_search/preview_dialog/save_or_create_btn",
+          "/advanced_search/preview_dialog/search_btn"
+        ],
+        "query_builder": "Nested field/operator/value/combinator/rule/group controls; generated by ReactQueryBuilder source."
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CustomSearchView/index.tsx",
+          "lines": [
+            50,
+            75
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RatanFilterBuilder/AdvancedSearch/components/EntrySelector.tsx",
+          "lines": [
+            105,
+            143
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RatanFilterBuilder/AdvancedSearch/components/MainPanel.tsx",
+          "lines": [
+            80,
+            180
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RatanFilterBuilder/AdvancedSearch/components/FilterList.tsx",
+          "lines": [
+            75,
+            132
+          ]
+        }
+      ],
+      "conditional": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Custom_Query_Builder",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "views",
+      "scope": "root",
+      "identities": {
+        "test_ids": [
+          "selectView",
+          "customView-clear-btn",
+          "customView-create-modify-btn"
+        ],
+        "dialog": "View Builder",
+        "dialog_test_ids": [
+          "searchField",
+          "viewName",
+          "filterNameTargetRoleSelect",
+          "customView-save-btn",
+          "customView-remove-btn",
+          "setBtn",
+          "show-field-name"
+        ],
+        "checkbox": "Is Private",
+        "confirmation": [
+          "Yes",
+          "No",
+          "Remove",
+          "Cancel"
+        ],
+        "dynamic_controls": [
+          "category anchors",
+          ".group-data li (drag source)",
+          ".result-data li (drag/reorder target)",
+          ".delete-btn (per displayed field)"
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewSelectorComp.tsx",
+          "lines": [
+            278,
+            330
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewName.tsx",
+          "lines": [
+            119,
+            211
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewOptions.tsx",
+          "lines": [
+            270,
+            407
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewBuilder.tsx",
+          "lines": [
+            120,
+            164
+          ]
+        }
+      ],
+      "conditional": "Permissions and View_Builder_POC can alter builder controls",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "search-visibility",
+      "scope": "root",
+      "identities": {
+        "buttons": [
+          "Hide Search Bar",
+          "Show Search Bar"
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/ToggleVisibleDivider/index.tsx",
+          "lines": [
+            33,
+            54
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+          "lines": [
+            64,
+            165
+          ]
+        }
+      ],
+      "conditional": null,
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "footer",
+      "scope": "root [data-testid=\"cashflow-export-file\"]",
+      "identities": {
+        "buttons": [
+          "Load next ${pageSize}",
+          "Resize",
+          "Export File",
+          "KR COMP",
+          "Uploading..."
+        ],
+        "load_settings": ".load-next-settings [role=\"img\"]",
+        "load_sizes": [
+          "set size to 1000",
+          "set size to 5000"
+        ],
+        "clear_grid_filters": "/cashflow_blotter_cn/cashflow_cn/blotter/clear_all_aggrid_filter_btn",
+        "result_alert": "[role=\"alert\"] close button",
+        "filter_tags": "[title=\"Local Filter\"] / [title=\"Custom Search\"] closable Tag; select exact header text"
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/index.tsx",
+          "lines": [
+            50,
+            98
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/load-next.tsx",
+          "lines": [
+            56,
+            72
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/ResultAlert.tsx",
+          "lines": [
+            43,
+            51
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FilterTags/index.tsx",
+          "lines": [
+            27,
+            75
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+          "lines": [
+            64,
+            165
+          ]
+        }
+      ],
+      "conditional": "Export permission; upload user whitelist; alert and tags state-dependent",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "export-dialog",
+      "scope": "page .cashflow-export-file-dialog",
+      "identities": {
+        "title": "Export File",
+        "test_ids": [
+          "closeExport",
+          "exportFileName",
+          "exportFileFormat",
+          "csv",
+          "excel",
+          "/cashflow_blotter_cn/cashflow_cn/blotter/export_file_confirm_btn"
+        ],
+        "formats": [
+          "CSV",
+          "XLSX"
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/ExportFile.tsx",
+          "lines": [
+            77,
+            123
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+          "lines": [
+            64,
+            165
+          ]
+        }
+      ],
+      "conditional": "Export permission; grid ready",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "main-grid",
+      "scope": "root .main-blotter-data-grid",
+      "identities": {
+        "row_identity": "Cashflow.Cashflow_Id -> row-id",
+        "column_identity": "col-id",
+        "actions": [
+          "row checkbox",
+          "header checkbox",
+          "sort column",
+          "resize column",
+          "column filter menu",
+          "filter input/operator/checkbox",
+          "horizontal/vertical scroll",
+          "context menu",
+          "row double-click",
+          "cell tooltips",
+          "FMO comments popover",
+          "MO View Comment button"
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDataGrid/index.tsx",
+          "lines": [
+            81,
+            170
+          ]
+        }
+      ],
+      "conditional": "Rows and columns are virtualized and field catalog dependent",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "context-menu",
+      "scope": "main-grid .ag-menu",
+      "identities": {
+        "items": [
+          "ReInstate",
+          "Early Materialization",
+          "Settle As Gross",
+          "Status Write Back",
+          "Resend To Razor",
+          "Early Release",
+          "Update Affirmation",
+          "Comment",
+          "Regenerate Swift",
+          "Manual Fail",
+          "Confirm Manual Fail",
+          "Verify Settle",
+          "Manual Settle",
+          "Swift Suppression",
+          "Verify Swift Suppression",
+          "Undo Swift Suppression",
+          "Verify Undo Swift Suppression",
+          "Suppress Cashflow",
+          "Confirm Suppression",
+          "Un-Suppress Cashflow",
+          "Confirm Un-Suppression",
+          "BIC Net Selected Cashflow",
+          "CCIL Net Selected Cashflow",
+          "Net Selected Cashflow",
+          "Un-Net Cashflow",
+          "Split Cashflow",
+          "Amend Split Amount",
+          "Un-Split Cashflow",
+          "Settlement Method Update",
+          "Bulk Approve",
+          "Bulk Submit",
+          "Bulk Submit/Approve",
+          "Hold",
+          "Unhold",
+          "Send to WAITING",
+          "View Trade Details",
+          "View Cashflow Details",
+          "View Cashflow History",
+          "View Swift Message"
+        ]
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDataGrid/common/RightClickMenuBuilder.tsx",
+          "lines": [
+            84,
+            220
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/hold/index.tsx",
+          "lines": [
+            1,
+            256
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/earlyMaterialization/EarlyMaterializationWrap.tsx",
+          "lines": [
+            1,
+            332
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/failed/FailedWrap.tsx",
+          "lines": [
+            1,
+            313
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/manualSettle/index.tsx",
+          "lines": [
+            1,
+            200
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/swiftSuppress/SwiftSuppress.tsx",
+          "lines": [
+            1,
+            332
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/netCashflow/netCashflowRightMenu.ts",
+          "lines": [
+            1,
+            139
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/netCashflow/unNetCashflowRightMenu.ts",
+          "lines": [
+            1,
+            41
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/splitting/SplittingCashflowRightMenu.tsx",
+          "lines": [
+            1,
+            136
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/settlementMethodUpdate/utils/rightmenu.ts",
+          "lines": [
+            1,
+            48
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/BulkFixExceptions/utils/rightmenu.ts",
+          "lines": [
+            1,
+            109
+          ]
+        }
+      ],
+      "conditional": "Permission, selected cashflows, state, settlement method, feature flags",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    },
+    {
+      "id": "notification-reconnect",
+      "scope": "page portalled Ant Design notification",
+      "identities": {
+        "button": "Reconnect",
+        "test_id": "/cashflow_blotter_cn/cashflow_cn/notification_reconnect_btn"
+      },
+      "sources": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/useReconnectNotification.tsx",
+          "lines": [
+            9,
+            34
+          ]
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+          "lines": [
+            64,
+            165
+          ]
+        }
+      ],
+      "conditional": "Notification connection interrupted",
+      "grounding": "source-inspected",
+      "runtime_uniqueness": "unverified"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/App.tsx",
+      "sha256": "99c05a1581e1e39d6a5e0d68d43b898e5672a35efb82876f4b1e8e8b91ee49c4",
+      "line_count": 221,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/index.tsx",
+      "sha256": "8fcbab4db28b6fa145092e83d237b948f3fea5740b31bc418ddc02761c2121be",
+      "line_count": 18,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/common/style.ts",
+      "sha256": "00eb3696c846887b4cfa8ffda1a98984d2c737b85f01af4d71b8f402f6fd132a",
+      "line_count": 18,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/config/ratanConfig/local/cashflowQuickSearchConfig.ts",
+      "sha256": "649574d05b929633187ca40f18f4cea179a99fc06a090ab77e088044f7a1a9df",
+      "line_count": 389,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/QuickSearch/index.tsx",
+      "sha256": "c33a803960f750435396b18b118be149cb5cabbc0fa660f574f7baaab90af1da",
+      "line_count": 296,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/QuickSearch/AmountItem.tsx",
+      "sha256": "5ecd610d915f975edb0a93fe5039a710cd78ddeb6ab536e2e1779e8ce28f7149",
+      "line_count": 183,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/QuickFilters/index.tsx",
+      "sha256": "d73ee97ecbdcf526260824fa487e98818bbde1457389be67b256950922898295",
+      "line_count": 915,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/PresetQueryCount/index.tsx",
+      "sha256": "ef1b57d7f477d898f9d32c4daf0c2448cc17b56d3e14b8d3c0c62221cbd4d46c",
+      "line_count": 163,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/PresetQueryCount/QueryCount.tsx",
+      "sha256": "6143456359bf287984407e1391817bf4a07c4cdb2ac4a334af96022928262d0e",
+      "line_count": 116,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CustomSearchView/index.tsx",
+      "sha256": "a8e030c030da6cff31051490f00efabfcf5a463856c2cbd39417a2a0905645f5",
+      "line_count": 81,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/AdvancedSearch/index.tsx",
+      "sha256": "44977a2f45850af0280a879aaa59694379a4d4345bbfe68da8e58e348a240a65",
+      "line_count": 180,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/ToggleVisibleDivider/index.tsx",
+      "sha256": "737683f7ddfe2458dfd5117e7af508ef0afb1b5009e75fec1abc6e2fb53303ed",
+      "line_count": 54,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/index.tsx",
+      "sha256": "adb29561da0d6d6010fbed2352473c4f8ab034f39717cda227c2ad26ec87260e",
+      "line_count": 98,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/load-next.tsx",
+      "sha256": "088584a18671f5e42912686ee2cb99e1612a9d52b9c6e4cb255d63f46bbf98ec",
+      "line_count": 72,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/ResultAlert.tsx",
+      "sha256": "12167a35915213b54b6711802595191a4077be0af7b115ac6f32ce6924e28f2f",
+      "line_count": 51,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/ExportFile.tsx",
+      "sha256": "c5cecb02d16a01f176973be79fded4650829c2211e03d615e3fa7a9a4ff72eb9",
+      "line_count": 123,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/GridFooter/UploadFile.tsx",
+      "sha256": "08ae9bb209a8433e1cedfeb1028c18d4bda468069832699dc18ca095890f7692",
+      "line_count": 123,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDataGrid/index.tsx",
+      "sha256": "1a513c20bfd85738af707f3ab97f88996b99f59a78d23abc44c9f641d90e3068",
+      "line_count": 204,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDataGrid/common/RightClickMenuBuilder.tsx",
+      "sha256": "b32340ff8e160ad1daafe684247d854dae90606b3997fbc887549c4c4ecfda50",
+      "line_count": 220,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/QuickSearchComponents/ItemsComponent.tsx",
+      "sha256": "9b70de9175f1b81a0a86591b550d44856fe1a4b1207d82e003e6aa602da535c1",
+      "line_count": 433,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FieldLabel/index.tsx",
+      "sha256": "7468055f35e7c7fcf1a2836d3658e76da898adcab65df1869df9f657d82493d3",
+      "line_count": 141,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewSelectorComp.tsx",
+      "sha256": "fdff8c780442bd54cde815ff9db61b5988100bccd7bdc18e24b9d56e619b671b",
+      "line_count": 337,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewName.tsx",
+      "sha256": "a83c943dcdf2bc58a5f5b0ac77cec50f4b5f55b541ad7530324db4ccdbd4ed42",
+      "line_count": 215,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewBuilder.tsx",
+      "sha256": "251daeff22e5fbc619dc4d883220145efabb9990d794e709c382511fc2dc045b",
+      "line_count": 165,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewOptions.tsx",
+      "sha256": "13aa3950fe4af7b87a955ed75c95d85d8de76e9de88e151d3753b1e7733adfbc",
+      "line_count": 407,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FilterTags/index.tsx",
+      "sha256": "329c3bb0a55fb2d0bbaef16a53c9686e5e2aa24d7b16143be03b42bae038e68a",
+      "line_count": 75,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RatanFilterBuilder/AdvancedSearch/index.tsx",
+      "sha256": "5ecf7b1f65bf94a76aca8b9fe5b4b4e042003e0520dd5792677c3c62eb1d5dc9",
+      "line_count": 125,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RatanFilterBuilder/AdvancedSearch/components/EntrySelector.tsx",
+      "sha256": "e609f24e1cf82a850a4738c5fe8e64423ae6b86297d9c3a37a83d6cc92959dcc",
+      "line_count": 143,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RatanFilterBuilder/AdvancedSearch/components/MainPanel.tsx",
+      "sha256": "094f0b2e4b377d20711b0b72c3ad7ae821ee7a16aa9f7200442a32869dd16621",
+      "line_count": 199,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RatanFilterBuilder/AdvancedSearch/components/FilterList.tsx",
+      "sha256": "1d8771474654975d5c6d37166e3e70f8f4f363b977c466b9a16751e5641ea5bb",
+      "line_count": 147,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/analysis/const.ts",
+      "sha256": "fd30af66768d2770fc0febb500b8a53a9fd0ad7cf10c55801f4a54104448d4ae",
+      "line_count": 270,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/const.ts",
+      "sha256": "33a0f935f95575aee4e7b69ec5430ec48919500a7caea79e040366ade503d146",
+      "line_count": 48,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/utils.ts",
+      "sha256": "ca9dae2bf94a3b7aae072d794f57844d6fe6b9668e4afe1638cb58fda9cd06df",
+      "line_count": 513,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/hold/index.tsx",
+      "sha256": "a3424470e5c1f9e1d055f69cb9c6bff68c54ea12c3b548cde1fb64b6d2742ed7",
+      "line_count": 256,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/earlyMaterialization/EarlyMaterializationWrap.tsx",
+      "sha256": "5af16d1e19e95494357dbc9300639638f5a008418eec5358c3035a0e49e0bf08",
+      "line_count": 332,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/failed/FailedWrap.tsx",
+      "sha256": "d0e8b5d210e53fc0442f2360de36695dfb459265cccbdaf71dec03978034145c",
+      "line_count": 313,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/manualSettle/index.tsx",
+      "sha256": "63bab45f41468e26718f086a882248a2f0339735f6e55241ef6f5fb53c06cd0d",
+      "line_count": 200,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/swiftSuppress/SwiftSuppress.tsx",
+      "sha256": "db9484b4589c568034bae6263dec8523615a8e83ced9cea8c4e7132aa11b29a4",
+      "line_count": 332,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/netCashflow/netCashflowRightMenu.ts",
+      "sha256": "8a5f76fe30404fd8556a381136049898e4133295f9d041166ad333a521014a4a",
+      "line_count": 139,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/netCashflow/unNetCashflowRightMenu.ts",
+      "sha256": "343127f47b4e6fd79f35eec19f8b6d53bcc6c220f72fd2c3743ef34af20443db",
+      "line_count": 41,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/splitting/SplittingCashflowRightMenu.tsx",
+      "sha256": "d4404d5eb01d6e6287c6c4e58c95e8fae504557042e6e7f8899eaf36638a009d",
+      "line_count": 136,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/settlementMethodUpdate/utils/rightmenu.ts",
+      "sha256": "bdb2615fc852bdc20cbca0c8680daa8d9bb69ba4691e19a981f5fb2f9eb1080e",
+      "line_count": 48,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/BulkFixExceptions/utils/rightmenu.ts",
+      "sha256": "d561094faa6b0f0da610230521c49efd03fd34aca4f50d4198da24f047eff2c6",
+      "line_count": 109,
+      "revision": null
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/useReconnectNotification.tsx",
+      "sha256": "b059d822fd9774c0598a2dced871697c5a2c738ca7f1a475ca29652c7c6f994d",
+      "line_count": 40,
+      "revision": null
+    }
+  ],
+  "limits": [
+    "Filesystem copies have no repository-local Git metadata. Workbench HEAD is not a business source revision.",
+    "Source discovery does not prove deployed DOM identities or uniqueness.",
+    "Dynamic values, feature permissions, saved views, filter rules, and AG Grid menus require runtime census in each open state."
+  ]
+}

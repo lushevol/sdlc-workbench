@@ -1,0 +1,31 @@
+export const setRefreshToken = (refreshToken: string) => {
+  const { baseDispatch } = getHooksBase();
+  baseDispatch({
+    type: ActionType.SET_REFRESH_TOKEN,
+    data: { refreshToken },
+  });
+};
+
+export const handleRefreshToken = (response: AxiosResponse) => {
+  if (
+    response?.headers &&
+    (response?.headers["Single-UI-Refresh"] ||
+      response?.headers["single-ui-refresh"])
+  ) {
+    const refreshToken = `${
+      response.headers["Single-UI-Refresh"] ??
+      response.headers["single-ui-refresh"]
+    }`;
+    setRefreshToken(refreshToken);
+  }
+};
+
+export const handleEntitlementsToken = (response: AxiosResponse) => {
+  if (response?.data?.entitlementsToken) {
+    const { baseDispatch } = getHooksBase();
+    baseDispatch({
+      type: ActionType.SET_ENTITLEMENTS_TOKEN,
+      data: { entitlementsToken: response?.data?.entitlementsToken },
+    });
+  }
+};

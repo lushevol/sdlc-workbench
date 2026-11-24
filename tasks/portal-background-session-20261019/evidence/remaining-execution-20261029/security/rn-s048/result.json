@@ -1,0 +1,36 @@
+{
+  "case_id": "RN-S048",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.048908+00:00",
+  "owner": "unknown transport and security owners",
+  "blocked_reason": "No authenticated stream server, publish fixture, or reviewed revocation deadline exists. Policy question Q-RN-06 remains unanswered.",
+  "unresolved_predicate": "No post-revocation protected message deliveries after the reviewed deadline.",
+  "definition": "../../../../06-test-cases.md#rn-s048",
+  "canonical_given": [
+    "A has an authenticated stream and a recorded revocation completion point"
+  ],
+  "canonical_when": [
+    "The server revokes A",
+    "The fixture publishes A-only message M after that point"
+  ],
+  "canonical_then": [
+    "A receives zero M deliveries after the reviewed revocation deadline"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java",
+      "lines": [
+        82,
+        103
+      ],
+      "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "local_sha256": "09d8595302dd702b8f38c298ff9e5a91f6107678ffd61714b540253605bcc161",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

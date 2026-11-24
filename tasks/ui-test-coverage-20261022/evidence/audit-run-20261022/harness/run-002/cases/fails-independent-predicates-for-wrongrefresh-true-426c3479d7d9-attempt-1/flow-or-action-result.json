@@ -1,0 +1,74 @@
+{
+  "recordedAt": "2026-10-22T06:25:23.161Z",
+  "caseId": "fails-independent-predicates-for-wrongrefresh-true-426c3479d7d9-attempt-1",
+  "scope": "SYNTHETIC_HARNESS",
+  "observations": {
+    "flow": "session-extension",
+    "scope": "synthetic-fixture",
+    "status": "failed",
+    "assertions": [
+      {
+        "id": "dialog-closed",
+        "status": "passed",
+        "actual": "absent"
+      },
+      {
+        "id": "refresh-credential",
+        "status": "failed",
+        "actual": {
+          "expectedSha256": "4760a5af7ffbc0ccc664e6975b723f504c975c1d889093cb4ecb0b06a9aa759c",
+          "requestSha256": "11554facbd48346c7d80e561154af4163d13f51062e100fa693486b1bfe9dec1"
+        }
+      },
+      {
+        "id": "renewal-accepted",
+        "status": "passed",
+        "actual": 200
+      },
+      {
+        "id": "installed-access",
+        "status": "passed",
+        "actual": {
+          "responseSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121",
+          "installedSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121"
+        }
+      },
+      {
+        "id": "workspace-visible",
+        "status": "passed",
+        "actual": "WS-A"
+      },
+      {
+        "id": "validation-request-token",
+        "status": "passed",
+        "actual": {
+          "requestSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121",
+          "installedSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121"
+        }
+      },
+      {
+        "id": "validation-result",
+        "status": "passed",
+        "actual": {
+          "httpStatus": 200,
+          "result": true,
+          "resultType": "boolean"
+        }
+      },
+      {
+        "id": "one-relogin-request",
+        "status": "passed",
+        "actual": 1
+      }
+    ],
+    "observations": {
+      "dialogClosed": true,
+      "sessionValid": true
+    },
+    "limits": [
+      "Authentication validation does not establish token lifetime or downstream authorization.",
+      "Request counts cover the flow observation window only.",
+      "Refresh comparison requires an independently observed or fixture-defined credential fingerprint."
+    ]
+  }
+}

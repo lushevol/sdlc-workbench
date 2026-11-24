@@ -1,0 +1,159 @@
+{
+  "caseId": "keyboard-extend-activation",
+  "status": "PASSED",
+  "startedAt": "2026-10-25T09:33:04.138Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "b23d33f1b56477148365fbb18af788901f46c9a182c0ab747138f345028617f4",
+  "testSourceSha256": "34ee3bbe846bb02065b536b4d3d59269a29389c72d1917de55f7252e30990a7d",
+  "sourceRevisions": {
+    "mfe-base": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "The real relogin request is held before dispatch, then forwarded with route.fetch()."
+  ],
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "pendingPromptClosures": 0,
+      "completedPromptClosures": 1
+    },
+    {
+      "activation": "keyboard",
+      "keyboardEvent": "Enter"
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-25T09:33:04.140Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "expired-prompt",
+      "capturedAt": "2026-10-25T09:34:04.460Z",
+      "file": "expired-prompt.png"
+    },
+    {
+      "phase": "pending-prompt",
+      "capturedAt": "2026-10-25T09:34:06.028Z",
+      "file": "pending-prompt.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-25T09:34:12.407Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "44f98a55125dd33bd3b1fcb14fc4e1b5f5c842fb3caf71e441235b1e7c7dda1c",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "completedAt": "2026-10-25T09:34:12.405Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792920784093,
+      "access": {
+        "sha256": "50fb7c0df605b5aba18a16e5b857bfadb9be40096168054bb830cb4bc5c6c1c7",
+        "exp": 1792920844,
+        "iat": 1792920784
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792920819029,
+      "access": null,
+      "refresh": {
+        "sha256": "ebfd9c24bca880fc9405c170bb121317efda361191fd84b33d9655b8720ea7a2",
+        "exp": 1792920963,
+        "iat": 1792920819
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "time": 1792920846081,
+      "access": {
+        "sha256": "44f98a55125dd33bd3b1fcb14fc4e1b5f5c842fb3caf71e441235b1e7c7dda1c",
+        "exp": 1792920906,
+        "iat": 1792920846
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792920852363,
+      "access": {
+        "sha256": "20125e854b47d8ffe3e8ff5c8ee094f3b07e6e6263e5db23de41d6d259bee384",
+        "exp": 1792920912,
+        "iat": 1792920852
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792920852107
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792920779582
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792920852179
+    }
+  ],
+  "initialAccess": {
+    "sha256": "50fb7c0df605b5aba18a16e5b857bfadb9be40096168054bb830cb4bc5c6c1c7",
+    "exp": 1792920844,
+    "iat": 1792920784
+  },
+  "latestAccess": {
+    "sha256": "20125e854b47d8ffe3e8ff5c8ee094f3b07e6e6263e5db23de41d6d259bee384",
+    "exp": 1792920912,
+    "iat": 1792920852
+  },
+  "refresh": {
+    "sha256": "ebfd9c24bca880fc9405c170bb121317efda361191fd84b33d9655b8720ea7a2",
+    "exp": 1792920963,
+    "iat": 1792920819
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-25T09:34:12.263Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

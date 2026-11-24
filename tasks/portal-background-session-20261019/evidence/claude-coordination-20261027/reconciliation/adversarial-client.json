@@ -1,0 +1,11 @@
+{
+  "candidate":"e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "response":"../adversarial-client-response.json",
+  "claims":[
+    {"id":"AC-01","claim":"Failed fresh-login attempt invalidates old epoch and clears refresh before response","classification":"CONFIRMED_CONDITIONAL_BEHAVIOR; UI_REACHABILITY_UNKNOWN","basis":"success.request.handler.ts:10-19 invalidates and clears; success.response.handler.ts:74-83 repeats on successful login. A failed attempt does not restore old refresh. Whether an active session can submit replacement login is not established."},
+    {"id":"AC-02","claim":"Late success from old epoch rejects as cancellation and may cause unhandled rejection","classification":"CONFIRMED_REJECTION; UNHANDLED_CALLER_UNPROVEN","basis":"succes.response.handler.ts:35-44 deliberately throws CanceledError. Local extend, refresh and logout paths catch their own failures. Other external or local consumers have not been exhaustively verified."},
+    {"id":"AC-03","claim":"getRefreshToken must obtain new access when stored refresh is reusable","classification":"REJECT_ENDPOINT_INTERPRETATION","basis":"service/index.ts:48-85 calls the refresh-token endpoint and supplies current access; relogin obtains renewed access separately. Behavior on expired access in production remains outside this claim."},
+    {"id":"AC-04","claim":"Opaque or iat-less renewal access is rejected","classification":"CONFIRMED_CONTRACT_RISK_DEPLOYMENT_UNKNOWN","basis":"succes.response.handler.ts:45-71 requires parseable JWT with finite exp and iat. Baseline accepted response without this validation. Deployed BFF token contract has not been confirmed."},
+    {"id":"AC-05","claim":"Acquisition promise resolves even when request fails","classification":"CONFIRMED_INTENTIONAL_SETTLEMENT_NOT_SUCCESS","basis":"service/index.ts:39-45 documents settlement only; lines 78-97 swallow the failure. Callers must inspect credentials and tests cover failure fallback."}
+  ]
+}

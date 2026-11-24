@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "assessed_at": "2026-10-22T13:22:17.231974+00:00",
+  "baseline_revision": "231f3d02a246a1d16814833173375dad789e6fcb",
+  "scope": "Consolidated knowledge question document, source mapping, and batched review procedure.",
+  "results": {
+    "workspace_validation": {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        ".",
+        "validate"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "VALID",
+        "valid": true,
+        "documents": 13,
+        "findings": [],
+        "catalogs": {
+          "repositories": 9,
+          "services": 2,
+          "capabilities": 5,
+          "contracts": 16,
+          "sources": 11,
+          "tools": 12
+        }
+      }
+    },
+    "artifact_lint": {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "lint",
+        "tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+        "tasks/ui-test-coverage-20261022/05-entry-clarification.md"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "PASSED",
+        "valid": true,
+        "artifacts": 2,
+        "findings": [
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "owner_unknown",
+            "severity": "warning",
+            "message": "Artifact owner is unknown. Identify the responsible owner."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "review_pending",
+            "severity": "warning",
+            "message": "Business review remains pending. Record actual review before applicable publication."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "unresolved_content",
+            "severity": "warning",
+            "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "writing_review_pending",
+            "severity": "warning",
+            "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+            "code": "owner_unknown",
+            "severity": "warning",
+            "message": "Artifact owner is unknown. Identify the responsible owner."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+            "code": "review_pending",
+            "severity": "warning",
+            "message": "Business review remains pending. Record actual review before applicable publication."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+            "code": "unresolved_content",
+            "severity": "warning",
+            "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+            "code": "writing_review_pending",
+            "severity": "warning",
+            "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+          }
+        ],
+        "limitations": [
+          "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+          "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+          "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+          "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+          "Gherkin checks cover an English subset. No business step definitions execute.",
+          "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "domain_records": 11,
+    "frontmatter_questions": 48,
+    "mapped_frontmatter_questions": 48,
+    "numbered_entries": 60,
+    "unanswered": 58,
+    "carried_forward": 2
+  },
+  "local_links_checked": 327,
+  "prose_sentences_checked": 944,
+  "prose_paragraphs_checked": 411,
+  "writing_scope": "Changed Markdown files; only the user-input section of AGENTS. YAML, tables, code, headings, and lists are excluded.",
+  "preservation": {
+    "tracked_supporting_artifacts_checked": 68,
+    "governed_records_checked": 11,
+    "all_unchanged": true
+  },
+  "independent_review": {
+    "security": "Known answers preserved. Deployment question broadened to include runtime overrides across supported environments.",
+    "architecture": "Known roles and excluded Gateway implementation preserved. Conditional features remain conditional.",
+    "operations": "Bounded POC evidence wording corrected. Duplicated entity question merged.",
+    "human_approval": false
+  },
+  "content_sha256": {
+    "AGENTS.md": "9ab42e7be376a765470ea106f89dbc2068b310f772ff17fd2d05ddf14837b64b",
+    "knowledge/candidates/index.md": "55613a48a02a8c042b2c65079aebdb2a50d866c9445cb525a15a686e2ae583d7",
+    "tasks/ui-test-coverage-20261022/05-entry-clarification.md": "444a7669c6141770da0105562ef788731d967fa2c9803469df0f740d13d2bf09",
+    "tasks/ui-test-coverage-20261022/05-knowledge-questions.md": "aa28ef6d2978e2c170da5e84221a314ceb0c9c55651811d3322cb1063162f0c0",
+    "tasks/ui-test-coverage-20261022/evidence/index.md": "bb1ab7f28a593aeef43866f28a96dd721c4991dafa5c70080e2ad851346e606c",
+    "tasks/ui-test-coverage-20261022/evidence/question-batch-20261022/source-map.json": "7ff5bf7229095243426fe3e7f67dd33e9d4ad46b2ed28437be991291fd1e7633",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/batched-question-workflow-source.json": "02c9767c654035e729ae45809dd7544b8dbfec1f6b94dd5e9e9f933b628e3226"
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "findings": [],
+  "limits": [
+    "This stage creates no new domain answer or approval.",
+    "No governed domain record, source manifest, or immutable audit event changes.",
+    "Questions are bounded to the inspected collection and current task evidence.",
+    "Returned user answers and material refinements need their applicable content review before publication.",
+    "No external system or business execution ran."
+  ]
+}

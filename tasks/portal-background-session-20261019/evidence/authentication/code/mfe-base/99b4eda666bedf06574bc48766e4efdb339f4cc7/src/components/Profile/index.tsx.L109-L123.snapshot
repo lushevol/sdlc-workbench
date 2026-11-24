@@ -1,0 +1,15 @@
+        {expanded === name &&
+          entity?.subjects?.map((subject: Subject) => {
+            const entitlements = { ...store?.user?.entitlements };
+            const actionObj =
+              entitlements[`${entity.name}:${entity.roleName}`][subject.name];
+            return (
+              <SubjectComp
+                key={name}
+                actionObj={actionObj}
+                subject={subject}
+                expanded={expandedSubject}
+                handleChange={handleChangeSubject}
+              />
+            );
+          })}

@@ -1,0 +1,58 @@
+{
+  "id": "RN-T019",
+  "title": "WebSocket connection credentials avoid URL leakage",
+  "started_at": "2026-10-29T02:09:56.573Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-t019",
+  "definition_sha256": "1ba1af7918811a021609fd1f494b300bc96b9b8532d42aedf13794088d216da0",
+  "status": "BLOCKED",
+  "assertions": [],
+  "requests": [],
+  "screenshots": [],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts",
+      "lines": [
+        126,
+        240
+      ],
+      "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/stomp.ts",
+      "lines": [
+        26,
+        141
+      ],
+      "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+      "sha256": "181b11c48c6f48c7c6ec145dac6cc5ac26882d08341474bd7f7dbd2f63ae38b1",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "blocker": "No source-bound GraphQL and STOMP network connections exist for credential URL capture.",
+  "owner": "unknown application, transport, or security owner",
+  "unexecuted_predicates": [
+    "request URLs contain zero access or refresh credential values",
+    "navigation history contains zero access or refresh credential values",
+    "the handshake identity is recorded only as a hash"
+  ],
+  "completed_at": "2026-10-29T02:09:56.574Z",
+  "runner_sha256": "ccd55df493f625e3951c3801cc370cbc68ccc9647ddcd2517dfd84903c61985e",
+  "runner_summary": "../attempt1/summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "blocked-before-complete-browser-setup",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [],
+  "execution_class": "blocked-not-executed"
+}

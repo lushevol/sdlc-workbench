@@ -1,0 +1,31 @@
+import React from "react";
+import { useContext } from "../../../hooks/provider";
+import useDispatcher from "../../../hooks/dispathcer";
+import { Workspace } from "../../../hooks/model/workspaces";
+import { validateWorkspace, aOrb } from "../../../utils/common";
+import { getRefreshToken } from "../../../hooks/service";
+import { extend } from "../../../hooks/service/util/extend";
+import useAnalytics from "../../../analytics";
+import { AnalyticsData } from "../../../analytics/model";
+import { handleLoginEntities } from "../../../utils/login";
+import { setDetail, refreshTabUtil } from "./util";
+const analyticsData: AnalyticsData = { container: "Base", tile: "home" };
+
+const useController = () => {
+  const [store, dispatch] = useContext();
+  const { ButtonEvent, TileEvent, TabEvent } = useAnalytics();
+  const {
+    dispacthLoading,
+    dispacthWorkspaces,
+    dispacthCurrentWorkspace,
+    addWorkspace,
+    dispacthErrorMessage,
+  } = useDispatcher();
+  const timerPopup = React.useRef<any>(0);
+  const timerMouseMove = React.useRef<any>(0);
+  const timerRefreshToken = React.useRef<any>(0);
+  const [showTimeout, setShowTimeout] = React.useState(false);
+  const [value, setValue] = React.useState(1);
+  const [ready, setReady] = React.useState(false);
+  const [validateWorkspaceReady, setValidateWorkspaceReady] =
+    React.useState(false);

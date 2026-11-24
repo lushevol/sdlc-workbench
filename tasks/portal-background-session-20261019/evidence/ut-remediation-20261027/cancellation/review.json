@@ -1,0 +1,107 @@
+{
+  "recorded_at": "2026-10-27T05:25:15.576801+00:00",
+  "status": "ISOLATED_CORRECTION_TARGETED_TESTS_PASSED",
+  "scope": "Current-session shared-service loading cleanup after cancellation",
+  "original_application_changed": false,
+  "source_freeze": "No further service edits planned",
+  "baseline": "b8d4f1b837c6388452fbdc540f311257e805f932",
+  "scratch": "/tmp/mfe-ut-remediation-20261027-qposcs1f",
+  "changed_paths": [
+    {
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "baseline_sha256": "01678bf5f1ac0764f6a3a3e39fedd92aa07ba523a46444c216650baf59151e2b",
+      "proposed_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "baseline_sha256": "8abe038ed8e1aa3ef6b4eba83428bf9b00e768ea35d0a34b13e937a78ad40b0a",
+      "proposed_sha256": "d42121390c57fb75cc17fa05e821dca46ea7e41f3e1c4e14e4f55371772debad"
+    },
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "baseline_sha256": "ec0957b68a6ec951d1922cd7f4fa1cb92f55f93ad64416e31a2131353f84ba01",
+      "proposed_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6"
+    },
+    {
+      "path": "src/hooks/service/util/requestLoading.ts",
+      "baseline_sha256": null,
+      "proposed_sha256": "75fa8314cdcf76b99c16e9efd5aa7ecc494e8c9202a120305d14b0e0c51c901b"
+    },
+    {
+      "path": "src/hooks/service/cancellationPreservation.test.ts",
+      "baseline_sha256": "886cb3e1473dcb546497350d9752f5e063c54a97b7cfb72274fbb5cd72d31e3d",
+      "proposed_sha256": "cc203479a303053c68489fedfbe126701f101ab66815c446ae0ae41c1411bd3c"
+    }
+  ],
+  "rationale": [
+    "Track loading-enabled Axios request configs within the current session epoch.",
+    "Remove only the settled current request and publish whether other loading-enabled work remains.",
+    "Reset bookkeeping when session ownership changes. Ignore stale response loading mutations.",
+    "Keep authentication, credential validation, cancellation rejection, and error handling rules unchanged."
+  ],
+  "affected_paths": [
+    "Synchronous request interceptor",
+    "Successful response interceptor, including fresh login epoch changes",
+    "Error/cancellation interceptor",
+    "Shared loading boolean used by PageLoader"
+  ],
+  "qualitative_risk": "Shared state, concurrency, and session replacement require preservation assertions.",
+  "existing_test_assertions_unchanged": true,
+  "existing_assertion_count": 14,
+  "new_case_ids": [
+    "DEL-21",
+    "DEL-22"
+  ],
+  "canonical_case_proposals": {
+    "DEL-21": [
+      "Given session A has a held loading-enabled request",
+      "When a second request with show-loading=false starts",
+      "Then loading remains true",
+      "When the silent request returns HTTP200 and silent-position",
+      "Then its caller receives that response and loading remains true",
+      "When the first request is canceled",
+      "Then it rejects ERR_CANCELED and loading becomes false",
+      "And session A token and empty error remain unchanged"
+    ],
+    "DEL-22": [
+      "Given session A has a held loading-enabled request",
+      "When session ownership changes to B and a B request starts",
+      "Then loading equals true",
+      "When the old A request is canceled",
+      "Then it rejects ERR_CANCELED",
+      "And loading remains true with token session-b and empty error",
+      "When B returns HTTP200 and current-position",
+      "Then its caller receives that response and loading becomes false"
+    ]
+  },
+  "test_execution": {
+    "path": "execution.json",
+    "passed": 74,
+    "failed": 0,
+    "skipped": 0,
+    "suites": 10,
+    "case_checkpoints": 74,
+    "natural_exit": true
+  },
+  "source_binding": "source-binding.json",
+  "patch": {
+    "path": "proposed-service.patch",
+    "sha256": "53e3ee8cf1aa0eed09552cae4cf3ad473a424b0121d1cc401a1bc68647fa9099"
+  },
+  "limits": [
+    "This patch exists only in the isolated checkout.",
+    "No new browser run was performed against the proposed patch.",
+    "This unit check does not bind a production artifact, target composition, or deployment authorization.",
+    "Pending tracking covers the shared service request loading contract. It does not establish ownership for independent external loading dispatchers."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

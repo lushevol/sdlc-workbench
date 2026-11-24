@@ -1,0 +1,783 @@
+{
+  "caseId": "auth-022-actual-react-displays-the-rejected-login-message-6bb84a9cb607-attempt-1",
+  "testId": "d1d1c462ba1576d791c3-c90ab089de64eddb56c9",
+  "title": "AUTH-022 actual React displays the rejected-login message",
+  "source": {
+    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+    "line": 153,
+    "column": 1
+  },
+  "startedAt": "2026-10-22T04:15:02.134Z",
+  "endedAt": "2026-10-22T04:15:03.772Z",
+  "durationMs": 1214,
+  "expectedStatus": "passed",
+  "actualStatus": "failed",
+  "outcome": "unexpected",
+  "assertionsSatisfied": false,
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "canonicalIdsMentioned": [
+    "AUTH-022"
+  ],
+  "canonicalBusinessExecution": "LOCAL_CONTROLLED_ASSERTIONS",
+  "errors": [
+    {
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\nExpected: \u001b[32m\"Invalid username and password combination or SSO service is unavailable.\"\u001b[39m\nError: strict mode violation: getByTestId('MicroWebUI_base_snackbar').getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" direction=\"up\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-rgg0t8-MuiPaper-root-MuiAlert-root\">…</div> aka getByRole('alert').first()\n    2) <div role=\"alert\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-elevation6 MuiSnackbarContent-root css-11hfw37-MuiPaper-root-MuiSnackbarContent-root\">…</div> aka getByRole('alert').nth(1)\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('MicroWebUI_base_snackbar').getByRole('alert') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\u001b[22m\n",
+      "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\nExpected: \u001b[32m\"Invalid username and password combination or SSO service is unavailable.\"\u001b[39m\nError: strict mode violation: getByTestId('MicroWebUI_base_snackbar').getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" direction=\"up\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-rgg0t8-MuiPaper-root-MuiAlert-root\">…</div> aka getByRole('alert').first()\n    2) <div role=\"alert\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-elevation6 MuiSnackbarContent-root css-11hfw37-MuiPaper-root-MuiSnackbarContent-root\">…</div> aka getByRole('alert').nth(1)\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('MicroWebUI_base_snackbar').getByRole('alert') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts:162:34",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "column": 34,
+        "line": 162
+      },
+      "snippet": "  160 |   await login.clickSignInButton();\n  161 |   await expectCredentials(login);\n> 162 |   await expect(errorAlert(page)).toHaveText(rejectedMessage);\n      |                                  ^\n  163 |   await audit.capture('rejected-login', 'The notification displays the exact canonical authentication error.', reference('AUTH-022'));\n  164 | });\n  165 |"
+    }
+  ],
+  "assertionSteps": [
+    {
+      "title": "Before Hooks",
+      "category": "hook",
+      "durationMs": 438,
+      "error": null,
+      "steps": [
+        {
+          "title": "beforeEach hook",
+          "category": "hook",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+            "line": 25,
+            "column": 6
+          },
+          "durationMs": 437,
+          "error": null,
+          "steps": [
+            {
+              "title": "Fixture \"browser\"",
+              "category": "fixture",
+              "durationMs": 190,
+              "error": null,
+              "steps": [
+                {
+                  "title": "Launch browser",
+                  "category": "pw:api",
+                  "durationMs": 189,
+                  "error": null,
+                  "steps": []
+                }
+              ]
+            },
+            {
+              "title": "Fixture \"context\"",
+              "category": "fixture",
+              "durationMs": 10,
+              "error": null,
+              "steps": [
+                {
+                  "title": "Create context",
+                  "category": "pw:api",
+                  "durationMs": 7,
+                  "error": null,
+                  "steps": []
+                }
+              ]
+            },
+            {
+              "title": "Fixture \"page\"",
+              "category": "fixture",
+              "durationMs": 165,
+              "error": null,
+              "steps": [
+                {
+                  "title": "Create page",
+                  "category": "pw:api",
+                  "durationMs": 165,
+                  "error": null,
+                  "steps": []
+                }
+              ]
+            },
+            {
+              "title": "Fixture \"audit\"",
+              "category": "fixture",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 84,
+                "column": 26
+              },
+              "durationMs": 1,
+              "error": null,
+              "steps": []
+            },
+            {
+              "title": "Expect \"toHaveLength\"",
+              "category": "expect",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+                "line": 27,
+                "column": 27
+              },
+              "durationMs": 1,
+              "error": null,
+              "steps": []
+            },
+            {
+              "title": "Expect \"toHaveLength\"",
+              "category": "expect",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+                "line": 28,
+                "column": 27
+              },
+              "durationMs": 0,
+              "error": null,
+              "steps": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Expect \"toBe\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 37,
+        "column": 25,
+        "function": "canonical"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Navigate",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/local-app.ts",
+        "line": 41,
+        "column": 14,
+        "function": "openLogin"
+      },
+      "durationMs": 36,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 334,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 3,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 3,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 49,
+        "column": 23,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 97,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"login-ready (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 57,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 6,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 3,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeEnabled\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 33,
+        "column": 32,
+        "function": "expectActionable"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeEditable\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+        "line": 31,
+        "column": 38,
+        "function": "LoginPage.fillUsername"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Fill \"user-a\"",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+        "line": 32,
+        "column": 30,
+        "function": "LoginPage.fillUsername"
+      },
+      "durationMs": 16,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 8,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 6,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 5,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeEnabled\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 33,
+        "column": 32,
+        "function": "expectActionable"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeEditable\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+        "line": 37,
+        "column": 38,
+        "function": "LoginPage.fillPassword"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Fill \"WrongPass\"",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+        "line": 38,
+        "column": 30,
+        "function": "LoginPage.fillPassword"
+      },
+      "durationMs": 8,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 26,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 27,
+        "column": 25,
+        "function": "expectUniqueVisible"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeEnabled\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+        "line": 33,
+        "column": 32,
+        "function": "expectActionable"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Click",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+        "line": 43,
+        "column": 29,
+        "function": "LoginPage.clickSignInButton"
+      },
+      "durationMs": 38,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 53,
+        "column": 42,
+        "function": "expectCredentials"
+      },
+      "durationMs": 11,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 53,
+        "column": 80,
+        "function": "expectCredentials"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 53,
+        "column": 42,
+        "function": "expectCredentials"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 53,
+        "column": 80,
+        "function": "expectCredentials"
+      },
+      "durationMs": 8,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveCount\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 53,
+        "column": 42,
+        "function": "expectCredentials"
+      },
+      "durationMs": 5,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toBeVisible\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 53,
+        "column": 80,
+        "function": "expectCredentials"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Expect \"toHaveText\"",
+      "category": "expect",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 162,
+        "column": 34
+      },
+      "durationMs": 8,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\nExpected: \u001b[32m\"Invalid username and password combination or SSO service is unavailable.\"\u001b[39m\nError: strict mode violation: getByTestId('MicroWebUI_base_snackbar').getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" direction=\"up\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-rgg0t8-MuiPaper-root-MuiAlert-root\">…</div> aka getByRole('alert').first()\n    2) <div role=\"alert\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-elevation6 MuiSnackbarContent-root css-11hfw37-MuiPaper-root-MuiSnackbarContent-root\">…</div> aka getByRole('alert').nth(1)\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('MicroWebUI_base_snackbar').getByRole('alert') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\nExpected: \u001b[32m\"Invalid username and password combination or SSO service is unavailable.\"\u001b[39m\nError: strict mode violation: getByTestId('MicroWebUI_base_snackbar').getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" direction=\"up\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-rgg0t8-MuiPaper-root-MuiAlert-root\">…</div> aka getByRole('alert').first()\n    2) <div role=\"alert\" class=\"MuiPaper-root MuiPaper-elevation MuiPaper-elevation6 MuiSnackbarContent-root css-11hfw37-MuiPaper-root-MuiSnackbarContent-root\">…</div> aka getByRole('alert').nth(1)\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('MicroWebUI_base_snackbar').getByRole('alert') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_snackbar').getByRole('alert')\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts:162:34",
+        "location": {
+          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+          "column": 34,
+          "line": 162
+        },
+        "snippet": "  160 |   await login.clickSignInButton();\n  161 |   await expectCredentials(login);\n> 162 |   await expect(errorAlert(page)).toHaveText(rejectedMessage);\n      |                                  ^\n  163 |   await audit.capture('rejected-login', 'The notification displays the exact canonical authentication error.', reference('AUTH-022'));\n  164 | });\n  165 |"
+      },
+      "steps": []
+    },
+    {
+      "title": "After Hooks",
+      "category": "hook",
+      "durationMs": 340,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"audit\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+            "line": 84,
+            "column": 26
+          },
+          "durationMs": 101,
+          "error": null,
+          "steps": [
+            {
+              "title": "Screenshot",
+              "category": "pw:api",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 49,
+                "column": 23,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 98,
+              "error": null,
+              "steps": []
+            },
+            {
+              "title": "Attach \"failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+              "category": "test.attach",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 57,
+                "column": 27,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 1,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"auditFixture\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+            "line": 19,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"auditScope\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+            "line": 19,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"page\"",
+          "category": "fixture",
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"context\"",
+          "category": "fixture",
+          "durationMs": 88,
+          "error": null,
+          "steps": [
+            {
+              "title": "Close context",
+              "category": "pw:api",
+              "durationMs": 13,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"serviceWorkers\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+            "line": 19,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Worker Cleanup",
+      "category": "hook",
+      "durationMs": 47,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"browser\"",
+          "category": "fixture",
+          "durationMs": 46,
+          "error": null,
+          "steps": []
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "type": "audit-scope",
+      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+    },
+    {
+      "type": "audit-fixture",
+      "description": "Actual mfe-base React application from the local webpack server. Controlled login API responses; no external identity service."
+    }
+  ],
+  "frames": {
+    "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-022-actual-react-displays-the-rejected-login-message-6bb84a9cb607-attempt-1/frames.json",
+    "sha256": "a5d9f5fbec2652f65cd32f18536b395e2bf356f6d5bd2c47a64f85621fc24591",
+    "count": 2,
+    "captureStatus": "CAPTURED"
+  },
+  "screenshotGap": null,
+  "attachments": [
+    {
+      "name": "login-ready (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/playwright-artifacts/login-environment-AUTH-022-e7274--the-rejected-login-message/attachments/login-ready-ACTUAL-APPLICATION-LOCAL-SERVICES--0e5e7c7243d13db7467e08be0578d17d42e70e39.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-022-actual-react-displays-the-rejected-login-message-6bb84a9cb607-attempt-1/attachments/001-login-ready-ACTUAL-APPLICATION-LOCAL-SERVICES--0e5e7c7243d13db7467e08be0578d17d42e70e39.png",
+      "sha256": "99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/playwright-artifacts/login-environment-AUTH-022-e7274--the-rejected-login-message/test-failed-1.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-022-actual-react-displays-the-rejected-login-message-6bb84a9cb607-attempt-1/attachments/002-test-failed-1.png",
+      "sha256": "fe79fb26bbeb9742f9023d36a25c754525afbf490362ebf43409d841021a9cc2",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/playwright-artifacts/login-environment-AUTH-022-e7274--the-rejected-login-message/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--a96e024b51c0ac34adf27d8095faa453e7adb9dd.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-022-actual-react-displays-the-rejected-login-message-6bb84a9cb607-attempt-1/attachments/003-failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--a96e024b51c0ac34adf27d8095faa453e7adb9dd.png",
+      "sha256": "7550f10bc8a43c5dd8d59d5581cc56e3532bff9a473ca2d5de3cecf9791a40fe",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/playwright-artifacts/login-environment-AUTH-022-e7274--the-rejected-login-message/error-context.md",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-022-actual-react-displays-the-rejected-login-message-6bb84a9cb607-attempt-1/attachments/004-error-context.md",
+      "sha256": "60ba0062dbf83c8302a99f6f2e5226dc94fb43b91ee3a7da8e5dd2f27dbf72d7",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/playwright-artifacts/login-environment-AUTH-022-e7274--the-rejected-login-message/trace.zip",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-022-actual-react-displays-the-rejected-login-message-6bb84a9cb607-attempt-1/attachments/005-trace.zip",
+      "sha256": "dae5ff78c60121aa52b1af94ceebf1171c2bddd302dde75a3e1b7bfdf236f557",
+      "copiedBytesUnchanged": true
+    }
+  ],
+  "limits": [
+    "The recorded assertions and environment binding limit the supported business result."
+  ]
+}

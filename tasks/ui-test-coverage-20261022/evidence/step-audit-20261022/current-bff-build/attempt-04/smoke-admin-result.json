@@ -1,0 +1,178 @@
+{
+  "status": "PASSED",
+  "source_revision": "834b4155232222347220e47139a502ee43a9cbdf",
+  "checks": {
+    "all_requests_accepted": true,
+    "create_and_list_audit_executed": true
+  },
+  "results": [
+    {
+      "name": "login",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Authorization": {
+        "sha256": "6ba6726cafe2097d9803e00e32c93826fb159af64d8e3838fd1d803d8ae0ef42",
+        "claims": {
+          "iss": "single-ui-bff",
+          "sub": "UI-ADMIN-01",
+          "id": "8D7E3CE58E58CC214548836396E32B95",
+          "iat": 1792647633,
+          "exp": 1792647693,
+          "auth_time": 1792647633,
+          "max_age": 1792651233
+        }
+      },
+      "data": null
+    },
+    {
+      "name": "create_session",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Refresh": {
+        "sha256": "ea7aee9081387f3ba264468652ac072e8dc30d99ca2758a8ceb5fe7fb75478ca",
+        "claims": {
+          "iss": "single-ui-bff-refresh",
+          "sub": "UI-ADMIN-01",
+          "id": "8D7E3CE58E58CC214548836396E32B95",
+          "iat": 1792647633,
+          "exp": 1792647777
+        }
+      },
+      "data": null
+    },
+    {
+      "name": "category_create",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "data",
+        "errorMessage",
+        "result"
+      ],
+      "data": {
+        "applicationCategoryId": 1000,
+        "label": "Current BFF smoke",
+        "ems2Role": "TEST_OWNER",
+        "createdAt": "2026-10-22T05:40:33.377+00:00",
+        "updatedAt": "2026-10-22T05:40:33.377+00:00",
+        "createdBy": "UI-ADMIN-01",
+        "updatedBy": "UI-ADMIN-01",
+        "orderNo": 1000,
+        "active": false
+      }
+    },
+    {
+      "name": "category_update",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "data",
+        "errorMessage",
+        "result"
+      ],
+      "data": {
+        "applicationCategoryId": 1000,
+        "label": "Updated current BFF smoke",
+        "ems2Role": "TEST_OWNER",
+        "createdAt": "2026-10-22T05:40:33.377+00:00",
+        "updatedAt": "2026-10-22T05:40:33.584+00:00",
+        "createdBy": "UI-ADMIN-01",
+        "updatedBy": "UI-ADMIN-01",
+        "orderNo": 7,
+        "active": false
+      }
+    },
+    {
+      "name": "category_list",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "data",
+        "errorMessage",
+        "result"
+      ],
+      "data": [
+        {
+          "applicationCategoryId": 1000,
+          "label": "Updated current BFF smoke",
+          "ems2Role": "TEST_OWNER",
+          "createdAt": "2026-10-22T05:40:33.377+00:00",
+          "updatedAt": "2026-10-22T05:40:33.584+00:00",
+          "createdBy": "UI-ADMIN-01",
+          "updatedBy": "UI-ADMIN-01",
+          "orderNo": 7,
+          "active": false
+        }
+      ]
+    },
+    {
+      "name": "category_audit",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "data",
+        "errorMessage",
+        "result"
+      ],
+      "data": [
+        {
+          "applicationCategoryAuditId": 1001,
+          "transactionMode": "maker",
+          "applicationCategoryId": 1000,
+          "label": "Updated current BFF smoke",
+          "ems2Role": "TEST_OWNER",
+          "createdAt": "2026-10-22T05:40:33.377+00:00",
+          "updatedAt": "2026-10-22T05:40:33.584+00:00",
+          "createdBy": "UI-ADMIN-01",
+          "updatedBy": "UI-ADMIN-01",
+          "orderNo": 7,
+          "active": false
+        },
+        {
+          "applicationCategoryAuditId": 1000,
+          "transactionMode": "create",
+          "applicationCategoryId": 1000,
+          "label": "Current BFF smoke",
+          "ems2Role": "TEST_OWNER",
+          "createdAt": "2026-10-22T05:40:33.377+00:00",
+          "updatedAt": "2026-10-22T05:40:33.377+00:00",
+          "createdBy": "UI-ADMIN-01",
+          "updatedBy": "UI-ADMIN-01",
+          "orderNo": 1000,
+          "active": false
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Synthetic OUD and EMS2 identities",
+    "H2 PostgreSQL mode, not PostgreSQL",
+    "Selected exact business source, isolated Spring Boot3 bootstrap, production Boot4 wiring not measured"
+  ]
+}

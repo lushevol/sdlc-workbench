@@ -1,0 +1,130 @@
+{
+  "id": "RN-H001",
+  "title": "the browser enters back-forward cache with a pending renewal",
+  "basis": "policy-open",
+  "started_at": "2026-10-29T02:33:52.643Z",
+  "status": "BLOCKED",
+  "stage": "execute",
+  "expected": [
+    "the trace records restored session owner before the first protected request"
+  ],
+  "assertions": [],
+  "observations": {
+    "relogin_count": 0
+  },
+  "source_revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "source_refs": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": "110-205",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    }
+  ],
+  "limits": [
+    "Actual Chromium portal, React hooks, reducers, Axios interceptors and services.",
+    "Controlled browser time, synthetic identity and auth responses. Protected peer assertions are fixture-level, not production RSA authorization.",
+    "Native device, VPN, real sleep, independent devices and unavailable target boundaries remain blocked."
+  ],
+  "screenshots": [],
+  "initial": {
+    "user": {
+      "max_age": 1793244836,
+      "sub": "session-local",
+      "auth_time": 1793241236,
+      "iss": "single-ui-bff",
+      "id": "session-local",
+      "exp": 1793241296,
+      "iat": 1793241236,
+      "jti": "single-ui-bff-id",
+      "oud": {
+        "fullName": "Local Session Fixture",
+        "country": "LOCAL",
+        "emailId": "session-local@example.invalid",
+        "locale": "en",
+        "userId": "session-local"
+      },
+      "entitlements": {
+        "LOCAL_SESSION_FIXTURE:LOCAL": {}
+      },
+      "entities": [
+        {
+          "id": 1,
+          "name": "LOCAL_SESSION_FIXTURE",
+          "applicationName": "LOCAL",
+          "roleId": 1,
+          "roleName": "LOCAL",
+          "subjects": []
+        }
+      ],
+      "fullName": "Local Session Fixture",
+      "name": "session-local",
+      "userId": "session-local"
+    },
+    "expiry": 1793232063352,
+    "isOnLogout": false,
+    "loading": false,
+    "dialog": false,
+    "workspaceIds": [
+      "c7bf2728-fafc-4dba-88f9-6742ee94b802"
+    ],
+    "selected": "c7bf2728-fafc-4dba-88f9-6742ee94b802",
+    "probe": {
+      "opens": 0,
+      "closures": 0,
+      "events": [],
+      "activity": [],
+      "activeTimers": {
+        "1000000000000": {
+          "delay": 5000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at Object.execute (http://127.0.0.1:8343/js/external/single-spa.dev.js:2435:9)\n    at i (http://127.0.0.1:8343/js/external/system.min.js:305:35)\n    at e (http://127.0.0.1:8343/js/external/system.min.js:342:52)\n    at http://127.0.0.1:8343/js/external/system.min.js:336:35\n    at Array.forEach (<anonymous>)\n    at e (http://127.0.0.1:8343/js/external/system.min.js:334:27)\n    at http://127.0.0.1:8343/js/external/system.min.js:345:19"
+        },
+        "1000000000002": {
+          "delay": 4000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8343/js/external/single-spa.dev.js:1038:11\n    at new Promise (<anonymous>)\n    at reasonableTime (http://127.0.0.1:8343/js/external/single-spa.dev.js:1023:16)\n    at http://127.0.0.1:8343/js/external/single-spa.dev.js:475:18"
+        },
+        "1000000000014": {
+          "delay": 57542,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2826:28\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        },
+        "1000000000016": {
+          "delay": 30000,
+          "kind": "interval"
+        },
+        "1000000000017": {
+          "delay": 600,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at setTabPanel (http://127.0.0.1:8342/base.js:74872:14)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2178:63\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000019": {
+          "delay": 32105,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at scheduleAcquisition (http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2872:28)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2894:5\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000020": {
+          "delay": 14400000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2896:49\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        }
+      },
+      "listeners": [],
+      "storageErrors": []
+    },
+    "token_sha256": "0355e762c8cc6b6b2bf6a2ccaea2e670c7f35ca6999f0b31329523cce7e53a9b",
+    "refresh_sha256": "c413227753339dc3a0754bf9751155cf1076d55cd03ce8cd661c2e8e6826635e"
+  },
+  "blocked_predicates": [
+    "A verified BFCache entry and restored pageshow.persisted event are unavailable in the development-server composition."
+  ],
+  "error": "A verified BFCache entry and restored pageshow.persisted event are unavailable in the development-server composition.",
+  "completed_at": "2026-10-29T02:33:58.925Z",
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793232003352,
+      "owner_sha256": null
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793232006247,
+      "owner_sha256": null
+    }
+  ]
+}

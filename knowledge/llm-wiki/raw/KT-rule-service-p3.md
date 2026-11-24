@@ -1,0 +1,1 @@
+../../records/candidates/architecture/KT-rule-service-p3.md

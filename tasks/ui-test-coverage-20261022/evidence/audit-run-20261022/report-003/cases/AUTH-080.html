@@ -1,0 +1,945 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AUTH-080</title><style>body{font:15px/1.5 system-ui,sans-serif;color:#18212d;margin:24px auto;padding:0 24px;max-width:1400px;background:#f7f9fc}a{color:#1354a4}h1,h2{line-height:1.2}.callout{border-left:5px solid #a66100;padding:12px 18px;background:#fff2d6}table{border-collapse:collapse;width:100%;background:white}th,td{padding:8px 12px;border-bottom:1px solid #d3d9e2;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#e9eef6}.PASS{color:#14613b}.FAIL{color:#a21724}.BLOCKED_NOT_EXECUTED{color:#835000}.badge{font-weight:700;white-space:nowrap}input,select{font:inherit;padding:8px;margin:8px}article,details{padding:16px;margin:18px 0;background:white;border:1px solid #d3d9e2;border-radius:6px}.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}figure{margin:0;border:1px solid #d3d9e2;padding:10px}img{max-width:100%;height:auto;background:#e9eef6}code,pre{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#eff3f8;padding:12px}small{font-size:12px}dt{font-weight:700}dd{margin:0 0 8px}footer{margin-top:30px;border-top:1px solid #d3d9e2;padding-top:18px}.muted{color:#526075}summary{cursor:pointer;font-weight:700}</style><body><p><a href="../index.html">All canonical cases</a></p><h1>AUTH-080: Log out from the expiration dialog</h1><p class="callout"><strong>Business acceptance remains unverified. Owner: unknown. Review the canonical definition and fixture limits before acceptance.</strong></p><h2>Latest local result: <span class="badge PASS">PASS</span></h2><p>Business acceptance: NOT_ESTABLISHED.</p><p>The latest local result describes execution. The historical definition review assesses the case design before execution.</p><p>Latest step screenshot bindings: <strong>COMPLETE</strong>. 12/12 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>CONTEXT_RECORDED</strong>. Recorded context does not establish human visual review.</p><p><a href="../../../../test-cases.md#auth-080">Canonical Gherkin definition</a>. Definition version: 2. SHA-256: <code>fd2432b792b75b1d9916c54be768821cee59f0db7644dfc93e2f8d2a1b9436ba</code>.</p><details class="definition-review"><summary>Historical definition review (preflight): UNVERIFIED</summary><p>A definition review FAIL can coexist with local PASS. The definition failed preflight quality checks.</p><p>This historical review does not change the latest execution result. Resolve definition gaps before business acceptance.</p></details><details><summary>Canonical Gherkin steps</summary><pre>Feature: Expiry
+  @AUTH-080
+  Scenario: Log out from the expiration dialog
+    Given User A is authenticated as user-a in an isolated browser context
+    And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page
+    And access A is expired; refresh R expires at controlled time T+600 seconds
+    And the dialog named &quot;Your session has been expired&quot; on the Home page is visible
+    When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;
+    And the controlled browser clock advances through the 1000-millisecond logout delay
+    Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible
+    And the text input with placeholder &quot;Enter Password&quot; on the login page is visible
+    And the button labelled &quot;Sign In&quot; on the login page is visible
+    And the tablist named &quot;workspaces&quot; on the Home page is absent
+    And the dialog named &quot;Your session has been expired&quot; on the Home page is absent
+    And localStorage and sessionStorage contain no access credential</pre></details><p>Acceptance and evidence limits: NO_COMPLETE_REAL_APPLICATION_BINDING, CANONICAL_REVIEW_OR_EVIDENCE_UNRESOLVED.</p><p>Planned essential canonical frames: 2. Plan completeness requires separate review.</p><section class="latest-attempt"><h2>Latest attempt</h2><article><h3>AUTH-080 Logout clears local access after delay</h3><p><span class="badge PASS">PASS</span> · application/run-082/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T07:31:12.739Z to 2026-10-22T07:31:15.934Z</p><p><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-082/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>01ab254afb31d657c5bb5a59e3230d32a92d866e2401c35edf7cc236f9d0f961</code></small><p><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/attachments/016-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/session-fixture.json">session-fixture.json</a> <code>e33ee4e6e29e6eea4e764aaf196be0709f2e555d9965c781579d65f958877901</code></li><li><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/session-observations.json">session-observations.json</a> <code>502e6cfb062826b0a3e121d5ea5b033b9d1ddebd3ff7fd615507f22eba2f3cb1</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 14.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 12/12 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>CONTEXT_RECORDED</strong>. Recorded context: 14/14 frames. Identical image bytes: 10 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-session-home-before-expiry.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-session-home-before-expiry.png" alt="session-home-before-expiry: Preparatory Home state before the controlled clock expires access A. This is fixture preparation within step 1."></a><figcaption><strong>1. session-home-before-expiry</strong><p>Preparatory Home state before the controlled clock expires access A. This is fixture preparation within step 1.</p><small>2026-10-22T07:31:13.604Z · 1440×1000<br>Step: sessionSetup: before clock.pauseAt(T)<br>SHA-256: <code>9f5257fcd427ff948d16fa5ef81e4d13f1f62b18b3f40a30b24870099e4b49ce</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T-59.299s (-59299 ms); cutoff remaining 657299 ms; Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893455940633,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893455940636,
+        &quot;elapsedMs&quot;: -59364,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 657364
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893455940698,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893455940701,
+        &quot;elapsedMs&quot;: -59299,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 657299
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-01.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>2. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T07:31:13.748Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3022<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-step-02.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-step-02.png" alt="step-02: Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page"></a><figcaption><strong>3. step-02</strong><p>Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</p><small>2026-10-22T07:31:13.828Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3023<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/004-step-03.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/004-step-03.png" alt="step-03: Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds"></a><figcaption><strong>4. step-03</strong><p>Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds</p><small>2026-10-22T07:31:13.895Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3024<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/005-step-04.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/005-step-04.png" alt="step-04: Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>5. step-04</strong><p>Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T07:31:14.031Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3025<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 4. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/006-step-05.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/006-step-05.png" alt="step-05: Visible state after step 5: When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;"></a><figcaption><strong>6. step-05</strong><p>Visible state after step 5: When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</p><small>2026-10-22T07:31:14.201Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3026<br>SHA-256: <code>7db2f7095a4c115c55fd13a5ef72b2587f360ca593465635874315be91508813</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend disabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: true,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: true,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/007-step-06.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/007-step-06.png" alt="step-06: Visible state after step 6: And the controlled browser clock advances through the 1000-millisecond logout delay"></a><figcaption><strong>7. step-06</strong><p>Visible state after step 6: And the controlled browser clock advances through the 1000-millisecond logout delay</p><small>2026-10-22T07:31:14.513Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3027<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/008-step-07.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/008-step-07.png" alt="step-07: Visible state after step 7: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible"></a><figcaption><strong>8. step-07</strong><p>Visible state after step 7: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</p><small>2026-10-22T07:31:14.654Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3028<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="8" data-step="8"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/009-step-08.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/009-step-08.png" alt="step-08: Visible state after step 8: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible"></a><figcaption><strong>9. step-08</strong><p>Visible state after step 8: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</p><small>2026-10-22T07:31:14.800Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3029<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="9" data-step="9"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/010-step-09.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/010-step-09.png" alt="step-09: Visible state after step 9: And the button labelled &quot;Sign In&quot; on the login page is visible"></a><figcaption><strong>10. step-09</strong><p>Visible state after step 9: And the button labelled &quot;Sign In&quot; on the login page is visible</p><small>2026-10-22T07:31:14.959Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3030<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 9. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="10" data-step="10"><p><strong>And the tablist named &quot;workspaces&quot; on the Home page is absent</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/011-step-10.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/011-step-10.png" alt="step-10: Visible state after step 10: And the tablist named &quot;workspaces&quot; on the Home page is absent"></a><figcaption><strong>11. step-10</strong><p>Visible state after step 10: And the tablist named &quot;workspaces&quot; on the Home page is absent</p><small>2026-10-22T07:31:15.134Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3031<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 10. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="11" data-step="11"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/012-step-11.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/012-step-11.png" alt="step-11: Visible state after step 11: And the dialog named &quot;Your session has been expired&quot; on the Home page is absent"></a><figcaption><strong>12. step-11</strong><p>Visible state after step 11: And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</p><small>2026-10-22T07:31:15.287Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3032<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 11. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="12" data-step="12"><p><strong>And localStorage and sessionStorage contain no access credential</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/013-step-12.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/013-step-12.png" alt="step-12: Visible state after step 12: And localStorage and sessionStorage contain no access credential"></a><figcaption><strong>13. step-12</strong><p>Visible state after step 12: And localStorage and sessionStorage contain no access credential</p><small>2026-10-22T07:31:15.431Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3033<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 12. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/014-final-result.png"><img loading="lazy" src="../../application/run-082/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/014-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>14. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T07:31:15.694Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:24<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 13. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></section><details class="attempt-history"><summary>Earlier attempt history (4)</summary><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-080 Logout clears local access after delay</h3><p><span class="badge PASS">PASS</span> · application/run-050/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T06:10:50.834Z to 2026-10-22T06:10:54.152Z</p><p><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-050/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>930d5db2cc1f7b705ada727a28a1d455ee0a6c919e447ed5096e03878fc1ca68</code></small><p><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/attachments/015-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/session-fixture.json">session-fixture.json</a> <code>62e1727a2c5c8a8471b1315e85daaa1c947883a2113a13663a806c464f7daede</code></li><li><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/session-observations.json">session-observations.json</a> <code>794f38af125228a62e1714341637fb2bb2445e458742ef0ff7409a2a6f162b95</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 13.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 12/12 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/13 frames. Identical image bytes: 9 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T06:10:52.186Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3022<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-02.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-02.png" alt="step-02: Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page"></a><figcaption><strong>2. step-02</strong><p>Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</p><small>2026-10-22T06:10:52.237Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3023<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-step-03.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-step-03.png" alt="step-03: Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds"></a><figcaption><strong>3. step-03</strong><p>Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds</p><small>2026-10-22T06:10:52.289Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3024<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/004-step-04.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/004-step-04.png" alt="step-04: Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>4. step-04</strong><p>Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T06:10:52.352Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3025<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/005-step-05.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/005-step-05.png" alt="step-05: Visible state after step 5: When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;"></a><figcaption><strong>5. step-05</strong><p>Visible state after step 5: When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</p><small>2026-10-22T06:10:52.436Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3026<br>SHA-256: <code>7db2f7095a4c115c55fd13a5ef72b2587f360ca593465635874315be91508813</code></small></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/006-step-06.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/006-step-06.png" alt="step-06: Visible state after step 6: And the controlled browser clock advances through the 1000-millisecond logout delay"></a><figcaption><strong>6. step-06</strong><p>Visible state after step 6: And the controlled browser clock advances through the 1000-millisecond logout delay</p><small>2026-10-22T06:10:52.688Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3027<br>SHA-256: <code>59c4e063cab140c3f713f0512ac90aebc5ae2dd3932cddd7e50e5f5f00d57386</code></small></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/007-step-07.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/007-step-07.png" alt="step-07: Visible state after step 7: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible"></a><figcaption><strong>7. step-07</strong><p>Visible state after step 7: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</p><small>2026-10-22T06:10:52.833Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3028<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small></figcaption></figure></div></li><li value="8" data-step="8"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/008-step-08.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/008-step-08.png" alt="step-08: Visible state after step 8: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible"></a><figcaption><strong>8. step-08</strong><p>Visible state after step 8: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</p><small>2026-10-22T06:10:52.986Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3029<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="9" data-step="9"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/009-step-09.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/009-step-09.png" alt="step-09: Visible state after step 9: And the button labelled &quot;Sign In&quot; on the login page is visible"></a><figcaption><strong>9. step-09</strong><p>Visible state after step 9: And the button labelled &quot;Sign In&quot; on the login page is visible</p><small>2026-10-22T06:10:53.142Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3030<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="10" data-step="10"><p><strong>And the tablist named &quot;workspaces&quot; on the Home page is absent</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/010-step-10.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/010-step-10.png" alt="step-10: Visible state after step 10: And the tablist named &quot;workspaces&quot; on the Home page is absent"></a><figcaption><strong>10. step-10</strong><p>Visible state after step 10: And the tablist named &quot;workspaces&quot; on the Home page is absent</p><small>2026-10-22T06:10:53.299Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3031<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 9. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="11" data-step="11"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/011-step-11.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/011-step-11.png" alt="step-11: Visible state after step 11: And the dialog named &quot;Your session has been expired&quot; on the Home page is absent"></a><figcaption><strong>11. step-11</strong><p>Visible state after step 11: And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</p><small>2026-10-22T06:10:53.441Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3032<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 10. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="12" data-step="12"><p><strong>And localStorage and sessionStorage contain no access credential</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/012-step-12.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/012-step-12.png" alt="step-12: Visible state after step 12: And localStorage and sessionStorage contain no access credential"></a><figcaption><strong>12. step-12</strong><p>Visible state after step 12: And localStorage and sessionStorage contain no access credential</p><small>2026-10-22T06:10:53.575Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3033<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 11. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/013-final-result.png"><img loading="lazy" src="../../application/run-050/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/013-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>13. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T06:10:53.848Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:24<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 12. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-080 Logout clears local access after delay</h3><p><span class="badge PASS">PASS</span> · application/run-015/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T05:24:12.078Z to 2026-10-22T05:24:21.403Z</p><p><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-015/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>7495570109d7c0f986d351aa0dd8d387c34b60d0b3a195b02fbef5a07ed684a5</code></small><p><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/attachments/015-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/session-fixture.json">session-fixture.json</a> <code>ecb629967be1ac536a07ff5ac79c1963eb3bd6a36cac301b7779d1e55b9bc609</code></li><li><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/session-observations.json">session-observations.json</a> <code>fadc3fa78680f5d3fe55b03579d284f44db49837c1dcef70b6987ac3df1a26cf</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 13.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 12/12 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/13 frames. Identical image bytes: 9 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T05:24:15.641Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3022<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-02.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-02.png" alt="step-02: Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page"></a><figcaption><strong>2. step-02</strong><p>Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</p><small>2026-10-22T05:24:15.743Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3023<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-step-03.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-step-03.png" alt="step-03: Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds"></a><figcaption><strong>3. step-03</strong><p>Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds</p><small>2026-10-22T05:24:15.827Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3024<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/004-step-04.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/004-step-04.png" alt="step-04: Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>4. step-04</strong><p>Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T05:24:15.912Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3025<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/005-step-05.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/005-step-05.png" alt="step-05: Visible state after step 5: When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;"></a><figcaption><strong>5. step-05</strong><p>Visible state after step 5: When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</p><small>2026-10-22T05:24:16.078Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3026<br>SHA-256: <code>7db2f7095a4c115c55fd13a5ef72b2587f360ca593465635874315be91508813</code></small></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/006-step-06.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/006-step-06.png" alt="step-06: Visible state after step 6: And the controlled browser clock advances through the 1000-millisecond logout delay"></a><figcaption><strong>6. step-06</strong><p>Visible state after step 6: And the controlled browser clock advances through the 1000-millisecond logout delay</p><small>2026-10-22T05:24:16.496Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3027<br>SHA-256: <code>59c4e063cab140c3f713f0512ac90aebc5ae2dd3932cddd7e50e5f5f00d57386</code></small></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/007-step-07.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/007-step-07.png" alt="step-07: Visible state after step 7: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible"></a><figcaption><strong>7. step-07</strong><p>Visible state after step 7: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</p><small>2026-10-22T05:24:16.775Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3028<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small></figcaption></figure></div></li><li value="8" data-step="8"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/008-step-08.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/008-step-08.png" alt="step-08: Visible state after step 8: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible"></a><figcaption><strong>8. step-08</strong><p>Visible state after step 8: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</p><small>2026-10-22T05:24:17.114Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3029<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="9" data-step="9"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/009-step-09.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/009-step-09.png" alt="step-09: Visible state after step 9: And the button labelled &quot;Sign In&quot; on the login page is visible"></a><figcaption><strong>9. step-09</strong><p>Visible state after step 9: And the button labelled &quot;Sign In&quot; on the login page is visible</p><small>2026-10-22T05:24:17.476Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3030<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="10" data-step="10"><p><strong>And the tablist named &quot;workspaces&quot; on the Home page is absent</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/010-step-10.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/010-step-10.png" alt="step-10: Visible state after step 10: And the tablist named &quot;workspaces&quot; on the Home page is absent"></a><figcaption><strong>10. step-10</strong><p>Visible state after step 10: And the tablist named &quot;workspaces&quot; on the Home page is absent</p><small>2026-10-22T05:24:18.006Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3031<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 9. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="11" data-step="11"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/011-step-11.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/011-step-11.png" alt="step-11: Visible state after step 11: And the dialog named &quot;Your session has been expired&quot; on the Home page is absent"></a><figcaption><strong>11. step-11</strong><p>Visible state after step 11: And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</p><small>2026-10-22T05:24:18.280Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3032<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 10. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="12" data-step="12"><p><strong>And localStorage and sessionStorage contain no access credential</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/012-step-12.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/012-step-12.png" alt="step-12: Visible state after step 12: And localStorage and sessionStorage contain no access credential"></a><figcaption><strong>12. step-12</strong><p>Visible state after step 12: And localStorage and sessionStorage contain no access credential</p><small>2026-10-22T05:24:18.809Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3033<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 11. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/013-final-result.png"><img loading="lazy" src="../../application/run-015/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/013-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>13. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T05:24:19.635Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:24<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 12. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt FAIL (superseded by latest PASS)</summary><article><h3>AUTH-080 Logout clears local access after delay</h3><p><span class="badge FAIL">FAIL</span> · application/run-013/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T05:19:19.664Z to 2026-10-22T05:19:25.697Z</p><p><a href="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-013/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>f5a9c4339cacd4bd47cc5492d50b37c413427944f685e00cba5c15ef77f1df93</code></small><details><summary>Retained failure details</summary><pre>[
+  {
+    &quot;message&quot;: &quot;Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \&quot;toHaveCount\&quot; getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \&quot;0\&quot;\u001b[22m\n&quot;,
+    &quot;stack&quot;: &quot;Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \&quot;toHaveCount\&quot; getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \&quot;0\&quot;\u001b[22m\n\n    at expectUniqueVisible (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts:26:25)\n    at PortalPage.expectWorkspaceTabVisible (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/portal.page.ts:78:11)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:128:93\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at runSessionCase (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:125:5)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:25:3&quot;,
+    &quot;location&quot;: {
+      &quot;file&quot;: &quot;/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts&quot;,
+      &quot;column&quot;: 25,
+      &quot;line&quot;: 26
+    },
+    &quot;snippet&quot;: &quot;\u001b[90m   at \u001b[39m../components/target.ts:26\n\n  24 |\n  25 | export async function expectUniqueVisible(locator: Locator): Promise&lt;void&gt; {\n&gt; 26 |   await expect(locator).toHaveCount(1);\n     |                         ^\n  27 |   await expect(locator).toBeVisible();\n  28 | }\n  29 |&quot;
+  }
+]</pre></details><p><a href="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/attachments/006-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/session-fixture.json">session-fixture.json</a> <code>6bfd03734d76610a8d8eabd154e43fd7a0eb0e52c88c96b17db12f86d3291d0e</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 3.</p><p><strong>Step screenshot bindings: INCOMPLETE.</strong> 2/12 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/3 frames. Identical image bytes: 1 repeated frames. Recorded context does not establish human visual review.</p><p class="callout">Step 3 has no screenshot from an executed step. Step 4 has no screenshot from an executed step. Step 5 has no screenshot from an executed step. Step 6 has no screenshot from an executed step. Step 7 has no screenshot from an executed step. Step 8 has no screenshot from an executed step. Step 9 has no screenshot from an executed step. Step 10 has no screenshot from an executed step. Step 11 has no screenshot from an executed step. Step 12 has no screenshot from an executed step.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T05:19:20.418Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3022<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: FAILED.</p><div class="frames"><figure><a href="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-02-failure.png"><img loading="lazy" src="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/002-step-02-failure.png" alt="step-02-failure: Visible state when step 2 failed. Later steps did not execute."></a><figcaption><strong>2. step-02-failure</strong><p>Visible state when step 2 failed. Later steps did not execute.</p><small>2026-10-22T05:19:25.476Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3023<br>SHA-256: <code>e49fd044d3f8b4bb45e64f831e8fd6bfc916ff18012af8943e5716540a3f4ece</code></small></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="5" data-step="5"><p><strong>When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="6" data-step="6"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="7" data-step="7"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="8" data-step="8"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="9" data-step="9"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="10" data-step="10"><p><strong>And the tablist named &quot;workspaces&quot; on the Home page is absent</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="11" data-step="11"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="12" data-step="12"><p><strong>And localStorage and sessionStorage contain no access credential</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-failure-result.png"><img loading="lazy" src="../../application/run-013/cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/003-failure-result.png" alt="failure-result: The visible state when the test failed."></a><figcaption><strong>3. failure-result</strong><p>The visible state when the test failed.</p><small>2026-10-22T05:19:25.540Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:24<br>SHA-256: <code>e49fd044d3f8b4bb45e64f831e8fd6bfc916ff18012af8943e5716540a3f4ece</code></small><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-080 Logout clears local access after the 1000ms delay</h3><p><span class="badge PASS">PASS</span> · application/run-005/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual mfe-base React with Playwright clock emulation. Unsigned browser-only JWT fixtures and controlled API responses. No natural lifecycle, real identity, or BFF expiry claim.</p><p>2026-10-22T04:18:24.337Z to 2026-10-22T04:18:27.197Z</p><p><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-005/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>826dd0cb26e99a22b0a4cc42ce86f588e1cdfd76d07132f09135dbeee14e9b14</code></small><p><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/attachments/007-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/canonical-mapping.json">canonical-mapping.json</a> <code>38f3de428707cf0d2f7d97a21898e34ef65f20832e4b8771fb370324805f82bf</code></li><li><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/controlled-setup.json">controlled-setup.json</a> <code>9456238a28f0cbebe09f1b8832f482d79e6616e9a28ce799aa97ec31e2065372</code></li><li><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/logout-assertions.json">logout-assertions.json</a> <code>996e24410872a07548dbd25656fd53754426da25c879c2936054e13794a45e92</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 5.</p><p><strong>Step screenshot bindings: LEGACY_ESSENTIAL_FRAMES.</strong> 0/12 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/5 frames. Identical image bytes: 2 repeated frames. Recorded context does not establish human visual review.</p><p class="callout">Step evidence not recorded.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="5" data-step="5"><p><strong>When User A clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Your session has been expired&quot;</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="6" data-step="6"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="7" data-step="7"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="8" data-step="8"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="9" data-step="9"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="10" data-step="10"><p><strong>And the tablist named &quot;workspaces&quot; on the Home page is absent</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="11" data-step="11"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is absent</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="12" data-step="12"><p><strong>And localStorage and sessionStorage contain no access credential</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/001-controlled-session-start.png"><img loading="lazy" src="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/001-controlled-session-start.png" alt="controlled-session-start: WS-A is present at controlled time T before the named timer action."></a><figcaption><strong>1. controlled-session-start</strong><p>WS-A is present at controlled time T before the named timer action.</p><small>2026-10-22T04:18:25.699Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-080; assertion lines 3028, 3029, 3030, 3031, 3032, 3033<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure><figure><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/002-expiry-decision.png"><img loading="lazy" src="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/002-expiry-decision.png" alt="expiry-decision: The expired-access dialog presents Logout and Extend."></a><figcaption><strong>2. expiry-decision</strong><p>The expired-access dialog presents Logout and Extend.</p><small>2026-10-22T04:18:25.771Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-080; assertion lines 3028, 3029, 3030, 3031, 3032, 3033<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure><figure><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/003-logout-delay-pending.png"><img loading="lazy" src="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/003-logout-delay-pending.png" alt="logout-delay-pending: Logout has started while the 1000-millisecond application delay is pending."></a><figcaption><strong>3. logout-delay-pending</strong><p>Logout has started while the 1000-millisecond application delay is pending.</p><small>2026-10-22T04:18:25.896Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-080; assertion lines 3028, 3029, 3030, 3031, 3032, 3033<br>SHA-256: <code>7db2f7095a4c115c55fd13a5ef72b2587f360ca593465635874315be91508813</code></small></figcaption></figure><figure><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/004-signed-out-after-delay.png"><img loading="lazy" src="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/004-signed-out-after-delay.png" alt="signed-out-after-delay: Login controls are visible without the workspace tablist or expiry dialog."></a><figcaption><strong>4. signed-out-after-delay</strong><p>Login controls are visible without the workspace tablist or expiry dialog.</p><small>2026-10-22T04:18:26.508Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-080; assertion lines 3028, 3029, 3030, 3031, 3032, 3033<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small></figcaption></figure><figure><a href="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/005-final-result.png"><img loading="lazy" src="../../application/run-005/cases/auth-080-logout-clears-local-access-after-the-1000ms-delay-109596f2f5a8-attempt-1/005-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>5. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T04:18:26.800Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:191<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 4. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details></details><p>Related evidence outside actual application scope: <a href="../harness/application--run-014--auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1.html">application/run-014/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1</a>, <a href="../harness/application--run-081--auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1.html">application/run-081/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1</a>.</p><footer><details><summary>Writing review</summary><pre>{
+  &quot;standard&quot;: &quot;ASD-STE100&quot;,
+  &quot;automated_check&quot;: &quot;PASSED&quot;,
+  &quot;asd_review&quot;: &quot;PENDING&quot;,
+  &quot;reviewer&quot;: null,
+  &quot;reviewed_at&quot;: null,
+  &quot;limitations&quot;: [
+    &quot;Automated checks do not check the complete approved dictionary or grammar rules.&quot;
+  ]
+}</pre></details></footer></body></html>

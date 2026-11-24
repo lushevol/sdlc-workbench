@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-25T12:45:25.133457+00:00",
+  "status": "COMPLETED",
+  "purpose": "Release the temporary native-test wake assertion after the completed queue.",
+  "target_process": {
+    "pid": 78794,
+    "command_observed": "caffeinate -di",
+    "before_stop": "Present; exact command matched."
+  },
+  "completed_case": "issue-2-natural-20261025T114548",
+  "native_processes_checked": [
+    85479,
+    85480,
+    85641
+  ],
+  "native_process_check": "All runner and browser PIDs absent before cleanup.",
+  "stop": {
+    "signal": "SIGTERM",
+    "exit_code": 0
+  },
+  "after_stop": {
+    "ps_exit_code": 1,
+    "stdout": "",
+    "meaning": "No matched wake assertion, native runner, or browser process remains."
+  },
+  "security_settings_changed": false,
+  "profile_state": "The native natural-run profile directory exists but contains zero files. Browser cleanup removed profile contents.",
+  "limits": [
+    "The process check covers the exact retained PIDs. It does not establish that unrelated browser or sleep assertions are absent."
+  ]
+}

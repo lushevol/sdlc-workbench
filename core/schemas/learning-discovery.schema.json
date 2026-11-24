@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-sdlc-workbench:learning-discovery:1",
+  "title": "Workbench capability discovery",
+  "description": "A checkpoint claim and its evidence. The verification status is the submitter's assessment.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "category", "title", "summary", "scope", "evidence", "rule",
+    "verification_status", "verification_method"
+  ],
+  "properties": {
+    "id": { "$ref": "#/$defs/digest" },
+    "discovered_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z(?![\\s\\S])",
+      "maxLength": 40
+    },
+    "category": {
+      "enum": ["system-knowledge", "contract", "business-rule", "workflow", "experience"]
+    },
+    "title": { "$ref": "#/$defs/label" },
+    "summary": { "$ref": "#/$defs/statement" },
+    "scope": { "$ref": "#/$defs/scope" },
+    "task": { "$ref": "#/$defs/path" },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/evidence" }
+    },
+    "observed_facts": { "$ref": "#/$defs/statements" },
+    "derived_conclusions": { "$ref": "#/$defs/statements" },
+    "verification_status": { "enum": ["OBSERVED", "INFERRED", "VERIFIED", "APPROVED"] },
+    "verification_method": { "$ref": "#/$defs/statement" },
+    "related_capabilities": { "$ref": "#/$defs/catalog_ids" },
+    "related_contracts": { "$ref": "#/$defs/catalog_ids" },
+    "capability_id": { "$ref": "#/$defs/slug" },
+    "skill_id": { "$ref": "#/$defs/slug" },
+    "operation": { "enum": ["CREATE", "EXTEND", "CORRECT", "REPLACE", "DEPRECATE", "NO_CHANGE"] },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "value"],
+      "properties": {
+        "key": { "$ref": "#/$defs/slug" },
+        "value": { "$ref": "#/$defs/statement" }
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "pattern": "^(?=.*\\S)[^\\u0000-\\u001f\\u007f-\\u009f]+(?![\\s\\S])",
+      "maxLength": 512
+    },
+    "label": { "$ref": "#/$defs/text", "maxLength": 128 },
+    "statement": { "$ref": "#/$defs/text" },
+    "statements": {
+      "type": "array",
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/statement" }
+    },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}(?![\\s\\S])" },
+    "slug": { "type": "string", "maxLength": 64, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?![\\s\\S])" },
+    "catalog_ids": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,79}(?![\\s\\S])" }
+    },
+    "scope": {
+      "type": "object",
+      "description": "Every declared selector must match. An empty selector object has global scope.",
+      "additionalProperties": false,
+      "properties": {
+        "system": { "$ref": "#/$defs/label" },
+        "instance": { "$ref": "#/$defs/label" },
+        "environment": { "$ref": "#/$defs/label" },
+        "repository": { "$ref": "#/$defs/label" },
+        "service": { "$ref": "#/$defs/label" },
+        "pipeline": { "$ref": "#/$defs/label" },
+        "version": { "$ref": "#/$defs/label" },
+        "project": { "$ref": "#/$defs/label" },
+        "branch": { "$ref": "#/$defs/text" }
+      }
+    },
+    "path": {
+      "description": "Workspace-relative file path with forward slashes.",
+      "type": "string",
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)[^\\u0000-\\u001f\\u007f-\\u009f:\\\\]+(?<!/)(?![\\s\\S])"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "locator"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "locator": { "$ref": "#/$defs/statement" }
+      }
+    }
+  }
+}

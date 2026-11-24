@@ -1,0 +1,219 @@
+{
+  "date": "2026-11-03",
+  "baseline_commit": "85d8a9967db7774f8ea83a60495d1852827abcc3",
+  "user_instruction": {
+    "source": "user-input.md",
+    "sha256": "72e80490baec682cca54f4288496026105466d2e2b676c7d964bc72f135da887",
+    "boundary": "Use supplied API responses as mocks. Real environment access is outside this session."
+  },
+  "source_sha256": {
+    "core/entitlement_coverage.py": "8447c34f536f3cde45f5872054bc38ad18ac986c7e3b3203c26a9689b32db2b6",
+    "core/entitlement_reconciliation.py": "919a9dc99e01fd6140b5dd117b8f85489616ca6472a57d7225ae055df5b528f7",
+    "core/entitlement_sources.py": "19aad1007be95ce4effe204d76dff994288f6c9c2ffc1f84dde795eeb4d69904",
+    "tests/test_entitlement_coverage.py": "4b1b228760b06a9a5659136f953da8ea7d8e59e6595c253b4eed6cdb1a44e60f",
+    "tests/test_entitlement_coverage_sources.py": "d19b0b67dba62d8fac12e7379bb1e679a130f4814a2cf3d6f37ec618bdcce994",
+    "tests/test_entitlement_reconciliation.py": "5c5205385d70856e93bdba06c2fe142e1297372444ae66da25d0c24d4f478c66",
+    "tests/test_entitlement_sources.py": "ea66f9943649efb6f39dd78faa416e1f734a1a9cdffe4ef1c4e7d6c8b23ea714",
+    "tasks/ces-entitlement-migration-20261102/coverage/config.json": "eaf2ee5cea992419b08b85e83b4bba9e737f737d9756dbf9d21163922d4bc363",
+    "tasks/ces-entitlement-migration-20261102/run-coverage.command": "ca1e4c9131dc6f879749d8f78149cdc7e36072571ebaf4e67b6c245723f4caf0",
+    "tasks/ces-entitlement-migration-20261102/run-coverage.cmd": "02b1e410b536a4722aa0d3d8485bbe9879cb0c45005f14a60ba286bdac27f59a",
+    "tasks/ces-entitlement-migration-20261102/01-intake.md": "e74d7c67478272f4a48e2dd52e48b8ab94bcb01dbad17dcc5ee724118faaaafa",
+    "tasks/ces-entitlement-migration-20261102/06-test-cases.md": "594ade498a6df87250643cb75087197b196654e695a0edf7aefbc9ca4ac90f90",
+    "tasks/ces-entitlement-migration-20261102/10-change-review-coverage-automation.md": "28ca1482ed9d6a74a9b05a97bc6b5fa5738ea68618e366ac23677741baeb8728",
+    "tasks/ces-entitlement-migration-20261102/coverage/README.md": "8a7bff6eca8e99e8ecf7522e47bef2e43e55aa978c76fe691e5c20db1c1aad63",
+    "tasks/ces-entitlement-migration-20261102/evidence/index.md": "dbcc7a433e058ef6b597c571bda0a89d219aeee2f42abaddc3c3c0d53f059b27"
+  },
+  "unit_tests": {
+    "discovered": 802,
+    "passed": 802,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "log": "unit-tests-all.log",
+    "environment": "WORKBENCH_CONNECTOR_INTEGRATION=1; controlled localhost listener permitted; no enterprise access"
+  },
+  "coverage_tests": {
+    "passed": 49,
+    "by_module": {
+      "test_entitlement_coverage": 15,
+      "test_entitlement_coverage_sources": 7,
+      "test_entitlement_reconciliation": 15,
+      "test_entitlement_sources": 12
+    },
+    "log": "unit-tests-all.log"
+  },
+  "default_boundary": {
+    "cli_default": "replay",
+    "runtime_default": "replay",
+    "launchers": "--mode replay",
+    "no_http_client_or_credentials": "PASSED; assertions make client construction and load_root_env fail if attempted",
+    "missing_capture": "PASSED; account remains UNASSESSED, final coverage null, no HTTP fallback"
+  },
+  "mock_run": {
+    "command": "tasks/ces-entitlement-migration-20261102/run-coverage.command --output tasks/ces-entitlement-migration-20261102/evidence/coverage-runs/mock-supplied-20261103",
+    "exit_code": 2,
+    "exit_reason": "INCOMPLETE: most discovered users lack supplied paired responses",
+    "log": "mock-launcher.log",
+    "mode": "replay",
+    "evidence_source": "MOCK: supplied API responses",
+    "status": "INCOMPLETE",
+    "summary": {
+      "discovered_accounts": 1051,
+      "compared_accounts": 2,
+      "matching_accounts": 0,
+      "different_accounts": 2,
+      "unassessed_accounts": 1049,
+      "baseline_accounts": 747,
+      "matching_baseline_accounts": 0,
+      "functional_profile_coverage_percent": null,
+      "verified_functional_match_lower_bound_percent": 0.0,
+      "full_data_profile_coverage": "UNASSESSED",
+      "subject_coverage": "23/23",
+      "role_grant_preservation": "786/786"
+    },
+    "report": "../coverage-runs/mock-supplied-20261103/report.html",
+    "result": "../coverage-runs/mock-supplied-20261103/result.json",
+    "binding": {
+      "config_sha256": "eaf2ee5cea992419b08b85e83b4bba9e737f737d9756dbf9d21163922d4bc363",
+      "matrix_sha256": [
+        "159184831f3b1c4283387ae4e717e0aef5f20e21a6a4cb33f1a894a1dd7f472a",
+        "e6e6da5a43b1303593c74da3703f8066bcf58a10abe3f729f8ea6aa204678d63",
+        "f0bb7982136da01bf78b323374f1e53602ceca1df11e6b0c261b8e441786f4ac"
+      ],
+      "mode": "replay",
+      "implementation_sha256": {
+        "entitlement_coverage.py": "8447c34f536f3cde45f5872054bc38ad18ac986c7e3b3203c26a9689b32db2b6",
+        "entitlement_sources.py": "19aad1007be95ce4effe204d76dff994288f6c9c2ffc1f84dde795eeb4d69904",
+        "entitlement_reconciliation.py": "919a9dc99e01fd6140b5dd117b8f85489616ca6472a57d7225ae055df5b528f7"
+      },
+      "replay_sha256": {
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by app and user (1289935).yml": "e2f1f505e032790ca9c43ca55a3b6c08b21ea0b3eb8b543359201216291f2382",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by app and user (1481696).yml": "5b184ecf59ae310086a1b6054d8eea3043e2e585fa0341a1a9079246e9ab1a3c",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by application (FlowZero).yml": "3b124edf881824b0f3269eabba1149e2d47d1e811a3c67b05ebe3ba5b033200f",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by application.yml": "1b9ee6360712663dd9386c1a7ad61e416773067698770105b3276d1bbfc4d14e",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 entitlementList for user id (1289935).yml": "a495c2f2b44a321491458be67653e5c99a4c8344534b93037ffdd19853bcb728",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 entitlementList for user id (1481696).yml": "bad8750021dde16c6e2203f62cc333c37bc77571badb8aaaea7b0436b82ae8db",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 entitlementList for user id (srv.ratan.001).yml": "736529242041b4361ceb3acf75dbeb7f8e4499768cc37f0702f43a96d9eaa89a",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 subjects from entity id (FMO PORTAL ADMIN).yml": "e50847290f93d464f310f7081010437f5581697955dfa5e5575244753f8a7afd",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 subjects from entity id (RATAN_DATA_ENTITLEMENT).yml": "4da9a5e258e4c643c91526a9412936d7f33b74730b78c22ae30940a537569cba",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 subjects from entity id (RATAN_FUNC).yml": "427c87bdebd8ba0cbbbdb568a646b06fb9dff05d5de98b3935e516f4e96b150c",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 subjects from entity id (X_RATANONE).yml": "ae4bed24e711bcbc1bcaaaf77d0c44e7fce57204beda9b7b62c2763962e17c15"
+      }
+    },
+    "artifacts_sha256": {
+      "binding.json": "9d09ceaaada4538f359bbfc569a3e0c506e4476a4729f3b78e34daba124d7c90",
+      "cases.jsonl": "c39f5cea7f595f6254aa24b112762e0bc4fc29949c6839a9a1a6ad97670ab241",
+      "differences.csv": "c547b1087ba2ffec29ad652ba5fa614befe4ed503990de2d72277abd89344e35",
+      "report.html": "f3d682803b7a212c70b60f70a249b5748a54e19bed1f59eccef7fad50dbe702c",
+      "result.json": "8b28f04a848c376d4146208ef965fda31b51b8c5089b401c484777570d78fe26"
+    },
+    "durable_checkpoints": 1051,
+    "checkpoint_hash_verification": "PASSED",
+    "automatic_browser_open": "Not verified: desktop open returned OS errors in the sandbox. Report generation completed."
+  },
+  "observed_capture_differences": {
+    "additional_subjects": 6,
+    "additional_role_grants": 130,
+    "missing_profile_names": [
+      [
+        "RATAN_ENTITLEMENT_RULE",
+        "EMS2_ADMIN"
+      ]
+    ],
+    "additional_profile_names": 38,
+    "paired_users": [
+      {
+        "user_id": "1289935",
+        "status": "DIFFERENT",
+        "effective_missing": [],
+        "effective_additional": [
+          [
+            "RATAN_ENTITLEMENT_RULE",
+            "FMID Reports",
+            "View"
+          ],
+          [
+            "RATAN_ENTITLEMENT_RULE",
+            "Reports",
+            "Download"
+          ],
+          [
+            "RATAN_ENTITLEMENT_RULE",
+            "Reports",
+            "View"
+          ]
+        ]
+      },
+      {
+        "user_id": "1481696",
+        "status": "DIFFERENT",
+        "effective_missing": [],
+        "effective_additional": [
+          [
+            "RATAN_ENTITLEMENT_RULE",
+            "Reports",
+            "View"
+          ]
+        ]
+      }
+    ]
+  },
+  "packaging": {
+    "wheel_build": "PASSED",
+    "wheel_install_outside_checkout": "PASSED",
+    "installed_default_mode": "replay",
+    "logs": [
+      "wheel-build.log",
+      "wheel-install-smoke.log"
+    ],
+    "new_dependencies": 0
+  },
+  "artifact_lint": {
+    "status": "PASSED",
+    "artifacts": 3,
+    "log": "artifact-lint.json",
+    "limits": "Expected unknown-owner, pending-review, unresolved-policy, and ASD review warnings remain."
+  },
+  "workspace_validation": {
+    "status": "VALID",
+    "log": "workspace-validation.json"
+  },
+  "independent_review": {
+    "scope": "Uncommitted runtime, tests, and launchers; source and retained mock output inspection",
+    "outcome": "No remaining actionable findings",
+    "limit": "No enterprise execution. The first test parser defect was corrected."
+  },
+  "prior_attempts": [
+    {
+      "log": "coverage-tests-sandbox-attempt.log",
+      "reason": "Sandbox denied localhost binding. A direct result fixture also needed the new evidence_source field; fixed."
+    },
+    {
+      "log": "coverage-tests-first-attempt.log",
+      "reason": "New CLI assertion parsed progress output as JSON. Fixed parsing without changing runtime behavior or weakening assertions."
+    }
+  ],
+  "limits": [
+    "Mock results describe supplied captures only.",
+    "The remaining 1049 accounts have no paired captures; no responses were fabricated.",
+    "Complete EMS2 field/value definitions were not supplied; data-profile equality is unassessed.",
+    "FMO Portal Admin remains outside production denominators.",
+    "Windows launcher execution remains untested."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "local_reference_checks": {
+    "status": "PASSED",
+    "checked": 366,
+    "scope": "Targets and numeric source line bounds in five updated documents"
+  },
+  "credential_scan": "PASSED: no bearer credentials found in new evidence files"
+}

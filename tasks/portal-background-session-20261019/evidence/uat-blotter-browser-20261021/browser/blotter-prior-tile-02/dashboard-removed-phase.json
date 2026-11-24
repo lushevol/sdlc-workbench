@@ -1,0 +1,72 @@
+{
+  "completedAt": "2026-10-21T08:34:30.129Z",
+  "status": "FAILED",
+  "checkpoint": "dashboard-removed-result",
+  "measured": {
+    "start": 1792571490479,
+    "settledAccess": {
+      "sha256": "8bdf0555291f47e8fb88171c04c476b654a6f6586514a457346fc52a0ff82221",
+      "iat": 1792571485,
+      "exp": 1792571665
+    },
+    "deadline": 1792571670000
+  },
+  "assertions": [
+    {
+      "name": "Recurring Dashboard requests stop after removal",
+      "passed": true,
+      "evidence": {
+        "laterDashboardQueries": []
+      }
+    },
+    {
+      "name": "Access expiry remains fixed after Dashboard removal",
+      "passed": false,
+      "evidence": {
+        "laterExtensions": [
+          {
+            "time": 1792571609592,
+            "url": "http://localhost:8126/api/auth/v2/sso/extend",
+            "status": 200,
+            "access": {
+              "sha256": "2306268efcb522c53039b6ee057510af9a0656c576609311704a46db74630fdf",
+              "iat": 1792571609,
+              "exp": 1792571789
+            },
+            "refresh": null
+          },
+          {
+            "time": 1792571663869,
+            "url": "http://localhost:8126/api/auth/v2/sso/extend",
+            "status": 200,
+            "access": {
+              "sha256": "cb44f36b760c23511072086bd968a41e4d888d0c9a476f47a018125c20b7c47a",
+              "iat": 1792571663,
+              "exp": 1792571843
+            },
+            "refresh": null
+          }
+        ],
+        "settledAccess": {
+          "sha256": "8bdf0555291f47e8fb88171c04c476b654a6f6586514a457346fc52a0ff82221",
+          "iat": 1792571485,
+          "exp": 1792571665
+        },
+        "finalAccess": {
+          "sha256": "cb44f36b760c23511072086bd968a41e4d888d0c9a476f47a018125c20b7c47a",
+          "iat": 1792571663,
+          "exp": 1792571843
+        }
+      }
+    },
+    {
+      "name": "Timeout appears after the fixed access deadline",
+      "passed": false,
+      "evidence": {
+        "finalOpened": [],
+        "fixedExpiry": 1792571665,
+        "timeoutVisible": false
+      }
+    }
+  ]
+}

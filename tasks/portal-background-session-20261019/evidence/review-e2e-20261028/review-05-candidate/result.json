@@ -1,0 +1,207 @@
+{
+  "caseId": "REVIEW-E2E-05",
+  "finding": "REVIEW-05",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:42:44.194Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8143",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:42:48.584Z",
+      "method": "Playwright screenshot",
+      "sha256": "d49d420ab571cc26207a3885e8525c31aeb7f4b8517ca7aee5d4271f0c9d5a33",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "pending-acquisition-dialog",
+      "file": "pending-acquisition-dialog.png",
+      "capturedAt": "2026-10-28T02:43:47.213Z",
+      "method": "Playwright screenshot",
+      "sha256": "d8da11fd88a3ac72f9bcc5af99b41ec61d93b4d3ae3c1b824efe2633028d4b52",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "acquisition-settled",
+      "file": "acquisition-settled.png",
+      "capturedAt": "2026-10-28T02:43:48.954Z",
+      "method": "Playwright screenshot",
+      "sha256": "2260405972eb94ebfdda86fcaf1ef8c76542be342a183bbeec455adfa6e96879",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "pending-recovery-final",
+      "file": "pending-recovery-final.png",
+      "capturedAt": "2026-10-28T02:43:50.445Z",
+      "method": "Playwright screenshot",
+      "sha256": "fd92cc09eb6a10b42bb0883ded46f24340b82691c438fbd1ce481519397c7ad5",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:42:47.016Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:42:47.204Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:42:47.325Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:43:47.029Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:43:47.041Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 503,
+      "at": "2026-10-28T02:43:47.249Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:43:47.262Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:43:47.262Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:43:47.270Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:43:47.270Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/logout",
+      "at": "2026-10-28T02:43:48.266Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "at": "2026-10-28T02:43:48.266Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "status": 404,
+      "at": "2026-10-28T02:43:48.280Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "at": "2026-10-28T02:43:48.281Z"
+    }
+  ],
+  "assertions": [
+    "Acquisition genuinely pending at access expiry; actual Extend and Logout state observed; settlement and sign-in recovery inspected."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Refresh acquisition is held before local BFF dispatch, then released with a disclosed synthetic HTTP503."
+  ],
+  "before": {
+    "at": "2026-10-28T02:42:48.582Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "809ae44a4edc3726a2e8d322f8b8f80722c9f04b6faddcd9dfa1b28aec5a3f43",
+      "exp": 1793155427,
+      "iat": 1793155367
+    },
+    "refresh": null,
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "pending": {
+    "at": "2026-10-28T02:43:47.212Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "809ae44a4edc3726a2e8d322f8b8f80722c9f04b6faddcd9dfa1b28aec5a3f43",
+      "exp": 1793155427,
+      "iat": 1793155367
+    },
+    "refresh": null,
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": true,
+    "extendDisabled": true,
+    "logoutDisabled": false,
+    "isOnLogout": false,
+    "isLoading": true,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "settled": {
+    "at": "2026-10-28T02:43:48.952Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": false,
+    "loginVisible": true,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:43:50.444Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": false,
+    "loginVisible": true,
+    "outcome": null
+  },
+  "impact": "PENDING_EXTEND_DISABLED_LOGOUT_AND_SETTLEMENT_RECOVER",
+  "completedAt": "2026-10-28T02:43:50.546Z",
+  "elapsedMs": 66352
+}

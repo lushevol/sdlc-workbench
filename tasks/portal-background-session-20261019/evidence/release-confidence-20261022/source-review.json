@@ -1,0 +1,773 @@
+{
+  "status": "COMPLETED",
+  "scope": "Read-only source applicability review for the mfe-base session-refresh release assessment.",
+  "comparison": {
+    "repository": "mfe-base",
+    "branch": "feature/session-refresh-minor",
+    "mode": "branch merge-base comparison",
+    "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "prior_runtime_candidate": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "remote_names": [],
+    "deployable_artifact": null
+  },
+  "source_inventory": {
+    "path": "source-inventory.json",
+    "sha256": "e58f110e7209dca9e98902ddba455bec755dac54556ac3b62a2d38f568654bac",
+    "tracked_files": 400,
+    "local_modified_paths": [
+      "tsconfig.tsbuildinfo"
+    ],
+    "changed_paths": [
+      ".env.cloud",
+      ".env.local",
+      ".env.mfe",
+      ".env.server",
+      ".eslintrc",
+      ".gitignore",
+      ".prettierignore",
+      "src/hooks/reducer/index.test.tsx",
+      "src/hooks/reducer/root0.reducers.ts",
+      "src/hooks/service/index.ts",
+      "src/hooks/service/refreshToken.test.ts",
+      "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "src/pages/Home/common/sessionRefresh.test.tsx",
+      "src/pages/Home/common/useController.ts",
+      "src/pages/Home/index.test.tsx"
+    ]
+  },
+  "findings": [
+    {
+      "id": "SRC-F01",
+      "retained_finding": "F-01",
+      "priority": "P2",
+      "state": "CURRENT_UNRESOLVED",
+      "classification": "INTRODUCED_REGRESSION",
+      "title": "Refresh expiry can end valid active access.",
+      "trigger": "An unreplaced refresh token expires while successful access extensions keep access valid.",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#review-f01",
+      "intended": {
+        "outcome": "Zero fresh SSO prompts solely from the initial session deadline.",
+        "source": "knowledge/candidates/requirements/REQ-active-session-renewal.md#L158-L162",
+        "version": 4,
+        "authority_limit": "Candidate knowledge; publication review remains pending."
+      },
+      "old": {
+        "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "outcome": "After 23 successful extensions, access stays installed and logout count is zero.",
+        "evidence": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-active_cutoff/actual.json"
+      },
+      "new": {
+        "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "outcome": "After the same extensions, refresh expiry opens Timeout and clears valid access. Logout count is one.",
+        "evidence": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/actual.json"
+      },
+      "source_evidence": [
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/pages/Home/common/useController.ts",
+          "lines": [
+            117,
+            123
+          ],
+          "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/pages/Home/common/useController.ts",
+          "lines": [
+            171,
+            173
+          ],
+          "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/components/Timeout/common/useController.ts",
+          "lines": [
+            25,
+            51
+          ],
+          "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8"
+        }
+      ],
+      "assertion_evidence": "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot#L73-L94",
+      "consequence": "An active portal user must authenticate again despite valid extended access.",
+      "owner": "unknown application owner",
+      "next_action": "Preserve active access across the original refresh expiry, then rerun the canonical paired case.",
+      "limits": [
+        "Four-hour refresh and fifteen-minute access values are controlled fixture settings.",
+        "The case seeds equal refresh credentials and does not compare hide acquisition.",
+        "No PROD occurrence rate or effective PROD lifetime was established."
+      ]
+    },
+    {
+      "id": "SRC-F03",
+      "retained_finding": "F-03",
+      "priority": "P2",
+      "state": "CURRENT_UNRESOLVED",
+      "classification": "INTRODUCED_OR_WORSENED_RACE",
+      "title": "Stale refresh credentials can clear a newly signed-in session.",
+      "trigger": "An ended session refresh response arrives after logout, around a fresh sign-in. Its future expiry suppresses replacement.",
+      "canonical_cases": [
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-f03a",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-f03b",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-f03-control"
+      ],
+      "intended": {
+        "outcome": "Recovery uses the current session credential and preserves the new session.",
+        "source": "tasks/portal-background-session-20261019/06-test-cases.md#review-f03a",
+        "authority_limit": "Review inference from inspected session boundaries. A separate approved late-response criterion is unavailable."
+      },
+      "old": {
+        "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "outcome": "A replacement opportunity installs session-B refresh and permits recovery. Without that opportunity, the control also fails.",
+        "evidence": [
+          "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-before/actual.json",
+          "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-after/actual.json",
+          "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-control/actual.json"
+        ]
+      },
+      "new": {
+        "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "outcome": "The stale session-A credential remains. Replacement is skipped; modeled revocation rejection clears session B.",
+        "evidence": [
+          "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-before/actual.json",
+          "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-after/actual.json",
+          "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-control/actual.json"
+        ]
+      },
+      "source_evidence": [
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/hooks/reducer/root0.reducers.ts",
+          "lines": [
+            6,
+            9
+          ],
+          "sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/hooks/service/index.ts",
+          "lines": [
+            37,
+            48
+          ],
+          "sha256": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/hooks/service/util/succes.response.handler.ts",
+          "lines": [
+            39,
+            40
+          ],
+          "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/utils/login.ts",
+          "lines": [
+            109,
+            128
+          ],
+          "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/services/index.ts",
+          "lines": [
+            20,
+            30
+          ],
+          "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/hooks/service/util/success.request.handler.ts",
+          "lines": [
+            18,
+            19
+          ],
+          "sha256": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d"
+        }
+      ],
+      "assertion_evidence": "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/races/raceComparison.test.tsx#L78-L148",
+      "consequence": "A fresh sign-in can later terminate because recovery sends an ended session credential.",
+      "owner": "unknown application owner",
+      "next_action": "Separate fresh sign-in from access rotation and reject ended-session responses. Rerun both race cases and their control.",
+      "limits": [
+        "Synthetic Axios adapters model logout revocation and recovery rejection. No live identity provider participates.",
+        "The test directly invokes acquisition; it does not execute Home timer delivery.",
+        "This evidence does not establish cross-user access or credential disclosure."
+      ]
+    },
+    {
+      "id": "SRC-F02",
+      "retained_finding": "F-02",
+      "priority": "P3",
+      "state": "CURRENT_UNRESOLVED",
+      "classification": "INTRODUCED_SCHEDULING_ROBUSTNESS_GAP",
+      "title": "A slightly late acquisition callback skips replacement.",
+      "trigger": "A callback executes with 24,999 milliseconds of access validity while refresh exists.",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#review-f02",
+      "intended": {
+        "outcome": "Acquire eligible replacement credentials while access remains valid.",
+        "authority_limit": "Source-derived review expectation. A separate approved timer-tolerance criterion is unavailable."
+      },
+      "old": {
+        "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "outcome": "One acquisition request replaces refresh. No Timeout appears.",
+        "evidence": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f02/actual.json"
+      },
+      "new": {
+        "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "outcome": "Zero acquisition requests occur. Existing refresh remains usable and no Timeout appears.",
+        "evidence": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f02/actual.json"
+      },
+      "source_evidence": [
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/pages/Home/common/useController.ts",
+          "lines": [
+            125,
+            135
+          ],
+          "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb"
+        }
+      ],
+      "consequence": "One refresh replacement opportunity is lost. No user-visible failure was demonstrated in this case.",
+      "owner": "unknown application owner",
+      "next_action": "Permit eligible acquisition after slight lateness, or retain the bounded robustness limitation for disposition.",
+      "limits": [
+        "A controlled one-millisecond offset models callback lateness.",
+        "This case does not measure actual browser scheduling latency or prove failed recovery."
+      ]
+    },
+    {
+      "id": "SRC-KNOWN-DELAYED",
+      "retained_finding": "KNOWN-DELAYED-REFRESH",
+      "priority": null,
+      "state": "CURRENT_KNOWN_LIMITATION",
+      "classification": "PRE_EXISTING_UNCHANGED_FAILURE",
+      "title": "Late refresh arrival cannot recover after logout starts.",
+      "trigger": "Scheduled refresh acquisition remains pending when access expires. Its usable response arrives after Timeout starts logout.",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#review-delayed-scheduled",
+      "intended": {
+        "outcome": "Usable late credentials permit the requested manual recovery.",
+        "authority_limit": "Required background-recovery scope and any fallback disposition remain task decisions."
+      },
+      "old": {
+        "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "outcome": "Extend stays disabled, zero relogin requests occur, and logout clears authentication.",
+        "evidence": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-delayed_recovery/actual.json"
+      },
+      "new": {
+        "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "outcome": "The same recovery failure occurs.",
+        "evidence": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-delayed_recovery/actual.json"
+      },
+      "source_evidence": [
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/components/Timeout/common/useController.ts",
+          "lines": [
+            25,
+            41
+          ],
+          "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/components/Timeout/common/useController.ts",
+          "lines": [
+            43,
+            60
+          ],
+          "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+          "lines": [
+            365,
+            379
+          ],
+          "sha256": "f316ac6a98e7d3bd8c4ae3417080c43c5cbec76b8f1bb9349ac8697ea45e72ac"
+        }
+      ],
+      "assertion_evidence": "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot#L96-L125",
+      "consequence": "The user must sign in again despite late usable refresh credentials.",
+      "owner": "unknown application owner; user for fallback disposition",
+      "next_action": "Correct required recovery or record the exact proposed fallback decision. Do not treat an expected-failure pass as recovery.",
+      "limits": [
+        "The controlled paired case establishes an inherited failure, not production frequency.",
+        "Lower incremental risk does not waive the requested recovery behavior."
+      ]
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "key_conclusion": "The current candidate retains both consequential P2 review causes and their controlled adverse outcomes.",
+  "retained_execution_binding": {
+    "setup": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/execution-setup.json",
+    "setup_sha256": "52cd77f9261c655cc1610b893c3b130862b75e5f7d887962fb59d84ae1d6b384",
+    "pair_count": 6,
+    "run_count": 12,
+    "runs": [
+      {
+        "condition": "active_cutoff",
+        "side": "baseline",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-active_cutoff/run.json",
+        "recorded_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-active_cutoff/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-active_cutoff/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-active_cutoff/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "active_cutoff",
+        "side": "candidate",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/run.json",
+        "recorded_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "delayed_recovery",
+        "side": "baseline",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-delayed_recovery/run.json",
+        "recorded_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-delayed_recovery/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-delayed_recovery/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-baseline-delayed_recovery/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "delayed_recovery",
+        "side": "candidate",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-delayed_recovery/run.json",
+        "recorded_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-delayed_recovery/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-delayed_recovery/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-delayed_recovery/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "timer_late",
+        "side": "baseline",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f02/run.json",
+        "recorded_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f02/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f02/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f02/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "timer_late",
+        "side": "candidate",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f02/run.json",
+        "recorded_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f02/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f02/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f02/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "old_refresh_before_login",
+        "side": "baseline",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-before/run.json",
+        "recorded_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-before/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-before/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-before/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "old_refresh_before_login",
+        "side": "candidate",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-before/run.json",
+        "recorded_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-before/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-before/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-before/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "old_refresh_after_login",
+        "side": "baseline",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-after/run.json",
+        "recorded_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-after/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-after/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-after/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "old_refresh_after_login",
+        "side": "candidate",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-after/run.json",
+        "recorded_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-after/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-after/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-after/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "no_replacement_control",
+        "side": "baseline",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-control/run.json",
+        "recorded_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-control/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-control/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-baseline-f03-control/execution.log",
+            "matches": true
+          }
+        ]
+      },
+      {
+        "condition": "no_replacement_control",
+        "side": "candidate",
+        "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-control/run.json",
+        "recorded_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "run_sha_matches_summary": true,
+        "setup_sha_matches": true,
+        "source_matches_export_before_recorded": true,
+        "source_matches_export_after_recorded": true,
+        "artifact_checks": [
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-control/result.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-control/actual.json",
+            "matches": true
+          },
+          {
+            "path": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-control/execution.log",
+            "matches": true
+          }
+        ]
+      }
+    ],
+    "candidate_export_comparison": {
+      "compared_files": 400,
+      "matched_files": 399,
+      "mismatched_paths": [
+        "tsconfig.tsbuildinfo"
+      ]
+    },
+    "diagnostics": [
+      {
+        "name": "baselineDiagnostic.test.tsx",
+        "retained_path": "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot",
+        "sha256": "38955c555dd92e61dcdaed638be2c9ea3107f0ff1eaa42ebadd6f8841e7182d0",
+        "matches_execution_setup": true
+      },
+      {
+        "name": "raceComparison.test.tsx",
+        "retained_path": "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/races/raceComparison.test.tsx",
+        "sha256": "8e394c61871e789406cb51f75a59f53833c96816d8a5ab8684831b4870c91d1c",
+        "matches_execution_setup": true
+      }
+    ],
+    "failures": [],
+    "limits": [
+      "The original runs use JSDOM, controlled clocks, and synthetic Axios adapters.",
+      "No fresh business suite ran in this source review."
+    ]
+  },
+  "inspected_source_hashes": {
+    "src/hooks/reducer/root0.reducers.ts": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+    "src/hooks/service/index.ts": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc",
+    "src/pages/Home/common/useController.ts": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+    "src/components/Timeout/common/useController.ts": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+    "src/services/index.ts": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+    "src/utils/login.ts": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+    "src/hooks/service/util/succes.response.handler.ts": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+    "src/hooks/service/util/success.request.handler.ts": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d",
+    "src/hooks/service/util/extend.ts": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+    "src/utils/common.ts": "93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764",
+    "src/pages/Home/common/sessionLifecycle.test.tsx": "f316ac6a98e7d3bd8c4ae3417080c43c5cbec76b8f1bb9349ac8697ea45e72ac"
+  },
+  "current_source_matches_prior_runtime": {
+    "src/hooks/reducer/root0.reducers.ts": true,
+    "src/hooks/service/index.ts": true,
+    "src/pages/Home/common/useController.ts": true,
+    "src/components/Timeout/common/useController.ts": true,
+    "src/services/index.ts": true,
+    "src/utils/login.ts": true,
+    "src/hooks/service/util/succes.response.handler.ts": true,
+    "src/hooks/service/util/success.request.handler.ts": true,
+    "src/hooks/service/util/extend.ts": true,
+    "src/utils/common.ts": true,
+    "src/pages/Home/common/sessionLifecycle.test.tsx": false
+  },
+  "requirement_identity": {
+    "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+    "version": 4,
+    "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+    "current_matches_prior_review_input": true,
+    "publication_review": "pending"
+  },
+  "changed_path_dispositions": [
+    {
+      "path": ".env.cloud",
+      "scope": "Ancillary configuration keys or formatting/ignore contents inspected. Deployed environment applicability remains unverified."
+    },
+    {
+      "path": ".env.local",
+      "scope": "Ancillary configuration keys or formatting/ignore contents inspected. Deployed environment applicability remains unverified."
+    },
+    {
+      "path": ".env.mfe",
+      "scope": "Ancillary configuration keys or formatting/ignore contents inspected. Deployed environment applicability remains unverified."
+    },
+    {
+      "path": ".env.server",
+      "scope": "Ancillary configuration keys or formatting/ignore contents inspected. Deployed environment applicability remains unverified."
+    },
+    {
+      "path": ".eslintrc",
+      "scope": "Ancillary configuration keys or formatting/ignore contents inspected. Deployed environment applicability remains unverified."
+    },
+    {
+      "path": ".gitignore",
+      "scope": "Ancillary configuration keys or formatting/ignore contents inspected. Deployed environment applicability remains unverified."
+    },
+    {
+      "path": ".prettierignore",
+      "scope": "Ancillary configuration keys or formatting/ignore contents inspected. Deployed environment applicability remains unverified."
+    },
+    {
+      "path": "src/hooks/reducer/index.test.tsx",
+      "scope": "Retained review and export hashes reconciled. Relevant lifecycle assertions inspected; complete fresh assertion review belongs to the test-evidence pass."
+    },
+    {
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "scope": "Exact old/new runtime diff, current enclosing source, and affected callers inspected."
+    },
+    {
+      "path": "src/hooks/service/index.ts",
+      "scope": "Exact old/new runtime diff, current enclosing source, and affected callers inspected."
+    },
+    {
+      "path": "src/hooks/service/refreshToken.test.ts",
+      "scope": "Retained review and export hashes reconciled. Relevant lifecycle assertions inspected; complete fresh assertion review belongs to the test-evidence pass."
+    },
+    {
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "scope": "Retained review and export hashes reconciled. Relevant lifecycle assertions inspected; complete fresh assertion review belongs to the test-evidence pass."
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "scope": "Retained review and export hashes reconciled. Relevant lifecycle assertions inspected; complete fresh assertion review belongs to the test-evidence pass."
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "scope": "Exact old/new runtime diff, current enclosing source, and affected callers inspected."
+    },
+    {
+      "path": "src/pages/Home/index.test.tsx",
+      "scope": "Retained review and export hashes reconciled. Relevant lifecycle assertions inspected; complete fresh assertion review belongs to the test-evidence pass."
+    }
+  ],
+  "scope_limits": [
+    "This pass reconfirms selected session defects; it is not a fresh exhaustive review of all test assertions.",
+    "The prior fifteen-path review remains secondary evidence, bound to the unchanged candidate source bytes.",
+    "The branch has no configured Git remote. Merge state and remote build state remain unknown.",
+    "No deployable artifact digest, deployment identity, or effective PROD setting was supplied to this pass.",
+    "No source change, dependency change, suite execution, deployment, or Git mutation occurred."
+  ],
+  "qualitative_source_risk": "Material authentication availability risk: current source can terminate active access or clear a fresh session under defined conditions.",
+  "source_review_outcome": "CURRENT_MATERIAL_FINDINGS_REMAIN",
+  "automated_checks": {
+    "source_inventory_files": 400,
+    "retained_run_records": 12,
+    "retained_artifact_hashes": 36,
+    "retained_diagnostics": 2,
+    "integrity_failures": [],
+    "limits": [
+      "Hashes establish byte identity, not actor authenticity, approved policy, or PROD execution."
+    ],
+    "source_before_after_changed_paths": [],
+    "current_head_unchanged": true,
+    "source_status_unchanged": true
+  }
+}

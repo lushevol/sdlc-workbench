@@ -1,0 +1,694 @@
+{
+  "schema_version": 1,
+  "assessed_at": "2026-10-28T15:24:46.164947+00:00",
+  "operation": "Read-only reconciliation of retained code-review and paired verification evidence; no new E2E execution.",
+  "scope": "Session Refresh source delivery confidence. Release artifacts excluded by latest user request.",
+  "request": "../user-input-20261028-release-report.txt",
+  "repository": "repos/ui/mfe-base",
+  "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "comparison": "Exact baseline-to-candidate endpoints; same endpoints as retained branch merge-base review.",
+  "current_checkout": {
+    "head": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+    "status": [
+      " M src/pages/Home/common/useController.ts",
+      " M tsconfig.tsbuildinfo",
+      "?? diff"
+    ],
+    "applicability": "Retained review applies to selected candidate, not later checkout bytes."
+  },
+  "metrics": {
+    "reviewed_changed_paths": {
+      "numerator": 36,
+      "denominator": 36,
+      "percent": 100,
+      "limit": "Path inspection does not establish full behavioral equivalence or exhaustive assertion quality."
+    },
+    "runtime_paths": {
+      "reviewed": 12,
+      "total": 12
+    },
+    "test_paths": {
+      "diff_reviewed": 17,
+      "total": 17,
+      "assertion_chain_scope": "sampled plus retained focused full test delta review"
+    },
+    "support_paths": {
+      "reviewed": 7,
+      "total": 7
+    },
+    "tracked_review_entries": 18,
+    "proposed_priorities": {
+      "P2": 10,
+      "P3": 6,
+      "P4": 2
+    },
+    "entries_with_paired_browser_observations": 9,
+    "primary_side_observations_completed": 20,
+    "locally_reproduced_tangible_impact_entries": 1,
+    "production_reachable_introduced_defects_confirmed": 0,
+    "production_reachability_limit": "Zero confirmed production reachability is not zero defects. REVIEW-01 has confirmed local impact; supported deployed caller remains unidentified.",
+    "earlier_introduced_defects_closed_local": 2
+  },
+  "critical_finding": {
+    "id": "REVIEW-01",
+    "case": "../../06-test-cases.md#review-e2e-01",
+    "source_path": "src/components/Timeout/common/useController.ts",
+    "candidate_source_lines": [
+      112,
+      125
+    ],
+    "setup": "Keep Home mounted. Open timeout dialog with valid local credentials.",
+    "steps": [
+      "Click Logout.",
+      "Complete replacement login through the public API before its one-second delay ends.",
+      "Inspect dialog after delayed callback.",
+      "Attempt Extend and another Logout."
+    ],
+    "intended_result": "Replacement-session protection must preserve usable recovery. Exact business approval of this consumer trigger remains unavailable.",
+    "baseline_result": "Old delayed logout clears replacement session and dialog.",
+    "candidate_result": "BFF-valid replacement access remains; stale dialog remains visible, Extend disabled, second Logout issues no logout request.",
+    "replacement_install_ms_after_logout": 61,
+    "protected_access_http_status": 200,
+    "consequence": "Replacement workspace is blocked by unusable dialog actions in this controlled local flow.",
+    "owner": "unknown application owner",
+    "next_action": "Identify supported replacement-login callers. Close dialog ownership when applicable and rerun same paired case.",
+    "confidence": "HIGH for controlled local impact; production reachability UNKNOWN",
+    "priority": "P2",
+    "severity": "S2 conditional",
+    "classification": "source-bound local reproduced issue; production applicability conditional",
+    "related_can_extend_lines": [
+      103,
+      109
+    ]
+  },
+  "closed_local": [
+    {
+      "id": "GL-01",
+      "case": "../../06-test-cases.md#del-14",
+      "status": "CLOSED_LOCAL",
+      "evidence": "../ut-remediation-20261027/final-cancellation-browser/comparison.json",
+      "consequence_before_fix": "Final cancellation could retain visible PageLoader.",
+      "candidate_closure": "PageLoader disappears and authentication/error state remains unchanged."
+    },
+    {
+      "id": "GL-02",
+      "case": "../../06-test-cases.md#del-20",
+      "status": "CLOSED_LOCAL",
+      "evidence": "../ut-remediation-20261027/final-timer-control/comparison.json",
+      "consequence_before_fix": "One-millisecond-late acquisition callback could lose recovery.",
+      "candidate_closure": "Controlled default-lifetime case retains prompt and refresh, with zero logout requests."
+    }
+  ],
+  "entries": [
+    {
+      "id": "REVIEW-01",
+      "locator": "../../10-issue-catalog.md#review-01",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "introduced_guard_with_controlled_local_impact",
+      "disposition": "REPRODUCED_LOCAL_IMPACT",
+      "claim_and_limit": "Valid replacement session remains behind stale dialog; production caller unknown.",
+      "definition": "../../06-test-cases.md#review-e2e-01",
+      "results": [
+        "final-focused/review-01-candidate/result.json",
+        "final-focused/review-01-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-02",
+      "locator": "../../10-issue-catalog.md#review-02",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "introduced_validation_provider_applicability_unresolved",
+      "disposition": "UNSUPPORTED_PROVIDER_SHAPE_RECOVERS_WITH_VALID_RESPONSE",
+      "claim_and_limit": "Opaque and missingiat are rejected; valid retry succeeds. Local provider emits finite exp and iat.",
+      "definition": "../../06-test-cases.md#review-e2e-02",
+      "results": [
+        "contracts-02-opaque-candidate/result.json",
+        "contracts-02-opaque-baseline/result.json",
+        "contracts-02-missingiat-candidate/result.json",
+        "contracts-02-missingiat-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-03",
+      "locator": "../../10-issue-catalog.md#review-03",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "introduced_transition_recovery_block_not_reproduced",
+      "disposition": "BLOCKING_IMPACT_NOT_REPRODUCED",
+      "claim_and_limit": "Failed fresh login clears refresh; actual Home reacquires and Extend recovers.",
+      "definition": "../../06-test-cases.md#review-e2e-03",
+      "results": [
+        "rerun/review-03-candidate/result.json",
+        "rerun/review-03-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-04",
+      "locator": "../../10-issue-catalog.md#review-04",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "changed_reducer_no_supported_direct_caller_found",
+      "disposition": "STATE_DIFFERENCE_OBSERVED_IDENTITY_IMPACT_UNVERIFIED",
+      "claim_and_limit": "Direct setter retains old refresh with new access; same local identity; distinct-user variant NOT_RUN.",
+      "definition": "../../06-test-cases.md#review-e2e-04",
+      "results": [
+        "rerun/review-04-candidate/result.json",
+        "rerun/review-04-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-05",
+      "locator": "../../10-issue-catalog.md#review-05",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "changed_wait_with_bounded_recovery",
+      "disposition": "BOUNDED_WAIT_OBSERVED",
+      "claim_and_limit": "Extend disabled during actual pending acquisition; Logout remains available; released failure settles. Suspended wall-clock duration unknown.",
+      "definition": "../../06-test-cases.md#review-e2e-05",
+      "results": [
+        "focused/review-05-candidate/result.json",
+        "focused/review-05-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-06",
+      "locator": "../../10-issue-catalog.md#review-06",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "introduced_fallback_on_invalid_fixture",
+      "disposition": "MALFORMED_FIXTURE_ONLY",
+      "claim_and_limit": "Missingexp with invalid signature forces logout. Inspected local provider never emits this shape.",
+      "definition": "../../06-test-cases.md#review-e2e-06",
+      "results": [
+        "review-06-candidate/result.json",
+        "review-06-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-07",
+      "locator": "../../10-issue-catalog.md#review-07",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "changed_schedule_valid_recovery_passes",
+      "disposition": "RECOVERY_BLOCK_NOT_REPRODUCED",
+      "claim_and_limit": "Candidate remounts with usable refresh and under25seconds; no catch-up; actual Extend succeeds. Baseline clears refresh and reacquires.",
+      "definition": "../../06-test-cases.md#review-e2e-07",
+      "results": [
+        "near-expiry-final/review-07-candidate/result.json",
+        "near-expiry-final/review-07-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-08",
+      "locator": "../../10-issue-catalog.md#review-08",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "inherited_public_path_rule_effective_config_unknown",
+      "disposition": "NOT_RUN_APPLICABLE_ARTIFACT_UNAVAILABLE",
+      "claim_and_limit": "Inherited public-path rule; no matching non-loopback server artifact/deployment proof.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-09",
+      "locator": "../../10-issue-catalog.md#review-09",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "new_tracked_setting_consumer_effect_unknown",
+      "disposition": "NOT_RUN_CONSUMER_UNAVAILABLE",
+      "claim_and_limit": "Development remote declaration; no actual importing journey or deployed composition identified.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-10",
+      "locator": "../../10-issue-catalog.md#review-10",
+      "priority": "P3",
+      "priority_authority": "analyst_proposal",
+      "origin": "new_tracked_value_unchanged_parser_no_applicable_route",
+      "disposition": "NOT_RUN_ROUTE_UNAVAILABLE",
+      "claim_and_limit": "Parser evaluation is retained; no supported body-reading route identified.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-11",
+      "locator": "../../10-issue-catalog.md#review-11",
+      "priority": "P3",
+      "priority_authority": "analyst_proposal",
+      "origin": "inherited_external_template_reference",
+      "disposition": "NOT_RUN_EXTERNAL_TEMPLATE_UNAVAILABLE",
+      "claim_and_limit": "Exact external pipeline template and artifact unavailable.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-12",
+      "locator": "../../10-issue-catalog.md#review-12",
+      "priority": "P2",
+      "priority_authority": "analyst_proposal",
+      "origin": "new_registry_stale_return_persistence_not_reproduced",
+      "disposition": "PERSISTENT_LOADER_NOT_REPRODUCED",
+      "claim_and_limit": "Actual auth-error route clears loader and leaves SignIn actionable. Other stale completion routes unverified.",
+      "definition": "../../06-test-cases.md#review-e2e-12",
+      "results": [
+        "loader-candidate/result.json",
+        "loader-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-13",
+      "locator": "../../10-issue-catalog.md#review-13",
+      "priority": "P4",
+      "priority_authority": "analyst_proposal",
+      "origin": "inherited_configless_fallback",
+      "disposition": "NOT_RUN_UNREACHED_CONFIGLESS_ERROR",
+      "claim_and_limit": "Inherited fallback; no source-bound browser path to a configless transport error identified.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-14",
+      "locator": "../../10-issue-catalog.md#review-14",
+      "priority": "P3",
+      "priority_authority": "analyst_proposal",
+      "origin": "new_cancellation_semantics_no_broken_consumer",
+      "disposition": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "claim_and_limit": "Local consumers catch stale cancellations; no concrete consumer failure identified.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-15",
+      "locator": "../../10-issue-catalog.md#review-15",
+      "priority": "P3",
+      "priority_authority": "analyst_proposal",
+      "origin": "new_rejection_contract_no_broken_consumer",
+      "disposition": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "claim_and_limit": "Timeout catches relogin rejection; no affected external consumer identified.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-16",
+      "locator": "../../10-issue-catalog.md#review-16",
+      "priority": "P3",
+      "priority_authority": "analyst_proposal",
+      "origin": "changed_error_identity_no_affected_consumer",
+      "disposition": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "claim_and_limit": "Error-object identity differs; no identified consumer depends on that identity.",
+      "definition": null,
+      "results": []
+    },
+    {
+      "id": "REVIEW-17",
+      "locator": "../../10-issue-catalog.md#review-17",
+      "priority": "P3",
+      "priority_authority": "analyst_proposal",
+      "origin": "changed_waiting_semantics_valid_late_response_recovers",
+      "disposition": "VALID_LATE_DELIVERY_RECOVERS",
+      "claim_and_limit": "Actual provider acceptance before expiry and usable response delivery afterward recover. Longer response hold separately reaches timeout.",
+      "definition": "../../06-test-cases.md#review-e2e-17",
+      "results": [
+        "contracts17-near-deadline-candidate/result.json",
+        "contracts17-near-deadline-baseline/result.json"
+      ]
+    },
+    {
+      "id": "REVIEW-18",
+      "locator": "../../10-issue-catalog.md#review-18",
+      "priority": "P4",
+      "priority_authority": "analyst_proposal",
+      "origin": "new_ignore_typo_no_current_consumer",
+      "disposition": "STATIC_MAINTENANCE_ONLY",
+      "claim_and_limit": "Ignore typo has no tracked pnpm lockfile or formatter consumer. Business E2E not applicable.",
+      "definition": null,
+      "results": []
+    }
+  ],
+  "source_checks": [
+    {
+      "path": ".env.cloud",
+      "kind": "support",
+      "candidate_sha256": "a6d8425ed203112b7007529b77b81cf8c82393239208667ce7a017fec5ab2545",
+      "retained_review_sha256": "a6d8425ed203112b7007529b77b81cf8c82393239208667ce7a017fec5ab2545",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": ".env.local",
+      "kind": "support",
+      "candidate_sha256": "e51f542105e1bfbfcb825638bb65ed93a3a57dca8caa33a5a12791d2cdbbc29e",
+      "retained_review_sha256": "e51f542105e1bfbfcb825638bb65ed93a3a57dca8caa33a5a12791d2cdbbc29e",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": ".env.mfe",
+      "kind": "support",
+      "candidate_sha256": "959645be96d8542ed51ea6786d2c5c293a0bd8b3364a61b0ad6889dfee5d2be1",
+      "retained_review_sha256": "959645be96d8542ed51ea6786d2c5c293a0bd8b3364a61b0ad6889dfee5d2be1",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": ".env.server",
+      "kind": "support",
+      "candidate_sha256": "c8a3cbcd77869ab9f4b7f21dcbec660d6d548e17d4cc9ccdcfc1d8db062da3cd",
+      "retained_review_sha256": "c8a3cbcd77869ab9f4b7f21dcbec660d6d548e17d4cc9ccdcfc1d8db062da3cd",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": ".eslintrc",
+      "kind": "support",
+      "candidate_sha256": "f6c6fe4263f5e5fa4803b17acd139164b3d3fb6e54a27e9ad95a30dbda4e67f4",
+      "retained_review_sha256": "f6c6fe4263f5e5fa4803b17acd139164b3d3fb6e54a27e9ad95a30dbda4e67f4",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": ".gitignore",
+      "kind": "support",
+      "candidate_sha256": "029e80d255d1982831865af272e28acb209b84807777fa5cdc6830cc9f4c8463",
+      "retained_review_sha256": "029e80d255d1982831865af272e28acb209b84807777fa5cdc6830cc9f4c8463",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": ".prettierignore",
+      "kind": "support",
+      "candidate_sha256": "3990d9a430cb18ceed0b6edbbaa1c63d3e08c6a5d8a7409d7b72a26e36f6bd82",
+      "retained_review_sha256": "3990d9a430cb18ceed0b6edbbaa1c63d3e08c6a5d8a7409d7b72a26e36f6bd82",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/components/Timeout/common/coverageBoundaries.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "d3d72e2fe5098affd112b9b115b782460bad946f0184685dac846ce9f371b66a",
+      "retained_review_sha256": "d3d72e2fe5098affd112b9b115b782460bad946f0184685dac846ce9f371b66a",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "kind": "runtime",
+      "candidate_sha256": "5ad7f7ad1ceebe2cc936c14175de0da82655b8a9b793270589affd543dc9c71f",
+      "retained_review_sha256": "5ad7f7ad1ceebe2cc936c14175de0da82655b8a9b793270589affd543dc9c71f",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/components/Timeout/index.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "eb3524b6b872b0569f3c30a7c3e39493c5b9a13276ddd833710ba4a6df7eda49",
+      "retained_review_sha256": "eb3524b6b872b0569f3c30a7c3e39493c5b9a13276ddd833710ba4a6df7eda49",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/components/Timeout/index.tsx",
+      "kind": "runtime",
+      "candidate_sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+      "retained_review_sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/components/Timeout/index0.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "d274e9d9d6d779c3e216da430fa7a51604027a2eab83bd11cc6fd33872be4b65",
+      "retained_review_sha256": "d274e9d9d6d779c3e216da430fa7a51604027a2eab83bd11cc6fd33872be4b65",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/reducer/index.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "bcf00c559c28cbe366aafdc8e654dafea5a92a77c2ecc0178b2ff23cfa15bedb",
+      "retained_review_sha256": "bcf00c559c28cbe366aafdc8e654dafea5a92a77c2ecc0178b2ff23cfa15bedb",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "kind": "runtime",
+      "candidate_sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "retained_review_sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/hooks/service/cancellationPreservation.test.ts",
+      "kind": "tests",
+      "candidate_sha256": "3e7762c68fd87718aa7223698df7edc334bf9596e8aefb0390bdafb143d54e39",
+      "retained_review_sha256": "3e7762c68fd87718aa7223698df7edc334bf9596e8aefb0390bdafb143d54e39",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/service/config.ts",
+      "kind": "runtime",
+      "candidate_sha256": "aac27acebae126dcc34abcab6a4a5df5a30af35d81ed7a04e1dca284fc64b39f",
+      "retained_review_sha256": "aac27acebae126dcc34abcab6a4a5df5a30af35d81ed7a04e1dca284fc64b39f",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/hooks/service/index.ts",
+      "kind": "runtime",
+      "candidate_sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+      "retained_review_sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/hooks/service/index2.test.ts",
+      "kind": "tests",
+      "candidate_sha256": "333d8532093c1f2d1cf39d1b8150b8e17c848de8b33c603416898126b961a8a6",
+      "retained_review_sha256": "333d8532093c1f2d1cf39d1b8150b8e17c848de8b33c603416898126b961a8a6",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/service/refreshToken.test.ts",
+      "kind": "tests",
+      "candidate_sha256": "7e5ba4d16b487e4479e83139280fc11c9463478f99aa7f5d3e7552e93b67bd20",
+      "retained_review_sha256": "7e5ba4d16b487e4479e83139280fc11c9463478f99aa7f5d3e7552e93b67bd20",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/service/sessionCompatibility.test.ts",
+      "kind": "tests",
+      "candidate_sha256": "73422a8bcd68ceffd7446e1d27589ffe7c5a2c70a3b8037eedcc31fffa267d07",
+      "retained_review_sha256": "73422a8bcd68ceffd7446e1d27589ffe7c5a2c70a3b8037eedcc31fffa267d07",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "kind": "runtime",
+      "candidate_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "retained_review_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/hooks/service/util/index.test.ts",
+      "kind": "tests",
+      "candidate_sha256": "0f237be9785558d5f809734b2746d3f2a4276e70ba210fcd4f1a1c5359e3c8b6",
+      "retained_review_sha256": "0f237be9785558d5f809734b2746d3f2a4276e70ba210fcd4f1a1c5359e3c8b6",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/service/util/requestLoading.ts",
+      "kind": "runtime",
+      "candidate_sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "retained_review_sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.test.ts",
+      "kind": "tests",
+      "candidate_sha256": "d23cc28adaa9e3464e08e39602b1fc6149313c0ae4c271e6739b0fb5c84648ac",
+      "retained_review_sha256": "d23cc28adaa9e3464e08e39602b1fc6149313c0ae4c271e6739b0fb5c84648ac",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "kind": "runtime",
+      "candidate_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "retained_review_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "kind": "runtime",
+      "candidate_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "retained_review_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "f08b678e84285b40980324991ed0edd3b79c7b150fbdf7b047d3f0519255cbfa",
+      "retained_review_sha256": "f08b678e84285b40980324991ed0edd3b79c7b150fbdf7b047d3f0519255cbfa",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/pages/Home/common/sessionOwnership.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "31d97cab978e6195f3719cb177d4daa85a1624f4e5b494c02b3d07e870cd6af5",
+      "retained_review_sha256": "31d97cab978e6195f3719cb177d4daa85a1624f4e5b494c02b3d07e870cd6af5",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/pages/Home/common/sessionPending.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "cb931d6812f99560859906a181b41326aada34ee4be90394812e59a1d165e5a5",
+      "retained_review_sha256": "cb931d6812f99560859906a181b41326aada34ee4be90394812e59a1d165e5a5",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "f0f5192a30d5e8a49e058d792a36065c3bbca404f26784367f55ae073120e8c2",
+      "retained_review_sha256": "f0f5192a30d5e8a49e058d792a36065c3bbca404f26784367f55ae073120e8c2",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/pages/Home/common/sessionTimingPreservation.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "73e3394ef102a9a7eb25a85527cea7c489fa9a9ff43288f3722c80b400b09a40",
+      "retained_review_sha256": "73e3394ef102a9a7eb25a85527cea7c489fa9a9ff43288f3722c80b400b09a40",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "kind": "runtime",
+      "candidate_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "retained_review_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/pages/Home/common/workspacePreservation.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "7d36c62d58bd597cd9f2c5b3e1c1eb306c6fa44ee41da42e121813aa3d3fc680",
+      "retained_review_sha256": "7d36c62d58bd597cd9f2c5b3e1c1eb306c6fa44ee41da42e121813aa3d3fc680",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/pages/Home/index.test.tsx",
+      "kind": "tests",
+      "candidate_sha256": "168989a972da97f6605fbd5559cf31973876b2e21b725624de67cb6a9b580904",
+      "retained_review_sha256": "168989a972da97f6605fbd5559cf31973876b2e21b725624de67cb6a9b580904",
+      "matches": true,
+      "review_disposition": "Changed test diff reviewed; actual assertion chains sampled against retained results."
+    },
+    {
+      "path": "src/utils/common.ts",
+      "kind": "runtime",
+      "candidate_sha256": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc",
+      "retained_review_sha256": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    },
+    {
+      "path": "src/utils/sessionEpoch.ts",
+      "kind": "runtime",
+      "candidate_sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+      "retained_review_sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+      "matches": true,
+      "review_disposition": "Source and selected behavior inspected."
+    }
+  ],
+  "provenance": [
+    {
+      "path": "../renewed-review-20261027/codex/review-result.json",
+      "sha256": "f6f196ade557ef3484bd80c581c47136dd8d24972e74dacb2d1a1da27d36e508"
+    },
+    {
+      "path": "../renewed-review-20261027/codex/review.md",
+      "sha256": "b9c07b1b34db2ce4872d980a5b3cc4381202ca36d00e1b16751bee1d5757dc4c"
+    },
+    {
+      "path": "../four-checks-20261027/review/final-test-diff-review-v2.json",
+      "sha256": "4b240c849519dd7dfb9b35b931077f7e877f950b9f6e3ef64b284d9554468c93"
+    },
+    {
+      "path": "../claude-coordination-20261027/reconciliation/review.md",
+      "sha256": "2274437762ce8fa73b5f8718e3a7f0e2631edb64a028654fb2cb789cbdf69df9"
+    },
+    {
+      "path": "../review-e2e-20261028/results.json",
+      "sha256": "1d49194df350a2937a7e57d1f97a1ad02a78797a387822c3673f2c862f118a89"
+    },
+    {
+      "path": "../review-e2e-20261028/final-focused/browser-summary.json",
+      "sha256": "b49f62b47306dd517921c358a50ac88433442623e6a3fe0e6e078b100afa0b6f"
+    },
+    {
+      "path": "../review-e2e-20261028/final-focused/review-01-candidate/result.json",
+      "sha256": "7a961a32d88a1859a4f7ba5e96687c014e12c4f04f9fd1b05d74c4c5583e5ae5"
+    },
+    {
+      "path": "../review-e2e-20261028/final-focused/review-01-baseline/result.json",
+      "sha256": "8addd4335e4438523c38732b1edeb14f3438b44824bb182c61cc638e5bc499e2"
+    },
+    {
+      "path": "../review-e2e-20261028/run-browser-final.py",
+      "sha256": "7b3898f7fe31e75ac62ebf1ebd8c385a2e522c0d57b43e7125c586e25cf29316"
+    },
+    {
+      "path": "../ut-remediation-20261027/final-cancellation-browser/comparison.json",
+      "sha256": "14fcdeabd0fe5338748ec90a0299fd081242207bbbaaa5ee0e994fd22e2814d1"
+    },
+    {
+      "path": "../ut-remediation-20261027/final-timer-control/comparison.json",
+      "sha256": "9d58a3fdc86b39b645a63065c6ff41469fc32f43c7d9d32c3962810e03461101"
+    }
+  ],
+  "interpretation": {
+    "latest_review_precedence": "28 October paired verification supersedes 27 October NONE_CONFIRMED for REVIEW-01.",
+    "independent_review": "29 usable bounded provider review responses; fragmented evidence does not establish an independent complete final-branch review.",
+    "suggested_code_review_score": 3,
+    "suggested_code_review_status": "LIMITED",
+    "rationale": "Complete changed-path inspection, two locally closed defects, and source-bound local impact proof. Supported caller reachability and downstream compatibility remain unresolved.",
+    "recommendation_effect": "No clean review sign-off. Retain REVIEW-01 and applicable contract/consumer risks. Artifacts must not control this requested source-only assessment."
+  },
+  "limits": [
+    "Review scope covers exact selected commits; later Timeout maintenance and current Home changes are excluded.",
+    "Nine paired review investigations are separate from the original 27-case browser inventory. Do not merge them into a business pass rate.",
+    "All 18 entries are tracked observations or hypotheses; they are not 18 confirmed runtime defects.",
+    "The inspected local BFF emits required JWT claims. Malformed/opaque substitutions do not establish valid production failures.",
+    "No new application fix, business approval, deployment, external review call, or E2E run occurred during this audit."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "JSON parsing, exact changed-path inventory, and all retained review source hashes were checked.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

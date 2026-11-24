@@ -1,0 +1,184 @@
+{
+  "id": "RN-W023",
+  "title": "Renewal success returns to selected workspace",
+  "started_at": "2026-10-29T02:18:36.589Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w023",
+  "definition_sha256": "d92c68f3886d02b701322b8ea6faca37702dca197fb5e1487c283a97ec1f12a2",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "one successful closure",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "label": "selection retained",
+      "actual": "W-B",
+      "expected": "W-B",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected fixture accepts installed current access",
+      "actual": "fulfilled",
+      "expected": "fulfilled",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected fixture principal",
+      "actual": "User A",
+      "expected": "User A",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected request uses installed current access",
+      "actual": "bf3fbae487d7bf6b4db54e204154b8eb33f9b24fb864a0580fa85a96401b93a3",
+      "expected": "bf3fbae487d7bf6b4db54e204154b8eb33f9b24fb864a0580fa85a96401b93a3",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239202836,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239209763,
+      "page": "A"
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793239262001,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "verify-current",
+      "workspace": "W-A",
+      "page": "A",
+      "credential_sha256": "bf3fbae487d7bf6b4db54e204154b8eb33f9b24fb864a0580fa85a96401b93a3",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239262001
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "e47b3b4c240401aa3f151906190a50b66693d19d93724c0d94e0269fe756e738",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/components/Timeout/index.tsx",
+      "lines": [
+        17,
+        48
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "lines": [
+        24,
+        155
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+  ],
+  "completed_at": "2026-10-29T02:18:46.576Z",
+  "runner_sha256": "cb08252ba9087563235c5885562a406a06b2f2943a24ce7b4d2c6f7462e0d38a",
+  "runner_summary": "../predicate-rerun-summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/components/Timeout/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+      "canonical_definition_source_sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "canonical_definition_source_sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/pages/Home/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "canonical_definition_source_sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "canonical_definition_source_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "execution_class": "executed",
+  "owner": "unknown application, transport, or security owner"
+}

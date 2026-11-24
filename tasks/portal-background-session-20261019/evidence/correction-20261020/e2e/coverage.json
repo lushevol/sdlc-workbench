@@ -1,0 +1,184 @@
+{
+  "testEngineBaseRevision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+  "testSources": [
+    {
+      "path": "Tests/ratan/plugin/ui/session/README.md",
+      "sha256": "75bf0c8fde198e61365a011516e5b214a0e8531ce72c59a476f72f2640e7f6a1",
+      "bytes": 4872
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/config.example.json",
+      "sha256": "26fbda8fcf795e331690a901bb9e588a66aa63fa649f1cdf96c72539604a3c45",
+      "bytes": 979
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "sha256": "43c38fd09e5e61d2692edd95fe9865ec0aed00420b1a7994374a614f678edd7a",
+      "bytes": 23371
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "sha256": "2253ba60a27dbf25cf0615dc0526e67b1a12f13a8c4c6e3e535dbef06f7beaec",
+      "bytes": 2339
+    }
+  ],
+  "cases": [
+    {
+      "behaviors": [
+        "AC-1"
+      ],
+      "robotPath": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "robotLine": 16,
+      "implementationPath": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "implementationSymbol": "assertActivityRenewsSession",
+      "implementationLine": 180,
+      "assertionStatus": "INSPECTED",
+      "executionStatus": "NOT_RUN",
+      "limits": [
+        "Trusted browser events use 100-millisecond host sleeps. Runner overhead prevents exact event cadence."
+      ]
+    },
+    {
+      "behaviors": [
+        "AC-2"
+      ],
+      "robotPath": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "robotLine": 20,
+      "implementationPath": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "implementationSymbol": "assertActivityRenewsSession",
+      "implementationLine": 180,
+      "assertionStatus": "INSPECTED",
+      "executionStatus": "NOT_RUN",
+      "limits": [
+        "Portal-document keyboard input only. Cross-origin frames require separate integration."
+      ]
+    },
+    {
+      "behaviors": [
+        "AC-3"
+      ],
+      "robotPath": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "robotLine": 24,
+      "implementationPath": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "implementationSymbol": "assertActivityRenewsSession",
+      "implementationLine": 180,
+      "assertionStatus": "INSPECTED",
+      "executionStatus": "NOT_RUN",
+      "limits": [
+        "The target must provide an inspected scrollable portal-document element."
+      ]
+    },
+    {
+      "behaviors": [
+        "AC-5",
+        "AC-6"
+      ],
+      "robotPath": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "robotLine": 28,
+      "implementationPath": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "implementationSymbol": "assertPendingRenewalCompletes",
+      "implementationLine": 254,
+      "assertionStatus": "INSPECTED",
+      "executionStatus": "NOT_RUN",
+      "limits": [
+        "Relogin is held before service dispatch, then forwarded to the real service."
+      ]
+    },
+    {
+      "behaviors": [
+        "AC-7"
+      ],
+      "robotPath": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "robotLine": 33,
+      "implementationPath": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "implementationSymbol": "assertRejectedRenewalCanRetry",
+      "implementationLine": 261,
+      "assertionStatus": "INSPECTED",
+      "executionStatus": "NOT_RUN",
+      "limits": [
+        "One controlled transport failure. Provider rejection and revocation remain uncovered."
+      ]
+    },
+    {
+      "behaviors": [
+        "AC-4-live-boundary"
+      ],
+      "robotPath": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "robotLine": 38,
+      "implementationPath": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "implementationSymbol": "assertActivityCrossesRefreshExpiry",
+      "implementationLine": 278,
+      "assertionStatus": "INSPECTED",
+      "executionStatus": "NOT_RUN",
+      "limits": [
+        "Real-time initial refresh-expiry boundary. The controlled four-hour AC-4 fixture remains uncovered."
+      ]
+    },
+    {
+      "behaviors": [
+        "DEFECT-natural-hidden-pair"
+      ],
+      "robotPath": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "robotLine": 43,
+      "implementationPath": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "implementationSymbol": "assertNaturalBackgroundRecovery",
+      "implementationLine": 317,
+      "assertionStatus": "INSPECTED",
+      "executionStatus": "NOT_RUN",
+      "limits": [
+        "No hidden-page polling. No forced freeze. Frozen-tab recovery remains NOT_COVERED unless a freeze event occurs."
+      ]
+    }
+  ],
+  "sharedAssertions": {
+    "realProtectedUiRequest": {
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "line": 153,
+      "predicate": "Successful response, renewed token fingerprint, and configured response JSON assertion."
+    },
+    "pendingAndSuccess": {
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "line": 223,
+      "predicate": "Zero pending closures. One closure after real success. Actual access token installed."
+    }
+  },
+  "remainingCoverageGaps": [
+    {
+      "id": "AC-4-controlled-four-hours",
+      "reason": "The new live boundary case does not implement a controlled four-hour backend clock."
+    },
+    {
+      "id": "DEFECT-no-refresh-at-return",
+      "reason": "The expected recovery policy remains unresolved."
+    },
+    {
+      "id": "DEFECT-workspace-restoration",
+      "reason": "The proposed descriptor-restoration criterion lacks approved expected behavior for this scope."
+    },
+    {
+      "id": "DEFECT-forced-and-natural-freeze",
+      "reason": "Natural hidden time can complete without a recorded freeze. No forced-freeze case exists."
+    },
+    {
+      "id": "AC-7-provider-rejection-and-revocation",
+      "reason": "The new browser case covers transport rejection. Provider and revocation outcomes need separate cases."
+    },
+    {
+      "id": "DEFECT-request-races",
+      "reason": "No browser cases cover repeated activity during slow renewal, cancellation at logout/expiry/unmount, or late activity responses after manual success."
+    }
+  ],
+  "validation": "validation.json",
+  "businessVerification": "NOT_VERIFIED",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "testEngineCommit": "62f1685a609bce6735bb0c9cec5fe0ee4311e194"
+}

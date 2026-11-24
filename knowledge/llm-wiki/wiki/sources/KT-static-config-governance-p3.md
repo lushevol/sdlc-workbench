@@ -1,0 +1,1 @@
+../../../records/candidates/operations/KT-static-config-governance-p3.md

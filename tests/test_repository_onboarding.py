@@ -1,0 +1,396 @@
+"""Check static onboarding boundaries and exact source evidence."""
+
+import copy
+import importlib.util
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest import mock
+
+
+SCRIPTS = Path(__file__).resolve().parents[1] / ".agents/skills/repository-onboarding/scripts"
+
+
+def load_helper(name):
+    spec = importlib.util.spec_from_file_location(name, SCRIPTS / f"{name}.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+scanner = load_helper("scan_repo")
+validator = load_helper("validate_evidence")
+
+
+@unittest.skipUnless(shutil.which("git"), "Git is required for source revision checks")
+class RepositoryOnboardingTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+        self.repo = self.root / "repo"
+        self.repo.mkdir()
+        self.environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+        self.environment.update({"GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": os.devnull})
+        self.git("init", "--template=")
+        self.git("config", "user.name", "Fixture")
+        self.git("config", "user.email", "fixture@example.invalid")
+        self.source = self.repo / "source.py"
+        self.source.write_text("first line\nsecond line", encoding="utf-8")
+        (self.repo / ".gitignore").write_text("ignored.txt\n", encoding="utf-8")
+        self.git("add", ".")
+        self.git("commit", "-m", "Source fixture")
+        self.revision = self.git("rev-parse", "HEAD")
+        self.report = {
+            "schema_version": "1.0",
+            "repository": {"path": str(self.repo), "revision": self.revision},
+            "claims": [{
+                "id": "OBS-001", "category": "source", "statement": "Two source lines exist.",
+                "status": "observed",
+                "evidence": [{"path": "source.py", "start_line": 1, "end_line": 2, "kind": "source"}],
+            }],
+        }
+
+    def git(self, *arguments, check=True):
+        result = subprocess.run(
+            ["git", "-c", "core.fsmonitor=false", "-C", str(self.repo), *arguments],
+            env=self.environment, capture_output=True, text=True, check=check,
+        )
+        return result.stdout.strip() if check else result
+
+    def errors(self, report=None):
+        return validator.validate(self.repo, report or self.report)
+
+    def test_committed_bytes_pass_and_line_ranges_are_checked(self):
+        self.assertEqual([], self.errors())
+        self.report["claims"][0]["evidence"][0]["end_line"] = 3
+        self.assertTrue(any("exceed" in issue for issue in self.errors()))
+
+    def test_ignored_and_untracked_files_cannot_attest_a_commit(self):
+        for filename in ("ignored.txt", "untracked.txt"):
+            with self.subTest(filename=filename):
+                (self.repo / filename).write_text("uncommitted\n", encoding="utf-8")
+                self.report["claims"][0]["evidence"][0].update(path=filename, end_line=1)
+                self.assertTrue(any("not tracked" in issue for issue in self.errors()))
+
+    def test_assume_unchanged_does_not_hide_modified_evidence(self):
+        self.git("update-index", "--assume-unchanged", "source.py")
+        self.source.write_text("changed\nsecond line", encoding="utf-8")
+        self.assertEqual("", self.git("status", "--porcelain"))
+        self.assertTrue(any("bytes differ" in issue for issue in self.errors()))
+
+    def test_unrelated_modifications_do_not_invalidate_committed_evidence(self):
+        (self.repo / "unrelated.txt").write_text("local change\n", encoding="utf-8")
+        self.assertEqual([], self.errors())
+
+    def test_symlink_evidence_is_rejected(self):
+        link = self.repo / "linked.py"
+        try:
+            link.symlink_to(self.source.name)
+        except (OSError, NotImplementedError):
+            self.skipTest("Symlink creation is unavailable")
+        self.git("add", "linked.py")
+        self.git("commit", "-m", "Symlink fixture")
+        self.report["repository"]["revision"] = self.git("rev-parse", "HEAD")
+        self.report["claims"][0]["evidence"][0]["path"] = "linked.py"
+        self.assertTrue(any("symlink" in issue for issue in self.errors()))
+
+    def test_malformed_claim_fields_report_errors_without_crashing(self):
+        for field, value in (("status", []), ("status", {}), ("reason", None), ("reason", [])):
+            with self.subTest(field=field, value=value):
+                report = copy.deepcopy(self.report)
+                report["claims"][0]["status"] = "inferred"
+                report["claims"][0][field] = value
+                self.assertTrue(self.errors(report))
+        for field, value in (("kind", []), ("kind", {}), ("path", "bad\x00path"), ("start_line", True)):
+            with self.subTest(field=field, value=value):
+                report = copy.deepcopy(self.report)
+                report["claims"][0]["evidence"][0][field] = value
+                self.assertTrue(self.errors(report))
+
+    def test_observed_and_inferred_claims_require_evidence(self):
+        for status in ("observed", "inferred"):
+            with self.subTest(status=status):
+                self.report["claims"][0].update(status=status, evidence=[], reason="Source is unavailable.")
+                self.assertTrue(any("lacks evidence" in issue for issue in self.errors()))
+        self.report["claims"][0]["status"] = "verified"
+        self.assertTrue(any("invalid status" in issue for issue in self.errors()))
+
+    def test_malformed_dependency_metadata_does_not_abort_inventory(self):
+        for value in (42, ["react"], [{"react": "*"}]):
+            with self.subTest(value=value):
+                (self.repo / "package.json").write_text(json.dumps({"dependencies": value}), encoding="utf-8")
+                self.assertIn("warning", scanner.safe_package_metadata(self.repo))
+
+    def test_brownfield_stack_candidates_need_no_source_or_manifest_content(self):
+        fixtures = {
+            "go": {
+                "manifests": ["go.mod"], "entrypoint_candidates": ["cmd/server/main.go"],
+                "test_candidates": ["internal/http/server_test.go"], "other": ["internal/http/server.go"],
+                "stack_signals": ["go-build"],
+            },
+            "rust": {
+                "manifests": ["Cargo.toml"], "entrypoint_candidates": ["src/lib.rs", "src/main.rs"],
+                "test_candidates": ["tests/integration.rs"], "other": [], "stack_signals": ["rust-build"],
+            },
+            "dotnet": {
+                "manifests": ["Example.sln", "src/Server/Server.csproj"],
+                "entrypoint_candidates": ["src/Server/Program.cs"],
+                "test_candidates": ["tests/Server.Tests/ServerTests.cs"], "other": [],
+                "stack_signals": ["dotnet-build"],
+            },
+            "ruby": {
+                "manifests": ["Gemfile"], "entrypoint_candidates": ["config.ru"],
+                "test_candidates": ["spec/customer_spec.rb"], "other": ["app/models/customer.rb"],
+                "stack_signals": ["ruby-build"],
+            },
+            "php": {
+                "manifests": ["composer.json"], "entrypoint_candidates": ["public/index.php"],
+                "test_candidates": ["tests/CustomerTest.php"], "other": ["src/Customer.php"],
+                "stack_signals": ["php-build"],
+            },
+            "native": {
+                "manifests": ["CMakeLists.txt"], "entrypoint_candidates": ["src/main.cpp"],
+                "test_candidates": ["tests/customer_test.cpp"], "other": [],
+                "stack_signals": ["native-build"],
+            },
+        }
+        for stack, expected in fixtures.items():
+            with self.subTest(stack=stack):
+                directory = self.root / stack
+                paths = [path for category in ("manifests", "entrypoint_candidates", "test_candidates", "other")
+                         for path in expected[category]]
+                for relative in paths:
+                    path = directory / relative
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text("unread source or private manifest content\n", encoding="utf-8")
+                with mock.patch.object(Path, "read_text", side_effect=AssertionError("Contents must not be read")):
+                    inventory = scanner.scan(directory)
+                for category in ("manifests", "entrypoint_candidates", "test_candidates", "stack_signals"):
+                    self.assertEqual(sorted(expected[category]), inventory[category])
+                self.assertEqual(len(paths), inventory["inventory_scope"]["files_enumerated"])
+                self.assertNotIn("unread source", json.dumps(inventory))
+
+    def test_mixed_stack_monorepo_retains_each_module_and_excludes_ignored_hints(self):
+        manifests = ["services/catalog/go.mod", "workers/loader/Cargo.toml", "services/api/Api.csproj",
+                     "legacy/site/Gemfile", "legacy/admin/composer.json", "native/engine/Makefile"]
+        entries = ["services/catalog/cmd/main.go", "workers/loader/src/main.rs", "services/api/Program.cs",
+                   "legacy/site/config.ru", "legacy/admin/public/index.php", "native/engine/src/main.c"]
+        cases = ["services/catalog/catalog_test.go", "workers/loader/tests/load.rs", "services/api/ApiTests.cs",
+                 "legacy/site/spec/customer_spec.rb", "legacy/admin/tests/CustomerTest.php",
+                 "native/engine/tests/customer_test.c"]
+        for relative in manifests + entries + cases + ["ignored/go.mod", "ignored/main.go", "ignored/main_test.go"]:
+            path = self.repo / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("not executed or read\n", encoding="utf-8")
+        (self.repo / ".gitignore").write_text("ignored/\n", encoding="utf-8")
+        before = self.git("status", "--porcelain", "--untracked-files=all")
+        with mock.patch.object(Path, "read_text", side_effect=AssertionError("Contents must not be read")):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(sorted(manifests), inventory["manifests"])
+        self.assertEqual(sorted(entries), inventory["entrypoint_candidates"])
+        self.assertEqual(sorted(cases), inventory["test_candidates"])
+        self.assertEqual(["dotnet-build", "go-build", "native-build", "php-build", "ruby-build", "rust-build"],
+                         inventory["stack_signals"])
+        self.assertEqual(before, self.git("status", "--porcelain", "--untracked-files=all"))
+
+    def test_dependency_candidates_are_discovered_without_reading_configuration_values(self):
+        configurations = [
+            "src/main/resources/application-prod.yaml", "src/main/resources/application-test.properties",
+            "src/main/resources/bootstrap.yml", "src/main/resources/bootstrap-cloud.yaml",
+            "deploy/helm/orders/Chart.yaml", "deploy/helm/orders/values-prod.yaml",
+            "deploy/helm/orders/templates/service.yaml", "k8s/base/kustomization.yaml",
+            "k8s/base/service.yaml", "compose.dev.yaml", "docker-compose-test.yml", "Dockerfile.release",
+            "infra/main.tf", "infra/overrides.tf.json", "infra/production.tfvars",
+            "infra/production.tfvars.json", "infra/.terraform.lock.hcl", "Pulumi.production.yaml",
+            "appsettings.Production.json", "config/ldap.conf", "config/brokers.json", "next.config.mjs",
+            "src/main/resources/kafka.properties", "src/main/resources/solace.properties",
+            "src/main/resources/persistence.xml", "src/main/resources/liquibase.properties", "vault.hcl",
+        ]
+        contracts = ["contracts/payment.wsdl", "contracts/payment.xsd", "contracts/orders.proto",
+                     "contracts/event.avdl", "contracts/event.avsc", "contracts/api.graphql"]
+        migrations = ["src/main/resources/db/migration/V1__orders.sql", "db/R__views.sql",
+                      "db/changelog/db.changelog-master.xml", "liquibase/orders.yaml",
+                      "migrations/versions/001_orders.py"]
+        marker = "private-value-must-not-appear"
+        for relative in configurations + contracts + migrations + ["CHANGELOG.md", "notes.xml"]:
+            path = self.repo / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(marker, encoding="utf-8")
+        before = self.git("status", "--porcelain", "--untracked-files=all")
+        with mock.patch.object(Path, "read_text", side_effect=AssertionError("Candidate contents must not be read")):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(sorted(configurations), inventory["configurations"])
+        self.assertEqual(sorted(contracts), inventory["contract_candidates"])
+        self.assertEqual(sorted(migrations), inventory["migration_candidates"])
+        self.assertNotIn(marker, json.dumps(inventory))
+        self.assertEqual(before, self.git("status", "--porcelain", "--untracked-files=all"))
+        self.assertFalse(inventory["inventory_scope"]["enumeration_truncated"])
+
+    def test_dependency_candidate_discovery_preserves_excluded_source_boundaries(self):
+        (self.repo / ".gitignore").write_text("ignored.txt\napplication-ignored.yaml\n", encoding="utf-8")
+        excluded = ["application-ignored.yaml", ".env.production", "secrets/application-prod.yaml",
+                    "config/private-openapi.pem"]
+        for relative in excluded + ["application-visible.yaml"]:
+            path = self.repo / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("excluded value\n", encoding="utf-8")
+        outside = self.root / "outside"
+        outside.mkdir()
+        (outside / "application-external.yaml").write_text("external value\n", encoding="utf-8")
+        try:
+            (self.repo / "application-linked.yaml").symlink_to(outside / "application-external.yaml")
+            (self.repo / "config-linked").symlink_to(outside, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest("Symlink creation is unavailable")
+        child = self.repo / "independent"
+        child.mkdir()
+        subprocess.run(["git", "-C", str(child), "init", "--template="],
+                       env=self.environment, capture_output=True, check=True)
+        (child / "application-child.yaml").write_text("child value\n", encoding="utf-8")
+        inventory = scanner.scan(self.repo)
+        self.assertEqual(["application-visible.yaml"], inventory["configurations"])
+        self.assertEqual([], inventory["contract_candidates"])
+        omissions = {item["path"]: item["reason"] for item in inventory["inventory_scope"]["omitted_directories"]}
+        self.assertEqual("symlink directory", omissions["config-linked"])
+        self.assertEqual("nested Git checkout", omissions["independent"])
+        self.assertEqual("excluded directory category", omissions["secrets"])
+
+    def test_dependency_candidate_limits_disclose_partial_inventory(self):
+        for suffix in ("a", "b", "c"):
+            (self.repo / f"application-{suffix}.yaml").write_text("not read\n", encoding="utf-8")
+            directory = self.repo / "migrations"
+            directory.mkdir(exist_ok=True)
+            (directory / f"V1__{suffix}.sql").write_text("not executed\n", encoding="utf-8")
+        with mock.patch.object(scanner, "MAX_LIST_ITEMS", 2):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(["application-a.yaml", "application-b.yaml"], inventory["configurations"])
+        self.assertEqual(["migrations/V1__a.sql", "migrations/V1__b.sql"], inventory["migration_candidates"])
+        for category in ("configurations", "migration_candidates"):
+            self.assertEqual({"matched": 3, "reported": 2, "truncated": True},
+                             inventory["inventory_scope"]["category_counts"][category])
+            self.assertIn(f"{category}: output truncated to 2 paths", inventory["warnings"])
+        self.assertEqual(2, inventory["inventory_scope"]["list_limit"])
+        with mock.patch.object(scanner, "MAX_FILES", 2):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(2, inventory["inventory_scope"]["files_enumerated"])
+        self.assertTrue(inventory["inventory_scope"]["enumeration_truncated"])
+        self.assertEqual(2, inventory["inventory_scope"]["file_limit"])
+        self.assertTrue(any("inventory stopped after 2 files" in warning for warning in inventory["warnings"]))
+
+    def test_ignored_child_repository_does_not_contaminate_python_inventory(self):
+        (self.repo / ".gitignore").write_text("ignored.txt\nrepos/\n.workbench/\n", encoding="utf-8")
+        child = self.repo / "repos/child"
+        child.mkdir(parents=True)
+        subprocess.run(
+            ["git", "-C", str(child), "init", "--template="],
+            env=self.environment, capture_output=True, check=True,
+        )
+        (child / "pom.xml").write_text("<project/>\n", encoding="utf-8")
+        (child / "tests").mkdir()
+        (child / "tests/OtherTest.java").write_text("class OtherTest {}\n", encoding="utf-8")
+        (self.repo / ".workbench").mkdir()
+        (self.repo / ".workbench/old-openapi.yaml").write_text("unretained\n", encoding="utf-8")
+        (self.repo / "pyproject.toml").write_text('[project]\nname = "fixture"\n', encoding="utf-8")
+        (self.repo / "core").mkdir()
+        (self.repo / "core/cli.py").write_text("def main():\n    pass\n", encoding="utf-8")
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/test_core.py").write_text("assert True\n", encoding="utf-8")
+        inventory = scanner.scan(self.repo)
+        self.assertEqual(["python-build"], inventory["stack_signals"])
+        self.assertEqual(["pyproject.toml"], inventory["manifests"])
+        self.assertEqual(["core"], inventory["source_roots"])
+        self.assertEqual(["tests/test_core.py"], inventory["test_candidates"])
+        self.assertEqual(["core/cli.py"], inventory["entrypoint_candidates"])
+        self.assertEqual([], inventory["contract_candidates"])
+        omissions = {item["path"] for item in inventory["inventory_scope"]["omitted_directories"]}
+        self.assertTrue({"repos", ".workbench"} <= omissions)
+        self.assertEqual("tracked-and-untracked-nonignored-files", inventory["inventory_scope"]["file_selection"])
+
+    def test_nested_checkouts_are_excluded_and_monorepo_directories_remain(self):
+        child = self.repo / "independent"
+        child.mkdir()
+        subprocess.run(
+            ["git", "-C", str(child), "init", "--template="],
+            env=self.environment, capture_output=True, check=True,
+        )
+        (child / "pom.xml").write_text("<project/>\n", encoding="utf-8")
+        # A directory named repos can contain this repository's own modules.
+        module = self.repo / "repos/module"
+        module.mkdir(parents=True)
+        (module / "package.json").write_text('{"name":"module"}\n', encoding="utf-8")
+        inventory = scanner.scan(self.repo)
+        self.assertEqual(["repos/module/package.json"], inventory["manifests"])
+        self.assertNotIn("jvm-build", inventory["stack_signals"])
+        self.assertIn(
+            {"path": "independent", "reason": "nested Git checkout"},
+            inventory["inventory_scope"]["omitted_directories"],
+        )
+
+    def test_no_git_inventory_uses_disclosed_filename_fallback(self):
+        with mock.patch.object(scanner, "git", return_value=None):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual("filesystem-fallback", inventory["inventory_scope"]["file_selection"])
+        self.assertEqual("unknown", inventory["repository"]["revision"])
+        self.assertTrue(any("cannot exclude all ignored files" in warning for warning in inventory["warnings"]))
+
+    def test_checkout_subdirectory_cannot_write_inside_its_actual_git_root(self):
+        subdirectory = self.repo / "src"
+        subdirectory.mkdir()
+        output = self.repo / "inventory.json"
+        result = subprocess.run(
+            [sys.executable, str(SCRIPTS / "scan_repo.py"), "--repo", str(subdirectory), "--output", str(output)],
+            env=self.environment, capture_output=True, text=True,
+        )
+        self.assertNotEqual(0, result.returncode)
+        self.assertFalse(output.exists())
+        self.assertIn("checkout root", result.stderr)
+
+    @unittest.skipIf(os.name == "nt", "This fixture requires an executable POSIX hook")
+    def test_static_inspection_does_not_run_fsmonitor_or_refresh_the_index(self):
+        marker = self.root / "hook-ran"
+        hook = self.root / "fsmonitor-hook"
+        hook.write_text(
+            f"#!{sys.executable}\nfrom pathlib import Path\nPath({str(marker)!r}).write_text('ran')\n",
+            encoding="utf-8",
+        )
+        hook.chmod(0o700)
+        self.git("config", "core.fsmonitor", str(hook))
+        source_stat = self.source.stat()
+        os.utime(self.source, ns=(source_stat.st_atime_ns, source_stat.st_mtime_ns + 2_000_000_000))
+        index = self.repo / ".git/index"
+        before = index.read_bytes(), index.stat().st_mtime_ns
+        scanner.scan(self.repo)
+        self.assertEqual([], self.errors())
+        self.assertFalse(marker.exists())
+        self.assertEqual(before, (index.read_bytes(), index.stat().st_mtime_ns))
+
+    def test_external_git_environment_cannot_redirect_source_identity(self):
+        with mock.patch.dict(os.environ, {"GIT_DIR": str(self.root / "missing.git"), "GIT_WORK_TREE": str(self.root)}):
+            self.assertEqual(self.revision, scanner.git(self.repo, "rev-parse", "HEAD"))
+            self.assertEqual([], self.errors())
+
+    def test_sha256_revisions_are_supported_when_git_supports_them(self):
+        self.repo = self.root / "sha256-repo"
+        self.repo.mkdir()
+        result = self.git("init", "--object-format=sha256", "--template=", check=False)
+        if result.returncode:
+            self.skipTest("Installed Git does not support SHA-256 repositories")
+        self.git("config", "user.name", "Fixture")
+        self.git("config", "user.email", "fixture@example.invalid")
+        (self.repo / "source.py").write_text("first line\nsecond line", encoding="utf-8")
+        self.git("add", ".")
+        self.git("commit", "-m", "SHA-256 source fixture")
+        self.report["repository"] = {"path": str(self.repo), "revision": self.git("rev-parse", "HEAD")}
+        self.assertEqual(64, len(self.report["repository"]["revision"]))
+        self.assertEqual(self.report["repository"]["revision"], scanner.scan(self.repo)["repository"]["revision"])
+        self.assertEqual([], self.errors())
+
+
+if __name__ == "__main__":
+    unittest.main()

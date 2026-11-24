@@ -1,0 +1,32 @@
+# Database Related
+
+## Schema Types
+
+| Issue | Description | Annotation | Location | |
+| --- | --- | --- | --- | --- |
+| "VARCHAR2" should be used | Currently, VARCHAR and VARCHAR2 are identical data types. But to prevent future changes in behavior, Oracle recommends the use of VARCHAR2. | - Rule ID:plsql:VarcharUsageCheck - Analysis scope:main sources - Rule repo:Sonar (PL/SQL) | [https://sonarqube.vx.standardchartered.com/project/issues?pullRequest=1900898&issueStatuses=OPEN%2CCONFIRMED&open=7c25884c-da64-4e60-b4ba-bf26fe966862&id=51358-ratanone-trade-service](https://sonarqube.vx.standardchartered.com/project/issues?pullRequest=1900898&issueStatuses=OPEN%2CCONFIRMED&open=7c25884c-da64-4e60-b4ba-bf26fe966862&id=51358-ratanone-trade-service) [https://sonarqube.vx.standardchartered.com/coding_rules?impactSoftwareQualities=MAINTAINABILITY&rule_key=plsql%3AVarcharUsageCheck&open=plsql%3AVarcharUsageCheck](https://sonarqube.vx.standardchartered.com/coding_rules?impactSoftwareQualities=MAINTAINABILITY&rule_key=plsql%3AVarcharUsageCheck&open=plsql%3AVarcharUsageCheck) [https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratanone-trade-service/pullrequest/1900898](https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratanone-trade-service/pullrequest/1900898) | |
+| | | | | |
+| | | | | |
+
+# Nginx Related
+
+## Config Issue
+
+| Issue | Description | Suggestion | Location | |
+| --- | --- | --- | --- | --- |
+| least_conn | The upstream block 'ssdr_report_download_api' contains only one server. Using 'least_conn' with a single server is unnecessary and may be misleading. | Remove 'least_conn;' directive from upstream blocks with only one server. | /ansible/roles/deploy_loadbalance/files/config/staging/non_ratan_upstream.conf:182 | |
+| remote_addr | Setting X-Forwarded-Host to $remote_addr is incorrect. X-Forwarded-Host should reflect the original Host header from the client, not the remote IP address. | Set X-Forwarded-Host to $host instead of $remote_addr. | /ansible/roles/deploy_loadbalance/files/config/staging/non_ratan_proxy.conf:535 | |
+
+# TOBE CLARIFIED
+
+[https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratanone-swift-service/pullrequest/2005953?_a=files&path=%2Fsrc%2Fmain%2Fjava%2Fcom%2Fscb%2Fratan%2Fswift%2Fmt%2Fservice%2FCounterPartyService.java&discussionId=14335766](https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratanone-swift-service/pullrequest/2005953?_a=files&path=%2Fsrc%2Fmain%2Fjava%2Fcom%2Fscb%2Fratan%2Fswift%2Fmt%2Fservice%2FCounterPartyService.java&discussionId=14335766)
+
+[View comment ](https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fdev.azure.com%2Fsc-ado%2FFMQPR%2F_git%2F51358-ratanone-trade-service%2Fpullrequest%2F2005642%3F_a%3Dfiles%26path%3D*2fsrc*2fmain*2fjava*2fcom*2fscb*2fratan*2ftrade*2fservice*2ftradereview*2faction*2fBaseStellaAction.java%26discussionId%3D14333462%26tracking_data%3DeyJTb3VyY2UiOiJFbWFpbCIsIlR5cGUiOiJOb3RpZmljYXRpb24iLCJTSUQiOiJtcy52c3MtY29kZS5naXQtcHVsbHJlcXVlc3QtY29tbWVudC1zdWJzY3JpcHRpb24iLCJTVHlwZSI6IkNPTiIsIlJlY2lwIjoxLCJfeGNpIjp7Ik5JRCI6Nzc1MDQzNjM3LCJNUmVjaXAiOiJtMD0xICIsIkFjdCI6IjhmN2JkNjZhLWE0MDctNGM3OC1hYjg2LWI5NDYzN2JjMjcwZSJ9LCJFbGVtZW50IjoiaGVyby9jdGEifQ*3d*3d__%3BJSUlJSUlJSUlJSUlJQ!!ASp95G87aa5DoyK5mB3l!4RqYw0tiBEdxM234JidqpMigwTouu_WQZ76FXpS0dCE-ycOg81wx7Q5WU0nzG7aPiEwlC6pS2Bd_bL-c_ew%24&data=05%7C02%7Cshuai.lu%40sc.com%7C1d54855359324adfdd1f08ddfa6df2c0%7Cb44900f12def4c3b9ec69020d604e19e%7C0%7C0%7C638942072314100090%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mlo2%2BIeSB%2FBX%2BR8WuzkbMhI2hlBAxRoDN7laCswghsg%3D&reserved=0)
+
+[View comment](https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fdev.azure.com%2Fsc-ado%2FFMQPR%2F_git%2F51358-ratanone-trade-service%2Fpullrequest%2F2005642%3F_a%3Dfiles%26path%3D*2fsrc*2fmain*2fjava*2fcom*2fscb*2fratan*2ftrade*2fservice*2fTradeAffirmationService.java%26discussionId%3D14333463%26tracking_data%3DeyJTb3VyY2UiOiJFbWFpbCIsIlR5cGUiOiJOb3RpZmljYXRpb24iLCJTSUQiOiJtcy52c3MtY29kZS5naXQtcHVsbHJlcXVlc3QtY29tbWVudC1zdWJzY3JpcHRpb24iLCJTVHlwZSI6IkNPTiIsIlJlY2lwIjoxLCJfeGNpIjp7Ik5JRCI6Nzc1MDM5OTUzLCJNUmVjaXAiOiJtMD0xICIsIkFjdCI6ImM4OGMyNjMyLTEwYjgtNDE0Yi1hZjE1LTc2NWEyYzQyODAwNCJ9LCJFbGVtZW50IjoiaGVyby9jdGEifQ*3d*3d__%3BJSUlJSUlJSUlJSU!!ASp95G87aa5DoyK5mB3l!_nTZHxCB1fJjX-DATOMJAQXNC-nLyYoJGdiFdHWx7TsDKYC15NHKPwxx6_Vd6QYq1V7fdv0sb_jy5Jdvwlk%24&data=05%7C02%7Cshuai.lu%40sc.com%7Cc563b1393352402cafb908ddfa6dd02a%7Cb44900f12def4c3b9ec69020d604e19e%7C0%7C0%7C638942071773936358%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=6vOygqXO2Xa39Lm1jpHlgRl66vmlV%2FGgxjqvyCkJ%2BJY%3D&reserved=0)
+
+[View comment](https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fdev.azure.com%2Fsc-ado%2FFMQPR%2F_git%2F51358-ratanone-trade-service%2Fpullrequest%2F2005642%3F_a%3Dfiles%26path%3D*2fsrc*2fmain*2fjava*2fcom*2fscb*2fratan*2ftrade*2flistener*2fAllTDS3TradesListener.java%26discussionId%3D14333464%26tracking_data%3DeyJTb3VyY2UiOiJFbWFpbCIsIlR5cGUiOiJOb3RpZmljYXRpb24iLCJTSUQiOiJtcy52c3MtY29kZS5naXQtcHVsbHJlcXVlc3QtY29tbWVudC1zdWJzY3JpcHRpb24iLCJTVHlwZSI6IkNPTiIsIlJlY2lwIjoxLCJfeGNpIjp7Ik5JRCI6Nzc1MDMyNDQ1LCJNUmVjaXAiOiJtMD0xICIsIkFjdCI6ImY4OThjNzdlLTQ0OWItNGE1YS1hYTBjLTM2ODMwZGVlZmQ2NiJ9LCJFbGVtZW50IjoiaGVyby9jdGEifQ*3d*3d__%3BJSUlJSUlJSUlJSU!!ASp95G87aa5DoyK5mB3l!4geTCVYkO9l6s_xj-S9cRpFUOKcDOZw79XjoSde2vgxfkAG0A2hjCZZQFz4wqvOj_ZW4izVVLJwHhoLVTRw%24&data=05%7C02%7Cshuai.lu%40sc.com%7C721d3ed22c07455e0e3308ddfa6d993f%7Cb44900f12def4c3b9ec69020d604e19e%7C0%7C0%7C638942070811905257%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=Jt4jOa11IfgsUHTljGDA8pAsacYH8uzJWGBB0clJk3o%3D&reserved=0)
+
+[https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratan-cashflow-lifecycle-service/pullRequest/2028800#1759129359](https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratan-cashflow-lifecycle-service/pullRequest/2028800#1759129359)
+
+[https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratanone-swift-service/pullRequest/2030775#1759136672](https://dev.azure.com/sc-ado/FMQPR/_git/51358-ratanone-swift-service/pullRequest/2030775#1759136672)

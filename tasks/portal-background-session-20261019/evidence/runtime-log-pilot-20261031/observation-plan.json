@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "source_kind": "local_development",
+  "environment": "isolated local browser and fixture services",
+  "required_observation_rows": [
+    {
+      "id": "OBS-01",
+      "case": "RN-X002",
+      "label": "candidate",
+      "mode": "e2e",
+      "essential_path": "manual-renewal-pending",
+      "criterion": "AC-5",
+      "intent_status": "recorded-user-intent-candidate",
+      "required_events": [
+        "timeout.extend.accepted",
+        "renewal.service.start"
+      ],
+      "independent_predicate": "Pending prompt remains visible; zero closures; one request for 25 clicks.",
+      "canonical_definition": "../../06-test-cases.md#rn-x002"
+    },
+    {
+      "id": "OBS-02",
+      "case": "RN-X002",
+      "label": "candidate",
+      "mode": "e2e",
+      "essential_path": "manual-renewal-success",
+      "criterion": "AC-6",
+      "intent_status": "recorded-user-intent-candidate",
+      "required_events": [
+        "auth.response.received",
+        "session.state_transition",
+        "timeout.renewal.success",
+        "timeout.prompt.close_requested"
+      ],
+      "independent_predicate": "Returned usable access is installed; one successful closure follows completion.",
+      "canonical_definition": "../../06-test-cases.md#rn-x002"
+    },
+    {
+      "id": "OBS-03",
+      "case": "RN-X001",
+      "label": "candidate",
+      "mode": "representative_usage",
+      "essential_path": "renewal-failure-retry",
+      "criterion": "AC-7",
+      "intent_status": "recorded-user-intent-candidate",
+      "required_events": [
+        "auth.response.error",
+        "timeout.renewal.failed"
+      ],
+      "independent_predicate": "Each of six controlled failures preserves the prompt, retry, and workspace identities.",
+      "canonical_definition": "../../06-test-cases.md#rn-x001"
+    },
+    {
+      "id": "OBS-04",
+      "case": "RN-X001",
+      "label": "candidate",
+      "mode": "representative_usage",
+      "essential_path": "repeated-renewal-success",
+      "criterion": "AC-6",
+      "intent_status": "recorded-user-intent-candidate",
+      "required_events": [
+        "timeout.renewal.success",
+        "session.state_transition",
+        "timeout.prompt.close_requested"
+      ],
+      "independent_predicate": "Each of six successful retries installs changed usable access and closes exactly once.",
+      "canonical_definition": "../../06-test-cases.md#rn-x001"
+    },
+    {
+      "id": "OBS-05",
+      "case": "RN-X003",
+      "label": "candidate",
+      "mode": "e2e",
+      "essential_path": "logout-during-renewal",
+      "criterion": null,
+      "intent_status": "proposed-security-diagnostic",
+      "required_events": [
+        "timeout.logout.accepted",
+        "session.invalidated",
+        "session.state_transition"
+      ],
+      "independent_predicate": "Logout aborts pending renewal and final authentication remains absent.",
+      "canonical_definition": "../../06-test-cases.md#rn-x003"
+    },
+    {
+      "id": "OBS-06",
+      "case": "RN-X003",
+      "label": "candidate",
+      "mode": "e2e",
+      "essential_path": "stale-response-handler",
+      "criterion": null,
+      "intent_status": "proposed-security-diagnostic",
+      "required_events": [
+        "auth.response.discarded"
+      ],
+      "independent_predicate": "Observe the response handler reject stale access. Cancellation can leave this branch unexercised.",
+      "canonical_definition": "../../06-test-cases.md#rn-x003"
+    }
+  ],
+  "scope_limits": [
+    "Local controlled pilot only, not UAT.",
+    "Representative usage is a scripted six-cycle workload with empty workspace descriptors.",
+    "Synthetic credentials and controlled browser clock follow existing canonical case setup.",
+    "The stale-response handler might remain unexercised when abort prevents response delivery.",
+    "No claim of full requirement, branch, unit, backend-current-source, or production verification."
+  ],
+  "case_catalog": {
+    "path": "../../06-test-cases.md",
+    "sha256": "5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037"
+  },
+  "requirement": {
+    "path": "../../../../knowledge/candidates/requirements/REQ-active-session-renewal.md",
+    "sha256": "3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359"
+  }
+}

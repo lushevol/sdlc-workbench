@@ -1,0 +1,3025 @@
+{
+  "date": "2026-10-26",
+  "baseline_revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+  "input_document_sha256": "db3e90d1d5d6dbbfb1da49178a40aaa47864cd3eb407d7c13623a9f1b58c3825",
+  "document_path": "tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+  "document_sha256": "0809ebe7ed6882809032e3709af0252dd61a134e9ae4900672483ccd19db2210",
+  "counts": {
+    "ANSWERED_FROM_EVIDENCE": 17,
+    "CONSOLIDATED": 6,
+    "OPEN_CONTACT": 1,
+    "OPEN_POLICY": 8,
+    "EVIDENCE_FOLLOWUP": 6,
+    "NOT_CURRENT_DECISION": 20,
+    "CARRIED_FORWARD": 2
+  },
+  "editable_entries": [
+    "KQ-SEC-03",
+    "KQ-SEC-04",
+    "KQ-SEC-06",
+    "KQ-SEC-14",
+    "KQ-SEC-15",
+    "KQ-SEC-19",
+    "KQ-OPS-002",
+    "KQ-OBS-002",
+    "KQ-OBS-005"
+  ],
+  "reconciliation_rationale": "Keep eight material policies and one consolidated ownership/contact request. Conditional deployment and release evidence remains follow-up work. Source findings do not grant policy approval or publication.",
+  "questions": [
+    {
+      "id": "KQ-SEC-01",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent and inspected implementation",
+      "answer": "Any matching configured EMS2 entity admits an ordinary tile when its subject is empty. The shell launches admitted tiles.",
+      "rationale": "The SSDR discussion explicitly says one listed entity suffices. BFF filtering implements that rule and skips blank subjects.",
+      "limits": [
+        "This answers the retained design and inspected source. It does not establish deployed configuration or recorded policy approval.",
+        "Template tiles bypass this filter. Later EMS3 filters can apply additional restrictions."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md",
+          "fragment": "L17-L20",
+          "revision": "sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef",
+          "sha256": "3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md",
+          "fragment": "L14-L24",
+          "revision": "sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012",
+          "sha256": "7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "fragment": "L101-L137",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "a515c30c585304810bd6a1dc7044fbccadf2dcb416efb907c0c5960dec4a612d"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "fragment": "L92-L118",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "6f8f759d314d97b41a6d0ad35a26a5cce475cc4c40d7ccf06f729668c8f15b3b"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/dispathcer/index.ts",
+          "fragment": "L152-L175",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "1e04cb3b7a63e9a7bf402546cb95bf4ff9d55835e220f1bf3f391a05515784fe"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/util/AdminModuleUtilTest.java",
+          "fragment": "L39-L61",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "292b80a44a3037293b0e5e4a3d97b738c3c91bce8e09a182ba9b62fdaa7cc0f9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Use the documented any-one rule for the qualified knowledge answer. Keep publication review separate.",
+      "owner": "portal team",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 1
+      },
+      "original_question": "A tile lists two entities and has an empty subject. Should one matching entity permit visibility and launch?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-01"
+    },
+    {
+      "id": "KQ-SEC-02",
+      "disposition": "CONSOLIDATED",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent and recorded review state",
+      "answer": "The portal team owns all three clarified rules. Current candidates record no verifier, named review, or publication approval.",
+      "rationale": "Exact user answers resolve ownership and environment scope. Candidate metadata retains empty verifier lists.",
+      "limits": [
+        "Ownership is not missing. Only the actual content reviewer and review event remain unrecorded.",
+        "The workflow request does not identify a reviewer or approve the current final content bytes."
+      ],
+      "sources": [
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json",
+          "fragment": "",
+          "revision": "user-answer-20261022-1",
+          "sha256": "a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+          "fragment": "L1-L120",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "1e842743029f8ccb96f14a46f33f1f095d118aeba7ab2b1c8772a822ba27765f"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+          "fragment": "L1-L143",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "9fae1a3f9a23d0db93c5213b1d977e8ee9d5ab6b94086a4d52c522dffab1cd05"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Record the reviewer and reviewed scope once. Do not repeat rule ownership or scope questions.",
+      "owner": "portal team",
+      "merge_into": "KQ-SEC-03",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 2
+      },
+      "original_question": "Who will provide the recorded portal-team review for the three saved entry and tile rules?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-02"
+    },
+    {
+      "id": "KQ-SEC-03",
+      "disposition": "OPEN_CONTACT",
+      "confidence": "UNKNOWN",
+      "evidence_class": "Unknown accountable owner",
+      "answer": "The retained session requirement names no accountable session-policy owner. Existing portal-team answers cover the three entitlement rules only.",
+      "rationale": "No inspected user answer extends that assignment to session policy. Git authorship cannot establish business ownership.",
+      "limits": [
+        "This concerns accountable review ownership, not the already resolved renewal behavior."
+      ],
+      "sources": [
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "fragment": "L1-L25",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "fragment": "acceptance-criteria",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/10-change-review.md",
+          "fragment": "unknowns-and-blockers",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "4781c01efe50f8a1781c3b2fb89c90b6f14503f911c5717a00faddc29f1bd4b3"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json",
+          "fragment": "",
+          "revision": "user-answer-20261022-1",
+          "sha256": "a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee"
+        }
+      ],
+      "remaining_question": "Which team owns portal session policy and its content review?",
+      "decision_impact": "Publication needs an accountable owner for the current renewal criteria.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 3
+      },
+      "original_question": "Who owns portal session policy and can review the current renewal criteria?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-03"
+    },
+    {
+      "id": "KQ-SEC-04",
+      "disposition": "OPEN_POLICY",
+      "confidence": "MEDIUM",
+      "evidence_class": "Explicit user intent and inspected configuration",
+      "answer": "Continuous eligible activity must preserve renewal. BFF YAML defaults declare 15-minute access, 225-minute refresh, and 60-minute absolute values.",
+      "rationale": "The user answer overrides historical fixed-session cutoffs. Legacy text conflicts on refresh duration, and the launch file overrides access to 480 minutes.",
+      "limits": [
+        "Configuration identifies inspected defaults, not approved timeout policy or deployed UAT values.",
+        "Refresh generation adds 24 seconds to configured minutes.",
+        "Provider-session limits remain distinct from portal token lifetimes."
+      ],
+      "sources": [
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/correction-20261020/user-request.txt",
+          "fragment": "",
+          "revision": "user-reply-20261020",
+          "sha256": "cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "fragment": "description",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/resources/application.yml",
+          "fragment": "L32-L35",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "719eae6ac604daa440e7c00bbab6f5f57454761b60b8ae3cb1ad3a3c00a56d56"
+        },
+        {
+          "path": "repos/services/single-ui-bff/app.conf",
+          "fragment": "L2",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "743bd7f90f1f167bbd0c6557aff1cc7e8e68757e0d54fbc07a247c4bbc5b4a17"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+          "fragment": "L48-L84",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md",
+          "fragment": "L106-L141",
+          "revision": "sha256:66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7",
+          "sha256": "66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7"
+        }
+      ],
+      "remaining_question": "Which access, idle, and refresh-credential limits are intended outside continuous active renewal, and in which environments?",
+      "decision_impact": "Unselected limits prevent measurable inactivity and token-expiry acceptance.",
+      "owner": "unknown session owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 4
+      },
+      "original_question": "What access, idle, refresh, and provider-session limits should apply in each supported environment?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-sec-04"
+    },
+    {
+      "id": "KQ-SEC-05",
+      "disposition": "EVIDENCE_FOLLOWUP",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation and bounded deployment unknown",
+      "answer": "Current local repository identities and token defaults are known. No retained binding identifies the effective UAT launcher, artifacts, or property origin.",
+      "rationale": "The screenshot gives a remaining delay, not JWT issuance time. Local app.conf and YAML provide competing configuration candidates.",
+      "limits": [
+        "The effective UAT property value cannot be selected from a local file alone.",
+        "Browser and server clock agreement and refresh-token expiry remain unbound.",
+        "Configured connector credentials are unavailable; this does not establish missing external records."
+      ],
+      "sources": [
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/repository-bindings.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "8f45769e8e0d7627533918fcfb45a4361e255a99edb3cd0b8dd5ee6dd0a05a79"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "84a79a84372cca564c672cfb09cf6619b5f3b1d5ab462fd48a704d3e846ae585"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "5271da7e928adcdf3de839567efc7c0e08f479c9321444a22c7690228d2100bd"
+        },
+        {
+          "path": "repos/services/single-ui-bff/app.conf",
+          "fragment": "L2",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "743bd7f90f1f167bbd0c6557aff1cc7e8e68757e0d54fbc07a247c4bbc5b4a17"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/resources/application.yml",
+          "fragment": "L32-L35",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "719eae6ac604daa440e7c00bbab6f5f57454761b60b8ae3cb1ad3a3c00a56d56"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain a precise deployment-evidence action. No new timing-policy answer is inferred.",
+      "owner": "unknown authentication or deployment owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 5
+      },
+      "original_question": "Where are deployment bindings for supported environments, starting with UAT? Include artifacts, runtime overrides, token properties, origins, and clocks.",
+      "original_answer": "",
+      "document_anchor": "kq-sec-05"
+    },
+    {
+      "id": "KQ-SEC-06",
+      "disposition": "OPEN_POLICY",
+      "confidence": "MEDIUM",
+      "evidence_class": "Inspected implementation with conflicting rollout intent",
+      "answer": "The current shell defaults to Entra in configured environments. URL values true, 1, yes, and y enable Entra; no disables it.",
+      "rationale": "The parser accepts both documented flag forms. It stores no activation preference; current defaults explain Entra after restart.",
+      "limits": [
+        "OneMFA and username/password paths remain in source. Their existence does not establish production permission.",
+        "The rollout calendar planned OneMFA retirement after September, but current release applicability is unbound."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/utils/featureFlagController.ts",
+          "fragment": "L14-L38",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "08e85fbf84377831d2f108450de677eafc3e0053e83aa9dd387b9ffcc0c4158c"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/utils/feature-flags.json",
+          "fragment": "L1-L9",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "af54609fe812e2ce6234d85664584ec7653a218d50183d2733a1f033b7be22ac"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/utils/common.ts",
+          "fragment": "L131-L153",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/utils/featureFlagController.test.ts",
+          "fragment": "L20-L79",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "532d2612eaed79f5faac798cadea9ef75016be7fbc4d69ca28d75043f39ba59b"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Login/common/useController.ts",
+          "fragment": "L38-L83",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "5e97ec2a4065cbef8ef9033b326bc7e9c9dfdbb038656f22fecbbf90a62e5dfb"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md",
+          "fragment": "L7-L30",
+          "revision": "sha256:e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee",
+          "sha256": "e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md",
+          "fragment": "L38-L46",
+          "revision": "sha256:0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957",
+          "sha256": "0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957"
+        }
+      ],
+      "remaining_question": "Is OneMFA fallback still permitted in production after its planned September retirement?",
+      "decision_impact": "The permitted fallback determines which production login paths acceptance must allow.",
+      "owner": "unknown identity-policy owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 6
+      },
+      "original_question": "Which login methods, fallback routes, and activation persistence should each supported environment permit?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-sec-06"
+    },
+    {
+      "id": "KQ-SEC-07",
+      "disposition": "CONSOLIDATED",
+      "confidence": "HIGH",
+      "evidence_class": "Retained migration documentation and missing deployment binding",
+      "answer": "The local collection already contains the Entra design, phase plan, production rollout calendar, and non-production verification guide.",
+      "rationale": "These sources locate the migration records. They do not bind current deployed artifacts or prove completion of planned milestones.",
+      "limits": [
+        "Referenced production sign-off attachments are unavailable in the retained guide directory.",
+        "Current enabled providers must be established through the deployment evidence already requested in KQ-SEC-05."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/UI SSO Entra Design/page.md",
+          "fragment": "L7-L31",
+          "revision": "sha256:e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee",
+          "sha256": "e52e079787b9cf1b30a5b16535b9b455e302a647b33ec6715424d0be9c52daee"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/page.md",
+          "fragment": "L15-L57",
+          "revision": "sha256:d035c6cb7803bb6b1011befc428e125bf4e1c466dcf845e0a359a5a7e947dd5d",
+          "sha256": "d035c6cb7803bb6b1011befc428e125bf4e1c466dcf845e0a359a5a7e947dd5d"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md",
+          "fragment": "L38-L46",
+          "revision": "sha256:0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957",
+          "sha256": "0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Non Prod Verification/page.md",
+          "fragment": "L5-L56",
+          "revision": "sha256:37b2b6ced13197b54ee429535d8716cc63bb3fff87212f5d3418781c6d9687b0",
+          "sha256": "37b2b6ced13197b54ee429535d8716cc63bb3fff87212f5d3418781c6d9687b0"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Carry current provider and rollout state into the specific deployment-binding action. Remove the generic record-location question.",
+      "owner": "unknown release owner",
+      "merge_into": "KQ-SEC-05",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 7
+      },
+      "original_question": "Where are the applicable Entra release, deployment, and environment verification records?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-07"
+    },
+    {
+      "id": "KQ-SEC-08",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Documented profile contract and inspected implementation",
+      "answer": "The supplied profile exposes firstName, lastName, fullName, country, emailId, locale, and userId. Entra country is coded; locale may be null.",
+      "rationale": "The production guide records these differences. The BFF mapping and shell profile expose the same fields.",
+      "limits": [
+        "Names can differ from OUD values. The guide directs entitlement checks to the dedicated entitlement system.",
+        "Uninspected external consumers may impose additional fields; no universal consumer contract is claimed."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal Entra Migration - Phase 1 - UI SSO/Entra SSO Prod Guide/page.md",
+          "fragment": "L48-L83",
+          "revision": "sha256:0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957",
+          "sha256": "0979a0498132d53449ad1c74a2323f2f2396fefcf6af1afc0f92215237e48957"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/EntraAuthenticationServiceImpl.java",
+          "fragment": "L59-L96",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "87694f4b90041ed887cd138ca5de1621f97341e826696174df75ac8dd724ec5d"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/components/Profile/index.tsx",
+          "fragment": "L200-L248",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "b6e5602627da98d54c3df39638e6ce129e4c7ec617a2482cdcadbdb2619d3888"
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/convertor.ts",
+          "fragment": "L75-L90",
+          "revision": "filesystem-sha256:71b06dce9be3db92f53bad07982fb63ac7c65a9f8e405b4e16f8ab1e2accfd0d",
+          "sha256": "71b06dce9be3db92f53bad07982fb63ac7c65a9f8e405b4e16f8ab1e2accfd0d"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Record the evidenced profile shape and migration differences. Do not ask for a new universal profile policy.",
+      "owner": "identity and downstream application owners",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 8
+      },
+      "original_question": "Which identity-profile fields and canonical values may downstream services require?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-08"
+    },
+    {
+      "id": "KQ-SEC-09",
+      "disposition": "EVIDENCE_FOLLOWUP",
+      "confidence": "MEDIUM",
+      "evidence_class": "Documented historical contract and inspected client implementation",
+      "answer": "FMAA client-credentials acquisition and token authentication remain present in the supplied source. Historical guidance states 17-year service-account and seven-day bank-ID validity.",
+      "rationale": "The current clients obtain tokens from FMAA. They do not define the provider-issued token lifetimes.",
+      "limits": [
+        "Historical validity examples are not current token policy.",
+        "The retained migration plan says the FMAA replacement was unresolved; it does not prove its present external status."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md",
+          "fragment": "L24-L30",
+          "revision": "sha256:2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9",
+          "sha256": "2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Entra Migration/Post Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md",
+          "fragment": "L1-L10",
+          "revision": "sha256:1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd",
+          "sha256": "1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/FmaaAuth.java",
+          "fragment": "L60-L82",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "e0171683c45fd07f122cb6ff3f24796d424bbd30e9453e00f4ed10f821c8e58a"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/authentication/AccessTokenAuthentication.java",
+          "fragment": "L25-L75",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "bf9712a4b481d3282f557be715926dbe81bae9679c8e770fbd7146f58d125942"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/FmaaAuth.java",
+          "fragment": "L73-L111",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "f1c255fee4c15e89711d9c9263f23a76e830c568ff7c411891b345d5d800449c"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+          "fragment": "L97-L140",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "5d227baf629361cf792568b1db10e947eb67cdd05cf5c28efb19400ad177c95b"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain the evidenced client flow as candidate knowledge with limits. Apply required review before publication.",
+      "owner": "authentication provider owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 9
+      },
+      "original_question": "Which FMAA service-account and bank-ID flows remain supported, and what validity limits apply?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-09",
+      "root_adjustments": [
+        "Remove an immediate publication instruction; applicable reviews remain required."
+      ]
+    },
+    {
+      "id": "KQ-SEC-10",
+      "disposition": "EVIDENCE_FOLLOWUP",
+      "confidence": "HIGH",
+      "evidence_class": "Historical security reports with unavailable current retest binding",
+      "answer": "The collection contains the named penetration, WAS, and API scan notes. They report historical fixes and planned deployments.",
+      "rationale": "The notes reference absent attachments. Local review results do not supply a current security scan and assertion-bearing retest.",
+      "limits": [
+        "This does not prove current exposure or current finding closure.",
+        "No current deployed artifact and security-retest pair was found within the inspected task evidence."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 – SSI+ BA/page.md",
+          "fragment": "L5-L29",
+          "revision": "sha256:86953471062331bc2092737467b10269c101513fdc6cf52617882359a080ef84",
+          "sha256": "86953471062331bc2092737467b10269c101513fdc6cf52617882359a080ef84"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md",
+          "fragment": "L31-L53",
+          "revision": "sha256:b2677f993b154c2705c4fe103d5e2bbff1a45b618f0129ae0234fa69c381b692",
+          "sha256": "b2677f993b154c2705c4fe103d5e2bbff1a45b618f0129ae0234fa69c381b692"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023/page.md",
+          "fragment": "L6-L18",
+          "revision": "sha256:3f1d4d92134c3eee85f2955b685cd68d7bf32a4ee8005cfdf68e82e9c0131267",
+          "sha256": "3f1d4d92134c3eee85f2955b685cd68d7bf32a4ee8005cfdf68e82e9c0131267"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep historical remediation statements bounded. Do not use them as current closure evidence.",
+      "owner": "security assurance owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 10
+      },
+      "original_question": "Where are current scan, remediation, and retest records for the applicable historical security findings?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-10"
+    },
+    {
+      "id": "KQ-SEC-11",
+      "disposition": "EVIDENCE_FOLLOWUP",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected dependency declarations and configuration",
+      "answer": "The supplied Auth Server declares fmoportal-auth-sdk 1.1.1. The SDK checkout declares 2.0.0-SNAPSHOT, Java 17, and Spring Boot 4.0.6.",
+      "rationale": "Local Maven declarations and Auth Server filter properties provide a concrete partial inventory without user source inspection.",
+      "limits": [
+        "No build was run. A dependency declaration does not identify the resolved deployment binary.",
+        "The two supplied backend repositories cannot establish every external application consumer."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/ratan-auth-server/pom.xml",
+          "fragment": "L96-L101",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "b4c36b73a946502da3632b1daec392ef5ea377487ea4daad2d866b556ea660ce"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/resources/application.yml",
+          "fragment": "L122-L137",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "8df3294198e6f7251335a357ce427644ff6a2070a7465da6274a1100c8e3fe58"
+        },
+        {
+          "path": "repos/libraries/single-ui-sdk-starter/pom.xml",
+          "fragment": "L3-L19",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "sha256": "757c76776c7530b9dc60f9a3b7d58beb061d52181e3c9ec671ba6a64d4739317"
+        },
+        {
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/pom.xml",
+          "fragment": "L5-L11",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "sha256": "88c5d40332aa1cc97a9a90509c1263c5d0911642cd014f26369bca015dd27d67"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep the local inventory as an answered finding. Request only missing deployment or external-consumer scope.",
+      "owner": "application deployment owners",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 11
+      },
+      "original_question": "Where is the current consumer inventory with each SDK artifact, dependency version, effective configuration, and deployment revision?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-11"
+    },
+    {
+      "id": "KQ-SEC-12",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "MEDIUM",
+      "evidence_class": "Inspected SDK and Auth Server implementation",
+      "answer": "The SDK skips JWT validation for configured paths or any nonempty configured skip header. Auth Server validates alternative credentials inside authentication endpoints.",
+      "rationale": "The current Auth Server dispatches X-Token to Redis-backed validation and FMAA-Token to provider validation at /v3/authenticate.",
+      "limits": [
+        "A skip-header presence check authenticates nothing by itself. It only delegates further request processing.",
+        "These inspected endpoint controls cannot establish protection for every excluded path or external SDK consumer.",
+        "Auth Server declares SDK 1.1.1; the supplied SDK checkout is a separate 2.0.0-SNAPSHOT source."
+      ],
+      "sources": [
+        {
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+          "fragment": "L34-L68",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/resources/application.yml",
+          "fragment": "L127-L138",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "8df3294198e6f7251335a357ce427644ff6a2070a7465da6274a1100c8e3fe58"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+          "fragment": "L66-L141",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "5d227baf629361cf792568b1db10e947eb67cdd05cf5c28efb19400ad177c95b"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/authentication/AccessTokenAuthentication.java",
+          "fragment": "L27-L73",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "bf9712a4b481d3282f557be715926dbe81bae9679c8e770fbd7146f58d125942"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/authentication/strategy/DefaultAuthenticationStrategy.java",
+          "fragment": "L17-L31",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "c2e5401ad2d3324a68da4fffb61e96f6f150f6d617bcb666080bfca1f557b089"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Document the concrete alternate controls and their endpoint scope. Inspect any additional consumer as an evidence task.",
+      "owner": "application security owners",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 12
+      },
+      "original_question": "Which trusted control authenticates requests when path exclusions or skip headers bypass SDK JWT validation?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-12"
+    },
+    {
+      "id": "KQ-SEC-13",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented responsibility boundary and explicit user architecture",
+      "answer": "Each tile application owns its data-view and edit permissions. The portal controls entry and tile visibility; the SDK supplies JWT validation.",
+      "rationale": "The tile-security source explicitly delegates data permissions. The user architecture clarification describes the SDK as a validation library.",
+      "limits": [
+        "The collection does not include every tenant backend or its protected business operations.",
+        "This boundary does not verify an individual downstream permission implementation."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md",
+          "fragment": "L7-L11",
+          "revision": "sha256:c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613",
+          "sha256": "c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613"
+        },
+        {
+          "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+          "fragment": "L16-L22",
+          "revision": "sha256:446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758",
+          "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758"
+        },
+        {
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+          "fragment": "L83-L118",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Record the responsibility boundary. Defer individual business-operation contracts until the relevant application scope is selected.",
+      "owner": "respective tile application owners",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 13
+      },
+      "original_question": "Which protected operations require subject and action permissions, and which application owner defines their denial results?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-13"
+    },
+    {
+      "id": "KQ-SEC-14",
+      "disposition": "OPEN_POLICY",
+      "confidence": "MEDIUM",
+      "evidence_class": "Inspected cache implementation with unresolved business delay limit",
+      "answer": "The supplied Auth Server supports Redis caching of EMS2 and EMS3 results, using configured expiryTime. EMS3 exposes eviction methods.",
+      "rationale": "The source resolves how this implementation caches permissions. It does not establish the maximum acceptable business revocation delay.",
+      "limits": [
+        "Current deployment overrides and every external application cache remain unbound.",
+        "A cache TTL is an implementation value, not an approved permission-revocation service level."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "fragment": "L112-L170",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "9d6691b90af5b48e5ac954bca8cb52ca98479deaed952ae25d3c6e66df1bebcd"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+          "fragment": "L49-L84",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "64dc26d91e67161a93ecfa3cc6bd37ae983b98e8a9d7c7d60f13e40795178b09"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+          "fragment": "L116-L123",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "64dc26d91e67161a93ecfa3cc6bd37ae983b98e8a9d7c7d60f13e40795178b09"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/configuration/Ems2Configuration.java",
+          "fragment": "L10-L24",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "53f6e45be97581a9eacc6055c925d301faad67161dd89d1ee6636564991f222b"
+        }
+      ],
+      "remaining_question": "What maximum delay is acceptable before revoked permissions stop authorizing protected application actions?",
+      "decision_impact": "The missing revocation deadline prevents measurable protected-action acceptance.",
+      "owner": "application permission owners",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 14
+      },
+      "original_question": "What cache lifetime and maximum permission-revocation delay must each application enforce across instances?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-sec-14"
+    },
+    {
+      "id": "KQ-SEC-15",
+      "disposition": "OPEN_POLICY",
+      "confidence": "MEDIUM",
+      "evidence_class": "Inspected revocation mechanisms with unresolved required scope",
+      "answer": "The BFF blacklists the supplied session ID on logout. The SDK maintains a filter-local revocation list for observed logout requests.",
+      "rationale": "These mechanisms are directly visible. Neither establishes a required cross-device revocation boundary or maximum propagation delay.",
+      "limits": [
+        "Current deployment topology and blacklist retention remain separate evidence gaps.",
+        "The historical governance finding describes a conditional risk, not a proven deployed failure."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "fragment": "L365-L378",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "6f8f759d314d97b41a6d0ad35a26a5cce475cc4c40d7ccf06f729668c8f15b3b"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/SessionServiceImplementation.java",
+          "fragment": "L17-L35",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "548150730664b0417dcc115ede889b74536a207938a2912e7da2231d6184b41e"
+        },
+        {
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java",
+          "fragment": "L82-L103",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "sha256": "09d8595302dd702b8f38c298ff9e5a91f6107678ffd61714b540253605bcc161"
+        },
+        {
+          "path": "evidence/knowledge/findings/GF-refresh-revocation-scope.md",
+          "fragment": "proposed-action",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "1b5dfeefc111c3755b0f4d843a39eeef9f102e9485d5bdd05273d384328eb927"
+        }
+      ],
+      "remaining_question": "Must logout revoke only the current session or also other devices and downstream instances, and within what delay?",
+      "decision_impact": "The missing logout boundary prevents cross-device and service-instance acceptance.",
+      "owner": "unknown session-policy owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 15
+      },
+      "original_question": "Which tabs, devices, and downstream instances must logout revoke, and within what maximum delay?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-sec-15"
+    },
+    {
+      "id": "KQ-SEC-16",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected token-issuance contract and documented token separation",
+      "answer": "The supplied v2/v3 login path places oud and session ID in the authentication payload. Entitlements are issued in a separate token.",
+      "rationale": "buildEntities constructs distinct payloads and returns both token types. The SDK guide explicitly forbids entitlement-token authentication.",
+      "limits": [
+        "This answers the current source contract, not every deployed environment or historical endpoint.",
+        "SDK compatibility code still reads an optional legacy entitlements claim. Deployment parity remains part of KQ-SEC-05."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "fragment": "L97-L121",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "6f8f759d314d97b41a6d0ad35a26a5cce475cc4c40d7ccf06f729668c8f15b3b"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+          "fragment": "L48-L84",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/page.md",
+          "fragment": "L7-L14",
+          "revision": "sha256:7feb80396e60776c59b08cf322f87622f1b8484a4867d0caaaa9b0404fc873de",
+          "sha256": "7feb80396e60776c59b08cf322f87622f1b8484a4867d0caaaa9b0404fc873de"
+        },
+        {
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+          "fragment": "L95-L108",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Record the evidenced separation. Do not ask the user to repeat local token-shape inspection.",
+      "owner": "authentication contract owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 16
+      },
+      "original_question": "Where are current environment-specific token contracts showing whether authentication JWTs include entitlements?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-16"
+    },
+    {
+      "id": "KQ-SEC-17",
+      "disposition": "CARRIED_FORWARD",
+      "confidence": "HIGH",
+      "evidence_class": "Explicit user requirement and later retained local recovery result",
+      "answer": "Required delayed recovery remains in scope. No fallback is accepted. Later native local recovery passed after the pending-renewal correction.",
+      "rationale": "The user authorized the two corrections and reruns. Current source awaits renewal before closing; the retained natural result records successful recovery.",
+      "limits": [
+        "Local natural recovery does not establish complete UAT conformance or production readiness.",
+        "The retained result binds mfe-base c42e760 and a substituted local BFF. Its clock limits remain recorded.",
+        "Remaining activity and cancellation failures cannot be converted into accepted fallbacks.",
+        "The retained result identifies its executed test-source hash. The current modular helper is separately inspected, not byte-identical."
+      ],
+      "sources": [
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "925b69f64daa287132fcf8d1f8229e23c18087d4c4adab78507e2c6796e4e8af"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "fragment": "description",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/10-change-review.md",
+          "fragment": "sequential-minor-corrections-25-october-2026",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "4781c01efe50f8a1781c3b2fb89c90b6f14503f911c5717a00faddc29f1bd4b3"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+          "fragment": "L128-L152",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "5ad7f7ad1ceebe2cc936c14175de0da82655b8a9b793270589affd543dc9c71f"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "ad61b4af4a1dc17daca71ab8a3598e3c834bcc4b05e1340ef77ebdac8aceb092"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/browser.cjs",
+          "fragment": "L58-L87",
+          "revision": "37b7365aca2203021e7014112b9d15cf00f7455b",
+          "sha256": "dff78cb3078193353cb561387e17cc49da2f395630801c65d0dc0f426cf3280d"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep the existing required outcome. Remove the repeated correction-versus-fallback question from the current batch.",
+      "owner": "application implementation owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 17
+      },
+      "original_question": "Must delayed recovery be corrected before acceptance, or is a specific fallback acceptable?",
+      "original_answer": "Required delayed recovery remains in scope. No fallback is accepted.",
+      "document_anchor": "kq-sec-17"
+    },
+    {
+      "id": "KQ-SEC-18",
+      "disposition": "CARRIED_FORWARD",
+      "confidence": "HIGH",
+      "evidence_class": "Explicit retained scope and absence of a named waiver",
+      "answer": "No criterion deferral or acceptance waiver is recorded. All applicable session criteria remain required.",
+      "rationale": "The later correction request and current stage retain the existing requirement scope. The smaller implementation never waived business criteria.",
+      "limits": [
+        "A future explicit waiver would require its own named scope and review. No waiver is inferred from continuation or local passing results."
+      ],
+      "sources": [
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "fragment": "acceptance-criteria",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "925b69f64daa287132fcf8d1f8229e23c18087d4c4adab78507e2c6796e4e8af"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/10-change-review.md",
+          "fragment": "sequential-minor-corrections-25-october-2026",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "4781c01efe50f8a1781c3b2fb89c90b6f14503f911c5717a00faddc29f1bd4b3"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Carry the current full requirement scope. Do not solicit optional deferrals to fill an answered status.",
+      "owner": "user for any future explicit scope change",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 18
+      },
+      "original_question": "Which specific session criteria, if any, may be deferred from the current acceptance scope?",
+      "original_answer": "No named criterion deferral or acceptance waiver is recorded.",
+      "document_anchor": "kq-sec-18"
+    },
+    {
+      "id": "KQ-SEC-19",
+      "disposition": "OPEN_POLICY",
+      "confidence": "MEDIUM",
+      "evidence_class": "Inspected launch implementation and proposed acceptance gap",
+      "answer": "The shell launches a tile from its authorized drawer state. The inspected launch function sends no fresh authorization request.",
+      "rationale": "buildEntities filters the catalog during authentication. KNOW-014 proposes a later revocation check without defining its business contract.",
+      "limits": [
+        "A cached catalog does not verify present tenant-data permission. Application backends retain their separate permission responsibility.",
+        "The proposed protected-field assertion cannot be accepted without a selected revocation boundary."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/hooks/dispathcer/index.ts",
+          "fragment": "L152-L175",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "1e04cb3b7a63e9a7bf402546cb95bf4ff9d55835e220f1bf3f391a05515784fe"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "fragment": "L97-L121",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "6f8f759d314d97b41a6d0ad35a26a5cce475cc4c40d7ccf06f729668c8f15b3b"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/06-test-cases.md",
+          "fragment": "know-014",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md",
+          "fragment": "L7-L11",
+          "revision": "sha256:c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613",
+          "sha256": "c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613"
+        }
+      ],
+      "remaining_question": "Must tile launch recheck revoked entitlements immediately, or may it use the last authorized catalog?",
+      "decision_impact": "Expected launch behavior after entitlement revocation remains undefined.",
+      "owner": "portal authorization owner",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 19
+      },
+      "original_question": "Which operation rechecks launch authorization, and what denial state and protected fields must the test observe?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-sec-19"
+    },
+    {
+      "id": "KQ-SEC-20",
+      "disposition": "CONSOLIDATED",
+      "confidence": "HIGH",
+      "evidence_class": "Retained assertion mapping and local execution with deployment unknown",
+      "answer": "The local audit already retains entitlement assertions, BFF bindings, and case outcomes. They do not verify all newly clarified predicates.",
+      "rationale": "The inspected spec uses controlled entitlements and catalog fixtures. The ledger keeps canonical acceptance NOT_ESTABLISHED, including a failed no-entity predicate.",
+      "limits": [
+        "Historical tests are scoped to their original revisions and fixtures. Their passing labels cannot verify successor criteria.",
+        "The current BFF template exception and separate data permissions remain visible source boundaries.",
+        "Effective deployed authorization behavior remains the shared missing binding in KQ-SEC-05."
+      ],
+      "sources": [
+        {
+          "path": "e2e/audit-specs/knowledge-current-bff.spec.ts",
+          "fragment": "L15-L69",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "b8bed5a794667ebad18e8a2ea8e028236460bbd9ea629ee01eac344c47b9fdcd"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/auth-and-knowledge-final-validation.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "f6b6bc48a272daf4d6dea686fdbcf7d4c0c951a7e6e710a0085f93e1061458ec"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/report-006/case-results.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "c9afe869705397fa69446dcf66bf349c9da3988185a5c3bece0ea46ed8fc6c95"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "fragment": "L101-L137",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "a515c30c585304810bd6a1dc7044fbccadf2dcb416efb907c0c5960dec4a612d"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+          "fragment": "canonical-case-applicability",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "444a7669c6141770da0105562ef788731d967fa2c9803469df0f740d13d2bf09",
+          "retained_snapshot": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/05-entry-clarification-input.md.snapshot"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep assertion and execution gaps as agent verification work. Merge deployment-evidence collection into KQ-SEC-05.",
+      "owner": "portal implementation and deployment owners",
+      "merge_into": "KQ-SEC-05",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/security-findings.jsonl",
+        "line": 20
+      },
+      "original_question": "Where can we obtain the deployed bindings and retained authorization tests for the three clarified portal rules?",
+      "original_answer": "",
+      "document_anchor": "kq-sec-20",
+      "root_adjustments": [
+        "The mutable stage source is bound to baseline Git bytes and its retained input snapshot."
+      ]
+    },
+    {
+      "id": "KQ-ARCH-01",
+      "disposition": "CONSOLIDATED",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Root Config names the portal Markets Operations One. Its description covers Operations processing and integrated post-trade applications.",
+      "rationale": "The current HTML directly states the name and scope. The candidate record identifies no accountable scope owner.",
+      "limits": [
+        "This identifies the supplied implementation wording, not a complete deployed capability inventory.",
+        "Portal-team ownership of three entitlement rules does not establish ownership of every platform capability."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-root-config/src/index.ejs",
+          "fragment": "L8-L16",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "sha256": "1960ac89a142d72df9750fd05c4ae7765b5c4a700a70f0c27dd65234fe1b1960"
+        },
+        {
+          "path": "knowledge/candidates/background/KT-portal-purpose.md",
+          "fragment": "scope",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620"
+        },
+        {
+          "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+          "fragment": "L7-L22",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "The existing name and documented scope need no repeated explanation. Scope ownership remains material to knowledge publication.",
+      "owner": "unknown",
+      "merge_into": "KQ-SEC-03",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 1
+      },
+      "original_question": "Who confirms the current portal name, scope, and supported capability inventory?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-01"
+    },
+    {
+      "id": "KQ-ARCH-02",
+      "disposition": "CONSOLIDATED",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The retained principles are draft. Explicit user answers already select entry denial, empty-entity denial, and single-entity empty-subject access.",
+      "rationale": "The draft labels notification as forthcoming. No new selection of every draft principle is required for this refinement.",
+      "limits": [
+        "Do not infer approval of interoperability, action tracing, or future notification delivery.",
+        "Publication review remains separate from the recorded user clarification."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md",
+          "fragment": "L1-L16",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep source statuses and completed user decisions. Review remaining current capability scope through the accountable baseline owner.",
+      "owner": "unknown",
+      "merge_into": "KQ-SEC-03",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 2
+      },
+      "original_question": "Which remaining draft principles are accepted, and from what effective date?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-02"
+    },
+    {
+      "id": "KQ-ARCH-03",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The source lists future onboarding, AI, telemetry, migration, notification, dashboards, and OpenFin proposals. It records no accepted delivery baseline.",
+      "rationale": "The target architecture sections are empty. The current user request concerns question refinement rather than roadmap implementation.",
+      "limits": [
+        "A proposal title does not establish approval, deployment, owner, or completion.",
+        "Reopen only the selected feature scope when a concrete adoption or implementation decision arises."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md",
+          "fragment": "L3-L18",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "6a6cd47cad4a73d0e98b3f3c61b93d63a710adf6c965ca800d4bb472b97a34ce"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md",
+          "fragment": "L49-L70",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "6a6cd47cad4a73d0e98b3f3c61b93d63a710adf6c965ca800d4bb472b97a34ce"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/user-request.json",
+          "fragment": "",
+          "revision": "sha256:3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9",
+          "sha256": "3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain these items as proposals. No current question requires the user to approve the complete 2026–2027 roadmap.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 3
+      },
+      "original_question": "Which 2026 and 2027 proposals are approved, deployed, deferred, rejected, or still proposed?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-03"
+    },
+    {
+      "id": "KQ-ARCH-04",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Root Config, shell, BFF, SDK, and Auth Server have exact current local Git baselines. Container, Blotter, and Nginx use filesystem hashes.",
+      "rationale": "Current checkout inspection identifies the available code. Auth Server now has independent Git history, unlike the October 22 snapshot.",
+      "limits": [
+        "Local commits do not establish deployed or upstream release identities.",
+        "The shell has an unrelated tsconfig.tsbuildinfo change. Inspected architecture source files remain identified separately.",
+        "Missing deployment bindings remain evidence limits, not a reason to repeat local repository inspection."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-root-config/src/root.ts",
+          "fragment": "L10-L27",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "sha256": "25f2b952a39292a0e73caf4c2bea373fa0bdaa5972f00ee60b7a41cb302a2dab"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+          "fragment": "L10-L32",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4"
+        },
+        {
+          "path": "repos/services/single-ui-bff/pom.xml",
+          "fragment": "",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "d06e0bb3cf0f62a3bbd9ded98e243549f0f93846a20f2f88fb0cc56888102de7"
+        },
+        {
+          "path": "repos/libraries/single-ui-sdk-starter/pom.xml",
+          "fragment": "",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "sha256": "757c76776c7530b9dc60f9a3b7d58beb061d52181e3c9ec671ba6a64d4739317"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/pom.xml",
+          "fragment": "",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "b4c36b73a946502da3632b1daec392ef5ea377487ea4daad2d866b556ea660ce"
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/src/Root/import/CashFlowCN.tsx",
+          "fragment": "L7-L20",
+          "revision": "filesystem-sha256:3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a",
+          "sha256": "3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a"
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/routing/common/useController.ts",
+          "fragment": "L7-L15",
+          "revision": "filesystem-sha256:e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf",
+          "sha256": "e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf"
+        },
+        {
+          "path": "repos/infra/nginx/ratan_servers.conf.j2",
+          "fragment": "L150-L256",
+          "revision": "filesystem-sha256:9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5",
+          "sha256": "9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "The agent can maintain exact local architecture provenance directly. Reuse existing environment-binding questions when deployment verification is selected.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 4
+      },
+      "original_question": "Which release or upstream revisions bind the supplied repositories to supported environments?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-04"
+    },
+    {
+      "id": "KQ-ARCH-05",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "MEDIUM",
+      "evidence_class": "Documented intent",
+      "answer": "The guideline prescribes TypeScript, React 18.2.0, functional components, MUI themes, and Context with Reducer. Current manifests declare React ^18.2.0.",
+      "rationale": "The original guide states the development baseline. Current shell and tenant manifests corroborate the React generation.",
+      "limits": [
+        "A manifest declaration does not establish installed, deployed, or platform-approved versions.",
+        "MUI declarations differ between the shell and tenants. No dependency upgrade is selected in this review."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md",
+          "fragment": "L1-L15",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "4e7399bf03a672bb61ca5d1a30ee3275e44e779ba5f0f097db9613a3fe47391d"
+        },
+        {
+          "path": "repos/ui/mfe-base/package.json",
+          "fragment": "",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348"
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/package.json",
+          "fragment": "",
+          "revision": "filesystem-sha256:93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82",
+          "sha256": "93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82"
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/package.json",
+          "fragment": "",
+          "revision": "filesystem-sha256:89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6",
+          "sha256": "89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Document the inspected baseline and approval limit. Request a compatibility decision only when a concrete dependency change requires it.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 5
+      },
+      "original_question": "Which development guideline and shared dependency versions are currently approved?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-05"
+    },
+    {
+      "id": "KQ-ARCH-06",
+      "disposition": "CONSOLIDATED",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The Micro frontend Team owns shared repository review and approval. Application teams own domain backend availability and application deployment.",
+      "rationale": "Development Principle assigns MT and MAT responsibilities directly. A new user explanation of those documented roles is unnecessary.",
+      "limits": [
+        "The retained guide does not identify current named contacts or prove later ownership changes.",
+        "Do not infer that portal-team entitlement-policy ownership covers every compatibility decision."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md",
+          "fragment": "L4-L10",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "06ce1c57bd699e5100e82a59b79c59a1cec1a8973223586a2eba9a9bda29d5b3"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Carry forward documented MT and MAT roles. Consolidate any current ownership correction into the baseline-owner review.",
+      "owner": "unknown",
+      "merge_into": "KQ-SEC-03",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 6
+      },
+      "original_question": "Who owns compatibility changes across shared modules and tenant applications?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-06"
+    },
+    {
+      "id": "KQ-ARCH-07",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "Direct external GUI dependencies require a platform-approved exception. The documented alternatives are internal packaging or tenant-owned backend encapsulation.",
+      "rationale": "The supplementary principle states the prohibition, exception path, alternatives, and tenant ownership duties directly.",
+      "limits": [
+        "No inspected exception register proves that every tenant complies or that no exception exists.",
+        "No new external dependency is proposed in this refinement."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md",
+          "fragment": "L3-L10",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "d95c3a34b07bccd986dee4b7508d6723ca938ef5addc44419e48d58801dca0f6"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Supplementary Principle_ External Frontend Dependency Control/page.md",
+          "fragment": "L23-L54",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "d95c3a34b07bccd986dee4b7508d6723ca938ef5addc44419e48d58801dca0f6"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain the stated rule. Obtain a specific exception decision only when an actual tenant dependency requires it.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 7
+      },
+      "original_question": "Which external frontend dependency policy and approved exceptions currently apply?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-07"
+    },
+    {
+      "id": "KQ-ARCH-08",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The standalone guide describes import-map reuse of MFE-Base and a Jest-configured template. Its linked template archive is unavailable.",
+      "rationale": "The original guide supports the integration pattern. No standalone application onboarding or template change is selected in this review.",
+      "limits": [
+        "An absent archive does not establish that standalone integration is unsupported or retired.",
+        "A supported runnable template version requires future template-specific evidence when an application needs it."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md",
+          "fragment": "L1-L17",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "a1ae5104849e9ca7b6276064b6f8c7870fe55b36e7cc5c80be54b11619a1b4cf"
+        },
+        {
+          "path": "registry/repositories.yaml",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "20cb4fd3e76ff2b7c05c4aba31c504174feeca55708813385b02a43de0de840b"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/user-request.json",
+          "fragment": "",
+          "revision": "sha256:3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9",
+          "sha256": "3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain the documented pattern and missing-archive limit. Remove the unsupported current request to choose or recover every standalone template.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 8
+      },
+      "original_question": "Which standalone template and shared-component versions remain supported?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-08"
+    },
+    {
+      "id": "KQ-ARCH-09",
+      "disposition": "EVIDENCE_FOLLOWUP",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Current manifests declare MUI, Ant Design, and AG Grid packages. The supplied component decision tables are incomplete.",
+      "rationale": "Package files establish declared library use. The conceptual design contains blank review, deviation, and decision records.",
+      "limits": [
+        "Declared package use does not establish licensing entitlement, approval, or deployment.",
+        "This review selects no new component, procurement, or production release."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/package.json",
+          "fragment": "",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348"
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/package.json",
+          "fragment": "",
+          "revision": "filesystem-sha256:93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82",
+          "sha256": "93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82"
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/package.json",
+          "fragment": "",
+          "revision": "filesystem-sha256:89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6",
+          "sha256": "89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/UI Library Comparations/Draft/Conceptual Design DRAFT/page.md",
+          "fragment": "L169-L202",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "006c0619c063e17bbc179391f862fb73c6999baf353fe3334f7df3f81896b1a5"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Do not label packages licensing-approved. Collect specific approval evidence when a release or procurement decision requires that claim.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 9
+      },
+      "original_question": "Which component libraries and licenses are approved, with versions and effective dates?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-09"
+    },
+    {
+      "id": "KQ-ARCH-10",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The report recommends Rspack migration or Vite for suitable new projects. Current supplied frontend manifests still declare Webpack.",
+      "rationale": "The report proposes pilots rather than recording completed platform adoption. No build-tool migration is requested in the current task.",
+      "limits": [
+        "Comparative benchmark tables do not prove results for these repositories.",
+        "No project benchmark execution or migration approval was inspected."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/React Build Tooling Research Report/page.md",
+          "fragment": "L13-L17",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "ad7c49791e54cc60acf841d7abbf0fc0d4c9ea01038b07c766ffabf1726f66eb"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/UI Tech Stack/React Build Tooling Research Report/page.md",
+          "fragment": "L261-L271",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "ad7c49791e54cc60acf841d7abbf0fc0d4c9ea01038b07c766ffabf1726f66eb"
+        },
+        {
+          "path": "repos/ui/mfe-base/package.json",
+          "fragment": "",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348"
+        },
+        {
+          "path": "repos/ui/mfe-root-config/package.json",
+          "fragment": "",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "sha256": "a96ab880d572e1178a84819db3a016c25fae456f99f04a5bf4421c445af5ad58"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep the report as research. Reopen provenance and pilot questions only when a concrete tooling migration requires them.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 10
+      },
+      "original_question": "Is the build-tool report historical research, or does it support an approved migration decision?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-10"
+    },
+    {
+      "id": "KQ-ARCH-11",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The notification source describes three experiments. The inspected shell has placeholder subscription handlers rather than a selected notification implementation.",
+      "rationale": "The draft records alternatives. A bounded shell and BFF source search found no notification transport implementation.",
+      "limits": [
+        "The bounded search does not establish absence across every tenant or deployment.",
+        "No notification adoption or implementation decision is requested in the current task."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/page.md",
+          "fragment": "L58-L102",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "e60c38efb14511b3e83dbb4ac2348a2be91b7d635f1b3121a4beda16e9e22433"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/dispathcer/index.ts",
+          "fragment": "L249-L255",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "1e04cb3b7a63e9a7bf402546cb95bf4ff9d55835e220f1bf3f391a05515784fe"
+        },
+        {
+          "path": "registry/repositories.yaml",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "20cb4fd3e76ff2b7c05c4aba31c504174feeca55708813385b02a43de0de840b"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/user-request.json",
+          "fragment": "",
+          "revision": "sha256:3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9",
+          "sha256": "3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain the experiments as proposals. Remove the request to select a supported transport without an active adoption decision.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 11
+      },
+      "original_question": "Which notification approach is supported, and in which environments?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-11"
+    },
+    {
+      "id": "KQ-ARCH-12",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The table draft offers one-hour, six-hour, and 24-hour retention alternatives. It selects no cleanup or unread-message policy.",
+      "rationale": "The exact draft states alternatives. The parent notification adoption question has no current implementation decision.",
+      "limits": [
+        "Do not select a retention period from a draft example.",
+        "No current supported notification service or required cleanup behavior is established in this scope."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Table Schema/page.md",
+          "fragment": "L18-L36",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "d1a02cfb6292e4a4343e89a08634c7c0c1ac09852619d3b55f7ade41cfef6a0c"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/user-request.json",
+          "fragment": "",
+          "revision": "sha256:3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9",
+          "sha256": "3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep the alternatives in historical knowledge. Reopen retention only when an adopted notification service requires measurable cleanup behavior.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 12
+      },
+      "original_question": "If notifications are supported, what retention, cleanup, and unread-message rules apply?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-12"
+    },
+    {
+      "id": "KQ-ARCH-13",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The store draft declares isRead as a string and assigns false. The table examples also use boolean read flags.",
+      "rationale": "The original store and schema contain a direct type inconsistency. They are proposal material, not an adopted current contract.",
+      "limits": [
+        "Do not repair the draft by inventing an approved field type.",
+        "No notification contract implementation is selected in this refinement."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md",
+          "fragment": "L1-L13",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "a9000b285f4f002139165d7be341719e04df3eb34738e3ef1665d5378c9bcc0f"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Notification Store and React.useEffect/page.md",
+          "fragment": "L63-L75",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "a9000b285f4f002139165d7be341719e04df3eb34738e3ef1665d5378c9bcc0f"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Table Schema/page.md",
+          "fragment": "L28-L36",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "d1a02cfb6292e4a4343e89a08634c7c0c1ac09852619d3b55f7ade41cfef6a0c"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Preserve the contradiction. Remove the premature request to choose a notification schema before an applicable service decision exists.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 13
+      },
+      "original_question": "If notifications are supported, which schema defines read, display, subscription, and delivery behavior?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-13"
+    },
+    {
+      "id": "KQ-ARCH-14",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The source list remains unchecked. Current Auth Server declares Spring Boot 4.0.6; BFF declares 3.3.4.",
+      "rationale": "The TODO source records no approval. Current POMs show partial implementation evidence, not universal completion of the list.",
+      "limits": [
+        "Unchecked source status does not prove that no later implementation exists elsewhere.",
+        "Current local code is not a release or approval record."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operation One TODO List/page.md",
+          "fragment": "L1-L4",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "bdb1374f5b897c5a72ab82abc42a1cf26333315498688655b25b819dfe7099f5"
+        },
+        {
+          "path": "repos/services/single-ui-bff/pom.xml",
+          "fragment": "",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "d06e0bb3cf0f62a3bbd9ded98e243549f0f93846a20f2f88fb0cc56888102de7"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/pom.xml",
+          "fragment": "",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "b4c36b73a946502da3632b1daec392ef5ea377487ea4daad2d866b556ea660ce"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/user-request.json",
+          "fragment": "",
+          "revision": "sha256:3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9",
+          "sha256": "3f5e9ea7daa20ff2a43d7891fce0ad9d4d6c506bd9d02ef4501a89fcaa1d39d9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain these items as unchecked proposals. Reopen acceptance and completion questions when a selected work item affects a current decision.",
+      "owner": "unknown",
+      "merge_into": null,
+      "refinement_history": [
+        {
+          "prior_answer": "All four source work items remain unchecked. They describe proposals rather than retained approvals or completion evidence.",
+          "reason": "Current POM inspection supplies partial implementation evidence beyond the unchecked proposal status."
+        }
+      ],
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 14
+      },
+      "original_question": "Which unchecked work items have accepted scope, owners, and completion evidence?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-14"
+    },
+    {
+      "id": "KQ-ARCH-15",
+      "disposition": "EVIDENCE_FOLLOWUP",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Nginx templates declare Gateway routes and direct query-service/data-ambassador proxies. External Ansible values determine concrete upstream hosts.",
+      "rationale": "Current templates directly show routing branches. The user already supplied the logical ingress model, so that explanation needs no repetition.",
+      "limits": [
+        "Templates do not establish live DNS, rendered hosts, or deployed route selection.",
+        "API Gateway implementation remains explicitly outside this review.",
+        "Missing rendered deployment evidence limits runtime claims but does not block the current logical architecture refinement."
+      ],
+      "sources": [
+        {
+          "path": "repos/infra/nginx/ratan_servers.conf.j2",
+          "fragment": "L150-L256",
+          "revision": "filesystem-sha256:9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5",
+          "sha256": "9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5"
+        },
+        {
+          "path": "repos/infra/nginx/ratan_upstreams.conf.j2",
+          "fragment": "L1-L26",
+          "revision": "filesystem-sha256:9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0",
+          "sha256": "9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0"
+        },
+        {
+          "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+          "fragment": "L16-L22",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain the reported topology and exact template exceptions. Request rendered bindings only when a selected deployment decision requires them.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 15
+      },
+      "original_question": "Which environment and rendered ingress configuration establish the reported DNS-to-Nginx-to-Gateway route?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-15"
+    },
+    {
+      "id": "KQ-ARCH-16",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Auth Server commit 7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee implements EMS3 entitlement retrieval. The earlier statement that this copy lacks EMS3 is stale.",
+      "rationale": "The new controller calls Ems3EntitlementService, which obtains an FMAA token and calls Ems3Repository for CES entitlements.",
+      "limits": [
+        "A bounded Java and POM search found no explicit Entra, SPN, or Azure implementation name.",
+        "Configured provider endpoints and indirect token services do not prove which live identity provider is selected.",
+        "User-reported Auth responsibilities remain retained. BFF Entra and EMS3 code also remains independently relevant.",
+        "No business execution or deployment verification occurred."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/Ems3EntitlementController.java",
+          "fragment": "L15-L27",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "c7e11ddaf8734c27731a94aa14ffd7b92f5d50e443f28387ad49462553fdcdd2"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+          "fragment": "L40-L115",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "64dc26d91e67161a93ecfa3cc6bd37ae983b98e8a9d7c7d60f13e40795178b09"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+          "fragment": "L20-L53",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "50adedeaf06bc546fb3a2214b50ec559297f65294fe4ae0e49fc189f1d54c556"
+        },
+        {
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/configuration/Ems3Config.java",
+          "fragment": "",
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+          "sha256": "d3a47af0f514ebc885080db8893fa36118c7fbd5352c53f8dabd590799cf5f25"
+        },
+        {
+          "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+          "fragment": "L20-L22",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Correct the stale local EMS3 gap directly. Preserve unbound Entra provider scope without requesting the known architecture explanation again.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 16
+      },
+      "original_question": "Which Auth Server revision implements the reported Entra SPN and EMS3 delegation?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-16"
+    },
+    {
+      "id": "KQ-ARCH-17",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "MEDIUM",
+      "evidence_class": "Inspected implementation",
+      "answer": "BFF declares Spring Boot Actuator and exposes management web endpoints. Separate controllers implement tile, category, import-map, and configuration administration.",
+      "rationale": "The POM, endpoint exposure configuration, and administration mappings explain the distinct implementation capabilities without a custom health controller.",
+      "limits": [
+        "Framework dependency and configuration do not prove a live health response or environment exposure.",
+        "The source does not define an additional business workflow called health management.",
+        "A terminology clarification is unnecessary unless a selected endpoint-level requirement depends on that distinction."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/single-ui-bff/pom.xml",
+          "fragment": "L138-L142",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "d06e0bb3cf0f62a3bbd9ded98e243549f0f93846a20f2f88fb0cc56888102de7"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/resources/application.yml",
+          "fragment": "L78-L84",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "719eae6ac604daa440e7c00bbab6f5f57454761b60b8ae3cb1ad3a3c00a56d56"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "fragment": "L33-L60",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "cfbda5507e80691404985e988f518c811b3458e24b51751e3909cda71ee44d23"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "fragment": "L28-L51",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "ee98fe6f1d416e6646bf26ed950a47927218b4b56c96aff77f02c21afcc8ed79"
+        },
+        {
+          "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+          "fragment": "L18-L22",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Use precise Actuator and administration descriptions. Preserve the user-reported responsibility without asking a nonmaterial terminology question.",
+      "owner": "unknown",
+      "merge_into": null,
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/architecture-findings.jsonl",
+        "line": 17
+      },
+      "original_question": "What does BFF health management cover, and which interface represents that responsibility?",
+      "original_answer": "",
+      "document_anchor": "kq-arch-17"
+    },
+    {
+      "id": "KQ-OPS-001",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "MEDIUM",
+      "evidence_class": "Documented intent",
+      "answer": "The retained procedure combines frontend and backend onboarding, EMS2 setup, Admin Module maker-checker review, and tenant-owned configuration promotion. The release flow uses exported CSV files and a tenant pipeline calling the BFF upload endpoint.",
+      "rationale": "The onboarding guides, later administration manual, release flow, and implemented upload endpoint describe consistent responsibilities.",
+      "limits": [
+        "This answers the retained procedure, not attested deployment in each environment.",
+        "Current environment identities and authorization evidence remain separate."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md",
+          "fragment": "L1-L15",
+          "revision": "sha256:b93d2fc08759df036482b632fe9c8f8f966be1d4c98eedc235c5206a036c587f",
+          "sha256": "b93d2fc08759df036482b632fe9c8f8f966be1d4c98eedc235c5206a036c587f"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Backend Onboarding Process/page.md",
+          "fragment": "L1-L7",
+          "revision": "sha256:d861539b93503406149b03d7917f985fbebba26499ddd43338fe5ce1de42d6a8",
+          "sha256": "d861539b93503406149b03d7917f985fbebba26499ddd43338fe5ce1de42d6a8"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md",
+          "fragment": "L3-L24",
+          "revision": "sha256:341a9cafae70f1171a244d38a45cefd908b42ca8bb46fcb2c31c452e5e50f634",
+          "sha256": "341a9cafae70f1171a244d38a45cefd908b42ca8bb46fcb2c31c452e5e50f634"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "fragment": "L53-L91",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "cfbda5507e80691404985e988f518c811b3458e24b51751e3909cda71ee44d23"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "The generic procedure question need not return to the user. Any deployment-specific exception needs a concrete supported scope.",
+      "owner": "unknown",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:34:11.359043+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 1
+      },
+      "original_question": "Which onboarding and administration procedures apply in each current environment?",
+      "original_answer": "",
+      "document_anchor": "kq-ops-001"
+    },
+    {
+      "id": "KQ-OPS-002",
+      "disposition": "OPEN_POLICY",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Data lists filter by the validated EMS2 role. Update paths compare record ownership and reject maker self-verification. Audit lookup validates credentials but does not compare record ownership. Tile creation also lacks the update path’s reference-owner comparison.",
+      "rationale": "The controllers and shared validation utility directly expose these different authorization paths. The manual requires distinct maker and checker users.",
+      "limits": [
+        "These are inspected source predicates, not approved access policy or new execution results.",
+        "The intended audit and foreign-reference access boundary remains unspecified."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "fragment": "L41-L68",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "a515c30c585304810bd6a1dc7044fbccadf2dcb416efb907c0c5960dec4a612d"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java",
+          "fragment": "L61-L99",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "17e4241303c4e1efaec0dd3f4623d4d823bb232e87a882b7214e48fa1c3c13d0"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java",
+          "fragment": "L141-L164",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "17e4241303c4e1efaec0dd3f4623d4d823bb232e87a882b7214e48fa1c3c13d0"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationCategoryController.java",
+          "fragment": "L105-L116",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "cf5c2266952bb6684f2600ecb268c8120d1efbbf5220d8fadf528c9f8a5b91b3"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "fragment": "L46-L64",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "ee98fe6f1d416e6646bf26ed950a47927218b4b56c96aff77f02c21afcc8ed79"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "fragment": "L118-L156",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "ee98fe6f1d416e6646bf26ed950a47927218b4b56c96aff77f02c21afcc8ed79"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md",
+          "fragment": "L19-L35",
+          "revision": "sha256:04d6ef196815349bd9144e81cde136c35b2ffae4a63fff825d89c687ec3fe16c",
+          "sha256": "04d6ef196815349bd9144e81cde136c35b2ffae4a63fff825d89c687ec3fe16c"
+        }
+      ],
+      "remaining_question": "Must tenant isolation restrict audit reads and category/import-map references to the same tenant role?",
+      "decision_impact": "This answer determines cross-tenant audit and foreign-reference acceptance expectations.",
+      "owner": "unknown administration policy owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:35:08.537275+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 2
+      },
+      "original_question": "Which tenant records may each maker, checker, and administrator read or change?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-ops-002"
+    },
+    {
+      "id": "KQ-OPS-003",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "MEDIUM",
+      "evidence_class": "Documented intent",
+      "answer": "The later release flow assigns change requests, ADO work items, and release pipelines to tenant teams. The administration manual requires different maker and checker users and per-function audit history. The earlier self-service proposal does not establish a change-control exemption.",
+      "rationale": "The detailed release procedure and implemented activation/audit paths qualify the earlier proposal.",
+      "limits": [
+        "Current production approval authority and emergency exceptions are not established by these documents.",
+        "No production configuration change or emergency release is proposed in this knowledge review."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md",
+          "fragment": "L9-L18",
+          "revision": "sha256:4be78457402c3fab32bac328a1690d852fdc34d41f363f8941efae41a3482911",
+          "sha256": "4be78457402c3fab32bac328a1690d852fdc34d41f363f8941efae41a3482911"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md",
+          "fragment": "L3-L17",
+          "revision": "sha256:341a9cafae70f1171a244d38a45cefd908b42ca8bb46fcb2c31c452e5e50f634",
+          "sha256": "341a9cafae70f1171a244d38a45cefd908b42ca8bb46fcb2c31c452e5e50f634"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md",
+          "fragment": "L31-L35",
+          "revision": "sha256:04d6ef196815349bd9144e81cde136c35b2ffae4a63fff825d89c687ec3fe16c",
+          "sha256": "04d6ef196815349bd9144e81cde136c35b2ffae4a63fff825d89c687ec3fe16c"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java",
+          "fragment": "L71-L99",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "17e4241303c4e1efaec0dd3f4623d4d823bb232e87a882b7214e48fa1c3c13d0"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Describe the documented controls without treating a historical proposal as an approved production exemption.",
+      "owner": "unknown release owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:35:08.538034+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 3
+      },
+      "original_question": "Which approval, audit, rollback, and emergency controls apply to self-service configuration changes?",
+      "original_answer": "",
+      "document_anchor": "kq-ops-003"
+    },
+    {
+      "id": "KQ-OPS-004",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The supplied BFF uses the post_trade_portal_service schema and Flyway’s post_trade_portal_service_schema_history table. Its V1_1_0 migration adds entry_name and filter_rule to tile and tile-audit records. Active database migration history is not retained.",
+      "rationale": "The source configuration, latest supplied migration, and ApplicationTile entity directly identify the local persistence baseline.",
+      "limits": [
+        "An independent deployment or database record is required before claiming an active environment schema.",
+        "No environment-specific catalog migration or deployment decision is requested here."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/single-ui-bff/src/main/resources/application.yml",
+          "fragment": "L15-L23",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "719eae6ac604daa440e7c00bbab6f5f57454761b60b8ae3cb1ad3a3c00a56d56"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/resources/db/migration/V1_1_0__application_tile_modify.sql",
+          "fragment": "L1-L4",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "837029aa32f0b1d98dfc1fda580e5eb09d312da219dc80963970d9ca04b09031"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java",
+          "fragment": "L14-L77",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "69adae24abb4eeb02244d27e8517bfae9eccfce3e81ac7098b55ca756be341e3"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java",
+          "fragment": "L14-L77",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "69adae24abb4eeb02244d27e8517bfae9eccfce3e81ac7098b55ca756be341e3"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain the exact source schema as bounded knowledge. Restore a deployment-binding question only for an actual environment-dependent decision.",
+      "owner": "unknown deployment owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:35:52.257727+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 4
+      },
+      "original_question": "Which deployed BFF artifact and migration history establish the catalog schema in each environment?",
+      "original_answer": "",
+      "document_anchor": "kq-ops-004",
+      "root_adjustments": [
+        "Correct physical locator endpoint to EOF at line 77.",
+        "Correct physical locator endpoint to EOF at line 77."
+      ]
+    },
+    {
+      "id": "KQ-OPS-006",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The selected user policy requires a registered application entity for portal entry. The single-entity tile rule also requires the configured entity entitlement. No SSDR delegation or guest exception was selected. The older document lists alternatives, not an applicable exception.",
+      "rationale": "Explicit user clarifications govern the current portal scope. The historic guest proposal is struck through.",
+      "limits": [
+        "This does not select an authorization design for an independent future SSDR interface.",
+        "No specific SSDR delegation requirement or active onboarding decision is supplied."
+      ],
+      "sources": [
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json",
+          "fragment": "",
+          "revision": "user-answer-20261022-1",
+          "sha256": "37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358"
+        },
+        {
+          "path": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json",
+          "fragment": "",
+          "revision": "user-answer-20261022-1",
+          "sha256": "4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md",
+          "fragment": "L27-L37",
+          "revision": "sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef",
+          "sha256": "3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md",
+          "fragment": "L42-L69",
+          "revision": "sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef",
+          "sha256": "3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Do not reopen a portal-entry exception through a historical tenant discussion. Ask about delegation only for a named new requirement.",
+      "owner": "unknown SSDR requirement owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:35:52.259678+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 5
+      },
+      "original_question": "For SSDR users without required entitlements, should onboarding add EMS2 grants or use an explicit delegation arrangement?",
+      "original_answer": "",
+      "document_anchor": "kq-ops-006"
+    },
+    {
+      "id": "KQ-REL-001",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The historical release proposal conflicts internally. Its summary states 24 hours; its detailed schedule states 10 hours, 09:00–19:00 SGT. Neither value becomes current policy through source inspection.",
+      "rationale": "Both incompatible values appear directly in one retained proposal. No production release is proposed by this knowledge review.",
+      "limits": [
+        "The governing duration remains unresolved for future release scheduling.",
+        "This does not select a release window or approve a release."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md",
+          "fragment": "L13-L19",
+          "revision": "sha256:3ed76a0a1d2a1fac423ac9c1d65d20783e32d2df2b65dac3e4baee709f858684",
+          "sha256": "3ed76a0a1d2a1fac423ac9c1d65d20783e32d2df2b65dac3e4baee709f858684"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md",
+          "fragment": "L44-L54",
+          "revision": "sha256:3ed76a0a1d2a1fac423ac9c1d65d20783e32d2df2b65dac3e4baee709f858684",
+          "sha256": "3ed76a0a1d2a1fac423ac9c1d65d20783e32d2df2b65dac3e4baee709f858684"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Record the proposal conflict. Ask for a governing duration only when an actual release-scheduling decision depends on it.",
+      "owner": "unknown release policy owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:36:59.796933+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 6
+      },
+      "original_question": "Which production release duration applies: 10 hours, 24 hours, or another stated duration?",
+      "original_answer": "",
+      "document_anchor": "kq-rel-001"
+    },
+    {
+      "id": "KQ-REL-002",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The historical urgent-release proposal requires all confirmations by Monday EOD. It also permits proceeding when nobody raises concerns. These are conflicting authorization conditions, not a selected current rule.",
+      "rationale": "The conflict is explicit in adjacent source rows. No urgent release or failed-release scheduling decision is requested.",
+      "limits": [
+        "No current urgent-release approval policy is established.",
+        "Silence must not be treated as recorded human authorization."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md",
+          "fragment": "L144-L151",
+          "revision": "sha256:3ed76a0a1d2a1fac423ac9c1d65d20783e32d2df2b65dac3e4baee709f858684",
+          "sha256": "3ed76a0a1d2a1fac423ac9c1d65d20783e32d2df2b65dac3e4baee709f858684"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Preserve the contradiction without asking an irrelevant scheduling question during knowledge clarification.",
+      "owner": "unknown release policy owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:36:59.799505+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 7
+      },
+      "original_question": "Must every urgent-release stakeholder confirm explicitly, or may silence permit release?",
+      "original_answer": "",
+      "document_anchor": "kq-rel-002"
+    },
+    {
+      "id": "KQ-REL-003",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The BFF pipeline extends java-maven.yml; MFE Base extends nodejs-mfe.yml from the shared ADO templates repository. Both expose release-work-item and rollback parameters and select Ansible deployment. The retained tenant promotion flow exports CSV configuration and calls the authenticated BFF upload endpoint.",
+      "rationale": "The checked pipeline entrypoints and upload controller provide exact local implementation bindings.",
+      "limits": [
+        "The external shared template implementation and executed environment pipeline records are unavailable locally.",
+        "Historical release-window proposals remain qualified rather than selected as current scheduling policy."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/single-ui-bff/azure-pipelines-maven.yml",
+          "fragment": "L1-L46",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "477531fe546f6e2a4a2f914352d29f767710e1c58393dd19099557c1e1444cfa"
+        },
+        {
+          "path": "repos/ui/mfe-base/azure-pipelines-npm.yml",
+          "fragment": "L5-L47",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "bfa371b4dbdaa0530872a046a1167b13e8300ab677a17888d9eb8990f1f09a26"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md",
+          "fragment": "L3-L24",
+          "revision": "sha256:341a9cafae70f1171a244d38a45cefd908b42ca8bb46fcb2c31c452e5e50f634",
+          "sha256": "341a9cafae70f1171a244d38a45cefd908b42ca8bb46fcb2c31c452e5e50f634"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "fragment": "L53-L91",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "cfbda5507e80691404985e988f518c811b3458e24b51751e3909cda71ee44d23"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Use the known pipeline entrypoints and documented promotion contract. Obtain executed environment bindings only for an actual deployment decision.",
+      "owner": "unknown deployment owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:36:59.801173+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 8
+      },
+      "original_question": "Which checklist, release-window rules, and deployment workflow currently govern each environment?",
+      "original_answer": "",
+      "document_anchor": "kq-rel-003",
+      "root_adjustments": [
+        "Correct physical locator endpoint to EOF at line 47."
+      ]
+    },
+    {
+      "id": "KQ-REL-004",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The supplied upload endpoint still requires fmaa_access_token. It calls the configured FMAA verification endpoint and rejects inactive identities. The old checklist’s decommissioning warning supplies no replacement contract or effective migration date.",
+      "rationale": "ApplicationConfigController calls ApplicationConfigServiceImpl before processing CSV files. Both current source paths retain FMAA validation.",
+      "limits": [
+        "This establishes the supplied source contract, not current FMAA service availability in production.",
+        "No replacement migration is inferred from an historical warning."
+      ],
+      "sources": [
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "fragment": "L53-L72",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "cfbda5507e80691404985e988f518c811b3458e24b51751e3909cda71ee44d23"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/ApplicationConfigServiceImpl.java",
+          "fragment": "L20-L31",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "f742e7c868d6a23df91fc8b8962d52901f72847802ac0bddbe947c40614b31f5"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md",
+          "fragment": "L16",
+          "revision": "sha256:795e87b970924888711478a7cf6f2a92ea664d63b96d02a777651d73d21f263c",
+          "sha256": "795e87b970924888711478a7cf6f2a92ea664d63b96d02a777651d73d21f263c"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Record FMAA as the implemented dependency. Reopen migration planning only if a named decommissioning or upload-change decision requires it.",
+      "owner": "unknown authentication owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:36:59.801589+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 9
+      },
+      "original_question": "Does FMAA remain supported for configuration uploads? If replacement is planned, which method and migration date apply?",
+      "original_answer": "",
+      "document_anchor": "kq-rel-004"
+    },
+    {
+      "id": "KQ-REL-005",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The retained calendar explicitly separates Portal, tenant, technical, and business dates. The request templates permit Portal deployment before application deployment. These are planning and sequencing records, not retained deployment or acceptance results.",
+      "rationale": "Calendar rows and request fields directly establish separate milestone identities. They do not establish completion.",
+      "limits": [
+        "Actual completion requires the selected release’s deployment and business sign-off records.",
+        "No specific tenant activation or release acceptance decision is requested in this review."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/page.md",
+          "fragment": "L7-L16",
+          "revision": "sha256:0b69e9821feaf89fef73e7474eb13166f0e97ac045058c94517fe735f79fa7d2",
+          "sha256": "0b69e9821feaf89fef73e7474eb13166f0e97ac045058c94517fe735f79fa7d2"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/[Template] Markets Operations One Change Request/page.md",
+          "fragment": "L21-L23",
+          "revision": "sha256:a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477",
+          "sha256": "a1b5ce1b3a8cb2dc2df5dfea197f2243217c639f13915361eb3cfd4e79ea2477"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/FSSDS Data Distribution and Reporting (DDR)/page.md",
+          "fragment": "L9-L17",
+          "revision": "sha256:194b9b81293e311de96fb3473ee24d00c9fbc7886ca9eb94c1af3b55e58d2c84",
+          "sha256": "194b9b81293e311de96fb3473ee24d00c9fbc7886ca9eb94c1af3b55e58d2c84"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep technical and business activation distinct. Do not request all tenant execution records without a named release decision.",
+      "owner": "unknown release owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:37:26.979776+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 10
+      },
+      "original_question": "Which records separately establish technical deployment, business validation, and business activation for each supported tenant?",
+      "original_answer": "",
+      "document_anchor": "kq-rel-005"
+    },
+    {
+      "id": "KQ-REL-006",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The retained tenant requests describe requested capabilities and expected readiness fields. CDUPS leaves sign-off, profiles, user counts, and UVT users unprovided. VPA withdraws several evidence references. These incomplete requests cannot establish present release readiness.",
+      "rationale": "The missing and struck-through fields are directly visible in the retained requests.",
+      "limits": [
+        "This is not a finding that the tenants remain unready today.",
+        "A named current tenant release would require its own applicable evidence."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/Markets Operation One Change Request - CDUPS/page.md",
+          "fragment": "L14-L21",
+          "revision": "sha256:5dd174e29f95f6d606afcd8a3d43248e9d0f1773a9fda2646d04ee4ecc384f43",
+          "sha256": "5dd174e29f95f6d606afcd8a3d43248e9d0f1773a9fda2646d04ee4ecc384f43"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/Markets Operations One Release Calendar/VPA Fix-link and Monitor Change Request/page.md",
+          "fragment": "L12-L22",
+          "revision": "sha256:9fbcf63179b50b0d0d060a941e7f45595d0a6217c0db715bd993fed5de01883b",
+          "sha256": "9fbcf63179b50b0d0d060a941e7f45595d0a6217c0db715bd993fed5de01883b"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md",
+          "fragment": "L19-L29",
+          "revision": "sha256:795e87b970924888711478a7cf6f2a92ea664d63b96d02a777651d73d21f263c",
+          "sha256": "795e87b970924888711478a7cf6f2a92ea664d63b96d02a777651d73d21f263c"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Preserve requested capability descriptions as historical intent. Avoid a blanket current-readiness question outside an identified tenant release scope.",
+      "owner": "unknown tenant release owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:37:26.980359+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 11
+      },
+      "original_question": "Which tenant requests and readiness records define accepted capability scope and completed release gates?",
+      "original_answer": "",
+      "document_anchor": "kq-rel-006"
+    },
+    {
+      "id": "KQ-INT-001",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The requesting tenant owns business demand and caller implementation. Portal routes intents and context and applies its access-control boundary. The receiving tenant owns the handler and business action. Joint readiness requires registration, context agreement, authorization, tests, release readiness, and provider deployment.",
+      "rationale": "The interoperability guide explicitly assigns these roles and lists the joint prerequisites.",
+      "limits": [
+        "The guide defines responsibility roles, not accountable contacts for every possible future feature.",
+        "A named new integration must identify its specific caller and provider owners."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md",
+          "fragment": "L27-L60",
+          "revision": "sha256:71c8c3952ed4d36f3b6f1ec5b099aa3edf5a11bc13993f28c1d064d5ddaab978",
+          "sha256": "71c8c3952ed4d36f3b6f1ec5b099aa3edf5a11bc13993f28c1d064d5ddaab978"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.ts",
+          "fragment": "L47-L108",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "3abe3884f3fd8a7649c0c2bcb98e8cedda86924f1c77daca3b427e8bf6614ebb"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/dispathcer/index.ts",
+          "fragment": "L152-L178",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "1e04cb3b7a63e9a7bf402546cb95bf4ff9d55835e220f1bf3f391a05515784fe"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Use the documented joint-delivery model without asking the user to restate it. Collect feature-specific owners during actual integration intake.",
+      "owner": "caller tenant, provider tenant, and portal roles; named contacts unknown",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:38:39.539959+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 12
+      },
+      "original_question": "For each interoperability feature, which caller and provider teams own delivery, and which readiness gates must both meet?",
+      "original_answer": "",
+      "document_anchor": "kq-int-001"
+    },
+    {
+      "id": "KQ-INT-002",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The supplied shell contains an OpenFin hook and launch-intent handling for cashflow, trade, and general target parameters. Home calls this hook. Source availability does not establish delivery dates or active runtime installation in any environment.",
+      "rationale": "The current hook and its Home caller establish implemented feature paths. The historical briefing supplies plans rather than environment execution bindings.",
+      "limits": [
+        "No current production OpenFin rollout or adoption decision is requested.",
+        "Environment delivery remains unverified and must not be inferred from repository code."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.ts",
+          "fragment": "L8-L15",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "3abe3884f3fd8a7649c0c2bcb98e8cedda86924f1c77daca3b427e8bf6614ebb"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.ts",
+          "fragment": "L47-L108",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "3abe3884f3fd8a7649c0c2bcb98e8cedda86924f1c77daca3b427e8bf6614ebb"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+          "fragment": "L43-L50",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md",
+          "fragment": "L135-L163",
+          "revision": "sha256:e8ec00d527cdf7ef33f2b901ddca98d7df4870d30f130cfc434b80b6d16255df",
+          "sha256": "e8ec00d527cdf7ef33f2b901ddca98d7df4870d30f130cfc434b80b6d16255df"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain implemented capabilities and historical milestones separately. Request dated deployment records only for a named rollout claim.",
+      "owner": "unknown interoperability deployment owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:38:39.540783+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 13
+      },
+      "original_question": "Which OpenFin and FDC3 features are delivered in each environment, with dated technical and business milestones?",
+      "original_answer": "",
+      "document_anchor": "kq-int-002"
+    },
+    {
+      "id": "KQ-INT-003",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The current shell registers scb.ViewLaunch. It accepts scb.fmptp.cashflows, scb.fmptp.trade.query, and scb.fmptp.general.parameters contexts. Trade IDs and filters become tile parameters; general parameters pass to the named target. This differs from the older fmchannel and OpenTile examples.",
+      "rationale": "The current hook declares the names, payload branches, and dispatcher calls. Direct unit assertions cover these transformations.",
+      "limits": [
+        "No explicit schema-version field or response contract is declared by this hook.",
+        "This is the inspected implementation contract, not proof of external producer adoption or business approval."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.ts",
+          "fragment": "L8-L15",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "3abe3884f3fd8a7649c0c2bcb98e8cedda86924f1c77daca3b427e8bf6614ebb"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.ts",
+          "fragment": "L50-L106",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "3abe3884f3fd8a7649c0c2bcb98e8cedda86924f1c77daca3b427e8bf6614ebb"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.test.ts",
+          "fragment": "L192-L206",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "5e61ffaa27dce9d06a96f4869bb5925d531bee60bd0e980813b212fdae529502"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.test.ts",
+          "fragment": "L223-L244",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "5e61ffaa27dce9d06a96f4869bb5925d531bee60bd0e980813b212fdae529502"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.test.ts",
+          "fragment": "L286-L307",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "5e61ffaa27dce9d06a96f4869bb5925d531bee60bd0e980813b212fdae529502"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md",
+          "fragment": "L43-L49",
+          "revision": "sha256:839b37307c84eccc1e46a2c16055786c5ce02314feae7f71c7f5d8d2a1b2a6a9",
+          "sha256": "839b37307c84eccc1e46a2c16055786c5ce02314feae7f71c7f5d8d2a1b2a6a9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Replace the generic contract question with the exact source contract and its limits. Do not force selection of obsolete POC names.",
+      "owner": "unknown interoperability contract owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:38:39.541150+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 14
+      },
+      "original_question": "Which versioned intent names, context schemas, payload fields, and responses form the current integration contract?",
+      "original_answer": "",
+      "document_anchor": "kq-int-003"
+    },
+    {
+      "id": "KQ-INT-004",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The supplied openfintoken URL bootstrap is gated to LOCAL or DEV with window.fin present. Other routing paths use the normal session validation flow. The POC URL-token example does not establish a production handoff contract.",
+      "rationale": "The routing controller applies the environment guard explicitly. No production OpenFin handoff requirement is selected here.",
+      "limits": [
+        "Source guards do not establish deployed environment values or provider configuration.",
+        "A future production launch integration requires an explicit approved handoff contract."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/routing/common/useController.ts",
+          "fragment": "L38-L72",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "097c110ba6df6357db918ed78a8c08f4b2be6fb38f76e920b8cf2f383cf41731"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/3. Application Interoperability/page.md",
+          "fragment": "L1-L23",
+          "revision": "sha256:46cd29f49215cf8cb7468f7ec403e5ce57a83c82519ec3165802df6e63007e31",
+          "sha256": "46cd29f49215cf8cb7468f7ec403e5ce57a83c82519ec3165802df6e63007e31"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Describe the implemented development-only bootstrap. Do not ask the user to design an unsupported production integration now.",
+      "owner": "unknown production interoperability owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:39:43.764585+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 15
+      },
+      "original_question": "Which production authentication handoff and token transport apply when one application launches another?",
+      "original_answer": "",
+      "document_anchor": "kq-int-004"
+    },
+    {
+      "id": "KQ-INT-005",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The local root manifest requests OpenFin runtime 26.102.71.8. MFE Base declares fdc3-2.1 at 2.1.x and openfin-fdc3 at ^0.2.3. The historical briefing separately names stable-v41. These declarations do not establish an installed environment support matrix.",
+      "rationale": "Exact manifest and dependency declarations are available locally. The package and runtime versions identify different artifacts.",
+      "limits": [
+        "The browser manifest is a local demonstration configuration.",
+        "No supported-environment compatibility matrix or actual OpenFin rollout decision is supplied."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-root-config/public/manifest.fin.json",
+          "fragment": "L1-L17",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "sha256": "6a71e2b99d5ed03c248a0b0fdee810628e4ebd1aa5847eccd67c96ea3ea74a6d"
+        },
+        {
+          "path": "repos/ui/mfe-base/package.json",
+          "fragment": "L109-L120",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md",
+          "fragment": "L56-L61",
+          "revision": "sha256:e8ec00d527cdf7ef33f2b901ddca98d7df4870d30f130cfc434b80b6d16255df",
+          "sha256": "e8ec00d527cdf7ef33f2b901ddca98d7df4870d30f130cfc434b80b6d16255df"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Retain the exact declared versions with their distinct scopes. Require environment support evidence only for a named runtime decision.",
+      "owner": "unknown runtime support owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:39:43.765244+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 16
+      },
+      "original_question": "Which OpenFin runtime and FDC3 library combinations are supported in each environment?",
+      "original_answer": "",
+      "document_anchor": "kq-int-005"
+    },
+    {
+      "id": "KQ-INT-006",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Observed execution",
+      "answer": "The 25 October retained run contains 22 passing OpenFin-hook and dispatcher unit cases. Source bindings match the current hook, dispatcher, and inspected test files. Assertions cover listener registration, payload transformation, tile lookup, and workspace parameters.",
+      "rationale": "The saved per-case results match inspected assertions and the run’s c42e7609c4e14eb53de32702e4bd3424a223988a source binding.",
+      "limits": [
+        "Mocks replace FDC3 libraries and provider behavior. These results do not verify real cross-library broadcasts or target rendering.",
+        "The runner uses forceExit; passing assertions do not prove resource cleanup.",
+        "No new execution occurred during this investigation."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.test.ts",
+          "fragment": "L192-L206",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "5e61ffaa27dce9d06a96f4869bb5925d531bee60bd0e980813b212fdae529502"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useOpenfin.test.ts",
+          "fragment": "L223-L244",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "5e61ffaa27dce9d06a96f4869bb5925d531bee60bd0e980813b212fdae529502"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/dispathcer/index.test.ts",
+          "fragment": "L19-L52",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "444f2edcbb1f9d5c71df79a2a807f93c7bb449d70c03be7dcd250bd8b9530978"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/source-binding.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "cf75a16cd25b72fda96c1fdceed80e42b1a09a527e53f9d4672986ae13aedee6"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/cases/520272ffff71.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "09e6a805a0f507fdc0de58003a69e4841669e8aae94d4dcbe7062c5c62b8efc5"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/cases/623778f44589.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "c21d826fe794505e59634f055c437c1b222e91ede741d43d0dc001a8033d4f91"
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/cases/5d3123825f25.json",
+          "fragment": "",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "ccac2ad67cb8133ae4b6551575db0005a78e125bbd2af3a5b53b741cd15e58a9"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Use retained assertions for bounded unit evidence. Keep actual runtime interoperability unverified without asking for an unspecified future deployment.",
+      "owner": "unknown interoperability test owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:40:16.706857+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 17
+      },
+      "original_question": "Which retained tests establish cross-library broadcasts, intent handling, authorization, and target application outcomes?",
+      "original_answer": "",
+      "document_anchor": "kq-int-006"
+    },
+    {
+      "id": "KQ-OBS-001",
+      "disposition": "ANSWERED_FROM_EVIDENCE",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Both current frontend analytics interfaces declare attribute1 through attribute20. The BFF request DTO also declares twenty custom fields. The hook spreads those fields into requests; the service serializes the DTO for Elasticsearch. The older ten-field example is stale for this source baseline.",
+      "rationale": "Producer types, the posting caller, transport DTO, controller, and storage writer agree on the declared twenty-field contract.",
+      "limits": [
+        "This does not establish active Elasticsearch mappings or dashboard field availability.",
+        "No runtime maximum-rejection assertion or deployed storage execution is claimed."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/analytics/model.ts",
+          "fragment": "L12-L69",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "30ba9fa285a31d3f4a3dfe0bb3a2f278092cba238991f43ba80c1487ee782024"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/analytics/index.ts",
+          "fragment": "L12-L30",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "a620b4ad660ed47d1df4a9a9a4d6b0582988f5c20964f3ead4383771fe99c368"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfAnalytics.java",
+          "fragment": "L9-L39",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "41671a373ace9ea69bb5b19116605c6e20949c1d280c95703e96f289aff328b9"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/AnalyticsController.java",
+          "fragment": "L47-L60",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "cd34671c3226b7ca43eb1569042f4fa48070803fe3e23e24aaf08d0cedd2a40d"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/AnalyticServiceImplementation.java",
+          "fragment": "L24-L32",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "70956fed23e675ded12ca0f20023a5c15523c9678aee6b3d12dd403586f2f2d6"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Record the typed twenty-field implementation contract. Do not ask the user to choose between obsolete documentation and directly inspected source.",
+      "owner": "unknown analytics contract owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:41:05.336087+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 18
+      },
+      "original_question": "Is the supported analytics custom-attribute limit 10, 20, or another stated number?",
+      "original_answer": "",
+      "document_anchor": "kq-obs-001"
+    },
+    {
+      "id": "KQ-OBS-002",
+      "disposition": "OPEN_POLICY",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The 2023 draft proposes five-second responses, 100 users, CPU below 50%, and heap below 80%. Its sign-off fields are empty. Those draft values do not establish current acceptance budgets.",
+      "rationale": "The only inspected numerical requirement source is explicitly draft and lacks its stated sign-off evidence.",
+      "limits": [
+        "Observed performance and implementation settings cannot define the intended business budget.",
+        "No current approved workload, response-time percentile, or capacity baseline is established locally."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md",
+          "fragment": "L5-L36",
+          "revision": "sha256:77108627a097f42f68be95abaf21d29b9bce8e8390ddf6b8c4f09aa3ce6673bb",
+          "sha256": "77108627a097f42f68be95abaf21d29b9bce8e8390ddf6b8c4f09aa3ce6673bb"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md",
+          "fragment": "L68-L89",
+          "revision": "sha256:77108627a097f42f68be95abaf21d29b9bce8e8390ddf6b8c4f09aa3ce6673bb",
+          "sha256": "77108627a097f42f68be95abaf21d29b9bce8e8390ddf6b8c4f09aa3ce6673bb"
+        }
+      ],
+      "remaining_question": "Which response-time and concurrent-user limits should acceptance enforce for the supported portal journeys, including workload and measurement interval?",
+      "decision_impact": "The answer defines measurable performance acceptance instead of treating old draft targets as current requirements.",
+      "owner": "unknown performance requirement owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:41:56.067935+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 19
+      },
+      "original_question": "Which measurable response-time, capacity, availability, browser, CPU, and memory limits apply to current supported workloads?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-obs-002",
+      "root_adjustments": [
+        "Confidence applies to directly inspected draft or code facts. Intended policy remains UNKNOWN."
+      ]
+    },
+    {
+      "id": "KQ-OBS-003",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The retained throughput page reports 500 users, 250-second ramp-up, five iterations, and 17,500 successful requests. Its maximum reported response is 2,023 milliseconds for SSO validation. The referenced JMeter plan and result archive are not retained in the inspected source collection.",
+      "rationale": "The source directly records the workload and summary. The available material supports a historical report, not current measured capacity.",
+      "limits": [
+        "These are reported historical figures, not inspected assertion-bearing load-test results.",
+        "No current sizing or performance-run decision is supplied. Current acceptance budgets remain a separate policy question."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Throughput Testing in UAT/page.md",
+          "fragment": "L11-L44",
+          "revision": "sha256:35a2a306c69d061472c5df0c8355af01399a5beaa7c3ec11f9555adbe5f02a71",
+          "sha256": "35a2a306c69d061472c5df0c8355af01399a5beaa7c3ec11f9555adbe5f02a71"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md",
+          "fragment": "L230-L256",
+          "revision": "sha256:77108627a097f42f68be95abaf21d29b9bce8e8390ddf6b8c4f09aa3ce6673bb",
+          "sha256": "77108627a097f42f68be95abaf21d29b9bce8e8390ddf6b8c4f09aa3ce6673bb"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Keep the historical report qualified. Collect a current run after a concrete workload and acceptance budget are selected.",
+      "owner": "unknown performance test owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:41:56.069983+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 20
+      },
+      "original_question": "Which dated workload and execution records establish current response time and capacity?",
+      "original_answer": "",
+      "document_anchor": "kq-obs-003"
+    },
+    {
+      "id": "KQ-OBS-004",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "Webpack emits fixed entry filenames and chunkhash-based lazy chunks for the shell, container, and supplied cashflow tile. The shell server uses express.static. A no-cache helper exists but is not registered by that server entrypoint. Active environment cache headers remain unverified.",
+      "rationale": "Inspected build output declarations and the server’s middleware registration establish the available implementation.",
+      "limits": [
+        "The historical design’s 120-day value is not established as an active deployed header.",
+        "No named cache-defect, environment change, or cache acceptance run is requested here."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/webpack.config.js",
+          "fragment": "L24-L36",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "bbacb769c8af0fbf0e7ef44d8d45976b385d5c1cbfc3e6941ab9005e98e519ae"
+        },
+        {
+          "path": "repos/ui/mfe-ratan-container/webpack.config.js",
+          "fragment": "L25-L36",
+          "revision": "filesystem-sha256:9dcac6860a554eadf9de1a54f2f5f8abab18ffdde18c35d9abaa10b415acf00c",
+          "sha256": "9dcac6860a554eadf9de1a54f2f5f8abab18ffdde18c35d9abaa10b415acf00c"
+        },
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/webpack.config.js",
+          "fragment": "L42-L47",
+          "revision": "filesystem-sha256:9f8a41dad944eeeae349435ab43c93f291e681879b54827b2322b535e34ce7e5",
+          "sha256": "9f8a41dad944eeeae349435ab43c93f291e681879b54827b2322b535e34ce7e5"
+        },
+        {
+          "path": "repos/ui/mfe-base/server/index.ts",
+          "fragment": "L1-L22",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "61341187eb9cce49b6ece0cd182c8b863f95bebacbee685cad2ca2dcbb196725"
+        },
+        {
+          "path": "repos/ui/mfe-base/server/server_util/header.ts",
+          "fragment": "L1-L5",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "9fd2399ee01e0102a8e0d0f970de5d80971978eb88d6624ba7d382ec8794ada9"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md",
+          "fragment": "L33-L45",
+          "revision": "sha256:14f4a4cf6c2caaff279947a5497dba886b683256e64acae6dce68f89faf09320",
+          "sha256": "14f4a4cf6c2caaff279947a5497dba886b683256e64acae6dce68f89faf09320"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Describe verified build declarations and preserve the deployment limit. Obtain response captures only when an actual environment-specific cache decision needs them.",
+      "owner": "unknown deployment owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:43:23.471771+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 21
+      },
+      "original_question": "Which deployed cache headers, entry revalidation rules, asset names, and expiry values apply in each environment?",
+      "original_answer": "",
+      "document_anchor": "kq-obs-004"
+    },
+    {
+      "id": "KQ-OBS-005",
+      "disposition": "OPEN_POLICY",
+      "confidence": "HIGH",
+      "evidence_class": "Inspected implementation",
+      "answer": "The analytics writer adds userId, client IP, and creation time, then clears singleUIAuthorization before serializing the record. Frontend event models permit values and twenty custom attributes. These implementation facts do not establish permitted readers, field policy, or retention duration.",
+      "rationale": "The complete producer-to-controller-to-writer chain is available, but the inspected sources supply no applicable data-governance rule.",
+      "limits": [
+        "Actual Elasticsearch lifecycle settings and reader-role assignments are not present in the inspected application source.",
+        "Implementation cannot supply permission to collect or retain particular identity and search values."
+      ],
+      "sources": [
+        {
+          "path": "repos/ui/mfe-base/src/analytics/model.ts",
+          "fragment": "L12-L69",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "30ba9fa285a31d3f4a3dfe0bb3a2f278092cba238991f43ba80c1487ee782024"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/analytics/index.ts",
+          "fragment": "L12-L30",
+          "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+          "sha256": "a620b4ad660ed47d1df4a9a9a4d6b0582988f5c20964f3ead4383771fe99c368"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/AnalyticsController.java",
+          "fragment": "L43-L58",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "cd34671c3226b7ca43eb1569042f4fa48070803fe3e23e24aaf08d0cedd2a40d"
+        },
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/AnalyticServiceImplementation.java",
+          "fragment": "L24-L32",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "sha256": "70956fed23e675ded12ca0f20023a5c15523c9678aee6b3d12dd403586f2f2d6"
+        },
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md",
+          "fragment": "L43-L47",
+          "revision": "sha256:7117c9bfce3d74ed0c7e15910d329355cc4dfcb585404e6a819bb47e366f75c6",
+          "sha256": "7117c9bfce3d74ed0c7e15910d329355cc4dfcb585404e6a819bb47e366f75c6"
+        }
+      ],
+      "remaining_question": "May analytics retain user identifiers, client IPs, and search values? Which readers and retention period are permitted?",
+      "decision_impact": "The answer defines the accepted collection, access, and retention boundary for the implemented analytics path.",
+      "owner": "unknown analytics data owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:43:23.473113+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 22
+      },
+      "original_question": "Which identity and search fields may analytics collect, who may read them, and how long may records remain?",
+      "original_answer": "",
+      "policy_confidence": "UNKNOWN",
+      "document_anchor": "kq-obs-005",
+      "root_adjustments": [
+        "Confidence applies to directly inspected draft or code facts. Intended policy remains UNKNOWN."
+      ]
+    },
+    {
+      "id": "KQ-OBS-006",
+      "disposition": "NOT_CURRENT_DECISION",
+      "confidence": "HIGH",
+      "evidence_class": "Documented intent",
+      "answer": "The retained dashboard guide names DEV and UAT locations and describes nine dashboards. Its Production location remains a placeholder. No Kibana saved-object export was found in the inspected application and Nginx file inventories.",
+      "rationale": "The exact guide and bounded repository inventory establish available documentation, not active dashboard availability.",
+      "limits": [
+        "The missing local binding does not prove that production dashboards do not exist.",
+        "No production-monitoring or dashboard rollout decision is requested in this review."
+      ],
+      "sources": [
+        {
+          "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md",
+          "fragment": "L1-L17",
+          "revision": "sha256:02ef377427c8d25b38babe9fd0c12a982326e1a309dfde650d3415f7dd234bcd",
+          "sha256": "02ef377427c8d25b38babe9fd0c12a982326e1a309dfde650d3415f7dd234bcd"
+        },
+        {
+          "path": "knowledge/candidates/observability/KT-observability-and-performance.md",
+          "fragment": "usage-dashboards",
+          "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479",
+          "sha256": "c23c2cac937ba81bb8187f5514d99a51f34cd632ea1dd129e078e7137ab1850f"
+        }
+      ],
+      "remaining_question": null,
+      "decision_impact": "Preserve the production observation limit. Obtain active URLs and operator contacts only for a named operational-readiness decision.",
+      "owner": "unknown analytics operations owner",
+      "merge_into": null,
+      "assessed_at": "2026-10-26T00:44:05.750987+00:00",
+      "raw_finding": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/operations-findings.jsonl",
+        "line": 23
+      },
+      "original_question": "Where are production dashboards, who operates them, and which event completeness checks are required?",
+      "original_answer": "",
+      "document_anchor": "kq-obs-006"
+    }
+  ]
+}

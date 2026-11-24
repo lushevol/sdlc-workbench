@@ -1,0 +1,48 @@
+{
+  "name": "@sc-node-mcp/core",
+  "version": "2.16.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "Core infrastructure for sc-node-mcp MCP servers",
+  "type": "module",
+  "main": "src/index.js",
+  "files": [
+    "src/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://artifactory.global.standardchartered.com/artifactory/api/npm/npm-release"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./config": "./src/config.js",
+    "./server": "./src/server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "https-proxy-agent": "^7.0.6",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
+  },
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist",
+    "clean": "rm -rf dist",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "core"
+  ],
+  "author": "",
+  "license": "ISC"
+}

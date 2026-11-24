@@ -1,0 +1,78 @@
+{
+  "criticalConclusion": "**Fix unparsed JWT declaration handling before relying on a clear audit result. Owner: Test harness maintainer. Evidence: finding CFG-01.**",
+  "status": "CHANGES_REQUIRED_FOR_REUSABLE_AUDIT",
+  "completedAt": "2026-10-22T02:26:11.135502+00:00",
+  "currentSelectedSourceVerdict": {
+    "status": "VALID_CONFLICT_RECEIPT",
+    "sourceHashesMatch": {
+      "yaml": true,
+      "launch": true
+    },
+    "scriptHashMatches": true,
+    "observedDefaultSeconds": 900,
+    "observedLaunchSeconds": 28800,
+    "effectiveConfiguration": "NOT_BOUND",
+    "receipt": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/source-config-audit.json"
+  },
+  "findings": [
+    {
+      "id": "CFG-01",
+      "priority": "P2",
+      "title": "Return unresolved for unparsed or empty duplicate JWT declarations",
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/config-audit.cjs",
+      "line": 24,
+      "supportingLines": [
+        29,
+        32,
+        41,
+        64
+      ],
+      "trigger": "A complete JWT block accompanies a dotted override, an underscore JVM override, or an empty duplicate JWT block.",
+      "observedResult": "Each inspected input returns NO_DECLARED_DIFFERENCE with exit-code-zero semantics.",
+      "intendedResult": "Unsupported or duplicate JWT declarations require UNRESOLVED, as the published audit contract states.",
+      "consequence": "A reusable audit can report no difference while it ignores a JWT declaration.",
+      "owner": "Test harness maintainer",
+      "nextAction": "Detect unparsed JWT forms and duplicate sections. Return UNRESOLVED without retaining their raw values.",
+      "evidenceLimit": "These forms do not occur in the selected source receipt. Its detected conflict remains valid."
+    }
+  ],
+  "reproduction": {
+    "command": [
+      "node",
+      "-"
+    ],
+    "script": "const {auditDeclarations}=require('./Tests/ratan/plugin/ui/session/real-world/config-audit.cjs');\nconst yaml='jwt:\\n  token-expiration: 15\\n  re-token-expiration: 225\\n  absolute-expiration: 60\\n';\nconst cases=[{name:'dotted-yaml-override',yaml:yaml+'jwt.token-expiration: 480\\n',launch:''},{name:'relaxed-jvm-underscore-override',yaml,launch:'JAVA_OPTS=-Djwt.token_expiration=480\\n'},{name:'empty-duplicate-jwt-section',yaml:yaml+'jwt:\\n',launch:''}];\nfor(const c of cases){const r=auditDeclarations(c.yaml,c.launch);console.log(JSON.stringify({name:c.name,status:r.status,access:r.declarations[0],effectiveConfiguration:r.effectiveConfiguration}));}\n",
+    "exitCode": 0,
+    "stdout": "{\"name\":\"dotted-yaml-override\",\"status\":\"NO_DECLARED_DIFFERENCE\",\"access\":{\"id\":\"access\",\"yamlProperty\":\"jwt.token-expiration\",\"jvmProperty\":\"jwt.tokenExpiration\",\"unit\":\"minutes\",\"yamlDeclarations\":[{\"line\":2,\"minutes\":15}],\"launchDeclarations\":[],\"defaultSeconds\":900,\"launchSeconds\":null,\"status\":\"NO_LAUNCH_OVERRIDE_OBSERVED\"},\"effectiveConfiguration\":\"NOT_BOUND\"}\n{\"name\":\"relaxed-jvm-underscore-override\",\"status\":\"NO_DECLARED_DIFFERENCE\",\"access\":{\"id\":\"access\",\"yamlProperty\":\"jwt.token-expiration\",\"jvmProperty\":\"jwt.tokenExpiration\",\"unit\":\"minutes\",\"yamlDeclarations\":[{\"line\":2,\"minutes\":15}],\"launchDeclarations\":[],\"defaultSeconds\":900,\"launchSeconds\":null,\"status\":\"NO_LAUNCH_OVERRIDE_OBSERVED\"},\"effectiveConfiguration\":\"NOT_BOUND\"}\n{\"name\":\"empty-duplicate-jwt-section\",\"status\":\"NO_DECLARED_DIFFERENCE\",\"access\":{\"id\":\"access\",\"yamlProperty\":\"jwt.token-expiration\",\"jvmProperty\":\"jwt.tokenExpiration\",\"unit\":\"minutes\",\"yamlDeclarations\":[{\"line\":2,\"minutes\":15}],\"launchDeclarations\":[],\"defaultSeconds\":900,\"launchSeconds\":null,\"status\":\"NO_LAUNCH_OVERRIDE_OBSERVED\"},\"effectiveConfiguration\":\"NOT_BOUND\"}\n",
+    "stderr": ""
+  },
+  "inspectedSources": [
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/config-audit.cjs",
+      "sha256": "55ab7f1ec8df8d5217cf3fe139362fcd719fb5625887614a794050dc03cf4322"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/offline/config-audit.test.cjs",
+      "sha256": "83d83608c79611a6cb632be8cd3e8f1d14d6a8cc37de21ed16455fdaf8d36d85"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/README.md",
+      "sha256": "5d2353d3b8ad879dd5e22db48f11933f4d7b7f3423644560ab50897f52f2b64d"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/config/JWTConfigProperties.java",
+      "sha256": "10b68c582233468478d44400b5d10bd33960cf4039a24a12b2c5d4173322c7c1"
+    }
+  ],
+  "testReview": "The four existing assertions cover the selected conflict, numeric equality, selected unsupported values, and unrelated nested settings.",
+  "testLimit": "They do not cover the reproduced unparsed declaration forms or empty duplicate sections.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "This review made no browser calls and changed no application or frozen runner source."
+  ]
+}

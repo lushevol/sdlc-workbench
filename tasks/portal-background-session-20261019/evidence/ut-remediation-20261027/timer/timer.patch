@@ -1,0 +1,29 @@
+--- a/src/pages/Home/common/useController.ts
++++ b/src/pages/Home/common/useController.ts
+@@ -131,13 +131,14 @@
+         getRefreshToken();
+       }
+     };
+-    const requestRefresh = () => {
++    const requestRefresh = (scheduled = false) => {
+       if (
+         accessExpiresAt > Date.now() &&
+         !showTimeout &&
+         !store.isOnLogout &&
+         (!refreshExpiresAt || refreshExpiresAt > Date.now()) &&
+-        (!refreshExpiresAt ||
++        (scheduled ||
++          !refreshExpiresAt ||
+           accessExpiresAt - Date.now() >= REFRESH_BEFORE_ACCESS_EXPIRY_MS)
+       ) {
+         getRefreshToken();
+@@ -150,7 +151,8 @@
+       // A missed deadline must not replay an acquisition when the page returns.
+       if (document.visibilityState === "visible" && delay > 0) {
+         acquisitionTimer = setTimeout(() => {
+-          if (document.visibilityState === "visible") requestRefresh();
++          // A scheduled callback can run late while access remains usable.
++          if (document.visibilityState === "visible") requestRefresh(true);
+         }, delay);
+       }
+     };

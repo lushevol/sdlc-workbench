@@ -1,0 +1,70 @@
+{
+  "case_id": "RN-S028",
+  "status": "FAILED",
+  "started_at": "2026-10-29T02:00:33.139Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "assertions": [
+    {
+      "name": "old callbacks preserve B generation",
+      "actual": 4,
+      "expected": 4,
+      "passed": true
+    },
+    {
+      "name": "old logout creates no B logout request",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "old callback closes no dialog",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "B visible identity remains B",
+      "actual": "none",
+      "expected": "B",
+      "passed": false
+    }
+  ],
+  "observations": {
+    "document_csp_present": false,
+    "retained_callback_invocation": "Actual React button onClick callbacks captured before account replacement"
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235606620,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235615041
+    },
+    {
+      "endpoint": "login",
+      "at": 1793235666001,
+      "fixture_subject": "B"
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793235666001,
+      "refresh_subject": "none"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "61ced98a2df52ba9c7e57a6c687f2edbb91285fc8c0d95f37d72f3540397212a"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+  ],
+  "completed_at": "2026-10-29T02:00:48.373Z"
+}

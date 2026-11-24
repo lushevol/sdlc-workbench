@@ -1,0 +1,126 @@
+{
+  "id": "RN-W004",
+  "title": "Switch back during a held module import",
+  "started_at": "2026-10-29T02:04:13.828Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w004",
+  "definition_sha256": "3146192d64cf012526fcd464bceda335909f9ec913e4effafe7d66db04ec7cc3",
+  "status": "FAILED",
+  "assertions": [],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239206334,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239206506,
+      "page": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "attempt-failed.png"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/TabPanel/index.tsx",
+      "lines": [
+        13,
+        46
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+      "lines": [
+        10,
+        35
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+  ],
+  "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('workspaces-tab-W-A')\u001b[22m\n\u001b[2m    - locator resolved to <button role=\"tab\" tabindex=\"-1\" type=\"button\" aria-selected=\"false\" id=\"workspaces-tab-W-A\" data-testid=\"workspaces-tab-W-A\" class=\"MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary MicroWebUI_base_home-tab css-15zb8k3-MuiButtonBase-root-MuiTab-root\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div aria-hidden=\"true\" class=\"MuiBackdrop-root css-1ji7omv-MuiBackdrop-root\">…</div> from <div class=\"MicroWebUI_base_home-box MuiBox-root css-0\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div aria-hidden=\"true\" class=\"MuiBackdrop-root css-1ji7omv-MuiBackdrop-root\">…</div> from <div class=\"MicroWebUI_base_home-box MuiBox-root css-0\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    23 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div aria-hidden=\"true\" class=\"MuiBackdrop-root css-1ji7omv-MuiBackdrop-root\">…</div> from <div class=\"MicroWebUI_base_home-box MuiBox-root css-0\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+  "setup_debug": {
+    "body": "New Tile\nDark\n02:00 UTC\nPlease wait...",
+    "store": {
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "drawers": [
+        {
+          "id": 1,
+          "label": "Synthetic fixture",
+          "tiles": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              },
+              "isTemplate": true
+            },
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              },
+              "isTemplate": true
+            }
+          ]
+        }
+      ],
+      "mounts": {
+        "W-A": 1
+      }
+    }
+  },
+  "completed_at": "2026-10-29T02:04:32.483Z"
+}

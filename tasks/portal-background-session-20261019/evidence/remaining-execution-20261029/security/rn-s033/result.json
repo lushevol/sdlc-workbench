@@ -1,0 +1,36 @@
+{
+  "case_id": "RN-S033",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.040286+00:00",
+  "owner": "unknown security and deployment owners",
+  "blocked_reason": "Current-source browser CORS/preflight endpoint is unavailable. Existing shared HTTP fixture uses historical server classes. Current direct-controller missing-header rejection does not establish lower-origin delivery or script exposure.",
+  "unresolved_predicate": "Browser request and readable-header predicates at the selected server/gateway composition.",
+  "definition": "../../../../06-test-cases.md#rn-s033",
+  "canonical_given": [
+    "A lower-trust local origin has no portal access or refresh credential"
+  ],
+  "canonical_when": [
+    "The origin submits POST /v2/sso/relogin"
+  ],
+  "canonical_then": [
+    "The response issues zero access credentials",
+    "The requesting origin reads zero portal credential headers"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "lines": [
+        315,
+        383
+      ],
+      "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "local_sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

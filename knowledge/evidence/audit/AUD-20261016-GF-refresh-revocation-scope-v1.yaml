@@ -1,0 +1,33 @@
+id: AUD-20261016-GF-refresh-revocation-scope-v1
+item_id: GF-refresh-revocation-scope
+item_version: 1
+actor: agent:codex
+at: '2026-10-15T22:13:45.339202+00:00'
+action: transition
+from_state: untracked
+to_state: candidate
+content_sha256: 1b5dfeefc111c3755b0f4d843a39eeef9f102e9485d5bdd05273d384328eb927
+reason: Retain the conditional refresh-revocation finding with unknown owner and deployment limits.
+evidence:
+- resource: git://single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java
+  revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  sha256: b71df7273263aa8c17b8ea58e9e727008b108ec51ffdc70e266207ed07efad4a
+- resource: git://single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/SessionServiceImplementation.java
+  revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  sha256: 548150730664b0417dcc115ede889b74536a207938a2912e7da2231d6184b41e
+- resource: git://single-ui-bff/src/main/resources/db/migration/V1_0_2__fmo_schema_config.sql
+  revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  sha256: f3e2bf950bc7b41709a8c90d1031456f0c69955f0d2e6232cf26dac1532865d2
+- resource: git://single-ui-bff/src/main/resources/application.yml#L73-L76
+  revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  sha256: 20928e87c49fe09880b3737341e592c320e12ff74cb46165b896acf4fee2086c
+- resource: git://single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java
+  revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  sha256: c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af
+- resource: git://single-ui-auth-sdk/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java
+  revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  sha256: dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d
+- resource: git://single-ui-auth-sdk/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/config/AuthConfiguration.java
+  revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  sha256: 48cfea2643775aa3c936e8391a0f2c1bcdba9a540e4b7761848a35906793ecba
+item_path: knowledge/findings/GF-refresh-revocation-scope.md

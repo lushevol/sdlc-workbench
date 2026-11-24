@@ -1,0 +1,600 @@
+{
+  "version": 1,
+  "evidence": {
+    "E_REQUIREMENT": {
+      "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+      "sha256": "4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5",
+      "start_line": 1,
+      "end_line": 365,
+      "kind": "behavior",
+      "authority": "draft"
+    },
+    "E_RUNNER": {
+      "path": "tasks/ces-entitlement-migration-20261102/frontend-tests/run-portal.mjs",
+      "sha256": "afa991de7ec909ad1890a0103986da24f2a053c37b5b0d90e4f5fe40165de223",
+      "start_line": 1,
+      "end_line": 134,
+      "kind": "automation",
+      "authority": "established"
+    },
+    "E_LOGIN": {
+      "path": "e2e/pages/login.page.ts",
+      "sha256": "d2460c93ff81609b728a5d9f332caf6e42ed2d5f627a78734810471201a3f571",
+      "start_line": 1,
+      "end_line": 70,
+      "kind": "ui",
+      "authority": "established"
+    },
+    "E_HOME": {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "start_line": 1,
+      "end_line": 135,
+      "kind": "ui",
+      "authority": "established"
+    },
+    "E_AVATAR": {
+      "path": "repos/ui/mfe-base/src/components/Avatar/index.tsx",
+      "sha256": "aa9baf32909b1705a1eddcdc7ad95aae88520848a9fd942f12347a92265ce903",
+      "start_line": 1,
+      "end_line": 109,
+      "kind": "ui",
+      "authority": "established"
+    },
+    "E_PROFILE": {
+      "path": "repos/ui/mfe-base/src/components/Profile/index.tsx",
+      "sha256": "686012ea1aef074e945d2e8e997087f8b112aaf5620b6a40d00bbf22c692baef",
+      "start_line": 1,
+      "end_line": 333,
+      "kind": "ui",
+      "authority": "established"
+    },
+    "E_NEW_TILE": {
+      "path": "repos/ui/mfe-base/src/components/NewTile/index.tsx",
+      "sha256": "cd93396f8e05109263dab0c75cfc5f678f354b0a4ca40cf8e02247be0d034aa5",
+      "start_line": 1,
+      "end_line": 25,
+      "kind": "ui",
+      "authority": "established"
+    },
+    "E_MENU": {
+      "path": "repos/ui/mfe-base/src/components/Tile/index.tsx",
+      "sha256": "3f3d8c7bbe2913fa6ec1c499f3f014f348558d08288985a109747460af1da600",
+      "start_line": 1,
+      "end_line": 78,
+      "kind": "ui",
+      "authority": "established"
+    },
+    "E_CONSUMER": {
+      "path": "tasks/ces-entitlement-migration-20261102/frontend-tests/portal-entry.tsx",
+      "sha256": "d957e1139a6a6709f208902b4184cf50061235ca66e95859515d5b75102feb9d",
+      "start_line": 1,
+      "end_line": 28,
+      "kind": "ui",
+      "authority": "established"
+    }
+  },
+  "scenarios": {
+    "TC-FE-CES-013": {
+      "file": "tasks/ces-entitlement-migration-20261102/06-test-cases.md",
+      "sha256": "442781a68d2ae7ea78f38b31b467175b33fb36a2531faf520eb4b7aaa7b93bae",
+      "behavior": {
+        "intent": "Preserve ordinary calls while independently routing CES and EMS2 tiles.",
+        "requirement": "E_REQUIREMENT",
+        "criterion": "knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001"
+      },
+      "components": {
+        "C_USER": {
+          "type": "textbox",
+          "identity": "Enter Username",
+          "identity_kind": "stable_identifier",
+          "scope": "login page",
+          "evidence": [
+            "E_LOGIN"
+          ]
+        },
+        "C_PASSWORD": {
+          "type": "text input",
+          "identity": "Enter Password",
+          "identity_kind": "stable_identifier",
+          "scope": "login page",
+          "evidence": [
+            "E_LOGIN"
+          ]
+        },
+        "C_SIGN_IN": {
+          "type": "button",
+          "identity": "Sign In",
+          "identity_kind": "accessible_name",
+          "scope": "login page",
+          "evidence": [
+            "E_LOGIN"
+          ]
+        },
+        "C_WORKSPACE": {
+          "type": "tab",
+          "identity": "Workspace 1",
+          "identity_kind": "accessible_name",
+          "scope": "portal",
+          "evidence": [
+            "E_HOME"
+          ]
+        },
+        "C_AVATAR": {
+          "type": "icon button",
+          "identity": "MicroWebUI_base_avatar_IconButton",
+          "identity_kind": "test_id",
+          "scope": "portal page",
+          "evidence": [
+            "E_AVATAR"
+          ]
+        },
+        "C_PROFILE_MENU": {
+          "type": "menu item",
+          "identity": "MicroWebUI_base_avatar_Profile",
+          "identity_kind": "test_id",
+          "scope": "portal avatar menu",
+          "evidence": [
+            "E_AVATAR"
+          ]
+        },
+        "C_ENTITY": {
+          "type": "button",
+          "identity": "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B",
+          "identity_kind": "accessible_name",
+          "scope": "profile dialog",
+          "evidence": [
+            "E_PROFILE"
+          ]
+        },
+        "C_SUBJECT": {
+          "type": "button",
+          "identity": "feature-a",
+          "identity_kind": "accessible_name",
+          "scope": "profile dialog",
+          "evidence": [
+            "E_PROFILE"
+          ]
+        },
+        "C_ACTION": {
+          "type": "chip",
+          "identity": "action-a",
+          "identity_kind": "visible_label",
+          "scope": "profile dialog",
+          "evidence": [
+            "E_PROFILE"
+          ]
+        },
+        "C_DIALOG": {
+          "type": "dialog",
+          "identity": "User Profile",
+          "identity_kind": "visible_label",
+          "scope": "portal page",
+          "evidence": [
+            "E_PROFILE"
+          ]
+        },
+        "C_NEW_TILE": {
+          "type": "section",
+          "identity": "New Tile",
+          "identity_kind": "visible_label",
+          "scope": "portal application bar region",
+          "evidence": [
+            "E_NEW_TILE"
+          ]
+        },
+        "C_CES_CARD": {
+          "type": "section",
+          "identity": "CES fixture",
+          "identity_kind": "visible_label",
+          "scope": "drawer panel",
+          "evidence": [
+            "E_MENU"
+          ]
+        },
+        "C_CES_EXPORT": {
+          "type": "button",
+          "identity": "Export fixture data",
+          "identity_kind": "accessible_name",
+          "scope": "CES contract consumer",
+          "evidence": [
+            "E_CONSUMER"
+          ]
+        },
+        "C_EMS2_EXPORT": {
+          "type": "button",
+          "identity": "Export fixture data",
+          "identity_kind": "accessible_name",
+          "scope": "EMS2 contract consumer",
+          "evidence": [
+            "E_CONSUMER"
+          ]
+        }
+      },
+      "steps": {
+        "1288": {
+          "kind": "condition",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ]
+        },
+        "1289": {
+          "kind": "condition",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ]
+        },
+        "1290": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_USER"
+          ]
+        },
+        "1291": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_PASSWORD"
+          ]
+        },
+        "1292": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_SIGN_IN"
+          ]
+        },
+        "1293": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_WORKSPACE"
+          ],
+          "observation": "ui"
+        },
+        "1294": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "observation": "functional"
+        },
+        "1295": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_AVATAR"
+          ]
+        },
+        "1296": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_PROFILE_MENU"
+          ]
+        },
+        "1297": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_ENTITY"
+          ]
+        },
+        "1298": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_SUBJECT"
+          ]
+        },
+        "1299": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_ACTION"
+          ],
+          "observation": "ui"
+        },
+        "1300": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_DIALOG"
+          ]
+        },
+        "1301": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_NEW_TILE"
+          ]
+        },
+        "1302": {
+          "kind": "interaction",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_CES_CARD"
+          ]
+        },
+        "1303": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_CES_EXPORT"
+          ],
+          "observation": "ui"
+        },
+        "1304": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "observation": "functional"
+        },
+        "1305": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "observation": "functional"
+        },
+        "1306": {
+          "kind": "event",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ]
+        },
+        "1307": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "components": [
+            "C_EMS2_EXPORT"
+          ],
+          "observation": "ui"
+        },
+        "1308": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "observation": "functional"
+        },
+        "1309": {
+          "kind": "event",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ]
+        },
+        "1310": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "observation": "functional"
+        },
+        "1311": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RUNNER",
+            "E_REQUIREMENT"
+          ],
+          "observation": "functional"
+        }
+      },
+      "review": {
+        "state": "UNVERIFIED",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": "Source and local runtime selectors inspected. Business candidate review and deployed-service acceptance remain pending."
+      },
+      "automation": {
+        "framework": "Playwright Chromium with actual React base and controlled services",
+        "mode": "mapped",
+        "bindings": {
+          "1288": {
+            "symbol": "const payload=",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1289": {
+            "symbol": "await browser.newContext()",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1290": {
+            "symbol": "getByPlaceholder('Enter Username').fill",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1291": {
+            "symbol": "getByPlaceholder('Enter Password').fill",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1292": {
+            "symbol": "getByRole('button',{name:'Sign In',exact:true}).click",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1293": {
+            "symbol": "getByRole('tab',{name:'Workspace 1',exact:true})",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1294": {
+            "symbol": "assert.deepEqual(state.entitlementRouting,routing)",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1295": {
+            "symbol": "getByTestId('MicroWebUI_base_avatar_IconButton').click",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1296": {
+            "symbol": "getByTestId('MicroWebUI_base_avatar_Profile').click",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1297": {
+            "symbol": "getByRole('button',{name:'RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B',exact:true}).click",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1298": {
+            "symbol": "getByRole('button',{name:'feature-a',exact:true}).click",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1299": {
+            "symbol": "getByText('action-a',{exact:true})",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1300": {
+            "symbol": "page.keyboard.press('Escape')",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1301": {
+            "symbol": "getByText('New Tile',{exact:true}).click",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1302": {
+            "symbol": "getByText('CES fixture',{exact:true}).click",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1303": {
+            "symbol": "getByTestId('consumer-CES fixture').getByRole('button',{name:'Export fixture data'})",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1304": {
+            "symbol": "getByTestId('consumer-CES fixture').getByTestId('scope')",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1305": {
+            "symbol": "assert.equal(String(opened.applicationTileId),'1')",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1306": {
+            "symbol": "window.__dispatcher.dispatchOpenTile",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1307": {
+            "symbol": "getByTestId('consumer-EMS2 fixture').getByRole('button',{name:'Export fixture data'})",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1308": {
+            "symbol": "getByTestId('consumer-EMS2 fixture').getByTestId('scope')",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1309": {
+            "symbol": "window.__base.LoginUtil.handleEntities(response)",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1310": {
+            "symbol": "page.locator('[data-testid^=\"consumer-\"]')",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          },
+          "1311": {
+            "symbol": "assert.deepEqual(decisions,[false,false])",
+            "evidence": [
+              "E_RUNNER"
+            ]
+          }
+        },
+        "review": {
+          "state": "PASS",
+          "reviewer": "agent:codex root",
+          "reviewed_at": "2026-11-06T08:25:05.005130+00:00",
+          "notes": "Inspected each mapped statement and the retained four-checkpoint local portal execution. This review covers local fixtures only."
+        }
+      }
+    }
+  }
+}

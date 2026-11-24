@@ -1,0 +1,329 @@
+{
+  "captured_at": "2026-10-21T07:25:07.678297+00:00",
+  "workbench_prior_revision": "3257b6f8736b88e47f0f239a8653dfa8f1862c0a",
+  "scope": "Correct application identity from Dashboard to Cashflow Blotter; reassess prior causal explanation.",
+  "supersedes": {
+    "receipt": "analysis.json",
+    "sha256": "a837a09df21d24a55751df3c7bdd7a2fdb4ce9b56440f46a4fa9c08a23ebdf05",
+    "withdrawn_claim": "C4 dashboard polling likely explains this UAT incident.",
+    "corrected_claim": "C1 affected page is Cashflow Blotter, not Dashboard.",
+    "retained_history": "Earlier user answer and analysis bytes remain unchanged."
+  },
+  "sources": [
+    {
+      "id": "B1",
+      "path": "tasks/portal-background-session-20261019/evidence/uat-timeout-inquiry-20261021/blotter-correction.txt",
+      "sha256": "e768541eb9eb12a33b774f9ab6e85bdaa619383b72b7cf80ae682f9123c7e5d1",
+      "revision": null,
+      "revision_limit": "Current user correction.",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 7,
+          "text": "User correction, 21 October 2026 (Asia/Singapore):\n\nNo I got this issue from cashflow blotter not cashflow dashboard.\n\nThis supersedes the earlier page identification in user-request.txt.\nThe latest minor branch and untouched background-tab conditions remain reported facts.\nThe dashboard polling explanation is withdrawn for this incident.\n"
+        }
+      ]
+    },
+    {
+      "id": "B2",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/routing/index.tsx",
+      "sha256": "d3b6d29d375265882526357d9ef2d41c827347f165268c7d9508dc2516263585",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 30,
+          "end": 49,
+          "text": "const Routing: React.FC<TileProps> = (props: TileProps): ReactElement => {\n  useController(props);\n  useNotificationCenter();\n  useVersionGuard();\n  return (\n    <Suspense fallback={<Splash />}>\n      <Routes>\n        <Route path=\"/cashflow_cn/*\" element={<CashflowCn {...props} />} />\n        <Route\n          path=\"/cashflow_open_search/*\"\n          element={<CashflowCnOpenSearch {...props} />}\n        />\n        <Route\n          path=\"/cashflow_group_management/*\"\n          element={<CashflowGroupManagement {...props} />}\n        />\n        <Route\n          path=\"/cashflow_cn_dashboard/*\"\n          element={<CashflowDashboard {...props} />}\n        />\n"
+        }
+      ]
+    },
+    {
+      "id": "B3",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/index.tsx",
+      "sha256": "0f0fbd52a2a8d67cd5c7c905e7997edcec8d16a3e0fa5e0b620122a5dc5972ac",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 9,
+          "end": 18,
+          "text": "const Cashflow: React.FC<TileProps> = (\n  props: TileProps\n): React.ReactElement => {\n  const store = useMemo(() => createStore(), []);\n  return (\n    <E2ELatencyStoreWrap>\n      <Provider store={store}>\n        <Main {...props} />\n      </Provider>\n    </E2ELatencyStoreWrap>\n"
+        }
+      ]
+    },
+    {
+      "id": "B4",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/store/index.ts",
+      "sha256": "f2927d414dcc7267b8a29fccc33a272ce4a4edb8a46495f4d4251180184aca77",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 19,
+          "end": 31,
+          "text": "const create = () =>\n  configureStore({\n    reducer,\n    middleware: (gDM) =>\n      gDM()\n        .concat(thunk)\n        .concat(graphqlApi.middleware)\n        .concat(apiSessionExtendMiddleware.middleware)\n        .concat(apiPerfMonitorMiddleware.middleware)\n        .concat(apiErrorHandlingMiddleware.middleware),\n    devTools: process.env.NODE_ENV !== \"production\",\n    preloadedState,\n  });\n"
+        }
+      ]
+    },
+    {
+      "id": "B5",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.ts",
+      "sha256": "faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 14,
+          "text": "import { createListenerMiddleware } from \"@reduxjs/toolkit\";\n\nimport { ExtendTokenService } from \"../import\";\n\nexport const apiSessionExtendMiddleware = createListenerMiddleware();\n\napiSessionExtendMiddleware.startListening({\n  predicate: (action, _currentState, _prevState) => {\n    return action.type === \"graphqlApi/executeQuery/fulfilled\";\n  },\n  effect: async (_action, _lisenerApi) => {\n    ExtendTokenService();\n  },\n});\n"
+        }
+      ]
+    },
+    {
+      "id": "B6",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/index.tsx",
+      "sha256": "c33d4bc4f9343936e51860c01aba2b46884659d0878a7c51cd18c5e674e4c343",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 25,
+          "end": 54,
+          "text": "    useEffect(() => {\n      const { add } = notificationDebugger();\n      const TOPIC = `/user/${userName}/cashflow/notification`;\n      const notificationPool = new CashflowNotificationPool<NotifiedCashflow>({\n        recordKey: \"Cashflow_Id\",\n      });\n      window.notificationPool = notificationPool;\n      const clearNotification = subscribeCashflowNotification(\n        TOPIC,\n        id,\n        (message) => {\n          if (isCashflow(message?.Cashflow))\n            notificationPool.add(message as unknown as NotifiedCashflow);\n          add(message);\n        },\n        () => {\n          notificationPool.unsubscribeAll();\n          notificationPool.subscribe((cashflows) => {\n            if (cashflows.length) onCashflowComming(cashflows);\n          });\n        },\n        (_frame, reconnectCallback) => {\n          popReconnectNotification(reconnectCallback, id);\n        }\n      );\n      return () => {\n        clearNotification();\n        notificationPool.destory();\n      };\n    }, []);\n"
+        }
+      ]
+    },
+    {
+      "id": "B7",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/CashflowNotificationPool.ts",
+      "sha256": "4513db48524429d6789b74124efba7702e173bc7008b83c59d54e0db24921f5a",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 55,
+          "end": 60,
+          "text": "  private publish() {\n    if (this.listeners.length && this.pool.length) {\n      this.clearOutDateData();\n      this.listeners.forEach((f) => f(this.pool));\n      this.pool = [];\n    }\n"
+        },
+        {
+          "start": 76,
+          "end": 80,
+          "text": "  start() {\n    this.stop();\n    this.intervalHandler = window.setInterval(() => {\n      this.publish();\n    }, this.holdingTime);\n"
+        }
+      ]
+    },
+    {
+      "id": "B8",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/store/actions/cashflowAction.ts",
+      "sha256": "3680cfe6c609e4716c0cfc2cb9b95dbd3fc3f1d8e8236034ac9356c0d519bf25",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 554,
+          "end": 597,
+          "text": "export const notificationUpdateOrAddingCashflows = (\n  cashflowInstances: CNCashflow[] | NotifiedCashflow[]\n) => {\n  return async (dispatch: Dispatch, getState: () => RootState) => {\n    if (isEmptyArray(cashflowInstances)) return;\n    const { cashflowListQueryStatus } = getState();\n    await cashflowListQueryStatus; // blotter loading\n    const {\n      cashflowGridEvent,\n      quickFilters,\n      searchFilters,\n      cashflowList,\n      cashflowListPagination,\n      viewCashflowDetailsWorkflow,\n    } = getState();\n    const { api } = cashflowGridEvent as GridReadyEvent;\n    const cashflows = filterOutCashflow(cashflowInstances);\n    // apply filter\n    let allFilters = transformAllVariableDates(\n      combineRuleGroups(searchFilters, quickFilters)\n    );\n    if (allFilters.rules.length === 0)\n      allFilters = legacyFilters2Query(getCashflowDefaultFilter());\n    const [filteredCashflows, droppedCashflows] = matchQueries<CNCashflow>(\n      cashflows,\n      allFilters\n    );\n\n    const {\n      updatedCashflows,\n      deletedCashflows,\n      newCashflowList,\n      originCashflowsBeUpdated,\n    } = handleCashflowsData(cashflowList, filteredCashflows, droppedCashflows);\n    const addedCashflows: CNCashflow[] = filteredCashflows;\n\n    if (\n      isCashflowListNotChanges(\n        updatedCashflows,\n        addedCashflows,\n        deletedCashflows\n      )\n    )\n      return;\n"
+        },
+        {
+          "start": 624,
+          "end": 694,
+          "text": "    const deletedCashflowsIds = deletedCashflows.map(\n      (c) => c.Cashflow?.Cashflow_Id\n    );\n    // store\n    dispatch({\n      type: types.SET_CASHFLOW_LIST,\n      data: [\n        ...addedCashflows,\n        ...newCashflowList.filter(\n          (c) => !deletedCashflowsIds.includes(c.Cashflow?.Cashflow_Id)\n        ),\n      ],\n    });\n    // 1. first loaded -> totally hits\n    // 2. totally hits -> all data\n    // 3. new data\n    // 1&2 can't be indentified\n    let paginationNewRowsSize = addedCashflows.length;\n    if (isCashflowPaginationChanges(paginationNewRowsSize, deletedCashflows)) {\n      dispatch({\n        type: types.SET_CASHFLOW_LIST_PAGINATION,\n        data: {\n          ...cashflowListPagination,\n          totalHits:\n            cashflowListPagination.totalHits +\n            paginationNewRowsSize -\n            deletedCashflows.length,\n        },\n      });\n    }\n\n    // level2 updating\n    const { isOpenCashflowDetails, data: cashflowDetailsData } =\n      viewCashflowDetailsWorkflow;\n    if (isOpenCashflowDetails) {\n      const targetCashflow = cashflows.find((cf) =>\n        isSameCashflow(cf, cashflowDetailsData)\n      );\n      if (\n        targetCashflow &&\n        isCashflowUpdated(cashflowDetailsData, targetCashflow)\n      ) {\n        // alert refresh\n        dispatch({\n          type: types.SET_DIALOG_REFRESH_ALERT,\n          data: {\n            showAlert: true,\n            onClickRefresh: (actions: string[]) => {\n              if (actions.includes(\"hidemodal\")) {\n                dispatch({\n                  type: types.SET_DIALOG_REFRESH_ALERT,\n                  data: {\n                    showAlert: false,\n                    onClickRefresh: () => {},\n                  },\n                });\n              }\n              if (actions.includes(\"refresh\")) {\n                dispatch(\n                  viewCashflowDetailsAction({\n                    ...viewCashflowDetailsWorkflow,\n                    data: targetCashflow,\n                  })\n                );\n              }\n            },\n          },\n        });\n      }\n    }\n  };\n"
+        }
+      ]
+    },
+    {
+      "id": "B9",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/stomp.ts",
+      "sha256": "181b11c48c6f48c7c6ec145dac6cc5ac26882d08341474bd7f7dbd2f63ae38b1",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 30,
+          "end": 39,
+          "text": "export function socketClientFactory(url: string, id: string): ISocketClient {\n  const uid = getUid(url, id);\n  const socketClientExisted = socketClientStore.get(uid);\n\n  if (socketClientExisted) {\n    return socketClientExisted;\n  } else {\n    const client = Stomp.over(new SockJS(url, undefined, { timeout: 1000 }));\n    client.heartbeat.outgoing = 3000;\n    client.heartbeat.incoming = 25000;\n"
+        },
+        {
+          "start": 144,
+          "end": 161,
+          "text": "export const subscribeCashflowNotification = (\n  topic: string,\n  id: string,\n  callback: (message: Record<string, object>) => void,\n  onConnected: (frame: Frame | undefined) => void,\n  onError: (frame: Frame | string, cb: () => void) => void\n) => {\n  const url = CASHFLOW_NOTIFICATION_SUBSCRIPTIONS;\n  return subscribeSocketNotification({\n    url,\n    id,\n    topic: {\n      destination: topic,\n      callback,\n    },\n    onConnected,\n    onError,\n  });\n"
+        }
+      ]
+    },
+    {
+      "id": "B10",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/PresetQueryCount/index.tsx",
+      "sha256": "ef1b57d7f477d898f9d32c4daf0c2448cc17b56d3e14b8d3c0c62221cbd4d46c",
+      "revision": null,
+      "revision_limit": "Supplied filesystem copy; independent revision and deployed UAT bytes unavailable.",
+      "excerpts": [
+        {
+          "start": 96,
+          "end": 110,
+          "text": "const PresetQueryCount: FC = memo(() => {\n  const dispatch = useDispatch<any>();\n  const [messageApi, messageContextHolder] = message.useMessage();\n  const [query, setQuery] = useState<PresetQueryCountGroup[]>(generateQuery());\n  const [activeKey, setActiveKey] = useState<string | null>(null);\n\n  useEffect(() => {\n    const timer = setInterval(() => {\n      setQuery(generateQuery());\n    }, 12 * 60 * 60 * 1000);\n\n    return () => {\n      clearInterval(timer);\n    };\n  }, []);\n"
+        }
+      ]
+    }
+  ],
+  "reused_sources": [
+    {
+      "source_id": "E2",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E3",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E4",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E5",
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E12",
+      "path": "tasks/portal-background-session-20261019/code-review.md",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "e1ab7362cf028529a2f44a24bf7496984751cb497c8a0823f6c4e7035a684a1b",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E13",
+      "path": "tasks/portal-background-session-20261019/impact-analysis.md",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "b80226617d7f809529316d031e49888e08007d4966b5e843840b4e4857ba5dc4",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E14",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E15",
+      "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "b97b8b857c5f2c7bbfd105bcd8c821598f3cf2c1258975194625574cec3d8c15",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E16",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "receipt": "analysis.json"
+    },
+    {
+      "source_id": "E18",
+      "path": "repos/ui/mfe-base/src/root.tsx",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+      "receipt": "analysis.json"
+    }
+  ],
+  "claims": [
+    {
+      "id": "B-C1",
+      "class": "user_report",
+      "claim": "Cashflow Blotter is affected. The earlier Cashflow Dashboard identification is superseded.",
+      "evidence": [
+        "B1"
+      ],
+      "limit": "No new UAT execution or deployment binding."
+    },
+    {
+      "id": "B-C2",
+      "class": "inspected_implementation",
+      "claim": "Blotter creates a store that installs the query-completion extension middleware.",
+      "evidence": [
+        "B2",
+        "B3",
+        "B4",
+        "B5"
+      ],
+      "limit": "A hook does not establish recurring query traffic during idle."
+    },
+    {
+      "id": "B-C3",
+      "class": "unknown",
+      "claim": "The cause of the reported UAT missing timeout dialog remains unknown. Query-triggered renewal is possible, not established as likely by the corrected incident conditions.",
+      "evidence": [
+        "B1",
+        "B4",
+        "B5",
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "limit": "Correlate actual blotter queries, successful extension, and access expiry."
+    },
+    {
+      "id": "B-C4",
+      "class": "inspected_implementation",
+      "claim": "The inspected notification timer publishes buffered received messages. Its row-update callback does not establish automatic GraphQL renewal.",
+      "evidence": [
+        "B6",
+        "B7",
+        "B8",
+        "B9"
+      ],
+      "limit": "Bounded inspected paths do not prove absence of all deployed background requests."
+    },
+    {
+      "id": "B-C5",
+      "class": "documented_review",
+      "claim": "Prior R-001 and impact analysis still identify query-triggered renewal as an open integration risk. They do not demonstrate this UAT failure.",
+      "evidence": [
+        "E12",
+        "E13"
+      ],
+      "limit": "The earlier reports cover broader runtime 4da985a9fa302d7f1ecc04a81b2924b49410ce6a."
+    }
+  ],
+  "search": {
+    "scope": [
+      "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN",
+      "repos/ui/mfe-cashflow-blotter/src/Root"
+    ],
+    "patterns": [
+      "pollingInterval",
+      "refetchOn",
+      "setInterval",
+      "setTimeout",
+      "ExtendTokenService",
+      "apiSessionExtendMiddleware"
+    ],
+    "result": "No recurring GraphQL poll or automatic focus refetch found in the bounded inspected blotter paths. The dashboard two-minute loop is not evidence for this incident.",
+    "limit": "A bounded search does not prove absence from deployed code or other loaded tiles."
+  },
+  "comparison": {
+    "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "result": "Shared extension mechanism remains inherited. No equivalent paired runtime evidence attributes the corrected UAT symptom to a new regression."
+  },
+  "knowledge_update": "not applicable; incident identity correction changes no domain rule.",
+  "business_tests": "NOT_RUN",
+  "uat_execution": "NOT_RUN",
+  "readiness": "READY_WITH_LIMITS for further UAT evidence collection only.",
+  "owner": "unknown application owner",
+  "next_action": "Bind loaded UAT modules and correlate blotter requests, successful sso/extend responses, and access-expiry progression.",
+  "frozen_intake_sha256": "1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948"
+}

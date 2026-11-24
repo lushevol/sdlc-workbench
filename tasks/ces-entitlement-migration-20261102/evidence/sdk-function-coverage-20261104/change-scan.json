@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "added_lines_scanned": 1622,
+    "changed_files": 20,
+    "custom_rules": "NOT_REQUESTED",
+    "secret_patterns": "COMPLETE"
+  },
+  "context": {
+    "base": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+    "comparison_base": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+    "fingerprint": "c656fa325a749d910ab11cb92b3072dd0b5e7890eb011d412031bf03bdebfde9",
+    "head": "fd9a157e260850b6d9efa10da3223950ea61133a",
+    "mode": "range",
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/libraries/single-ui-sdk-starter"
+  },
+  "findings": [
+    {
+      "check": "secret_patterns",
+      "id": "secret.credential-assignment",
+      "kind": "candidate",
+      "line": 36,
+      "message": "Possible hard-coded credential assignment. Confirm the surrounding context.",
+      "path": "single-ui-sdk-starter/src/test/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImplTest.java",
+      "severity": "MEDIUM"
+    }
+  ],
+  "limitations": [
+    "Secret patterns do not establish complete credential absence.",
+    "All candidates require contextual confirmation; pattern matches do not establish validity."
+  ],
+  "rules_fingerprint": null,
+  "schema_version": 1,
+  "status": "FINDINGS"
+}

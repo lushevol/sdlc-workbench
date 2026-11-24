@@ -1,0 +1,20 @@
+    location / {
+        proxy_redirect    off;
+        proxy_set_header  Host $host;
+        proxy_set_header  X-Real-IP $remote_addr;
+        proxy_set_header  X-Forwarded-Proto http;
+        proxy_set_header  X-Forwarded-For $remote_addr;
+        proxy_set_header  X-Forwarded-Host $remote_addr;
+        proxy_pass http://root_config;
+    }
+}
+
+server {
+    listen 8000;
+    include config-ratan/mfestaticcache.conf;
+
+    location / {
+        root /apps/nginx/instances/nginx-DEV_RATAN_UK_01/www/mfe-root-config;
+        try_files $uri /index.html?$args;
+        index index.html;
+    }

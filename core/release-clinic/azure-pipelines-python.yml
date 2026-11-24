@@ -1,0 +1,24 @@
+
+trigger:
+  - main
+
+resources:
+  repositories:
+    - repository: governed-templates
+      name: dj-core/governed-templates
+      ref: 'refs/heads/main'
+      type: git
+ 
+ 
+extends:
+  template: governed-template/build.yml@governed-templates
+  parameters:
+      releaseId: " "
+      buildStackName: python
+      buildStackParams:        
+          pool: "sc-linux" #optinal since the value is set by default
+          pythonVersion: "default" #optional
+          unitTest: false # this repo currently has no pytest tests; avoids exit code 5 on "no tests collected"
+          testRequirementsFilePath: 'requirements.txt'  #Required for installing unit test dependencies
+          usePyprojectToml: false
+         

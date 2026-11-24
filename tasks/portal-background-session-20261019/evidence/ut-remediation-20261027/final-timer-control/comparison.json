@@ -1,0 +1,144 @@
+{
+  "case_id": "ADV-M1-COINCIDENT",
+  "created_at": "2026-10-27T05:59:48.060125+00:00",
+  "status": "PASSED",
+  "critical_conclusion": "The final committed source matches retained main for this controlled default-lifetime delayed-timer case.",
+  "owner": "Coordinator /root",
+  "next_action": "Use this result only for its controlled assertions. Preserve broader release gates.",
+  "source_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "test_sha256": "9f43f74fee05efb1065465ccc7afda71ac1551defc5ad7add2b8ce2af84c02ef",
+  "checks": {
+    "identical_unchanged_test_bytes": true,
+    "common_initial_state_equal": true,
+    "access_default_issued_lifetime_900_seconds": true,
+    "refresh_default_issued_lifetime_13524_seconds": true,
+    "all_observation_records_equal_retained_main": true,
+    "final_assertions_all_passed": true,
+    "single_case_checkpoint_matches_results": true,
+    "normal_exit_zero": true,
+    "zero_failures_or_runner_errors": true,
+    "source_bytes_stable": true,
+    "application_unchanged": true,
+    "historical_evidence_unchanged": true
+  },
+  "execution": {
+    "suites": 1,
+    "cases": 1,
+    "passing_assertions": 10,
+    "exit_code": 0,
+    "elapsed_seconds": 2.837236000224948,
+    "source_files_bound": 409,
+    "argv_evidence": "launch.json",
+    "result_evidence": "results.json",
+    "case_checkpoint": "cases/5888b36e2c30.json"
+  },
+  "comparison": {
+    "initial_states_equal": true,
+    "final_observation_equals_retained_main": true,
+    "retained_main_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "retained_old_candidate_revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "retained_old_candidate": {
+      "signedOut": true,
+      "promptVisible": false,
+      "requests": [
+        "/api/auth/v2/sso/logout",
+        "/api/ssiplus/imeta/logout"
+      ]
+    },
+    "final_source": {
+      "signedOut": false,
+      "promptVisible": true,
+      "requests": [
+        "/api/auth/v2/sso/refreshtoken"
+      ],
+      "refresh_acquisitions": 1,
+      "logout_requests": 0,
+      "replacement_refresh_matches_main": true
+    },
+    "observed_at_expiry": {
+      "extend_enabled": true,
+      "is_on_logout": false,
+      "evidence_class": "Recorded observations. The unchanged harness does not assert these fields directly."
+    }
+  },
+  "direct_assertion_predicates": [
+    "Initial access equals its fixture.",
+    "Initial refresh equals its fixture.",
+    "Initial access and refresh expiry values match.",
+    "Initial expiredIn equals access expiry.",
+    "Access issued lifetime equals 900 seconds.",
+    "Refresh issued lifetime equals 13,524 seconds.",
+    "The final view does not show Signed out.",
+    "The replacement refresh remains installed.",
+    "The final logout request count equals zero.",
+    "The expiry prompt remains visible."
+  ],
+  "limits": [
+    "The clock is controlled. The one-millisecond displacement models callback lateness.",
+    "The test uses immediate Axios adapter responses and a seeded common expiry.",
+    "No natural matching-expiry occurrence or preceding issuance sequence was observed.",
+    "The passing result does not establish native timer latency or production frequency.",
+    "This command does not enable detectOpenHandles. Empty serialized handles do not prove absence.",
+    "Only the selected final-side test ran. The main and prior candidate results remain historical."
+  ],
+  "evidence": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/run.py",
+      "sha256": "9262b067bd411a3be175ce3d7c14a89173a19f7311fbf6f74f10dc579df24f2d"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/source-binding.json",
+      "sha256": "47c8ec69e68a493e01c7a94f1992d11170936e81ff52a47a229b9b110b394b02"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/launch.json",
+      "sha256": "2f030babc396172193de1df2a26770a73dc89105d913f8f6886dfcf9e29f232b"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/execution.json",
+      "sha256": "14f4db43062af3a9eca4b0e640e2dce3fea47d003315ac41e9bac3098a645342"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/observation.json",
+      "sha256": "f50108c73b5f30262a84274efa1fa3b5e28d383c7166db834287fcccf5aa1ad2"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/results.json",
+      "sha256": "12ac7b174b260752b6e627d66759b301bc5187e49a2078c9cbe72acfd82c850a"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/runner.log",
+      "sha256": "303ea521bef26623825aa42cb31d81e10d259e8474ca1b0f0abe1cc488dd17b3"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/final-timer-control/cases/5888b36e2c30.json",
+      "sha256": "65de0d15ead8b75975bd6c3c3fb89541ac8523c3e1d421c493116a9fca5e08f5"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json",
+      "sha256": "a75b4dca8b062e934ba7e9d01bf87570fa98a5e14e5a6a88ad43b177acf529c5"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/late-timer-provider-main-observation.json",
+      "sha256": "f50108c73b5f30262a84274efa1fa3b5e28d383c7166db834287fcccf5aa1ad2"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/late-timer-provider-candidate-observation.json",
+      "sha256": "e1fedc039600977cc55eb98a7904bc8f0978c7db049d9f4b9d9db35720456ae0"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/delayedTimerTie.provider.test.tsx",
+      "sha256": "9f43f74fee05efb1065465ccc7afda71ac1551defc5ad7add2b8ce2af84c02ef"
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+| Document Type | Link |
+| --- | --- |
+| ASRM | [RATAN ONE Application System Run Manual (ASRM) - Derivative Strategy Projects - Confluence](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3691421338) |
+| User Guide | Settlement : [User manual - RATAN](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=2863770766) Korea: [Ratan One Processing Guide(DOI)-Korea - Derivative Strategy Projects - Confluence](https://confluence.global.standardchartered.com/display/DSP/Ratan+One+Processing+Guide%28DOI%29-Korea) Trade : [2-User Guideline - Derivative Strategy Projects - Confluence](https://confluence.global.standardchartered.com/display/DSP/2-User+Guideline) |
+| SLA | [SLA - RATAN](https://teamsites.zone1.scb.net/sites/sm/Lists/SLA%20List/All%20Items.aspx#InplviewHashd674effe-f354-4677-b494-29ad45ddc0f4=SortField%3DDocument_x0020_Review_x0020_Due_-SortDir%3DAsc-FilterField1%3DTechnology%255Fx0020%255FService%255Fx0020%255FM-FilterValue1%3DZou%252C%2520Gevin-FilterField2%3DProduction%255Fx002f%255FDecomm-FilterValue2%3DProduction) |
+| OLAs | [08 - OLA - RATAN](https://confluence.global.standardchartered.com/display/PSS/08+-+OLA+-+RATAN+ONE) |
+| Service Recovery Plan(DR) | [RATAN (51358) Recovery (DR) Plan [PLAN-16314]](https://onepoint.global.standardchartered.com/ui/form/mid=102767&pid=72795704&iid=528748105) |
+| Service Restore Plan | [RATAN (51358) Restore Plan [PLAN-16315]](https://onepoint.global.standardchartered.com/ui/form/mid=102767&pid=75608234&iid=528747392/flag%3D1%26emd%3D1%26obj_id%3DPLAN-16315%26action_type%3DUPDATE%26mode%3Dview) |
+| Capacity Plan | [RATAN (51358) Capacity Management Plan [PLAN-16312]](https://onepoint.global.standardchartered.com/ui/form/mid=102767&pid=75441175&iid=526477139/flag%3D1%26emd%3D1%26obj_id%3DPLAN-16312%26action_type%3DUPDATE%26mode%3Dview) |
+| Test Environment Spec | [Ratan Application Test Environment Specifications - Derivative Strategy Projects - Confluence](https://confluence.global.standardchartered.com/display/DSP/Ratan+Application+Test+Environment+Specifications) |

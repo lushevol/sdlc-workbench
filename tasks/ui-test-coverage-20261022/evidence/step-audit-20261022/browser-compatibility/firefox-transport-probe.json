@@ -1,0 +1,75 @@
+{
+  "recordedAt": "2026-10-22T06:18:45.216Z",
+  "scope": "Isolated local Firefox transport investigation",
+  "results": [
+    {
+      "name": "default",
+      "browserVersion": "157.0",
+      "options": {},
+      "proxyVariableNames": [
+        "HTTPS_PROXY",
+        "HTTP_PROXY"
+      ],
+      "responses": [
+        {
+          "url": "http://localhost:8128/?show_normal_login=Y",
+          "status": 503
+        }
+      ],
+      "error": "page.goto: NS_ERROR_NET_ERROR_RESPONSE\nCall log:\n\u001b[2m  - navigating to \"http://localhost:8128/?show_normal_login=Y\", waiting until \"load\"\u001b[22m\n"
+    },
+    {
+      "name": "direct",
+      "browserVersion": "157.0",
+      "options": {
+        "firefoxUserPrefs": {
+          "network.proxy.type": 0
+        }
+      },
+      "proxyVariableNames": [
+        "HTTPS_PROXY",
+        "HTTP_PROXY"
+      ],
+      "responses": [
+        {
+          "url": "http://localhost:8128/?show_normal_login=Y",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/js/external/runtime.min.js",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/js/external/import-map-overrides.js",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/js/external/amd.min.js",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/js/external/system.min.js",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/importmaplocal.json",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/image/fmo-app-portal-splash.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/config.js",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8128/js/external/single-spa.dev.js",
+          "status": 200
+        }
+      ],
+      "title": "Markets Operations One",
+      "url": "http://localhost:8128/?show_normal_login=Y"
+    }
+  ]
+}

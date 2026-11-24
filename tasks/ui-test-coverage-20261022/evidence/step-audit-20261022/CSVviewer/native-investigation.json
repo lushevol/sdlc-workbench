@@ -1,0 +1,89 @@
+{
+  "caseId": "UX-043",
+  "kind": "manual_continuation_feasibility_investigation",
+  "recordedAt": "2026-10-22T06:44:29.458190+00:00",
+  "canonicalCase": "tasks/ui-test-coverage-20261022/test-cases.md#ux-043",
+  "canonicalVersion": 2,
+  "freshPlaywrightAttempt": false,
+  "retainedCsvRun": "run-050",
+  "sourceLinkage": "investigation-inputs.json",
+  "viewer": {
+    "name": "Numbers Creator Studio",
+    "bundleId": "com.apple.Numbers",
+    "version": "15.1"
+  },
+  "screenshot": {
+    "path": "numbers-path-sheet-blocked.png",
+    "captureStartedAt": "2026-10-22T06:43:27.496Z",
+    "captureFinishedAt": "2026-10-22T06:43:27.606Z",
+    "description": "Numbers Go To Folder path sheet recognizes the retained CSV folder. CSV import is not complete."
+  },
+  "fileSha256": {
+    "run-050-export-exact.csv": "8010a541dd1dfa1939c815d06026e042cce0532a96846980d39a627ad807cc0f",
+    "investigation-inputs.json": "e1b7257d7cc3aee9b4a2d7098324450795e1c7de2e3dab81e9c2c80197a9c584",
+    "numbers-path-sheet-blocked.png": "bb392cf7e827e3d9993a5d7baadbb1c0705ac9962c310abfb8c7752979ee3bd6",
+    "numbers-path-sheet-blocked-ax.txt": "101c9091ad668d252b1dce2674c40665d3f899f45729af3656936b45ade47a70"
+  },
+  "actionLedger": [
+    {
+      "ordinal": 1,
+      "action": "Read the Numbers Open dialog through CUA accessibility state.",
+      "actualOutcome": "Open dialog exists. No document is loaded."
+    },
+    {
+      "ordinal": 2,
+      "action": "Click picker location and send Command+Shift+G through CUA.",
+      "actualOutcome": "Numbers shows the Go To Folder path sheet."
+    },
+    {
+      "ordinal": 3,
+      "action": "Set the exact retained CSV path through AX setValue.",
+      "actualOutcome": "Path field and suggestion show the exact retained CSV path."
+    },
+    {
+      "ordinal": 4,
+      "action": "Try Return, keypad Enter, paste, typing, click, double click, and exposed open action through CUA.",
+      "actualOutcome": "Path sheet remains open. No CSV document is loaded."
+    },
+    {
+      "ordinal": 5,
+      "action": "Set the containing CSVviewer folder through AX setValue and try native navigation.",
+      "actualOutcome": "Folder suggestion appears. Path sheet remains open."
+    },
+    {
+      "ordinal": 6,
+      "action": "Bring Numbers to front through its Window menu and retry Return.",
+      "actualOutcome": "Path sheet remains open."
+    },
+    {
+      "ordinal": 7,
+      "action": "Retain native screenshot and exact accessibility text.",
+      "actualOutcome": "Blocker evidence is saved with SHA-256 hashes."
+    }
+  ],
+  "canonicalSteps": [
+    {
+      "step": 3,
+      "text": "The controlled spreadsheet viewer loads the captured CSV artifact with formula evaluation enabled",
+      "status": "BLOCKED",
+      "actualOutcome": "The path sheet recognizes the retained file. Native import did not complete. Formula control was not entered."
+    },
+    {
+      "step": 4,
+      "text": "Each of the four exported label cells has text data type and equals its original fixture string",
+      "status": "NOT_EXECUTED",
+      "actualOutcome": "No imported label cells exist for inspection."
+    },
+    {
+      "step": 5,
+      "text": "The spreadsheet formula evaluator contains zero evaluated fixture formulas",
+      "status": "NOT_EXECUTED",
+      "actualOutcome": "No evaluator or imported cells were inspected."
+    }
+  ],
+  "cellValueFormulaType": null,
+  "positiveFormulaControl": null,
+  "nativeRestriction": "Use cua_repl (JavaScript) for all UI actions. Do not use other technologies besides cua_repl for computer interactions, unless specifically requested by the user (e.g. AppleScript, osascript, JXA, System Events, CGEvent synthesis).",
+  "programmaticOpen": "Not executed. The native tool rule forbids other technologies for computer interactions without a user request.",
+  "conclusion": "UX-043 remains blocked at canonical step 3. Raw CSV escaping is available. Spreadsheet data types and formula nonexecution remain unproved."
+}

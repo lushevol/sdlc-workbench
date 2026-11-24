@@ -1,0 +1,86 @@
+{
+  "id": "UNIT-ISSUE1-REGRESSION-20261024",
+  "candidate_home_sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+  "baseline_home_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "baseline_home_scope": "Only Home differs; candidate assertions and other copied source stay equal.",
+  "failed_to_passed": [
+    {
+      "full_name": "Session lifecycle across browser minimize and return [SR11] Given repeated successful activity, When the original refresh expires, Then access remains active and later renewal uses its replacement",
+      "assertion_file": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "baseline": "failed",
+      "candidate": "passed"
+    },
+    {
+      "full_name": "Session lifecycle across browser minimize and return Given manual Extend just before refresh expiry, When the original refresh expires, Then renewed access stays active and refresh is replaced",
+      "assertion_file": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "baseline": "failed",
+      "candidate": "passed"
+    },
+    {
+      "full_name": "Home session refresh [SR11] Given valid access, when refresh expires, then replacement is requested without opening the alert",
+      "assertion_file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "baseline": "failed",
+      "candidate": "passed"
+    },
+    {
+      "full_name": "Home session refresh [SR11] Given repeated successful access renewals, when refresh expires, then valid access remains active while replacement is requested",
+      "assertion_file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "baseline": "failed",
+      "candidate": "passed"
+    },
+    {
+      "full_name": "Home session refresh [SR05] Given valid access but expired refresh, when restoring, then refresh is replaced without opening the alert",
+      "assertion_file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "baseline": "failed",
+      "candidate": "passed"
+    }
+  ],
+  "focused": {
+    "jest_passed": 79,
+    "ordinary_assertion_passes": 78,
+    "expected_failure_cases": 1,
+    "failed": 0
+  },
+  "full": {
+    "suites_passed": 116,
+    "jest_passed": 413,
+    "ordinary_assertion_passes": 412,
+    "expected_failure_cases": 1,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "known_defect_normal_it": {
+    "ordinary_passes": 0,
+    "failed": 1,
+    "filtered": 30,
+    "interpretation": "Delayed refresh delivery still prevents manual Extend. Jest it.failing marks this unmet requirement as expected."
+  },
+  "canonical_cases": [
+    "REVIEW-F01",
+    "REVIEW-F01-RECOVERY",
+    "REVIEW-F01-MANUAL",
+    "REVIEW-DELAYED-HIDE"
+  ],
+  "limits": [
+    "jsdom controlled integration and hook tests use fake timers, controlled JWT payloads, and Axios adapter responses.",
+    "No browser, deployed provider, production token lifetime, or refresh revocation conclusion follows.",
+    "Full Jest execution emitted an open-handle warning before eventually exiting zero."
+  ],
+  "validation": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "typescript_validation": {
+    "status": "PASSED",
+    "baseline_exit_code": 0,
+    "candidate_exit_code": 0,
+    "diagnostics": 0,
+    "comparison": "typescript-source-comparison.json"
+  }
+}

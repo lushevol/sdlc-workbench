@@ -1,0 +1,501 @@
+{
+  "analysis": "BFF frontend entitlement contract",
+  "created_at": "2026-11-06T00:03:32.357263+08:00",
+  "comparison": {
+    "mode": "branch merge base",
+    "main": "834b4155232222347220e47139a502ee43a9cbdf",
+    "merge_base": "834b4155232222347220e47139a502ee43a9cbdf",
+    "head": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+    "head_date": "2026-11-05T23:46:30+08:00",
+    "worktree_clean": true
+  },
+  "claims": [
+    {
+      "id": "BFF-01",
+      "topic": "Login response envelope and endpoints",
+      "classification": "source-confirmed contract",
+      "before": "buildEntities queried EMS2 entities derived from tile ems2_entities. Response contained entities, drawers, userInfo, oud and entitlementsToken.",
+      "after": "buildEntities calls TileAuthorizationService. The response envelope and v2/v3 endpoint division remain. v3 selects Entra authentication, not the CES provider. Login, validate and relogin call the common builder.",
+      "frontend_effect": "Keep the shared normalized entities decoder. No direct CES HTTP client or new login URL is required for this migration. Refresh every replaced entities/drawers value consistently.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "start": 100,
+          "end": 143,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "start": 167,
+          "end": 194,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "start": 209,
+          "end": 244,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "start": 259,
+          "end": 281,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ],
+      "baseline_sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+          "start": 97,
+          "end": 122
+        }
+      ]
+    },
+    {
+      "id": "BFF-02",
+      "topic": "CES normalized permission identity",
+      "classification": "source-confirmed contract",
+      "before": "EMS2 entity names and roles flowed into response.",
+      "after": "CES entity.name is configured entitlement_app_name. Each subject.name and longName is the feature. subject.entitlementSource is EMS3. Each action.name is the CES action. roleName, roleId, numeric IDs and applicationName are not populated by the CES mapper. The raw CES role_entitlements collection supplies effective feature/action grants, not a role-name assignment.",
+      "frontend_effect": "Resolve a permission using source, configured application, feature and action. Permit null metadata. Do not require X_RATANONE, roleName or numeric IDs for CES permission checks. Do not infer named role assignments from an aggregate grant list.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "start": 155,
+          "end": 165,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+          "start": 19,
+          "end": 40,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+          "start": 62,
+          "end": 96,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java",
+          "start": 10,
+          "end": 17,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ]
+    },
+    {
+      "id": "BFF-03",
+      "topic": "Drawer provider and grant semantics",
+      "classification": "source-confirmed contract",
+      "before": "Drawer entity came from legacy ems2_entities. Subject came from ems2_subject. Legacy name/longName matched tile visibility.",
+      "after": "Each drawer tile adds entitlementSource. An authorized feature-controlled CES tile uses configured application names for tile.entity. tile.subject remains the legacy ems2_subject. BFF performs case-insensitive ANY matching among configured CES features, independent of action name. Returned entities retain all application permissions, beyond the feature selecting a tile.",
+      "frontend_effect": "Preserve entitlementSource in tile models and route props. Do not repeat legacy subject matching on CES drawers. Tile availability and action permission are separate checks. Use the BFF-returned drawer grant for availability and scoped feature/action grants for controls.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "start": 117,
+          "end": 153,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "start": 208,
+          "end": 225,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "start": 290,
+          "end": 308,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileFeatureMatcher.java",
+          "start": 13,
+          "end": 22,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ]
+    },
+    {
+      "id": "BFF-04",
+      "topic": "Blank CES feature bypass",
+      "classification": "source-confirmed candidate behavior; approved policy not established here",
+      "before": "Legacy empty subject still needed an entitled configured entity unless a template bypass applied.",
+      "after": "In dual/CES modes an EMS3 tile with null, empty or whitespace feature is returned without any CES request or entity grant. Its tile.entity is empty. In EMS2_ONLY it still follows legacy authorization.",
+      "frontend_effect": "An unconditional nonempty-entity check can hide a BFF-returned CES tile or reject its direct launch. Reconcile intentional blank-feature semantics with portal entry policy. Do not grant all CES action access from tile availability.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "start": 181,
+          "end": 200,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "start": 125,
+          "end": 129,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "start": 285,
+          "end": 287,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ],
+      "assertion_sources": [
+        {
+          "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3ApplicationNameAuthorizationTest.java",
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+          "start": 261,
+          "end": 297
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-05",
+      "topic": "Mixed provider and rollback behavior",
+      "classification": "source-confirmed contract",
+      "before": "Login read EMS2 for the legacy entity inventory.",
+      "after": "EMS2_ONLY ignores per-tile EMS3 selection for grant collection and uses legacy names. Dual mode partitions tile sources, combines EMS2 and CES entities, and keeps EMS2 results after a CES read failure. EMS3_ONLY reads only EMS3 tile scopes. File application.yml selects EMS3_PRIMARY_DUAL_READ; effective deployment setting is unknown.",
+      "frontend_effect": "Keep source-aware branches and legacy compatibility during rollout. Do not globally replace every legacy name or treat every returned permission as CES.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "start": 43,
+          "end": 78,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/config/AuthorizationMigrationProperties.java",
+          "start": 9,
+          "end": 12,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ],
+      "configuration_source": {
+        "path": "src/main/resources/application.yml",
+        "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+        "start": 85,
+        "end": 88
+      }
+    },
+    {
+      "id": "BFF-06",
+      "topic": "Tile admin metadata round trip",
+      "classification": "source-confirmed metadata contract; conditional omission risk disproved for normal fetched-row editing",
+      "before": "Legacy frontend forms did not know CES metadata.",
+      "after": "Create/update requests, database models, list results and audit results contain entitlementSource, entitlementAppId, entitlementAppName and entitlementAppFeature. /tile/data returns complete ApplicationTile entities. Current mfe-base clones and spreads those fetched rows through edits and request construction, preserving the metadata. New records derive from columns that omit CES fields, so the current create flow cannot configure CES. RequestOfApplicationTile defaults an actually omitted source to EMS2; preservation only applies to explicit null source. That is a conditional contract risk for other callers, not a demonstrated current fetched-row edit defect.",
+      "frontend_effect": "Add all four fields to create/edit/read/audit models and UI. Keep the current complete-row round trip. Add regression assertions for metadata preservation. Do not claim normal current existing-row editing resets EMS3 to EMS2.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java",
+          "start": 31,
+          "end": 35,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "start": 62,
+          "end": 107,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "start": 207,
+          "end": 221,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "start": 264,
+          "end": 267,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "start": 281,
+          "end": 288,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ],
+      "runtime_execution": "NOT_RUN; source prediction only",
+      "owner": "unknown",
+      "frontend_disproof_sources": [
+        {
+          "repository": "mfe-base",
+          "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+          "path": "src/admin/Tile/common/useTableDetail.ts",
+          "start": 27,
+          "end": 48,
+          "sha256": "2bf4b22926c294c1ea8ab89daeb5d11db80154f4a88dea4f06b2d42858f581d3"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+          "path": "src/admin/Tile/services/useServices.ts",
+          "start": 74,
+          "end": 82,
+          "sha256": "ed33d36798f28eef3d552846a47c81ec10f1aa5e8828c305bf873d3fcd402367"
+        },
+        {
+          "repository": "mfe-base",
+          "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+          "path": "src/admin/Tile/common/useController.tsx",
+          "start": 342,
+          "end": 360,
+          "sha256": "62b586c92942ee7dc62bcaf27ec630a90b82ad5038409e3150e8a8102da6269a"
+        }
+      ]
+    },
+    {
+      "id": "BFF-07",
+      "topic": "CSV import and export contract",
+      "classification": "source-confirmed contract",
+      "before": "Tile CSV had legacy columns through Entry Name.",
+      "after": "Four headers are appended: Entitlement Source, Entitlement App Id, Entitlement App Name, Entitlement App Feature. Import accepts either all four or none. Partial metadata headers fail. Omitted all-four columns preserve existing CES metadata during update. Comma lists must be quoted.",
+      "frontend_effect": "Update CSV download/export/template/import mapping for all four columns together. Keep legacy import compatibility. The supplied database dump is not necessarily the admin CSV upload shape.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/Constant.java",
+          "start": 29,
+          "end": 32,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/CsvUtility.java",
+          "start": 93,
+          "end": 114,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/CsvUtility.java",
+          "start": 130,
+          "end": 160,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "start": 249,
+          "end": 262,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ]
+    },
+    {
+      "id": "BFF-08",
+      "topic": "CES configuration validation",
+      "classification": "source-confirmed contract",
+      "after": "Source strings are EMS2 or EMS3. App ID is a single value up to 64 characters. App names are comma-separated, trim/deduplicate preserving case. Features are comma-separated, trim/deduplicate ignoring case. Names and features are at most 512 characters each. Fullwidth comma is rejected. EMS3 writes require app ID and at least one app name. Blank features remain allowed.",
+      "frontend_effect": "Expose a source selector using EMS2/EMS3 wire values. Match backend validation and distinguish empty feature from malformed nonempty lists. Do not use CES as an unrecognized enum value.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/TileEntitlementConfig.java",
+          "start": 22,
+          "end": 55,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/TileEntitlementConfig.java",
+          "start": 59,
+          "end": 74,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ]
+    },
+    {
+      "id": "BFF-09",
+      "topic": "Portal admin role contract remains legacy",
+      "classification": "source-confirmed dependency; runtime admin failure unverified",
+      "before": "Entitlement JWT keys were entityName:roleName. Admin validation extracted the role from a configured admin entity key.",
+      "after": "JWT serialization and AdminModuleUtil role extraction remain the same. CES entities get null roleName, producing applicationName:null keys. Frontend roleName fallback alone cannot restore role-based admin authorization or ownership filtering.",
+      "frontend_effect": "Treat admin authorization as a separate coordinated BFF/frontend mapping decision. Do not manufacture SUPER_USER, maker/checker or PSS_RO assignments from unrelated CES actions.",
+      "sources": [
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "start": 131,
+          "end": 143,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "start": 43,
+          "end": 63,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "start": 249,
+          "end": 253,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        },
+        {
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+          "start": 72,
+          "end": 90,
+          "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+        }
+      ],
+      "owner": "unknown"
+    }
+  ],
+  "assertion_inspection": {
+    "execution": "NOT_RUN",
+    "paths": [
+      "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java",
+      "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3ApplicationNameAuthorizationTest.java",
+      "src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java",
+      "src/test/java/com/scb/sso/singleuibff/util/AdminModuleUtilTest.java"
+    ],
+    "direct_assertions": [
+      "Mapper feature/action/provenance output",
+      "Application-name entities and drawers",
+      "Blank CES feature bypass including zero entities",
+      "Create CES tile metadata persistence"
+    ]
+  },
+  "source_files": [
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "candidate_sha256": "c5e50cb1272af3a27354b1a28b3f092999a7011922343284984ef854aee56af3",
+      "base_sha256": "6f8f759d314d97b41a6d0ad35a26a5cce475cc4c40d7ccf06f729668c8f15b3b"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "candidate_sha256": "3b86de99b181d789ec9804e259f0d1d32a331cd6c483d7056de12ba7148e41f3",
+      "base_sha256": null
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "candidate_sha256": "2fb6fd6ec859326f2bf1c2cc290e1cce7e4e8b8b8fbd33339bb22a6219552e71",
+      "base_sha256": null
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationResult.java",
+      "candidate_sha256": "9295dd8010028752af33c08f18e79db975737ae27ef08b994ab37a4796203a42",
+      "base_sha256": null
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileFeatureMatcher.java",
+      "candidate_sha256": "0d9d390f9c6cbfbfbeb2cb734f142dedc8760084001062ce3c6c9e8bb709d914",
+      "base_sha256": null
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+      "candidate_sha256": "cf84399ee5428b9464ed6c12533c8b30f1fa042c921778439e45ab150536fee7",
+      "base_sha256": "ee98fe6f1d416e6646bf26ed950a47927218b4b56c96aff77f02c21afcc8ed79"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+      "candidate_sha256": "5eef1aa233853afefb8694e3b64f91dbb8646e9ca30deb52d6f6cdf4c6436294",
+      "base_sha256": "cfbda5507e80691404985e988f518c811b3458e24b51751e3909cda71ee44d23"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java",
+      "candidate_sha256": "9235b4c156cdf501ac94cc0dac21d48e0138cfe2bd5679a5f80b6c9621c45470",
+      "base_sha256": "b393a586a8d34102c487deeae5d2e53d68b72a99b8b277e968264241bdd224be"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java",
+      "candidate_sha256": "bfc792bb3323756f2bd6ec03d066b3dfd7ce37d0127ab957a64108449cfc5649",
+      "base_sha256": "195acf078cbc8b09ecf2db1a851b0f611eb5ff3a8c25f6e8b44127657b159b12"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Subject.java",
+      "candidate_sha256": "7651b8d895ef6a8fc367a2f589c00aabb7b148e663e0f2ae584331aa0c2f0a1a",
+      "base_sha256": "ae8e1a17d1363f19b643a8d32ec8c1f92be6aefc19c3ad6d327c8149687f5c79"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java",
+      "candidate_sha256": "b6ad88b22055a4306257edf37241bc51e0b340baafa3e6aa49e9be66829847dd",
+      "base_sha256": "b6ad88b22055a4306257edf37241bc51e0b340baafa3e6aa49e9be66829847dd"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/TileEntitlementConfig.java",
+      "candidate_sha256": "3e63b152255c7f37674574c7aad4a2b4ecc66fb7e874162532b99a133f0152e8",
+      "base_sha256": null
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "candidate_sha256": "9677698f3e3ec7a1c412448c6cd2aa1e25b4aff3d6190ee84449c910de223559",
+      "base_sha256": "a515c30c585304810bd6a1dc7044fbccadf2dcb416efb907c0c5960dec4a612d"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/CsvUtility.java",
+      "candidate_sha256": "8da9aee9d35329bdf4c25064e12038e5419e148ecec984d389b03268895d5c6c",
+      "base_sha256": "6265516a01e590dd02c640fb6cb131cdba8e474195bd596fd86bb4089d6abd7d"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/Constant.java",
+      "candidate_sha256": "98318bf5ee01af1c67cfa056cc73828901c1c045c97408a2ed1f0b8a6848d4d3",
+      "base_sha256": "e03d6c2bdbd9768499b9a940e3c756aa17ebb32c2b2a4e095bd542e5e4775480"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java",
+      "candidate_sha256": "a164177391f90238450d819b89122b94c16ec4b1e6251c0ea92306424e50ae9c",
+      "base_sha256": "69adae24abb4eeb02244d27e8517bfae9eccfce3e81ac7098b55ca756be341e3"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/entity/ApplicationTileAudit.java",
+      "candidate_sha256": "36775a9256eda9a9fce61980335fef6e8d03554d3770c8c523e0dddfdb70ec76",
+      "base_sha256": "ea980636529fcf3aebfacb92bd9cc8313801749718809fb4476eca9e5d0609ba"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/dto/Drawer.java",
+      "candidate_sha256": "d299828856df0dc213d9c1465c31e9cce5c22359a5ae8d1510daf7766ce7640d",
+      "base_sha256": "9e0d637cac016ad04344dc8920fd837ca28452be09a7c03df6b64a6d46b417e7"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/AuthFilterExecutor.java",
+      "candidate_sha256": "957db09c4af96544bdbe9883ccee7bdf9adea2617c9a293bdfd9a3b5ba28e1a8",
+      "base_sha256": "5292049e678cbca1b1f6bfc8193a4cdc029ed7ce5fc5c060c826b7270a6060dc"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/config/AuthorizationMigrationMode.java",
+      "candidate_sha256": "d0f562afadad375fcd09fc64bd77a872de8293f48c12cab33316c84451573350",
+      "base_sha256": null
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/config/AuthorizationMigrationProperties.java",
+      "candidate_sha256": "30a1325f16fba25c9c11cfb14b61a1d46cc37888c64456ba3ebefdc0ad7c39f4",
+      "base_sha256": null
+    },
+    {
+      "path": "src/main/resources/application.yml",
+      "candidate_sha256": "1735ca2175ab90f7081db92f7a342d0984084220c6e1c70eb3457d3c9612c15b",
+      "base_sha256": "719eae6ac604daa440e7c00bbab6f5f57454761b60b8ae3cb1ad3a3c00a56d56"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java",
+      "candidate_sha256": "a3ecbac37fd5f70085eec8712dc08b11ed917220be36a6d715a099007d69c604",
+      "base_sha256": null
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3ApplicationNameAuthorizationTest.java",
+      "candidate_sha256": "cd5324e7a433fbcd5b9e06c7e7adfa4c141ad00e7033ecf2c0948d74663539cc",
+      "base_sha256": null
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java",
+      "candidate_sha256": "cc3f0bf9569d2f579f109ada3f34174cf02e4cb5c636ac316d5d2d50c5190737",
+      "base_sha256": "1bd7716e5e9fc419c9034007c0673a1c3750193b75ce5dc1105e29a8cde927f5"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/util/AdminModuleUtilTest.java",
+      "candidate_sha256": "2a7dafce6171f1ba90c168895d2b4fde647a9585b935ab4e7dffd0d004494d81",
+      "base_sha256": "292b80a44a3037293b0e5e4a3d97b738c3c91bce8e09a182ba9b62fdaa7cc0f9"
+    }
+  ],
+  "limits": [
+    "Focused integration analysis, not a complete review of all 54 changed BFF paths.",
+    "No live endpoint, browser, database write or migration acceptance was performed.",
+    "Capture environment/build/time and effective deployment migration mode remain unknown.",
+    "Business mapping and blank-feature approval require canonical intent review.",
+    "No raw login tokens or personal user attributes are retained in this derived record."
+  ]
+}

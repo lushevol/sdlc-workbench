@@ -1,0 +1,56 @@
+PASS src/pages/Home/common/sessionLifecycle.test.tsx
+FAIL src/pages/Home/index.test.tsx (8.723 s)
+  ● Home component › should be in the document
+
+    TestingLibraryElementError: Unable to find an element by: [data-testid="undefined_home"]
+
+    Ignored nodes: comments, script, style
+    [36m<body[39m
+      [33mstyle[39m=[32m"background-color: rgb(23, 29, 36);"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mid[39m=[32m"deleteWorkspace-1"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [36m<button[39m
+              [33mdata-testid[39m=[32m"test-delete-workspace"[39m
+            [36m>[39m
+              [0mDelete workspace fixture[0m
+            [36m</button>[39m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mid[39m=[32m"editWorkspace-1"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [36m<button[39m
+              [33mdata-testid[39m=[32m"test-edit-workspace"[39m
+            [36m>[39m
+              [0mEdit workspace fixture[0m
+            [36m</button>[39m
+          [36m</span>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      373 |     </Provider>);
+      374 |     expect(screen).toBeDefined();
+    > 375 |     const id = screen.getByTestId(PREFIX);
+          |                       ^
+      376 |     expect(id).toBeInTheDocument();
+      377 |
+      378 |     const edit = screen.getByTestId(`edit-${workspacesDefault1[0].id}`);
+
+      at Object.getElementError (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/config.js:37:19)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at getByTestId (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/node_modules/@testing-library/dom/dist/query-helpers.js:95:19)
+      at Object.<anonymous> (src/pages/Home/index.test.tsx:375:23)
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 44 passed, 45 total
+Snapshots:   0 total
+Time:        10.783 s
+Ran all test suites within paths "src/pages/Home/index.test.tsx", "src/pages/Home/common/sessionLifecycle.test.tsx".
+Test results written to: ../../../tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/test-repairs/jest-result.json

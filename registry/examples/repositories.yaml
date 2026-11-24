@@ -1,0 +1,37 @@
+# Fictional examples. These entries do not describe discovered repositories.
+schema_version: 1
+repositories:
+  - id: example-portal
+    name: Fictional settlement portal
+    primary_type: frontend
+    responsibility: Present settlement requests.
+    ownership: {team: Example Portal Team, contact: portal@example.invalid}
+    provides_contract_ids: [example-ui-contract]
+    consumes_contract_ids: [example-http-contract]
+    source_ids: [example-git-source]
+  - id: example-payments
+    name: Fictional payments code
+    primary_type: backend
+    responsibilities: [Accept settlement requests., Coordinate settlement work.]
+    provides_contract_ids: [example-http-contract, example-graphql-candidate]
+    consumes_contract_ids: [example-message-contract, example-data-contract]
+  - id: example-shared
+    name: Fictional shared validation library
+    primary_type: library
+    responsibility: Define shared validation functions.
+  - id: example-clearing-adapter
+    name: Fictional clearing integration
+    primary_type: integration
+    provides_contract_ids: [example-message-contract]
+  - id: example-ledger
+    name: Fictional ledger schema
+    primary_type: data
+    provides_contract_ids: [example-data-contract]
+  - id: example-deployment
+    name: Fictional settlement deployment
+    primary_type: deployment
+    provides_contract_ids: [example-deployment-contract]
+  - id: example-test-suite
+    name: Fictional settlement tests
+    primary_type: testing
+    consumes_contract_ids: [example-http-contract]

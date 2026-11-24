@@ -1,0 +1,279 @@
+{
+  "artifact_kind": "review-history-audit",
+  "id": "AUDIT-session-uat-blotter-review-20261021",
+  "recorded_at": "2026-10-21T08:08:17.507578+00:00",
+  "assessor": "Codex review_history subagent",
+  "scope": "Prior code review, impact analysis, and retained local browser evidence for absent idle Timeout with an embedded Cashflow application.",
+  "workbench_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+  "source_comparison": {
+    "historical_base": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+    "historical_head": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+    "minor_runtime": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "minor_test_only_head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "uat_artifact_binding": "NOT_ESTABLISHED_BY_THIS_AUDIT"
+  },
+  "sources": [
+    {
+      "id": "historical-review",
+      "path": "tasks/portal-background-session-20261019/code-review.md",
+      "sha256": "e1ab7362cf028529a2f44a24bf7496984751cb497c8a0823f6c4e7035a684a1b",
+      "locator": "116-140; 173-179"
+    },
+    {
+      "id": "historical-impact",
+      "path": "tasks/portal-background-session-20261019/impact-analysis.md",
+      "sha256": "b80226617d7f809529316d031e49888e08007d4966b5e843840b4e4857ba5dc4",
+      "locator": "37-60; 96-100; 170-177"
+    },
+    {
+      "id": "inspection",
+      "path": "tasks/portal-background-session-20261019/evidence/post-change-review-20261020/code-review/inspection.json",
+      "sha256": "d3ad77afd1b1dbe49c4205bc9e6b9aa9ba175a892d9c2a090a2a70c0cedc9dde",
+      "locator": "files; review_result; limits"
+    },
+    {
+      "id": "impact-evidence",
+      "path": "tasks/portal-background-session-20261019/evidence/post-change-review-20261020/impact/impact-evidence.json",
+      "sha256": "d3e6b6f3cf2c22cd97a1a1efae3919ef41329460da09bae4c51bb900251d8ad5",
+      "locator": "relationships; limits"
+    },
+    {
+      "id": "consumer-excerpts",
+      "path": "tasks/portal-background-session-20261019/evidence/post-change-review-20261020/code-review/consumer-excerpts.txt",
+      "sha256": "a467d69ebf3064b857cb63e8961a8e5cf9ce3e35246cfe079d026b3c66385b86",
+      "locator": "22-36; 38-72; 133-139"
+    },
+    {
+      "id": "original-browser-manifest",
+      "path": "tasks/portal-background-session-20261019/evidence/post-change-review-20261020/browser-execution/final/manifest.json",
+      "sha256": "75ddf4bde85430d78d67e0e1de11bc739a7ead32a7c85ea76fdae441942b570d",
+      "locator": "cases; limits"
+    },
+    {
+      "id": "minor-browser-manifest",
+      "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser-manifest.json",
+      "sha256": "2cc915c3bc18b89e8a6c477e72be66fe1d180599c98a0dd278417c6d0406d524",
+      "locator": "cases; attempts"
+    },
+    {
+      "id": "browser-assertions",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "locator": "267-274; 493-520; 643-700"
+    },
+    {
+      "id": "minor-idle-result",
+      "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json",
+      "sha256": "b97b8b857c5f2c7bbfd105bcd8c821598f3cf2c1258975194625574cec3d8c15",
+      "locator": "sourceRevisions; lifecycle.events"
+    },
+    {
+      "id": "middleware",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.ts",
+      "sha256": "faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561",
+      "locator": "7-13",
+      "independent_revision": null,
+      "recorded_original_sha256": "faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561",
+      "matches_original_inspection": true
+    },
+    {
+      "id": "middleware-test",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.test.ts",
+      "sha256": "363a383ee3e79b6e4729edecef395916276027ca573e10868bb056207a3224dd",
+      "locator": "6-8; 29-32",
+      "independent_revision": null,
+      "recorded_original_sha256": "363a383ee3e79b6e4729edecef395916276027ca573e10868bb056207a3224dd",
+      "matches_original_inspection": true
+    },
+    {
+      "id": "import",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/index.ts",
+      "sha256": "d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+      "locator": "16",
+      "independent_revision": null,
+      "recorded_original_sha256": "d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+      "matches_original_inspection": true
+    }
+  ],
+  "exact_historical_helper": {
+    "repository": "mfe-base",
+    "path": "src/hooks/service/util/extend.ts",
+    "revision": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+    "sha256": "126a54edd59a6835a2bae5c46bda1c1c07e5aabbbf7eb5eb11e9ebd889131663",
+    "inspected": true,
+    "scope": "extendToken obtains shared store state and calls extend. The helper checks logout and access lifetime, without checking human activity or visibility.",
+    "matches_original_inspection": true
+  },
+  "findings": [
+    {
+      "id": "RA-01",
+      "class": "documented-review",
+      "conclusion": "The prior review identified API-triggered renewal outside Home activity and visibility checks.",
+      "evidence": [
+        "historical-review#L126",
+        "historical-review#L130",
+        "historical-impact#L98"
+      ],
+      "consequence": "Loaded application traffic could affect idle-timeout observations.",
+      "owner": "unknown portal and embedded-application owners",
+      "next_action": "Run representative idle controls with the embedded application and retain renewal traffic.",
+      "original_status": "OPEN"
+    },
+    {
+      "id": "RA-02",
+      "class": "inspected-implementation",
+      "conclusion": "The retained Cashflow middleware invokes the shared extension helper after fulfilled GraphQL queries.",
+      "evidence": [
+        "consumer-excerpts#L22-L36",
+        "middleware#L7-L13",
+        "import#L16"
+      ],
+      "consequence": "A successful query can request access renewal without a human event.",
+      "owner": "unknown application owner",
+      "next_action": "Correlate the deployed query and renewal responses before attributing UAT causation.",
+      "limit": "Supplied consumer copy has no established independent Git revision. This audit does not prove background polling frequency."
+    },
+    {
+      "id": "RA-03",
+      "class": "inspected-test-assertion",
+      "conclusion": "The middleware unit test mocks the extension helper and asserts that it was called.",
+      "evidence": [
+        "middleware-test#L6-L8",
+        "middleware-test#L29-L32"
+      ],
+      "consequence": "This assertion cannot establish idle timeout, real renewal, or embedded browser behavior.",
+      "owner": "unknown test owner",
+      "next_action": "Retain representative browser assertions with actual request and expiry observations."
+    },
+    {
+      "id": "RA-04",
+      "class": "evidence-gap",
+      "conclusion": "No representative embedded Cashflow idle execution was identified in the audited historical manifests and assertion source.",
+      "evidence": [
+        "historical-review#L126-L127",
+        "historical-impact#L174",
+        "inspection#limits",
+        "impact-evidence#limits",
+        "original-browser-manifest#cases",
+        "browser-assertions#L267-L274"
+      ],
+      "consequence": "The specific deployed absent-dialog failure was not verified or resolved by those records.",
+      "owner": "unknown application and test owners",
+      "next_action": "Execute the actual embedded idle journey and a no-polling control.",
+      "limit": "This is a bounded evidence audit. It does not prove that no external execution ever occurred."
+    },
+    {
+      "id": "RA-05",
+      "class": "observed-execution",
+      "conclusion": "A minor-branch local idle case did display the Timeout dialog.",
+      "evidence": [
+        "minor-idle-result#lifecycle.events",
+        "browser-assertions#L267-L274"
+      ],
+      "consequence": "The local pass does not establish the reported UAT embedded condition.",
+      "owner": "unknown test owner",
+      "next_action": "Keep this local control separate from UAT reproduction.",
+      "actual": {
+        "case_id": "idle-prompt-logout",
+        "status": "PASSED",
+        "prompt_opened": [
+          {
+            "event": "prompt_opened",
+            "timestamp": "2026-10-20T14:37:31.035Z",
+            "visibility": "visible"
+          }
+        ]
+      },
+      "limit": "Shortened local lifetimes and no representative embedded traffic were established."
+    }
+  ],
+  "original_browser_case_inventory": [
+    {
+      "case_id": "activity-mouse",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "activity-keyboard",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "activity-scroll",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "pending-renewal",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "rejected-renewal-retry",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "activity-cross-refresh-expiry",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "slow-activity-single-flight",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "pending-manual-logout-cancellation",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "pending-activity-home-unmount-cancellation",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "late-activity-after-manual-success",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "TC-05-actual-expired-credential-denial",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "TC-07-workspace-descriptor-observation",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "natural-background-paired-control",
+      "result_status": "PASSED"
+    },
+    {
+      "case_id": "TC-04-background-without-refresh-observation",
+      "result_status": "PASSED"
+    }
+  ],
+  "answer": {
+    "risk_category_caught": true,
+    "specific_uat_failure_reproduced_by_prior_review": false,
+    "representative_embedded_idle_execution": "NOT_IDENTIFIED_IN_AUDITED_EVIDENCE",
+    "risk_resolved_by_prior_review": false,
+    "expected_idle_policy": "NOT_ESTABLISHED_BY_REVIEW_OR_IMPLEMENTATION_ALONE",
+    "accountability": "The integration risk was recorded and remained open. It was not converted into representative executed coverage before this reported UAT failure."
+  },
+  "checks": {
+    "source_hashes_computed": true,
+    "consumer_hashes_match_original_inspection": true,
+    "json_parse": "PASSED",
+    "business_tests_run": false,
+    "browser_execution_run": false
+  },
+  "limitations": [
+    "This audit does not access UAT or establish the deployed module versions.",
+    "Original impact and code review concern the broader runtime. Minor-branch local evidence has separate source bindings.",
+    "Cashflow Blotter, Cashflow Dashboard, and repository identity are not interchangeable runtime identities.",
+    "No review statement establishes approval to count automatic traffic as human activity."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

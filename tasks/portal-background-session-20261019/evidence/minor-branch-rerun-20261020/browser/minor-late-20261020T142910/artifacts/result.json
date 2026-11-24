@@ -1,0 +1,128 @@
+{
+  "caseId": "late-activity-after-manual-success",
+  "status": "FAILED",
+  "startedAt": "2026-10-20T14:29:14.903Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "0d7aada0988068864548e882716fb794954b87a382732a2f48cc79907e502cd4",
+  "testSourceSha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "sourceRevisions": {
+    "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "An earlier real activity extension response is held through access expiry and delivered after real manual renewal."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T14:29:14.904Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "expired-prompt",
+      "capturedAt": "2026-10-20T14:30:14.118Z",
+      "file": "expired-prompt.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T14:30:24.243Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "error": "Opening the timeout prompt must cancel the earlier activity extension.",
+  "completedAt": "2026-10-20T14:30:24.235Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792506554853,
+      "access": {
+        "sha256": "abcd126ebc89e051c2aaa8df1866f44568cea40dd438f9c856e9e6d78b00eb96",
+        "exp": 1792506614,
+        "iat": 1792506554
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792506555361,
+      "access": null,
+      "refresh": {
+        "sha256": "b403c8b40cab369dd7c3eff99ca226af6866b1b60ae8c9c4436adc0728e47da1",
+        "exp": 1792506699,
+        "iat": 1792506555
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/extend",
+      "status": 401,
+      "time": 1792506624321,
+      "access": null,
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792506552895
+    }
+  ],
+  "initialAccess": {
+    "sha256": "abcd126ebc89e051c2aaa8df1866f44568cea40dd438f9c856e9e6d78b00eb96",
+    "exp": 1792506614,
+    "iat": 1792506554
+  },
+  "latestAccess": {
+    "sha256": "abcd126ebc89e051c2aaa8df1866f44568cea40dd438f9c856e9e6d78b00eb96",
+    "exp": 1792506614,
+    "iat": 1792506554
+  },
+  "refresh": {
+    "sha256": "b403c8b40cab369dd7c3eff99ca226af6866b1b60ae8c9c4436adc0728e47da1",
+    "exp": 1792506699,
+    "iat": 1792506555
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T14:29:14.495Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-20T14:29:15.326Z",
+        "visibility": "hidden"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-20T14:29:15.380Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_opened",
+        "timestamp": "2026-10-20T14:30:14.031Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": true,
+    "closures": 0,
+    "activity": {
+      "mousemove": 2,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

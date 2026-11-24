@@ -1,0 +1,9 @@
+{
+  "candidate":"e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "provider_response":"../independent-support-response.json",
+  "provider_response_sha256":"2e4e8bd118dd0fbe9d6aead3bdf6e4bf9a91aa86c51a2277a5396f2d07edb371",
+  "claims":[
+    {"id":"ISU-01","claim":"Removing refreshToken reset from SET_TOKEN leaves prior credentials on logout or fresh login","classification":"REJECT_LOCAL_LOGOUT_AND_FRESH_LOGIN_PATHS; LIMIT_EXTERNAL_SET_TOKEN_CALLERS","evidence":["src/hooks/reducer/root0.reducers.ts:4-9,35-43","src/utils/common.ts:52-79","src/hooks/service/util/success.request.handler.ts:10-19","src/hooks/service/util/succes.response.handler.ts:74-83","src/hooks/dispathcer/index.ts:36-41"],"qualification":"Local logout dispatches CLEAR, which clears refresh. Fresh v2/v3 login explicitly clears refresh on request and success. SET_TOKEN preserves refresh during rotation. The exported dispatcher can also set a token without clearing; no local non-test caller was found. External consumers remain unknown."},
+    {"id":"ISU-02","claim":"Malformed pnpm lock ignore can cause Prettier churn","classification":"CONFIRMED_TYPO_NO_REPOSITORY_FORMAT_IMPACT_ESTABLISHED","evidence":[".prettierignore:9","package.json:16-17,23"],"qualification":"The pattern contains spaces. Existing format scripts target src only; no pnpm-lock file was found in tracked visible files. A repository-wide external invocation and its impact are hypothetical."}
+  ]
+}

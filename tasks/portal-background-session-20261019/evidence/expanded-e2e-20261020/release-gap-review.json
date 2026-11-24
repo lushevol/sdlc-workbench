@@ -1,0 +1,495 @@
+{
+  "id": "REVIEW-session-release-gaps-20261020",
+  "recorded_at": "2026-10-20T01:24:40.952136+00:00",
+  "owner": "unknown",
+  "scope": "Independent source and assertion review of session renewal and remaining release evidence.",
+  "repository_revisions": {
+    "mfe-base": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+    "ratan-test-engine": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+    "workbench": "3ef6e1b18401acda32ca292c80b6fa031567ca8e"
+  },
+  "browser_runtime_revision": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+  "application_source_changed_since_browser_runtime": [],
+  "unit_commit_binding": "unit/commit-binding.json",
+  "unit_commit_binding_sha256": "5d30acaa83c926b2ce926cd793fc7b7be2fc7d184f6f45fdf6ff59d77597aea3",
+  "unit_result": {
+    "targeted_tests": 6,
+    "targeted_suites": 2,
+    "full_tests": 451,
+    "full_suites": 119,
+    "status": "PASSED",
+    "execution_limit": "JSDOM and existing mocks. ForceExit handles existing open handles."
+  },
+  "resolved_findings": [
+    {
+      "id": "RG-UT-001",
+      "status": "RESOLVED",
+      "category": "weak_assertion",
+      "source_refs": [
+        "clock"
+      ],
+      "prior_fact": "The explicit-failure fixture used a fixed token expiry without freezing the test clock.",
+      "consequence": "An expired header could hide a regression in body-failure rejection.",
+      "resolution": "Freeze Date.now per case. Add a valid-success authorization control.",
+      "owner": "unknown",
+      "next_action": "Retain the committed correction and matching unit evidence.",
+      "commit": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5"
+    }
+  ],
+  "findings": [
+    {
+      "id": "RG-001",
+      "priority": "P1",
+      "category": "environment_evidence_gap",
+      "status": "OPEN",
+      "title": "Production applicability lacks deployment binding",
+      "source_refs": [
+        "stage",
+        "fixture"
+      ],
+      "facts": [
+        "Stage readiness excludes production approval without deployed evidence.",
+        "The local fixture disables module federation remotes and uses synthetic identity and authorization adapters."
+      ],
+      "inferences": [],
+      "consequence": "Local assertions cannot establish production provider, gateway, embedded application, or toolkit behavior.",
+      "owner": "unknown",
+      "next_action": "Bind deployed revisions and settings. Execute the mapped cases against a representative environment.",
+      "scope_limit": "This limits production confidence. It does not invalidate passing local predicates."
+    },
+    {
+      "id": "RG-002",
+      "priority": "P2",
+      "category": "integration_risk",
+      "status": "OPEN",
+      "title": "Shared-origin portal tab interactions remain untested",
+      "source_refs": [
+        "storage",
+        "provider",
+        "persist",
+        "natural"
+      ],
+      "facts": [
+        "The routing storage listener updates theme only.",
+        "Each portal maintains authentication in its React reducer.",
+        "Access persistence writes local storage and session storage.",
+        "The natural background control uses a separate browser context."
+      ],
+      "inferences": [
+        "Concurrent portal tabs could retain stale authentication after logout or credential rotation."
+      ],
+      "consequence": "A second tab could show inconsistent session state or write retained credentials into shared storage.",
+      "owner": "unknown",
+      "next_action": "Confirm the tab interaction policy. Test concurrent renewal, logout, and reload in one browser context.",
+      "scope_limit": "No failure was reproduced. Existing acceptance criteria do not define global tab logout behavior."
+    },
+    {
+      "id": "RG-003",
+      "priority": "P2",
+      "category": "integration_and_policy_gap",
+      "status": "OPEN",
+      "title": "Embedded API traffic can request renewal outside Home activity checks",
+      "source_refs": [
+        "shared",
+        "cashflow",
+        "ratan",
+        "fixture"
+      ],
+      "facts": [
+        "Cashflow fulfilled queries invoke the shared extension export.",
+        "Ratan GraphQL invokes the export after query completion.",
+        "The shared helper checks credentials and logout state without checking document visibility.",
+        "The current fixture disables module federation remotes."
+      ],
+      "inferences": [
+        "Background application traffic could change idle-session observations."
+      ],
+      "consequence": "Portal-only idle controls cannot establish behavior with representative application queries.",
+      "owner": "unknown",
+      "next_action": "Confirm eligible activity. Test visible-idle and hidden sessions with representative application traffic.",
+      "scope_limit": "Consumer revisions remain unknown. This source path does not establish a deployed defect."
+    },
+    {
+      "id": "RG-004",
+      "priority": "P2",
+      "category": "verification_level_gap",
+      "status": "OPEN",
+      "title": "Protected operation covers portal validation only",
+      "source_refs": [
+        "protected",
+        "fixture"
+      ],
+      "facts": [
+        "The example protected operation calls the portal authentication validation endpoint.",
+        "The retained fixture excludes a trading workflow."
+      ],
+      "inferences": [],
+      "consequence": "Renewed portal access does not establish downstream business authorization or business-query success.",
+      "owner": "unknown",
+      "next_action": "Configure one inspected read-only application operation. Assert its response and renewed request credential.",
+      "scope_limit": "The existing portal validation predicate remains useful within its stated boundary."
+    },
+    {
+      "id": "RG-005",
+      "priority": "P2",
+      "category": "missing_execution_fixture",
+      "status": "OPEN",
+      "title": "Provider refusal and revocation have no matching fixture",
+      "source_refs": [
+        "retry",
+        "expired",
+        "fixture"
+      ],
+      "facts": [
+        "The manual retry case aborts the first transport request.",
+        "The credential denial case waits for natural access expiry.",
+        "The local fixture substitutes identity and authorization adapters."
+      ],
+      "inferences": [],
+      "consequence": "Transport retry and natural expiry results cannot establish provider refusal or revocation behavior.",
+      "owner": "unknown",
+      "next_action": "Obtain an authorized provider fixture. Assert the agreed refusal, revocation, and recovery outcomes.",
+      "scope_limit": "No provider defect or global revocation behavior is claimed."
+    },
+    {
+      "id": "RG-006",
+      "priority": "P2",
+      "category": "acceptance_policy_gap",
+      "status": "OPEN",
+      "title": "Absent-credential recovery and application-edit restoration remain unresolved",
+      "source_refs": [
+        "missing",
+        "workspace"
+      ],
+      "facts": [
+        "TC-04 records O-001 without an expected recovery outcome.",
+        "TC-07 records O-004 and compares workspace descriptors.",
+        "The default workspace fixture creates empty workspaces."
+      ],
+      "inferences": [],
+      "consequence": "Observation success cannot establish recovery acceptance or preservation of application edits.",
+      "owner": "unknown",
+      "next_action": "Resolve O-001 and O-004. Define expected outcomes and supply populated application fixtures.",
+      "scope_limit": "Descriptor equality does not establish application memory, entitlement, or cross-origin content restoration."
+    },
+    {
+      "id": "RG-007",
+      "priority": "P3",
+      "category": "scope_question",
+      "status": "OPEN",
+      "title": "Click and touch activity require a defined policy",
+      "source_refs": [
+        "inputs",
+        "requirement"
+      ],
+      "facts": [
+        "Home binds mouse movement, keyboard input, and captured scroll activity.",
+        "Requirement version 4 names those activity types.",
+        "Cross-origin embedded activity requires separate integration evidence."
+      ],
+      "inferences": [
+        "Click-only and touch-only use could follow different renewal paths."
+      ],
+      "consequence": "The current inventory cannot establish eligibility for activity outside the defined event scope.",
+      "owner": "unknown",
+      "next_action": "Confirm supported input types before adding acceptance cases or changing event bindings.",
+      "scope_limit": "These inputs are scope questions. They are not demonstrated violations of version 4."
+    },
+    {
+      "id": "RG-008",
+      "priority": "P3",
+      "category": "inherited_policy_question",
+      "status": "OPEN",
+      "title": "Manual renewal stops before nominal refresh expiry",
+      "source_refs": [
+        "lead"
+      ],
+      "facts": [
+        "The timeout controller schedules logout two seconds before refresh expiry."
+      ],
+      "inferences": [
+        "A slow pending renewal near that boundary could be cancelled before nominal credential expiry."
+      ],
+      "consequence": "The final renewal window depends on an inherited early-logout policy.",
+      "owner": "unknown",
+      "next_action": "Confirm the two-second lead policy. Retain boundary assertions before changing that behavior.",
+      "scope_limit": "The behavior predates this test correction. No new application defect is claimed."
+    },
+    {
+      "id": "RG-009",
+      "priority": "P1",
+      "category": "confirmed_typecheck_failure",
+      "status": "OPEN",
+      "title": "Changed extension request guard fails the declared typecheck",
+      "source_refs": [
+        "shared",
+        "typecheck",
+        "typecheck_review"
+      ],
+      "facts": [
+        "The current typecheck fails with four diagnostics.",
+        "Two TS18048 diagnostics identify changed extension request guard lines.",
+        "Two Home test diagnostics recur on baseline source with current dependencies.",
+        "The proposed guard removes both changed application diagnostics in an isolated copy.",
+        "The proposal still fails with the two reproduced baseline diagnostics."
+      ],
+      "inferences": [
+        "The explicit existence guard preserves runtime request-sharing behavior."
+      ],
+      "consequence": "The selected revision lacks a passing declared typecheck. Browser success cannot establish production build success.",
+      "owner": "unknown",
+      "next_action": "Review the narrow proposed patch. Assign the baseline test diagnostics. Repeat typecheck and a configured production build.",
+      "scope_limit": "The proposal remains unapplied. Full production build lacks environment and Storybook configuration.",
+      "proposal": "proposed-type-fix.patch",
+      "proposal_sha256": "2d5c8178ec862fd1d99e6c08a112aa9f2fdac836c6ec3fea66b5cf52044e6e78",
+      "build_review": "build/typecheck-review.json"
+    }
+  ],
+  "sources": {
+    "stage": {
+      "repository_id": "workbench",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/stage-baseline.json",
+      "start_line": 1,
+      "end_line": 26,
+      "revision": null,
+      "sha256": "20b4e338df3f340508a8a6756d5252fe1caf63917b99bd1ee427c45af8b45577",
+      "matches_git_revision": null,
+      "excerpt": "Production release approval without deployed evidence",
+      "evidence_limit": "Filesystem snapshot only. Independent Git revision and deployment remain unknown."
+    },
+    "fixture": {
+      "repository_id": "workbench",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/fixture-binding.json",
+      "start_line": 1731,
+      "end_line": 1736,
+      "revision": null,
+      "sha256": "71d92e582aa9f092976fba62bf94ec169b1df38a458daaa3586b59bd1b1994e6",
+      "matches_git_revision": null,
+      "excerpt": "Module federation remotes are disabled.",
+      "evidence_limit": "Filesystem snapshot only. Independent Git revision and deployment remain unknown."
+    },
+    "storage": {
+      "repository_id": "mfe-base",
+      "path": "src/routing/common/useController.ts",
+      "start_line": 28,
+      "end_line": 38,
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "sha256": "097c110ba6df6357db918ed78a8c08f4b2be6fb38f76e920b8cf2f383cf41731",
+      "matches_git_revision": true,
+      "excerpt": "if (r.key === ActionType.SET_THEME)",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "provider": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/provider/index.tsx",
+      "start_line": 19,
+      "end_line": 27,
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "sha256": "1290c3bde3c18540d5d7a9e98ccf505751acfd4d6201763409fd583d3d278749",
+      "matches_git_revision": true,
+      "excerpt": "React.useReducer(reducers, {",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "persist": {
+      "repository_id": "mfe-base",
+      "path": "src/utils/common.ts",
+      "start_line": 46,
+      "end_line": 48,
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "sha256": "93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764",
+      "matches_git_revision": true,
+      "excerpt": "getLocalStorage().setItem(key, data);",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "natural": {
+      "repository_id": "ratan-test-engine",
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "start_line": 623,
+      "end_line": 652,
+      "revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "matches_git_revision": true,
+      "excerpt": "const context = await page.context().browser().newContext();",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "shared": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/service/util/extend.ts",
+      "start_line": 13,
+      "end_line": 45,
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "sha256": "126a54edd59a6835a2bae5c46bda1c1c07e5aabbbf7eb5eb11e9ebd889131663",
+      "matches_git_revision": true,
+      "excerpt": "return extend(store.expiredIn, store.isOnLogout, store.token);",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "cashflow": {
+      "repository_id": "mfe-cashflow-blotter",
+      "path": "src/Root/rtk-query/apiSessionExtendMiddleware.ts",
+      "start_line": 7,
+      "end_line": 13,
+      "revision": null,
+      "sha256": "faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561",
+      "matches_git_revision": null,
+      "excerpt": "ExtendTokenService();",
+      "evidence_limit": "Filesystem snapshot only. Independent Git revision and deployment remain unknown."
+    },
+    "ratan": {
+      "repository_id": "mfe-ratan-container",
+      "path": "src/ratanutils/http/graphql.ts",
+      "start_line": 162,
+      "end_line": 167,
+      "revision": null,
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "matches_git_revision": null,
+      "excerpt": "ExtendTokenService(url);",
+      "evidence_limit": "Filesystem snapshot only. Independent Git revision and deployment remain unknown."
+    },
+    "protected": {
+      "repository_id": "ratan-test-engine",
+      "path": "Tests/ratan/plugin/ui/session/config.example.json",
+      "start_line": 11,
+      "end_line": 16,
+      "revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "sha256": "89ae9ef27887789bbe96fd3804c8bf6ec58bce85d3a9ee6463de054d3c785d93",
+      "matches_git_revision": true,
+      "excerpt": "\"protectedOperationScope\": \"PORTAL_AUTHENTICATION_VALIDATION\",",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "retry": {
+      "repository_id": "ratan-test-engine",
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "start_line": 320,
+      "end_line": 334,
+      "revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "matches_git_revision": true,
+      "excerpt": "await route.abort('failed');",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "expired": {
+      "repository_id": "ratan-test-engine",
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "start_line": 836,
+      "end_line": 869,
+      "revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "matches_git_revision": true,
+      "excerpt": "Provider revocation remains a separate unsupported fixture.",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "missing": {
+      "repository_id": "ratan-test-engine",
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "start_line": 873,
+      "end_line": 906,
+      "revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "matches_git_revision": true,
+      "excerpt": "O-001_OPEN_NO_EXPECTED_RECOVERY_OUTCOME_ASSERTED",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "workspace": {
+      "repository_id": "ratan-test-engine",
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "start_line": 926,
+      "end_line": 950,
+      "revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "matches_git_revision": true,
+      "excerpt": "O-004_OPEN_DESCRIPTOR_COMPARISON_ONLY",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "requirement": {
+      "repository_id": "workbench",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "start_line": 99,
+      "end_line": 103,
+      "revision": "3ef6e1b18401acda32ca292c80b6fa031567ca8e",
+      "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "matches_git_revision": true,
+      "excerpt": "Cross-origin embedded application activity",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "inputs": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/index.tsx",
+      "start_line": 56,
+      "end_line": 61,
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "sha256": "d4d0cdfe9307fb8277275b4cc6306008c84e5f6afa19f16c7bbcc9932056012d",
+      "matches_git_revision": true,
+      "excerpt": "onMouseMove={mouseMove}",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "lead": {
+      "repository_id": "mfe-base",
+      "path": "src/components/Timeout/common/useController.ts",
+      "start_line": 76,
+      "end_line": 84,
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "sha256": "d78fe86dcba51e4075b12a772aa09fb5f8a214630199e9f881a6801cd81a1ede",
+      "matches_git_revision": true,
+      "excerpt": "Math.max(0, expiresAt - Date.now() - 2000)",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "clock": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/service/util/succes.response.handler.session.test.ts",
+      "start_line": 38,
+      "end_line": 79,
+      "revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "sha256": "2711f6c04829d908d5b321989badbdc50951cf2930da0368686aa9695fbbfba7",
+      "matches_git_revision": true,
+      "excerpt": "jest.spyOn(Date, \"now\").mockReturnValue(now);",
+      "evidence_limit": "Source or retained evidence only. Deployment remains unknown."
+    },
+    "typecheck": {
+      "repository_id": "workbench",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/build/typecheck.log",
+      "start_line": 5,
+      "end_line": 10,
+      "revision": null,
+      "sha256": "04baf6c167a9d1e564991151e646556f8e33964692735088785f2c19d1f793be",
+      "matches_git_revision": null,
+      "excerpt": "error TS18048: 'extensionRequest' is possibly 'undefined'.",
+      "evidence_limit": "Exact compiler result at MFE4cddb38 with installed TypeScript4.9.5."
+    },
+    "typecheck_review": {
+      "repository_id": "workbench",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/build/typecheck-review.json",
+      "start_line": 1,
+      "end_line": 360,
+      "revision": null,
+      "sha256": "9165b42562fdddbdffe87406a0807d4628854da807b8e51826bd6947340e876d",
+      "matches_git_revision": null,
+      "excerpt": "\"status\": \"FAILED_WITH_BASELINE_TEST_DIAGNOSTICS\"",
+      "evidence_limit": "The proposal runs in a temporary copy. Installed dependencies remain shared."
+    }
+  },
+  "review_limits": [
+    "This review establishes no production release approval.",
+    "The parent owns current browser execution and its final reconciliation.",
+    "No new application defect was confirmed by this source review.",
+    "Publication review and business acceptance remain separate.",
+    "The declared typecheck failed. The proposed correction remains outside application source."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "automated_checks": {
+    "source_locators_within_file": true,
+    "source_excerpts_match": true,
+    "git_backed_source_hashes_match": true,
+    "required_finding_fields_present": true,
+    "unit_source_binding_passed": true
+  }
+}

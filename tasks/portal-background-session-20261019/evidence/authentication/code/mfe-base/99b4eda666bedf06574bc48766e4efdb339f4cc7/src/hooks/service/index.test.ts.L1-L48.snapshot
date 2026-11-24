@@ -1,0 +1,48 @@
+import { getHooksBase } from "../HooksBase";
+import { putService, postService, getService, deleteService, patchService, getRefreshToken, relogin, signal } from "./";
+import { extend, extendToken, signal as signal2 } from "./util/extend";
+afterAll(() => {
+  jest.clearAllMocks();
+});
+jest.mock('./config', () => {
+  return {
+    put: async () => { return Promise.resolve({}) },
+    post: async () => { return Promise.resolve({}) },
+    get: async () => { return Promise.resolve({}) },
+    patch: async () => { return Promise.resolve({}) },
+    "delete": async () => { return Promise.resolve({}) }
+  }
+});
+jest.mock('../../utils/common', () => {
+  return {
+    getJWTPayload: () => "JWT",
+    storeData: jest.fn(),
+    clearLocalStorage: jest.fn(),
+    clearStorageWhenLogout: jest.fn(),
+    uuidv4: () => "id",
+    showErrorMsg: jest.fn(),
+    show_error_msg: jest.fn(),
+    getEnv: () => "LOCAL",
+    getHostName: () => "localhost",
+    getLocalStorage: () => ({
+      setItem: (v) => { },
+      getItem: () => undefined,
+      clear: () => { }
+    }),
+    getSessionStorage: () => ({
+      setItem: (v) => { },
+      getItem: () => undefined,
+      clear: () => { }
+    }),
+    validateTile: () => true
+  }
+});
+
+describe("Service Util", () => {
+  it("should be true", () => {
+    putService("/", {});
+    postService("/", {});
+    patchService("/", {});
+    getService("/");
+    deleteService("/");
+    extendToken();

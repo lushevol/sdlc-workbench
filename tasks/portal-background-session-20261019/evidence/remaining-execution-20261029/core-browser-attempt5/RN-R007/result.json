@@ -1,0 +1,220 @@
+{
+  "id": "RN-R007",
+  "title": "Late renewal failure: starts a fresh login while renewal is pending",
+  "basis": "proposed-security",
+  "started_at": "2026-10-29T02:32:29.463Z",
+  "status": "PARTIALLY_EXECUTED",
+  "stage": "execute",
+  "expected": [
+    "the old failure clears 0 fields in the new login epoch"
+  ],
+  "assertions": [
+    {
+      "name": "old response does not change current authentication fields",
+      "actual": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiUk4tUjAwNy1sb2dpbi1CIiwiaWF0IjoxNzkzMjMyMDYyLjI4LCJleHAiOjE3OTMyMzIxMjIuMjh9.synthetic",
+        "user": {
+          "max_age": 1793244751,
+          "sub": "B",
+          "auth_time": 1793241151,
+          "iss": "single-ui-bff",
+          "id": "B",
+          "exp": 1793241211,
+          "iat": 1793241151,
+          "jti": "single-ui-bff-id",
+          "oud": {
+            "fullName": "B",
+            "country": "LOCAL",
+            "emailId": "session-local@example.invalid",
+            "locale": "en",
+            "userId": "session-local"
+          },
+          "userId": "B",
+          "fullName": "B",
+          "entitlements": {
+            "LOCAL_SESSION_FIXTURE:LOCAL": {}
+          },
+          "entities": [
+            {
+              "id": 1,
+              "name": "LOCAL_SESSION_FIXTURE",
+              "applicationName": "LOCAL",
+              "roleId": 1,
+              "roleName": "LOCAL",
+              "subjects": []
+            }
+          ],
+          "name": "B"
+        },
+        "expiry": 1793232122280,
+        "isOnLogout": false
+      },
+      "expected": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiUk4tUjAwNy1sb2dpbi1CIiwiaWF0IjoxNzkzMjMyMDYyLjI4LCJleHAiOjE3OTMyMzIxMjIuMjh9.synthetic",
+        "user": {
+          "max_age": 1793244751,
+          "sub": "B",
+          "auth_time": 1793241151,
+          "iss": "single-ui-bff",
+          "id": "B",
+          "exp": 1793241211,
+          "iat": 1793241151,
+          "jti": "single-ui-bff-id",
+          "oud": {
+            "fullName": "B",
+            "country": "LOCAL",
+            "emailId": "session-local@example.invalid",
+            "locale": "en",
+            "userId": "session-local"
+          },
+          "userId": "B",
+          "fullName": "B",
+          "entitlements": {
+            "LOCAL_SESSION_FIXTURE:LOCAL": {}
+          },
+          "entities": [
+            {
+              "id": 1,
+              "name": "LOCAL_SESSION_FIXTURE",
+              "applicationName": "LOCAL",
+              "roleId": 1,
+              "roleName": "LOCAL",
+              "subjects": []
+            }
+          ],
+          "name": "B"
+        },
+        "expiry": 1793232122280,
+        "isOnLogout": false
+      },
+      "status": "PASSED"
+    }
+  ],
+  "observations": {
+    "old_access_sha256": "f8f6a78cc6e229d2a6ba922f51ac3d9a1b6ce39cc28e17af71e9792147e45a64",
+    "relogin_count": 1
+  },
+  "source_revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "source_refs": [
+    {
+      "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+      "lines": "1-20",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    }
+  ],
+  "limits": [
+    "Actual Chromium portal, React hooks, reducers, Axios interceptors and services.",
+    "Controlled browser time, synthetic identity and auth responses. Protected peer assertions are fixture-level, not production RSA authorization.",
+    "Native device, VPN, real sleep, independent devices and unavailable target boundaries remain blocked."
+  ],
+  "screenshots": [],
+  "initial": {
+    "user": {
+      "max_age": 1793244751,
+      "sub": "session-local",
+      "auth_time": 1793241151,
+      "iss": "single-ui-bff",
+      "id": "session-local",
+      "exp": 1793241211,
+      "iat": 1793241151,
+      "jti": "single-ui-bff-id",
+      "oud": {
+        "fullName": "Local Session Fixture",
+        "country": "LOCAL",
+        "emailId": "session-local@example.invalid",
+        "locale": "en",
+        "userId": "session-local"
+      },
+      "entitlements": {
+        "LOCAL_SESSION_FIXTURE:LOCAL": {}
+      },
+      "entities": [
+        {
+          "id": 1,
+          "name": "LOCAL_SESSION_FIXTURE",
+          "applicationName": "LOCAL",
+          "roleId": 1,
+          "roleName": "LOCAL",
+          "subjects": []
+        }
+      ],
+      "fullName": "Local Session Fixture",
+      "name": "session-local",
+      "userId": "session-local"
+    },
+    "expiry": 1793232062279,
+    "isOnLogout": false,
+    "loading": false,
+    "dialog": false,
+    "workspaceIds": [
+      "0ee77979-eaec-4358-8968-cac2835f4755"
+    ],
+    "selected": "0ee77979-eaec-4358-8968-cac2835f4755",
+    "probe": {
+      "opens": 0,
+      "closures": 0,
+      "events": [],
+      "activity": [],
+      "activeTimers": {
+        "1000000000000": {
+          "delay": 5000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at Object.execute (http://127.0.0.1:8343/js/external/single-spa.dev.js:2435:9)\n    at i (http://127.0.0.1:8343/js/external/system.min.js:305:35)\n    at e (http://127.0.0.1:8343/js/external/system.min.js:342:52)\n    at http://127.0.0.1:8343/js/external/system.min.js:336:35\n    at Array.forEach (<anonymous>)\n    at e (http://127.0.0.1:8343/js/external/system.min.js:334:27)\n    at http://127.0.0.1:8343/js/external/system.min.js:345:19"
+        },
+        "1000000000014": {
+          "delay": 56442,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2826:28\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        },
+        "1000000000016": {
+          "delay": 30000,
+          "kind": "interval"
+        },
+        "1000000000017": {
+          "delay": 600,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at setTabPanel (http://127.0.0.1:8342/base.js:74872:14)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2178:63\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000019": {
+          "delay": 31102,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at scheduleAcquisition (http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2872:28)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2894:5\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000020": {
+          "delay": 14400000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2896:49\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        }
+      },
+      "listeners": [],
+      "storageErrors": []
+    },
+    "token_sha256": "f8f6a78cc6e229d2a6ba922f51ac3d9a1b6ce39cc28e17af71e9792147e45a64",
+    "refresh_sha256": "8ab117443a78fd00c86fe3833e805bb069e941f74ca3a7e2766728cd525045e8"
+  },
+  "blocked_predicates": [
+    "Completed replacement login was exercised. The separate fresh-login-pending interval was not held."
+  ],
+  "error": "Completed replacement login was exercised. The separate fresh-login-pending interval was not held.",
+  "completed_at": "2026-10-29T02:32:35.758Z",
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793232002279,
+      "owner_sha256": null
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793232006177,
+      "owner_sha256": null
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793232062280,
+      "owner_sha256": null,
+      "attempt": 1,
+      "mode": "hold"
+    },
+    {
+      "endpoint": "login",
+      "at": 1793232062280,
+      "owner_sha256": null
+    }
+  ]
+}

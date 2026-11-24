@@ -1,0 +1,49 @@
+build/
+dist/
+*.egg-info/
+.venv/
+.venv-llm-wiki/
+.venv-openkb/
+# OpenKB project data; credentials and disposable runtime state stay local.
+/knowledge/llm-wiki/*
+!/knowledge/llm-wiki/wiki/
+!/knowledge/llm-wiki/raw/
+!/knowledge/llm-wiki/output/
+!/knowledge/llm-wiki/source-manifest.json
+!/knowledge/llm-wiki/AGENTS.md
+!/knowledge/llm-wiki/.openkb/
+/knowledge/llm-wiki/.openkb/*
+!/knowledge/llm-wiki/.openkb/hashes.json
+.workbench/
+# Native hook registrations and installation ownership remain local to each workspace.
+/.codex/hooks.json
+/.github/hooks/workbench.json
+/.claude/workbench-hooks.json
+# Imports stay local unless a registered collection is allowlisted for Git-only continuation.
+/knowledge/evidence/incoming/*
+!/knowledge/evidence/incoming/Cash Settlement Home Page/
+!/knowledge/evidence/incoming/RATAN - 51358/
+!/knowledge/evidence/incoming/settlement-netting/
+# Keep repository guides visible; exclude independent checkouts inside each group.
+/repos/*/*/
+workspace.local.yaml
+.sdlc/
+.env*
+!/.env.example
+!/.env.example
+node_modules/
+offline-bundle/
+core/connectors/packages/*/coverage/
+core/connectors/packages/*/reports/
+.DS_Store
+__pycache__/
+relationships/service-dependencies/generated/
+/e2e/results/
+/e2e/playwright-report/
+/e2e/test-results/
+# Optional HTML exports duplicate canonical case evidence.
+/tasks/*/evidence/**/html-report/
+# Keep new browser trace archives local.
+*trace*.zip
+# Preserve the published Portal trace archive and its existing evidence consumers.
+!/tasks/portal-background-session-20261019/evidence/browser-final/edge/trace.zip

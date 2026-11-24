@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/INT-KT-ratan-reference-and-control-interfaces.md

@@ -1,0 +1,67 @@
+{
+  "id": "STAGE-session-minor-rerun-20261020",
+  "recorded_at": "2026-10-20T14:18:43.230255+00:00",
+  "authorization": {
+    "source": "user-request.txt",
+    "sha256": "5c88efbae986e6fdc4015b9ed84d59508be849af7b02541401d55f6621cd1b6d"
+  },
+  "selected_application": {
+    "repository": "mfe-base",
+    "branch": "feature/session-refresh-minor",
+    "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "prior_tested_runtime": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+    "prior_tested_unit_revision": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+    "preexisting_status": "M tsconfig.tsbuildinfo",
+    "tsconfig_buildinfo_sha256": "0dad40c38a19a3858acf1eb011bd1dcdb65f9e5ead347b89357ab2605bd944cc"
+  },
+  "test_source": {
+    "repository": "ratan-test-engine",
+    "revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+    "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+    "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+    "declared_browser_cases": 22,
+    "inventory": "../expanded-e2e-20261020/case-inventory.json",
+    "inventory_sha256": "4a9af6e91c2bd6910347ea33e9c8d1bb8f2da6007a39ef176a3ebf983269c813"
+  },
+  "service_source": {
+    "repository": "single-ui-bff",
+    "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "frozen_intake": {
+    "path": "tasks/portal-background-session-20261019/intake.md",
+    "revision": "cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c",
+    "sha256": "1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948"
+  },
+  "existing_intent": {
+    "id": "REQ-active-session-renewal",
+    "version": 4,
+    "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+    "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+    "status": "candidate; human review pending"
+  },
+  "scope": {
+    "required": "Background-session recovery",
+    "potential_deferrals": "Broader renewal behavior; decide after exact observed failures.",
+    "accepted_criterion_waivers": [],
+    "application_edits_authorized": false,
+    "browser_rerun_authorized": true,
+    "supplemental_background_happy_path": "Separate investigation without held-response prompt predicates; never substitutes an AC-5 pass."
+  },
+  "readiness": {
+    "named_phase": "Read-only source assessment and authorized local execution evidence collection",
+    "status": "READY",
+    "assessor": "Codex",
+    "rationale": "Exact branch and prior revisions, inspected assertions, authorized existing local fixtures, and fixed test source support this phase. Acceptance decisions do not block observation.",
+    "blocked_actions": [
+      "Application changes",
+      "Acceptance waivers",
+      "Production release",
+      "Knowledge publication"
+    ]
+  },
+  "limits": [
+    "Local fixtures do not establish production applicability.",
+    "Requirement version4 remains unchanged until an explicit case-specific scope decision exists.",
+    "Machine environment file values are neither printed nor retained."
+  ]
+}

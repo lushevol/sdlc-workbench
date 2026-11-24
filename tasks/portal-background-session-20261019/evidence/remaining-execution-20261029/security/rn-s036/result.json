@@ -1,0 +1,36 @@
+{
+  "case_id": "RN-S036",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.044796+00:00",
+  "owner": "unknown transport and security owners",
+  "blocked_reason": "No named authorized WebSocket endpoint, source-bound server, or effective Origin enforcement configuration is available.",
+  "unresolved_predicate": "A real socket upgrade and zero authenticated subscriptions under the proposed Origin rule.",
+  "definition": "../../../../06-test-cases.md#rn-s036",
+  "canonical_given": [
+    "A has valid credentials",
+    "A lower-trust local origin targets the authorized socket endpoint"
+  ],
+  "canonical_when": [
+    "The origin attempts a WebSocket upgrade"
+  ],
+  "canonical_then": [
+    "The socket accepts zero authenticated subscriptions under the proposed Origin rule"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        37
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

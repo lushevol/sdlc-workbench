@@ -1,0 +1,112 @@
+{
+  "id": "RN-D013",
+  "title": "Browser restart after persisted credentials expire",
+  "started_at": "2026-10-29T02:11:55.003Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-d013",
+  "definition_sha256": "1b99887269728d200ab531f5531aee018b4884c2c699ad48c2458122bf1761b7",
+  "status": "BLOCKED",
+  "assertions": [],
+  "requests": [],
+  "screenshots": [],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        32,
+        299
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "lines": [
+        24,
+        155
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/services/index.ts",
+      "lines": [
+        20,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": "Absent-credential recovery and persisted-workspace restoration remain unresolved.",
+  "business_acceptance": "BLOCKED_POLICY",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "blocker": "Native persistent browser-profile restart after both credentials expire is not configured. Fresh contexts cannot prove restart restoration.",
+  "owner": "unknown application, transport, or security owner",
+  "unexecuted_predicates": [
+    "the server accepts zero expired-credential requests",
+    "the result records sign-in, dialog, and workspace states separately",
+    "the result marks business acceptance BLOCKED and links the unresolved policy"
+  ],
+  "completed_at": "2026-10-29T02:11:55.003Z",
+  "runner_sha256": "ccd55df493f625e3951c3801cc370cbc68ccc9647ddcd2517dfd84903c61985e",
+  "runner_summary": "../attempt1/summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "blocked-before-complete-browser-setup",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/pages/Home/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "canonical_definition_source_sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "canonical_definition_source_sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "definition_source_matches": false,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "canonical_definition_source_sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/services/index.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+      "canonical_definition_source_sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "definition_source_limit": "Canonical source inventory includes dirty Home bytes. Execution uses the immutable candidate and recorded hashes; it does not execute those dirty bytes.",
+  "execution_class": "blocked-not-executed"
+}

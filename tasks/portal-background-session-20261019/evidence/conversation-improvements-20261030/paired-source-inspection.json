@@ -1,0 +1,144 @@
+{
+  "recorded_at": "2026-10-30T15:46:06.788337+00:00",
+  "normalization": "Method text preserves characters and normalizes CRLF to LF; full file hashes bind raw bytes.",
+  "sources": [
+    {
+      "repository_path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "revisions": {
+        "baseline": {
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "file_sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+          "methods": {
+            "logout": {
+              "start_line": 371,
+              "end_line": 384,
+              "normalized_line_endings_sha256": "ec4114afe38ea15389214578d3b4cccc9f6deadf4ea3eb5daf6fe85cc7cdf94f",
+              "source": "    public ResponseEntity<ResponseOfAuthenticate> logout(@RequestBody RequestOfJWT requestOfJWT, HttpServletResponse response) {\n        try {\n            String jwtToken = retrieveToken(requestOfJWT.getSingleUIAuthorization());\n            String userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);\n            Map<String, String> payload = objectMapper.readValue(userInfo, HashMap.class);\n            sessionService.create(payload.get(SESSION_ID));\n        } catch (Exception e) {\n            log.error(\"token logout failed, reason: {}\", e.getMessage(), e);\n        }\n        httpSession.invalidate();\n        clearCookie(response);\n        response.setHeader(HEADER_JWT_TOKEN, StringUtils.EMPTY);\n        return ResponseEntity.ok(ResponseOfAuthenticate.builder().result(true).build());\n    }\n"
+            },
+            "relogin": {
+              "start_line": 341,
+              "end_line": 368,
+              "normalized_line_endings_sha256": "c580e79e4d9497f18e91eacc360d5d5bbdca0572d57890bc2b95f82453216ffb",
+              "source": "    public ResponseEntity<ResponseOfAuthenticate> relogin(@RequestBody RequestOfRelogin requestOfRelogin, HttpServletRequest request,\n        HttpServletResponse response) {\n        try {\n            String jwtToken = retrieveToken(request.getHeader(HEADER_REFRESH_TOKEN));\n            boolean result = jwtTokenUtil.validateToken(jwtToken);\n            jwtTokenUtil.handleIssuer(jwtToken, JWT_ISSUER_REFRESH);\n            String userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);\n            Map<String, String> payload = objectMapper.readValue(userInfo, HashMap.class);\n            sessionService.validateSession(payload.get(SESSION_ID));\n            final String userName = payload.get(\"sub\");\n            final String oudString = payload.get(\"oud\");\n            final String sessionId = payload.get(SESSION_ID);\n            Map<String, Object> returnObject = buildEntities(response, userName, oudString, sessionId);\n            final List<Entity> entities = (List<Entity>) returnObject.get(\"entities\");\n            jwtToken = (String) returnObject.get(\"token\");\n            userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);\n            final String entitlementsToken = (String) returnObject.get(\"entitlementsToken\");\n            final List<Map<String, Object>> drawers = (List<Map<String, Object>>) returnObject.get(\"drawers\");\n            return ResponseEntity\n                .ok(ResponseOfAuthenticate.builder().entitlementsToken(entitlementsToken).oud(oudString).result(result).drawers(drawers)\n                    .entities(entities)\n                    .userInfo(userInfo).build());\n        } catch (Exception e) {\n            log.error(\"token relogin failed, reason: {}\", e.getMessage(), e);\n            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(\n                ResponseOfAuthenticate.builder().result(false).errorMessage(\"TOKEN_INVALID_EXPIRED - \".concat(e.getMessage())).build());\n        }\n    }\n"
+            }
+          }
+        },
+        "candidate": {
+          "revision": "134a340472f29d2a4136e07e516690de6a18e323",
+          "file_sha256": "c5e50cb1272af3a27354b1a28b3f092999a7011922343284984ef854aee56af3",
+          "methods": {
+            "logout": {
+              "start_line": 373,
+              "end_line": 386,
+              "normalized_line_endings_sha256": "ec4114afe38ea15389214578d3b4cccc9f6deadf4ea3eb5daf6fe85cc7cdf94f",
+              "source": "    public ResponseEntity<ResponseOfAuthenticate> logout(@RequestBody RequestOfJWT requestOfJWT, HttpServletResponse response) {\n        try {\n            String jwtToken = retrieveToken(requestOfJWT.getSingleUIAuthorization());\n            String userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);\n            Map<String, String> payload = objectMapper.readValue(userInfo, HashMap.class);\n            sessionService.create(payload.get(SESSION_ID));\n        } catch (Exception e) {\n            log.error(\"token logout failed, reason: {}\", e.getMessage(), e);\n        }\n        httpSession.invalidate();\n        clearCookie(response);\n        response.setHeader(HEADER_JWT_TOKEN, StringUtils.EMPTY);\n        return ResponseEntity.ok(ResponseOfAuthenticate.builder().result(true).build());\n    }\n"
+            },
+            "relogin": {
+              "start_line": 343,
+              "end_line": 370,
+              "normalized_line_endings_sha256": "c580e79e4d9497f18e91eacc360d5d5bbdca0572d57890bc2b95f82453216ffb",
+              "source": "    public ResponseEntity<ResponseOfAuthenticate> relogin(@RequestBody RequestOfRelogin requestOfRelogin, HttpServletRequest request,\n        HttpServletResponse response) {\n        try {\n            String jwtToken = retrieveToken(request.getHeader(HEADER_REFRESH_TOKEN));\n            boolean result = jwtTokenUtil.validateToken(jwtToken);\n            jwtTokenUtil.handleIssuer(jwtToken, JWT_ISSUER_REFRESH);\n            String userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);\n            Map<String, String> payload = objectMapper.readValue(userInfo, HashMap.class);\n            sessionService.validateSession(payload.get(SESSION_ID));\n            final String userName = payload.get(\"sub\");\n            final String oudString = payload.get(\"oud\");\n            final String sessionId = payload.get(SESSION_ID);\n            Map<String, Object> returnObject = buildEntities(response, userName, oudString, sessionId);\n            final List<Entity> entities = (List<Entity>) returnObject.get(\"entities\");\n            jwtToken = (String) returnObject.get(\"token\");\n            userInfo = jwtTokenUtil.retrieveUserInfoFromToken(jwtToken);\n            final String entitlementsToken = (String) returnObject.get(\"entitlementsToken\");\n            final List<Map<String, Object>> drawers = (List<Map<String, Object>>) returnObject.get(\"drawers\");\n            return ResponseEntity\n                .ok(ResponseOfAuthenticate.builder().entitlementsToken(entitlementsToken).oud(oudString).result(result).drawers(drawers)\n                    .entities(entities)\n                    .userInfo(userInfo).build());\n        } catch (Exception e) {\n            log.error(\"token relogin failed, reason: {}\", e.getMessage(), e);\n            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(\n                ResponseOfAuthenticate.builder().result(false).errorMessage(\"TOKEN_INVALID_EXPIRED - \".concat(e.getMessage())).build());\n        }\n    }\n"
+            }
+          }
+        }
+      },
+      "same_file_bytes": false,
+      "same_normalized_method_bytes": {
+        "logout": true,
+        "relogin": true
+      }
+    },
+    {
+      "repository_path": "src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "revisions": {
+        "baseline": {
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "file_sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+          "methods": {
+            "retrieveUserInfoFromToken": {
+              "start_line": 125,
+              "end_line": 130,
+              "normalized_line_endings_sha256": "4b9faf84a9afd6affd340672615a677b77ef87f1c74bfc5ae9f5f2b6b7f9399a",
+              "source": "    public String retrieveUserInfoFromToken(String token) {\n        if (!validateToken(token)) {\n            throw JwtException.builder().message(\"token is expired\").build();\n        }\n        return retrieveUserInfo(token);\n    }\n"
+            },
+            "validateToken": {
+              "start_line": 87,
+              "end_line": 99,
+              "normalized_line_endings_sha256": "672f707bae8f844c51f2b3b3922ecf6d7ea1cf19bcfc734bbbe8e03cd35b6bad",
+              "source": "    public boolean validateToken(String token) {\n        try {\n            DecodedJWT decodedJWT = jwtVerifier.verify(token);\n            Date maxAge = decodedJWT.getClaim(ABSOLUTE_IDLE).asDate();\n            Date now = new Date();\n            if (Objects.nonNull(maxAge) && maxAge.before(now)) {\n                throw JwtException.builder().message(\"token is expired - reached idle timeout\").build();\n            }\n            return true;\n        } catch (TokenExpiredException e) {\n            throw JwtException.builder().message(\"token is expired - reached idle timeout\").build();\n        }\n    }\n"
+            }
+          }
+        },
+        "candidate": {
+          "revision": "134a340472f29d2a4136e07e516690de6a18e323",
+          "file_sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+          "methods": {
+            "retrieveUserInfoFromToken": {
+              "start_line": 125,
+              "end_line": 130,
+              "normalized_line_endings_sha256": "4b9faf84a9afd6affd340672615a677b77ef87f1c74bfc5ae9f5f2b6b7f9399a",
+              "source": "    public String retrieveUserInfoFromToken(String token) {\n        if (!validateToken(token)) {\n            throw JwtException.builder().message(\"token is expired\").build();\n        }\n        return retrieveUserInfo(token);\n    }\n"
+            },
+            "validateToken": {
+              "start_line": 87,
+              "end_line": 99,
+              "normalized_line_endings_sha256": "672f707bae8f844c51f2b3b3922ecf6d7ea1cf19bcfc734bbbe8e03cd35b6bad",
+              "source": "    public boolean validateToken(String token) {\n        try {\n            DecodedJWT decodedJWT = jwtVerifier.verify(token);\n            Date maxAge = decodedJWT.getClaim(ABSOLUTE_IDLE).asDate();\n            Date now = new Date();\n            if (Objects.nonNull(maxAge) && maxAge.before(now)) {\n                throw JwtException.builder().message(\"token is expired - reached idle timeout\").build();\n            }\n            return true;\n        } catch (TokenExpiredException e) {\n            throw JwtException.builder().message(\"token is expired - reached idle timeout\").build();\n        }\n    }\n"
+            }
+          }
+        }
+      },
+      "same_file_bytes": true,
+      "same_normalized_method_bytes": {
+        "retrieveUserInfoFromToken": true,
+        "validateToken": true
+      }
+    },
+    {
+      "repository_path": "src/main/java/com/scb/sso/singleuibff/service/v1/implementation/SessionServiceImplementation.java",
+      "revisions": {
+        "baseline": {
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "file_sha256": "548150730664b0417dcc115ede889b74536a207938a2912e7da2231d6184b41e",
+          "methods": {
+            "create": {
+              "start_line": 19,
+              "end_line": 25,
+              "normalized_line_endings_sha256": "53992f7bbd9965d79f222274c1f28081ef7dd69fb66e968f7ff1dc5eb81df436",
+              "source": "    public void create(String sessionId) {\n        try {\n            this.applicationSessionRepo.save(ApplicationSession.builder().sessionId(sessionId).build());\n        } catch (NoSuchElementException e) {\n            log.info(\"SessionServiceImplementation create: {}\", e.getMessage());\n        }\n    }\n"
+            },
+            "validateSession": {
+              "start_line": 28,
+              "end_line": 33,
+              "normalized_line_endings_sha256": "4c346151ff6dce33ee8f1adc6f15631eb4161cbc6c851fe49a5792eb75b3248f",
+              "source": "    public void validateSession(String sessionId) {\n        Optional<ApplicationSession> applicationSessionOptional = this.applicationSessionRepo.findBySessionId(sessionId);\n        if (!applicationSessionOptional.isEmpty()) {\n            throw JwtException.builder().message(\"invalid token\").build();\n        }\n    }\n"
+            }
+          }
+        },
+        "candidate": {
+          "revision": "134a340472f29d2a4136e07e516690de6a18e323",
+          "file_sha256": "548150730664b0417dcc115ede889b74536a207938a2912e7da2231d6184b41e",
+          "methods": {
+            "create": {
+              "start_line": 19,
+              "end_line": 25,
+              "normalized_line_endings_sha256": "53992f7bbd9965d79f222274c1f28081ef7dd69fb66e968f7ff1dc5eb81df436",
+              "source": "    public void create(String sessionId) {\n        try {\n            this.applicationSessionRepo.save(ApplicationSession.builder().sessionId(sessionId).build());\n        } catch (NoSuchElementException e) {\n            log.info(\"SessionServiceImplementation create: {}\", e.getMessage());\n        }\n    }\n"
+            },
+            "validateSession": {
+              "start_line": 28,
+              "end_line": 33,
+              "normalized_line_endings_sha256": "4c346151ff6dce33ee8f1adc6f15631eb4161cbc6c851fe49a5792eb75b3248f",
+              "source": "    public void validateSession(String sessionId) {\n        Optional<ApplicationSession> applicationSessionOptional = this.applicationSessionRepo.findBySessionId(sessionId);\n        if (!applicationSessionOptional.isEmpty()) {\n            throw JwtException.builder().message(\"invalid token\").build();\n        }\n    }\n"
+            }
+          }
+        }
+      },
+      "same_file_bytes": true,
+      "same_normalized_method_bytes": {
+        "create": true,
+        "validateSession": true
+      }
+    }
+  ]
+}

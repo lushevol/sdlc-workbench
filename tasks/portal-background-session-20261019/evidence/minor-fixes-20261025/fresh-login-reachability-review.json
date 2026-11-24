@@ -1,0 +1,296 @@
+{
+  "id": "REVIEW-fresh-login-timeout-reachability-20261025",
+  "recorded_at": "2026-10-25T10:01:00.321554+00:00",
+  "reviewer": "Codex /root/pending_design_review",
+  "operation": "READ_ONLY_SOURCE_REVIEW",
+  "critical_conclusion": "No critical conclusions require user attention or action.",
+  "scope": "Fresh-login epoch change while the existing Home Timeout remains mounted.",
+  "application": {
+    "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "worktree": [
+      " M tsconfig.tsbuildinfo"
+    ]
+  },
+  "question": "Can a current production caller start fresh login while Timeout remains mounted, then leave both Timeout actions unusable?",
+  "source_predicted_trigger": [
+    "Timeout mounts under session epoch A.",
+    "A fresh-login request starts in the same document while Home remains mounted.",
+    "The request increments the global epoch to B.",
+    "A failed fresh login retains old access. The old Timeout has epoch A and rejects actions.",
+    "A successful in-place fresh login can also leave the old Timeout state mounted."
+  ],
+  "classification": "SYNTHETIC_BOUNDARY_ONLY_WITHIN_INSPECTED_CALLERS",
+  "current_caller_trace": [
+    {
+      "evidence": [
+        "routing",
+        "timeout-owner",
+        "login-caller",
+        "login-service"
+      ],
+      "finding": "Normal routing mounts Home or Login. The only inspected application login callers belong to Login.",
+      "consequence": "The ordinary shell login journey does not preserve a mounted Home Timeout during fresh-login start."
+    },
+    {
+      "evidence": [
+        "openfin"
+      ],
+      "finding": "OpenFin token handling replaces the page location.",
+      "consequence": "This path does not preserve the same Timeout instance."
+    },
+    {
+      "evidence": [
+        "synthetic-fixture",
+        "timeout-guard"
+      ],
+      "finding": "The PEND fixture exposes a replacement-login button beside the still-mounted Session.",
+      "consequence": "The surviving guarded modal is a synthetic fixture boundary. PEND-10 still establishes token preservation."
+    },
+    {
+      "evidence": [
+        "public-service",
+        "public-login-services"
+      ],
+      "finding": "The public base module permits external HTTP and login helper use.",
+      "consequence": "Unknown remote consumers can invalidate the current reachability conclusion."
+    }
+  ],
+  "registered_consumer_scan": [
+    {
+      "repository": "repos/ui/mfe-root-config",
+      "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+      "worktree": [],
+      "source_root": "repos/ui/mfe-root-config/src",
+      "source_file_count": 2,
+      "content_fingerprint_sha256": "9935930c9fe8c49549062dabcfe21eaf953846d41c86788f758fc38e414b7c6c",
+      "fingerprint_rule": "SHA-256 of sorted workspace-relative source paths, TAB, file SHA-256, newline.",
+      "search_pattern": "/auth/v[23]/sso/login|loginEntra|Services\\.[A-Za-z_]*login|\\blogin\\s*\\(",
+      "search_globs": [
+        "-g",
+        "*.ts",
+        "-g",
+        "*.tsx",
+        "-g",
+        "*.js",
+        "-g",
+        "*.mjs",
+        "-g",
+        "*.cjs",
+        "-g",
+        "!*.test.*",
+        "-g",
+        "!**/node_modules/**",
+        "-g",
+        "!**/dist/**",
+        "-g",
+        "!**/build/**"
+      ],
+      "search_exit_code": 1,
+      "matches": [],
+      "conclusion": "No matching fresh-login invocation in the scanned source corpus."
+    },
+    {
+      "repository": "repos/ui/mfe-ratan-container",
+      "revision": null,
+      "limit": "No independent Git root at this registered source directory; filesystem bytes identify this inspection.",
+      "source_root": "repos/ui/mfe-ratan-container/src",
+      "source_file_count": 310,
+      "content_fingerprint_sha256": "9d040cf065ce654a715a13860162c618081b9e0a8d8b2bbe429b932a5dd11a18",
+      "fingerprint_rule": "SHA-256 of sorted workspace-relative source paths, TAB, file SHA-256, newline.",
+      "search_pattern": "/auth/v[23]/sso/login|loginEntra|Services\\.[A-Za-z_]*login|\\blogin\\s*\\(",
+      "search_globs": [
+        "-g",
+        "*.ts",
+        "-g",
+        "*.tsx",
+        "-g",
+        "*.js",
+        "-g",
+        "*.mjs",
+        "-g",
+        "*.cjs",
+        "-g",
+        "!*.test.*",
+        "-g",
+        "!**/node_modules/**",
+        "-g",
+        "!**/dist/**",
+        "-g",
+        "!**/build/**"
+      ],
+      "search_exit_code": 1,
+      "matches": [],
+      "conclusion": "No matching fresh-login invocation in the scanned source corpus."
+    },
+    {
+      "repository": "repos/ui/mfe-cashflow-blotter",
+      "revision": null,
+      "limit": "No independent Git root at this registered source directory; filesystem bytes identify this inspection.",
+      "source_root": "repos/ui/mfe-cashflow-blotter/src",
+      "source_file_count": 506,
+      "content_fingerprint_sha256": "fbbb722d62306cd4b0454b2a0a888306713b62dc4c605ec5acd6fe36338b6aba",
+      "fingerprint_rule": "SHA-256 of sorted workspace-relative source paths, TAB, file SHA-256, newline.",
+      "search_pattern": "/auth/v[23]/sso/login|loginEntra|Services\\.[A-Za-z_]*login|\\blogin\\s*\\(",
+      "search_globs": [
+        "-g",
+        "*.ts",
+        "-g",
+        "*.tsx",
+        "-g",
+        "*.js",
+        "-g",
+        "*.mjs",
+        "-g",
+        "*.cjs",
+        "-g",
+        "!*.test.*",
+        "-g",
+        "!**/node_modules/**",
+        "-g",
+        "!**/dist/**",
+        "-g",
+        "!**/build/**"
+      ],
+      "search_exit_code": 1,
+      "matches": [],
+      "conclusion": "No matching fresh-login invocation in the scanned source corpus."
+    }
+  ],
+  "assessment": {
+    "actionable_defect": "NOT_ESTABLISHED",
+    "reason": "No current inspected caller establishes the required in-place fresh-login trigger while Timeout remains mounted.",
+    "owner": "unknown application owner",
+    "next_action": "Retain the consumer limit. Investigate a real in-place fresh-login caller if one is supplied.",
+    "speculative_runtime_fix": "not applied"
+  },
+  "limits": [
+    "Source review does not prove global unreachability across uninspected remote modules.",
+    "Filesystem consumer identities do not establish deployed bytes or active import-map composition.",
+    "The synthetic fixture does not establish an ordinary production user journey.",
+    "No new browser, unit, or PROD execution occurred for this review.",
+    "No new business policy or waiver is inferred."
+  ],
+  "evidence": {
+    "routing": {
+      "path": "repos/ui/mfe-base/src/routing/index.tsx",
+      "lines": [
+        10,
+        11
+      ],
+      "sha256": "28bd1faeb75203695e6f102ad65b543432f2d413f87bb64ed3a2bac6ddc1ec9e",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "RoutingComponent selects Home when token and entities exist; otherwise it selects Login."
+    },
+    "timeout-owner": {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        127,
+        127
+      ],
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "Timeout is rendered under Home from showTimeout."
+    },
+    "login-caller": {
+      "path": "repos/ui/mfe-base/src/pages/Login/common/useController.ts",
+      "lines": [
+        20,
+        49
+      ],
+      "sha256": "5e97ec2a4065cbef8ef9033b326bc7e9c9dfdbb038656f22fecbbf90a62e5dfb",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "SSO query-code and explicit login invoke login or loginEntra only in the Login controller."
+    },
+    "login-service": {
+      "path": "repos/ui/mfe-base/src/services/index.ts",
+      "lines": [
+        10,
+        18
+      ],
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "The login helpers post to the fresh-login v2 and v3 endpoints."
+    },
+    "openfin": {
+      "path": "repos/ui/mfe-base/src/routing/common/useController.ts",
+      "lines": [
+        48,
+        68
+      ],
+      "sha256": "097c110ba6df6357db918ed78a8c08f4b2be6fb38f76e920b8cf2f383cf41731",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "OpenFin token handling writes stored access and replaces window.location; it does not invoke in-place fresh login."
+    },
+    "epoch-request": {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        11,
+        18
+      ],
+      "sha256": "ec0957b68a6ec951d1922cd7f4fa1cb92f55f93ad64416e31a2131353f84ba01",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "Fresh-login start invalidates the session epoch and clears refresh state."
+    },
+    "epoch-response": {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        73,
+        81
+      ],
+      "sha256": "8abe038ed8e1aa3ef6b4eba83428bf9b00e768ea35d0a34b13e937a78ad40b0a",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "Successful fresh login invalidates login-pending work before installing the new session."
+    },
+    "timeout-guard": {
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "lines": [
+        103,
+        140
+      ],
+      "sha256": "5ad7f7ad1ceebe2cc936c14175de0da82655b8a9b793270589affd543dc9c71f",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "Timeout rejects actions and delayed completion from a different epoch."
+    },
+    "synthetic-fixture": {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/sessionPending.test.tsx",
+      "lines": [
+        52,
+        60
+      ],
+      "sha256": "28adf40863705531a697716d97c5d116b5bd46436a49e8cf8acea4e383543f18",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "PEND fixture exposes replacement-login while Session remains mounted; production routing does not."
+    },
+    "public-service": {
+      "path": "repos/ui/mfe-base/src/root.tsx",
+      "lines": [
+        34,
+        41
+      ],
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "Public Service exports expose shared HTTP operations to consumers."
+    },
+    "public-login-services": {
+      "path": "repos/ui/mfe-base/src/root.tsx",
+      "lines": [
+        78,
+        78
+      ],
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "claim": "Public Services export exposes the useServices module."
+    }
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "Checks cover JSON parsing, cited paths, hashes, inspected source lines, and search completion only."
+    ]
+  }
+}

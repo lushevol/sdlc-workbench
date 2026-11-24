@@ -1,0 +1,255 @@
+{
+  "recorded_at": "2026-10-21T00:23:46.568969+00:00",
+  "base_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+  "execution_status": "COMPLETED",
+  "diagnostic_runs": 8,
+  "diagnostic_assertions_passed": 8,
+  "runtime_sources_match_commits": true,
+  "runtime_mismatches": [],
+  "harness_sources": {
+    "raceComparison.v1.test.tsx.snapshot": "d83f93cf6d00e01579517a88f0bcbc6e66194a1e5a95f9968ec5e9a4278c068f",
+    "raceComparison.test.tsx": "8e394c61871e789406cb51f75a59f53833c96816d8a5ab8684831b4870c91d1c"
+  },
+  "runs": {
+    "f02-baseline": {
+      "run": "f02-baseline/run.json",
+      "metrics": "f02-baseline/metrics.json",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F02",
+        "side": "baseline",
+        "access_remaining_ms": 24999,
+        "refresh_requests": 1,
+        "refresh_replaced": true,
+        "refresh_still_usable": true,
+        "dialog_open": false,
+        "limits": [
+          "Identical synthetic retained-refresh initial state.",
+          "Old standard Home flow does not acquire refresh early on hide.",
+          "No end-user recovery failure is asserted from acquisition counts alone."
+        ]
+      },
+      "run_sha256": "f00c7b86218de9757a23409aadb97cde8554a98952ca599ced462876a4fa208b"
+    },
+    "f02-candidate": {
+      "run": "f02-candidate/run.json",
+      "metrics": "f02-candidate/metrics.json",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F02",
+        "side": "candidate",
+        "access_remaining_ms": 24999,
+        "refresh_requests": 0,
+        "refresh_replaced": false,
+        "refresh_still_usable": true,
+        "dialog_open": false,
+        "limits": [
+          "Identical synthetic retained-refresh initial state.",
+          "Old standard Home flow does not acquire refresh early on hide.",
+          "No end-user recovery failure is asserted from acquisition counts alone."
+        ]
+      },
+      "run_sha256": "39f2de5764484aaeea432f4cf20a5ddf0f04d0b05a05322d681af23ee83aad81"
+    },
+    "f03-after-baseline": {
+      "run": "f03-after-baseline/run.json",
+      "metrics": "f03-after-baseline/metrics.json",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F03",
+        "delivery": "after-login",
+        "side": "baseline",
+        "old_refresh_delivered_after_clear": true,
+        "old_session_revoked_in_fixture": true,
+        "refresh_session_after_login": "session-A",
+        "replacement_acquisitions_after_login": 1,
+        "refresh_session_before_recovery": "session-B",
+        "recovery_header_session": "session-B",
+        "new_session_recovery_succeeded": true,
+        "new_session_cleared": false,
+        "limits": [
+          "Actual reducers, request/response interceptors, and service exports.",
+          "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+          "Service call follows normal username/password sign-in endpoint; no live provider.",
+          "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling."
+        ]
+      },
+      "run_sha256": "4cdf24a1d0ab9ec3a76775bd68d8831c6cac98be4dc201648ee38ac116bfa914"
+    },
+    "f03-after-candidate": {
+      "run": "f03-after-candidate/run.json",
+      "metrics": "f03-after-candidate/metrics.json",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F03",
+        "delivery": "after-login",
+        "side": "candidate",
+        "old_refresh_delivered_after_clear": true,
+        "old_session_revoked_in_fixture": true,
+        "refresh_session_after_login": "session-A",
+        "replacement_acquisitions_after_login": 0,
+        "refresh_session_before_recovery": "session-A",
+        "recovery_header_session": "session-A",
+        "new_session_recovery_succeeded": false,
+        "new_session_cleared": true,
+        "limits": [
+          "Actual reducers, request/response interceptors, and service exports.",
+          "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+          "Service call follows normal username/password sign-in endpoint; no live provider.",
+          "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling."
+        ]
+      },
+      "run_sha256": "c069dedf979241c97caa6599ac2a3e58c3d5d6679fb3049523a847045f48b508"
+    },
+    "f03-after-no-acquisition-baseline": {
+      "run": "f03-after-no-acquisition-baseline/run.json",
+      "metrics": "f03-after-no-acquisition-baseline/metrics.json",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F03",
+        "delivery": "after-login",
+        "side": "baseline",
+        "old_refresh_delivered_after_clear": true,
+        "old_session_revoked_in_fixture": true,
+        "refresh_session_after_login": "session-A",
+        "next_acquisition_suppressed_by_fixture": true,
+        "replacement_acquisitions_after_login": 0,
+        "refresh_session_before_recovery": "session-A",
+        "recovery_header_session": "session-A",
+        "new_session_recovery_succeeded": false,
+        "new_session_cleared": true,
+        "limits": [
+          "Actual reducers, request/response interceptors, and service exports.",
+          "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+          "Service call follows normal username/password sign-in endpoint; no live provider.",
+          "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+          "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+        ]
+      },
+      "run_sha256": "1b70d07bd68257bf9c40827764fa1faf2bc86330ae391561ba6c74a8da626da3"
+    },
+    "f03-after-no-acquisition-candidate": {
+      "run": "f03-after-no-acquisition-candidate/run.json",
+      "metrics": "f03-after-no-acquisition-candidate/metrics.json",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F03",
+        "delivery": "after-login",
+        "side": "candidate",
+        "old_refresh_delivered_after_clear": true,
+        "old_session_revoked_in_fixture": true,
+        "refresh_session_after_login": "session-A",
+        "next_acquisition_suppressed_by_fixture": true,
+        "replacement_acquisitions_after_login": 0,
+        "refresh_session_before_recovery": "session-A",
+        "recovery_header_session": "session-A",
+        "new_session_recovery_succeeded": false,
+        "new_session_cleared": true,
+        "limits": [
+          "Actual reducers, request/response interceptors, and service exports.",
+          "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+          "Service call follows normal username/password sign-in endpoint; no live provider.",
+          "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+          "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+        ]
+      },
+      "run_sha256": "47593a0ea2234642d2269ec7485f0eed717567207960cdf40a87d6ed483be39d"
+    },
+    "f03-before-baseline": {
+      "run": "f03-before-baseline/run.json",
+      "metrics": "f03-before-baseline/metrics.json",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F03",
+        "delivery": "before-login",
+        "side": "baseline",
+        "old_refresh_delivered_after_clear": true,
+        "old_session_revoked_in_fixture": true,
+        "refresh_session_after_login": null,
+        "replacement_acquisitions_after_login": 1,
+        "refresh_session_before_recovery": "session-B",
+        "recovery_header_session": "session-B",
+        "new_session_recovery_succeeded": true,
+        "new_session_cleared": false,
+        "limits": [
+          "Actual reducers, request/response interceptors, and service exports.",
+          "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+          "Service call follows normal username/password sign-in endpoint; no live provider.",
+          "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling."
+        ]
+      },
+      "run_sha256": "4f92ebf0aa381cc5902b10ddd4b02aa6248bb392c0ee2866289060701a759a95"
+    },
+    "f03-before-candidate": {
+      "run": "f03-before-candidate/run.json",
+      "metrics": "f03-before-candidate/metrics.json",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "exit_code": 0,
+      "status": "PASSED",
+      "observed": {
+        "case": "F03",
+        "delivery": "before-login",
+        "side": "candidate",
+        "old_refresh_delivered_after_clear": true,
+        "old_session_revoked_in_fixture": true,
+        "refresh_session_after_login": "session-A",
+        "replacement_acquisitions_after_login": 0,
+        "refresh_session_before_recovery": "session-A",
+        "recovery_header_session": "session-A",
+        "new_session_recovery_succeeded": false,
+        "new_session_cleared": true,
+        "limits": [
+          "Actual reducers, request/response interceptors, and service exports.",
+          "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+          "Service call follows normal username/password sign-in endpoint; no live provider.",
+          "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling."
+        ]
+      },
+      "run_sha256": "7cb7c4dfd977fa4ad99859b4f0d0881e607a298d0d92f909c41855dafdfd402d"
+    }
+  },
+  "findings": {
+    "F-02": {
+      "classification": "NEW_SCHEDULING_DIFFERENCE_WITHOUT_PROVEN_RECOVERY_REGRESSION",
+      "baseline": "One refresh replacement request; existing refresh replaced.",
+      "candidate": "No replacement request at 24,999 ms remaining; existing refresh remains usable; no prompt.",
+      "consequence_limit": "No failed recovery observed. Current source arithmetic is confirmed, but early retained refresh is not supplied by the baseline standard Home hide flow.",
+      "recommendation": "Downgrade release importance; retain as a scheduling gap with unproven end-user delta.",
+      "owner": "unknown",
+      "next_action": "Validate a shared reachable journey or retain as optional robustness correction."
+    },
+    "F-03": {
+      "classification": "PRE_EXISTING_RESPONSE_RACE_WORSENED_BY_PRESERVATION_AND_REUSE",
+      "response_before_login": "Baseline clears stale refresh at sign-in; candidate preserves it.",
+      "response_after_login": "Both versions install the stale response. That acceptance race is pre-existing.",
+      "deadline_acquisition_control": "Baseline acquires session-B refresh and recovers. Candidate reuses session-A refresh, then recovery rejects and clears B.",
+      "no_acquisition_after_login_control": "Both versions send session-A refresh and clear B. This user failure is inherited when the replacement callback is absent.",
+      "recommendation": "Keep the new/worsened session-boundary finding, but narrow its cause. Do not classify unconditional stale-response installation as newly introduced.",
+      "owner": "unknown",
+      "next_action": "Distinguish fresh sign-in from same-session rotation and prevent ended-session responses."
+    }
+  },
+  "limits": [
+    "Controlled JSDOM and fake clock; no natural timer-delay frequency measured.",
+    "The Axios adapter supplies tokens and models revoked session rejection; actual service interceptors and reducers execute.",
+    "The normal login service endpoint executes; no live identity provider participates.",
+    "F03 deadline acquisition is invoked directly to isolate service reuse from Home timer delivery.",
+    "The no-acquisition control omits a callback by fixture; it does not establish real browser freezing.",
+    "All commands passed their comparative characterization predicates. That does not mean the candidate business behavior passed."
+  ]
+}

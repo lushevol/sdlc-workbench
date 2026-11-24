@@ -1,0 +1,70 @@
+{
+  "case_id": "FOUR-AC4-BROWSER",
+  "canonical_definition": "../../../06-test-cases.md#four-ac4-browser",
+  "checked_at": "2026-10-27T06:52:05.693390+00:00",
+  "assertions_identical": true,
+  "clock_duration_ms": 14400000,
+  "old": {
+    "commit": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "core_ac4_status": "PASSED",
+    "all_control_status": "FAILED",
+    "cycles": 24,
+    "passed_assertions": 126,
+    "failure": "replacement refresh differs\n\nfalse !== true\n",
+    "final_refresh_present": false,
+    "evidence": "main-attempt-02/result.json"
+  },
+  "new": {
+    "commit": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+    "core_ac4_status": "PASSED",
+    "all_control_status": "PASSED",
+    "cycles": 24,
+    "passed_assertions": 128,
+    "final_refresh_present": true,
+    "evidence": "candidate-attempt-02/result.json"
+  },
+  "classification": "Core controlled AC-4 passes both. Candidate additionally preserves replacement refresh credentials.",
+  "fixture_equivalence": {
+    "access_lifetime_ms": 900000,
+    "initial_refresh_lifetime_ms": 7200000,
+    "activity_interval_ms": 600000,
+    "debounce_ms": 5000,
+    "extension_response_lifetime_ms": 900000,
+    "clock_initialization": "2026-10-27T00:00:00Z; subsecond setup drift is disclosed in each result",
+    "authentication": "Actual local sign-in body; synthetic access and refresh response headers for controlled time."
+  },
+  "screenshot_review": {
+    "reviewer": "Codex",
+    "reviewed_at": "2026-10-27T06:52:05.693498+00:00",
+    "files": [
+      "candidate-attempt-02/cycle-24.png",
+      "main-attempt-02/cycle-24.png"
+    ],
+    "observation": "Both show the authenticated workspace at 04:00 UTC with no timeout dialog. Screenshots do not show credential persistence."
+  },
+  "failed_collector_attempts": [
+    {
+      "path": "main-attempt-01/result.json",
+      "classification": "Evidence collector TypeError on absent inherited refresh state; not a qualified failed AC-4 execution."
+    },
+    {
+      "path": "candidate-served-binding-attempt-01.json",
+      "classification": "Webpack-generated context module compared to Git directory listing; corrected collector excludes non-blob Git objects."
+    }
+  ],
+  "hashes": {
+    "run.mjs": "f775bad036f6405cc456fca25c144de9a083c240af63140b688f52534e97d528",
+    "run.py": "5893ae91f3ffda1fb8ac9aae7bedce3befdc3f8b8e10147ea5f76563dcee4804",
+    "main-attempt-02/result.json": "35290f2d8bcaadc1627f8cc849561b522242a00ee306bdd2b0193341421e96d0",
+    "candidate-attempt-02/result.json": "57f84d5cce2aa6dda479b8e5d9a8778cd397da3effadc66b0fb34a524e07c69a",
+    "main-served-binding.json": "b68266fa1cb000eb8bfe99c3e31a84ed5eaf5bb5447d46ffb3d08ae9902358c1",
+    "candidate-served-binding.json": "0570df301290c83b27f5f224dcda5f0203a353f4742ac0656cf65caa7e345717"
+  },
+  "limits": [
+    "Synthetic authentication credentials and response headers bypass server credential validation.",
+    "Actual MFE composition, DOM, Axios, reducers, Home timers, and trusted mouse events execute unchanged.",
+    "Headless Edge does not establish native tab suspension or PROD parity.",
+    "MutationObserver can miss insertion and removal within one delivery batch; no exhaustive transient-flash claim is made."
+  ],
+  "independent_critique": "../review/ac4-critique.json"
+}

@@ -1,0 +1,50 @@
+{
+  "recorded_at": "2026-10-26T15:45:37.001544+00:00",
+  "case": "E2E-07",
+  "current_execution": "NOT_RERUN",
+  "retained_outcome": "PASSED_WITH_DISCLOSED_CLOCK_LIMIT",
+  "candidate_ref": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+  "matching_application_source_count": 136,
+  "source_mismatches": [],
+  "source_match_status": "PASSED",
+  "evidence": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json",
+      "sha256": "ad61b4af4a1dc17daca71ab8a3598e3c834bcc4b05e1340ef77ebdac8aceb092"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/native/run.json",
+      "sha256": "0c71f69939d92413d56db8f3f073c11961e2eeffe6cf127b0e4fa3a2ace7e52f"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/natural-timing-analysis.json",
+      "sha256": "d4d11ddb52d30e91b5c2917902b043529bd1b75cefb10ac81a470316a47cbbab"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/final-served-source-binding.json",
+      "sha256": "1017764c30333bbce0262bfded173e29cc0c67f2d24ebacb915405eaa8a665a5"
+    }
+  ],
+  "assertion_comparison": {
+    "current_case_source": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-07.cjs",
+    "current_sha256": "1d2459f5b1ec491e9c33a4fc6ade4cd08b0096a3004963b1c9555ac4cd134334",
+    "review": "The natural hidden duration, visible control, observed freeze, usable-refresh, pending prompt and successful recovery predicates remain present.",
+    "difference": "The retained old runner adds an immediate long-wait checkpoint. The current split setup adds timing preflight. Current setup was not rerun naturally."
+  },
+  "limits": [
+    "The raw configured wait delta is1799958ms. Native transition timestamps support a conservative hidden lower bound1800694ms.",
+    "Only recorded wall-clock timestamps support that interval. No independent monotonic duration is available.",
+    "Reused evidence does not establish a current natural run or the current timing-preflight result.",
+    "No missing-refresh acceptance behavior is inferred."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

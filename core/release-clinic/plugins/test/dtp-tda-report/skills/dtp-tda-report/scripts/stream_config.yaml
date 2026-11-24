@@ -1,0 +1,395 @@
+# stream_config.yaml
+# ---------------------------------------------------------------------------
+# Stream-centric configuration for AutoTDAScript.py.
+#
+# STATUS: LIVE (phase 2 complete, 2026-07-13). tda/build_resolver.py's
+# load_stream_config()/load_builds_from_yaml() and tda/config.py's
+# decrypt_snow_credentials()/Config.from_env() all read `streams.<STREAM>`
+# from this file FIRST for build/PIT/Sonar/Genie/regression/SNOW settings.
+# associated_builds.yaml is kept as a per-stream FALLBACK for any stream not
+# (yet) present here — do not delete it. New streams may be added to EITHER
+# file; adding here is preferred going forward since it consolidates every
+# setting for a stream in one place.
+#
+# ---------------------------------------------------------------------------
+# Per-stream schema (all keys optional unless noted):
+#
+#   pit_url (string | null, REQUIRED)
+#     Confluence PIT URL template with {{version}} placeholder.
+#     Set to ~ (null) if the stream does not use a PIT document.
+#
+#   genie_enabled (bool, default: true)
+#     Set to false to skip Genie regression collection for this stream.
+#     Equivalent to listing the stream in the old GENIE_DISABLED_STREAMS.
+#     NOTE (2026-07-30): the ADO-native fallback fetch (regression_config below)
+#     is GLOBALLY DISABLED for now regardless of regression_config.skip — see
+#     tda/collectors/release.py collect_release_data(). Streams with
+#     genie_enabled: false simply report no regression data collected until
+#     a safer/clearer non-Genie extraction approach is agreed — UNLESS
+#     genie_test_management_app_id (below) is also set, in which case the
+#     new Genie test-management API is used instead.
+#
+#   genie_test_management_app_id (string, optional — no default here)
+#     ADDED 2026-08-04, OPT-IN, EXPERIMENTAL. Genie/report application id
+#     (e.g. "50285") for the NEW Genie "test-management" API
+#     (tda/integrations/genie_test_management.py), used ONLY when
+#     genie_enabled is false for this stream. Has NO effect otherwise.
+#     IMPORTANT: this is the Genie system's own numeric application id —
+#     it is NOT confirmed to be the same value as the Release WI's
+#     Custom.ApplicationID field (which is often a free-text ADO description
+#     like "RADARS BA-50736"). Get the correct value from the API owner /
+#     confirm it against a known-good example before setting this for a
+#     new stream. Also note: pagination for this API is NOT YET CONFIRMED
+#     (see the module docstring) — only the first page of results is
+#     fetched, and `genie_count['pagination_incomplete']` will be true in
+#     the output JSON if more results likely exist beyond page 1.
+#
+#   snow_enabled (bool, optional — no default here)
+#     Per-stream override for whether SNOW (ServiceNow change request) data is
+#     collected. When omitted, falls back to the SNOW_ENABLED environment
+#     variable in .env (default true). Set explicitly to true/false here to
+#     override .env for just this stream, e.g. for a stream that has no CHG
+#     process / SNOW integration. NOTE: SNOW_ENABLED in .env still gates
+#     whether FERNET_KEY/SNOW_BLADE_KEY/CLIENT_SECRET are required at all —
+#     if every stream needing SNOW sets snow_enabled: true here but .env has
+#     SNOW_ENABLED=false, decryption is still skipped for streams that don't
+#     override it, so keep .env's default aligned with your common case.
+#
+#   story_comments_enabled (bool, default false)
+#     Set to true to fetch each story's last ADO comment (CommentByStoryId —
+#     one extra ADO API call per story WI in the release) for the "Story Last
+#     Comment" closure check. Defaults to false (disabled) for every stream —
+#     omit this key, or set it to false, to skip the fetch entirely and avoid
+#     that per-story ADO call volume. There is no .env fallback for this flag;
+#     it must be set explicitly per stream in stream_config.yaml.
+#
+#   po_reprioritization_check_enabled (bool, default false)
+#     Set to true to fetch each story's full ADO revision history
+#     (WorkItemUpdates — one extra ADO API call per story WI in the release)
+#     to detect Description / Acceptance Criteria edits made AFTER the story
+#     first transitioned into the 'Prioritized' state. Per governance
+#     guidelines, a story whose scope changes post-prioritization should have
+#     been re-prioritized by the PO — this surfaces that as a
+#     "PO Reprioritization Check" finding. Defaults to false (disabled) for
+#     every stream — omit this key, or set it to false, to skip the fetch
+#     entirely. There is no .env fallback for this flag; it must be set
+#     explicitly per stream in stream_config.yaml.
+#
+#   application_confluence_post_approval_check_enabled (bool, default false)
+#     Set to true to check whether any Confluence document linked on the
+#     Application WI (Application Architecture, ASRM, NFR, TEM, Test Strategy
+#     etc.) was edited AFTER the ADO approval was recorded on it. When enabled,
+#     the collector:
+#       1. Extracts all Hyperlink-typed relations on the Application WI whose
+#          URL contains the Confluence host (cfg.confluence_url).
+#       2. For each link, calls validate_confluence_page() to get the page's
+#          last-modified timestamp (page['version']['when']) in addition to
+#          the existing approver comments.
+#       3. Compares last-modified against the most recent approver comment
+#          timestamp. If last-modified > latest approval → flags as
+#          'EDITED_AFTER_APPROVAL'; otherwise 'OK'. Pages with no approver
+#          comments recorded are flagged as 'NO_APPROVAL_RECORDED'.
+#     Results are stored in application_features[0]['confluence_post_approval_checks']
+#     as a list of {url, label, page_title, last_modified, last_approval, status}.
+#     Adds ~1 Confluence API call per linked document — enable only for streams
+#     whose Application WI consistently carries meaningful Confluence links.
+#     Defaults to false (disabled) for every stream; no .env fallback.
+#
+#   builds_from_latest_pipeline_field (bool, default false)
+#     Set to true for streams where the Release WI's 'Custom.LatestPipelineRuns'
+#     field already links EVERY component's build directly (no single master
+#     build whose promotedImageList artifact can be expanded via tag-search —
+#     e.g. SCALE-style streams). When true, resolve_builds() parses ALL
+#     'buildId=' links out of that field and fetches each build's own metadata
+#     directly, instead of running discover_associated_builds()'s
+#     promotedImageList + tag-search flow. Per-pipeline version hint is derived from
+#     that build's own 'build-version='/'release-version=' tag if present,
+#     otherwise from its branch suffix (e.g. 'release/scale_agg_26.0' ->
+#     'scale_agg_26.0') — and fed into Sonar exactly like a `builds` branch
+#     hint/version hint annotation below. Falls back to this stream's `builds` map on failure
+#     (same as a failed promotedImageList auto-discovery). Does NOT affect any
+#     stream that leaves this unset/false — those keep using
+#     discover_associated_builds() (the master-build/promotedImageList flow)
+#     exactly as before. Mutually exclusive in effect with `sonar_config.
+#     auto_discovery` (this flag takes priority when both would apply).
+#
+#   branch_version_fallback_enabled (bool, default false)
+#     Set to true for streams whose component pipelines DO run through the
+#     normal promotedImageList tag-search discovery flow (discover_associated_
+#     builds(), NOT builds_from_latest_pipeline_field) but whose builds carry
+#     NO 'build-version='/'release-version=' tags at all — e.g. RULES, whose
+#     component pipelines never tag builds, confirmed via probe_build_version_
+#     info.py. Tag-based Strategies 1-3 in _resolve_builds_for_version() are
+#     still tried first for every stream regardless of this flag. Only when
+#     ALL of them fail does this flag change behavior, in two ways:
+#       1. Also tries a 'release/{major}.{minor}.0' candidate branch (some
+#          pipelines always use a trailing '.0' release-train branch
+#          regardless of the artifact's actual patch version — e.g. branch
+#          'release/187.0.0' for artifact version '187.0.13').
+#       2. Adds a Strategy 4 fallback: an UNFILTERED branch query, taking the
+#          newest build (by queueTime) as the resolved build for that version.
+#     Trade-off: this only guarantees release-train-level correctness, not
+#     exact-patch traceability — multiple promotedImageList versions on the
+#     same release-train branch (e.g. 187.0.13/.24/.31/.32) will all resolve
+#     to the SAME newest build on that branch. Has ZERO effect for any stream
+#     that leaves this unset/false — those keep hard-failing when no tag
+#     strategy matches, exactly as before (correct behavior for streams whose
+#     pipelines DO tag builds, e.g. FXO/RATES/CREDIT).
+#
+#   artifactory_build_discovery_enabled (bool, default false)
+#     ADDED 2026-08-06, OPT-IN, EXPERIMENTAL — pilot before wider rollout.
+#     Alternative to ALL tag/branch strategies above (Strategies 1-4):
+#     resolves each promotedImageList helm3 artifact's build.name/build.number
+#     DIRECTLY from Artifactory's build-info properties (stamped by
+#     JFrogPublishBuildInfo at publish time — no ADO tags or branch names
+#     guessed anywhere), then looks up the exact ADO build via
+#     find_build_by_name_and_number(). Requires BOTH this flag AND
+#     sonar_config.auto_discovery: true to activate — has ZERO effect
+#     otherwise, and does not change behavior for any other stream.
+#     Docker artifacts are NOT resolved by this path (Artifactory's docker
+#     repo needs an auth token we don't have configured yet — helm3/maven
+#     only). Verified manually (2026-08-06) against a real RULES
+#     promotedImageList.json: all resolved builds matched the existing
+#     manually-curated 'builds:' map. NOT yet enabled for any stream in this
+#     file — pilot on RULES manually (flip sonar_config.auto_discovery to
+#     true + set this flag true) only when ready to validate live, since
+#     RULES currently relies on a proven manual 'builds:' map.
+#     See tda/build_resolver.py's _resolve_builds_via_artifactory() docstring
+#     for full design rationale and residual-risk notes.
+#
+
+#   builds (map, pipeline_name -> build_id or "build_id sonar_branch_hint")
+#     Fallback build IDs used when auto-discovery is disabled/fails.
+#     Optional trailing Sonar branch hint (after a space) controls branch selection
+#     without an extra ADO API call:
+#       - branch-like hints are used as-is (e.g. "main", "release/185.0.14",
+#         "refs/heads/release/185.0.14")
+#       - other hints are treated as release versions and mapped to
+#         "release/<hint>" (e.g. "185.0.14" -> "release/185.0.14")
+#     Use a plain build_id (no trailing hint) when you want the collector to
+#     resolve the branch from the build metadata directly.
+#
+#   sonar_keys (map, pipeline_name -> sonar_project_key)
+#     Only needed when the SonarQube project key differs from the ADO repo name.
+#
+#   sonar_config (map)
+#     skip (bool, default false)               — completely skip Sonar collection
+#     auto_discovery (bool, default true)       — disable to always use `builds` above
+#     branch_strategy (build_branch|release_branch, default build_branch)
+#     shared_repo_prefix (string, default "")   — see associated_builds.yaml for details
+#     branch_version_format (standard|bcf|raw, default standard)
+#     component_ado_projects (list)             — extra ADO project base URLs to query
+#     required_quality_gate (string, default "ESDLC-Sonarway-managed") — override the mandated
+#                                                SonarQube Quality Gate name for this stream.
+#                                                Use when an approved exception permits a different
+#                                                gate (e.g. "ESDLC-Sonarway-generic"). Comparison
+#                                                is always case-insensitive. Omit to keep the
+#                                                organisation-standard default.
+#
+#   regression_config (map) — only relevant when genie_enabled: false
+#     regression_run_filter (string, default "") — substring filter for ADO test run names
+#     skip (bool, default false)                 — historical flag; the ADO-native fetch
+#                                                   this controlled is currently GLOBALLY
+#                                                   DISABLED in code (see genie_enabled note
+#                                                   above), so this has no effect right now.
+#                                                   Kept so it can be re-enabled per-stream
+#                                                   once a safe extraction approach exists.
+# ---------------------------------------------------------------------------
+
+streams:
+
+  FXO:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/Blade+FXO+Release+{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : false
+    story_comments_enabled : false
+    po_reprioritization_check_enabled: false
+    artifactory_build_discovery_enabled: true
+    application_confluence_post_approval_check_enabled: true
+    builds:
+      #50665-fmdc-releases: "13146418 74.2.0"    #50665-fmdc-releases: 13146418
+    sonar_config:
+      auto_discovery: true
+
+  RATES:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/Blade+LC+Release+2.4+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : true
+    story_comments_enabled : false
+    po_reprioritization_check_enabled: true
+    artifactory_build_discovery_enabled: true
+    application_confluence_post_approval_check_enabled: true
+    builds:
+      #50665-fmdc-releases: "12304461 74.2.0"
+    sonar_config:
+      auto_discovery: true
+
+  RULES:
+    #pit_url: "https://confluence.global.standardchartered.com/display/DTP/FMDC+-+Post+Implementation+Testing+for+Rules+Release+{{version}}"
+    genie_enabled: true
+    snow_enabled : false
+    story_comments_enabled : false
+    po_reprioritization_check_enabled: false
+    application_confluence_post_approval_check_enabled: true  # pilot — RULES Application WI typically has Architecture/ASRM/NFR/TEM/TestStrategy Confluence links
+    branch_version_fallback_enabled: false
+    artifactory_build_discovery_enabled: true
+    builds:
+      #51527-fmdc-releases: "13458068 rules-186.0.0"
+    sonar_keys:
+      51527-dtp-sabre-entitlement_maven_pipeline: 51527-dtp-sabre-entitlement  # was "dtp-sabre-entitlements-parent" (display name, not key) — fixed 2026-07-14, confirmed via /api/components/search
+      # 51527-apollo-rules-low-latency_maven_pipeline: <sonar-project-key>  # verify key in SonarQube
+    sonar_config:
+      auto_discovery: true
+
+
+  CREDIT:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/Blade+Credit+Release+{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : true
+    po_reprioritization_check_enabled: true
+    artifactory_build_discovery_enabled: true
+    story_comments_enabled : false
+    application_confluence_post_approval_check_enabled: true
+
+    builds:
+      #50665-fmdc-releases_maven_pipeline: "13340431 credit-14.0.0"
+    sonar_config:
+      auto_discovery: true
+
+
+  SCALE:
+    pit_url: "https://confluence.global.standardchartered.com/display/FXSCALE/{{version}}+FX+Scale+Post+Implementation+Testing"
+
+    genie_enabled: false
+    snow_enabled : false
+    story_comments_enabled : false
+    po_reprioritization_check_enabled: true
+    builds_from_latest_pipeline_field: true
+    genie_test_management_app_id : 50285
+
+    builds:
+      #50285-scale-aggregator_maven_pipeline: "12109063 scale_agg_26.0"
+
+    sonar_config:
+      auto_discovery: false
+
+  KDB:
+    pit_url: "https://confluence.global.standardchartered.com/display/FXSCALE/{{version}}+FX+Scale+Post+Implementation+Testing"
+    genie_enabled: false
+    snow_enabled : false 
+    po_reprioritization_check_enabled: true
+    builds_from_latest_pipeline_field: true
+    story_comments_enabled : false
+    builds:
+      #50736-radars-config_generic_pipeline: "13931561 ODL.4.18"
+    sonar_config:
+      skip: true
+      auto_discovery: false
+
+  SCM:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/SC+Markets+Release+{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : true
+    po_reprioritization_check_enabled: true
+    application_confluence_post_approval_check_enabled: true
+    builds: {}
+      # TODO: populate before running for SCM releases
+      # 50665-fmdc-scm-releases: <build-id>
+
+  OMS:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/Blade+OMS+Release+{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : true
+    po_reprioritization_check_enabled: true
+    application_confluence_post_approval_check_enabled: true
+    builds: {}
+      # TODO: populate before running for OMS releases
+      # 50665-fmdc-oms-releases: <build-id>
+
+  XAP:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/Blade+XAP+{{version}}+-+Post+implementation+testing"
+    genie_enabled: true
+    snow_enabled : true
+    po_reprioritization_check_enabled: true
+    application_confluence_post_approval_check_enabled: true
+    builds: {}
+      # TODO: populate before running for XAP releases
+      # 50665-fmdc-xap-releases: <build-id>
+
+  BCF:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : false
+    po_reprioritization_check_enabled: true
+    builds_from_latest_pipeline_field: true
+    builds:
+      # TODO: populate before running for BCF releases
+      50665-fmdc-bcf-releases: 15557366
+    sonar_config:
+      skip: true                        # BCF has no Sonar project configured
+      branch_version_format: bcf        # release/bcf/1/2/3 → "1 2 3"
+ 
+
+  PLATFORM:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/Blade+Platform+Release+{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : true
+    po_reprioritization_check_enabled: true
+    application_confluence_post_approval_check_enabled: true
+    builds: {}
+      # TODO: populate before running for PLATFORM releases
+      # 50665-fmdc-platform-releases: <build-id>
+
+  ION:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/ION+Release+{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : false
+    po_reprioritization_check_enabled: true
+    builds_from_latest_pipeline_field: true
+
+    builds:
+      #15528-MARKETAXESS-EUR-CREDIT_maven_pipeline : "13577023 main"
+      15528-cne-credit_maven_pipeline : "15161931 release/maHgTct-3"
+    sonar_config:
+      auto_discovery: false
+
+  MDA-PXE:
+    pit_url: "https://confluence.global.standardchartered.com/display/DTP/ION+Release+{{version}}+-+Post+Implementation+Testing"
+    genie_enabled: true
+    snow_enabled : false
+    po_reprioritization_check_enabled: true
+    builds_from_latest_pipeline_field: true
+    builds:
+      15528-MARKETAXESS-EUR-CREDIT_maven_pipeline : "13577023 main"
+    sonar_config:
+      auto_discovery: false
+
+  S2BX:
+    pit_url: "https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3811297308"
+    genie_enabled: false
+    snow_enabled : false
+    po_reprioritization_check_enabled: true
+    builds:
+      # Release 116.0 (14110257) — update these each release from the ADO Release Summary tab
+      29014-s2bx_generic_pipeline: 13837532
+    sonar_config:
+      auto_discovery: false
+
+  UDP:
+    pit_url: "https://confluence.global.standardchartered.com/display/DSP/MarketsUDP+-+Post+Implementation+Testing+for+CHG1060462"
+    genie_enabled: false
+    snow_enabled: false
+    po_reprioritization_check_enabled: false
+    artifactory_build_discovery_enabled: true
+    application_confluence_post_approval_check_enabled: true
+    #builds_from_latest_pipeline_field: true
+    builds:
+    #  51507-MarketsUDP-ctrlm_generic_pipeline: 14403241
+    #  51507-MarketsUDP-upstream-data-api-maven-ansible: 14403183
+    #  51507-MarketsUDP-webservice_generic_pipeline: 14571595
+      51507-MarketsUDP-eod_generic_pipeline: 14611888
+
+    sonar_config:
+      auto_discovery: false
+    skip: false
+  

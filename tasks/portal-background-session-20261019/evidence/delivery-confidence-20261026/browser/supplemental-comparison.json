@@ -1,0 +1,248 @@
+{
+  "recorded_at": "2026-10-26T15:36:03.887970+00:00",
+  "assertion_source": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs",
+  "assertion_source_sha256": "07cd4629f776b53a9ab56e84ce55d433d1683d51aaf2b59709b825b71e1d2e53",
+  "cases": [
+    {
+      "label": "main",
+      "ref": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "case_id": "DEL-14-cancelled-generic-request-loader",
+      "status": "PASSED",
+      "error": null,
+      "summary": "main/main-cancelledLoader-20261026T153205/case-summary.json",
+      "result": "main/main-cancelledLoader-20261026T153205/artifacts/DEL-14-cancelled-generic-request-loader-1793028733686/result.json",
+      "result_sha256": "97f582350f7152fdd8ab6efb2aaabb99af3a0e9be17953138421e4e845049d8d",
+      "before": {
+        "isLoading": false,
+        "loaderVisible": false,
+        "authenticated": true
+      },
+      "during": {
+        "isLoading": true,
+        "loaderVisible": true
+      },
+      "after": {
+        "isLoading": false,
+        "loaderVisible": false,
+        "tokenUnchanged": true,
+        "errorUnchanged": true,
+        "outcome": {
+          "rejected": true,
+          "code": "ERR_CANCELED"
+        },
+        "aborted": true
+      },
+      "pendingObservation": null,
+      "screenshots": [
+        {
+          "phase": "before",
+          "capturedAt": "2026-10-26T15:32:13.686Z",
+          "file": "before.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "request-pending-loader-visible",
+          "capturedAt": "2026-10-26T15:32:19.778Z",
+          "file": "request-pending-loader-visible.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "request-cancelled-final-loader",
+          "capturedAt": "2026-10-26T15:32:20.071Z",
+          "file": "request-cancelled-final-loader.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "after",
+          "capturedAt": "2026-10-26T15:32:20.107Z",
+          "file": "after.png",
+          "method": "page.screenshot; configured credential fields masked"
+        }
+      ],
+      "execution_scope": "DOM_SERVICE_HEADLESS"
+    },
+    {
+      "label": "main",
+      "ref": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "case_id": "BROWSER-SHARING-PENDING",
+      "status": "FAILED",
+      "error": "A second event must reuse the already pending same-token extension.\n\n2 !== 1\n",
+      "summary": "main/main-sharingPending-20261026T153220/case-summary.json",
+      "result": "main/main-sharingPending-20261026T153220/artifacts/BROWSER-SHARING-PENDING-1793028749546/result.json",
+      "result_sha256": "a39110f9c20f72cae16f65bb41f08cbaa737e916e69eeab59736280ee1ae6cee",
+      "before": null,
+      "during": null,
+      "after": null,
+      "pendingObservation": {
+        "startedRequests": 2,
+        "cancelledRequests": 1,
+        "secondEventWaitMs": 6500
+      },
+      "screenshots": [
+        {
+          "phase": "before",
+          "capturedAt": "2026-10-26T15:32:29.546Z",
+          "file": "before.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "first-request-held",
+          "capturedAt": "2026-10-26T15:32:40.615Z",
+          "file": "first-request-held.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "second-activity-while-pending",
+          "capturedAt": "2026-10-26T15:32:47.164Z",
+          "file": "second-activity-while-pending.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "after",
+          "capturedAt": "2026-10-26T15:32:47.206Z",
+          "file": "after.png",
+          "method": "page.screenshot; configured credential fields masked"
+        }
+      ],
+      "execution_scope": "DOM_SERVICE_HEADLESS"
+    },
+    {
+      "label": "candidate-headless",
+      "ref": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "case_id": "DEL-14-cancelled-generic-request-loader",
+      "status": "FAILED",
+      "error": "The final cancelled current-session request must clear loading.\n\ntrue !== false\n",
+      "summary": "candidate-headless/candidate-cancelledLoader-20261026T153330/case-summary.json",
+      "result": "candidate-headless/candidate-cancelledLoader-20261026T153330/artifacts/DEL-14-cancelled-generic-request-loader-1793028820175/result.json",
+      "result_sha256": "161d0b7ad39d3f83ac850863929aa892a183d7bb431a64d5354b44bc5c581457",
+      "before": {
+        "isLoading": false,
+        "loaderVisible": false,
+        "authenticated": true
+      },
+      "during": {
+        "isLoading": true,
+        "loaderVisible": true
+      },
+      "after": {
+        "isLoading": true,
+        "loaderVisible": true,
+        "tokenUnchanged": true,
+        "errorUnchanged": true,
+        "outcome": {
+          "rejected": true,
+          "code": "ERR_CANCELED"
+        },
+        "aborted": true
+      },
+      "pendingObservation": null,
+      "screenshots": [
+        {
+          "phase": "before",
+          "capturedAt": "2026-10-26T15:33:40.175Z",
+          "file": "before.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "request-pending-loader-visible",
+          "capturedAt": "2026-10-26T15:33:46.243Z",
+          "file": "request-pending-loader-visible.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "request-cancelled-final-loader",
+          "capturedAt": "2026-10-26T15:33:46.528Z",
+          "file": "request-cancelled-final-loader.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "after",
+          "capturedAt": "2026-10-26T15:33:46.565Z",
+          "file": "after.png",
+          "method": "page.screenshot; configured credential fields masked"
+        }
+      ],
+      "execution_scope": "DOM_SERVICE_HEADLESS"
+    },
+    {
+      "label": "candidate-headless",
+      "ref": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "case_id": "BROWSER-SHARING-PENDING",
+      "status": "FAILED",
+      "error": "A second event must reuse the already pending same-token extension.\n\n2 !== 1\n",
+      "summary": "candidate-headless/candidate-sharingPending-20261026T153346/case-summary.json",
+      "result": "candidate-headless/candidate-sharingPending-20261026T153346/artifacts/BROWSER-SHARING-PENDING-1793028845792/result.json",
+      "result_sha256": "c8e6238a8615827c25dd37537b200d05310729e762876ee264830d2e87dad82e",
+      "before": null,
+      "during": null,
+      "after": null,
+      "pendingObservation": {
+        "startedRequests": 2,
+        "cancelledRequests": 1,
+        "secondEventWaitMs": 6500
+      },
+      "screenshots": [
+        {
+          "phase": "before",
+          "capturedAt": "2026-10-26T15:34:05.792Z",
+          "file": "before.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "first-request-held",
+          "capturedAt": "2026-10-26T15:34:16.885Z",
+          "file": "first-request-held.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "second-activity-while-pending",
+          "capturedAt": "2026-10-26T15:34:23.441Z",
+          "file": "second-activity-while-pending.png",
+          "method": "page.screenshot; configured credential fields masked"
+        },
+        {
+          "phase": "after",
+          "capturedAt": "2026-10-26T15:34:23.483Z",
+          "file": "after.png",
+          "method": "page.screenshot; configured credential fields masked"
+        }
+      ],
+      "execution_scope": "DOM_SERVICE_HEADLESS"
+    }
+  ],
+  "conclusions": [
+    {
+      "case_id": "DEL-14",
+      "classification": "INTRODUCED_REGRESSION",
+      "result": "Main clears loading after cancellation. Candidate leaves loading and the actual PageLoader active.",
+      "evidence_confidence": "HIGH",
+      "owner": "unknown application owner",
+      "next_action": "Release current-session loading when its final request is cancelled. Preserve stale-session authentication isolation."
+    },
+    {
+      "case_id": "BROWSER-SHARING-PENDING",
+      "classification": "INHERITED_MAIN_BEHAVIOR",
+      "result": "Both main and candidate start2 requests when the second event occurs after the first request is held. Both cancel the first request.",
+      "evidence_confidence": "HIGH",
+      "owner": "unknown application owner",
+      "next_action": "Keep separate backlog triage. Reuse an already pending same-token activity request before claiming sharing."
+    }
+  ],
+  "limits": [
+    "Actual browser rendering, reducers, public Axios client and local request cancellation are exercised.",
+    "Headless Edge does not prove native visibility or device interaction.",
+    "The diagnostic cancellation route is held before dispatch; no service response is fabricated.",
+    "Sharing response completion assertions are not reached because both candidates fail the request reuse assertion."
+  ],
+  "test_engine_commit": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

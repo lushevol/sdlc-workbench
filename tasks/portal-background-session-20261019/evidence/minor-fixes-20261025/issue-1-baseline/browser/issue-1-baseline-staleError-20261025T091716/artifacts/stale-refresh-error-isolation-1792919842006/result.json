@@ -1,0 +1,161 @@
+{
+  "caseId": "stale-refresh-error-isolation",
+  "status": "FAILED",
+  "startedAt": "2026-10-25T09:17:22.005Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8101",
+  "configSha256": "1cb7ef6eff2bf85aef0aaedb40cba372f59dfbbfdd8c5d49b2e49a063d4b34c2",
+  "testSourceSha256": "99991ff2e63a5637b48fb8852a51be989e70dc7c8e19316adfa43274bab83f24",
+  "sourceRevisions": {
+    "mfe-base": "ae8213f2963047e7c126d01f4003cee1236abc25",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "Session-A acquisition is held before service dispatch, then sent after A logout. The actual service must reject it."
+  ],
+  "browserVersion": "156.0.4314.42",
+  "assertions": [],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-25T09:17:22.006Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "capturedAt": "2026-10-25T09:17:24.848Z",
+      "file": "session-a-acquisition-held.png"
+    },
+    {
+      "phase": "session-b-before-old-delivery",
+      "capturedAt": "2026-10-25T09:17:26.675Z",
+      "file": "session-b-before-old-delivery.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-25T09:17:28.258Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "nativeWindowTransitions": [
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-25T09:17:23.972Z",
+      "visibility": "hidden",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "minimized"
+        }
+      }
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-25T09:17:24.848Z",
+      "visibility": "visible",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "normal"
+        }
+      }
+    }
+  ],
+  "sessionBAccess": {
+    "sha256": "d94bb9ac7ed9296feaac46e5850a13d3da660c8aaed4b6924a9116d6d3034c0e",
+    "exp": 1792920746,
+    "iat": 1792919846
+  },
+  "actualStaleServiceStatus": 401,
+  "lateResponseRelease": "FULFILL_ATTEMPT_COMPLETED",
+  "error": "Old session-A success or error must preserve session-B access.\n+ actual - expected\n\n+ 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'\n- 'd94bb9ac7ed9296feaac46e5850a13d3da660c8aaed4b6924a9116d6d3034c0e'\n",
+  "completedAt": "2026-10-25T09:17:28.257Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792919841900,
+      "access": {
+        "sha256": "2fdfdc82c19d1b9ab6e715d194b00dafb1aade2ebe3c7f0414ddf048534c26ac",
+        "exp": 1792920741,
+        "iat": 1792919841
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792919846657,
+      "access": {
+        "sha256": "d94bb9ac7ed9296feaac46e5850a13d3da660c8aaed4b6924a9116d6d3034c0e",
+        "exp": 1792920746,
+        "iat": 1792919846
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 401,
+      "time": 1792919846752,
+      "access": null,
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8101",
+      "pathname": "/",
+      "time": 1792919838464
+    }
+  ],
+  "initialAccess": {
+    "sha256": "2fdfdc82c19d1b9ab6e715d194b00dafb1aade2ebe3c7f0414ddf048534c26ac",
+    "exp": 1792920741,
+    "iat": 1792919841
+  },
+  "latestAccess": {
+    "sha256": "d94bb9ac7ed9296feaac46e5850a13d3da660c8aaed4b6924a9116d6d3034c0e",
+    "exp": 1792920746,
+    "iat": 1792919846
+  },
+  "refresh": null,
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-25T09:17:21.407Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-25T09:17:23.951Z",
+        "visibility": "hidden"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-25T09:17:24.820Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 5,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

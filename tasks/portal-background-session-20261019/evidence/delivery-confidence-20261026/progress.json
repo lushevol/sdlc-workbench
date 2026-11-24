@@ -1,0 +1,81 @@
+{
+  "updated_at": "2026-10-26T15:32:05.160359+00:00",
+  "request": "user-input.md",
+  "active_report": "../../10-delivery-confidence-20261026.md",
+  "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "reviewed_candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+  "runtime_changes_authorized": false,
+  "test_changes_authorized": true,
+  "state": "COMPLETED_WITH_FAILED_PRESERVATION_CHECKS",
+  "streams": {
+    "unit": "unit/",
+    "browser": "browser/progress.json",
+    "independent_codex": "independent-review/",
+    "codex_draft": "codex-review/draft.json",
+    "claude_independent": "claude/independent-connected-response.json",
+    "claude_adversarial": "claude/adversarial-response.json"
+  },
+  "claude_code": {
+    "version": "2.1.310",
+    "configured_model": "deepseek-v4-flash",
+    "first_attempt": "API Error: Unable to connect to API (EPERM)",
+    "first_attempt_result": "claude/independent-response.json",
+    "retry": "COMPLETED",
+    "tools": "Read,Grep,Glob only; no edits or shell execution",
+    "validation": "claude/claude-validation.md"
+  },
+  "known_new_regression": "Two new source regressions; see new_regressions.",
+  "pending": [],
+  "completed_at": "2026-10-27T00:08:44.087179+08:00",
+  "stage_readiness": "READY; requested review and verification completed",
+  "test_commit": "b8d4f1b837c6388452fbdc540f311257e805f932",
+  "test_engine_commit": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+  "runtime_source_changed_in_stage": false,
+  "proposed_ac_count": 16,
+  "new_canonical_unit_case_ids": 20,
+  "new_unit_executions": 22,
+  "unit_results": {
+    "total": 457,
+    "passed": 455,
+    "failed": 2,
+    "skipped": 0
+  },
+  "browser_results": {
+    "current_original_total": 20,
+    "passed": 13,
+    "failed": 7,
+    "business_total": 18,
+    "business_passed": 12,
+    "business_failed": 6,
+    "valid_supplemental_total": 5,
+    "supplemental_passed": 3,
+    "supplemental_failed": 2,
+    "natural_case": "matching historical PASS; NOT_RERUN",
+    "absent_refresh_observation": "NOT_RERUN"
+  },
+  "new_regressions": [
+    "DELIVERY-01 / DEL-14: final cancellation retains loading; main passes.",
+    "DELIVERY-02 / DEL-20: delayed acquisition loses recovery at matching expiry; main passes."
+  ],
+  "next_actions": [
+    "Correct both newly demonstrated preservation regressions.",
+    "Retain overlapping-current-request, stale-session, and visibility/no-replay controls.",
+    "Rerun affected and full suites against corrected source.",
+    "Bind artifact, target settings, recovery, and operating owners before promotion."
+  ],
+  "recommendation": {
+    "evidence_confidence_score": 100,
+    "confidence_level": "HIGH",
+    "release_status": "NO_GO",
+    "can_go": false,
+    "production_recommendation": "DO_NOT_RECOMMEND",
+    "controlling_dimensions": [
+      "CR-01",
+      "CR-02",
+      "CR-05",
+      "CR-06"
+    ],
+    "score_basis": "Direct current matching main/candidate failure evidence; minimum5 times20.",
+    "deployment_authorization": null
+  }
+}

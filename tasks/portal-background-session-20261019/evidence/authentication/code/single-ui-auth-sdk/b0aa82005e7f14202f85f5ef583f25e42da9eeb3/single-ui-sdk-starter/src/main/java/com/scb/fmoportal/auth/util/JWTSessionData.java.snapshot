@@ -1,0 +1,21 @@
+package com.scb.fmoportal.auth.util;
+
+import java.util.Date;
+
+public class JWTSessionData {
+    private final String sessionId;
+    private final Date expiredDate;
+
+    public JWTSessionData(String sessionId, Date expiredDate) {
+        this.sessionId = sessionId;
+        this.expiredDate = new Date(expiredDate.getTime());
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public Date getExpiredDate() {
+        return new Date(this.expiredDate.getTime());
+    }
+}

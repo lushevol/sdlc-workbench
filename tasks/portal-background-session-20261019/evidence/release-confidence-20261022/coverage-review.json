@@ -1,0 +1,1254 @@
+{
+  "status": "COMPLETE_WITH_MATERIAL_LIMITS",
+  "scope": "Requirement, assertion, and retained execution coverage for the local mfe-base session-refresh candidate.",
+  "critical_conclusions": [
+    {
+      "finding": "Passing runner totals cannot establish release acceptance.",
+      "evidence": [
+        "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/suite-suite-suite/run.json",
+        "repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx#L372-L378"
+      ],
+      "consequence": "Delayed recovery remains a known failure despite a green suite.",
+      "owner": "unknown",
+      "next_action": "Keep the known failure explicit and resolve its acceptance or correction."
+    },
+    {
+      "finding": "Complete criterion conformance remains unsupported for the reduced candidate.",
+      "evidence": [
+        "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser-manifest.json",
+        "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria"
+      ],
+      "consequence": "The evidence cannot support complete session-renewal acceptance.",
+      "owner": "unknown",
+      "next_action": "Resolve failed criteria and target-bound execution gaps before a positive release recommendation."
+    }
+  ],
+  "candidate": {
+    "repository": "mfe-base",
+    "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "branch": "feature/session-refresh-minor",
+    "worktree": [
+      " M tsconfig.tsbuildinfo"
+    ],
+    "artifact_identity": "UNKNOWN",
+    "runtime_matches_prior_candidate": {
+      "prior_runtime_commit": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "changed_paths_to_current_head": [
+        "src/pages/Home/common/sessionLifecycle.test.tsx",
+        "src/pages/Home/index.test.tsx"
+      ],
+      "runtime_change_count": 0,
+      "limits": [
+        "Only test source differs. Target deployment and historical dependency installations remain unbound."
+      ]
+    }
+  },
+  "test_repository": {
+    "repository": "ratan-test-engine",
+    "head": "37b7365aca2203021e7014112b9d15cf00f7455b",
+    "worktree": [
+      " M CLAUDE.md",
+      "?? playwright-log.txt"
+    ]
+  },
+  "requirement": {
+    "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+    "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+    "version": 4,
+    "governance_state": "candidate",
+    "criteria": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5",
+      "AC-6",
+      "AC-7"
+    ],
+    "limits": [
+      "Publication review remains pending.",
+      "The seven criteria do not cover all session integrity and deployment risks."
+    ]
+  },
+  "evidence_groups": [
+    {
+      "group": "Original reduced-branch 22-case browser suite",
+      "manifest": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser-manifest.json",
+      "manifest_sha256": "2cc915c3bc18b89e8a6c477e72be66fe1d180599c98a0dd278417c6d0406d524",
+      "inventory": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/case-inventory.json",
+      "inventory_sha256": "9584c7462c48f21cc1dae2c730c3bec786a1a27cc17aedad94392ccb6e4e86bd",
+      "runtime_commit": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "test_commit": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "driver_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "complete": true,
+      "counts": {
+        "DIAGNOSTIC_FAILED": 1,
+        "FAILED": 14,
+        "OBSERVATION_ONLY": 2,
+        "PASSED": 5
+      },
+      "result_hash_checks": 22,
+      "cases": [
+        {
+          "case_id": "E2E-01",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-01",
+          "criteria": [
+            "AC-1"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-mouse-20261020T142055/artifacts/result.json",
+          "sha256": "23d5fc5c67d5a5212b0a4e1c367fb0403dfd6e55a88db369f91bb83b0a155bf4",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-02",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-02",
+          "criteria": [
+            "AC-2"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-keyboard-20261020T142128/artifacts/result.json",
+          "sha256": "57b7bf8902b82ae67b7a5be360c38dbfef800d98b5d3e0e4f097ebc2ec798566",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-03",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-03",
+          "criteria": [
+            "AC-3"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-scroll-20261020T142155/artifacts/result.json",
+          "sha256": "db0919baef1360b6113fb2bec119e726e72b31feb6a239f26f5586fa8ff56a0c",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-04",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-04",
+          "criteria": [
+            "AC-5",
+            "AC-6",
+            "TC-01"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-pending-20261020T142222/artifacts/result.json",
+          "sha256": "53e97491cb15f5205e1867d422d99e421cda8512cb6d32ddbf80d5895b33e1e8",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-05",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-05",
+          "criteria": [
+            "AC-7",
+            "TC-02"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "Rejected renewal must leave the prompt visible.\n\nfalse !== true\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-retry-20261020T142329/artifacts/result.json",
+          "sha256": "65a8a8ff1fe79e0e9aaba109d9e2d61ddfc5a7808a457fe7cceaeb55677eb07a",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-06",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-06",
+          "criteria": [
+            "AC-4-live-boundary"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "The authenticated portal must remain available.\n\nfalse !== true\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json",
+          "sha256": "a68adb736f666fa3e80d8855c1804d392a7cf269e1a4a9fedcf6dbbd5e39c385",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-07",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-07",
+          "criteria": [
+            "TC-03",
+            "TC-06",
+            "AC-5",
+            "AC-6"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/artifacts/result.json",
+          "sha256": "97d4cfea6fdd164339b037ca0b81ba28bd0c3bf464efd9d4872165e777e794b1",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-08",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-08",
+          "criteria": [],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "The same access token must share one pending extension during repeated activity.\n\n0 !== 1\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-single-20261020T142711/artifacts/result.json",
+          "sha256": "64e09b412e885dd08fe9dbae2bd4b7d4f817919b6f3d8c8946a454029d61adca",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-09",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-09",
+          "criteria": [
+            "AC-5",
+            "AC-6"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "locator.boundingBox: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"Extend_Btn\"]')\u001b[22m\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-rapid-20261020T143143/artifacts/result.json",
+          "sha256": "3d6ea4bc288ae94dc1f227fc2fb33a762740b0fcf9348e7c5d4df2a834fc4000",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-10",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-10",
+          "criteria": [
+            "AC-5",
+            "AC-6"
+          ],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-keyboardExtend-20261020T143319/artifacts/result.json",
+          "sha256": "941ac827994c511e90a66ab59428e2c8b1a253956971c926f8ddfc0e8be043bf",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-11",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-11",
+          "criteria": [],
+          "outcome": "PASSED",
+          "runner_status": "PASSED",
+          "error": null,
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-activityRetry-20261020T143426/artifacts/result.json",
+          "sha256": "c2d379c7a3ca1526129fe1e84a0e1c0bbaa6e06ef083b113428584c820fa929c",
+          "actual_assertions": [
+            {
+              "failedActivityAttempts": 1,
+              "successfulActivityRetries": 1,
+              "promptVisibleAfterFailure": false
+            }
+          ]
+        },
+        {
+          "case_id": "E2E-12",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-12",
+          "criteria": [],
+          "outcome": "DIAGNOSTIC_FAILED",
+          "runner_status": "FAILED",
+          "error": "A result=false extension response must not install its authorization header.\n+ actual - expected\n\n+ '614419d3716ca2f0e3c6748bd431373de27fc7586fd6cf8f6e1351b7604a830d'\n- 'ec93df37119c0f12c22e56401cb68315d2322369c1cf611771c3fdf61ee7f4f2'\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-inconsistent-20261020T143455/artifacts/result.json",
+          "sha256": "a03ad15c03a1a93f6f56f46fc98853af1fb19b8fb315ebadcaf162fb2b6fb005",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-13",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-13",
+          "criteria": [],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-promptActivity-20261020T143514/artifacts/result.json",
+          "sha256": "a1bcee51b748b387a0bdf31c30131a786460b1dba0cf9cad9351aa7add5626c2",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-14",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-14",
+          "criteria": [],
+          "outcome": "PASSED",
+          "runner_status": "PASSED",
+          "error": null,
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json",
+          "sha256": "b97b8b857c5f2c7bbfd105bcd8c821598f3cf2c1258975194625574cec3d8c15",
+          "actual_assertions": [
+            {
+              "logoutRequestObserved": true,
+              "storedAccessCleared": true,
+              "persistedRefreshAbsentAfterLogout": true,
+              "signInVisibleAfterLogout": true,
+              "reloginRequests": 0
+            }
+          ]
+        },
+        {
+          "case_id": "E2E-15",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-15",
+          "criteria": [],
+          "outcome": "PASSED",
+          "runner_status": "PASSED",
+          "error": null,
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/artifacts/result.json",
+          "sha256": "1aa99d5bf568c7a822e6d4d34f4f90b77767de2727c649bbe065642de70d2263",
+          "actual_assertions": [
+            {
+              "hiddenRefreshRequests": 1,
+              "promptVisibleOnReturn": false,
+              "authenticatedOnReturn": true
+            }
+          ]
+        },
+        {
+          "case_id": "E2E-16",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-16",
+          "criteria": [],
+          "outcome": "PASSED",
+          "runner_status": "PASSED",
+          "error": null,
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/artifacts/result.json",
+          "sha256": "b73ba86130de81ef03c8b2972b648cd559701cfc00c6c137b6d86dffbd086e61",
+          "actual_assertions": [
+            {
+              "preReloadRenewedAccessUsedForValidation": true,
+              "validationSucceeded": true,
+              "validationResponseAccessInstalled": true,
+              "validationRotatedAccess": true,
+              "additionalLoginRequests": 0,
+              "refreshReacquiredAfterReload": true,
+              "signInVisibleAfterReload": false
+            }
+          ]
+        },
+        {
+          "case_id": "E2E-17",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-17",
+          "criteria": [],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "Pending renewal must keep the timeout prompt visible.\n\nfalse !== true\n",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/artifacts/result.json",
+          "sha256": "eed7e1aa58d5b478b7c9f3a4b82ac95b540517092b0b32455e09969cdbf3b0a3",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-18",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-18",
+          "criteria": [],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "Logout or Home unmount must cancel the pending extension request.",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/artifacts/result.json",
+          "sha256": "271e5e6f6cff6f98b6678d8567de5a5c5d09ea62cc7a19800ded5d34abdfb201",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-19",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-19",
+          "criteria": [],
+          "outcome": "FAILED",
+          "runner_status": "FAILED",
+          "error": "Opening the timeout prompt must cancel the earlier activity extension.",
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-late-20261020T142910/artifacts/result.json",
+          "sha256": "5ac85e6552f21dbb80189f4055ced226a169d129ef41309a4d642e453331b8d7",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-20",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-20",
+          "criteria": [
+            "TC-05"
+          ],
+          "outcome": "PASSED",
+          "runner_status": "PASSED",
+          "error": null,
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-expired-20261020T143026/artifacts/result.json",
+          "sha256": "60248ca2cff9fd17283bcb2768e216887445f7a8d549bd5f2902a5f5c65074a5",
+          "actual_assertions": [
+            {
+              "criterion": "TC-05",
+              "expiredAccess": {
+                "sha256": "f16b9c2b4819ee9450f083ef61a97eea92df4480773488f6439a034356fd826c",
+                "exp": 1792506690,
+                "iat": 1792506630
+              },
+              "actualExpiryElapsedMs": 1524,
+              "initialStatus": 200,
+              "deniedStatus": 401,
+              "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+            }
+          ]
+        },
+        {
+          "case_id": "E2E-21",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-21",
+          "criteria": [
+            "TC-04"
+          ],
+          "outcome": "OBSERVATION_ONLY",
+          "runner_status": "PASSED",
+          "error": null,
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/artifacts/result.json",
+          "sha256": "f99a6e265054e27f1920a041ce51fdd8b01f65bf5d8e26f61bc6b0e5375666b1",
+          "actual_assertions": []
+        },
+        {
+          "case_id": "E2E-22",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-22",
+          "criteria": [
+            "TC-07"
+          ],
+          "outcome": "OBSERVATION_ONLY",
+          "runner_status": "PASSED",
+          "error": null,
+          "result": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-workspace-20261020T143133/artifacts/result.json",
+          "sha256": "7c9bba213c398a8c2ed784e95ef15bdee87f0cb2ad5073a05cdb4387a97cdfc9",
+          "actual_assertions": [
+            {
+              "fixtureWorkspaceCount": 2,
+              "reauthenticationCompleted": true
+            }
+          ]
+        }
+      ],
+      "scope_limits": [
+        "Actual local browser and BFF runs used shortened lifetimes and disclosed external-service substitutions.",
+        "AC-4 was a short initial-refresh boundary, not its four-hour definition.",
+        "Passing characterization or observation cases do not establish requirement conformance.",
+        "Current modularized Robot source was not executed as this suite."
+      ]
+    },
+    {
+      "group": "Current candidate full Jest suite",
+      "runtime_and_test_commit": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "run": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/suite-suite-suite/run.json",
+      "run_sha256": "f6ae188a64fbad6c1ed66c881cdaaeb5e17a8953c3f32693ae90c6cdc4887392",
+      "result": "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/suite-suite-suite/result.json",
+      "result_sha256": "a9593f2ab0021962b79133c4dfcfd1dcaf02b4308602e871c564005dbde8a576",
+      "reported_summary": {
+        "success": true,
+        "numTotalTestSuites": 116,
+        "numPassedTestSuites": 116,
+        "numFailedTestSuites": 0,
+        "numTotalTests": 413,
+        "numPassedTests": 413,
+        "numFailedTests": 0,
+        "numPendingTests": 0,
+        "numTodoTests": 0
+      },
+      "source_hashes_compared_to_current_commit": 400,
+      "source_mismatches": [],
+      "expected_failure": {
+        "assertion_source": "repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx#L372-L378",
+        "source_sha256": "f316ac6a98e7d3bd8c4ae3417080c43c5cbec76b8f1bb9349ac8697ea45e72ac",
+        "predicate": "Delayed refresh delivery after access expiry permits successful manual Extend.",
+        "jest_mechanism": "it.failing",
+        "runner_status": "passed",
+        "business_outcome": "KNOWN_DEFECT_REMAINS"
+      },
+      "limits": [
+        "Installed dependencies shared through symlink; no dependency installation or historical recreation.",
+        "JSDOM, fake timers, synthetic credentials, and controlled Axios adapters.",
+        "No live browser, provider, or production execution.",
+        "Reported runner passes do not mean every asserted business expectation succeeded.",
+        "Coverage collection was explicitly disabled. No line or branch coverage measurement exists in this run."
+      ]
+    },
+    {
+      "group": "Latest realistic local session profiles",
+      "source_binding": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/setup/shell-source-binding.json",
+      "source_binding_sha256": "a61a41c665f23cbcae7700e27a5f9e64598e1f59edd951f5d7ea3789c1b9a077",
+      "current_mfe_source_files_checked": 223,
+      "current_mfe_source_mismatches": [],
+      "cases": [
+        {
+          "run_id": "rw-blotter-hidden-30m-03",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#rw-blotter-hidden-30m",
+          "result": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json",
+          "sha256": "38b7b1d585dd5a7959aae52c2c980839454cae9d2fab9440ce9f6dc4c4158c5b",
+          "source_revisions": {
+            "mfe-base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+            "mfe-ratan-container": "SUPPLIED_FILESYSTEM_COPY",
+            "mfe-cashflow-blotter": "SUPPLIED_FILESYSTEM_COPY"
+          },
+          "status": "FAILED",
+          "assertions": 34,
+          "passing_assertions": 33,
+          "failed_assertions": [
+            {
+              "id": "fixed-expiry",
+              "name": "No successful extension changes settled access expiry",
+              "passed": false,
+              "evidence": {
+                "extensions": [
+                  {
+                    "time": 1792635242983,
+                    "route": "http://localhost:8128/api/auth/v2/sso/extend",
+                    "status": 200,
+                    "serverDate": "Thu, 22 Oct 2026 02:14:02 GMT",
+                    "access": {
+                      "sha256": "2127f76c70659017be4f2140905664d7e3e9e78f0c1746106a13f18bd85e576c",
+                      "iat": 1792635242,
+                      "exp": 1792664042,
+                      "auth_time": 1792635242,
+                      "max_age": 1792638842
+                    },
+                    "refresh": null
+                  }
+                ],
+                "baselineAccess": {
+                  "sha256": "58c1da08b1c45f8d86b04b5cc0db230fc7a15f6d14dcdba2b935f907b9f46656",
+                  "iat": 1792635232,
+                  "exp": 1792664032,
+                  "auth_time": 1792635232,
+                  "max_age": 1792638832
+                },
+                "finalAccess": {
+                  "sha256": "2127f76c70659017be4f2140905664d7e3e9e78f0c1746106a13f18bd85e576c",
+                  "iat": 1792635242,
+                  "exp": 1792664042,
+                  "auth_time": 1792635242,
+                  "max_age": 1792638842
+                }
+              }
+            }
+          ],
+          "claim": "The full hidden interval completed. Fixed expiry failed after one early extension moved access expiry ten seconds.",
+          "drivers": [
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/driver-runner.mjs.snapshot",
+              "sha256": "3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/driver-timing.cjs.snapshot",
+              "sha256": "bbf4c955e879f69bc4497fb3260003bbb4c7fd7a0c28f97319cc7ba88da73211"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/driver-common.cjs.snapshot",
+              "sha256": "5ba040b66b4ea13bfd7662a0e90aa5d2fe38af062175a6ef664f13a9de0e83e7"
+            }
+          ],
+          "limits": [
+            "CDP and a passive DOM observer remain attached. Natural freezing and device sleep are not established.",
+            "Timer observation delegates unchanged delay values to native setTimeout. Instrumentation can affect execution overhead.",
+            "Source revision declarations require separate deployment evidence. UAT parity is not established.",
+            "CDP and a passive DOM observer remain attached. Natural browser freezing is not established.",
+            "Local identity, catalog, entitlement, and business response fixtures replace external systems. UAT parity is not established.",
+            "Live notification acquisition returns HTTP 503. Socket traffic and notification-driven updates are unavailable.",
+            "All non-localhost network requests are aborted. External profile photos and services are unavailable.",
+            "Toolkit custom elements use empty local substitutes.",
+            "AG Grid32.3.3 and React Redux8.1.3 differ from some Ratan manifest constraints."
+          ],
+          "measurement": {
+            "requestedMs": 1800000,
+            "actualWallMs": 1800122,
+            "actualMonotonicMs": 1800175.70875
+          }
+        },
+        {
+          "run_id": "rw-short-idle-02",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#rw-short-idle",
+          "result": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-short-idle-02/result.json",
+          "sha256": "25ff1720a621145501c854fe0e3624bca8fc915353e03f582a783dd98e7d9889",
+          "source_revisions": {
+            "mfe-base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+            "mfe-ratan-container": "SUPPLIED_FILESYSTEM_COPY",
+            "mfe-cashflow-blotter": "SUPPLIED_FILESYSTEM_COPY"
+          },
+          "status": "PASSED",
+          "assertions": 30,
+          "passing_assertions": 30,
+          "failed_assertions": [],
+          "claim": "Timeout appeared after actual shortened access expiry and stayed visible after native return.",
+          "drivers": [
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-short-idle-02/driver-runner.mjs.snapshot",
+              "sha256": "69967bd8d3c3cf9975d0a4d25e391d61c4367fd947d7158b911e9082167d20b1"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-short-idle-02/driver-timing.cjs.snapshot",
+              "sha256": "bbf4c955e879f69bc4497fb3260003bbb4c7fd7a0c28f97319cc7ba88da73211"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-short-idle-02/driver-common.cjs.snapshot",
+              "sha256": "5ba040b66b4ea13bfd7662a0e90aa5d2fe38af062175a6ef664f13a9de0e83e7"
+            }
+          ],
+          "limits": [
+            "CDP and a passive DOM observer remain attached. Natural freezing and device sleep are not established.",
+            "Timer observation delegates unchanged delay values to native setTimeout. Instrumentation can affect execution overhead.",
+            "Source revision declarations require separate deployment evidence. UAT parity is not established.",
+            "CDP and a passive DOM observer remain attached. Natural browser freezing is not established.",
+            "Local identity, catalog, entitlement, and business response fixtures replace external systems. UAT parity is not established.",
+            "Live notification acquisition returns HTTP 503. Socket traffic and notification-driven updates are unavailable.",
+            "All non-localhost network requests are aborted. External profile photos and services are unavailable.",
+            "Toolkit custom elements use empty local substitutes.",
+            "AG Grid32.3.3 and React Redux8.1.3 differ from some Ratan manifest constraints."
+          ],
+          "measurement": {
+            "requestedMs": 56503,
+            "actualWallMs": 56534,
+            "actualMonotonicMs": 56534.153125
+          }
+        },
+        {
+          "run_id": "rw-480-schedule-03",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#rw-480-schedule",
+          "result": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-480-schedule-03/result.json",
+          "sha256": "e3bb8a64ffd0762cb4fe97a60a428eb27aaf9add72d7c5633caf0e9f53a89423",
+          "source_revisions": {
+            "mfe-base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+            "mfe-ratan-container": "SUPPLIED_FILESYSTEM_COPY",
+            "mfe-cashflow-blotter": "SUPPLIED_FILESYSTEM_COPY"
+          },
+          "status": "PASSED",
+          "assertions": 34,
+          "passing_assertions": 34,
+          "failed_assertions": [],
+          "claim": "Local 480-minute issuance matched the Home timer during a fifteen-second observation.",
+          "drivers": [
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-480-schedule-03/driver-runner.mjs.snapshot",
+              "sha256": "69967bd8d3c3cf9975d0a4d25e391d61c4367fd947d7158b911e9082167d20b1"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-480-schedule-03/driver-timing.cjs.snapshot",
+              "sha256": "bbf4c955e879f69bc4497fb3260003bbb4c7fd7a0c28f97319cc7ba88da73211"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-480-schedule-03/driver-common.cjs.snapshot",
+              "sha256": "5ba040b66b4ea13bfd7662a0e90aa5d2fe38af062175a6ef664f13a9de0e83e7"
+            }
+          ],
+          "limits": [
+            "CDP and a passive DOM observer remain attached. Natural freezing and device sleep are not established.",
+            "Timer observation delegates unchanged delay values to native setTimeout. Instrumentation can affect execution overhead.",
+            "Source revision declarations require separate deployment evidence. UAT parity is not established.",
+            "CDP and a passive DOM observer remain attached. Natural browser freezing is not established.",
+            "Local identity, catalog, entitlement, and business response fixtures replace external systems. UAT parity is not established.",
+            "Live notification acquisition returns HTTP 503. Socket traffic and notification-driven updates are unavailable.",
+            "All non-localhost network requests are aborted. External profile photos and services are unavailable.",
+            "Toolkit custom elements use empty local substitutes.",
+            "AG Grid32.3.3 and React Redux8.1.3 differ from some Ratan manifest constraints."
+          ],
+          "measurement": {
+            "requestedMs": 15000,
+            "actualWallMs": 15035,
+            "actualMonotonicMs": 15035.044084
+          }
+        },
+        {
+          "run_id": "rw-negative-900-03",
+          "canonical_definition": "tasks/portal-background-session-20261019/06-test-cases.md#rw-config-preflight",
+          "result": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-negative-900-03/result.json",
+          "sha256": "f28b1a0b66172ce3538cec3345f76dab7892acc673831716bcf08b30a179cb7c",
+          "source_revisions": {
+            "mfe-base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+            "mfe-ratan-container": "SUPPLIED_FILESYSTEM_COPY",
+            "mfe-cashflow-blotter": "SUPPLIED_FILESYSTEM_COPY"
+          },
+          "status": "FAILED",
+          "assertions": 18,
+          "passing_assertions": 17,
+          "failed_assertions": [
+            {
+              "id": "preflight-access-issued-lifetime",
+              "name": "Timing preflight: access-issued-lifetime",
+              "passed": false,
+              "evidence": {
+                "id": "access-issued-lifetime",
+                "status": "FAILED",
+                "actualSeconds": 28800,
+                "expectedSeconds": 900,
+                "toleranceSeconds": 0
+              }
+            }
+          ],
+          "claim": "The prerequisite correctly detected 28,800-second issuance against a diagnostic 900-second expectation.",
+          "drivers": [
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-negative-900-03/driver-runner.mjs.snapshot",
+              "sha256": "69967bd8d3c3cf9975d0a4d25e391d61c4367fd947d7158b911e9082167d20b1"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-negative-900-03/driver-timing.cjs.snapshot",
+              "sha256": "bbf4c955e879f69bc4497fb3260003bbb4c7fd7a0c28f97319cc7ba88da73211"
+            },
+            {
+              "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/rw-negative-900-03/driver-common.cjs.snapshot",
+              "sha256": "5ba040b66b4ea13bfd7662a0e90aa5d2fe38af062175a6ef664f13a9de0e83e7"
+            }
+          ],
+          "limits": [
+            "CDP and a passive DOM observer remain attached. Natural freezing and device sleep are not established.",
+            "Timer observation delegates unchanged delay values to native setTimeout. Instrumentation can affect execution overhead.",
+            "Source revision declarations require separate deployment evidence. UAT parity is not established.",
+            "CDP and a passive DOM observer remain attached. Natural browser freezing is not established.",
+            "Local identity, catalog, entitlement, and business response fixtures replace external systems. UAT parity is not established.",
+            "Live notification acquisition returns HTTP 503. Socket traffic and notification-driven updates are unavailable.",
+            "All non-localhost network requests are aborted. External profile photos and services are unavailable.",
+            "Toolkit custom elements use empty local substitutes.",
+            "AG Grid32.3.3 and React Redux8.1.3 differ from some Ratan manifest constraints."
+          ],
+          "measurement": {}
+        }
+      ],
+      "limits": [
+        "Each profile has separate configuration and driver bindings. These results are not one conformance suite.",
+        "The thirty-minute result belongs to test commit 9314355b75771d756784ca872480848b9d206deb. Later retention-only changes did not repeat it.",
+        "RW-REMOTE-NO-STUBS was not executed. UAT/PROD artifact and configuration parity remain unavailable."
+      ]
+    },
+    {
+      "group": "Historical broader correction coverage",
+      "report": "tasks/portal-background-session-20261019/09-coverage.md",
+      "sha256": "1d8835d8aca70fa31c05a4f55e8ef25e256b1ed11587675769e1b992fd7ca794",
+      "application_revision": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+      "historical_reported_coverage": "7/7 inspected implementation, controlled assertions, and partial live predicates",
+      "current_applicability": "NOT_CURRENT_FOR_REDUCED_CANDIDATE",
+      "reason": "The current reduced implementation does not contain those broader runtime corrections.",
+      "limits": [
+        "This historical report cannot establish present criterion conformance."
+      ]
+    },
+    {
+      "group": "Selected newer UI audit session predicates",
+      "ledger": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/report-006/case-results.json",
+      "ledger_sha256": "c9afe869705397fa69446dcf66bf349c9da3988185a5c3bece0ea46ed8fc6c95",
+      "selected_cases": [
+        {
+          "case_id": "AUTH-070",
+          "definition": "tasks/ui-test-coverage-20261022/test-cases.md#auth-070",
+          "definition_version": 2,
+          "definition_sha256": "19c08f6d84c4512da35b34834abbe72ad53b71f94ffb3717a80e5fdee9106944",
+          "local_predicate_status": "PASS",
+          "canonical_acceptance_status": "NOT_ESTABLISHED",
+          "run": "application/run-050",
+          "result": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/auth-070-repeated-mouse-movements-debounce-573f333c157b-attempt-1/result.json",
+          "result_sha256": "617ba2e6071ae80fc9780eb3af3c0f7ba9910923a2090b47487c8a1418e1e972",
+          "assertion_sources": [
+            {
+              "path": "e2e/audit-specs/auth-session-expanded.spec.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-session-expanded.spec.ts",
+              "sha256": "94faf718f8725b4dbc8ff0c1e5ce707acf79829dd67040d8fa1eae649e904168",
+              "current_bytes_match": true
+            },
+            {
+              "path": "e2e/support/auth-session.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/auth-session.ts",
+              "sha256": "72c41aa4212a9bd16d66d9cdda84dbd259441afa78b650ab6389b6c68ed9b29b",
+              "current_bytes_match": false
+            }
+          ],
+          "canonical_business_execution": "LOCAL_CONTROLLED_ASSERTIONS",
+          "fixture_annotations": [
+            {
+              "type": "audit-scope",
+              "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+            },
+            {
+              "type": "audit-fixture",
+              "description": "Actual MFE; controlled API responses, clock, visibility and suspension adapters. Unsigned browser-only credentials. No natural lifecycle, real identity or service policy acceptance."
+            },
+            {
+              "type": "canonical-case",
+              "description": "AUTH-070"
+            }
+          ],
+          "interpretation": "The passing predicate requires zero extensions during repeated moves, then one after quiet time. It does not satisfy AC-1.",
+          "errors": []
+        },
+        {
+          "case_id": "AUTH-074",
+          "definition": "tasks/ui-test-coverage-20261022/test-cases.md#auth-074",
+          "definition_version": 2,
+          "definition_sha256": "df563dd3d268fa3476607881f696b8ec7230da58b3aa88c7096bd4c3c14eead6",
+          "local_predicate_status": "FAIL",
+          "canonical_acceptance_status": "NOT_ESTABLISHED",
+          "run": "application/run-050",
+          "result": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/auth-074-proposed-input-activity-renewal-cef1879119be-attempt-1/result.json",
+          "result_sha256": "b3c3638c18737855016ad3e6206056a7e7feaef9e4175a705e62c0eb0b2ddbbc",
+          "assertion_sources": [
+            {
+              "path": "e2e/audit-specs/auth-session-expanded.spec.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-session-expanded.spec.ts",
+              "sha256": "94faf718f8725b4dbc8ff0c1e5ce707acf79829dd67040d8fa1eae649e904168",
+              "current_bytes_match": true
+            },
+            {
+              "path": "e2e/support/auth-session.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/auth-session.ts",
+              "sha256": "72c41aa4212a9bd16d66d9cdda84dbd259441afa78b650ab6389b6c68ed9b29b",
+              "current_bytes_match": false
+            }
+          ],
+          "canonical_business_execution": "LOCAL_CONTROLLED_ASSERTIONS",
+          "fixture_annotations": [
+            {
+              "type": "audit-scope",
+              "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+            },
+            {
+              "type": "audit-fixture",
+              "description": "Actual MFE; controlled API responses, clock, visibility and suspension adapters. Unsigned browser-only credentials. No natural lifecycle, real identity or service policy acceptance."
+            },
+            {
+              "type": "canonical-case",
+              "description": "AUTH-074"
+            }
+          ],
+          "interpretation": "Keyboard-only input produces zero required extension requests in the controlled fixture. This supports the AC-2 gap.",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate"
+          ]
+        },
+        {
+          "case_id": "AUTH-078",
+          "definition": "tasks/ui-test-coverage-20261022/test-cases.md#auth-078",
+          "definition_version": 2,
+          "definition_sha256": "92bcc7936fa80dc94673e354a9a5e316df3054e48ecf8ea989dce1da552bb617",
+          "local_predicate_status": "PASS",
+          "canonical_acceptance_status": "NOT_ESTABLISHED",
+          "run": "application/run-084",
+          "result": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-084/cases/auth-078-manual-extend-installs-b-and-validates-b-1b3c66cc1d67-attempt-1/result.json",
+          "result_sha256": "29fb36a2ef9d768246d174dc53ac5e574c342ead37a33f40c72ab32ef86ca7ad",
+          "assertion_sources": [
+            {
+              "path": "e2e/audit-specs/session-timing.spec.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-084/source-snapshots/e2e/audit-specs/session-timing.spec.ts",
+              "sha256": "260e6e7c1cd1bdc13d69d5f26aba88bde62cbeee8e624e2754f444fa83ad351e",
+              "current_bytes_match": true
+            },
+            {
+              "path": "e2e/support/auth-session.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-084/source-snapshots/e2e/support/auth-session.ts",
+              "sha256": "b57e478d3b54ed25d5bd0f574046d617c3b9522231a40d2239748e715850a963",
+              "current_bytes_match": true
+            }
+          ],
+          "canonical_business_execution": "LOCAL_CONTROLLED_ASSERTIONS",
+          "fixture_annotations": [
+            {
+              "type": "audit-scope",
+              "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+            },
+            {
+              "type": "audit-fixture",
+              "description": "Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim."
+            },
+            {
+              "type": "canonical-case",
+              "description": "AUTH-078"
+            }
+          ],
+          "interpretation": "The passing definition requires dialog absence before held response delivery. It cannot establish AC-5 or post-completion closure.",
+          "errors": []
+        },
+        {
+          "case_id": "AUTH-082",
+          "definition": "tasks/ui-test-coverage-20261022/test-cases.md#auth-082",
+          "definition_version": 2,
+          "definition_sha256": "fe08fa1a363f2801cd78f01434d361b9dd26871b009e07c7014976e3cdbd353d",
+          "local_predicate_status": "FAIL",
+          "canonical_acceptance_status": "NOT_ESTABLISHED",
+          "run": "application/run-050",
+          "result": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/auth-082-access-rotation-does-not-postpone-refresh-expiry-b3d3bbc949fc-attempt-1/result.json",
+          "result_sha256": "696d09835713c5121bbbe5b1954b63193b966c6582108b4eac8050669de0ca24",
+          "assertion_sources": [
+            {
+              "path": "e2e/audit-specs/auth-session-expanded.spec.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-session-expanded.spec.ts",
+              "sha256": "94faf718f8725b4dbc8ff0c1e5ce707acf79829dd67040d8fa1eae649e904168",
+              "current_bytes_match": true
+            },
+            {
+              "path": "e2e/support/auth-session.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/auth-session.ts",
+              "sha256": "72c41aa4212a9bd16d66d9cdda84dbd259441afa78b650ab6389b6c68ed9b29b",
+              "current_bytes_match": false
+            }
+          ],
+          "canonical_business_execution": "LOCAL_CONTROLLED_ASSERTIONS",
+          "fixture_annotations": [
+            {
+              "type": "audit-scope",
+              "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+            },
+            {
+              "type": "audit-fixture",
+              "description": "Actual MFE; controlled API responses, clock, visibility and suspension adapters. Unsigned browser-only credentials. No natural lifecycle, real identity or service policy acceptance."
+            },
+            {
+              "type": "canonical-case",
+              "description": "AUTH-082"
+            }
+          ],
+          "interpretation": "The definition expects logout at the fixed refresh cutoff. It conflicts with AC-4 continuous renewal and is not adopted as intent.",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate"
+          ]
+        },
+        {
+          "case_id": "AUTH-095",
+          "definition": "tasks/ui-test-coverage-20261022/test-cases.md#auth-095",
+          "definition_version": 2,
+          "definition_sha256": "a34a9a4f08a6baa58e1ccad01cf5ca883c8208c114c88380a84332265335ec00",
+          "local_predicate_status": "PASS",
+          "canonical_acceptance_status": "NOT_ESTABLISHED",
+          "run": "application/run-050",
+          "result": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/auth-095-relogin-failure-ui-11256f8b3ef4-attempt-1/result.json",
+          "result_sha256": "c84dc6b4d14210e383a75283f2690027edf423ec8a39052ae0723674d2cecc7c",
+          "assertion_sources": [
+            {
+              "path": "e2e/audit-specs/auth-session-expanded.spec.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-session-expanded.spec.ts",
+              "sha256": "94faf718f8725b4dbc8ff0c1e5ce707acf79829dd67040d8fa1eae649e904168",
+              "current_bytes_match": true
+            },
+            {
+              "path": "e2e/support/auth-session.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/auth-session.ts",
+              "sha256": "72c41aa4212a9bd16d66d9cdda84dbd259441afa78b650ab6389b6c68ed9b29b",
+              "current_bytes_match": false
+            }
+          ],
+          "canonical_business_execution": "LOCAL_CONTROLLED_ASSERTIONS",
+          "fixture_annotations": [
+            {
+              "type": "audit-scope",
+              "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+            },
+            {
+              "type": "audit-fixture",
+              "description": "Actual MFE; controlled API responses, clock, visibility and suspension adapters. Unsigned browser-only credentials. No natural lifecycle, real identity or service policy acceptance."
+            },
+            {
+              "type": "canonical-case",
+              "description": "AUTH-095"
+            }
+          ],
+          "interpretation": "The passing predicate requires sign-in after TOKEN_INVALID_EXPIRED rejection. It does not establish a retained retry opportunity.",
+          "errors": []
+        },
+        {
+          "case_id": "AUTH-096",
+          "definition": "tasks/ui-test-coverage-20261022/test-cases.md#auth-096",
+          "definition_version": 2,
+          "definition_sha256": "78a4a09778c4c311ae848a01f01990153bf23a32c21af73880e1c2458f37d96f",
+          "local_predicate_status": "FAIL",
+          "canonical_acceptance_status": "NOT_ESTABLISHED",
+          "run": "application/run-050",
+          "result": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/cases/auth-096-relogin-failure-ui-dcfceae3a64e-attempt-1/result.json",
+          "result_sha256": "5a2dfcec3a7091b618b1d592ebc7c5ae973eec9585513b59bbcc78051d8aeeb3",
+          "assertion_sources": [
+            {
+              "path": "e2e/audit-specs/auth-session-expanded.spec.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-session-expanded.spec.ts",
+              "sha256": "94faf718f8725b4dbc8ff0c1e5ce707acf79829dd67040d8fa1eae649e904168",
+              "current_bytes_match": true
+            },
+            {
+              "path": "e2e/support/auth-session.ts",
+              "snapshot": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/auth-session.ts",
+              "sha256": "72c41aa4212a9bd16d66d9cdda84dbd259441afa78b650ab6389b6c68ed9b29b",
+              "current_bytes_match": false
+            }
+          ],
+          "canonical_business_execution": "LOCAL_CONTROLLED_ASSERTIONS",
+          "fixture_annotations": [
+            {
+              "type": "audit-scope",
+              "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+            },
+            {
+              "type": "audit-fixture",
+              "description": "Actual MFE; controlled API responses, clock, visibility and suspension adapters. Unsigned browser-only credentials. No natural lifecycle, real identity or service policy acceptance."
+            },
+            {
+              "type": "canonical-case",
+              "description": "AUTH-096"
+            }
+          ],
+          "interpretation": "The required retry dialog is absent after the controlled network failure. It does not close AC-7.",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: 'Your session has been expired', exact: true })\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('dialog', { name: 'Your session has been expired', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Your session has been expired', exact: true })\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n"
+          ]
+        }
+      ],
+      "application_source_binding": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/environment/mfe-source-comparison.json",
+      "application_source_binding_sha256": "3c067636a73f1f7219aeee7f74c6af46b1796cd4c3a113494f3b465681ffa8cd",
+      "current_mfe_source_files_checked": 339,
+      "current_mfe_source_mismatches": [],
+      "prepared_source_difference_count": 2,
+      "prepared_source_differences": [
+        {
+          "path": "pages/Home/common/sessionLifecycle.test.tsx",
+          "currentSha256": "f316ac6a98e7d3bd8c4ae3417080c43c5cbec76b8f1bb9349ac8697ea45e72ac",
+          "preparedSha256": "78ab0f5315a1d5c6eab73433fa55f3440c17d25f7ef89ee350240d3dac0164f1"
+        },
+        {
+          "path": "pages/Home/index.test.tsx",
+          "currentSha256": "168989a972da97f6605fbd5559cf31973876b2e21b725624de67cb6a9b580904",
+          "preparedSha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6"
+        }
+      ],
+      "limits": [
+        "Selected predicates use actual MFE code with controlled Playwright clocks, visibility adapters, routed API responses and unsigned fixture credentials.",
+        "The 521-case audit and its 420 passes are broader local-predicate inventories, not session-release acceptance coverage.",
+        "Some definitions characterize current behavior or propose policy. They cannot replace requirement-v4 intent.",
+        "No natural lifecycle, live identity-provider, or BFF credential-acceptance claim follows from these selected session cases."
+      ]
+    }
+  ],
+  "case_conclusions": [
+    {
+      "id": "COV-ORIGINAL-22",
+      "finding": "Seven requirement criteria have no fully passing coverage in this declared 22-case suite.",
+      "evidence": [
+        "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser-manifest.json",
+        "tasks/portal-background-session-20261019/06-test-cases.md#e2e-01",
+        "tasks/portal-background-session-20261019/06-test-cases.md#e2e-04",
+        "tasks/portal-background-session-20261019/06-test-cases.md#e2e-05",
+        "tasks/portal-background-session-20261019/06-test-cases.md#e2e-06"
+      ],
+      "consequence": "These retained cases do not support conformance to all seven criteria.",
+      "owner": "unknown",
+      "next_action": "Resolve failed predicates and the complete AC-4 assertion before claiming full criterion coverage.",
+      "limits": [
+        "This is the declared old-suite scope, not a count merged with newer audit cases."
+      ]
+    },
+    {
+      "id": "COV-EXPECTED-FAILURE",
+      "finding": "The full passing Jest total includes one known delayed-recovery failure.",
+      "evidence": [
+        "repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx#L325-L378",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-delayed-scheduled",
+        "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/suite-suite-suite/result.json"
+      ],
+      "consequence": "The runner total cannot close delayed-recovery conformance or release acceptance.",
+      "owner": "unknown",
+      "next_action": "Correct delayed recovery or record an applicable scoped acceptance decision. Keep the actual failure visible."
+    },
+    {
+      "id": "COV-REALISTIC-LIMITS",
+      "finding": "The realistic controls establish timing observations, not complete renewal acceptance.",
+      "evidence": [
+        "tasks/portal-background-session-20261019/06-test-cases.md#rw-blotter-hidden-30m",
+        "tasks/portal-background-session-20261019/06-test-cases.md#rw-short-idle",
+        "tasks/portal-background-session-20261019/06-test-cases.md#rw-remote-no-stubs"
+      ],
+      "consequence": "The failed fixed-expiry check and unavailable remote bindings prevent broad idle-stability or deployment claims.",
+      "owner": "unknown",
+      "next_action": "Settle queued activity before a future fixed-expiry run. Bind actual deployed settings before remote acceptance.",
+      "limits": [
+        "One early renewal does not establish recurring background renewal.",
+        "No eight-hour timer firing or device sleep was executed."
+      ]
+    },
+    {
+      "id": "COV-CROSS-TASK-PREDICATES",
+      "finding": "Newer passing UI predicates do not resolve the requirement failures.",
+      "evidence": [
+        "tasks/ui-test-coverage-20261022/test-cases.md#auth-070",
+        "tasks/ui-test-coverage-20261022/test-cases.md#auth-078",
+        "tasks/ui-test-coverage-20261022/test-cases.md#auth-082",
+        "e2e/support/auth-session.ts#L89-L104"
+      ],
+      "consequence": "Combining their pass totals would overstate release confidence and hide incompatible expectations.",
+      "owner": "unknown",
+      "next_action": "Use criterion-aligned assertions and retain controlled-service limitations in the release assessment."
+    }
+  ],
+  "coverage_metrics": [
+    {
+      "metric": "Declared requirement criteria accounted for",
+      "numerator": 7,
+      "denominator": 7,
+      "meaning": "Each criterion has a sourced definition, inspected assertion mapping, and explicit outcome or limit.",
+      "limits": [
+        "Accounting is not implementation conformance or passing execution."
+      ]
+    },
+    {
+      "metric": "Retained attempts in the original reduced-branch suite",
+      "numerator": 22,
+      "denominator": 22,
+      "meaning": "Every declared original suite case has a retained attempt.",
+      "limits": [
+        "There are 14 failures, one diagnostic failure, two observations, and five passes.",
+        "Attempt completeness is not assertion completion or conformance."
+      ]
+    },
+    {
+      "metric": "Fully passing criteria in the declared original suite",
+      "numerator": 0,
+      "denominator": 7,
+      "meaning": "No entire requirement criterion has a passing result under its complete required conditions in that suite.",
+      "limits": [
+        "AC-4 is only a failed short boundary. Its exact four-hour duration remains unrun.",
+        "AC-6 post-success assertions were not reached after the pending-prompt failure.",
+        "This metric does not merge the newer, differently defined audit predicates."
+      ]
+    },
+    {
+      "metric": "Whole-release requirement implementation coverage",
+      "numerator": null,
+      "denominator": 7,
+      "status": "NOT_ESTABLISHED",
+      "reason": "Implementation mappings include confirmed contradictions and absent input handlers. A mapping count cannot establish conformance."
+    },
+    {
+      "metric": "PROD-matching passing execution",
+      "numerator": null,
+      "denominator": null,
+      "status": "UNKNOWN",
+      "reason": "No selected release artifact, effective PROD settings, target case inventory, or PROD-bound execution was supplied."
+    },
+    {
+      "metric": "Changed-code line and branch coverage",
+      "numerator": null,
+      "denominator": null,
+      "status": "UNAVAILABLE",
+      "reason": "The retained full Jest run explicitly used --coverage=false. No applicable line or branch measurement was located."
+    }
+  ],
+  "limits": [
+    "No new test execution or external access is authorized in this assessment.",
+    "Local source identity does not identify a PROD artifact.",
+    "The requirement remains candidate version 4. No named waiver of its criteria was located in the inspected current task records.",
+    "Only selected newer session predicates were inspected. No whole-audit acceptance judgment is supplied.",
+    "Retained source hashes were checked. This establishes bytes, not source authority or approval."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "criterion_reconciliation": [
+    {
+      "requirement_version": 4,
+      "definition": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+      "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "assertion_snapshot_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "criterion_id": "AC-1",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-01",
+      "implementation": "repos/ui/mfe-base/src/pages/Home/common/useController.ts#L60-L68",
+      "inspected_assertion": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L231-L265",
+      "retained_result_status": "FAILED",
+      "conclusion": "The local browser observes no successful renewal during continuous mouse input.",
+      "owner": "unknown",
+      "next_action": "Resolve the failed or incomplete criterion before claiming complete requirement conformance."
+    },
+    {
+      "requirement_version": 4,
+      "definition": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+      "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "assertion_snapshot_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "criterion_id": "AC-2",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-02",
+      "implementation": "repos/ui/mfe-base/src/pages/Home/index.tsx#L55-L56",
+      "inspected_assertion": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L231-L265",
+      "retained_result_status": "FAILED",
+      "conclusion": "Home has no keyboard renewal binding. The newer controlled keyboard predicate also fails.",
+      "owner": "unknown",
+      "next_action": "Resolve the failed or incomplete criterion before claiming complete requirement conformance."
+    },
+    {
+      "requirement_version": 4,
+      "definition": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+      "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "assertion_snapshot_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "criterion_id": "AC-3",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-03",
+      "implementation": "repos/ui/mfe-base/src/pages/Home/index.tsx#L55-L56",
+      "inspected_assertion": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L231-L265",
+      "retained_result_status": "FAILED",
+      "conclusion": "Home has no scroll renewal binding. The local criterion case fails.",
+      "owner": "unknown",
+      "next_action": "Resolve the failed or incomplete criterion before claiming complete requirement conformance."
+    },
+    {
+      "requirement_version": 4,
+      "definition": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+      "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "assertion_snapshot_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "criterion_id": "AC-4",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-06",
+      "implementation": "repos/ui/mfe-base/src/pages/Home/common/useController.ts#L118-L172",
+      "inspected_assertion": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L601-L641",
+      "retained_result_status": "SHORT_BOUNDARY_FAILED_FULL_DURATION_NOT_RUN",
+      "conclusion": "The short boundary fails. The exact four-hour criterion was not executed for this reduced candidate.",
+      "owner": "unknown",
+      "next_action": "Resolve the failed or incomplete criterion before claiming complete requirement conformance."
+    },
+    {
+      "requirement_version": 4,
+      "definition": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+      "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "assertion_snapshot_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "criterion_id": "AC-5",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-04",
+      "implementation": "repos/ui/mfe-base/src/hooks/service/index.ts#L89-L105",
+      "inspected_assertion": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277-L311",
+      "retained_result_status": "FAILED",
+      "conclusion": "The prompt disappears while the held renewal is pending. The service export does not return its completion promise.",
+      "owner": "unknown",
+      "next_action": "Resolve the failed or incomplete criterion before claiming complete requirement conformance."
+    },
+    {
+      "requirement_version": 4,
+      "definition": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+      "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "assertion_snapshot_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "criterion_id": "AC-6",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-04",
+      "implementation": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L54-L61",
+      "inspected_assertion": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277-L311",
+      "retained_result_status": "NOT_ESTABLISHED",
+      "conclusion": "The combined case fails before successful-response assertions. Newer eventual-token checks do not establish post-completion closure.",
+      "owner": "unknown",
+      "next_action": "Resolve the failed or incomplete criterion before claiming complete requirement conformance."
+    },
+    {
+      "requirement_version": 4,
+      "definition": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria",
+      "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "assertion_snapshot_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "criterion_id": "AC-7",
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-05",
+      "implementation": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L54-L61",
+      "inspected_assertion": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L320-L335",
+      "retained_result_status": "FAILED",
+      "conclusion": "The local failure case loses the prompt. The newer controlled network-failure case also fails retry availability.",
+      "owner": "unknown",
+      "next_action": "Resolve the failed or incomplete criterion before claiming complete requirement conformance."
+    }
+  ],
+  "recorded_at": "2026-10-22T15:20:20.018937+00:00",
+  "automated_checks": {
+    "status": "PASSED",
+    "checks": [
+      "Parsed retained evidence JSON.",
+      "Checked 22 original case-result hashes against the manifest.",
+      "Checked the full Jest output hashes and 400 exported source hashes against current committed bytes.",
+      "Checked 223 realistic-profile MFE source hashes against current bytes.",
+      "Checked realistic result driver and source-binding snapshots against recorded hashes.",
+      "Checked six selected newer UI result hashes and retained assertion/helper snapshots.",
+      "Checked 339 newer-audit MFE source hashes against current bytes.",
+      "Verified exact old-suite driver SHA-256."
+    ],
+    "new_test_execution": "NOT_RUN",
+    "external_access": "NOT_RUN"
+  }
+}

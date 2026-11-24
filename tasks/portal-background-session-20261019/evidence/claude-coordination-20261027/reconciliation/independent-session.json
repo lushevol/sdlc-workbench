@@ -1,0 +1,11 @@
+{
+  "candidate":"e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "baseline":"f025513f696476a9cc8162681410cbd21e029bcb",
+  "provider_response":"../independent-session-response.json",
+  "provider_response_sha256":"81f956c16d8f1fa59da33804cc97a9b9f0a0475687e1c0096841de557faf859c",
+  "claims":[
+    {"id":"IS-01","claim":"Acquisition is not immediately attempted when valid refresh expiry exists and access is within 25 seconds","classification":"CONFIRMED_BEHAVIOR_CHANGE_INTENT_UNRESOLVED","cross_reference":"AS-01","qualification":"The final tests explicitly expect no catch-up after a hidden return. A different initial registration is not covered by that assertion. A valid refresh can still support explicit renewal; access expiry does not automatically prove session loss."},
+    {"id":"IS-02","claim":"Expired refresh handling repeatedly calls acquisition, potentially overlapping refreshes","classification":"PARTLY_CONFIRMED_REJECT_UNGUARDED_SAME_SESSION_OVERLAP","evidence":["src/pages/Home/common/useController.ts:118-133,159-183","src/hooks/service/index.ts:66-104"],"qualification":"Repeated invocations are possible, but the service shares a pending request for the same access token and epoch. It can issue a later attempt after settlement, or replace a request when identity changes. A harmful race is not established."},
+    {"id":"IS-03","claim":"Logout is no longer awaited and may reject unhandled","classification":"REJECT_RETURN_TYPE_PREMISE","evidence":["src/components/Timeout/common/useController.ts:122-125","src/services/index.ts:20-31","baseline src/components/Timeout/common/useController.ts:43-51"],"qualification":"The service returns void and catches Promise.all failures. Baseline await did not wait for those HTTP operations. A synchronous throw is a distinct unproven path."}
+  ]
+}

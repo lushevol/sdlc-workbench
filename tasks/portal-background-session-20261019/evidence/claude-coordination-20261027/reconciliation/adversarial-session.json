@@ -1,0 +1,67 @@
+{
+  "candidate": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "provider_response": "../adversarial-session-response.json",
+  "provider_response_sha256": "673470e676211c887c0cc9252f9bb0f093d2e6d4e8c8bb0a194cea5700411396",
+  "reviewer": "Codex independent source audit",
+  "claims": [
+    {
+      "id": "AS-01",
+      "claim": "No immediate acquisition when an unexpired refresh token exists and access has less than 25 seconds remaining",
+      "classification": "CONFIRMED_BEHAVIOR_CHANGE_INTENT_UNRESOLVED",
+      "evidence": [
+        "src/pages/Home/common/useController.ts:134-179",
+        "baseline src/pages/Home/common/useController.ts:87-100",
+        "src/pages/Home/common/sessionLifecycle.test.tsx:296-323",
+        "src/hooks/service/index.ts:48-65"
+      ],
+      "qualification": "Baseline scheduled an immediate call, but getRefreshToken now reuses credentials beyond three hours. The final lifecycle test explicitly expects no catch-up after hidden return. The claim does not establish a defect or that refresh always fails; the separate refresh-expiry timer may reacquire."
+    },
+    {
+      "id": "AS-02",
+      "claim": "A never-settling pending acquisition prevents automatic recovery expiry and disables Extend",
+      "classification": "CONDITIONAL_RISK_NOT_PROVEN_INDEFINITE",
+      "evidence": [
+        "src/components/Timeout/common/useController.ts:25-27,49-60,78-108",
+        "src/hooks/service/config.ts:6-17",
+        "src/pages/Home/common/sessionPending.test.tsx:220-235,251-262"
+      ],
+      "qualification": "Axios sets a 60-second timeout. JavaScript suspension, adapter behavior, and production timeout effects are not established. Logout remains available. A bound for wall-clock recovery is unverified."
+    },
+    {
+      "id": "AS-03",
+      "claim": "A refresh credential without usable expiry leads to logout instead of Extend",
+      "classification": "CONFIRMED_BEHAVIOR_CHANGE_INTENT_UNRESOLVED",
+      "evidence": [
+        "src/components/Timeout/common/useController.ts:62-93,103-108",
+        "baseline src/components/Timeout/common/useController.ts:25-36",
+        "src/components/Timeout/common/coverageBoundaries.test.tsx:54-64"
+      ],
+      "qualification": "Baseline leaves a parsed token with absent exp without an automatic logout timer, but malformed JSON may throw. Final explicitly applies the logout fallback. Token contract and business disposition are not established."
+    },
+    {
+      "id": "AS-04",
+      "claim": "Concurrent session invalidation during delayed logout leaves old prompt loading; logout promise rejection is unhandled",
+      "classification": "CONFIRMED_SYNTHETIC_STALE_MODAL; PRODUCTION_REACHABILITY_UNKNOWN; REJECT_UNHANDLED_PROMISE",
+      "evidence": [
+        "src/components/Timeout/common/useController.ts:110-125",
+        "src/components/Timeout/index.tsx:17-46",
+        "src/pages/Home/index.tsx:127",
+        "src/pages/Home/common/sessionPending.test.tsx:238-249",
+        "src/services/index.ts:20-31",
+        "reconciliation/stale-modal-probe/execution.json"
+      ],
+      "qualification": "A focused PEND-10 probe confirms the replacement token remains while the dialog persists, Extend is disabled, and Logout is an enabled no-op. The harness synthesizes the replacement login and keeps Home mounted. Production reachability is unknown. Logout returns void and catches Promise.all rejection."
+    },
+    {
+      "id": "AS-05",
+      "claim": "Cancellation tests do not establish no defect in session controller paths",
+      "classification": "ACCEPT_SCOPED_LIMIT",
+      "evidence": [
+        "evidence/renewed-review-20261027/codex/review.md",
+        "src/pages/Home/common/sessionPending.test.tsx:238-249"
+      ],
+      "qualification": "Other lifecycle tests also exist. No finite test suite proves no defects; the stale-dialog assertion gap is material."
+    }
+  ]
+}

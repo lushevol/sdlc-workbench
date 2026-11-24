@@ -1,0 +1,60 @@
+{
+  "id": "PROBE-04",
+  "captured_at": "2026-11-05T03:29:09.863Z",
+  "fixture": {
+    "feature": "RATAN_TRADE_BLOTTER",
+    "action": "F_Custom_View_Builder_Private",
+    "entities": [
+      {
+        "name": "RATAN_ENTITLEMENT_RULE",
+        "roleName": null,
+        "subjects": [
+          {
+            "name": "RATAN_TRADE_BLOTTER",
+            "longName": "RATAN_TRADE_BLOTTER",
+            "entitlementSource": "EMS3",
+            "actions": [
+              {
+                "name": "F_Custom_View_Builder_Private"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "RATAN_ENTITLEMENT_RULE",
+        "roleName": "PSS_USER",
+        "subjects": [
+          {
+            "name": "RATAN_TRADE_BLOTTER",
+            "longName": "RATAN_TRADE_BLOTTER",
+            "entitlementSource": "EMS2",
+            "actions": [
+              {
+                "name": "DifferentAction"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "actual": {
+    "flattened": {
+      "id": "fixture-user",
+      "entitlements": {
+        "RATAN_ENTITLEMENT_RULE": {
+          "RATAN_TRADE_BLOTTER": [
+            "DifferentAction"
+          ]
+        }
+      }
+    }
+  },
+  "observation_assertion": "PASSED",
+  "business_verification": "NOT_ESTABLISHED",
+  "limits": [
+    "Synthetic duplicate application name demonstrates last-write overwrite.",
+    "Safe resolution must retain provider and application scope; arbitrary union is not validated."
+  ]
+}

@@ -1,0 +1,232 @@
+# Knowledge standards
+
+Use the Workbench profile of [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md).
+Upstream OKF requires `type`. This profile adds mandatory domain fields and governance checks.
+
+Domain knowledge tracking serves business behavior and context in existing business repositories.
+Harness configuration, upgrades, tooling, and Workbench maintenance use a [lightweight maintenance task](../tasks/README.md#lightweight-maintenance-records) without business knowledge records or business gates.
+Maintain current procedures in project guides and source configuration. Keep incremental work and supporting evidence in the owning task.
+The [documentation ownership contract](../docs/WORKSPACE_DESIGN.md#documentation-ownership) keeps integrated current views separate from canonical intent and task history.
+
+Use `knowledge/` as one parent for canonical `records/`, supporting `evidence/`, technical `integrations/`, and the single derived `llm-wiki/`.
+Maintain integration references under `integrations/<domain>/` with linked Contracts, Workflows, and Knowledge folders.
+Use [domain-capability-extractor](../.agents/skills/domain-capability-extractor/SKILL.md) for this technical reference library.
+Keep approved business intent in canonical records and link it by identity and version.
+Integration references do not confer publication, execution, or deployment authority.
+Store canonical business-system domain knowledge and navigation only in `knowledge/records/`.
+Knowledge describes requirements, intent, and ideal target system behavior.
+Keep business terms, intended rules, workflows, requirements, contracts, and target architecture decisions here.
+Technical content qualifies when it explains intended system responsibilities and has a current consumer.
+Workbench procedures, schemas, templates, logs, code copies, scripts, fixtures, reports, and run status belong outside canonical records.
+Keep domain candidates in `records/candidates/`. Keep accepted documents in their relevant domain directory.
+
+The sibling `knowledge/llm-wiki/` holds the single derived wiki, relative canonical source aliases, native metadata, local state and visualization. Its generated pages use the native wiki schema rather than the canonical document contract below. Keep private configuration and disposable state ignored. Workbench validation, canonical ingestion and the service-graph knowledge projection scan only canonical records; the [wiki bridge](../.agents/skills/llm-wiki/SKILL.md) verifies its format, source links and bindings separately. Original canonical records remain subject to all governance gates.
+
+## Intended behavior and independent gaps
+
+Keep actual source behavior, deployment state, observations, and conformance assessments in independent gap Markdown under the owning task.
+Use the [gap comparison rules](../tasks/README.md#compare-behavior-for-gap-analysis) and link canonical intent from each finding.
+Keep intended, old actual, new actual, and observed results separate, with exact versions and evidence limits.
+Knowledge can link the gap document for navigation without copying its actual-behavior narrative or result status.
+
+A fix that restores an existing rule updates the gap and verification evidence. The intended rule remains unchanged.
+Only a sourced requirement, decision, or clarification can justify a change to intended meaning.
+Implementation, tests, deployment, and successful execution cannot supply missing business intent or approval.
+Intended environment or policy applicability belongs with the rule. Actual rollout and deployment applicability belong with gap evidence.
+Preserve historical design proposals as proposed intent. Resolve competing rules without selecting whichever the code implements.
+
+Keep source snapshots and provenance in `knowledge/evidence/` or the owning task.
+Register source revisions in `evidence/manifest.yaml`.
+Keep governance findings in `evidence/findings/` and immutable audit events in `evidence/audit/`.
+Keep task investigations, questions, browser captures, execution results, and incident excerpts under `tasks/<task-id>/evidence/`.
+Knowledge records reference evidence without copying it into the canonical record tree.
+
+Ingestion classifies original materials and connects their meaning across project topics.
+Use `KnowledgeTopic` for background, terms, workflows, and historical explanations.
+Keep source classification separate from derived topic classification.
+Classification alone does not establish source authority or current applicability.
+The [ingestion skill](../.agents/skills/ingest-knowledge/SKILL.md) supports review and ingestion modes.
+
+## Source preparation boundary
+
+Use complete raw export → filtered source view → canonical knowledge → derived wiki.
+The [source preparation procedure](../.agents/skills/ingest-knowledge/references/source-preparation.md) preserves originals and records inspected selections.
+Imports stay ignored by default. A project's `.gitignore` can allowlist owner-approved collections for Git-only continuation.
+Tracked exports remain replaceable inputs. Retained snapshots, source identities, selections, and governance remain separate.
+Filtered views remain in ignored working storage outside canonical records. Their inclusion decisions do not approve the selected rules.
+
+Each selection and generated link binds the original source page's SHA-256, revision, location, and exact ranges.
+Record policy and governing context hashes with the decision. Generated excerpts also bind output bytes and source range mappings.
+
+Reassess changed sources, including prior exclusions. Missing export pages do not authorize deleting retained sources or knowledge.
+Canonical records continue citing the original retained revision through the existing source manifest contract.
+The wiki consumes canonical records through source links with saved page hashes.
+Run local `sources plan` before semantic work. Generate queued inputs with `sources view --plan`.
+Keep successful-processing receipts under `knowledge/evidence/processing/`, separate from selection decisions and canonical governance.
+Use [the incremental contract](../.agents/skills/ingest-knowledge/references/source-preparation.md#plan-incremental-canonical-work) for completion and invalidation.
+Wiki planning skips unchanged records only after reviewed source/output completion matches current bytes.
+
+## Document contract
+
+Each instantiated canonical domain Markdown document starts with YAML frontmatter.
+Required fields are `type`, `id`, `version`, `owner`, `governance_state`, `status`,
+`sources`, `generated`, and `verified`. Use a positive integer for `version`.
+Use a stable ID with letters, digits, dots, underscores, or hyphens.
+
+Keep OKF `status` as `draft`, `stable`, or `deprecated`. Use `governance_state`
+for `candidate`, `investigated`, `verified`, `published`, `contested`, `stale`, or `superseded`.
+These fields have separate meanings. Extra OKF extension fields are permitted.
+
+Each `sources` entry requires `resource`, `revision`, and lowercase hexadecimal `sha256`.
+The three values must match a raw manifest record.
+`generated` requires `by` and `at`. Each `verified` entry requires `by` and `at`.
+
+Quote each timestamp. Use ISO 8601 with a timezone, for example `"2026-10-14T00:00:00Z"`.
+An empty `verified` list is permitted for a candidate. Verification must follow generation.
+
+The [schemas](../core/knowledge/schemas/) define required domain fields. The [templates](../core/knowledge/templates/)
+show complete illustrative records. Each domain also requires these level-two body headings:
+
+| Type | Required fields and body headings |
+| --- | --- |
+| `KnowledgeTopic` | Classification, scope, summary, related IDs, and open questions; body: Scope, Summary, Documented knowledge, Connections, Evidence limits, Open questions. |
+| `Requirement` | Description, Rationale, Acceptance criteria |
+| `Architecture` | Scope, Components, Interfaces, Dependencies, Decisions |
+| `Decision` | Context, Options, Decision, Rationale, Consequences |
+| `RepositoryProfile` | Purpose, Scope, Responsibility, Components, Contracts, Dependencies, Languages, Entry points, Validation commands; frontmatter also requires `repository_id` |
+| `GovernanceFinding` in `knowledge/evidence/findings/` | Subject, Evidence, Proposed action, Resolution; frontmatter also requires `category` and `severity` |
+
+Required headings must occur outside Markdown code fences and contain text.
+Keep structured frontmatter and body content consistent during human review.
+The structural checker does not compare their meaning.
+
+Classified drafts use `records/candidates/<classification>/` and retain the normal candidate lifecycle.
+An ingested project's `records/candidates/index.md` lists its topics, purposes, review states, and evidence limits.
+This project-specific index is navigation and does not grant approval.
+The reusable `index.md` remains a generic guide for new workspaces.
+Only reviewed knowledge with the required evidence can support a source-of-truth claim.
+
+Requirements need at least one actionable acceptance criterion. Each criterion has
+`id`, `given`, `when`, `then`, and `measure`. Start the clauses with `Given`, `When`,
+and `Then`. A measure has `metric`, `operator`, numeric `value`, and `unit`.
+Operators are `equals`, `at_least`, `at_most`, `less_than`, and `greater_than`.
+
+Use an observable count, duration, size, or numeric code. Human review must confirm
+that the clauses and measurement describe the intended behavior.
+
+<a id="source-provenance-outside-knowledge"></a>
+
+## Source provenance outside canonical records
+
+`evidence/manifest.yaml` contains `schema_version: 1` and a `sources` list.
+Each record requires `id`, `resource`, `revision`, `sha256`, `ingested_at`, and `classification`.
+Classify sources as `business`, `architecture`, `decision`, `implementation`,
+`deployment`, or `verification`. Use `unknown` or `mixed` when review cannot assign one class.
+
+Retain each prior revision. A stable source ID may occur once per revision.
+One resource and revision must have one recorded hash.
+Keep resource names at their original locations. A resource name does not grant tool access.
+
+An optional `snapshot` is a path relative to the workspace. It must stay within
+the workspace and cannot contain `..`. Snapshot paths must remain outside `knowledge/records/`. Validation hashes snapshot bytes without
+normalization. It never opens or fetches the external `resource` value.
+Without a snapshot, validation checks the recorded reference only.
+
+## Clarification feedback
+
+Search existing knowledge and source evidence before asking for clarification.
+Record each material ambiguity, missing rule, or stale claim with its consequence, owner, and required answer.
+Resolve the material question before changing its meaning.
+
+When clarification changes business understanding, update the affected domain knowledge record before the next SDLC handoff.
+Retain the answer source, scope, changed rule, version, and applicable measurable acceptance criteria.
+Register new source bytes when the clarification adds evidence.
+Update related references and record the result in the task's knowledge-update log.
+Append the audit events required by the record's actual lifecycle change.
+Do not leave resolved material clarification only in chat or task notes.
+
+Keep unresolved claims open. Mark conflicting approved claims through the governance procedure.
+Clarification does not grant publication approval or establish passing business execution.
+Important requirements and decisions retain their human review gates.
+
+## Authorized evidence relocation
+
+The source checkout's [24 November cleanup receipt](../tasks/cleanup-manifest.json) maps retired maintenance-task locators to retained provenance.
+Canonical record bytes, existing audit events, and prior processing receipts remain unchanged.
+Resolve their historical task paths through the receipt's `old_locator_map`.
+Active source snapshot and selection-context paths use the new locations with identical source hashes.
+Prior selection and manifest bytes remain available under `knowledge/evidence/sources/task-provenance-20261124/binding-baseline/`.
+Replan before resuming ingestion. Locator changes do not advance semantic completion or publication.
+
+Task-generated materials can move into their owning task when the user authorizes the relocation.
+Preserve every moved file's exact bytes, source ID, resource, revision, and SHA-256.
+Retain the previous manifest bytes outside canonical records before changing active snapshot locators.
+Record old paths, canonical task paths, hashes, and authorization in a relocation map.
+Preserve existing source IDs, resource names, revisions, and hashes during relocation.
+Append new records for genuinely new evidence and append a relocation audit event.
+Keep existing audit event bytes unchanged.
+
+Historical reports and audit metadata can retain their original locators.
+Resolve historical locators through the recorded relocation map.
+Git revisions require a retained source checkout or backup.
+A clean-root branch omits those old commits.
+An earlier ingestion baseline remains historical because it correctly records the earlier storage layout.
+Create a new baseline after validating the authorized migration.
+During authorized cleanup, remove files that have no current consumer or meaningful evidence value.
+Record each deleted path, hash, prior Git revision, and reason outside canonical records.
+For a retired snapshot, preserve its source identity and historical locator. Remove its active `snapshot` field.
+Record the cleanup locator and retention limit with that source. Repair active links before validation.
+Retain meaningful failed or contradictory evidence. Preserve immutable audit history.
+Normal ingestion checks reject unrecorded removals or manifest rewrites.
+Start a new ingestion baseline after an authorized migration.
+
+## Review gates
+
+A candidate may omit audit events. Each other state requires a matching transition
+event for its current ID, version, state, and full Markdown file SHA256.
+Verified and published records also need a verifier entry with a matching `verified`
+transition event.
+Both records must identify the same actor, timestamp, ID, version, and current file hash.
+
+Published requirements and decisions also need a human approval event for the
+current file hash. Declare the human actor as `human:<id>`. The approval actor
+must also occur in `verified` and its matching verification audit event.
+Approval must follow that actor's verification. Publication must follow approval.
+
+AI generation or validation never supplies human approval.
+
+Review the final bytes, including frontmatter. Record the final file hash in review
+and publication events. A file change requires a new review and matching audit evidence.
+
+Events contain `id`, `item_id`, `item_version`, `actor`, `at`, `action`, `from_state`,
+`to_state`, `content_sha256`, `reason`, and nonempty `evidence` source references.
+Use `action: transition` for state changes and `action: approval` for human review.
+Each event filename is its ID plus `.yaml`. Append it under `evidence/audit/`.
+
+Do not change or delete earlier event files. Use Git review to check audit changes.
+
+The main path is `untracked` → `candidate` → `investigated` → `verified` → `published`.
+An active item may become `contested` or `stale`. A contested or stale item may
+return to `investigated` or become `superseded`. A published item may become
+`superseded`. A superseded item has no next state.
+
+Approval events start from `verified` and keep that state or authorize `published`.
+Publication must follow verification and human approval in timestamp order.
+
+`ai-sdlc --workspace PATH validate` checks structure, source declarations, available
+snapshot hashes, storage boundaries, and recorded gates. It reads files and returns findings.
+Validation rejects non-Markdown artifacts and forbidden working directories inside `knowledge/records/`. Evidence and derived wiki siblings use their own contracts.
+Local knowledge retrieval includes structured domain records. Navigation guides remain available through normal file access.
+Ingestion requires a supported domain record with complete metadata and body sections.
+These checks cannot determine whether prose is relevant to the business domain. Agents must review its meaning.
+It does not edit source files, promote candidates, create audit records, or grant approval.
+It cannot establish factual truth, source authority, reviewer identity, or historical
+append-only integrity. Human review must assess those matters and apply ASD-STE100.
+The shared ingestion skill guides agent-assisted synthesis.
+The runtime does not extract meaning or investigate source quality automatically.
+
+## Layout compatibility
+
+New workspaces use this consolidated layout. Existing workspaces with only `evidence/knowledge/manifest.yaml` retain their legacy canonical `knowledge/` root until an authorized migration. A unique `knowledge/evidence/manifest.yaml` selects the consolidated layout and requires `knowledge/records/`. Both manifests, or an incomplete consolidated layout, require recovery instead of implicit union or fallback.
+
+Authorized migrations preserve old-to-new locators, original source identities, source bytes, and immutable audit history.

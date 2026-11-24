@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "evidence": {
+    "E_UI": {
+      "path": "repos/ui/mfe-base/src/components/Timeout/index.tsx",
+      "sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+      "start_line": 16,
+      "end_line": 45,
+      "kind": "ui",
+      "authority": "established",
+      "revision": "10560f39a57e8ce4010cee634f7682559b1a6bdd"
+    },
+    "E_HOME": {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "start_line": 60,
+      "end_line": 70,
+      "kind": "ui",
+      "authority": "established",
+      "revision": "10560f39a57e8ce4010cee634f7682559b1a6bdd"
+    },
+    "E_REQUIREMENT": {
+      "path": "knowledge/records/candidates/requirements/REQ-active-session-renewal.md",
+      "sha256": "fe3f8eecdc77ae8969053fc785f8a006d15c2f36308253fc42f483b9948328ec",
+      "start_line": 210,
+      "end_line": 215,
+      "kind": "behavior",
+      "authority": "draft"
+    },
+    "E_CANONICAL": {
+      "path": "tasks/portal-background-session-20261019/test-cases.md",
+      "sha256": "26c997ebe6bbda3ecb509d4029d635b8dc74d6d5cb069509f78d91dc1699145c",
+      "start_line": 327,
+      "end_line": 373,
+      "kind": "behavior",
+      "authority": "established"
+    },
+    "E_PROBE": {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/browser.cjs",
+      "sha256": "dff78cb3078193353cb561387e17cc49da2f395630801c65d0dc0f426cf3280d",
+      "start_line": 4,
+      "end_line": 33,
+      "kind": "automation",
+      "authority": "established",
+      "revision": "9f83897e8e71f8afa524b260ffa3e809b281a2f0"
+    },
+    "E_CONFIG": {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/config.example.json",
+      "sha256": "07279d6b7fdc36a27434ff12f21332e49f8487aec11e6275cfaf058a646fe833",
+      "start_line": 9,
+      "end_line": 17,
+      "kind": "automation",
+      "authority": "established",
+      "revision": "9f83897e8e71f8afa524b260ffa3e809b281a2f0"
+    },
+    "E_VALIDATE": {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "sha256": "fcfdf57d6147f484edc1645da85dd04c99f73852dbe996ec9e4856142c2340b9",
+      "start_line": 267,
+      "end_line": 297,
+      "kind": "behavior",
+      "authority": "established",
+      "revision": "95480c0e2563bc2a5a639bca1f22ecedb61936c2"
+    },
+    "E_CLOSURE": {
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "sha256": "647c944e7d60a8319ccd1f8e09dfed570c3491f5815a79c51268132751a62758",
+      "start_line": 128,
+      "end_line": 151,
+      "kind": "behavior",
+      "authority": "established",
+      "revision": "10560f39a57e8ce4010cee634f7682559b1a6bdd"
+    },
+    "E_RELOGIN": {
+      "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+      "sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+      "start_line": 107,
+      "end_line": 122,
+      "kind": "behavior",
+      "authority": "established",
+      "revision": "10560f39a57e8ce4010cee634f7682559b1a6bdd"
+    }
+  },
+  "scenarios": {
+    "SESSION-UI-EXAMPLE": {
+      "file": "docs/examples/gherkin-session/session.md",
+      "sha256": "c5e11890e24f03abbe1562bca3eddff8f45606a139985f61d86bf0228654055c",
+      "behavior": {
+        "intent": "Request refresh-based renewal, then verify portal authentication validation.",
+        "requirement": "E_REQUIREMENT",
+        "criterion": "knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L210"
+      },
+      "components": {
+        "C_DIALOG": {
+          "type": "dialog",
+          "identity": "Your session has been expired",
+          "identity_kind": "accessible_name",
+          "scope": "portal",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_TEXT": {
+          "type": "text",
+          "identity": "Do you want to logout or extend the session?",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_EXTEND": {
+          "type": "button",
+          "identity": "Extend",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_WORKSPACES": {
+          "type": "tablist",
+          "identity": "workspaces",
+          "identity_kind": "accessible_name",
+          "scope": "portal main region",
+          "evidence": [
+            "E_HOME"
+          ]
+        }
+      },
+      "steps": {
+        "33": {
+          "kind": "condition",
+          "evidence": [
+            "E_CANONICAL",
+            "E_REQUIREMENT"
+          ]
+        },
+        "34": {
+          "kind": "condition",
+          "evidence": [
+            "E_UI"
+          ],
+          "components": [
+            "C_DIALOG"
+          ]
+        },
+        "35": {
+          "kind": "condition",
+          "evidence": [
+            "E_UI"
+          ],
+          "components": [
+            "C_TEXT"
+          ]
+        },
+        "36": {
+          "kind": "interaction",
+          "evidence": [
+            "E_UI"
+          ],
+          "components": [
+            "C_EXTEND"
+          ]
+        },
+        "37": {
+          "kind": "assertion",
+          "evidence": [
+            "E_UI",
+            "E_CLOSURE",
+            "E_RELOGIN"
+          ],
+          "components": [
+            "C_DIALOG"
+          ],
+          "observation": "ui"
+        },
+        "38": {
+          "kind": "assertion",
+          "evidence": [
+            "E_PROBE",
+            "E_CONFIG",
+            "E_VALIDATE"
+          ],
+          "observation": "functional"
+        },
+        "39": {
+          "kind": "assertion",
+          "evidence": [
+            "E_PROBE",
+            "E_CONFIG"
+          ],
+          "observation": "functional"
+        },
+        "40": {
+          "kind": "assertion",
+          "evidence": [
+            "E_HOME",
+            "E_PROBE"
+          ],
+          "components": [
+            "C_WORKSPACES"
+          ],
+          "observation": "ui"
+        }
+      },
+      "review": {
+        "state": "UNVERIFIED",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": "Tooling fixture only. Source paths, hashes, ranges, and the candidate version 9 absolute-deadline condition were inspected on 2026-11-13. Candidate publication review remains pending. This subset does not assert exact closure count. Source inspection does not prove rendered uniqueness, deployed behavior, complete assertion coverage, or automation compatibility. No semantic review completion, binding review, or execution is claimed."
+      }
+    },
+    "SESSION-AMBIGUOUS-EXAMPLE": {
+      "file": "docs/examples/gherkin-session/ambiguous.md",
+      "sha256": "65828909131956cd890ae6773636519994adfe9b59fc4777c64ec1540cf9c168",
+      "behavior": {
+        "intent": "Request refresh-based renewal, then verify portal authentication validation.",
+        "requirement": "E_REQUIREMENT",
+        "criterion": "knowledge/records/candidates/requirements/REQ-active-session-renewal.md#L210"
+      },
+      "components": {},
+      "steps": {
+        "23": {
+          "kind": "condition",
+          "evidence": [
+            "E_CANONICAL"
+          ]
+        },
+        "24": {
+          "kind": "interaction",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "25": {
+          "kind": "assertion",
+          "evidence": [
+            "E_REQUIREMENT"
+          ],
+          "observation": "functional"
+        }
+      },
+      "review": {
+        "state": "UNVERIFIED",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": "Deliberately invalid tooling fixture. Missing component references and vague assertion must fail mandatory quality rules. Evidence links identify the intended source context, not adequate wording or an executable binding."
+      }
+    }
+  }
+}

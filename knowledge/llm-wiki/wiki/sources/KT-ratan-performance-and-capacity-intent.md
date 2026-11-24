@@ -1,0 +1,1 @@
+../../../records/candidates/operations/KT-ratan-performance-and-capacity-intent.md

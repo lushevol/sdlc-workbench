@@ -1,0 +1,112 @@
+{
+  "status": "PASSED",
+  "run_at_utc": "2026-10-22T02:06:24.909023+00:00",
+  "command": [
+    ".venv/bin/ai-sdlc",
+    "lint",
+    "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+    "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md"
+  ],
+  "exit_code": 0,
+  "artifact_lint": {
+    "schema_version": 1,
+    "status": "PASSED",
+    "valid": true,
+    "artifacts": 2,
+    "findings": [
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "owner_unknown",
+        "severity": "warning",
+        "message": "Artifact owner is unknown. Identify the responsible owner."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "review_pending",
+        "severity": "warning",
+        "message": "Business review remains pending. Record actual review before applicable publication."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "unresolved_content",
+        "severity": "warning",
+        "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/intake.md",
+        "code": "writing_review_pending",
+        "severity": "warning",
+        "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "owner_unknown",
+        "severity": "warning",
+        "message": "Artifact owner is unknown. Identify the responsible owner."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "review_pending",
+        "severity": "warning",
+        "message": "Business review remains pending. Record actual review before applicable publication."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "unresolved_content",
+        "severity": "warning",
+        "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+        "code": "writing_review_pending",
+        "severity": "warning",
+        "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+      }
+    ],
+    "limitations": [
+      "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+      "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+      "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+      "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+      "Gherkin checks cover an English subset. No business step definitions execute.",
+      "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+    ]
+  },
+  "catalog_checks": {
+    "case_count": 521,
+    "unique_case_ids": 521,
+    "refined_case_count": 521,
+    "definition_version": 2,
+    "minimum_assertions_per_case": 1,
+    "total_assertions": 1596,
+    "resolved_local_links": 3633,
+    "source_fingerprints": 139,
+    "all_execution_status": "NOT_RUN",
+    "errors": []
+  },
+  "quality_gate": {
+    "status": "FAIL",
+    "automation_ready": false,
+    "by_status": {
+      "UNVERIFIED": 493,
+      "FAIL": 28
+    },
+    "results": "quality-results.json",
+    "limits": "Document checks do not resolve missing UI evidence, business authority, or automation bindings."
+  },
+  "document_hashes": {
+    "intake.md": "e819973066ef6668495472728e4785d70ed8bad3600e9cb84c1c58f313d68204",
+    "refinement.md": "f0ffd5ce865acd648150efebd0af535e04216e1a01e28efc900be8f172ef619a",
+    "test-cases.md": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+    "evidence/ui-source-inspection.md": "ece95bfbc0719307783708c38b0d017c384d3383d63195623c63f09e6885f5bc",
+    "evidence/session-source-inspection.md": "b7a1d819f9ddf998ab0f061147a19f48757d81230665d8fb28588f4e34d3c1e6",
+    "evidence/admin-boundary-inspection.md": "aa9ff5337ea325d0880b7a8bb794f60e566277ff3b96423cec76a82e3093156a",
+    "evidence/crosscut-inspection.md": "85b3b46814d5862057f1b0dd874fb84fc5f60b5fb4fde5c9bfc5a4c642653407",
+    "evidence/index.md": "82e1e6809ea2b51e3bac8678361919d5c7be4f2202c4cf97aad5b9899d326023",
+    "evidence/knowledge-inspection.md": "5defcf79f4aa1abc36f1dac7c5cd5c2fd13dd1d9caf90a8b4cbb84bd1a82eca6"
+  },
+  "validation_script": {
+    "source": "from pathlib import Path\nfrom collections import Counter\nimport datetime,hashlib,json,re,subprocess,sys,urllib.parse\nroot=Path.cwd();task=root/'tasks/ui-test-coverage-20261022';ev=task/'evidence';out=ev/'refinement';catalog=task/'test-cases.md'\nhashfile=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\ntext=catalog.read_text();inventory=json.loads((ev/'case-inventory.json').read_text());sources=json.loads((ev/'source-manifest.json').read_text())\nrecords={r['case_id']:r for r in (json.loads(l) for l in (out/'case-reviews.jsonl').read_text().splitlines() if l.strip())}\nquality=json.loads((out/'quality-results.json').read_text());states={r['id']:r for r in quality['scenarios']};findings=quality['findings']\nheads=list(re.finditer(r'^#### ([A-Z][A-Z0-9-]+)\\s*$',text,re.M));ids=[m[1] for m in heads];errors=[]\nold_ids=[r['id'] for r in inventory['cases']]\nif ids!=old_ids:errors.append('Case identity or order changed')\nif len(ids)!=521 or len(set(ids))!=521:errors.append('Expected 521 unique case IDs')\nif set(ids)!=set(records) or set(ids)!=set(states):errors.append('Case journal or checker reconciliation differs')\nassertion_counts=[]\nfor row in inventory['cases']:\n cid=row['id'];i=ids.index(cid);b=text[heads[i].start():heads[i+1].start() if i+1<len(ids) else len(text)]\n b=re.split(r'^### Group:|^## Execution binding',b,flags=re.M)[0]\n g=re.search(r'```gherkin\\n(.*?)\\n```',b,re.S)[1]\n if f'case-reviews.jsonl#L{records[cid][\"metadata_line\"]}' not in b:errors.append(cid+' review link mismatch')\n if 'Version: 2.' not in b:errors.append(cid+' lacks version2')\n if not all(re.search(r'^\\s*'+k+r'\\s+\\S',g,re.M) for k in ('Given','When','Then')):errors.append(cid+' lacks complete clauses')\n if not re.search(r'^\\s*@'+re.escape(cid)+r'\\s*\\n\\s*Scenario:',g,re.M):errors.append(cid+' lacks scoped tag')\n count=0;kind=None\n for line in g.splitlines():\n  m=re.match(r'^\\s*(Given|When|Then|And|But|\\*)\\s+',line)\n  if not m:continue\n  if m[1] not in ('And','But','*'):kind=m[1]\n  if kind=='Then':count+=1\n if count<1:errors.append(cid+' lacks assertions')\n if hashfile(catalog)!=quality.get('catalog_sha256',hashfile(catalog)):errors.append('Checker catalog hash mismatch')\n if hashlib.sha256(b.encode()).hexdigest()!=records[cid]['canonical_case_sha256']:errors.append(cid+' journal hash mismatch')\n if row['status']!='NOT_RUN' or row['actual_result'] is not None or row['execution_evidence'] is not None:errors.append(cid+' has unsupported execution result')\n row.update(definition_version=2,assertion_count=count,source_ids=records[cid]['source_refs'],quality_status=states[cid]['status'],automation_ready=False,quality_findings=sum(f['scenario_id']==cid for f in findings),refinement_review='refinement/case-reviews.jsonl',gherkin_evidence='refinement/gherkin-manifest.json')\n assertion_counts.append(count)\ninventory['definition_version']=2;inventory['catalog_sha256']=hashfile(catalog);inventory['by_quality_status']=dict(Counter(s['status'] for s in states.values()))\n(ev/'case-inventory.json').write_text(json.dumps(inventory,ensure_ascii=False,indent=2)+'\\n')\nfor key,field in [('by_category','category'),('by_basis','basis'),('by_priority','priority'),('by_status','status')]:\n if dict(Counter(c[field] for c in inventory['cases']))!=inventory[key]:errors.append(key+' differs')\nfor s in sources['sources']:\n if hashfile(root/s['path'])!=s['sha256']:errors.append('Stale source '+s['evidence_id'])\nfor s in sources.get('retained_knowledge_source_identities',[]):\n if hashfile(root/s['path'])!=s['sha256']:errors.append('Stale knowledge identity '+s['path'])\nlinks=0\nfor f in task.rglob('*.md'):\n for m in re.finditer(r'(?<!!)\\[[^\\]]*\\]\\((<[^>]+>|[^)\\n]+)\\)',f.read_text()):\n  raw=m[1].strip('<>').split(' \"')[0]\n  if re.match(r'^[a-z]+://',raw):continue\n  target,_,anchor=urllib.parse.unquote(raw).partition('#');q=(f.parent/target).resolve() if target else f.resolve();links+=1\n  if not q.is_file():errors.append(str(f.relative_to(root))+': missing '+raw);continue\n  if anchor:\n   body=q.read_text(errors='replace')\n   if re.fullmatch(r'L\\d+(?:-L?\\d+)?',anchor):\n    if max(map(int,re.findall(r'\\d+',anchor)))>len(body.splitlines()):errors.append('Invalid source line '+raw)\n   elif q.suffix=='.md':\n    headings=re.findall(r'^#{1,6}\\s+(.+?)\\s*#*$',body,re.M)\n    anchors=[re.sub(r'[^\\w\\- ]','',h.replace('`','').lower()).replace(' ','-') for h in headings]+re.findall(r'<a\\s+id=\"([^\"]+)\"',body)\n    if anchor not in anchors:errors.append('Missing heading '+raw)\nargs=['.venv/bin/ai-sdlc','lint',str(task/'intake.md'),str(catalog)]\nr=subprocess.run(args,capture_output=True,text=True)\ntry:lint=json.loads(r.stdout)\nexcept ValueError:lint={'stdout':r.stdout,'stderr':r.stderr};errors.append('Lint output invalid')\nif r.returncode:errors.append('Artifact lint failed')\nresults={'status':'PASSED' if not errors else 'FAILED','run_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'command':args,'exit_code':r.returncode,'artifact_lint':lint,'catalog_checks':{'case_count':len(ids),'unique_case_ids':len(set(ids)),'refined_case_count':len(records),'definition_version':2,'minimum_assertions_per_case':min(assertion_counts),'total_assertions':sum(assertion_counts),'resolved_local_links':links,'source_fingerprints':len(sources['sources']),'all_execution_status':'NOT_RUN','errors':errors},'quality_gate':{'status':quality['status'],'automation_ready':False,'by_status':inventory['by_quality_status'],'results':'quality-results.json','limits':'Document checks do not resolve missing UI evidence, business authority, or automation bindings.'},'document_hashes':{str(f.relative_to(task)):hashfile(f) for f in task.rglob('*.md')},'validation_script':{'source':Path(__file__).read_text(),'sha256':hashfile(Path(__file__))}}\n(out/'document-checks.json').write_text(json.dumps(results,indent=2)+'\\n');print(json.dumps({k:v for k,v in results.items() if k not in ('validation_script','artifact_lint','document_hashes')},indent=2));sys.exit(bool(errors))\n",
+    "sha256": "e98bfedadbabb8c380d74fb408a7d6052aeac90f689ae333ec70e3b2cf58d59b"
+  }
+}

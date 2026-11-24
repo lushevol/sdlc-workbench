@@ -1,0 +1,59 @@
+exclude workspace.yaml workspace.local.yaml
+prune registry
+prune knowledge
+prune evidence
+prune docs
+prune repos
+include repos/README.md
+prune tasks
+include tasks/README.md
+include scaffold.json PRINCIPLE.md ARCHITECTURE.md
+include docs/README.md
+include README.md AGENTS.md .gitignore .gitattributes workspace.local.example.yaml
+include PLUGIN_CONTRACT.md
+include .env.example docs/CONNECTORS.md
+include docs/RELEASE_CLINIC.md
+include docs/RELEASE_REPORT.md
+include docs/ROBOT_TESTING.md docs/BEHAVIOR_REVIEW.md
+include docs/GHERKIN_QUALITY.md
+include docs/REVIEW_INDEX.md
+include docs/TEST_PREFLIGHT.md
+include docs/QUESTION_RECONCILIATION.md
+include docs/HOOKS.md
+include CLAUDE.md docs/CAPABILITY_LEARNING.md
+recursive-include docs/examples/gherkin-session *.md *.json
+include registry/README.md
+recursive-include registry *.schema.json
+recursive-include registry/examples *.yaml *.md
+include knowledge/README.md knowledge/index.md
+include knowledge/records/architecture/README.md knowledge/records/candidates/README.md
+include knowledge/records/decisions/README.md knowledge/records/repository-profiles/README.md
+include knowledge/records/requirements/README.md
+include knowledge/evidence/README.md knowledge/evidence/audit/README.md knowledge/evidence/findings/README.md
+recursive-include core/knowledge/schemas *.json
+recursive-include core/knowledge/templates *.md *.yaml *.txt *.json
+recursive-include relationships *.md
+recursive-include .agents/skills *.md *.py *.json *.html *.yaml *.cjs
+graft .agents/skills/llm-wiki/upstream
+include .agents/skills/openkb/LICENSE
+recursive-include core *.py *.md *.json
+recursive-include core/knowledge_web/static *.html *.js *.css *.txt
+recursive-include core/release-clinic *.yaml *.yml *.txt
+include adapters/claude-code/README.md
+include adapters/codex/README.md
+include adapters/copilot/README.md
+include adapters/mcp/README.md
+include adapters/sources/README.md
+include docs/WORKSPACE_DESIGN.md
+include docs/KNOWLEDGE_LIFECYCLE.md
+include docs/EXPERIENCE_ASSETS.md
+include docs/SETUP.md
+include docs/DEPENDENCIES.md
+include docs/BROWSER_INVESTIGATIONS.md
+include setup.command setup.cmd
+recursive-include tests *.py
+recursive-include tests/fixtures/capability_learning *.json
+recursive-include tests/fixtures/ces *.json
+include tests/README.md
+include tests/skill-evaluation-cases.json tests/skill-evaluation-rubric.json
+global-exclude .DS_Store *.pyc

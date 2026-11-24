@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/KT-day2-inter-entity-netting.md

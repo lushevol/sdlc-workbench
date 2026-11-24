@@ -1,0 +1,4 @@
+- [Cash Settlement -- Korea Migration](https://confluence.global.standardchartered.com/display/DSP/Cash+Settlement+--+Korea+Migration)
+- [Email Affirmation Automation (AI Use Case)](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3596370589)
+- [Group Blotter Requirement](https://confluence.global.standardchartered.com/display/DSP/Group+Blotter+Requirement)
+- [Korea Migration Functional Analysis](https://confluence.global.standardchartered.com/display/DSP/Korea+Migration+Functional+Analysis)

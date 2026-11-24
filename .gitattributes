@@ -1,0 +1,10 @@
+# Preserve exact source and governance evidence bytes across platform checkouts.
+evidence/knowledge/** -text
+# Preserve imported formatting; source hashes validate exact export bytes.
+/knowledge/evidence/incoming/** -text -whitespace
+/knowledge/evidence/sources/** -text
+# Show opaque retained excerpts without a misleading text diff.
+tasks/*/evidence/**/*.snapshot -diff
+# Preserve retained task evidence bytes across platform checkouts.
+tasks/*/evidence/** -text
+/registry/capability-history/** -text

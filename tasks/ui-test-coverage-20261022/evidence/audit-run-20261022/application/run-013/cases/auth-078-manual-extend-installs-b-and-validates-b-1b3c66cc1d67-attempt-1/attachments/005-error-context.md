@@ -1,0 +1,106 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: session-timing.spec.ts >> AUTH-078 manual Extend installs B and validates B
+- Location: e2e/audit-specs/session-timing.spec.ts:47:1
+
+# Error details
+
+```
+Error: expect(locator).toHaveCount(expected) failed
+
+Locator:  getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true })
+Expected: 1
+Received: 0
+Timeout:  5000ms
+
+Call log:
+  - Expect "toHaveCount" getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }) with timeout 5000ms
+  - waiting for getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true })
+    14 × locator resolved to 0 elements
+       - unexpected value "0"
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e10]:
+      - generic [ref=e11] [cursor=pointer]: New Tile
+      - generic [ref=e19]:
+        - text: dark
+        - checkbox [ref=e22] [cursor=pointer]
+      - group [ref=e26]:
+        - generic [ref=e27]: 00:00 UTC
+        - checkbox [checked] [ref=e30] [cursor=pointer]
+      - button [ref=e34] [cursor=pointer]:
+        - generic [ref=e35]: A
+      - button [ref=e37] [cursor=pointer]
+    - main [ref=e41]:
+      - tablist [ref=e45]:
+        - tab [selected] [ref=e47] [cursor=pointer]:
+          - region [ref=e48]:
+            - textbox [ref=e52]: WS-A
+        - button [ref=e54] [cursor=pointer]
+      - tabpanel [ref=e59]:
+        - generic [ref=e63]:
+          - paragraph [ref=e65]: Start customizing your workspace
+          - paragraph [ref=e66]: find out what workspace preference options you have and how those options work.
+          - button [ref=e67] [cursor=pointer]: Find tile
+  - dialog [ref=e73]:
+    - heading "Your session has been expired" [level=2] [ref=e74]
+    - paragraph [ref=e76]: Do you want to logout or extend the session?
+    - generic [ref=e77]:
+      - button "Extend" [active] [ref=e78] [cursor=pointer]
+      - button "Logout" [ref=e79] [cursor=pointer]
+```
+
+# Test source
+
+```ts
+  1  | import { expect, type Locator } from '@playwright/test';
+  2  | import type { UiTarget } from '../catalog/ui-contracts.js';
+  3  | 
+  4  | export interface TargetInspection {
+  5  |   readonly contract: UiTarget['contract'];
+  6  |   readonly count: number;
+  7  |   readonly visible: boolean | null;
+  8  |   readonly enabled: boolean | null;
+  9  |   readonly available: boolean;
+  10 |   readonly reason: 'ready' | 'not-found' | 'ambiguous' | 'hidden' | 'disabled';
+  11 | }
+  12 | 
+  13 | export async function inspectTarget(target: UiTarget): Promise<TargetInspection> {
+  14 |   const count = await target.locator.count();
+  15 |   if (count !== 1) {
+  16 |     return { contract: target.contract, count, visible: null, enabled: null,
+  17 |       available: false, reason: count === 0 ? 'not-found' : 'ambiguous' };
+  18 |   }
+  19 |   const visible = await target.locator.isVisible();
+  20 |   const enabled = await target.locator.isEnabled();
+  21 |   return { contract: target.contract, count, visible, enabled, available: visible && enabled,
+  22 |     reason: !visible ? 'hidden' : !enabled ? 'disabled' : 'ready' };
+  23 | }
+  24 | 
+  25 | export async function expectUniqueVisible(locator: Locator): Promise<void> {
+> 26 |   await expect(locator).toHaveCount(1);
+     |                         ^ Error: expect(locator).toHaveCount(expected) failed
+  27 |   await expect(locator).toBeVisible();
+  28 | }
+  29 | 
+  30 | export async function expectActionable(target: UiTarget, scope?: Locator): Promise<void> {
+  31 |   if (scope) await expectUniqueVisible(scope);
+  32 |   await expectUniqueVisible(target.locator);
+  33 |   await expect(target.locator).toBeEnabled();
+  34 | }
+  35 | 
+  36 | export const assertUniqueVisibleEnabled = expectActionable;
+  37 | 
+```

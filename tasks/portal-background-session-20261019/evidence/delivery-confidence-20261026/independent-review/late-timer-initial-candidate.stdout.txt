@@ -1,0 +1,27 @@
+FAIL src/pages/Home/common/delayedTimerTie.initial.test.tsx
+  Late acquisition with coincident credential expiry
+    ✕ [ADV-M1-COINCIDENT] preserves manual recovery after the acquisition callback runs one millisecond late (52 ms)
+
+  ● Late acquisition with coincident credential expiry › [ADV-M1-COINCIDENT] preserves manual recovery after the acquisition callback runs one millisecond late
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      105 |     expect(initial.access.exp).toBe(initial.refresh.exp);
+      106 |     expect(initial.expiredIn).toBe(initial.access.exp);
+    > 107 |     expect(final.signedOut).toBe(false);
+          |                             ^
+      108 |     expect(final.refreshToken).toBe(replacementRefresh);
+      109 |     expect(final.requests.filter((url) => url.endsWith('/logout'))).toHaveLength(0);
+      110 |     expect(final.promptVisible).toBe(true);
+
+      at Object.<anonymous> (src/pages/Home/common/delayedTimerTie.initial.test.tsx:107:29)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        1.013 s
+Ran all test suites within paths "src/pages/Home/common/delayedTimerTie.initial.test.tsx".
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/late-timer-initial-candidate-jest.json

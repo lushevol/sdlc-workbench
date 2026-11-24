@@ -1,0 +1,61 @@
+{
+  "canonicalId": "BFF-ADM-085",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-085",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.654263+00:00",
+  "actualStatus": "failed",
+  "failedStep": "11. Then the alert with severity \"error\" in the portal snackbar displays the agreed message for that the record is already active",
+  "classification": "OBSERVED_DUPLICATE_VERIFICATION_DEACTIVATION",
+  "facts": [
+    "The first controlled checker operation activates the record.",
+    "The second actual UI Verify returns HTTP 200 and deactivates the record.",
+    "Persisted is_active becomes false."
+  ],
+  "owner": "unknown business repository maintainer",
+  "nextAction": "Retain the true-to-false transition. Investigate the verification toggle independently of the undefined agreed message.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-085-current-bff-administration-through-actual-ui-6f667ccdf9cb-attempt-1/result.json",
+      "sha256": "8cfce389db9ec7be010e4b2a3f1bf2ffb52f2aba7741664c1daff188955a1348"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-085-current-bff-administration-through-actual-ui-6f667ccdf9cb-attempt-1/ui-origin-bff-requests.json",
+      "sha256": "d6ee500395c388099eb50503a5f78ed0822d771c599cac94467b76b459cb6620"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-085-current-bff-administration-through-actual-ui-6f667ccdf9cb-attempt-1/011-step-11-failure.json",
+      "sha256": "10c73d3f7fc99bf36155a93685fa22dd95e11369119cb52a9014b8c4db17ec01"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-085-current-bff-administration-through-actual-ui-6f667ccdf9cb-attempt-1/attachments/014-error-context.md",
+      "sha256": "939176ab38a6110a71c864b73e4222dfeff76ff830d767617b1644b862bcd772"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-085-current-bff-administration-through-actual-ui-6f667ccdf9cb-attempt-1/initial-persisted-records.json",
+      "sha256": "a3b6aa15ca65c8c03fb2f845dae1be9c13561d2fd26551a3c0078b20d629f427"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-085-current-bff-administration-through-actual-ui-6f667ccdf9cb-attempt-1/persisted-after-submit.json",
+      "sha256": "4641d88e6fc8ff304ef0e563363d9ac266685b93ee721ad87f30a53ecddbbbb3"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-085-current-bff-administration-through-actual-ui-6f667ccdf9cb-attempt-1/concurrent-admin-b-checker.json",
+      "sha256": "dee85fb02f8cbab9e709f0be3f7500f8b11b66bb9aceb38e8fec60d5e7183086"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ],
+  "lastMutation": {
+    "resource": "category",
+    "operation": "update",
+    "status": 200,
+    "errorMessage": null
+  }
+}

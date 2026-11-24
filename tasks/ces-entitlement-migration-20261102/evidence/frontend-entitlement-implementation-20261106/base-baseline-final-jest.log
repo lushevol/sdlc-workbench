@@ -1,0 +1,291 @@
+FAIL src/utils/login.ces.test.ts
+  ● CES login compatibility › TC-FE-IMPL-004 clears an explicitly empty drawer catalog
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    Expected: {"data": {"drawers": []}, "type": "SET_DRAWERS"}
+
+    Number of calls: 0
+
+      17 |   it("TC-FE-IMPL-004 clears an explicitly empty drawer catalog", () => {
+      18 |     handleDrawers({ data: { drawers: [] } } as any);
+    > 19 |     expect(mockDispatch).toHaveBeenCalledWith({
+         |                          ^
+      20 |       type: ActionType.SET_DRAWERS,
+      21 |       data: { drawers: [] },
+      22 |     });
+
+      at Object.<anonymous> (src/utils/login.ces.test.ts:19:26)
+
+  ● CES login compatibility › TC-FE-IMPL-004 replaces entities and routing from one response
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: [{"applicationId": "51358", "entityNames": ["RATAN_ENTITLEMENT_RULE"], "features": ["CASHFLOW"], "source": "EMS3", "tileId": "1"}]
+    Received: undefined
+
+      47 |     const data = mockDispatch.mock.calls[0][0].data;
+      48 |     expect(data.entities).toEqual([]);
+    > 49 |     expect(data.entitlementRouting).toEqual(entitlementRouting);
+         |                                     ^
+      50 |   });
+      51 | });
+      52 |
+
+      at Object.<anonymous> (src/utils/login.ces.test.ts:49:37)
+
+FAIL src/components/Profile/util.ces.test.ts
+  ● CES profile labels › TC-FE-IMPL-006 keeps the team label and formats all CES assignments
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B"
+    Received: "RATAN :: RATAN_ENTITLEMENT_RULE :: null"
+
+      4 |   it("TC-FE-IMPL-006 keeps the team label and formats all CES assignments", () => {
+      5 |     expect(getName({ applicationName: "RATAN", name: "RATAN_ENTITLEMENT_RULE", roleName: null, roleList: ["Role A", "Role B"] }))
+    > 6 |       .toBe("RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B");
+        |        ^
+      7 |   });
+      8 |
+      9 |   it("TC-FE-IMPL-006 preserves the existing EMS2 role label", () => {
+
+      at Object.<anonymous> (src/components/Profile/util.ces.test.ts:6:8)
+
+  ● CES profile labels › TC-FE-IMPL-006 displays structured CES actions without a legacy token key
+
+    TypeError: (0 , _util.getProfileActions) is not a function
+
+      14 |   it("TC-FE-IMPL-006 displays structured CES actions without a legacy token key", () => {
+      15 |     const subject = { id: null, name: "CASHFLOW", entitlementSource: "EMS3", actions: [{ name: "Export" }] };
+    > 16 |     expect(getProfileActions({ name: "RATAN_ENTITLEMENT_RULE", roleName: null }, subject, {})).toEqual(["Export"]);
+         |                             ^
+      17 |   });
+      18 |
+      19 |   it("TC-FE-IMPL-006 keeps existing EMS2 token action lookup", () => {
+
+      at Object.<anonymous> (src/components/Profile/util.ces.test.ts:16:29)
+
+  ● CES profile labels › TC-FE-IMPL-006 keeps existing EMS2 token action lookup
+
+    TypeError: (0 , _util.getProfileActions) is not a function
+
+      18 |
+      19 |   it("TC-FE-IMPL-006 keeps existing EMS2 token action lookup", () => {
+    > 20 |     expect(getProfileActions({ name: "X_RATANONE", roleName: "OPS" }, { name: "CASHFLOW" }, { "X_RATANONE:OPS": { CASHFLOW: ["Export"] } })).toEqual(["Export"]);
+         |                             ^
+      21 |   });
+      22 |
+      23 |   it("TC-FE-IMPL-006 separates null-ID application and feature presentation keys", () => {
+
+      at Object.<anonymous> (src/components/Profile/util.ces.test.ts:20:29)
+
+  ● CES profile labels › TC-FE-IMPL-006 separates null-ID application and feature presentation keys
+
+    TypeError: (0 , _util.getEntityKey) is not a function
+
+      24 |     const first = { id: null, name: "RULE", applicationId: "51358" };
+      25 |     const second = { ...first, applicationId: "999" };
+    > 26 |     expect(getEntityKey(first)).not.toEqual(getEntityKey(second));
+         |                        ^
+      27 |     expect(getSubjectKey(first, { id: null, name: "A" })).not.toEqual(getSubjectKey(first, { id: null, name: "B" }));
+      28 |   });
+      29 | });
+
+      at Object.<anonymous> (src/components/Profile/util.ces.test.ts:26:24)
+
+FAIL src/utils/drawer.ces.test.ts
+  ● CES workspace tile identity › TC-FE-IMPL-005 resolves the retained database tile ID
+
+    expect(received).toBe(expected) // Object.is equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -3,10 +3,10 @@
+        "entitlementSource": "EMS3",
+        "entity": Array [
+          "RATAN_ENTITLEMENT_RULE",
+        ],
+        "entryName": "cashflow",
+    -   "id": 102,
+    +   "id": 101,
+        "module": "/blotter",
+        "subject": "CASHFLOW",
+        "tile": "/cashflow",
+      }
+
+       8 |   it("TC-FE-IMPL-005 resolves the retained database tile ID", () => {
+       9 |     const second = { ...tile, id: 102 };
+    > 10 |     expect(findTile([{ tiles: [tile, second] }], workspace({ applicationTileId: "102" }))).toBe(second);
+         |                                                                                            ^
+      11 |   });
+      12 |
+      13 |   it("TC-FE-IMPL-005 rejects a removed tile even when its old route remains", () => {
+
+      at Object.<anonymous> (src/utils/drawer.ces.test.ts:10:92)
+
+  ● CES workspace tile identity › TC-FE-IMPL-005 rejects a removed tile even when its old route remains
+
+    expect(received).toBeUndefined()
+
+    Received: {"container": "@fm/ratan", "entitlementSource": "EMS3", "entity": ["RATAN_ENTITLEMENT_RULE"], "entryName": "cashflow", "id": 101, "module": "/blotter", "subject": "CASHFLOW", "tile": "/cashflow"}
+
+      12 |
+      13 |   it("TC-FE-IMPL-005 rejects a removed tile even when its old route remains", () => {
+    > 14 |     expect(findTile([{ tiles: [tile] }], workspace({ applicationTileId: "999" }))).toBeUndefined();
+         |                                                                                    ^
+      15 |   });
+      16 |
+      17 |   it("TC-FE-IMPL-005 restores a legacy workspace using a unique route", () => {
+
+      at Object.<anonymous> (src/utils/drawer.ces.test.ts:14:84)
+
+  ● CES workspace tile identity › TC-FE-IMPL-005 rejects ambiguous legacy routes
+
+    expect(received).toBeUndefined()
+
+    Received: {"container": "@fm/ratan", "entitlementSource": "EMS3", "entity": ["RATAN_ENTITLEMENT_RULE"], "entryName": "cashflow", "id": 101, "module": "/blotter", "subject": "CASHFLOW", "tile": "/cashflow"}
+
+      20 |
+      21 |   it("TC-FE-IMPL-005 rejects ambiguous legacy routes", () => {
+    > 22 |     expect(findTile([{ tiles: [tile, { ...tile, id: 102 }] }], workspace({}))).toBeUndefined();
+         |                                                                                ^
+      23 |   });
+      24 | });
+      25 |
+
+      at Object.<anonymous> (src/utils/drawer.ces.test.ts:22:80)
+
+FAIL src/utils/tileEntitlements.test.ts
+  ● per-tile provider admission › TC-FE-IMPL-003 admits a current BFF-authorized CES tile
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      14 | describe("per-tile provider admission", () => {
+      15 |   it("TC-FE-IMPL-003 admits a current BFF-authorized CES tile", () => {
+    > 16 |     expect(canOpenTile([], tile, drawers)).toBe(true);
+         |                       ^
+      17 |   });
+      18 |
+      19 |   it("TC-FE-IMPL-003 denies a CES tile absent from the current catalog", () => {
+
+      at Object.<anonymous> (src/utils/tileEntitlements.test.ts:16:23)
+
+  ● per-tile provider admission › TC-FE-IMPL-003 denies a CES tile absent from the current catalog
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      18 |
+      19 |   it("TC-FE-IMPL-003 denies a CES tile absent from the current catalog", () => {
+    > 20 |     expect(canOpenTile([entity("EMS3")], tile, [])).toBe(false);
+         |                       ^
+      21 |   });
+      22 |
+      23 |   it("TC-FE-IMPL-003 does not admit CES blank-feature configurations", () => {
+
+      at Object.<anonymous> (src/utils/tileEntitlements.test.ts:20:23)
+
+  ● per-tile provider admission › TC-FE-IMPL-003 does not admit CES blank-feature configurations
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      23 |   it("TC-FE-IMPL-003 does not admit CES blank-feature configurations", () => {
+      24 |     const blank = { ...tile, subject: "" };
+    > 25 |     expect(canOpenTile([], blank, [{ tiles: [blank] }])).toBe(false);
+         |                       ^
+      26 |   });
+      27 |
+      28 |   it("TC-FE-IMPL-003 denies invalid provider metadata", () => {
+
+      at Object.<anonymous> (src/utils/tileEntitlements.test.ts:25:23)
+
+  ● per-tile provider admission › TC-FE-IMPL-003 denies invalid provider metadata
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      28 |   it("TC-FE-IMPL-003 denies invalid provider metadata", () => {
+      29 |     const invalid = { ...tile, entitlementSource: "OTHER" };
+    > 30 |     expect(canOpenTile([entity("EMS2")], invalid, [{ tiles: [invalid] }])).toBe(false);
+         |                       ^
+      31 |   });
+      32 |
+      33 |   it("TC-FE-IMPL-003 excludes CES subjects from EMS2 admission", () => {
+
+      at Object.<anonymous> (src/utils/tileEntitlements.test.ts:30:23)
+
+  ● per-tile provider admission › TC-FE-IMPL-003 excludes CES subjects from EMS2 admission
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      33 |   it("TC-FE-IMPL-003 excludes CES subjects from EMS2 admission", () => {
+      34 |     const legacy = { ...tile, entitlementSource: "EMS2" };
+    > 35 |     expect(canOpenTile([entity("EMS3")], legacy, [{ tiles: [legacy] }])).toBe(false);
+         |                       ^
+      36 |     expect(canOpenTile([entity("EMS2")], legacy, [{ tiles: [legacy] }])).toBe(true);
+      37 |   });
+      38 |
+
+      at Object.<anonymous> (src/utils/tileEntitlements.test.ts:35:23)
+
+  ● per-tile provider admission › TC-FE-IMPL-003 preserves omitted-source legacy grants
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      40 |     const legacy = { ...tile, entitlementSource: undefined };
+      41 |     const grants = [{ name: tile.entity[0], subjects: [{ name: tile.subject, actions: [] }] }];
+    > 42 |     expect(canOpenTile(grants, legacy, [{ tiles: [legacy] }])).toBe(true);
+         |                       ^
+      43 |   });
+      44 |
+      45 |   it("TC-FE-IMPL-005 restores a current CES tile and removes it after catalog revocation", () => {
+
+      at Object.<anonymous> (src/utils/tileEntitlements.test.ts:42:23)
+
+  ● per-tile provider admission › TC-FE-IMPL-005 restores a current CES tile and removes it after catalog revocation
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  +  4
+
+      Array [
+        Object {
+    -     "containers": Array [
+    -       Object {
+    -         "applicationTileId": "101",
+    -         "container": "@fm/ratan",
+    -         "entitlementSource": "EMS3",
+    -         "entity": Array [
+    -           "RATAN_ENTITLEMENT_RULE",
+    -         ],
+    -         "id": "instance",
+    -         "module": "/blotter",
+    -         "subject": "CASHFLOW",
+    -         "tile": "/cashflow",
+    -       },
+    -     ],
+    -     "id": "workspace",
+    +     "containers": Array [],
+    +     "id": "ebfdc6ea-6d02-468b-8b09-e2d71e695bb4",
+    +     "isActive": false,
+    +     "label": "Workspace 1",
+        },
+      ]
+
+      45 |   it("TC-FE-IMPL-005 restores a current CES tile and removes it after catalog revocation", () => {
+      46 |     const workspace = { id: "workspace", containers: [{ ...tile, id: "instance", applicationTileId: "101" }] };
+    > 47 |     expect(validateWorkspace([workspace], [], drawers)).toEqual([workspace]);
+         |                                                         ^
+      48 |     expect(validateWorkspace([workspace], [], [])[0].containers).toEqual([]);
+      49 |   });
+      50 | });
+
+      at Object.<anonymous> (src/utils/tileEntitlements.test.ts:47:57)
+
+Test Suites: 4 failed, 4 total
+Tests:       16 failed, 4 passed, 20 total
+Snapshots:   0 total
+Time:        0.605 s, estimated 1 s
+Ran all test suites within paths "src/utils/login.ces.test.ts", "src/utils/drawer.ces.test.ts", "src/utils/tileEntitlements.test.ts", "src/components/Profile/util.ces.test.ts".
+Test results written to: ../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/base-baseline-final-jest.json

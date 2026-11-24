@@ -1,0 +1,144 @@
+{
+  "id": "LIFECYCLE-BASELINE-REASSESSMENT-20261021",
+  "recorded_at": "2026-10-21T00:20:08.528787+00:00",
+  "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+  "diagnostic_source": "diagnostic.test.tsx.snapshot",
+  "diagnostic_sha256": "38955c555dd92e61dcdaed638be2c9ea3107f0ff1eaa42ebadd6f8841e7182d0",
+  "inputs": "inputs.json",
+  "completed_case_count": 4,
+  "characterization_assertions_passed": true,
+  "runtime_sources_unchanged": true,
+  "cases": {
+    "active_cutoff-baseline": {
+      "run_record": "active_cutoff-baseline/run.json",
+      "run_record_sha256": "dfb0aac695f00da92913036e967f7781cb55b0ec827d08991e8eaeca131214a4",
+      "actual": "active_cutoff-baseline/actual.json",
+      "actual_sha256": "d954c20cfb9898b18ca672eedd41f7987821e7f2c145b9cbb4a06d577b58a14a",
+      "exit_code": 0,
+      "jest_summary": {
+        "success": true,
+        "numTotalTests": 2,
+        "numPassedTests": 1,
+        "numFailedTests": 0,
+        "numPendingTests": 1
+      },
+      "status": "PASSED"
+    },
+    "active_cutoff-candidate": {
+      "run_record": "active_cutoff-candidate/run.json",
+      "run_record_sha256": "b7861f8d53e360986ba6eb04173bc80b53d15c939aa55172ff6c44c289fa1154",
+      "actual": "active_cutoff-candidate/actual.json",
+      "actual_sha256": "6bbbebe6479521fd2fa5d990f439d2f21f13682df3077589b57a23563d1f651d",
+      "exit_code": 0,
+      "jest_summary": {
+        "success": true,
+        "numTotalTests": 2,
+        "numPassedTests": 1,
+        "numFailedTests": 0,
+        "numPendingTests": 1
+      },
+      "status": "PASSED"
+    },
+    "delayed_recovery-baseline": {
+      "run_record": "delayed_recovery-baseline/run.json",
+      "run_record_sha256": "ae6a963bc1c7cdb871013f81c924bf9443c54953a2c6a34a1e6c02f83acfbe3e",
+      "actual": "delayed_recovery-baseline/actual.json",
+      "actual_sha256": "abcf93d888d9d07d178db580b23850df9eda322db23df598ead15d7f4e37c38b",
+      "exit_code": 0,
+      "jest_summary": {
+        "success": true,
+        "numTotalTests": 2,
+        "numPassedTests": 1,
+        "numFailedTests": 0,
+        "numPendingTests": 1
+      },
+      "status": "PASSED"
+    },
+    "delayed_recovery-candidate": {
+      "run_record": "delayed_recovery-candidate/run.json",
+      "run_record_sha256": "60a83c5060a24d63a9724ed0f66bfa8e3a7f6a0f120f1d3996c4e4cb2cb11dc6",
+      "actual": "delayed_recovery-candidate/actual.json",
+      "actual_sha256": "b1afd52b8000aa8422e54980e785f8cd52aa2b64c3bab58d9d7f78c989f5c975",
+      "exit_code": 0,
+      "jest_summary": {
+        "success": true,
+        "numTotalTests": 2,
+        "numPassedTests": 1,
+        "numFailedTests": 0,
+        "numPendingTests": 1
+      },
+      "status": "PASSED"
+    }
+  },
+  "findings": [
+    {
+      "id": "F-01",
+      "classification": "INTRODUCED_REGRESSION",
+      "behavior": "Active-session logout at the original refresh deadline.",
+      "baseline_actual": {
+        "accessValidAcrossRefreshDeadline": true,
+        "successfulExtensionCount": 23,
+        "logoutRequests": 0,
+        "authenticatedAfterDeadline": true
+      },
+      "candidate_actual": {
+        "accessValidAcrossRefreshDeadline": true,
+        "successfulExtensionCount": 23,
+        "logoutRequests": 1,
+        "authenticatedAfterDeadline": false
+      },
+      "consequence": "The minor branch ends a controlled active session that the baseline keeps authenticated.",
+      "owner": "unknown",
+      "next_action": "Retain the introduced-regression finding. Correct refresh replacement or refresh-driven logout after separate application authorization.",
+      "limits": [
+        "Both versions start with equal seeded refresh credentials; hide acquisition itself is not compared.",
+        "A four-hour refresh lifetime is a fixture, not an asserted production setting."
+      ]
+    },
+    {
+      "id": "KNOWN-DELAYED-REFRESH",
+      "classification": "PRE_EXISTING_UNCHANGED_FAILURE",
+      "behavior": "A scheduled refresh response arrives after access expiry and cannot enable manual Extend.",
+      "baseline_actual": {
+        "refreshAcquisitionCount": 1,
+        "extendDisabledAfterDelivery": true,
+        "reloginRequests": 0,
+        "renewedAccessInstalled": false,
+        "logoutRequests": 1,
+        "authenticatedAfterGrace": false
+      },
+      "candidate_actual": {
+        "refreshAcquisitionCount": 1,
+        "extendDisabledAfterDelivery": true,
+        "reloginRequests": 0,
+        "renewedAccessInstalled": false,
+        "logoutRequests": 1,
+        "authenticatedAfterGrace": false
+      },
+      "consequence": "Both versions enter logout before late usable refresh credentials arrive. The minor change does not introduce this downstream failure.",
+      "owner": "unknown",
+      "next_action": "Downgrade its importance as incremental release risk. Retain the known background-recovery limitation and intended acceptance failure.",
+      "limits": [
+        "The shared scheduled acquisition boundary permits direct parity. The changed-only hide request is not asserted in the baseline.",
+        "The diagnostic characterizes the defect; passing characterization does not verify successful recovery."
+      ]
+    }
+  ],
+  "execution_limits": [
+    "JSDOM, fake timers, synthetic JWTs, and a controlled Axios adapter were used.",
+    "No real browser, natural four-hour run, BFF, provider, or production deployment was executed.",
+    "The transport fixture holds a response across expiry. It does not measure production latency frequency.",
+    "Dependencies come from the currently installed node_modules; historical dependency installation was not recreated."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "status": "PASSED",
+  "sourcePath": "repos/ui/mfe-base/src/utils/featureFlagController.ts",
+  "sourceSha256": "981abe52bb786188dab592e435ce7dfcb957ee5be9949c020ef7206396f4e56c",
+  "flagsPath": "repos/ui/mfe-base/src/utils/feature-flags.json",
+  "flagsSha256": "af54609fe812e2ce6234d85664584ec7653a218d50183d2733a1f033b7be22ac",
+  "cases": [
+    {
+      "condition": "declared flag query value",
+      "value": "true",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "TRUE",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "yes",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "YeS",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "1",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "y",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "false",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "no",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "0",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "n",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "unexpected",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    },
+    {
+      "condition": "declared flag query value",
+      "value": "",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    },
+    {
+      "condition": "committed flag configuration",
+      "environment": "local",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "committed flag configuration",
+      "environment": "dev",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "committed flag configuration",
+      "environment": "uat",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "committed flag configuration",
+      "environment": "pre-prod",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "committed flag configuration",
+      "environment": "prod",
+      "expected": true,
+      "actual": true,
+      "status": "PASSED"
+    },
+    {
+      "condition": "environment outside declared flag environment set",
+      "environment": "SIT",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    },
+    {
+      "condition": "undeclared flag query",
+      "expected": false,
+      "actual": false,
+      "status": "PASSED"
+    }
+  ],
+  "limits": [
+    "This harness executes the actual parser after Node TypeScript transformation.",
+    "The getEnv import and browser location are controlled test inputs.",
+    "This is not Jest, an end-to-end login, or a deployed-browser observation."
+  ]
+}

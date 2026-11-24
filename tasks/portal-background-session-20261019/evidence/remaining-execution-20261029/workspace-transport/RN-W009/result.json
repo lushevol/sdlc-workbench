@@ -1,0 +1,140 @@
+{
+  "id": "RN-W009",
+  "title": "Delete active last workspace during pending renewal",
+  "started_at": "2026-10-29T02:05:24.066Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w009",
+  "definition_sha256": "d7d2d8871e8af2f6514b31d1887888c469e49c81adbddd6c3688a6c110aabb9a",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "list",
+      "actual": [
+        "W-A"
+      ],
+      "expected": [
+        "W-A"
+      ],
+      "status": "PASSED"
+    },
+    {
+      "label": "selection",
+      "actual": "W-A",
+      "expected": "W-A",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239205371,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239205546,
+      "page": "A"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239206846,
+      "page": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "b0afba2b4cabf666b767ba80225fbc50ea81562b428f01b32ec3fb725f0e4deb",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        32,
+        299
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/TabItem/index.tsx",
+      "lines": [
+        24,
+        76
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "2c6b5fa605b46a5faaf7284fe1857e91c2647102ddd54f73dd1b92c8cabffc2b",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+  ],
+  "completed_at": "2026-10-29T02:05:39.862Z",
+  "runner_sha256": "ccd55df493f625e3951c3801cc370cbc68ccc9647ddcd2517dfd84903c61985e",
+  "runner_summary": "../attempt1/summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "canonical_definition_source_sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "definition_source_matches": false,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "canonical_definition_source_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/components/TabItem/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "2c6b5fa605b46a5faaf7284fe1857e91c2647102ddd54f73dd1b92c8cabffc2b",
+      "canonical_definition_source_sha256": "2c6b5fa605b46a5faaf7284fe1857e91c2647102ddd54f73dd1b92c8cabffc2b",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "definition_source_limit": "Canonical source inventory includes dirty Home bytes. Execution uses the immutable candidate and recorded hashes; it does not execute those dirty bytes.",
+  "execution_class": "executed",
+  "owner": "unknown application, transport, or security owner"
+}

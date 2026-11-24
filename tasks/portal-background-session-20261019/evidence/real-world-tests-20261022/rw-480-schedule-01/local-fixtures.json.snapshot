@@ -1,0 +1,167 @@
+{
+  "catalog": {
+    "drawers": [
+      {
+        "id": 1,
+        "label": "Local investigation fixture",
+        "tiles": [
+          {
+            "title": "Cashflow Blotter",
+            "container": "@fm/ratan_container",
+            "module": "/cashflow_blotter_cn",
+            "tile": "/cashflow_cn",
+            "emailSupport": "local@example.invalid",
+            "entity": [
+              "X_RATANONE"
+            ],
+            "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "isTemplate": true,
+            "imageDarkTheme": ""
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "id": 1,
+        "name": "X_RATANONE",
+        "applicationName": "LOCAL",
+        "roleId": 1,
+        "roleName": "LOCAL",
+        "subjects": [
+          {
+            "id": 1,
+            "name": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "longName": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "actions": [
+              {
+                "id": 1,
+                "entitlementId": 1,
+                "name": "UI_Read_Access"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "workspace": {
+      "id": "local-blotter-workspace",
+      "label": "Cashflow Blotter",
+      "isActive": true,
+      "containers": [
+        {
+          "title": "Cashflow Blotter",
+          "container": "@fm/ratan_container",
+          "module": "/cashflow_blotter_cn",
+          "tile": "/cashflow_cn",
+          "emailSupport": "local@example.invalid",
+          "entity": [
+            "X_RATANONE"
+          ],
+          "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+          "isTemplate": true,
+          "imageDarkTheme": "",
+          "id": "local-blotter-container",
+          "panelId": "local-blotter-panel",
+          "tabId": "local-blotter-workspace"
+        }
+      ]
+    }
+  },
+  "fixtures": {
+    "storage": {},
+    "responses": [
+      {
+        "pathname": "/api/ratan/rule/v1/fields",
+        "body": {
+          "fields": [
+            {
+              "indexedTerm": "Cashflow.Cashflow_Id",
+              "businessTerm": "Cashflow ID",
+              "dataType": "String",
+              "context": "CASHFLOW_DATA",
+              "scope": "{\"disabledBlotter\":[]}",
+              "valueList": "[]"
+            },
+            {
+              "indexedTerm": "Cashflow.Cashflow_State",
+              "businessTerm": "Cashflow State",
+              "dataType": "String",
+              "context": "CASHFLOW_DATA",
+              "scope": "{\"disabledBlotter\":[]}",
+              "valueList": "[\"WAITING\"]"
+            }
+          ],
+          "version": {
+            "fieldsConfig": 1,
+            "fields": 1
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/rule/v1/fields/versions",
+        "body": {
+          "ratan_suppression_fields_config": {
+            "activedVersion": 1
+          },
+          "ratan_suppression_fields": {
+            "activedVersion": 1
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/stmcn/v1/cashflows",
+        "method": "POST",
+        "body": {
+          "data": {
+            "cashflowUltraQuery": {
+              "totalResult": 0,
+              "pageIndex": 0,
+              "itemsPerPage": 100,
+              "lastPage": true,
+              "results": []
+            },
+            "cashflowUltraQueryByOpensearch": {
+              "totalResult": 0,
+              "pageIndex": 0,
+              "itemsPerPage": 100,
+              "lastPage": true,
+              "results": []
+            },
+            "cashflowUltraQueryCount": {
+              "count": 0
+            },
+            "groupMessages": {
+              "pageInfo": {
+                "totalHits": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/v2/customview/views",
+        "body": []
+      },
+      {
+        "pathname": "/api/ratan/v3/customview/views",
+        "body": []
+      },
+      {
+        "pathname": "/api/ratan/notification/subscriptions/info",
+        "status": 503,
+        "body": {
+          "message": "LOCAL_LIVE_NOTIFICATIONS_UNAVAILABLE"
+        }
+      }
+    ]
+  },
+  "limits": [
+    "CDP and a passive DOM observer remain attached. Natural browser freezing is not established.",
+    "Local identity, catalog, entitlement, and business response fixtures replace external systems. UAT parity is not established.",
+    "Live notification acquisition returns HTTP 503. Socket traffic and notification-driven updates are unavailable.",
+    "All non-localhost network requests are aborted. External profile photos and services are unavailable.",
+    "Toolkit custom elements use empty local substitutes.",
+    "AG Grid32.3.3 and React Redux8.1.3 differ from some Ratan manifest constraints."
+  ]
+}

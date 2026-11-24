@@ -1,0 +1,1 @@
+../../records/candidates/settlement/INT-KT-entity-and-reference-data-design.md

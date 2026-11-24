@@ -1,0 +1,44 @@
+{
+  "recorded_at": "2026-10-25T09:00:09.831624+00:00",
+  "reviewer": "Codex, with independent pending_design_review agent",
+  "comparison_base": "ae8213f2963047e7c126d01f4003cee1236abc25",
+  "comparison_head": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+  "finding_count": 0,
+  "conclusion": "No actionable new defect found within inspected session boundaries.",
+  "inspected_predicates": [
+    "Request ownership is stamped synchronously.",
+    "Fresh login invalidates prior and login-pending work.",
+    "Stale success and errors stop before credential, error, or loading mutations.",
+    "Same-session access rotation keeps ownership valid.",
+    "Refresh deduplication requires matching generation."
+  ],
+  "validation": "summary.json",
+  "files_sha256": {
+    "src/hooks/service/config.ts": "aac27acebae126dcc34abcab6a4a5df5a30af35d81ed7a04e1dca284fc64b39f",
+    "src/hooks/service/index.ts": "0341b421b239411f368ed3d0989a90ef48557c956d40481c27fde47d5e21fea5",
+    "src/hooks/service/util/success.request.handler.ts": "ec0957b68a6ec951d1922cd7f4fa1cb92f55f93ad64416e31a2131353f84ba01",
+    "src/hooks/service/util/succes.response.handler.ts": "bd88f4d083401316458d5c0175b366152225591f4b59a1a37d78d07a1ab57fef",
+    "src/hooks/service/util/error.response.handler.ts": "01678bf5f1ac0764f6a3a3e39fedd92aa07ba523a46444c216650baf59151e2b",
+    "src/utils/common.ts": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc",
+    "src/utils/sessionEpoch.ts": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+    "src/pages/Home/common/sessionOwnership.test.tsx": "05d41a1ee54b2cd004284c1bb06b66255b2e4cee1b7faf1d74133fb6c5bc7e6a",
+    "src/services/index.ts": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+    "src/utils/login.ts": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+    "src/pages/Login/common/useController.ts": "5e97ec2a4065cbef8ef9033b326bc7e9c9dfdbb038656f22fecbbf90a62e5dfb"
+  },
+  "limits": [
+    "Browser execution remains separate.",
+    "Timeout immediate invalidation and callback ownership belong to issue 2.",
+    "This source review does not establish the absence of all defects or PROD parity."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

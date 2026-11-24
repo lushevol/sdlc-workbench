@@ -1,0 +1,254 @@
+{
+  "id": "RN-X003",
+  "label": "candidate",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "started_at": "2026-10-31T04:09:36.758Z",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "name": "three workspace descriptors",
+      "actual": 3,
+      "expected": 3,
+      "status": "PASSED"
+    },
+    {
+      "name": "Logout sets logout state while renewal held",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "late renewal cannot authenticate after Logout",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "name": "single held renewal request",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    }
+  ],
+  "cycles": [],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793404801754
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793404803644
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793404861001,
+      "attempt": 1,
+      "mode": "hold"
+    },
+    {
+      "endpoint": "logout",
+      "at": 1793404862001
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "start-before-renewal.png",
+      "phase": "start-before-renewal",
+      "captured_at": "2026-10-31T04:09:40.572Z",
+      "sha256": "6624a394d7e67cedb676d39293d4ca2c022a1363016884bdc59aa96c0c437477"
+    },
+    {
+      "file": "logout-during-pending.png",
+      "phase": "logout-during-pending",
+      "captured_at": "2026-10-31T04:09:40.766Z",
+      "sha256": "a94bc8b811782f7a2d0e30c233ef901cc84dff1b1773b9f27fe0bb131a1a8925"
+    },
+    {
+      "file": "logged-out.png",
+      "phase": "logged-out",
+      "captured_at": "2026-10-31T04:09:40.976Z",
+      "sha256": "d0788ab590f8b9fce9267bae7f986e9ae2ec4ca60fd0c34504e0bdb9072f68df"
+    }
+  ],
+  "source_binding": "../../../local-source-binding.json",
+  "initial": {
+    "authenticated": true,
+    "expiry": 1793404861000,
+    "workspaceIds": [
+      "4d7bc470-2cb3-421c-ab70-63e688810ec4",
+      "ce6a2ade-aaed-42c8-8725-cc2733590c24",
+      "4a396a35-3ea4-41b7-905a-fec2b4d1b4e1"
+    ],
+    "workspaceLabels": [
+      "Workspace 1",
+      "Workspace 2",
+      "Workspace 3"
+    ],
+    "dialog": false,
+    "isOnLogout": false,
+    "events": {
+      "opens": 0,
+      "closures": 0,
+      "events": []
+    },
+    "token_sha256": "484ceb2de52a741e28bdb7cb258f11e954bea53f1a653b019da2432356328657"
+  },
+  "late_delivery": "fulfilled",
+  "served_scripts": [
+    {
+      "url": "http://127.0.0.1:8342/base.js",
+      "status": 200,
+      "sha256": "dba0e06622a5744c09185d0e8fa92efd80845dfe2646af72ec54fc2bbe6b163c",
+      "bytes": 4779473,
+      "instrumentation_marker_present": false
+    },
+    {
+      "url": "http://127.0.0.1:8342/794232ed43edaf91493e.src_pages_Home_index_tsx.base.js",
+      "status": 200,
+      "sha256": "20c8aaad7302209163db177eb44b45deadcfa9640943a62b93b0322660e52df4",
+      "bytes": 211140,
+      "instrumentation_marker_present": true
+    },
+    {
+      "url": "http://127.0.0.1:8342/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+      "status": 200,
+      "sha256": "81167231d2c20307e29a9b564a1ce18d6656958ff6500f0887663cdf61478b11",
+      "bytes": 489028,
+      "instrumentation_marker_present": false
+    }
+  ],
+  "console_capture": "sanitized text; tokens and fixture credentials removed; 4000-character bound",
+  "completed_at": "2026-10-31T04:09:40.976Z",
+  "collection": {
+    "emitted": 29,
+    "collected": 29,
+    "parse_errors": 0,
+    "unique_sequences": 29,
+    "contiguous": true
+  },
+  "application_event_count": 29,
+  "console_signals": [
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:38.436Z",
+      "message": "Using kebab-case for css properties in objects is not supported. Did you mean WebkitTextFillColor?"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:38.549Z",
+      "message": "Warning: A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components%s \n    at input\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at InputBase (http://127.0.0.1:8342/base.js:12589:88)\n    at OutlinedInput (http://127.0.0.1:8342/base.js:16790:88)\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at FormControl (http://127.0.0.1:8342/base.js:9709:87)\n    at http://127.0.0.1:8342/base.js:1069:66\n    at TextField (http://127.0.0.1:8342/base.js:22663:87)\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at FormControl (http://127.0.0.1:8342/base.js:9709:87)\n    at section\n    at main\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Grid (http://127.0.0.1:8342/base.js:10902:93)\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Grid (http://127.0.0.1:8342/base.js:10902:93)\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at ErrorBoundary (http://127.0.0.1:8342/base.js:68761:90)\n    at ErrorComponent\n    at Login (http://127.0.0.1:8342/base.js:72276:89)\n    at Suspense\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Routing (http://127.0.0.1:8342/base.js:72881:89)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at DefaultPropsProvider (http://127.0.0.1:8342/base.js:27610:3)\n    at RtlProvider (http://127.0.0.1:8342/base.js:27778:7)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:26624:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:28070:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:24814:14)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:73349:20)\n    at Theme (http://127.0.0.1:8342/base.js:74400:80)\n    at Provider (http://127.0.0.1:8342/base.js:71018:225)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at App (http://127.0.0.1:8342/base.js:67097:28)\n    at n (http://127.0.0.1:8342/base.js:97656:6223)\n    at t (http://127.0.0.1:8342/base.js:97656:3311)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.170Z",
+      "message": "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s fullWidth fullwidth \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tabs (http://127.0.0.1:8342/base.js:21896:88)\n    at main\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Home (http://127.0.0.1:8342/[TOKEN].js:3363:89)\n    at Suspense\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Routing (http://127.0.0.1:8342/base.js:72881:89)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at DefaultPropsProvider (http://127.0.0.1:8342/base.js:27610:3)\n    at RtlProvider (http://127.0.0.1:8342/base.js:27778:7)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:26624:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:28070:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:24814:14)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:73349:20)\n    at Theme (http://127.0.0.1:8342/base.js:74400:80)\n    at Provider (http://127.0.0.1:8342/base.js:71018:225)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at App (http://127.0.0.1:8342/base.js:67097:28)\n    at n (http://127.0.0.1:8342/base.js:97656:6223)\n    at t (http://127.0.0.1:8342/base.js:97656:3311)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.170Z",
+      "message": "Warning: Received `%s` for a non-boolean attribute `%s`.\n\nIf you want to write it to the DOM, pass a string instead: %s=\"%s\" or %s={value.toString()}.\n\nIf you used to conditionally omit it with %s={condition && value}, pass %s={condition ? value : undefined} instead.%s false indicator indicator false indicator indicator indicator \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tabs (http://127.0.0.1:8342/base.js:21896:88)\n    at main\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Home (http://127.0.0.1:8342/[TOKEN].js:3363:89)\n    at Suspense\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Routing (http://127.0.0.1:8342/base.js:72881:89)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at DefaultPropsProvider (http://127.0.0.1:8342/base.js:27610:3)\n    at RtlProvider (http://127.0.0.1:8342/base.js:27778:7)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:26624:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:28070:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:24814:14)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:73349:20)\n    at Theme (http://127.0.0.1:8342/base.js:74400:80)\n    at Provider (http://127.0.0.1:8342/base.js:71018:225)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at App (http://127.0.0.1:8342/base.js:67097:28)\n    at n (http://127.0.0.1:8342/base.js:97656:6223)\n    at t (http://127.0.0.1:8342/base.js:97656:3311)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.170Z",
+      "message": "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s selectionFollowsFocus selectionfollowsfocus \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tabs (http://127.0.0.1:8342/base.js:21896:88)\n    at main\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Home (http://127.0.0.1:8342/[TOKEN].js:3363:89)\n    at Suspense\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Routing (http://127.0.0.1:8342/base.js:72881:89)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at DefaultPropsProvider (http://127.0.0.1:8342/base.js:27610:3)\n    at RtlProvider (http://127.0.0.1:8342/base.js:27778:7)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:26624:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:28070:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:24814:14)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:73349:20)\n    at Theme (http://127.0.0.1:8342/base.js:74400:80)\n    at Provider (http://127.0.0.1:8342/base.js:71018:225)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at App (http://127.0.0.1:8342/base.js:67097:28)\n    at n (http://127.0.0.1:8342/base.js:97656:6223)\n    at t (http://127.0.0.1:8342/base.js:97656:3311)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.170Z",
+      "message": "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s textColor textcolor \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tabs (http://127.0.0.1:8342/base.js:21896:88)\n    at main\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Home (http://127.0.0.1:8342/[TOKEN].js:3363:89)\n    at Suspense\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Routing (http://127.0.0.1:8342/base.js:72881:89)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at DefaultPropsProvider (http://127.0.0.1:8342/base.js:27610:3)\n    at RtlProvider (http://127.0.0.1:8342/base.js:27778:7)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:26624:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:28070:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:24814:14)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:73349:20)\n    at Theme (http://127.0.0.1:8342/base.js:74400:80)\n    at Provider (http://127.0.0.1:8342/base.js:71018:225)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at App (http://127.0.0.1:8342/base.js:67097:28)\n    at n (http://127.0.0.1:8342/base.js:97656:6223)\n    at t (http://127.0.0.1:8342/base.js:97656:3311)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.172Z",
+      "message": "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s tabId tabid \n    at div\n    at TabPanel (http://127.0.0.1:8342/[TOKEN].js:2160:24)\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Box (http://127.0.0.1:8342/base.js:28919:72)\n    at main\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Home (http://127.0.0.1:8342/[TOKEN].js:3363:89)\n    at Suspense\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Routing (http://127.0.0.1:8342/base.js:72881:89)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at DefaultPropsProvider (http://127.0.0.1:8342/base.js:27610:3)\n    at RtlProvider (http://127.0.0.1:8342/base.js:27778:7)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:26624:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:28070:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:24814:14)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:73349:20)\n    at Theme (http://127.0.0.1:8342/base.js:74400:80)\n    at Provider (http://127.0.0.1:8342/base.js:71018:225)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at App (http://127.0.0.1:8342/base.js:67097:28)\n    at n (http://127.0.0.1:8342/base.js:97656:6223)\n    at t (http://127.0.0.1:8342/base.js:97656:3311)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.173Z",
+      "message": "The pseudo class \":first-child\" is potentially unsafe when doing server-side rendering. Try changing it to \":first-of-type\"."
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.173Z",
+      "message": "The pseudo class \":first-child\" is potentially unsafe when doing server-side rendering. Try changing it to \":first-of-type\"."
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.485Z",
+      "message": "Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <button> button \n    at button\n    at http://127.0.0.1:8342/base.js:1069:66\n    at ButtonBase (http://127.0.0.1:8342/base.js:4812:87)\n    at http://127.0.0.1:8342/base.js:1069:66\n    at IconButton (http://127.0.0.1:8342/base.js:11584:87)\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tooltip (http://127.0.0.1:8342/[TOKEN].js:3317:88)\n    at TabItem (http://127.0.0.1:8342/[TOKEN].js:2068:20)\n    at button\n    at http://127.0.0.1:8342/base.js:1069:66\n    at ButtonBase (http://127.0.0.1:8342/base.js:4812:87)\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tab (http://127.0.0.1:8342/base.js:21179:87)\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tabs (http://127.0.0.1:8342/base.js:21896:88)\n    at main\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Home (http://127.0.0.1:8342/[TOKEN].js:3363:89)\n    at Suspense\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Routing (http://127.0.0.1:8342/base.js:72881:89)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at DefaultPropsProvider (http://127.0.0.1:8342/base.js:27610:3)\n    at RtlProvider (http://127.0.0.1:8342/base.js:27778:7)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:26624:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:28070:5)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:24814:14)\n    at ThemeProvider (http://127.0.0.1:8342/base.js:73349:20)\n    at Theme (http://127.0.0.1:8342/base.js:74400:80)\n    at Provider (http://127.0.0.1:8342/base.js:71018:225)\n    at LocalizationProvider (http://127.0.0.1:8342/base.js:44921:19)\n    at App (http://127.0.0.1:8342/base.js:67097:28)\n    at n (http://127.0.0.1:8342/base.js:97656:6223)\n    at t (http://127.0.0.1:8342/base.js:97656:3311)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.496Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.497Z",
+      "message": "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.545Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.546Z",
+      "message": "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.596Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.596Z",
+      "message": "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.675Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.675Z",
+      "message": "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.709Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.709Z",
+      "message": "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.709Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.709Z",
+      "message": "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.872Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "level": "error",
+      "at": "2026-10-31T04:09:40.872Z",
+      "message": "e AxiosError: Request failed with status code 404\n    at settle (http://127.0.0.1:8342/base.js:90285:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:8342/base.js:88028:68)"
+    }
+  ],
+  "event_log": "application-events.ndjson"
+}

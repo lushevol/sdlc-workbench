@@ -1,0 +1,824 @@
+{
+  "config": {
+    "argv": [
+      "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config=e2e/audit.config.ts",
+      "preferences.spec.ts",
+      "module-risk-expanded.spec.ts",
+      "--grep",
+      "UI-PREF-00[345]|UI-RISK-",
+      "--workers=1"
+    ],
+    "configFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.config.ts",
+    "rootDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "snapshotDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "launchOptions": {
+            "channel": "chromium",
+            "headless": true,
+            "chromiumSandbox": true
+          },
+          "trace": "on",
+          "screenshot": "on",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.reporter.ts",
+        {
+          "output": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "module-risk-expanded.spec.ts",
+      "file": "module-risk-expanded.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-RISK-001 reject the disabled Global default",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React shell and internal admin modules. Controlled login, validation, activity renewal, UI-USER-01 entity roles, and empty administration endpoint responses. Controlled tenant component is used only for the disabled-default risk case. No BFF permission or business tenant acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-RISK-001"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7852,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:58:112\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:50:3",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                      "column": 112,
+                      "line": 58
+                    },
+                    "snippet": "  56 |       source: 'repos/ui/mfe-base/src/components/Drawer/MenuItem.tsx',\n  57 |       expected: 'No newly added workspace displays /tile-global' });\n> 58 |     await expect(app.selectedPanel().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })).toHaveCount(0);\n     |                                                                                                                ^\n  59 |   });\n  60 |   await audit.step(5, async () => { await expect(app.entry('Indonesia')).toBeEnabled(); });\n  61 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                        "column": 112,
+                        "line": 58
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n\n  56 |       source: 'repos/ui/mfe-base/src/components/Drawer/MenuItem.tsx',\n  57 |       expected: 'No newly added workspace displays /tile-global' });\n> 58 |     await expect(app.selectedPanel().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })).toHaveCount(0);\n     |                                                                                                                ^\n  59 |   });\n  60 |   await audit.step(5, async () => { await expect(app.entry('Indonesia')).toBeEnabled(); });\n  61 | });\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:58:112\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:50:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as fixture UI-USER-01 with the case-specific permissions",
+                      "duration": 577
+                    },
+                    {
+                      "title": "2. And T-GLOBAL is disabled and T-ID is enabled in one card",
+                      "duration": 870
+                    },
+                    {
+                      "title": "3. When User A clicks section with text \"Test Tile\" inside the tile group with subtitle \"Demo\" in the fixture category inside the right drawer titled \"Tile Options\"",
+                      "duration": 55
+                    },
+                    {
+                      "title": "4. Then no newly added workspace displays the disabled Global tile route \"/tile-global\"",
+                      "duration": 5824,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })\u001b[22m\n\u001b[2m    14 × locator resolved to 1 element\u001b[22m\n\u001b[2m       - unexpected value \"1\"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:58:112\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:50:3",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                          "column": 112,
+                          "line": 58
+                        },
+                        "snippet": "  56 |       source: 'repos/ui/mfe-base/src/components/Drawer/MenuItem.tsx',\n  57 |       expected: 'No newly added workspace displays /tile-global' });\n> 58 |     await expect(app.selectedPanel().getByTestId('fixture-tile-route').filter({ hasText: /^\\/tile-global$/ })).toHaveCount(0);\n     |                                                                                                                ^\n  59 |   });\n  60 |   await audit.step(5, async () => { await expect(app.entry('Indonesia')).toBeEnabled(); });\n  61 | });"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:00.690Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React shell and internal admin modules. Controlled login, validation, activity renewal, UI-USER-01 entity roles, and empty administration endpoint responses. Controlled tenant component is used only for the disabled-default risk case. No BFF permission or business tenant acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-RISK-001"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--d09826be77c7533da27e3d5927109011659b31a2.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--155609f4ead83ec1138447d22ac60e73f735c4a6.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--02b00347f29256016cc9d8ee9be27a5a9b918a25.png"
+                    },
+                    {
+                      "name": "step-04-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/attachments/step-04-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--ec58bdd5c1f6af77a0c419815a0ef153c8e61348.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--65f5e8140bbe62a3615c52f1e5cfd8629162f92e.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-faff8-the-disabled-Global-default/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                    "column": 112,
+                    "line": 58
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "234e9e4c407037380719-95969d31312d544e6504",
+          "file": "module-risk-expanded.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "UI-RISK-010 show an explicit unsupported internal module message",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React shell and internal admin modules. Controlled login, validation, activity renewal, UI-USER-01 entity roles, and empty administration endpoint responses. Controlled tenant component is used only for the disabled-default risk case. No BFF permission or business tenant acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-RISK-010"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7488,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:78:137\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:75:3",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                      "column": 137,
+                      "line": 78
+                    },
+                    "snippet": "  76 |     await audit.record('unknown-module-result', { module: '/unknown', panelText: await app.selectedPanel().innerText(),\n  77 |       source: 'repos/ui/mfe-base/src/admin/Routing.tsx', expected: 'An explicit unsupported-module message is visible.' });\n> 78 |     await expect(app.selectedPanel().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)).toBeVisible();\n     |                                                                                                                                         ^\n  79 |   });\n  80 | });\n  81 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                        "column": 137,
+                        "line": 78
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\u001b[22m\n\n\n  76 |     await audit.record('unknown-module-result', { module: '/unknown', panelText: await app.selectedPanel().innerText(),\n  77 |       source: 'repos/ui/mfe-base/src/admin/Routing.tsx', expected: 'An explicit unsupported-module message is visible.' });\n> 78 |     await expect(app.selectedPanel().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)).toBeVisible();\n     |                                                                                                                                         ^\n  79 |   });\n  80 | });\n  81 |\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:78:137\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:75:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as fixture UI-USER-01 with the case-specific permissions",
+                      "duration": 1054
+                    },
+                    {
+                      "title": "2. And an admin tile points to module /unknown",
+                      "duration": 94
+                    },
+                    {
+                      "title": "3. When User A clicks section with source identity \"UNVERIFIED admin tile title and subtitle\" inside the fixture category inside the drawer titled \"Tile Options\"",
+                      "duration": 79
+                    },
+                    {
+                      "title": "4. Then an explicit unsupported-module message is visible in the selected tile tabpanel",
+                      "duration": 5014,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tabpanel').visible().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:78:137\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts:75:3",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                          "column": 137,
+                          "line": 78
+                        },
+                        "snippet": "  76 |     await audit.record('unknown-module-result', { module: '/unknown', panelText: await app.selectedPanel().innerText(),\n  77 |       source: 'repos/ui/mfe-base/src/admin/Routing.tsx', expected: 'An explicit unsupported-module message is visible.' });\n> 78 |     await expect(app.selectedPanel().getByText(/unsupported.*module|unknown.*module|module.*(?:unsupported|not supported|not found)/i)).toBeVisible();\n     |                                                                                                                                         ^\n  79 |   });\n  80 | });\n  81 |"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:09.276Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React shell and internal admin modules. Controlled login, validation, activity renewal, UI-USER-01 entity roles, and empty administration endpoint responses. Controlled tenant component is used only for the disabled-default risk case. No BFF permission or business tenant acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-RISK-010"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--9b2de82d9c77665c2d6fb569134245ea83677fd2.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--594a7179bad216016986f908713c8e38e2353911.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--e273de0fbe011d7d8028b9576fcd5b635fc414c9.png"
+                    },
+                    {
+                      "name": "step-04-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/attachments/step-04-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--aa5fabb61d3f003c86565fd74b2ab05034e776d4.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--6934c68078e53056e2cb794b6e130fe2c8cf607b.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/module-risk-expanded-UI-RI-510b2-ted-internal-module-message/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+                    "column": 137,
+                    "line": 78
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "234e9e4c407037380719-dea8913d5438b3e57ff0",
+          "file": "module-risk-expanded.spec.ts",
+          "line": 63,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "preferences.spec.ts",
+      "file": "preferences.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-PREF-003 time display uses the selected clock mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React with controlled login/validation/activity renewal and seeded empty workspace. Preference storage is real browser storage. Clock cases use Playwright clock."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-PREF-003"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2091,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as fixture UI-USER-01 with the case-specific permissions",
+                      "duration": 1191
+                    },
+                    {
+                      "title": "2. And the controlled time is 2026-10-22T00:05:00Z and browser timezone is Asia/Singapore; clock mode is UTC",
+                      "duration": 35
+                    },
+                    {
+                      "title": "3. When User A clicks switch named \"Time Switch\" inside the shell application bar",
+                      "duration": 51
+                    },
+                    {
+                      "title": "4. Then text with text \"08:05 Local\" inside the Time Switch fieldset in the shell application bar is visible",
+                      "duration": 4
+                    },
+                    {
+                      "title": "5. And switch named \"Time Switch\" inside the shell application bar is not checked",
+                      "duration": 4
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:17.901Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React with controlled login/validation/activity renewal and seeded empty workspace. Preference storage is real browser storage. Clock cases use Playwright clock."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-PREF-003"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--ce27bc7ab620f6fdce39ec8b3315de1b0a0ca931.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--ed911e9979bf27df830c6bc1ce3027cbe97e6c8f.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--ae947709e1fc13fc346ae8a87f14421ae14ef3a2.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--1f895c7674f38c437eacfe3abd4063e250450ff4.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--6ae8f63586f477f9a53e4c820f36f38da3512c8b.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--359342034faef5c00d7491bd5cca3a5743d6fe6e.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-003-ti-f59e3-ses-the-selected-clock-mode/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-38496e6ee389363856d9",
+          "file": "preferences.spec.ts",
+          "line": 45,
+          "column": 3
+        },
+        {
+          "title": "UI-PREF-004 time display uses the selected clock mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React with controlled login/validation/activity renewal and seeded empty workspace. Preference storage is real browser storage. Clock cases use Playwright clock."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-PREF-004"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1551,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as fixture UI-USER-01 with the case-specific permissions",
+                      "duration": 784
+                    },
+                    {
+                      "title": "2. And the controlled time is 2026-10-22T00:05:00Z and browser timezone is Asia/Singapore; clock mode is local",
+                      "duration": 92
+                    },
+                    {
+                      "title": "3. When User A clicks switch named \"Time Switch\" inside the shell application bar",
+                      "duration": 51
+                    },
+                    {
+                      "title": "4. Then text with text \"00:05 UTC\" inside the Time Switch fieldset in the shell application bar is visible",
+                      "duration": 4
+                    },
+                    {
+                      "title": "5. And switch named \"Time Switch\" inside the shell application bar is checked",
+                      "duration": 4
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:20.562Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React with controlled login/validation/activity renewal and seeded empty workspace. Preference storage is real browser storage. Clock cases use Playwright clock."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-PREF-004"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--6297fcfaf2f29e0d395365fb09df7af52f448f2e.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--4ee6316ba457cd169a63c5c59ef6eb591cd13a28.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--ab15ff533d2c426baf24588a8e95d8a4adfe0449.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--e07820f0d4014ee0231139c89c4f332cb4fddd7e.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--3435d0143f7ddafeadc5bc944aa17429e0aae3ee.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--bff841bc172c0322e9f9780c3dfd4987a59223c9.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-004-ti-615af-ses-the-selected-clock-mode/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-adbf878b3669df55390e",
+          "file": "preferences.spec.ts",
+          "line": 45,
+          "column": 3
+        },
+        {
+          "title": "UI-PREF-005 time display uses the selected clock mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React with controlled login/validation/activity renewal and seeded empty workspace. Preference storage is real browser storage. Clock cases use Playwright clock."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-PREF-005"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1311,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as fixture UI-USER-01 with the case-specific permissions",
+                      "duration": 734
+                    },
+                    {
+                      "title": "2. And the real interval is controlled and initial time is 2026-10-22T00:05:00Z",
+                      "duration": 26
+                    },
+                    {
+                      "title": "3. When the declared controlled clock advances by 60 seconds",
+                      "duration": 3
+                    },
+                    {
+                      "title": "4. Then text with text \"00:06 UTC\" inside the Time Switch fieldset in the shell application bar is visible",
+                      "duration": 4
+                    },
+                    {
+                      "title": "5. And switch named \"Time Switch\" inside the shell application bar is checked",
+                      "duration": 3
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:22.264Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React with controlled login/validation/activity renewal and seeded empty workspace. Preference storage is real browser storage. Clock cases use Playwright clock."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-PREF-005"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--9f2e62beb47dbedcc6cb89e06bea453582393002.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--80bd8a193832807d55e2d9058c8a977c3aee4694.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--d92b4cf11cde80d7a0283e27f0a4e22fcf6288f4.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--337a0c5db3a02d6792a024403d9667e49c76d60f.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--d28ea44a7e9509a619d7dc3416943e55c3a644ab.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--1efbf9224b82bb38efa407b107e03cc3d730d657.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/playwright-artifacts/preferences-UI-PREF-005-ti-0dea9-ses-the-selected-clock-mode/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-d27e2891884f8e5c9b7c",
+          "file": "preferences.spec.ts",
+          "line": 45,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T05:33:00.311Z",
+    "duration": 23456.755,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

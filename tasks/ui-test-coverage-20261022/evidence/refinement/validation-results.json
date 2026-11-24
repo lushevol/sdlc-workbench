@@ -1,0 +1,71 @@
+{
+  "status": "PASSED",
+  "run_at_utc": "2026-10-22T02:02:20.237064+00:00",
+  "runtime": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "total": 611,
+    "passed": 609,
+    "skipped": 2,
+    "log": "runtime-tests.log",
+    "sha256": "cac5cc7187c0950fb320369bb4f0948744f0c2cf6ebe2ed9c15f22300f9e6d67",
+    "source_fingerprints": {
+      "core/gherkin_quality.py": "0cd59efc9c8efdd3fd795963cd4aa1866495e3fe85582d455c75c39cd7b5ed7a",
+      "core/artifact_lint.py": "b26262e2b703b2d962d87806c3d82acfdd3a5ca03240183e087e4f290d189285",
+      "tests/test_gherkin_quality.py": "cf7a23e4b9bb6750a651c0221c1374b819bc1ee8cdb2387d7a6d9ebc0296123b",
+      "tests/test_artifact_lint.py": "9f9c9af8e5938dabefeb99a646de178415c0bac135f2d2eae0b780617109d322"
+    }
+  },
+  "sandbox_attempt": {
+    "exit_code": 1,
+    "total": 606,
+    "error": "PermissionError when test_eureka_reads_instances_from_mock_registry bound 127.0.0.1",
+    "resolution": "The complete final suite ran with sandbox escalation and passed.",
+    "prior_output_sha256": "169dfbe010d34513d43a3c596257984df26e4b697cbcb0e5c233eadc6ec63cf7"
+  },
+  "wheel": {
+    "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+    "exit_code": 0,
+    "path": "dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl",
+    "sha256": "b031429b559557e23250a3321780f42c5ef4cc8e7c1357165fd538fdf99bb68f",
+    "log": "wheel-build.log",
+    "build_limit": "Uses installed offline build dependencies. Isolated external dependency resolution was not retested."
+  },
+  "installed_smoke": {
+    "install_command": ".venv/bin/python -m pip install --no-deps --target /tmp/ui-refinement-final-wheel/installed dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl",
+    "init_command": "ai-sdlc init /tmp/ui-refinement-final-wheel/workspace",
+    "validate_command": "ai-sdlc --workspace /tmp/ui-refinement-final-wheel/workspace validate",
+    "checks": {
+      "initialized_workspace_valid": true,
+      "gherkin_skill_shipped": true,
+      "component_vocabulary_shipped": true,
+      "installed_cli_schema_matches_source": true,
+      "runtime_source_not_copied": true
+    },
+    "validation": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 0,
+      "findings": [],
+      "catalogs": {
+        "repositories": 0,
+        "services": 0,
+        "capabilities": 0,
+        "contracts": 0,
+        "sources": 0,
+        "tools": 0
+      }
+    },
+    "execution_root": "/tmp, outside the source checkout",
+    "dependency_limit": "The smoke check uses the existing Python dependency environment."
+  },
+  "business_case_gate": {
+    "status": "FAIL",
+    "exit_code": 1,
+    "scenarios": 521,
+    "automation_ready": false,
+    "business_execution_status": "NOT_RUN",
+    "limits": "The runtime and document checks do not establish passing business cases."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "case_id": "RN-S024",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:07.190Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "assertions": [
+    {
+      "name": "malformed success does not close dialog",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "expired renewal access is not installed",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "usable refresh permits retry",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    }
+  ],
+  "observations": {
+    "document_csp_present": false
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235602667,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235605559
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793235662001,
+      "refresh_subject": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "56b988ccaca0bda9bb8bb3b723547e86e21a62939bd2b84fa70d95d939aa5934"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+  ],
+  "completed_at": "2026-10-29T02:00:12.919Z"
+}

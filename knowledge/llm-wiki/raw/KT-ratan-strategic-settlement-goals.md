@@ -1,0 +1,1 @@
+../../records/candidates/operations/KT-ratan-strategic-settlement-goals.md

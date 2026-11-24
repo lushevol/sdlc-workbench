@@ -1,0 +1,158 @@
+{
+  "commands": [
+    {
+      "name": "mfe-node-version",
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "cwd": "repos/ui/mfe-base",
+      "started_at": "2026-10-19T04:37:40.347687+00:00",
+      "finished_at": "2026-10-19T04:37:40.363076+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-node-version.stdout.txt",
+          "sha256": "a8f8f7ba69d43285857a0ea34017ef8dadd3ba012404bb7dd188fc773cf63ee2",
+          "size_bytes": 9
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-node-version.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "mfe-jest-local-attempt",
+      "argv": [
+        "node",
+        "./node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--no-coverage",
+        "--no-cache",
+        "--runTestsByPath",
+        "src/components/Timeout/common/useController.test.tsx",
+        "src/hooks/service/relogin.test.ts",
+        "--reporters=default"
+      ],
+      "cwd": "repos/ui/mfe-base",
+      "started_at": "2026-10-19T04:37:40.363088+00:00",
+      "finished_at": "2026-10-19T04:37:40.419222+00:00",
+      "exit_code": 1,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-jest-local-attempt.stdout.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-jest-local-attempt.stderr.txt",
+          "sha256": "a29a651ca47c9db218b94fb89dd99be78e72b197558dcd0234dd62aed11a7f37",
+          "size_bytes": 822
+        }
+      }
+    },
+    {
+      "name": "mfe-required-modules",
+      "argv": [
+        "node",
+        "-e",
+        "const modules=['jest','jest-environment-jsdom','babel-jest','ts-node','@babel/core','react','@testing-library/react','@scdevkit/webkit'];for(const name of modules){try{console.log(JSON.stringify({name,path:require.resolve(name)}));}catch(e){console.log(JSON.stringify({name,status:'MISSING',code:e.code}));}}"
+      ],
+      "cwd": "repos/ui/mfe-base",
+      "started_at": "2026-10-19T04:37:40.419234+00:00",
+      "finished_at": "2026-10-19T04:37:40.449098+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-required-modules.stdout.txt",
+          "sha256": "501cb8ca628b3a2cb744fb61ce52dd3c52fa4d0f0b462a42579b52fc982949ed",
+          "size_bytes": 644
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-required-modules.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "robot-doctor-full",
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "scripts/workbench.py",
+        "doctor",
+        "--profile",
+        "full"
+      ],
+      "cwd": "repos/testing/ratan-test-engine",
+      "started_at": "2026-10-19T04:37:40.449112+00:00",
+      "finished_at": "2026-10-19T04:37:40.553069+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-doctor-full.stdout.txt",
+          "sha256": "095c9e519a9810e74672f883f27c2e3454ccbc42886cf49d2bcf86d10d23d7a5",
+          "size_bytes": 4385
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-doctor-full.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "robot-session-suite-parse",
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "scripts/workbench.py",
+        "parse",
+        "Tests/ratan/workspace/ui/BAU-UI-RP.robot",
+        "Tests/ratan/workspace/ui/__import__.resource",
+        "Resources/keywords/playwright.resource"
+      ],
+      "cwd": "repos/testing/ratan-test-engine",
+      "started_at": "2026-10-19T04:37:40.553085+00:00",
+      "finished_at": "2026-10-19T04:37:40.684760+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-session-suite-parse.stdout.txt",
+          "sha256": "6bd25707a4e5a99eff0648733e69da30237afdf24156915e680a718621834f41",
+          "size_bytes": 247
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-session-suite-parse.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "robot-browser-files",
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "-c",
+        "import importlib.metadata as m,json,pathlib,sys; d=m.distribution('robotframework-browser'); root=pathlib.Path(d.locate_file('Browser')); print(json.dumps({'python':sys.version.split()[0],'browser_version':d.version,'browser_library':str(root),'wrapper_package_exists':(root/'wrapper/package.json').is_file(),'playwright_core_package_exists':(root/'wrapper/node_modules/playwright-core/package.json').is_file(),'browser_wrapper_node_modules_exists':(root/'wrapper/node_modules').is_dir(),'mac_browser_cache_exists':(pathlib.Path.home()/'Library/Caches/ms-playwright').exists(),'linux_browser_cache_exists':(pathlib.Path.home()/'.cache/ms-playwright').exists()},indent=2))"
+      ],
+      "cwd": "repos/testing/ratan-test-engine",
+      "started_at": "2026-10-19T04:37:40.684775+00:00",
+      "finished_at": "2026-10-19T04:37:40.715679+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-browser-files.stdout.txt",
+          "sha256": "f18a46ca1f04ef891a45a766eb07500382451ef5eb68f9ca1470ce511a9f0e6c",
+          "size_bytes": 415
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-browser-files.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "caseId": "REVIEW-E2E-06",
+  "finding": "REVIEW-06",
+  "side": "baseline",
+  "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:43:50.553Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8153",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:43:55.341Z",
+      "method": "Playwright screenshot",
+      "sha256": "c236d0bcbdb4eace22201e04a76ed275b4060c0cc783e14482d39853e1dff241",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "malformed-expiry-final",
+      "file": "malformed-expiry-final.png",
+      "capturedAt": "2026-10-28T02:44:55.922Z",
+      "method": "Playwright screenshot",
+      "sha256": "38d88e92974b81deffa00a29522ffc6d0612c27a9722247eb716ebb87ef760bc",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:43:54.018Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:43:54.036Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:43:54.116Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:43:54.125Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:44:29.003Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:44:54.218Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:44:54.227Z"
+    }
+  ],
+  "assertions": [
+    "Natural client access expiry with explicitly malformed refresh; actual fallback route and available controls observed."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Refresh JWT payload deliberately omits exp through public setter; signature becomes invalid and inspected local BFF never emits this shape."
+  ],
+  "before": {
+    "at": "2026-10-28T02:43:55.340Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "3ea3a9e4df29862b488b91e298d464fbc499bad1b90f1271e189c44877bda3b5",
+      "exp": 1793155494,
+      "iat": 1793155434
+    },
+    "refresh": {
+      "sha256": "0a13b680464e0e50508166f1794a5055479476b7b7ed98970b9c59db3a0f22ea",
+      "exp": 1793155578,
+      "iat": 1793155434
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:44:55.921Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "3ea3a9e4df29862b488b91e298d464fbc499bad1b90f1271e189c44877bda3b5",
+      "exp": 1793155494,
+      "iat": 1793155434
+    },
+    "refresh": {
+      "sha256": "7473ceba9c60ef78ce5017a2ecfb8195687266e86615cb9ed01fe08407a01c87",
+      "exp": null,
+      "iat": 1793155434
+    },
+    "accessChanged": false,
+    "refreshChanged": true,
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "impact": "MALFORMED_REFRESH_PROMPT_REMAINS",
+  "completedAt": "2026-10-28T02:44:55.964Z",
+  "elapsedMs": 65411
+}

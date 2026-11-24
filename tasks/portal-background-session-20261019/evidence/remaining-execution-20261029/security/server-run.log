@@ -1,0 +1,68 @@
+09:54:55.306 [main] ERROR com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- token logout failed, reason: synthetic revocation write rejected
+java.lang.IllegalStateException: synthetic revocation write rejected
+	at RemainingSecurityProbe$Fixture.lambda$new$0(RemainingSecurityProbe.java:56)
+	at org.mockito.internal.stubbing.StubbedInvocationMatcher.answer(StubbedInvocationMatcher.java:42)
+	at org.mockito.internal.handler.MockHandlerImpl.handle(MockHandlerImpl.java:103)
+	at org.mockito.internal.handler.NullResultGuardian.handle(NullResultGuardian.java:29)
+	at org.mockito.internal.handler.InvocationNotifierHandler.handle(InvocationNotifierHandler.java:34)
+	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor.doIntercept(MockMethodInterceptor.java:82)
+	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor.doIntercept(MockMethodInterceptor.java:56)
+	at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor$DispatcherDefaultingToRealMethod.interceptAbstract(MockMethodInterceptor.java:161)
+	at com.scb.sso.singleuibff.repository.ApplicationSessionRepo$MockitoMock$cr9U65Rk.save(Unknown Source)
+	at com.scb.sso.singleuibff.repository.ApplicationSessionRepo$MockitoMock$cr9U65Rk.save(Unknown Source)
+	at com.scb.sso.singleuibff.service.v1.implementation.SessionServiceImplementation.create(SessionServiceImplementation.java:21)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.logout(JwtAuthenticationController.java:376)
+	at RemainingSecurityProbe.logout(RemainingSecurityProbe.java:90)
+	at RemainingSecurityProbe.main(RemainingSecurityProbe.java:109)
+09:54:55.329 [main] INFO com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- JwtAuthenticationController.buildEntities, userId: A, finalEmsResult: {"entities":[],"accountName":null,"fullName":null,"accountOwner":null,"accountStatus":null,"accountType":null,"status":null}
+RN-S003 PASSED
+09:54:55.337 [main] ERROR com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- token logout failed, reason: jwtToken is empty, validation failed.
+com.scb.sso.singleuibff.exceptions.JwtException: jwtToken is empty, validation failed.
+	at com.scb.sso.singleuibff.exceptions.JwtException$JwtExceptionBuilder.build(JwtException.java:7)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.retrieveToken(JwtAuthenticationController.java:147)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.logout(JwtAuthenticationController.java:373)
+	at RemainingSecurityProbe.logout(RemainingSecurityProbe.java:90)
+	at RemainingSecurityProbe.main(RemainingSecurityProbe.java:113)
+09:54:55.338 [main] INFO com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- JwtAuthenticationController.buildEntities, userId: A, finalEmsResult: {"entities":[],"accountName":null,"fullName":null,"accountOwner":null,"accountStatus":null,"accountType":null,"status":null}
+RN-S004 PASSED
+09:54:55.342 [main] ERROR com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- token relogin failed, reason: invalid token
+com.scb.sso.singleuibff.exceptions.JwtException: invalid token
+	at com.scb.sso.singleuibff.exceptions.JwtException$JwtExceptionBuilder.build(JwtException.java:7)
+	at com.scb.sso.singleuibff.service.v1.implementation.SessionServiceImplementation.validateSession(SessionServiceImplementation.java:31)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.relogin(JwtAuthenticationController.java:349)
+	at RemainingSecurityProbe.renewal(RemainingSecurityProbe.java:81)
+	at RemainingSecurityProbe.main(RemainingSecurityProbe.java:117)
+RN-S006 PASSED
+09:54:55.346 [main] ERROR com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- token relogin failed, reason: invalid token
+com.scb.sso.singleuibff.exceptions.JwtException: invalid token
+	at com.scb.sso.singleuibff.exceptions.JwtException$JwtExceptionBuilder.build(JwtException.java:7)
+	at com.scb.sso.singleuibff.service.v1.implementation.SessionServiceImplementation.validateSession(SessionServiceImplementation.java:31)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.relogin(JwtAuthenticationController.java:349)
+	at RemainingSecurityProbe.renewal(RemainingSecurityProbe.java:81)
+	at RemainingSecurityProbe.main(RemainingSecurityProbe.java:125)
+09:54:55.350 [main] INFO com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- JwtAuthenticationController.buildEntities, userId: A, finalEmsResult: {"entities":[],"accountName":null,"fullName":null,"accountOwner":null,"accountStatus":null,"accountType":null,"status":null}
+RN-S007 PASSED
+09:54:55.354 [main] ERROR com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- token refreshtoken failed, reason: invalid token
+com.scb.sso.singleuibff.exceptions.JwtException: invalid token
+	at com.scb.sso.singleuibff.exceptions.JwtException$JwtExceptionBuilder.build(JwtException.java:7)
+	at com.scb.sso.singleuibff.service.v1.implementation.SessionServiceImplementation.validateSession(SessionServiceImplementation.java:31)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.refreshtoken(JwtAuthenticationController.java:325)
+	at RemainingSecurityProbe.main(RemainingSecurityProbe.java:131)
+RN-S008 PASSED
+09:54:55.358 [main] INFO com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- JwtAuthenticationController.buildEntities, userId: A, finalEmsResult: {"entities":[],"accountName":null,"fullName":null,"accountOwner":null,"accountStatus":null,"accountType":null,"status":null}
+RN-S009 PASSED
+09:54:55.363 [main] ERROR com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- token relogin failed, reason: invalid token
+com.scb.sso.singleuibff.exceptions.JwtException: invalid token
+	at com.scb.sso.singleuibff.exceptions.JwtException$JwtExceptionBuilder.build(JwtException.java:7)
+	at com.scb.sso.singleuibff.service.v1.implementation.SessionServiceImplementation.validateSession(SessionServiceImplementation.java:31)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.relogin(JwtAuthenticationController.java:349)
+	at RemainingSecurityProbe.renewal(RemainingSecurityProbe.java:81)
+	at RemainingSecurityProbe.main(RemainingSecurityProbe.java:139)
+RN-S010 PASSED
+09:54:55.365 [main] INFO com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- JwtAuthenticationController.buildEntities, userId: A, finalEmsResult: {"entities":[],"accountName":null,"fullName":null,"accountOwner":null,"accountStatus":null,"accountType":null,"status":null}
+RN-S022 PASSED
+09:54:55.370 [main] INFO com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- JwtAuthenticationController.buildEntities, userId: A, finalEmsResult: {"entities":[],"accountName":null,"fullName":null,"accountOwner":null,"accountStatus":null,"accountType":null,"status":null}
+RN-S023 FAILED
+RN-S037 FAILED
+09:54:55.378 [main] INFO com.scb.fmoportal.auth.filter.AuthTokenFilter -- current url: /synthetic/protected fmoportal token is valid, will proceed
+RN-S039 PASSED

@@ -1,0 +1,236 @@
+{
+  "caseId": "REVIEW-E2E-07",
+  "finding": "REVIEW-07",
+  "side": "baseline",
+  "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:46:17.822Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8153",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:46:25.806Z",
+      "method": "Playwright screenshot",
+      "sha256": "b082cdc75fedd51c70db2914f73de84d29d5eec294a38cabde8afe73521eea67",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "usable-refresh-near-expiry",
+      "file": "usable-refresh-near-expiry.png",
+      "capturedAt": "2026-10-28T02:47:00.008Z",
+      "method": "Playwright screenshot",
+      "sha256": "29296281651fc2baa645de2a13c46680861654055a226f963ce4aa5525130da6",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "completed-near-expiry-recovery",
+      "file": "completed-near-expiry-recovery.png",
+      "capturedAt": "2026-10-28T02:47:21.917Z",
+      "method": "Playwright screenshot",
+      "sha256": "29296281651fc2baa645de2a13c46680861654055a226f963ce4aa5525130da6",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:46:20.747Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:46:20.753Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:46:24.583Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:46:24.594Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:46:55.016Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:46:55.032Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:20.027Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:20.042Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:20.105Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:20.105Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "at": "2026-10-28T02:47:20.105Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:20.107Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:20.112Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "at": "2026-10-28T02:47:20.142Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/validate",
+      "at": "2026-10-28T02:47:21.911Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "at": "2026-10-28T02:47:21.917Z"
+    }
+  ],
+  "assertions": [
+    "Usable refresh present with less than25seconds of access, actual Extend completes, dialog closes, BFF validates access."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "This control verifies recovery with usable refresh at near expiry. It does not reproduce Home mounting inside the missed scheduling window."
+  ],
+  "before": {
+    "at": "2026-10-28T02:46:25.805Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "60d85221d3b1f38e9deccf6db77baad422913c343e70521f303fa2e8c4874eb0",
+      "exp": 1793155640,
+      "iat": 1793155580
+    },
+    "refresh": {
+      "sha256": "efe580500ba31f379ed9e1de0deffe36c3dc9508b9b57017dd553f966c62b7fa",
+      "exp": 1793155728,
+      "iat": 1793155584
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "nearExpiry": {
+    "at": "2026-10-28T02:47:00.005Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "60d85221d3b1f38e9deccf6db77baad422913c343e70521f303fa2e8c4874eb0",
+      "exp": 1793155640,
+      "iat": 1793155580
+    },
+    "refresh": {
+      "sha256": "a3bb4530391c1d98ba9b34390db479d48620ccd8df66e5f051910c529e24a4e9",
+      "exp": 1793155759,
+      "iat": 1793155615
+    },
+    "accessChanged": false,
+    "refreshChanged": true,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "prompt": {
+    "at": "2026-10-28T02:47:20.048Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "60d85221d3b1f38e9deccf6db77baad422913c343e70521f303fa2e8c4874eb0",
+      "exp": 1793155640,
+      "iat": 1793155580
+    },
+    "refresh": {
+      "sha256": "a3bb4530391c1d98ba9b34390db479d48620ccd8df66e5f051910c529e24a4e9",
+      "exp": 1793155759,
+      "iat": 1793155615
+    },
+    "accessChanged": false,
+    "refreshChanged": true,
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:47:21.910Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "0414ee61064cd2d9495f7d51a4354969f9b42a8029e28c0cb88e8d046b1569f1",
+      "exp": 1793155700,
+      "iat": 1793155640
+    },
+    "refresh": null,
+    "accessChanged": true,
+    "refreshChanged": true,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "protected": {
+    "called": true,
+    "status": 200,
+    "result": true
+  },
+  "impact": "USABLE_REFRESH_COMPLETES_RECOVERY",
+  "completedAt": "2026-10-28T02:47:21.957Z",
+  "elapsedMs": 64135
+}

@@ -1,0 +1,124 @@
+schema_version: 1
+repositories:
+- id: single-ui-bff
+  name: Single UI BFF
+  location: repos/services/single-ui-bff
+  primary_type: backend
+  responsibility: Provide authentication, session, application catalog, import-map,
+    and analytics endpoints.
+  description: Initial local Git baseline of the supplied copy. Original history and
+    source owner are unknown.
+  source_ids:
+  - single-ui-bff-git
+  provides_contract_ids:
+  - single-ui-sso-token-family
+  - single-ui-importmap-admin
+  - single-ui-active-importmap
+  - single-ui-category-tile-admin
+  - single-ui-analytics-proxy
+- id: mfe-base
+  name: MFE Base
+  location: repos/ui/mfe-base
+  primary_type: frontend
+  responsibilities:
+  - Implement the Single UI application shell.
+  - Export shared module interfaces and HTTP clients.
+  - Render application containers and administration screens.
+  description: Initial local Git baseline of the supplied copy. Original history and
+    source owner are unknown.
+  source_ids:
+  - mfe-base-git
+  provides_contract_ids:
+  - single-ui-base-module
+  - single-ui-shared-http
+  consumes_contract_ids:
+  - single-ui-container-props
+  - single-ui-shared-http
+  - single-ui-sso-token-family
+  - single-ui-importmap-admin
+  - single-ui-category-tile-admin
+  - single-ui-analytics-proxy
+- id: mfe-root-config
+  name: MFE Root Config
+  location: repos/ui/mfe-root-config
+  primary_type: frontend
+  responsibility: Register the @fm/base application and declare frontend proxy routes.
+  description: Initial local Git baseline of the supplied copy. Original history and
+    source owner are unknown.
+  source_ids:
+  - mfe-root-config-git
+  consumes_contract_ids:
+  - single-ui-base-module
+- id: single-ui-auth-sdk
+  name: Single UI authentication SDK
+  location: repos/libraries/single-ui-sdk-starter
+  primary_type: library
+  responsibilities:
+  - Validate Single UI JWT tokens and publish request attributes.
+  - Expose EMS2 entitlement lookup for downstream callers.
+  description: 'Initial local source baseline. Maven module: com.scb.fmoportal:fmoportal-auth-sdk.
+    Downstream permission enforcement remains unproved.'
+  source_ids:
+  - single-ui-auth-sdk-git
+  provides_contract_ids:
+  - single-ui-sdk-autoconfiguration
+  - single-ui-sdk-jwt-validation
+  - single-ui-sdk-request-context
+  - single-ui-sdk-entitlement-lookup
+  consumes_contract_ids:
+  - single-ui-sso-token-family
+- id: ratan-test-engine
+  name: Ratan test engine
+  location: repos/testing/ratan-test-engine
+  primary_type: testing
+  responsibilities:
+  - Supply Robot Framework API and UI suites, keywords, and scripts.
+  - Generate Robot suites and export execution results.
+  - Expose keyword discovery through an MCP STDIO server.
+  - Supply static Workbench checks and an isolated Robot framework smoke suite.
+  description: Initial local source baseline. Source assertions do not establish passing
+    E2E behavior or complete coverage.
+  source_ids:
+  - ratan-test-engine-git
+  - ratan-test-engine-workbench-git
+  provides_contract_ids:
+  - ratan-robot-suite-execution
+  - ratan-excel-robot-generation
+  - ratan-robot-result-export
+  - ratan-keyword-mcp
+  consumes_contract_ids:
+  - single-ui-sso-token-family
+- id: mfe-ratan-container
+  name: MFE Ratan Container
+  location: repos/ui/mfe-ratan-container
+  primary_type: frontend
+  responsibilities:
+  - Export shared Ratan UI components and utilities.
+  - Render Ratan application containers.
+  description: Supplied filesystem copy with local snapshot and delivery branches from 6 November 2026. Upstream Git history and source owner remain unknown.
+  source_ids:
+  - mfe-ratan-container-filesystem
+- id: mfe-cashflow-blotter
+  name: MFE Cashflow Blotter
+  location: repos/ui/mfe-cashflow-blotter
+  primary_type: frontend
+  responsibility: Render cashflow blotter screens with shared frontend modules.
+  description: Supplied filesystem copy. Independent Git history and source owner are unknown.
+  source_ids:
+  - mfe-cashflow-blotter-filesystem
+- id: ratan-auth-server
+  name: Ratan authentication server
+  location: repos/services/ratan-auth-server
+  primary_type: backend
+  responsibility: Declare login, session, user, and token HTTP endpoints.
+  description: Supplied filesystem copy. Independent Git history and source owner are unknown.
+  source_ids:
+  - ratan-auth-server-filesystem
+- id: nginx
+  name: Ratan Nginx configuration
+  location: repos/infra/nginx
+  primary_type: deployment
+  responsibility: Declare HTTP proxy routes and upstream templates.
+  description: Supplied filesystem copy. Active deployments and source owner are unknown.
+  source_ids:
+  - nginx-filesystem

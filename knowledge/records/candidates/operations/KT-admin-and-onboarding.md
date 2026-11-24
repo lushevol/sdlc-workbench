@@ -1,0 +1,412 @@
+---
+type: KnowledgeTopic
+id: KT-admin-and-onboarding
+version: 6
+owner: unknown
+governance_state: candidate
+status: draft
+sources:
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Admin Module/page.md
+  revision: sha256:4be78457402c3fab32bac328a1690d852fdc34d41f363f8941efae41a3482911
+  sha256: 4be78457402c3fab32bac328a1690d852fdc34d41f363f8941efae41a3482911
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Admin Module/Table Schema and Screen Draft/page.md
+  revision: sha256:e0b574ea07d2f94a1c7a46439b97b4fd59670de7a9cdc88be3b34ef09896dd28
+  sha256: e0b574ea07d2f94a1c7a46439b97b4fd59670de7a9cdc88be3b34ef09896dd28
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Admin Module/User Manual/page.md
+  revision: sha256:04d6ef196815349bd9144e81cde136c35b2ffae4a63fff825d89c687ec3fe16c
+  sha256: 04d6ef196815349bd9144e81cde136c35b2ffae4a63fff825d89c687ec3fe16c
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Development Principle - Development Guideline - Onboarding Process/Development
+    Principle/page.md
+  revision: sha256:06ce1c57bd699e5100e82a59b79c59a1cec1a8973223586a2eba9a9bda29d5b3
+  sha256: 06ce1c57bd699e5100e82a59b79c59a1cec1a8973223586a2eba9a9bda29d5b3
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend
+    Onboarding Process/page.md
+  revision: sha256:b93d2fc08759df036482b632fe9c8f8f966be1d4c98eedc235c5206a036c587f
+  sha256: b93d2fc08759df036482b632fe9c8f8f966be1d4c98eedc235c5206a036c587f
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Development Principle - Development Guideline - Onboarding Process/Backend
+    Onboarding Process/page.md
+  revision: sha256:d861539b93503406149b03d7917f985fbebba26499ddd43338fe5ce1de42d6a8
+  sha256: d861539b93503406149b03d7917f985fbebba26499ddd43338fe5ce1de42d6a8
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Development Principle - Development Guideline - Onboarding Process/Creating
+    EMS2 Entity Role Subject Action/page.md
+  revision: sha256:e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7
+  sha256: e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Admin Module/EMS2/page.md
+  revision: sha256:f6c34b31a788d6d634845965506b96672573cbd40cb176afe870b963e0c3bcd2
+  sha256: f6c34b31a788d6d634845965506b96672573cbd40cb176afe870b963e0c3bcd2
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Admin Module/Flywaydb/page.md
+  revision: sha256:dbb70c8147ccd91f3c8d10cf724f8421038e36a378f8d693181928127fc30165
+  sha256: dbb70c8147ccd91f3c8d10cf724f8421038e36a378f8d693181928127fc30165
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md
+  revision: sha256:3f1ad32cd017284ddb988f39cadc8e07813597bca193b49fae194f7ea639d09e
+  sha256: 3f1ad32cd017284ddb988f39cadc8e07813597bca193b49fae194f7ea639d09e
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Admin Module/Firewall Configurations/page.md
+  revision: sha256:df7621489221d46c454f903aca629fb54c21dc95f79a84ce347dcceee9c192fb
+  sha256: df7621489221d46c454f903aca629fb54c21dc95f79a84ce347dcceee9c192fb
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/On Boarding Records/SSDR On Board Discussion/page.md
+  revision: sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
+  sha256: 3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
+- resource: conversation:ui-test-coverage-20261022:empty-subject
+  revision: user-answer-20261022-1
+  sha256: 4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d
+- resource: conversation:ui-test-coverage-20261022:empty-subject-owner-scope
+  revision: user-answer-20261022-1
+  sha256: a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee
+- resource: conversation:codex/portal-knowledge-ingestion/2026-11-12/answers
+  revision: sha256:b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+  sha256: b2820b053e32a9b45b44f177e539c2bfe8106c29c9b74c09c8fbd94c8e116303
+previous_version: 5
+previous_content_sha256: b6f3c2d55027cc91c7a4f687ea762b061634f3edc91640a2ddbb954517b1f26e
+tile_empty_subject_policy:
+  owner: portal team
+  environments:
+  - local
+  - test
+  - UAT
+  - production
+  configured_entity_count: 1
+  configured_subject_count: 0
+  decision: allow tile visibility and launch through the entity check
+  basis: explicit-user-clarification
+  approval: pending
+generated:
+  by: agent:sol_complete_sources
+  at: '2026-11-16T07:41:48.408273+00:00'
+verified: []
+classification: operations
+scope: Portal tenant onboarding, application catalog administration, and documented
+  team responsibilities.
+summary: Onboarding joins frontend deployment, backend routing, EMS2 roles, and reviewed
+  application catalog changes. Portal administrators can read all tenant audit history
+  and configuration. A tile cannot reference metadata from another tile.
+related:
+- KT-sdk-and-entitlements
+- KT-authentication-and-sessions
+- KT-frontend-composition
+- KT-release-operations
+- single-ui-application-catalog
+- single-ui-importmap-admin
+- single-ui-active-importmap
+- single-ui-category-tile-admin
+open_questions:
+- Which onboarding and admin procedures apply to the current environment?
+- Which write and verification permissions apply across tenants for maker and checker
+  users?
+- Which catalog fields are tile-specific metadata, and which tenant-level records
+  may be shared?
+- Which release controls apply to configuration changes made through self-service?
+- Which source revisions and environment checks establish the deployed catalog schema?
+- Which SSDR entitlement option and multiple-entity matching rule apply to the current
+  tenant configuration?
+writing_review:
+  standard: ASD-STE100
+  automated_check: PASSED
+  asd_review: PENDING
+  reviewer: null
+  reviewed_at: null
+  limitations:
+  - Automated checks do not establish complete writing review.
+---
+# Admin and onboarding
+
+## Scope
+
+This topic connects tenant onboarding with module mappings, drawer categories, tile configuration, and EMS2 setup.
+It distinguishes an earlier admin proposal from the later procedural manual.
+It records documented responsibilities without assigning current owners or claiming executed onboarding.
+
+## Summary
+
+An onboarded application needs frontend assets, backend routing, entitlements, and portal catalog records.
+The admin proposal seeks self-service configuration in place of source changes for every tile update.
+The manual describes separate maker and checker users, activation, deactivation, and per-record audit history.
+The current user clarification defines portal administrator reads across tenants and the tile metadata boundary.
+Current production enforcement and release controls require separate evidence.
+
+## Documented knowledge
+
+### Purpose and component vocabulary
+
+The admin overview describes a previous process that changed `mfe-base` source and raised a production change request.
+It proposes tenant-maintained configuration to reduce that repeated release work.
+It records reuse of `single-ui-bff` for the admin backend.
+The proposal does not establish an approved exemption from production change controls.
+[Admin overview, lines 1–37](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md>)
+
+The user manual identifies three admin functions: Module Mapping, Drawer Category, and Tile Configuration.
+A module mapping connects an import-map module name with its asset path.
+A drawer category groups application tiles.
+A tile record connects display details, container and route information, and entitlement configuration.
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+The schema draft separates application categories, application tiles, and tile authorization records.
+Its tile authorization records link a tile to EMS2 entities.
+These draft relationships explain the design vocabulary, rather than the deployed database schema.
+[Admin schema draft, lines 3–60, 99–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Table Schema and Screen Draft/page.md>)
+
+### Team responsibilities and onboarding sequence
+
+The development principle assigns portal-backend availability to the microfrontend team.
+It assigns each application's backend availability to its application team.
+Application teams choose deployment approaches and provide static-file and API URLs for NGINX configuration.
+The document also separates feature-branch contribution from shared-repository review and approval responsibilities.
+[Development principle, lines 2–10](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md>)
+
+The frontend procedure starts from separate container and tile templates.
+It updates names, webpack, interfaces, entry points, tests, and the local import map.
+It then links application registration through the admin manual.
+Each application supplies its build pipeline and informs the portal team about static-file and API URLs.
+[Frontend onboarding, lines 1–15](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md>)
+
+The backend procedure requests application URLs for proxy configuration and CORS handling.
+It requires application role or entitlement setup in EMS2.
+It directs services to SDK-based JWT validation and entitlement integration.
+Onboarding therefore spans routing, authentication, authorization data, and UI registration.
+[Backend onboarding, lines 1–7](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Backend Onboarding Process/page.md>)
+
+The EMS2 procedure creates an entity, actions, roles, and subjects.
+It then assigns actions to role-and-subject combinations.
+The admin manual identifies `FMO PORTAL ADMIN` entitlements for import-map, category, and tile functions.
+These procedures describe prerequisites; they do not establish completed grants for any current operator.
+[EMS2 setup procedure, lines 1–12](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Creating EMS2 Entity Role Subject Action/page.md>)
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+### Review and activation workflow
+
+The manual requires different maker and checker users.
+Creation and modification produce an `un-verified` record.
+Another user checks and verifies that record before activation.
+The manual states that each admin function maintains its own audit history.
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+For module mappings, users enter the module name without `@fm/` or spaces.
+The manual says the active import-map API adds `@fm/` automatically.
+The stored path supplies the import-map value.
+These input conventions connect administration with frontend module loading.
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+Tile configuration captures labels, descriptions, theme images, container identity, routes, role subjects, and role entities.
+Module and tile paths must match their corresponding routing paths.
+The manual requests those paths without a leading slash or spaces.
+It describes API conversion of comma-separated role entities into an array.
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+The manual permits deactivation of a verified record and returns it to `un-verified` status.
+It provides record-specific history viewing.
+The supplied text does not fully specify rollback, activation propagation, or concurrent edits.
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+### Historical persistence relationships
+
+[Retained reported observations](<../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-sql-configuration-observations>).
+
+### Draft routing intake and operational context
+
+The NGINX draft collects an upstream name, host, port, route path, rewrite rule, protocol, and request limits.
+Its intake also includes environment, WebSocket settings, timeout values, load-balancing method, and custom headers.
+These fields explain the routing information required during tenant onboarding.
+They do not establish current endpoint values, active configuration, or a working deployment pipeline.
+[NGINX draft, lines 3–46](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md>)
+
+The draft separates non-production maintenance from UAT and stage configuration work.
+Its manual-deployment discussion identifies configuration testing and rollback as improvement proposals.
+Those proposals require an applicable operating procedure before use.
+[NGINX environment discussion, lines 48–61](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md>)
+
+[Retained reported observations](<../../../../tasks/workbench-knowledge-raw-import-20261113/evidence/portal-reported-observations-20261116.md#retained-firewall-register-context>).
+
+### Portal administrator reads and tile metadata references
+
+Portal administrators can read audit history and configuration for every tenant.
+This read rule applies across tenant boundaries. Write and verification permissions are a separate decision.
+A tile must never reference metadata from another tile, including when a portal administrator submits the configuration.
+The classification of specific metadata fields and rules for shared tenant records remain open.
+[Portal ingestion answer, item 7](../../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
+
+#### ADMIN-CROSS-TENANT-READ-AC-001
+
+```gherkin
+Feature: Read tenant audit history and configuration as a portal administrator
+  @ADMIN-CROSS-TENANT-READ-AC-001
+  Scenario Outline: Read a record across tenant boundaries
+    Given the requester has the portal administrator role
+    And each tenant in the test has a distinct known <record> record
+    When the administrator requests the <record> record from each tenant
+    Then each request returns the requested record
+    And the number of requests denied because of tenant ownership is 0
+
+    Examples:
+      | record        |
+      | audit history |
+      | configuration |
+```
+
+#### ADMIN-TILE-METADATA-AC-001
+
+```gherkin
+Feature: Keep metadata references within a tile
+  @ADMIN-TILE-METADATA-AC-001
+  Scenario Outline: Reject a reference to metadata belonging to another tile
+    Given the requester has permission to <operation> the target tile
+    And the submitted configuration references metadata belonging to another tile
+    When the requester submits that configuration
+    Then the portal rejects the submitted configuration
+    And the number of references to the other tile's metadata created by the request is 0
+
+    Examples:
+      | operation |
+      | create    |
+      | update    |
+```
+
+### Current empty-subject clarification
+
+The [explicit user answer](../../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json) permits tile visibility and launch through one configured EMS2 entity.
+The user must satisfy portal-entry requirements and hold entitlement for that entity.
+The tile's subject setting must be empty.
+The [owner and scope answer](../../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json) identifies `portal team` across local, test, UAT, and production.
+The [SDK criterion](../security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) defines the measurable results.
+
+This explicit user clarification is the first-priority intended-behavior reference within its scope.
+It selects no multiple-entity matching rule or SSDR delegation option.
+Application data permissions, publication approval, and deployed enforcement remain separate.
+
+### SSDR entitlement discussion
+
+The SSDR discussion describes report and download users with differing EMS2 entity assignments.
+It proposes multiple tile entities and optional subject checks for selected tenants.
+An empty subject would skip that validation under the described proposal.
+It also considers adding missing EMS2 assignments or delegating authorization to SSDR.
+[SSDR onboarding discussion, lines 3–20, 27–37, 67–69](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md>)
+
+The temporary guest-access approach is struck through.
+The discussion states that the portal does not implement entitlement control outside existing systems such as EMS2.
+These recorded alternatives do not establish an approved bypass, selected solution, or deployed permission rule.
+[SSDR alternatives and boundary, lines 42–69](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md>)
+
+### Draft admin schema access predicates
+
+The category draft uses numeric `category_id` and string `ems2_role`, with the latter controlling that category and child records.
+The tile draft uses numeric `tile_id` and `category_id`. Its string `ems2_subject` describes drawer visibility.
+The authorization draft uses numeric `authorization_id` and `tile_id`, with string `ems2_entity` for drawer visibility.
+
+Each draft entity includes a Boolean disabled flag and creator/updater strings with date fields.
+Tile display and route fields are strings, including `isTemplate` in this draft. The current deployed type remains unconfirmed.
+The screen draft requires the Admin Module EMS2 entity and subject to see its admin tiles.
+[Selected source lines 1–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Table Schema and Screen Draft/page.md#L1-L101>)
+
+### Historical manual field and permission detail
+
+The manual lists `FMO PORTAL ADMIN` subjects `/importmap`, `/category`, and `/tile`.
+Its matrix gives READ-WRITE to RATAN_ADMIN, SSI_ADMIN, FSS_ADMIN, STAMP_ADMIN, LOANIQ_ADMIN, and SSDR_ADMIN for those subjects.
+Those historical entries select no current cross-tenant write or verification policy. The manual requires technical understanding of drawer and import-map files.
+
+Verification is enabled for an `un-verified` record. Deactivation is enabled for a `verified` record.
+Different maker and checker users receive their team role, and each admin function records changes in its own audit-history table.
+Tile creation also includes `Is Template?` and `Email Support`, and the API appends `/` to submitted module and tile paths.
+
+The named active import-map endpoint is `/api/auth/v1/fmo/admin/importmap/active`.
+[Selected source lines 1–233](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L1-L233>)
+
+### Historical admin role alternatives
+
+The overview proposes one `POST_TRADE` EMS2 entity with team-specific roles, including all-record, team-write, and team-read examples.
+It states a historical constraint of one role per user within an EMS2 entity. That proposal therefore permits maintaining one team.
+Its many-entities alternative, permitting multiple-team maintenance, is struck through.
+
+These proposed alternatives supply no accepted current write policy or new EMS2 compatibility assumption.
+[Selected source lines 7–37](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L7-L37>)
+
+### Draft proxy defaults and behavior
+
+The routing draft gives an upstream server-port default of 80 and load-balancing default `least_conn`.
+Its WebSocket request-timeout field shows default 60 and says timeout expiry disconnects the WebSocket connection.
+The draft shows 100M as an example body limit. It includes HTTP/HTTPS protocol, path matching, path rewrite and upstream alias linkage.
+
+The WebSocket example supplies upgrade headers and connect/send/read timeouts. Its intake also permits a custom request header.
+These are draft configuration semantics and illustrative values. Units and effective settings need the applicable configuration contract.
+[Selected source lines 3–20](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md#L3-L20>) [Selected source lines 33–46](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md#L33-L46>)
+
+## Connections
+
+[Frontend composition](../architecture/KT-frontend-composition.md) explains containers, tiles, routing, and import maps.
+[SDK and entitlements](../security/KT-sdk-and-entitlements.md) explains backend validation and application permissions.
+[Authentication and sessions](../security/KT-authentication-and-sessions.md) separates user login from tenant configuration.
+[Release operations](KT-release-operations.md) connects configuration work with documented release procedures.
+
+Capability `single-ui-application-catalog` groups declared catalog interfaces.
+Contracts `single-ui-importmap-admin`, `single-ui-active-importmap`, and `single-ui-category-tile-admin` provide existing interface context.
+These declarations do not establish operator permissions, approved workflow, or passing maker-checker enforcement.
+
+## Evidence limits
+
+The overview and schema are proposals; the manual provides procedural instructions.
+Their source revisions and current applicability remain unconfirmed.
+Combining them cannot establish that all proposed controls became production behavior.
+Owner: unknown.
+Next action: identify the current manual and schema through an applicable release record.
+[Admin overview, lines 1–37](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md>)
+[Admin schema draft, lines 3–60, 99–101](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Table Schema and Screen Draft/page.md>)
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+The EMS2 setup page refers to absent entitlement spreadsheets, change attachments, and later setup actions.
+The manual also depends on screenshots absent from this copy.
+Detailed grants and visual procedures cannot be reconstructed from those references alone.
+Owner: unknown.
+Next action: retrieve the missing materials or retain a reviewed textual procedure.
+[Admin EMS2 setup, lines 7–31](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/EMS2/page.md>)
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+The Flyway SQL, NGINX draft, and firewall register have no inspected deployment or connectivity execution.
+Their retained definitions cannot establish the current schema, active routes, or network permissions.
+Owner: unknown.
+Next action: connect applicable migrations, operating procedures, and environment-specific checks before executing onboarding changes.
+[Flyway configuration and schema, lines 16–24, 77–220](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Flywaydb/page.md>)
+[NGINX environment discussion, lines 48–61](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Drafts/The Proxy Config of Nginx Operation Standard Step/page.md>)
+[Firewall operational register, lines 1–8](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Firewall Configurations/page.md>)
+
+## Open questions
+
+Which tenant boundaries apply to maker and checker writes and verification?
+The proposal discusses tenant-specific roles; the manual lists shared admin subjects and a different-user check.
+The current [read rule and metadata boundary](#portal-administrator-reads-and-tile-metadata-references) leave cross-tenant write and verification permissions open.
+Owner: unknown.
+Next action: confirm the write and verification policy before defining permitted and denied cases.
+[Admin overview, lines 1–37](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md>)
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+Which catalog fields are tile-specific metadata, and which tenant-level records may be shared?
+The user defines the boundary for metadata belonging to another tile.
+The admin manual identifies drawer categories and module mappings as separate catalog functions.
+The shared status of any particular category or import-map record remains unconfirmed.
+Owner: unknown.
+Next action: classify the referenced records before applying the metadata rule to specific fields.
+[Portal ingestion answer, item 7](../../../../tasks/ui-test-coverage-20261022/evidence/portal-ingestion-answers-20261112.md#exact-user-input)
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+Which production controls govern self-service configuration changes?
+The overview proposes avoiding repeated change requests, while the manual describes record review and audit history.
+These statements do not establish an approved production governance policy.
+Owner: unknown.
+Next action: record the applicable release, approval, rollback, and emergency-change rules.
+[Admin overview, lines 1–37](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md>)
+[Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
+
+Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
+The discussion records alternatives and a struck-through guest-access proposal without retained approval or execution.
+The [empty-subject clarification](#current-empty-subject-clarification) resolves the single-entity scope only.
+Owner: unknown.
+Next action: Resolve multiple-entity matching and SSDR delegation before accepting those separate scopes.
+[SSDR onboarding discussion, lines 13–69](<../../../evidence/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md>)

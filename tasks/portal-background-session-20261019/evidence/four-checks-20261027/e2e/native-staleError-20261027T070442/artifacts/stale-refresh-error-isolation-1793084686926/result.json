@@ -1,0 +1,240 @@
+{
+  "caseId": "stale-refresh-error-isolation",
+  "status": "PASSED",
+  "startedAt": "2026-10-27T07:04:46.925Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8143",
+  "configSha256": "46ce7d0f6441e4c2dd39e30430fd1226ef76d46fb9072d2c6906cbabe3618003",
+  "testSourceSha256": "34ee3bbe846bb02065b536b4d3d59269a29389c72d1917de55f7252e30990a7d",
+  "sourceRevisions": {
+    "mfe-base": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "Session-A acquisition is held before service dispatch, then sent after A logout. The actual service must reject it."
+  ],
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "staleDeliveryKind": "error",
+      "sessionBAccessPreserved": true,
+      "authenticatedPortalPreserved": true,
+      "sessionBAcquisitionObserved": true,
+      "totalAcquisitions": 2
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-27T07:04:46.927Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "capturedAt": "2026-10-27T07:04:50.651Z",
+      "file": "session-a-acquisition-held.png"
+    },
+    {
+      "phase": "session-b-before-old-delivery",
+      "capturedAt": "2026-10-27T07:04:52.490Z",
+      "file": "session-b-before-old-delivery.png"
+    },
+    {
+      "phase": "session-b-acquisition-triggered",
+      "capturedAt": "2026-10-27T07:04:55.493Z",
+      "file": "session-b-acquisition-triggered.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-27T07:05:01.891Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "nativeWindowTransitions": [
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-27T07:04:49.798Z",
+      "visibility": "hidden",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "minimized"
+        }
+      }
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-27T07:04:50.651Z",
+      "visibility": "visible",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "normal"
+        }
+      }
+    },
+    {
+      "phase": "session-b-acquisition-triggered",
+      "at": "2026-10-27T07:04:54.631Z",
+      "visibility": "hidden",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "minimized"
+        }
+      }
+    },
+    {
+      "phase": "session-b-acquisition-triggered",
+      "at": "2026-10-27T07:04:55.492Z",
+      "visibility": "visible",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "normal"
+        }
+      }
+    }
+  ],
+  "sessionBAccess": {
+    "sha256": "51740d37c983c8a555d9c6116ae835deb7cba8dc50eb9b2623b67ca7503fad6e",
+    "exp": 1793084752,
+    "iat": 1793084692
+  },
+  "actualStaleServiceStatus": 401,
+  "lateResponseRelease": "FULFILL_ATTEMPT_COMPLETED",
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "51740d37c983c8a555d9c6116ae835deb7cba8dc50eb9b2623b67ca7503fad6e",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "limitations": [
+    "Native visibility and actual authentication endpoints are exercised.",
+    "A response/request delivery hold controls the race. This does not establish production race frequency.",
+    "Browser cancellation can prevent stale delivery. Controlled integration tests separately cover settled interceptor ordering."
+  ],
+  "completedAt": "2026-10-27T07:05:01.887Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1793084686873,
+      "access": {
+        "sha256": "72caf602e740fa070ba6ac3240c0326e2f8587140fd79e679588a2eaa444c9b9",
+        "exp": 1793084746,
+        "iat": 1793084686
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1793084692472,
+      "access": {
+        "sha256": "51740d37c983c8a555d9c6116ae835deb7cba8dc50eb9b2623b67ca7503fad6e",
+        "exp": 1793084752,
+        "iat": 1793084692
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 401,
+      "time": 1793084692542,
+      "access": null,
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1793084694636,
+      "access": null,
+      "refresh": {
+        "sha256": "976da24888507d2d72ed394f155dbda25dbc63585d4fd92bea11f48f7c462d32",
+        "exp": 1793084838,
+        "iat": 1793084694
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1793084701845,
+      "access": {
+        "sha256": "c95ab2399df514d007608b2e5e8227e574f12a0dc9e74a262557bec507d7428e",
+        "exp": 1793084761,
+        "iat": 1793084701
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1793084701577
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8143",
+      "pathname": "/",
+      "time": 1793084684417
+    },
+    {
+      "origin": "http://127.0.0.1:8143",
+      "pathname": "/",
+      "time": 1793084701642
+    }
+  ],
+  "initialAccess": {
+    "sha256": "72caf602e740fa070ba6ac3240c0326e2f8587140fd79e679588a2eaa444c9b9",
+    "exp": 1793084746,
+    "iat": 1793084686
+  },
+  "latestAccess": {
+    "sha256": "c95ab2399df514d007608b2e5e8227e574f12a0dc9e74a262557bec507d7428e",
+    "exp": 1793084761,
+    "iat": 1793084701
+  },
+  "refresh": {
+    "sha256": "976da24888507d2d72ed394f155dbda25dbc63585d4fd92bea11f48f7c462d32",
+    "exp": 1793084838,
+    "iat": 1793084694
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-27T07:05:01.760Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

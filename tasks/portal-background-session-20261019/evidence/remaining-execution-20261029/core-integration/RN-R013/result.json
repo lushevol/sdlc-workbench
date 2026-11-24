@@ -1,0 +1,65 @@
+{
+  "case_id": "RN-R013",
+  "definition": "../../../../06-test-cases.md#rn-r013",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:53:18.891Z",
+  "given": [
+    "User A has unchanged access identity and session epoch",
+    "refresh reuse does not suppress acquisition",
+    "the first response remains pending",
+    "all manual calls use the same mounted Timeout controller extend action"
+  ],
+  "when": [
+    "the fixture invokes 2 same-controller extend actions before settlement"
+  ],
+  "then": [
+    "the relogin POST count equals 1",
+    "all accepted callers observe the same final installed identity"
+  ],
+  "assertions": [
+    {
+      "name": "POST count for 2 simultaneous callers",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "name": "all accepted callers observe the same installed identity",
+      "actual": [
+        "59cacbb30077bb35f5bc78ee6263c2023a1797ff58d0e2a36f5b52a0ed27d6d1",
+        "59cacbb30077bb35f5bc78ee6263c2023a1797ff58d0e2a36f5b52a0ed27d6d1"
+      ],
+      "expected": [
+        "59cacbb30077bb35f5bc78ee6263c2023a1797ff58d0e2a36f5b52a0ed27d6d1",
+        "59cacbb30077bb35f5bc78ee6263c2023a1797ff58d0e2a36f5b52a0ed27d6d1"
+      ],
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "method": "post",
+      "signal_aborted": false
+    }
+  ],
+  "blocked_predicates": [],
+  "execution_level": "actual-source component integration in jsdom",
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Exact React Provider, reducers, mounted Timeout hook, service helpers, and Axios request/response interceptors execute.",
+    "Network responses and JWT payloads are controlled fixture inputs. Cryptographic validity is not established by the client probes.",
+    "No native browser lifecycle, real UI rendering, transport, or business mutations execute."
+  ],
+  "caller_count": 2,
+  "final": {
+    "access_sha256": "59cacbb30077bb35f5bc78ee6263c2023a1797ff58d0e2a36f5b52a0ed27d6d1",
+    "refresh_sha256": "75687923407a58474fb6dd8fdddff1802037d9f36d4ad7dc42edd442ff4b3152",
+    "expiry": 1793239320,
+    "iat": 1793239199,
+    "logout": false,
+    "closures": 1
+  },
+  "completed_at": "2026-10-29T02:53:18.892Z"
+}

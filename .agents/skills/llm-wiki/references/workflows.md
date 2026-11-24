@@ -1,0 +1,236 @@
+# Workbench wiki procedures
+
+Keep one active document set at `knowledge/llm-wiki/`. It retains OpenKB's detailed page format regardless of which engine maintains it. Use `--project PATH` before a launcher command to select a different workspace.
+
+## Project-scoped commands
+
+Workbench owns project selection. Apply this table when the unchanged OpenKB skill shows native commands. Run relative commands from the Workbench root. From another directory, use the absolute launcher path and put `--project /absolute/workspace` before the command.
+
+| Upstream example | Workbench operation |
+| --- | --- |
+| `openkb status` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run status` |
+| `openkb list` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run list` |
+| `openkb query "question"` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run query "question"` |
+| `openkb lint` | `python3 .agents/skills/llm-wiki/scripts/wiki.py run lint` |
+| `openkb visualize` | `python3 .agents/skills/llm-wiki/scripts/wiki.py graph` |
+| `openkb add`, `remove`, `watch`, `recompile`, `init`, `use` or interactive `chat` | Use authorized Workbench canonical ingestion/governance and the compile procedure below; these native transactions do not own the linked source files. |
+
+The bridge supplies an explicit KB directory to native operations, independent of a global default. Keep the reported root at the selected workspace's `knowledge/llm-wiki/`. Use the source paths there for file reads. Do not run bare discovery or register a global KB to work around project selection. The original upstream skill remains unchanged reference material; these project-scoped commands take precedence in Workbench.
+
+## Engine selection and installation
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py engine
+python3 .agents/skills/llm-wiki/scripts/wiki.py install
+```
+
+OpenKB is the semantic engine only when **both** `OPENAI_API_BASE` and `LLM_API_KEY` are nonempty. The launcher reads single-line literal assignments from ignored `knowledge/llm-wiki/.env`, then falls back per value to the process environment. It accepts optional `export`, quoted literals and comments; it does not expand shell variables. Keep credentials private. The selector reports only presence, never values. Root project secrets, global OpenKB credentials, provider-specific keys and OAuth caches do not select the engine.
+
+Set the provider-compatible `model` in ignored `.openkb/config.yaml`; the installer seeds `openai/gpt-4.1` as an example. A configured pair is not proof of valid credentials or model access. OpenKB is pinned at `ff54396e575ee6feb0113b631a34caa082b441cc` (`0.5.0rc2.dev3+gff54396e5`). Its isolated `.venv-openkb/` also supplies the local native format validator and graph viewer. `install --python PATH`, `install --wheelhouse PATH` and `install --offline` retain bounded installation options. Installation does not register a global default KB or authenticate to a provider.
+
+The bridge rejects OAuth-only model prefixes and LiteLLM credential/endpoint overrides for semantic operations. Use the explicit pair and an API model; native dispatch binds that selected URL and token. Installation migrates only the exact old generated ChatGPT example configuration, preserving customized configuration.
+
+When either value is absent, select **llm-wiki-agent in the current ADE session**. Read [the unchanged original workflow](../upstream/AGENTS.md) and apply the shared source/layout boundaries below. The no-credential workflow does not require launching OpenKB model commands. Existing pages remain available in both modes.
+
+## Source lifecycle ownership
+
+Existing engines own operational document maintenance. Workbench owns canonical authority and the linked-source boundary.
+
+| Layer | Existing control | Shared-workspace adaptation |
+| --- | --- | --- |
+| Canonical knowledge | Workbench source history, review, and publication gates. | Preserve source IDs, versions, hashes, and governance state. |
+| llm-wiki-agent | Full-source ingestion, semantic maintenance, health/lint, and hash-based source refresh. | Reuse semantic reasoning in ADE with OpenKB-format layout mappings. |
+| Native OpenKB | Hash registry, deduplication, changed-source handling, compilation, removal, and journaled ingestion recovery. | Invoke the semantic compiler through the bridge while keeping canonical aliases immutable. |
+
+Native source-owning transactions copy or remove their input artifacts.
+They do not own Workbench's canonical records.
+The bridge calls the compiler directly, so native `add` batch rollback does not cover the whole bridge update.
+Partial derived pages can remain after failure. ADE's two provenance writes are also not crash-atomic.
+Reuse the existing controls without introducing another canonical source approval lifecycle.
+
+## Relocate canonical origins
+
+For an authorized path-only canonical move, retain an explicit JSON mapping receipt and run:
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py relocate --receipt PATH_TO_RETAINED_MAPPING.json
+```
+
+```json
+{
+  "reason": "ACTUAL_AUTHORIZED_RELOCATION_REASON",
+  "sources": [{
+    "id": "CANONICAL_ID",
+    "from": "OLD_WORKSPACE_RELATIVE_CANONICAL_PATH",
+    "to": "knowledge/records/candidates/security/access.md",
+    "sha256": "CURRENT_TARGET_FULL_FILE_SHA256"
+  }]
+}
+```
+
+Use inspected IDs, workspace-relative locators, and current target hashes. The operation validates the target identity and existing relative aliases, then updates alias targets and binding/completion origin paths through the existing paired-write recovery controls.
+By default, this origin-only operation preserves all observed source and output hashes, including existing staleness.
+
+When migration also repairs local Markdown destinations, these optional receipt fields enable exact locator proof:
+
+| Field | Required proof input |
+| --- | --- |
+| `baseline_revision` | Full Git commit SHA containing the original bytes. |
+| `locator_map` | Workspace-relative JSON map with the same `source_revision` and `entries` containing exact `old` and `new` workspace paths. |
+| `sources[].before_sha256` | Original source hash; existing `sha256` remains the current target hash. |
+| `outputs[]` | Optional entries with wiki-relative `path`, original `before_sha256`, and current `sha256`. |
+
+The proof loads exact old Git blobs and rejects any change outside Markdown destinations, including prose or metadata changes. Repaired local destinations must resolve through the migration map with queries and fragments preserved; external and fragment-only destinations cannot change.
+Only existing source observations and output bindings matching the before hash, or the current target hash on retry, can be rebound. Preexisting stale observations are rejected. Existing completion hashes advance only when they match those proven bytes; missing completion or output receipts remain missing, and stale completion hashes remain stale.
+Neither mode creates semantic completion, clears pending attempts, changes recipes, invokes a model, or grants publication approval. Inspect a fresh `plan` and complete any remaining maintenance through the normal operations below.
+
+## Compile canonical records
+
+Use these reusable operations in order:
+
+1. [bind-wiki-sources](../../bind-wiki-sources/SKILL.md) selects canonical inputs, validates aliases, captures starting hashes, and prepares ADE recovery material.
+2. [maintain-wiki-content](../../maintain-wiki-content/SKILL.md) applies the selected engine's semantic workflow and records reviewed output.
+3. [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) checks completion, provenance, and verification, with coordinated recovery where applicable.
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py plan --source knowledge/records/candidates --output .workbench/wiki/plan.json
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/records/candidates/security
+python3 .agents/skills/llm-wiki/scripts/wiki.py compile --source knowledge/records/candidates --record knowledge/records/candidates/security/access.md --recipe default
+```
+
+Run `plan` before semantic dispatch. It uses local hashes and metadata without credentials, runtime installation, or model calls.
+With `--output`, keep the full inventory on disk and return compact counts and queued paths.
+Choose an unused output path below the selected workspace's ignored `.workbench/` directory.
+Use repeated `--record` for exact workspace-relative canonical inputs inside `--source`.
+Directory planning discovers new records and reports missing bound records without deleting their history.
+Keep the same nonsecret `--recipe` across planning, compilation, and review.
+Change its identity when semantic settings or governing policy change, including the selected model.
+The planner also binds the incremental contract, pinned compiler revision, and wiki authoring policy hash.
+It does not read private model configuration to infer recipe changes.
+
+| Planned result | Next operation |
+| --- | --- |
+| `unchanged` | Skip semantic compilation; reviewed source, bindings, dependencies, and outputs still match. |
+| `new`, `changed`, `recipe_changed`, or `retry` | Maintain the selected source and its affected outputs. |
+| `bootstrap_review` | Review existing legacy pages and record completion; automatic recompilation is unnecessary. |
+| `pending_review` | Inspect generated output and finish actual semantic review before completion. |
+| `repair_review` | Reconcile bindings or changed/missing outputs, then review the affected scope. |
+| `missing` | Investigate missing canonical input; preserve history and unsupported-claim qualifications. |
+
+`--force` explicitly requests recompilation of selected present inputs, including legacy bindings.
+Use it only when regeneration is intended. Missing completion evidence alone calls for review.
+Native compiler return records a pending attempt, not successful semantic completion.
+Unchanged completed inputs make zero additional compiler calls.
+
+With both configured settings, the bridge calls OpenKB's original semantic compiler under its ingest lock.
+Without both settings, it returns an agent handoff and changes no pages or bindings.
+Follow the reusable units after a handoff; do not report that output as completed compilation.
+
+`raw/<name>.md` and `wiki/sources/<name>.md` remain relative symlinks to canonical records.
+Derived summaries live in `wiki/summaries/`; saved synthesis lives in `wiki/explorations/`.
+Direct ADE authoring uses the [native-format metadata contract](fallback.md#author-complete-native-format-pages).
+
+Never run either engine's source-owning native `add`, `remove`, `watch`, `recompile`, `ingest`, or `refresh` on these links.
+The bridge also blocks interactive `chat`, whose `/add` bypasses scoped compilation.
+Use canonical ingestion/governance for source changes. Reconcile origins and aliases explicitly after authorized record moves.
+Symlink failure is an error; do not duplicate canonical files as a workaround.
+Missing sources do not authorize automatic deletion.
+
+## Reviewed completion receipts
+
+After actual semantic review, finalize either engine's work through the same command:
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py review --receipt .workbench/wiki/RUN/review.json
+```
+
+This local operation requires the installed OpenKB schema and lock helpers, but performs no provider call or credential read.
+Prepare a JSON receipt using actual reviewed hashes and scope:
+
+```json
+{
+  "recipe": "default",
+  "engine": "llm-wiki-agent",
+  "reviewed_by": "ACTUAL_REVIEWER",
+  "reviewed_at": "2026-11-12T00:00:00Z",
+  "review_note": "REPLACE_WITH_ACTUAL_SEMANTIC_REVIEW",
+  "sources": [{
+    "path": "knowledge/records/candidates/security/access.md",
+    "sha256": "SOURCE_BEFORE_SHA256",
+    "outputs": ["wiki/summaries/access.md", "wiki/index.md"],
+    "withdrawn_outputs": [],
+    "claim_review": {
+      "changed_outputs": [
+        {"path": "wiki/summaries/access.md", "change_type": "replacement", "removed_claims": [{"claim": "Prior access summary claim", "claim_type": "intent", "disposition": "preserved", "evidence": ["prior reviewed output"]}]},
+        {"path": "wiki/index.md", "change_type": "additive", "removed_claims": []}
+      ],
+      "review_note": "Reviewed changed bytes for removed intent, implementation, test, and execution claims."
+    }
+  }],
+  "outputs": [
+    {"path": "wiki/summaries/access.md", "sha256": "REVIEWED_OUTPUT_SHA256", "sources": ["CANONICAL_ID"], "note": "ACTUAL_REVIEW"},
+    {"path": "wiki/index.md", "sha256": "REVIEWED_INDEX_SHA256", "sources": ["ALL_PRESERVED_SOURCE_IDS"], "note": "ACTUAL_REVIEW"}
+  ]
+}
+```
+
+Replace placeholders. Copy the full expected output scope from the plan, including concepts, entities, contradictions, and affected explorations.
+Inspect prior dependents as well as newly selected pages when sources withdraw claims.
+Each output lists the canonical IDs whose claims its complete reviewed bytes preserve.
+Shared-page review must preserve every existing owner or explicitly withdraw that source's support.
+Updated global navigation hashes do not independently force unrelated canonical inputs through compilation.
+
+Use source-level `unchanged_reason` when review supports unchanged summary bytes after a source change.
+Use `relocation_reason` during actual semantic review when an authorized canonical move changes the binding path. Use the separate `relocate` operation for a path-only move that preserves existing semantic completion and staleness.
+For former dependencies, add `withdrawn_outputs: [{"path": "wiki/concepts/FORMER.md", "reason": "ACTUAL_DISPOSITION"}]`.
+Also supply `withdrawal_review_note` and review the former output's current bytes after removing or qualifying unsupported claims.
+For an authorized removed derived page, its output entry uses `sha256: null` and `disposition: "removed"`.
+Missing raw or canonical sources alone authorize no deletion.
+Affected saved explorations require reviewed qualification or authorized regeneration before completion.
+
+When any derived output bytes change, `claim_review` is required for that source. Its `changed_outputs` entries must match the changed output hashes and declare `additive`, `replacement`, `removal`, or `mixed`; `removed_claims` must be present even when empty. Replacement, removal, and mixed changes need at least one removed claim; use `additive` only when no prior claim is removed. Each removed claim must name its prior meaning, classify it as `intent`, `implementation`, `test`, `execution`, `deployment`, `approval`, or `unknown`, choose `preserved`, `superseded`, or `withdrawn`, and cite supporting evidence. This keeps a valid policy correction from silently deleting implementation or test behavior; preserve that evidence in a task record or qualify the supersession explicitly.
+
+The bridge stores compact completion, output ownership, and pending attempts under existing `source-manifest.json` metadata.
+Attempts left `running` by an interruption or marked `failed` after a provenance error return to the local retry queue when derived outputs are unchanged. Partial outputs remain available for explicit review before retry.
+It checks native structure, source/output bytes, relative aliases, and paired registry consistency under the native lock.
+It retains both provenance before-images and intended hashes under ignored `.workbench/wiki/` before replacing either binding file.
+Failed writes or verification restore both before-images only when current bytes belong to that attempt.
+Crash interruption still requires coordinated recovery; inspect its recovery record and preserve unrelated writes.
+Semantic edits remain available for review after failures.
+Finalization still requires full wiki binding and structural verification.
+Another stale source or shared-output owner can block completion; retain successful compilation and pending attempts for reconciliation.
+Use [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) for completion and interrupted recovery.
+Hash receipts record declared review; they do not authenticate actors, establish semantic truth, or grant canonical publication.
+
+## Query and saved synthesis
+
+In fallback mode use the original llm-wiki-agent query workflow in the current ADE context: read the index, relevant concepts/entities and summaries, follow links, reopen canonical sources for important claims, and answer with evidence and qualifications. Save an answer to `wiki/explorations/` only when requested.
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py run query "What does the wiki say about session renewal?"
+```
+
+With both URL and token, this uses native OpenKB query and makes a separate provider call. Otherwise it prints the current-agent handoff. Native OpenKB query cannot follow full-text symlinks resolving outside `wiki/`; use current-agent source reads for exact canonical content. A read-only answer does not refresh the wiki.
+
+## Health and semantic review
+
+Use [check-wiki-health](../../check-wiki-health/SKILL.md) for local hash/link/structure checks and requested semantic review.
+It reports findings without advancing provenance or publication state.
+Use [finalize-wiki-update](../../finalize-wiki-update/SKILL.md) to finish a reviewed update.
+
+Requested engine lint uses `run lint` with OpenKB only when both URL and token are configured.
+Otherwise use original llm-wiki-agent reasoning in the current ADE session.
+Native lint writes a report and log even without `--fix`; it is separate from read-only health inspection.
+
+<a id="openkb-wiki-graph"></a>
+
+## Wiki graph
+
+```sh
+python3 .agents/skills/llm-wiki/scripts/wiki.py graph
+```
+
+This invokes unchanged OpenKB `visualize --no-open` on the retained OpenKB document format in either semantic mode. It needs no URL/token or provider call. The self-contained viewer at `knowledge/llm-wiki/output/visualize/graph.html` embeds data and renderer assets. It extracts directed wikilinks from summaries, concepts and entities; source links, navigation and saved explorations are outside its node set.
+
+This is the original OpenKB wiki graph, separate from Workbench's service dependency graph. Semantic engine selection does not rewrite existing pages or substitute service relationships for wiki links.

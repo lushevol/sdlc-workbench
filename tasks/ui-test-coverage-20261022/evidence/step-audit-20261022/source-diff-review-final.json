@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-22T07:03:52.648505+00:00",
+  "review": {
+    "path": "tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/source-consumption.json",
+    "sha256": "cd83d28f50c9431ddafb1c23a9cbb4160ed6007f3102171e167b6460a9e27bdf"
+  },
+  "files": [
+    {
+      "current": {
+        "path": "e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "sha256": "16f8d3ce97486eee60ba21695d0022e164d2a6495a7460690d77d526d3144580"
+      },
+      "snapshot": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "sha256": "9b938d2bee745f3afb8beb37ea56321ea65d62e715e9b1ca1fdbbdb48dd98933"
+      },
+      "caseIds": [
+        "AUTH-029",
+        "AUTH-041",
+        "AUTH-042",
+        "AUTH-140",
+        "AUTH-141",
+        "AUTH-142"
+      ],
+      "reviewedChange": "Only AUTH-143 changes navigation and cancellation behavior. AUTH-029 shares its callback, but every added navigation branch requires id===AUTH-143. Other callbacks match. Extra empty observation arrays do not change AUTH-029 navigation or provider response.",
+      "diff": "--- tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-login-security-expanded.spec.ts\n+++ e2e/audit-specs/auth-login-security-expanded.spec.ts\n@@ -28,13 +28,41 @@\n for(const id of ['AUTH-029','AUTH-143'] as const){\n   test(`${id} source configured SSO navigation`,async({page,audit})=>{\n     const steps=await audit.defineCase(id);let login!:LoginPage;let expected='';let requested='';\n+    const providerVisits:{attempt:string;url:string;at:string}[]=[];\n+    const callbackPosts:string[]=[];\n+    const cancellationUrl=`${localBase}/?show_normal_login=Y&error=access_denied&state=SSO-A`;\n     for(const step of steps)await audit.step(step.number,async()=>{\n       if(step.number===1){await blockExternal(page);login=await openLogin(page);return;}\n       if(step.number===2){await login.expectVisible();expected=(await login.ssoLink.getAttribute('href'))!;\n-        await page.route(expected,async route=>{requested=route.request().url();await route.fulfill({status:200,contentType:'text/html',body:'<main><h1>Controlled identity provider destination</h1></main>'});});\n-        await audit.record('sso-destination',{expected,cancelledAttempt:id==='AUTH-143'?'SSO-A fixture':null,externalNetworkUsed:false});return;}\n+        if(id==='AUTH-143')page.on('request',request=>{if(request.method()==='POST'&&/\\/api\\/auth\\/v[23]\\/sso\\/login$/.test(new URL(request.url()).pathname))callbackPosts.push(request.url());});\n+        await page.route(expected,async route=>{\n+          requested=route.request().url();\n+          if(id==='AUTH-143')providerVisits.push({attempt:providerVisits.length===0?'SSO-A':'SSO-B',url:requested,at:new Date().toISOString()});\n+          await route.fulfill({status:200,contentType:'text/html',body:id==='AUTH-143'&&providerVisits.length===1\n+            ?`<main><h1>Controlled identity provider: SSO-A</h1><p>The provider fixture can cancel this attempt.</p><a href=\"${cancellationUrl.replaceAll('&','&amp;')}\">Cancel SSO-A</a></main>`\n+            :'<main><h1>Controlled identity provider destination</h1></main>'});\n+        });\n+        if(id==='AUTH-143'){\n+          await login.clickSsoLink();\n+          await expect(page.getByRole('heading',{name:'Controlled identity provider: SSO-A',exact:true})).toBeVisible();\n+          expect(providerVisits).toHaveLength(1);expect(providerVisits[0].url).toBe(new URL(expected).toString());\n+          await audit.capture('sso-a-provider-before-cancel','The first actual SSO navigation reached the controlled provider cancellation boundary.');\n+          await page.getByRole('link',{name:'Cancel SSO-A',exact:true}).click();\n+          await login.expectVisible();await expect(login.passwordInput).toBeVisible();await expect(login.signInButton).toBeVisible();\n+          expect(page.url()).toBe(cancellationUrl);expect(callbackPosts).toEqual([]);\n+          expect(await page.evaluate(()=>({local:localStorage.getItem('SET_TOKEN'),session:sessionStorage.getItem('SET_TOKEN')}))).toEqual({local:null,session:null});\n+          await expect(page.getByRole('tablist',{name:'workspaces',exact:true})).toHaveCount(0);\n+          await audit.capture('sso-a-cancelled-return','The provider cancellation returned to the anonymous LOCAL login page.');\n+        }\n+        await audit.record('sso-destination',{expected,cancelledAttempt:id==='AUTH-143'?'SSO-A':null,providerVisits,cancellationReturn:id==='AUTH-143'?page.url():null,callbackPosts,externalNetworkUsed:false,\n+          limits:['Provider HTML and cancellation response are controlled locally. Real identity-provider cancellation is not verified.']});return;}\n       if(step.number===3){await login.clickSsoLink();return;}\n-      if(step.number===4){await expect.poll(()=>requested).toBe(new URL(expected).toString());expect(page.url()).toBe(new URL(expected).toString());return;}\n+      if(step.number===4){await expect.poll(()=>requested).toBe(new URL(expected).toString());expect(page.url()).toBe(new URL(expected).toString());\n+        if(id==='AUTH-143'){\n+          await expect(page.getByRole('heading',{name:'Controlled identity provider destination',exact:true})).toBeVisible();\n+          expect(providerVisits.map(visit=>visit.attempt)).toEqual(['SSO-A','SSO-B']);expect(callbackPosts).toEqual([]);\n+          await audit.record('sso-retry-navigation',{providerVisits,cancelledAttempt:'SSO-A',newAttempt:'SSO-B',cancellationUrl,callbackPosts});\n+        }return;}\n       if(step.number===5){await expect(page.getByRole('tablist',{name:'workspaces',exact:true})).toHaveCount(0);return;}\n       throw new Error(`Missing ${id} step ${step.number}`);\n     });\n"
+    },
+    {
+      "current": {
+        "path": "e2e/audit-specs/auth-remaining.spec.ts",
+        "sha256": "c5274cd0f1325f1acb06b55bc04ffd7baf8f56ac0a3be1b75df07e68efa67bf0"
+      },
+      "snapshot": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-remaining.spec.ts",
+        "sha256": "5ebdae65834700e7b031fb5dbddcaf095f00bd8a8fccae6d72ee9cc558be8a21"
+      },
+      "caseIds": [
+        "AUTH-062",
+        "AUTH-063",
+        "AUTH-093",
+        "AUTH-097",
+        "AUTH-099",
+        "AUTH-104",
+        "AUTH-105",
+        "AUTH-106"
+      ],
+      "reviewedChange": "The runtime change affects only AUTH-098. All eight selected callbacks match. The added SessionStore import is type-only.",
+      "diff": "--- tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-remaining.spec.ts\n+++ e2e/audit-specs/auth-remaining.spec.ts\n@@ -1,6 +1,6 @@\n import type {Page} from '@playwright/test';\n import {test,expect} from '../support/audit-fixture.js';\n-import {at,commonAssertion,equalsToken,observe,rotate,runSessionCase,sessionSetup,sessionToken,T,visibility,type Session,type SystemWindow} from '../support/auth-session.js';\n+import {at,commonAssertion,equalsToken,observe,rotate,runSessionCase,sessionSetup,sessionToken,T,visibility,type Session,type SessionStore,type SystemWindow} from '../support/auth-session.js';\n import {localPrefix} from '../support/local-app.js';\n const leave=(s:Session)=>s.portal.page.getByRole('dialog',{name:'Leave Now?',exact:true});\n async function openLeave(s:Session){await s.portal.avatarButton.click({force:true});await s.portal.logoutMenuItem.click({force:true});await expect(leave(s)).toBeVisible();}\n@@ -42,11 +42,30 @@\n  });\n });\n test('AUTH-098 rapid recovery activation',async({page,audit})=>{\n- let transitions=0;\n  await runSessionCase(page,audit,'AUTH-098',{accessExpires:0,refreshExpires:600},{\n-  5:async s=>{expect(s.relogin.length).toBe(0);},6:async s=>{await s.portal.sessionTimeoutDialog.extendButton.click({force:true});},\n+  5:async s=>{\n+   expect(s.relogin.length).toBe(0);\n+   const initial=await page.evaluate(async()=>{\n+    const m=await(window as unknown as SystemWindow).System.import('@fm/base');\n+    const hooks=m.Hooks.getHooks() as {store:SessionStore;setStore(store:SessionStore):void};\n+    const project=(store:SessionStore)=>({time:Date.now(),authenticated:Boolean(store.token)&&Number(store.expiredIn)*1000>Date.now()&&!store.isOnLogout});\n+    const observations=[project(hooks.store)];\n+    (window as unknown as {auditRecoveryStates:typeof observations}).auditRecoveryStates=observations;\n+    const original=hooks.setStore;\n+    hooks.setStore=function(store){original.call(this,store);observations.push(project(this.store));};\n+    return observations[0];\n+   });\n+   expect(initial.authenticated).toBe(false);\n+   await audit.record('recovery-observer',{initial,method:'Call-through observer on actual Hooks.setStore.',predicate:'A present unexpired access token with isOnLogout=false.',limit:'This measures effective browser authentication state. It does not establish server authentication or an approved anonymous-state policy.'});\n+  },6:async s=>{await s.portal.sessionTimeoutDialog.extendButton.click({force:true});},\n   7:async s=>{await expect(s.portal.sessionTimeoutDialog.extendButton).toBeVisible();await s.portal.sessionTimeoutDialog.extendButton.click({force:true});},\n-  8:async s=>{await s.acceptRelogin();transitions++;},9:async()=>{expect(transitions).toBeLessThanOrEqual(1);},\n+  8:async s=>{await s.acceptRelogin();await expect.poll(()=>equalsToken(page,'token',sessionToken(900,'B'))).toBe(true);},\n+  9:async()=>{\n+   const states=await page.evaluate(()=>(window as unknown as {auditRecoveryStates:{time:number;authenticated:boolean}[]}).auditRecoveryStates);\n+   const transitions=states.slice(1).filter((state,index)=>state.authenticated&&!states[index].authenticated).length;\n+   await audit.record('observed-recovery-transitions',{states,transitions});\n+   expect(transitions).toBeLessThanOrEqual(1);\n+  },\n   11:async()=>{await expect(page.getByTestId(`${localPrefix}_snackbar`).locator('.MuiSnackbarContent-root[role=\"alert\"]')).toHaveCount(0);},\n  });\n });\n"
+    },
+    {
+      "current": {
+        "path": "e2e/audit-specs/auth-final.spec.ts",
+        "sha256": "c81420c8efdb60b6d21ce4f1b0c0a4dd940d2b52978285b26d1b9f2bd550d8a4"
+      },
+      "snapshot": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-final.spec.ts",
+        "sha256": "133a5ec4632074a6d7527c9547510d890f4ede7d1533ab93947176e004455150"
+      },
+      "caseIds": [
+        "AUTH-066",
+        "AUTH-112",
+        "AUTH-117",
+        "AUTH-137"
+      ],
+      "reviewedChange": "Only AUTH-138 adds clock advancement and drawer settling. All four selected callbacks and their imported helper bytes match.",
+      "diff": "--- tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-final.spec.ts\n+++ e2e/audit-specs/auth-final.spec.ts\n@@ -56,7 +56,7 @@\n test('AUTH-138 recovery removes old entity and controls',async({page,audit})=>{\n  await runSessionCase(page,audit,'AUTH-138',{accessExpires:0,refreshExpires:600},{\n   5:async()=>{await setCatalog(page);},6:async s=>{await s.portal.sessionTimeoutDialog.extendButton.click({force:true});},\n-  7:async s=>{await expect.poll(()=>s.relogin.length).toBe(1);for(const route of s.relogin.splice(0))await route.fulfill({status:200,headers:{'single-ui-authorization':sessionToken(900,'B')},json:{result:true,entities:[],drawers:[],userInfo:JSON.stringify({sub:'user-a',fullName:'user-a'})}});},8:async s=>{await s.portal.root.getByText('New Tile',{exact:true}).click({force:true});await audit.record('drawer-inspection',{action:'Open New Tile to inspect chosen controlled ENTITY-A App title; Escape closes this inspection before the canonical avatar action.',limit:'Canonical control identity remains UNVERIFIED.'});await audit.capture('removed-entity-drawer-inspection','Drawer state for the controlled ENTITY-A App probe.');await expect(page.getByText('ENTITY-A App',{exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await expect(page.getByTestId(`${localPrefix}_drawer`).getByText('Tile Options',{exact:true})).not.toBeVisible();},\n+  7:async s=>{await expect.poll(()=>s.relogin.length).toBe(1);for(const route of s.relogin.splice(0))await route.fulfill({status:200,headers:{'single-ui-authorization':sessionToken(900,'B')},json:{result:true,entities:[],drawers:[],userInfo:JSON.stringify({sub:'user-a',fullName:'user-a'})}});},8:async s=>{await s.portal.root.getByText('New Tile',{exact:true}).click({force:true});await page.clock.runFor(500);await page.waitForLoadState('networkidle');await audit.record('drawer-inspection',{action:'Open New Tile to inspect chosen controlled ENTITY-A App title; Escape closes this inspection before the canonical avatar action.',limit:'Canonical control identity remains UNVERIFIED.'});await audit.capture('removed-entity-drawer-inspection','Drawer state for the controlled ENTITY-A App probe.');await expect(page.getByText('ENTITY-A App',{exact:true})).toHaveCount(0);await page.keyboard.press('Escape');await page.clock.runFor(300);await expect(page.getByTestId(`${localPrefix}_drawer`).getByText('Tile Options',{exact:true})).not.toBeVisible();},\n   9:async s=>{await s.portal.avatarButton.click({force:true});},10:async s=>{await s.portal.avatarMenu.getByRole('menuitem').filter({hasText:'user-a'}).click({force:true});},\n   11:async()=>{await expect(page.getByTestId('entitlement-profile-label-box').locator('.MuiTypography-h5')).toHaveText('user-a');},12:async()=>{expect(await page.evaluate(async()=>JSON.stringify((await(window as unknown as SystemWindow).System.import('@fm/base')).Hooks.getHooks().store.entities))).not.toContain('ENTITY-A');},\n  });\n"
+    },
+    {
+      "current": {
+        "path": "e2e/audit-specs/additional-boundaries.spec.ts",
+        "sha256": "b72312266d05eae25a316cd892d76c30dc3e10e9e13fdc471a417a83f200a5fa"
+      },
+      "snapshot": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/additional-boundaries.spec.ts",
+        "sha256": "5269148c137202889ba97d7e2c137549b3f9188e2f2df98fd8522cdc04045988"
+      },
+      "caseIds": [
+        "AUTH-115",
+        "UX-036"
+      ],
+      "reviewedChange": "Only UX-043 changes prerequisite disclosure. The AUTH-115 and UX-036 callbacks and their imported helper bytes match.",
+      "diff": "--- tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/additional-boundaries.spec.ts\n+++ e2e/audit-specs/additional-boundaries.spec.ts\n@@ -32,10 +32,11 @@\n   const app = new AdminApp(page, 'Category', 'UX-043');\n   for (const step of steps) {\n     if (step.number === 3) {\n-      await audit.record('execution-blocker', { code: 'FORMULA_ENABLED_SPREADSHEET_VIEWER_UNAVAILABLE',\n-        blockedStep: step.number, owner: 'Unknown', nextAction: 'Provide a formula-enabled spreadsheet viewer for captured CSV imports.',\n-        consequence: 'Export and screenshot evidence exist. Formula execution and cell data types remain unverified.' });\n-      test.skip(true, 'FORMULA_ENABLED_SPREADSHEET_VIEWER_UNAVAILABLE: export completed; viewer steps cannot execute.');\n+      await audit.record('execution-blocker', { code: 'NATIVE_CSV_IMPORT_UNAVAILABLE',\n+        blockedStep: step.number, owner: 'Audit execution owner', nextAction: 'Restore native CSV import controls, then inspect cell types, original values, and a separate evaluator control.',\n+        investigation: 'tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/CSVviewer/native-investigation.json',\n+        consequence: 'Numbers is installed. Native controls recognized the exact CSV but did not complete import. Export evidence exists; formula execution and cell data types remain unverified.' });\n+      test.skip(true, 'NATIVE_CSV_IMPORT_UNAVAILABLE: export completed; native import and viewer assertions remain unexecuted.');\n     }\n     await audit.step(step.number, async () => {\n       if (step.number === 1) {\n"
+    },
+    {
+      "current": {
+        "path": "e2e/audit-specs/knowledge-current-bff.spec.ts",
+        "sha256": "b8bed5a794667ebad18e8a2ea8e028236460bbd9ea629ee01eac344c47b9fdcd"
+      },
+      "snapshot": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-073/source-snapshots/e2e/audit-specs/knowledge-current-bff.spec.ts",
+        "sha256": "53d0223f8ca2abf2aeaa0586b9547cf688c66a97d3c70ef6b0c92d163608a705"
+      },
+      "caseIds": [
+        "KNOW-001",
+        "KNOW-002",
+        "KNOW-003",
+        "KNOW-004",
+        "KNOW-005",
+        "KNOW-006",
+        "KNOW-007",
+        "KNOW-008",
+        "KNOW-009",
+        "KNOW-010",
+        "KNOW-015",
+        "KNOW-017"
+      ],
+      "reviewedChange": "The shared callback adds a prerequisite guard only for id===KNOW-014 at step9. All twelve selected IDs skip that guard. The removed exception handled only KNOW-014 open authorization. Their predicates and helper bytes remain equivalent.",
+      "diff": "--- tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-073/source-snapshots/e2e/audit-specs/knowledge-current-bff.spec.ts\n+++ e2e/audit-specs/knowledge-current-bff.spec.ts\n@@ -30,7 +30,14 @@\n  async function fixture(operation:string,data:unknown={}){const result=await page.request.post(`${bff}/local/fixture/${operation}`,{data});expect(result.ok(),`Fixture ${operation}: HTTP${result.status()}`).toBe(true);return result.json();}\n  async function databaseTile(title:string){const result=await fixture('sql',{statements:[`SELECT title,ems2_entities AS entities,ems2_subject AS subject FROM post_trade_portal_service.application_tile WHERE title='${title}'`]});return result.results[0].rows;}\n  async function signIn(){await login.fillUsername('alice');await login.fillPassword('FixturePass1!');await login.clickSignInButton();await expect.poll(()=>loginSettled).toBe(true);await page.waitForLoadState('networkidle');}\n- for(const step of steps)await audit.step(step.number,async()=>{\n+ for(const step of steps){\n+  if(id==='KNOW-014'&&step.number===9){\n+   const after=requests.slice(openStart);\n+   await audit.record('open-operation-observation',{sourceRevision,requests:after,serviceRequests:after.filter(request=>new URL(request.url).pathname.startsWith('/api/')),authorizationRequests:after.filter(request=>new URL(request.url).pathname.startsWith('/api/auth/')),observed:'Actual shell tile click completed. The retained list identifies all observed requests.',limits:['Observed request counts do not establish protected tenant authorization.']});\n+   await audit.record('execution-blocker',{caseId:id,blockedBeforeStep:9,remainingSteps:steps.filter(value=>value.number>=9).map(value=>value.number),reason:'No approved current shell tile open-authorization operation, protected business field identities, or agreed denial state is bound.',owner:'Business contract owner: unknown',requiredAction:'Approve the concrete tile authorization response, protected fields, and denial UI; provide the corresponding tenant runtime.',partialEvidence:'Canonical steps1–8 completed with fresh screenshots. Steps9–10 did not execute.',policy:'BLOCKED prerequisite; no business assertion failure or invented denial state.'});\n+   test.skip(true,'KNOW-014 lacks approved open-authorization, protected-field, and denial-state bindings. Steps9–10 did not execute.');\n+  }\n+  await audit.step(step.number,async()=>{\n   if(step.number===1){await blockExternal(page);await seedWorkspaces(page,[workspace('WS-A','WS-A')]);page.on('request',request=>requests.push({method:request.method(),url:request.url()}));await page.route('**/api/auth/**',async route=>{const pathname=new URL(route.request().url()).pathname;const response=await route.fetch({url:`${bff}${pathname.replace('/api/auth','')}`});if(pathname.endsWith('/sso/login')){loginStatus=response.status();const body=await response.json();loginResult=body.result;actualDrawers=body.drawers??[];await audit.record('actual-filtered-login',{sourceRevision,status:loginStatus,result:loginResult,entities:body.entities?.map((value:any)=>({name:value.name,subjects:value.subjects?.map((subject:any)=>({name:subject.name,longName:subject.longName}))})),drawers:actualDrawers,limits:['Controlled EMS2 input; no canned catalog response. Current AdminModuleUtil and AuthFilterExecutor compute these drawers.']});loginSettled=true;}await route.fulfill({response});});await openLogin(page);return;}\n   if(step.number===2){await fixture('reset');await fixture('seed',catalog);const titles=await fixture('sql',{statements:['SELECT title FROM post_trade_portal_service.application_tile ORDER BY application_tile_id']});expect(titles.results[0].rows.map((row:any)=>row.title)).toEqual(['T-TRADE','T-CASH','T-REPORT']);await audit.record('actual-catalog-seed',{sourceRevision,database:'Disposable PostgreSQL18.4',catalog});return;}\n   if(step.number===3){expect(await databaseTile('T-TRADE')).toEqual([{title:'T-TRADE',entities:'E-TRADE',subject:'S-VIEW'}]);return;}\n@@ -40,7 +47,6 @@\n   if(step.text.includes('visible catalog contains')){await fixture('seed',{entities:permissions[id]});await signIn();await portal.expectVisible();await portal.root.getByTestId(`${localPrefix}_new_tile`).click();await expect(drawer.getByText('T-TRADE',{exact:true})).toBeVisible();return;}\n   if(step.text.includes('next tile authorization response')){await fixture('seed',{entities:[]});openStart=requests.length;await audit.record('revoked-provider-state',{sourceRevision,nextControlledEMS2Entities:[],openAuthorizationEndpoint:'NONE_DECLARED_BY_CURRENT_SHELL',limit:'The fixture changes real local EMS2 input. No tile authorization endpoint or response is invented.'});return;}\n   if(step.text.includes('clicks the text \"T-TRADE\"')){await drawer.getByText('T-TRADE',{exact:true}).click();await page.waitForLoadState('networkidle');return;}\n-  if(step.text.includes('after the open authorization response settles')){const after=requests.slice(openStart);const serviceRequests=after.filter(request=>new URL(request.url).pathname.startsWith('/api/'));const authorizationRequests=serviceRequests.filter(request=>new URL(request.url).pathname.startsWith('/api/auth/'));await audit.record('open-operation-observation',{sourceRevision,requests:after,serviceRequests,authorizationRequests,expected:'Canonical tile open authorization response',observed:'Actual shell tile click completed. The retained list identifies all observed requests. No approved shell tile authorization operation is bound.',limits:['The protected business tenant is unavailable.','Observed request counts cannot establish tenant API authorization behavior.','Canonical protected field identities and the agreed denial state remain undefined.']});throw new Error('Canonical open-authorization operation and agreed denial state have no approved current shell binding.');}\n   if(step.text.includes('no tenant entities')||step.text.includes('no registered portal entity')){await fixture('seed',{entities:[]});return;}\n   if(step.text.includes('overrides its configured entity list')){await fixture('sql',{statements:[\"UPDATE post_trade_portal_service.application_tile SET ems2_entities='',ems2_subject='' WHERE title='T-REPORT'\"]});expect(await databaseTile('T-REPORT')).toEqual([{title:'T-REPORT',entities:'',subject:''}]);await signIn();return;}\n   if(step.text.includes('browser storage contains the synthetic guest flag')){guest=true;await page.evaluate(()=>localStorage.setItem('UI_AUDIT_SYNTHETIC_GUEST','true'));await audit.record('synthetic-guest-overlay',{key:'UI_AUDIT_SYNTHETIC_GUEST',value:'true',sourceConsumer:'No current MFE guest-flag consumer was found.',limit:'Synthetic flag only; no production guest policy is inferred.'});await signIn();return;}\n@@ -58,5 +64,6 @@\n   const count=/contains exactly (\\d+) occurrences of tile title text \"([^\"]+)\"/.exec(step.text);\n   if(count){await expect(drawer.getByText(count[2],{exact:true})).toHaveCount(Number(count[1]));const filtered=actualDrawers.flatMap((value:any)=>value.tiles??[]).filter((tile:any)=>tile.title===count[2]);expect(filtered).toHaveLength(Number(count[1]));return;}\n   throw new Error(`Missing ${id} step ${step.number}: ${step.text}`);\n- });\n+  });\n+ }\n });\n"
+    },
+    {
+      "current": {
+        "path": "e2e/audit-specs/ux-shell.spec.ts",
+        "sha256": "06c3644d14cb3aea5e867e9100bc9f7a3ec127f2e3f805a1d195e966f7cbaeb9"
+      },
+      "snapshot": {
+        "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/ux-shell.spec.ts",
+        "sha256": "cf6b86260efd547f75e24041a18514029e9efcf78f961cb75b6c609f35d0a4e2"
+      },
+      "caseIds": [
+        "UX-001",
+        "UX-002",
+        "UX-003",
+        "UX-005",
+        "UX-006",
+        "UX-007",
+        "UX-008",
+        "UX-009",
+        "UX-010",
+        "UX-011",
+        "UX-012",
+        "UX-013",
+        "UX-019",
+        "UX-020",
+        "UX-023",
+        "UX-024",
+        "UX-025",
+        "UX-026",
+        "UX-027",
+        "UX-028",
+        "UX-037",
+        "UX-044",
+        "UX-046",
+        "UX-048",
+        "UX-049",
+        "UX-050",
+        "UX-063",
+        "UX-064",
+        "UX-071",
+        "UX-072"
+      ],
+      "reviewedChange": "Only n===4 reverses workspace ordering and records new fixture metadata. Every selected case has n!==4. Existing workspace arrays remain equivalent. Other responsive and resilience callbacks match.",
+      "diff": "--- tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/ux-shell.spec.ts\n+++ e2e/audit-specs/ux-shell.spec.ts\n@@ -44,9 +44,16 @@\n     for (const step of steps) await audit.step(step.number, async () => {\n       const text = step.text;\n       if (step.number === 1) {\n-        app = await loginCatalog(page, [4,5,6,7].includes(n) ? { workspaces: [\n+        const keyboardWorkspaces = [\n           { id: 'W1', label: n === 4 || n === 6 ? 'Home' : 'Cashflow', isActive: true, containers: [fixtureContainer({registerRefresh:true})] },\n-          { id: 'W2', label: 'Cashflow', isActive: true, containers: [] }] } : {});\n+          { id: 'W2', label: 'Cashflow', isActive: true, containers: [] }];\n+        // Home assigns panel indexes from array position, starting at one.\n+        if (n === 4) keyboardWorkspaces.reverse();\n+        app = await loginCatalog(page, [4,5,6,7].includes(n) ? { workspaces: keyboardWorkspaces } : {});\n+        if (n === 4) await audit.record('keyboard-workspace-fixture', {\n+          workspaces: keyboardWorkspaces, expectedCashflowPanel: 'workspaces-tabpanel-1',\n+          definition: 'tasks/ui-test-coverage-20261022/test-cases.md:102',\n+          limit: 'ArrowRight wraps from focused Home to the first Cashflow tab. Workspace IDs do not determine panel indexes.' });\n         if ([4,5,6,7].includes(n)) {\n           if (n === 4) { await tab().tab.focus(); await expect(tab().tab).toBeFocused(); }\n         }\n"
+    }
+  ]
+}

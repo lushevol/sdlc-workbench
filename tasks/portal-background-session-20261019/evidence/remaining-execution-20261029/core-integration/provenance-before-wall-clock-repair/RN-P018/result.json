@@ -1,0 +1,108 @@
+{
+  "case_id": "RN-P018",
+  "definition": "../../../../06-test-cases.md#rn-p018",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "User A has a pending manual renewal",
+    "the response contains different access values under lowercase and title-case header names"
+  ],
+  "when": [
+    "the fixture delivers the response"
+  ],
+  "then": [
+    "the trace records the selected header value and installed expiry",
+    "a service-side protected validation records the accepted identity"
+  ],
+  "assertions": [
+    {
+      "name": "one manual request pending",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "name": "selected access is one of the two supplied values",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "installed expiry equals selected credential expiry",
+      "actual": 1793242961,
+      "expected": 1793242961,
+      "status": "PASSED"
+    },
+    {
+      "name": "current BFF signature and expiry verification passes",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "current SDK protected handler accepts selected credential",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "accepted service-side identity matches installed access subject",
+      "actual": "B",
+      "expected": "B",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "method": "post",
+      "signal_aborted": false
+    }
+  ],
+  "blocked_predicates": [],
+  "execution_level": "actual-source component integration in jsdom",
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Exact React Provider, reducers, mounted Timeout hook, service helpers, and Axios request/response interceptors execute.",
+    "Network responses and JWT payloads are controlled fixture inputs. Cryptographic validity is not established by the client probes.",
+    "No native browser lifecycle, real UI rendering, transport, or business mutations execute.",
+    "P018 additionally executes real current RSA/JWT verification and SDK filtering. It does not execute a live business service."
+  ],
+  "signed_peer": {
+    "source_binding": "../../security/server-execution.json",
+    "verifier": "current BFF JwtTokenUtil and current SDK AuthTokenFilter",
+    "handler": "synthetic protected servlet handler",
+    "raw_credentials_retained": false
+  },
+  "response_values": {
+    "lowercase_sha256": "526304a0bb8cb1fe9f37a108bb0af99f9ec4585d2795171f7bd678aef7cfb68f",
+    "titlecase_sha256": "28ed224a6cb90fca7399668423f1f0fcd399089726380e4640a3f06639f18a6d"
+  },
+  "selected_casing": "title-case",
+  "selection": {
+    "access_sha256": "28ed224a6cb90fca7399668423f1f0fcd399089726380e4640a3f06639f18a6d",
+    "refresh_sha256": "2241e04d007b3d441a1944fb954b2b98b0e23357d9dd038d4f8d40506e9b0433",
+    "expiry": 1793242961,
+    "iat": 1793242060,
+    "logout": false,
+    "closures": 1
+  },
+  "protected_validation": {
+    "current_bff_jwt_valid": true,
+    "sdk_authorization_subject": "B",
+    "protected_fixture_accepted": true,
+    "credential_sha256": "28ed224a6cb90fca7399668423f1f0fcd399089726380e4640a3f06639f18a6d",
+    "sdk_filter_status": 200,
+    "limit": "Actual current BFF verifier and SDK filter; synthetic servlet handler. No live business service or distributed revocation validation."
+  },
+  "final": {
+    "access_sha256": "28ed224a6cb90fca7399668423f1f0fcd399089726380e4640a3f06639f18a6d",
+    "refresh_sha256": "2241e04d007b3d441a1944fb954b2b98b0e23357d9dd038d4f8d40506e9b0433",
+    "expiry": 1793242961,
+    "iat": 1793242060,
+    "logout": false,
+    "closures": 1
+  },
+  "completed_at": "2026-10-29T02:47:41.000Z"
+}

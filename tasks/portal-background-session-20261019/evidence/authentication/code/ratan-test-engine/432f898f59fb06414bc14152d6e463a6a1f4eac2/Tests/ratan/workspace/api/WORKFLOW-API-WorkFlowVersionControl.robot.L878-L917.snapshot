@@ -1,0 +1,40 @@
+	[Documentation]  1135614 - Verify the version changes when create and republishing the workflow multiple times
+	...      Verify the information is saved correctly when create a new workflow
+	...      Verify the error message when user try to publish the workflow in INIT status
+	...      Verify the error message when user try to publish the workflow in published status
+	...      Verify the error message when user try to save the workflow in Published status
+	...      Verify the error message when create workflow with no access token
+	...      Verify the error message when create workflow with expired token
+	...      Verify the version is updated correctly when user republish the workflow for multiple times
+	[Tags]  WorkFlowVersionControl  FlowZero  DesignWorkflow  Regression
+	GROUP  Create a new workflow and check the information
+	    comment  ======Step1: Create a draft workflow and check the information is saved correctly
+	    # Create draft
+	    ${req_host}  Set Variable  ${URL}
+	    ${req_header_admin}  Create Dictionary  Single-Ui-Authorization=${token_admin}
+	    ${CountryCodes}     Get Random Countries Or BusinessArea     Countries
+	    ${BusinessArea}      Get Random Countries Or BusinessArea     BusinessArea
+        ${WFName}  randomString  20  lm
+        ${WFName_Original}    Set Variable      AutoTest ${WFName}
+        ${Description}  randomString  500  lm
+	    ${req_body}   Create Dictionary   name=${WFName_Original}  countryCodes=${CountryCodes}  businessArea=${BusinessArea}  createdBy=${USERNAME_WF_ADMIN}  icon=${HeadIcon1}  description=${Description}
+	    FOR  ${i}  IN RANGE  1
+		    RequestsLibrary.Create Session  website  url=${req_host}
+		    ${response}  RequestsLibrary.Post On Session    website    url=api/ratan/api/v1/workflow/create    json=${req_body}	 headers=${req_header_admin} 	allow_redirects=${False}
+	        ${create_utc_min}   Get Current Date   result_format=%Y-%m-%d %H:%M    time_zone=UTC
+	    END
+	    ${req_header_expired}     Create Dictionary  Single-Ui-Authorization=${token_expired}
+	    ${req_header_noaccess}     Create Dictionary  Single-Ui-Authorization=${token_noaccess}
+	    # Check the error message when create workflow with with expired token
+	    FOR  ${i}  IN RANGE  1
+		    RequestsLibrary.Create Session  website  url=${req_host}
+		    ${response_error}  RequestsLibrary.Post On Session    website    url=api/ratan/api/v1/workflow/create    json=${req_body}	 headers=${req_header_expired}  	allow_redirects=${False}   expected_status=503
+	    END
+	    RequestsLibrary.Delete All Sessions
+	    # Check the error message when create workflow with no access user
+	    FOR  ${i}  IN RANGE  1
+		    RequestsLibrary.Create Session  website  url=${req_host}
+		    ${response_error}  RequestsLibrary.Post On Session    website    url=api/ratan/api/v1/workflow/create    json=${req_body}	 headers=${req_header_noaccess}  	allow_redirects=${False}   expected_status=403
+	    END
+        RequestsLibrary.Delete All Sessions
+        Run Keyword And Continue On Failure  Should Contain  ${response_error.text}   ACTION_DENIED

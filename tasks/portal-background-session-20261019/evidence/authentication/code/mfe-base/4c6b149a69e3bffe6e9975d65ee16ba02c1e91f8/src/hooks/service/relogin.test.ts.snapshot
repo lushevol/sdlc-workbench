@@ -1,0 +1,58 @@
+import { relogin, signal } from ".";
+
+const mockPost = jest.fn();
+
+jest.mock("./config", () => ({
+  __esModule: true,
+  default: { post: (...args: unknown[]) => mockPost(...args) },
+}));
+jest.mock("../HooksBase", () => ({ getHooksBase: () => ({ store: {} }) }));
+
+const deferred = () => {
+  let resolve!: (value: unknown) => void;
+  let reject!: (reason: unknown) => void;
+  const promise = new Promise((accept, decline) => {
+    resolve = accept;
+    reject = decline;
+  });
+  return { promise, resolve, reject };
+};
+
+describe("relogin promise", () => {
+  beforeEach(() => {
+    mockPost.mockReset();
+    signal.relogin = undefined;
+  });
+
+  it("returns the request promise and waits for its result", async () => {
+    const request = deferred();
+    mockPost.mockReturnValue(request.promise);
+    const response = relogin();
+    expect(response).toBe(request.promise);
+    expect(mockPost).toHaveBeenCalledWith("/api/auth/v2/sso/relogin", {}, {
+      signal: expect.any(AbortSignal),
+    });
+    let settled = false;
+    response.then(() => { settled = true; });
+    await Promise.resolve();
+    expect(settled).toBe(false);
+    request.resolve({ status: 200 });
+    await expect(response).resolves.toEqual({ status: 200 });
+  });
+
+  it("propagates rejection and still aborts an older request", async () => {
+    const first = deferred();
+    const second = deferred();
+    mockPost.mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise);
+    const firstResponse = relogin();
+    const firstSignal = signal.relogin.signal;
+    const secondResponse = relogin();
+    expect(firstSignal.aborted).toBe(true);
+    const error = new Error("renewal unavailable");
+    const rejected = expect(secondResponse).rejects.toBe(error);
+    second.reject(error);
+    await rejected;
+    first.resolve({ status: 200 });
+    await firstResponse;
+  });
+});

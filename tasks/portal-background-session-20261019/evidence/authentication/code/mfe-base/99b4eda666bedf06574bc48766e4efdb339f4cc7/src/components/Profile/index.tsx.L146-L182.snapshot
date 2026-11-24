@@ -1,0 +1,37 @@
+const Profile: FC<ProfileProps> = ({ open, onClose }) => {
+  const [store] = useContext();
+  const { ButtonEvent } = useAnalytics();
+  const [functionalProfileArray, setFunctionalProfileArray] = useState<
+    Entity[]
+  >([]);
+  const [entitlementProfileArray, setEntitlementProfileArray] = useState<
+    Entity[]
+  >([]);
+  const [expanded, setExpanded] = React.useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+      ButtonEvent("click", {
+        name: panel,
+        value: `${expanded !== panel}`,
+        ...analyticsData,
+      });
+    };
+
+  useEffect(() => {
+    setTimeout(() => {
+      const array1 = store?.entities?.filter(
+        (entity: Entity) => entity?.name !== "RATAN_DATA_ENTITLEMENT"
+      );
+      const array2 = store?.entities?.filter(
+        (entity: Entity) => entity?.name === "RATAN_DATA_ENTITLEMENT"
+      );
+      setFunctionalProfileArray(array1 ?? []);
+      setEntitlementProfileArray(array2 ?? []);
+    }, 500);
+  }, []);
+
+  const auth_time = (store?.user?.auth_time as number) * 1000;
+  const expiredIn = (store?.expiredIn as number) * 1000;
+  const timeType = store?.timeType?.toUpperCase();

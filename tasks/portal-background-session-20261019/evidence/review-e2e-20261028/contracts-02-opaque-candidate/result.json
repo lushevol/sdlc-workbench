@@ -1,0 +1,273 @@
+{
+  "caseId": "REVIEW-E2E-02",
+  "variant": "opaque",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "sourceBindingSha256": "19c24f18d1c360461e87ed73e75ba6014ae004cd6f87871737f4025bf1452c9b",
+  "runnerSha256": "22d208f13bd356ee51ebd23c08db001e41302a4d415b9dd61fae8e2dc41f2af3",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:50:32.031Z",
+  "clock": "REAL_WALL_CLOCK",
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "predicate": "Malformed-token experiment first obtains successful real BFF renewal with authorization",
+      "passed": true
+    },
+    {
+      "predicate": "Exactly one correlated malformed-token relogin occurred",
+      "passed": true
+    },
+    {
+      "predicate": "Candidate does not install substituted authorization",
+      "passed": true
+    },
+    {
+      "predicate": "Candidate retains recovery dialog after unsupported access",
+      "passed": true
+    },
+    {
+      "predicate": "Valid control obtains real BFF success and access",
+      "passed": true
+    },
+    {
+      "predicate": "Valid control installs exactly returned access",
+      "passed": true
+    },
+    {
+      "predicate": "Valid control closes Timeout dialog",
+      "passed": true
+    },
+    {
+      "predicate": "Valid control BFF validation succeeds",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "initial-home",
+      "file": "initial-home.png",
+      "sha256": "4f4825957396cb6fb59cd89e42a28011e3cf2a186a58659071671ce4a61d9704",
+      "capturedAt": "2026-10-28T02:50:47.302Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    },
+    {
+      "phase": "natural-expiry-prompt",
+      "file": "natural-expiry-prompt.png",
+      "sha256": "7942f3d7e6bbb3252c036ced42dacb27fcda7c3a268e2a5c581d6b3b582251bd",
+      "capturedAt": "2026-10-28T02:51:37.399Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    },
+    {
+      "phase": "malformed-response-outcome",
+      "file": "malformed-response-outcome.png",
+      "sha256": "eb7be78f942908df9ca7a7b3dce5fa9697501f2bc0079466004535a961d1ecd3",
+      "capturedAt": "2026-10-28T02:51:38.825Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    },
+    {
+      "phase": "valid-normal-control",
+      "file": "valid-normal-control.png",
+      "sha256": "f0fd48110ce676b8b429f5c26d1bd1cbf781d62e32cd9e0eba21bb7f38e6d2bd",
+      "capturedAt": "2026-10-28T02:51:38.963Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    }
+  ],
+  "events": [
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:51:12.038Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:51:37.035Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:51:37.449Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "at": "2026-10-28T02:51:37.456Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 401,
+      "at": "2026-10-28T02:51:38.749Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:51:38.919Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "at": "2026-10-28T02:51:38.920Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:51:38.924Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "at": "2026-10-28T02:51:38.935Z"
+    }
+  ],
+  "limits": [
+    "Local BFF authentication/entitlement fixture and toolkit substitute; source-bound local development build; production applicability unverified.",
+    "Successful local relogin authorization is replaced with opaque. Modified JWT signature is invalid; local BFF never emits this malformed shape."
+  ],
+  "loadedScriptResources": [
+    "http://127.0.0.1:8143/js/external/runtime.min.js",
+    "http://127.0.0.1:8143/js/external/import-map-overrides.js",
+    "http://127.0.0.1:8143/js/external/amd.min.js",
+    "http://127.0.0.1:8143/js/external/system.min.js",
+    "http://127.0.0.1:8143/config.js",
+    "http://127.0.0.1:8143/js/external/single-spa.dev.js",
+    "http://127.0.0.1:8142/base.js",
+    "http://127.0.0.1:8143/js/external/react.development.js",
+    "http://127.0.0.1:8143/js/external/react-dom.development.js",
+    "http://127.0.0.1:8142/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+    "http://127.0.0.1:8142/d036a119bbe9457b9006.src_pages_Home_index_tsx.base.js"
+  ],
+  "initial": {
+    "at": "2026-10-28T02:50:37.306Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "515cf794e4f727139b9acdd7745da300befc8fdabc6693e647054c2d0f1a341c",
+      "exp": 1793155897,
+      "iat": 1793155837
+    },
+    "refresh": {
+      "sha256": "26b1d774006808fabf13417d159b97c993250a1b2a652bd83a2f00f7c9acf126",
+      "exp": 1793155981,
+      "iat": 1793155837
+    },
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isLoading": false,
+    "homeVisible": true,
+    "signInVisible": false
+  },
+  "phase": "FINISHED",
+  "prompt": {
+    "at": "2026-10-28T02:51:37.362Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "515cf794e4f727139b9acdd7745da300befc8fdabc6693e647054c2d0f1a341c",
+      "exp": 1793155897,
+      "iat": 1793155837
+    },
+    "refresh": {
+      "sha256": "7176799123aaf7f8d6256169aff4bc3354ee0ccce181d3545c699431308a74b0",
+      "exp": 1793156016,
+      "iat": 1793155872
+    },
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isLoading": false,
+    "homeVisible": true,
+    "signInVisible": false
+  },
+  "substitution": {
+    "variant": "opaque",
+    "provider": {
+      "sha256": "665590b279f2fbffbb1f7a809ba60f90de8290df43b16c06bb5fa086aea061e3",
+      "exp": 1793155957,
+      "iat": 1793155897
+    },
+    "substituted": {
+      "sha256": "0994810190b3183d1e2ed1505aa80277264d1630e17bedf8d623ec5284aaffec",
+      "exp": null,
+      "iat": null
+    },
+    "providerAcceptedAt": "2026-10-28T02:51:37.450Z"
+  },
+  "malformed": {
+    "at": "2026-10-28T02:51:38.744Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "515cf794e4f727139b9acdd7745da300befc8fdabc6693e647054c2d0f1a341c",
+      "exp": 1793155897,
+      "iat": 1793155837
+    },
+    "refresh": {
+      "sha256": "7176799123aaf7f8d6256169aff4bc3354ee0ccce181d3545c699431308a74b0",
+      "exp": 1793156016,
+      "iat": 1793155872
+    },
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isLoading": false,
+    "homeVisible": true,
+    "signInVisible": false
+  },
+  "malformedProtected": {
+    "called": true,
+    "status": 401,
+    "result": false
+  },
+  "malformedRequestCount": 1,
+  "malformedInstalled": false,
+  "malformedRealProviderAccessInstalled": false,
+  "validControlContext": "SAME_PROMPT_RETRY",
+  "validResponse": {
+    "status": 200,
+    "access": {
+      "sha256": "0beda9725d379f861ef8908dfe14d2d6d6d06df79a277a63f29a1b570b4268b0",
+      "exp": 1793155958,
+      "iat": 1793155898
+    },
+    "receivedAt": "2026-10-28T02:51:38.920Z"
+  },
+  "valid": {
+    "at": "2026-10-28T02:51:38.928Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "0beda9725d379f861ef8908dfe14d2d6d6d06df79a277a63f29a1b570b4268b0",
+      "exp": 1793155958,
+      "iat": 1793155898
+    },
+    "refresh": {
+      "sha256": "7176799123aaf7f8d6256169aff4bc3354ee0ccce181d3545c699431308a74b0",
+      "exp": 1793156016,
+      "iat": 1793155872
+    },
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isLoading": false,
+    "homeVisible": true,
+    "signInVisible": false
+  },
+  "validProtected": {
+    "called": true,
+    "status": 200,
+    "result": true
+  },
+  "disposition": "UNSUPPORTED_ACCESS_REJECTED_VALID_RETRY_RECOVERS",
+  "completedAt": "2026-10-28T02:51:38.964Z"
+}

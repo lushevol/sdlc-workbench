@@ -1,0 +1,1 @@
+../../records/candidates/settlement/INT-KT-payment-accounting-contracts.md

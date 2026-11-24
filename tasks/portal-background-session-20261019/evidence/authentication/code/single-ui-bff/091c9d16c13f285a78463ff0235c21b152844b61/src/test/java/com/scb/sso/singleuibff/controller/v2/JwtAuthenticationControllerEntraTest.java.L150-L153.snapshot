@@ -1,0 +1,4 @@
+        assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+        assertNotNull(resp.getBody());
+        assertFalse(resp.getBody().isResult());
+        assertTrue(resp.getBody().getErrorMessage().contains("AuthenticationException:"));

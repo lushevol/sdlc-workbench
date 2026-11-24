@@ -1,0 +1,349 @@
+{
+  "id": "RN-D002",
+  "title": "Renewal in one tab leaves another tab idle",
+  "started_at": "2026-10-29T02:19:24.456Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-d002",
+  "definition_sha256": "a8ad30baa766c8293de068e5a47de6cd3e5bbb39301f0d38787331d7740c1a8a",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "both-tab observations retained",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "label": "acceptance remains policy blocked",
+      "actual": "BLOCKED_POLICY",
+      "expected": "BLOCKED_POLICY",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239201868,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239205767,
+      "page": "A"
+    },
+    {
+      "endpoint": "validate",
+      "at": 1793239200000,
+      "page": "B"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239200100,
+      "page": "B"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239200750,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "validate-A",
+      "workspace": "W-A",
+      "page": "A",
+      "credential_sha256": "cb908c0eb6d41a9538388077798b2060cb3bd64baf7aa327bd1500271c8a7b3e",
+      "principal": "User A",
+      "accepted": false,
+      "method": "GET",
+      "at": 1793239261001
+    },
+    {
+      "endpoint": "protected",
+      "id": "validate-B",
+      "workspace": "W-A",
+      "page": "B",
+      "credential_sha256": "9e9a52fcde5751aaba003410003baeedff38800549991cda63f2affa5dc26964",
+      "principal": "User A",
+      "accepted": false,
+      "method": "GET",
+      "at": 1793239261001
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "bc3b494e5bdb91945ca654fb886272deb813d7f803b243dc3d2e6f1b3d62adde",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        32,
+        299
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": "Cross-tab credential synchronization and idle-policy scope are not defined.",
+  "business_acceptance": "BLOCKED_POLICY",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-a.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+  ],
+  "tab_observations": {
+    "A": {
+      "expiry": 1793239260000,
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "workspaces": [
+        {
+          "id": "W-A",
+          "label": "W-A",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "W-B",
+          "label": "W-B",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              }
+            }
+          ]
+        }
+      ],
+      "selected": "W-A",
+      "loading": false,
+      "dialog": true,
+      "logout": false,
+      "props": {
+        "W-A": {
+          "tabId": "W-A",
+          "panelId": "workspaces-tabpanel-1",
+          "parameters": {
+            "fixtureId": "W-A",
+            "record": "trade-X",
+            "autoRequest": false
+          }
+        }
+      },
+      "mounts": {
+        "W-A": 1
+      },
+      "refreshCalls": {},
+      "calls": {
+        "validate-A": {
+          "status": "rejected",
+          "session_epoch": 2,
+          "error": {
+            "code": "ERR_BAD_REQUEST",
+            "message": "Request failed with status code 401"
+          }
+        }
+      },
+      "opens": 1,
+      "closures": 0,
+      "storage_events": [],
+      "persisted": "[{\"id\":\"W-A\",\"label\":\"W-A\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-A\",\"container\":\"@fm/wt-fixture-a\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-A\",\"title\":\"W-A\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-A\",\"record\":\"trade-X\",\"autoRequest\":false}}]},{\"id\":\"W-B\",\"label\":\"W-B\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-B\",\"container\":\"@fm/wt-fixture-b\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-B\",\"title\":\"W-B\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-B\",\"record\":\"positions-Y\",\"autoRequest\":false}}]}]",
+      "token_sha256": "cb908c0eb6d41a9538388077798b2060cb3bd64baf7aa327bd1500271c8a7b3e",
+      "refresh_sha256": "536468cb4925631ca4e644af6104bb100cea2c68875f930540f8dca3572d9d17",
+      "stored_token_sha256": "cb908c0eb6d41a9538388077798b2060cb3bd64baf7aa327bd1500271c8a7b3e",
+      "session_token_sha256": "cb908c0eb6d41a9538388077798b2060cb3bd64baf7aa327bd1500271c8a7b3e"
+    },
+    "B": {
+      "expiry": 1793239261000,
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "workspaces": [
+        {
+          "id": "W-A",
+          "label": "W-A",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "W-B",
+          "label": "W-B",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              }
+            }
+          ]
+        }
+      ],
+      "selected": "W-A",
+      "loading": false,
+      "dialog": true,
+      "logout": false,
+      "props": {
+        "W-A": {
+          "tabId": "W-A",
+          "panelId": "workspaces-tabpanel-1",
+          "parameters": {
+            "fixtureId": "W-A",
+            "record": "trade-X",
+            "autoRequest": false
+          }
+        }
+      },
+      "mounts": {
+        "W-A": 1
+      },
+      "refreshCalls": {},
+      "calls": {
+        "validate-B": {
+          "status": "rejected",
+          "session_epoch": 0,
+          "error": {
+            "code": "ERR_BAD_REQUEST",
+            "message": "Request failed with status code 401"
+          }
+        }
+      },
+      "opens": 1,
+      "closures": 0,
+      "storage_events": [
+        {
+          "key": "SET_TOKEN",
+          "at": 1793239200750,
+          "oldPresent": true,
+          "newPresent": true
+        }
+      ],
+      "persisted": "[{\"id\":\"W-A\",\"label\":\"W-A\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-A\",\"container\":\"@fm/wt-fixture-a\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-A\",\"title\":\"W-A\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-A\",\"record\":\"trade-X\",\"autoRequest\":false}}]},{\"id\":\"W-B\",\"label\":\"W-B\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-B\",\"container\":\"@fm/wt-fixture-b\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-B\",\"title\":\"W-B\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-B\",\"record\":\"positions-Y\",\"autoRequest\":false}}]}]",
+      "token_sha256": "9e9a52fcde5751aaba003410003baeedff38800549991cda63f2affa5dc26964",
+      "refresh_sha256": "536468cb4925631ca4e644af6104bb100cea2c68875f930540f8dca3572d9d17",
+      "stored_token_sha256": "cb908c0eb6d41a9538388077798b2060cb3bd64baf7aa327bd1500271c8a7b3e",
+      "session_token_sha256": "9e9a52fcde5751aaba003410003baeedff38800549991cda63f2affa5dc26964"
+    }
+  },
+  "completed_at": "2026-10-29T02:19:32.640Z",
+  "runner_sha256": "cb08252ba9087563235c5885562a406a06b2f2943a24ce7b4d2c6f7462e0d38a",
+  "runner_summary": "../predicate-rerun-summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "canonical_definition_source_sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "definition_source_matches": false,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "canonical_definition_source_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "canonical_definition_source_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "definition_source_limit": "Canonical source inventory includes dirty Home bytes. Execution uses the immutable candidate and recorded hashes; it does not execute those dirty bytes.",
+  "execution_class": "executed",
+  "owner": "unknown application, transport, or security owner"
+}

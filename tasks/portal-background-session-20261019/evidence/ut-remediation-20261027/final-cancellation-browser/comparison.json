@@ -1,0 +1,186 @@
+{
+  "recorded_at": "2026-10-27T06:05:20.648116+00:00",
+  "status": "PASSED_FINAL_DEL14_BROWSER_CLOSURE",
+  "critical_conclusions": "Final cancellation now clears the actual PageLoader. Production and other release conditions remain separate.",
+  "case_definition": "../../../06-test-cases.md#del-14",
+  "candidate_commit": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "execution_scope": "DOM_SERVICE_HEADLESS",
+  "browser_version": "156.0.4314.42",
+  "original_comparison": "../../delivery-confidence-20261026/browser/supplemental-comparison.json",
+  "assertion_source": {
+    "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs",
+    "sha256": "07cd4629f776b53a9ab56e84ce55d433d1683d51aaf2b59709b825b71e1d2e53",
+    "unchanged_from_original": true
+  },
+  "attempts": [
+    {
+      "id": "sandbox-local-listen",
+      "status": "SETUP_BLOCKED",
+      "evidence": "sandbox-listen-attempt.json",
+      "classification": "Sandbox denied local socket binding. No browser case ran.",
+      "resolution": "The same local servers passed automatic escalation review."
+    },
+    {
+      "id": "initial-general-natural-profile",
+      "status": "SETUP_FAILED_BEFORE_DEL14",
+      "evidence": "execution.json",
+      "setup_result": "artifacts/session-setup-ppogYa/result.json",
+      "classification": "The copied general profile required refresh observation before cancellation setup. No DEL-14 assertion ran.",
+      "resolution": "Use the original cancellation fixture declaration. Keep access, absolute, clock, and all case assertions active.",
+      "correction": "setup-correction.json"
+    },
+    {
+      "id": "matching-original-cancellation-fixture",
+      "status": "PASSED",
+      "execution": "rerun-matching-original-fixture/execution.json",
+      "command": "rerun-matching-original-fixture/command.json",
+      "configuration": "rerun-matching-original-fixture/config.json",
+      "result": "rerun-matching-original-fixture/artifacts/DEL-14-cancelled-generic-request-loader-1793080992997/result.json",
+      "result_sha256": "8464e59cf947e474cedded252adcb11e2c3cb6ecc7555134c23afe32a559291f",
+      "classification": "The original public-client cancellation case completed against the final candidate."
+    }
+  ],
+  "observations": {
+    "before": {
+      "isLoading": false,
+      "loaderVisible": false,
+      "authenticated": true
+    },
+    "during": {
+      "isLoading": true,
+      "loaderVisible": true
+    },
+    "after": {
+      "isLoading": false,
+      "loaderVisible": false,
+      "tokenUnchanged": true,
+      "errorUnchanged": true,
+      "outcome": {
+        "rejected": true,
+        "code": "ERR_CANCELED"
+      },
+      "aborted": true
+    }
+  },
+  "explicit_assertions": [
+    {
+      "predicate": "Initial loading equals false",
+      "status": "PASSED",
+      "actual": false
+    },
+    {
+      "predicate": "Pending loading equals true",
+      "status": "PASSED",
+      "actual": true
+    },
+    {
+      "predicate": "Actual PageLoader renders while pending",
+      "status": "PASSED",
+      "actual": true
+    },
+    {
+      "predicate": "Public client cancellation rejects ERR_CANCELED",
+      "status": "PASSED",
+      "actual": "ERR_CANCELED"
+    },
+    {
+      "predicate": "Cancellation preserves authentication token",
+      "status": "PASSED",
+      "actual": true
+    },
+    {
+      "predicate": "Cancellation preserves error state",
+      "status": "PASSED",
+      "actual": true
+    },
+    {
+      "predicate": "Final loading equals false",
+      "status": "PASSED",
+      "actual": false
+    },
+    {
+      "predicate": "Actual PageLoader disappears after final cancellation",
+      "status": "PASSED",
+      "actual": false
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "captured_at": "2026-10-27T06:03:12.997Z",
+      "file": "rerun-matching-original-fixture/artifacts/DEL-14-cancelled-generic-request-loader-1793080992997/before.png",
+      "sha256": "74d2736c5aca195b1fa1eb7dcb14a9ba817f3a98647e026cfabf0c67e3b21569",
+      "capture_method": "page.screenshot; configured credential fields masked"
+    },
+    {
+      "phase": "request-pending-loader-visible",
+      "captured_at": "2026-10-27T06:03:19.068Z",
+      "file": "rerun-matching-original-fixture/artifacts/DEL-14-cancelled-generic-request-loader-1793080992997/request-pending-loader-visible.png",
+      "sha256": "b97b45ab9ea2d34e8dfdd7e748e548e01e2235c99d3199ab50134b1ce7dd048f",
+      "capture_method": "page.screenshot; configured credential fields masked"
+    },
+    {
+      "phase": "request-cancelled-final-loader",
+      "captured_at": "2026-10-27T06:03:19.344Z",
+      "file": "rerun-matching-original-fixture/artifacts/DEL-14-cancelled-generic-request-loader-1793080992997/request-cancelled-final-loader.png",
+      "sha256": "74d2736c5aca195b1fa1eb7dcb14a9ba817f3a98647e026cfabf0c67e3b21569",
+      "capture_method": "page.screenshot; configured credential fields masked"
+    },
+    {
+      "phase": "after",
+      "captured_at": "2026-10-27T06:03:19.377Z",
+      "file": "rerun-matching-original-fixture/artifacts/DEL-14-cancelled-generic-request-loader-1793080992997/after.png",
+      "sha256": "74d2736c5aca195b1fa1eb7dcb14a9ba817f3a98647e026cfabf0c67e3b21569",
+      "capture_method": "page.screenshot; configured credential fields masked"
+    }
+  ],
+  "screenshot_review": {
+    "reviewer": "Codex /root/proposal_review",
+    "status": "REVIEWED",
+    "pending_observation": "The portal renders the loading spinner over the workspace.",
+    "final_observation": "The workspace remains visible and the loading spinner is absent.",
+    "limits": "Screenshots corroborate rendering. DOM and store assertions establish the selected state predicates."
+  },
+  "source_binding": {
+    "archive_source": "source-binding.json",
+    "served_sources": "served-source-binding.json",
+    "served_source_status": "PASSED",
+    "matched_app_sources": 137,
+    "required_loading_and_UI_paths_matched": true,
+    "source_changes_during_case": [],
+    "application_source_changes_during_case": [],
+    "candidate_HEAD_at_completion": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303"
+  },
+  "sensitive_data_scan": {
+    "status": "PASSED",
+    "scanned_file_count": 23,
+    "jwt_matches": [],
+    "credential_matches": [],
+    "retained_credential_form": "Hash and timing summaries. Login fields are masked in screenshots.",
+    "limits": "The automatic scan checks retained JSON, logs, and text. It does not prove complete secret detection."
+  },
+  "process_cleanup": {
+    "record": "cleanup.json",
+    "own_ports_closed": true,
+    "reused_BFF_untouched_and_listening": true
+  },
+  "overlap_scope": "The original browser cancellation fixture has no overlap branch. DEL-19, DEL-21, and DEL-22 remain unit controls.",
+  "limits": [
+    "This case verifies real headless Edge rendering, reducers, shared Axios, and public AbortSignal cancellation.",
+    "The local diagnostic route is held before service dispatch. No response is fabricated.",
+    "The final run observes 900-second access and 3600-second absolute lifetime. It does not require refresh issuance.",
+    "The earlier paired runs used shorter local lifetimes. Cancellation assertions and valid-current-session conditions remain equivalent.",
+    "Headless execution does not establish natural visibility, device suspension, physical input, deployment parity, or release authorization."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks inspect JSON, source hashes, case values, sensitive data patterns, and process cleanup.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

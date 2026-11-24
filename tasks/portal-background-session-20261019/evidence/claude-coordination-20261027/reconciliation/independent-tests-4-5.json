@@ -1,0 +1,17 @@
+{
+  "candidate":"e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "packets":[
+    {"name":"independent-tests-4","claims":[
+      {"claim":"OWN-06 uses different JWT subjects for same-session rotation","disposition":"CONFIRMED_FIXTURE_LABEL_LIMIT","basis":"JWT subjects differ. Ownership is keyed by epoch, not sub. The case verifies epoch continuity but cannot establish BFF subject continuity."},
+      {"claim":"OWN-01/02/03 late responses may be vacuous after cancellation","disposition":"NOT_PROVEN","basis":"The logout service clears storage but does not abort getRefreshToken. The deferred test adapter is not configured to reject on abort. These tests deliver held results; the reviewer did not demonstrate vacuity."},
+      {"claim":"Teardown can deadlock or leak under new asynchronous work","disposition":"HYPOTHETICAL","basis":"No concrete extra request chain or leak was demonstrated; the retained final suite completes. This does not prove all teardown schedules."},
+      {"claim":"Refresh expiry timing is nondeterministic","disposition":"REJECT_NONDETERMINISTIC_PREMISE","basis":"Jest fake timers and fixed clock control the chosen timing. An equality boundary may need a specific requirement, but no randomness was shown."}
+    ]},
+    {"name":"independent-tests-5","claims":[
+      {"claim":"Teardown can leak microtasks","disposition":"UNVERIFIED_TEST_RISK","basis":"async act wraps pending resolution. Reviewer gives no failing schedule. Full suite completed, which does not prove all async schedules."},
+      {"claim":"PEND-12 can pass vacuously","disposition":"PARTIAL_ASSERTION_LIMIT","basis":"Test asserts enabled control before changing the fake clock and asserts no relogin after click. It does not instrument handler invocation; no incorrect current result is established."},
+      {"claim":"Expiry equality needs defined semantics","disposition":"CONFIRMED_BOUNDARY; NOT_DEFECT","basis":"success.response.handler.ts:56 explicitly rejects exp <= current time; test uses equality."},
+      {"claim":"signal fields may be readonly and teardown fail","disposition":"REJECT_READONLY_PREMISE","basis":"service/index.ts:24-27 and service/util/extend.ts:5-7 define mutable plain objects. Full suite passed. Restoring prior singleton state is a potential isolation limit."}
+    ]}
+  ]
+}

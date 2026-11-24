@@ -1,0 +1,95 @@
+{
+  "status": "STATIC_PATCH_REVIEW_COMPLETE",
+  "owned_source": "src/pages/Home/common/useController.ts",
+  "test_changes": false,
+  "guard_changes": [
+    {
+      "condition": "scheduled callback lead time",
+      "old": "access expiry minus current time must be at least 25000 milliseconds",
+      "new": "An already scheduled visible callback can run while access remains valid."
+    }
+  ],
+  "preserved_guards": [
+    "Access must remain unexpired.",
+    "Refresh credential must remain unexpired when present.",
+    "Timeout must not be open.",
+    "Logout must not be active.",
+    "The scheduled callback must observe visible state.",
+    "Visibility transitions clear obsolete scheduled callbacks.",
+    "Resuming after a missed lead-time deadline does not rearm that deadline.",
+    "Effect cleanup removes listeners and cancels timers.",
+    "The shared service retains its existing epoch and pending-request deduplication."
+  ],
+  "assertion_controls": [
+    {
+      "id": "DEL-20",
+      "file": "src/pages/Home/common/sessionTimingPreservation.test.tsx",
+      "line": 58,
+      "predicate": "Late scheduled callback retains usable manual recovery."
+    },
+    {
+      "id": "SR39",
+      "file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "line": 96,
+      "predicate": "Hiding cancels the visible scheduled timer."
+    },
+    {
+      "id": "SR40",
+      "file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "line": 107,
+      "predicate": "Returning before the deadline rearms the scheduled acquisition."
+    },
+    {
+      "id": "SR41",
+      "file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "line": 119,
+      "predicate": "Returning after the missed deadline does not replay acquisition."
+    },
+    {
+      "id": "SR36",
+      "file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "line": 161,
+      "predicate": "A callback delivered after access expiry cannot acquire."
+    },
+    {
+      "id": "SR15",
+      "file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "line": 180,
+      "predicate": "Timeout blocks hide and scheduled acquisition."
+    },
+    {
+      "id": "SR16",
+      "file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "line": 191,
+      "predicate": "Logout blocks hide and scheduled acquisition."
+    },
+    {
+      "id": "SR11",
+      "file": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "line": 328,
+      "predicate": "Expired refresh is replaced while access is valid."
+    }
+  ],
+  "test_bindings": [
+    {
+      "path": "src/pages/Home/common/sessionTimingPreservation.test.tsx",
+      "sha256": "73e3394ef102a9a7eb25a85527cea7c489fa9a9ff43288f3722c80b400b09a40",
+      "matches_application_checkout": true
+    },
+    {
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "sha256": "f08b678e84285b40980324991ed0edd3b79c7b150fbdf7b047d3f0519255cbfa",
+      "matches_application_checkout": true
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "sha256": "b7f0fc9bee33cd5b273612829093ae9d3ff0aa92cde66e448381634a2108f95f",
+      "matches_application_checkout": true
+    }
+  ],
+  "risk": "A shared guard could accidentally permit visibility replay. Only the scheduled callback passes the new flag. Existing direct calls keep false.",
+  "limitations": [
+    "Static review does not establish passing execution.",
+    "No actual deployed timer occurrence or natural delay frequency is measured."
+  ]
+}

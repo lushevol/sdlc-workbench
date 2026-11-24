@@ -1,0 +1,541 @@
+{
+  "recorded_date": "2026-10-27",
+  "timezone": "Asia/Singapore",
+  "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+  "base": "834b4155232222347220e47139a502ee43a9cbdf",
+  "head": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+  "scope": "Eight prior BFF review candidates; source-only comment-anchor audit",
+  "owning_instructions": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/AGENTS.md",
+  "missing_instruction_reference": ".github/copilot-instructions.md is referenced by AGENTS.md but absent",
+  "service_source_mutations": false,
+  "builds_run": false,
+  "findings": [
+    {
+      "id": "BFF-001",
+      "title": "Preserve trusted role metadata for EMS3 admin tokens",
+      "priority": "P1",
+      "status": "confirmed_source_defect",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 46,
+        "end": 48
+      },
+      "trigger": "The admin-module entity is authorized only through EMS3, with no merged EMS2 entity supplying roleName.",
+      "base_behavior": "EMS2 entity construction populated roleName from trusted entitlement role data. Token construction used that name.",
+      "candidate_behavior": "The EMS3 mapper sets name and subjects only. Token generation serializes ENTITY:null. Admin validation extracts the literal string null.",
+      "consequence": "Existing admin role ownership checks reject the EMS3 administrator for records owned by a real role.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/implementation/EMS2AuthorizationImplementation.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 99,
+          "end": 106
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 130,
+          "end": 140
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 53,
+          "end": 61
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 188,
+          "end": 191
+        }
+      ],
+      "inspected_test": {
+        "location": {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 36,
+          "end": 42
+        },
+        "assertions": "Asserts entity names, actions, and subject names. It does not assert roleName or admin token compatibility."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "Requires migration of the configured admin-module entity. Existing EMS2-only admin configuration can mask this failure.",
+        "The trusted EMS3-to-admin-role policy is unavailable. A tile owner string must not be treated automatically as a granted user role."
+      ],
+      "next_action": "Define and implement a trusted EMS3 role mapping or adapt admin token validation to an approved authorization contract.",
+      "focused_validation": "Authenticate an EMS3-only administrator; assert the issued token carries the approved role and authorized admin updates succeed.",
+      "comment_body": "When the admin entity comes only from EMS3, this Entity has no roleName. buildEntitlementString creates ENTITY:null, and AdminModuleUtil uses null as the role for record ownership checks. Preserve trusted role identity, or update the token and admin validation contract together. Add an EMS3-only admin flow test.",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-002",
+      "title": "Keep application identity when combining permissions",
+      "priority": "P1",
+      "status": "confirmed_source_defect",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 189,
+        "end": 192
+      },
+      "trigger": "Two EMS3 applications use entity E. Both tiles require subject S. App A returns S:read; app B returns unrelated T:read.",
+      "base_behavior": "The base has no per-tile EMS3 application routing. EMS2 returns authorization records with entity and role identities.",
+      "candidate_behavior": "Both application calls return valid nonempty role lists. Their entities merge solely by E, and subjects S and T are unioned.",
+      "consequence": "Drawer filtering exposes app B tile using app A subject S. App B did not grant S.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 116,
+          "end": 149
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 195,
+          "end": 200
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 46,
+          "end": 64
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 115,
+          "end": 127
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementService.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 198,
+          "end": 205
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/AuthFilterExecutor.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 84,
+          "end": 85
+        }
+      ],
+      "inspected_test": {
+        "location": {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImplTest.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 151,
+          "end": 160
+        },
+        "assertions": "Explicitly verifies subjects/actions are unioned for shared entities. It does not test same entity across distinct EMS3 apps with one missing required subject."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "Both responses must contain a role item. A completely empty app B role list throws before the final union and is not the leakage trigger.",
+        "Use tiles without a further data filter, or users for whom that filter does not remove the tile. Exposure concerns tiles and issued permission tokens; backend data access was not tested."
+      ],
+      "next_action": "Carry application or tile identity through authorization results and filtering. Avoid global authorization by entity name alone.",
+      "focused_validation": "Return S from app A and only T from app B for shared entity E. Assert A tile is present and B tile is absent.",
+      "comment_body": "This merge key discards EMS3 application identity. With shared entity E, app A granting S and app B granting only T, the merged E contains S and T. Drawer filtering then admits app B tile requiring S. Preserve the application or tile boundary through mapping, merge, and filtering.",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-003",
+      "title": "Preserve entitlement settings omitted by legacy updates",
+      "priority": "P1",
+      "status": "confirmed_source_defect",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 105,
+        "end": 108
+      },
+      "trigger": "An existing EMS3 tile receives a normal update payload from a legacy client that omits the three new entitlement fields.",
+      "base_behavior": "The base update cannot change an authorization source because those fields do not exist.",
+      "candidate_behavior": "DTO initialization supplies EMS2; update writes EMS2 and clears both application fields.",
+      "consequence": "A content update changes the authorization provider after subsequent activation, without an explicit source-change request.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 31,
+          "end": 34
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 109,
+          "end": 112
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 61,
+          "end": 89
+        }
+      ],
+      "inspected_test": {
+        "location": {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 463,
+          "end": 472
+        },
+        "assertions": "Rejects an explicit EMS3 request missing application configuration. Does not check omitted fields against a stored EMS3 tile."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "Applies to normal edit mode. Checker and deactivate branches skip these writes. The update sets active=false, so exposure follows later activation."
+      ],
+      "next_action": "Distinguish absent fields from explicit provider changes. Preserve stored entitlement values when fields are omitted.",
+      "focused_validation": "Update an EMS3 tile with a legacy JSON payload. Assert source and both application fields remain unchanged.",
+      "comment_body": "A legacy update omitting entitlementSource deserializes as EMS2 because the DTO initializes it. These writes downgrade the stored EMS3 tile and clear its app fields during an unrelated edit. Preserve existing settings when the new fields are absent, and test a legacy payload against an EMS3 record.",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-004",
+      "title": "Make advertised EMS2 fallback cover failed migrated scopes",
+      "priority": "P2",
+      "status": "policy_dependent_source_behavior",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 74,
+        "end": 78
+      },
+      "trigger": "Dual-read mode has a migrated EMS3 tile whose EMS2 equivalent still exists. The EMS3 call fails.",
+      "base_behavior": "The base queries EMS2 for all configured tile entities.",
+      "candidate_behavior": "EMS2 is queried only for non-EMS3 rows. The catch logs fallback but performs no read for failed EMS3 rows.",
+      "consequence": "Migrated tiles disappear while the request returns the unrelated legacy result. With only migrated tiles, it returns no entities.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 66,
+          "end": 70
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 80,
+          "end": 84
+        }
+      ],
+      "inspected_test": {
+        "location": {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImplTest.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 164,
+          "end": 177
+        },
+        "assertions": "The test named dualReadFallsBackToEms2WhenEms3Fails explicitly expects only the legacy entity. It establishes current behavior, not a business fallback requirement."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "Fallback policy is not supplied. Fail-closed behavior may be intended. This is a concrete mismatch with the log and migration fallback claim; approval of fail-open behavior is unavailable.",
+        "Do not automatically grant EMS2 permissions after EMS3 denial. Any fallback policy must separate outage from authoritative denial."
+      ],
+      "next_action": "Resolve the migration failure policy. Implement authorized fallback for failed scopes or describe and test deliberate fail-closed behavior.",
+      "focused_validation": "For an EMS3 outage, assert the agreed per-scope outcome and accurate status/logging. Keep authoritative denial separate.",
+      "comment_body": "The log says fallback to EMS2, but ems2Result contains only non-EMS3 scopes. No EMS2 read covers the failed migrated tile, so that tile disappears. Confirm the intended outage policy and implement it per scope, or report deliberate fail-closed behavior accurately.",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-005",
+      "title": "Wire new entitlement fields through bulk import",
+      "priority": "P2",
+      "status": "confirmed_source_defect",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 31,
+        "end": 33
+      },
+      "trigger": "An operator tries to create or change an EMS3 tile through the existing CSV bulk import path.",
+      "base_behavior": "Bulk import persisted the supported EMS2 tile configuration.",
+      "candidate_behavior": "The DTO adds fields, but TILE_HEADERS and CsvUtility never parse them, and handleApplicationTile never copies them.",
+      "consequence": "New imported tiles retain entity default EMS2. Existing records keep prior entitlement settings; CSV cannot migrate them.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/Constant.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 29,
+          "end": 32
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/CsvUtility.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 113,
+          "end": 132
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 199,
+          "end": 206
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 230,
+          "end": 247
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 80,
+          "end": 88
+        }
+      ],
+      "inspected_test": {
+        "location": {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigControllerTest.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 72,
+          "end": 101
+        },
+        "assertions": "Mocks CsvUtility and checks upload HTTP success for legacy fields. It does not inspect EMS3 fields from CSV bytes or persisted entities."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "Previous wording that all CSV uploads reset entitlement settings was too broad. Existing records preserve fields because the controller never writes them.",
+        "Whether EMS3 CSV import belongs to approved scope is not supplied. The added bulk config DTO fields indicate unfinished plumbing."
+      ],
+      "next_action": "Extend the CSV contract, parser, validation, and persistence, or explicitly reject unsupported entitlement columns.",
+      "focused_validation": "Import a new EMS3 tile and update an existing source through real CSV parsing. Assert the agreed persisted source and app fields.",
+      "comment_body": "These bulk-import fields have no consumer in CsvUtility or handleApplicationTile. The fixed headers never parse them, and persistence never writes them. New CSV-created tiles remain EMS2, while existing tiles keep old settings. Complete the import contract and add a CSV-to-persistence test.",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-006",
+      "title": "Include authorization settings in tile audit history",
+      "priority": "P2",
+      "status": "confirmed_source_defect",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/resources/db/migration/V1_1_1__application_tile_add_entitlement.sql",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 2,
+        "end": 4
+      },
+      "trigger": "An operator creates a tile or changes its entitlement source/application through the new REST fields.",
+      "base_behavior": "All supported tile fields relevant to legacy authorization were copied into ApplicationTileAudit.",
+      "candidate_behavior": "The migration only adds live-table fields. ApplicationTileAudit and both audit builders omit source and app identity.",
+      "consequence": "The audit response cannot reconstruct which source/application applied to a historical change.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 80,
+          "end": 88
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/entity/ApplicationTileAudit.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 71,
+          "end": 77
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 247,
+          "end": 271
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 248,
+          "end": 271
+        }
+      ],
+      "inspected_test": {
+        "location": {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 236,
+          "end": 247
+        },
+        "assertions": "Checks successful audit endpoint response with an empty mocked result. It does not assert entitlement source or app history."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "No production audit policy document was supplied. The repository guide states all admin actions have audit logging. This finding concerns missing reconstruction fields, not absent audit rows."
+      ],
+      "next_action": "Add audit schema/entity fields and copy the new settings in both audit builders.",
+      "focused_validation": "Change an EMS2 tile to EMS3, inspect its audit record, and assert source, app ID, and app name match the saved version.",
+      "comment_body": "The new authorization fields are added only to application_tile. ApplicationTileAudit and its builders lack these values, so a source/app change cannot be reconstructed from the existing audit API. Extend the audit schema, model, and builders alongside the live table fields.",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-007",
+      "title": "Compare equivalent scopes in dual-read parity logging",
+      "priority": "P2",
+      "status": "confirmed_source_defect",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 80,
+        "end": 81
+      },
+      "trigger": "Dual-read mode contains nonoverlapping EMS2 and EMS3 scopes, or only EMS3 scopes, with valid permissions.",
+      "base_behavior": "No EMS2/EMS3 parity comparison existed in base.",
+      "candidate_behavior": "The caller compares EMS2 non-migrated scopes with EMS3 migrated scopes as if they represented the same permission universe.",
+      "consequence": "It reports missing/extra differences caused by routing. An all-migrated valid configuration compares empty EMS2 against populated EMS3.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 58,
+          "end": 74
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationComparisonService.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 28,
+          "end": 44
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationComparisonService.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 54,
+          "end": 59
+        }
+      ],
+      "inspected_test": {
+        "location": {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationComparisonServiceTest.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 46,
+          "end": 56
+        },
+        "assertions": "Injects already matching canonical sets; it does not verify the caller queries both sources for the same tile scope."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "Mixed scopes are not necessarily disjoint when entity names overlap. The finding applies to ordinary distinct entity scopes and all-migrated configurations with nonempty grants.",
+        "A complete business parity definition is unavailable. These logs cannot substantiate source equivalence."
+      ],
+      "next_action": "Shadow-read equivalent tile/app scope from both sources or emit per-scope coverage status instead of a global parity result.",
+      "focused_validation": "Use equivalent fixture permissions for each migrated scope. Assert no routing-induced DIFF and label unavailable baselines separately.",
+      "comment_body": "These results cover different scopes: EMS2 reads non-EMS3 rows while EMS3 reads migrated rows. Comparing them as whole permission sets produces routing-induced DIFFs; all-migrated configurations compare empty EMS2 with populated EMS3. Compare equivalent scopes or report scope coverage separately.",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "BFF-008",
+      "title": "Remove complete authorization payloads from INFO logging",
+      "priority": "P2",
+      "status": "confirmed_source_defect",
+      "owner": "unknown",
+      "comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 23,
+        "end": 23
+      },
+      "trigger": "A successful EMS3 authorization runs with normal INFO logging enabled.",
+      "base_behavior": "Base has existing EMS3 data-filter logs, but this path did not log the new raw functional authorization payload and merged result.",
+      "candidate_behavior": "The new mapper logs raw responses and permissions. Merge and authentication controller log full entitlement results.",
+      "consequence": "User-to-permission mappings and raw EMS3 entitlement details enter application logs.",
+      "supporting_locations": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 40,
+          "end": 40
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 167,
+          "end": 168
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 105,
+          "end": 106
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationComparisonService.java",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "side": "right",
+          "start": 31,
+          "end": 35
+        }
+      ],
+      "inspected_test": {
+        "location": null,
+        "assertions": "No log-content assertion was found in the inspected authorization mapper/service tests."
+      },
+      "confidence": "high for stated source flow; behavior execution NOT_RUN",
+      "limits": [
+        "Log destination, retention, access controls, and approved logging policy were not inspected. No unauthorized reader or credential exposure was demonstrated.",
+        "The concrete source fact is expanded entitlement payload logging. Security impact depends on operational log controls."
+      ],
+      "next_action": "Log counts/status and correlation identifiers. Redact entitlement payloads and require explicit diagnostic configuration for sensitive details.",
+      "focused_validation": "Capture successful INFO output and assert raw responses, permission lists, and token content are absent.",
+      "comment_body": "This INFO statement records the complete user authorization response. Additional new logs publish permission sets and merged entities. Replace payloads with status/count diagnostics, or explicitly gate redacted details. Add a log-content assertion for the successful authentication path.",
+      "execution": "NOT_RUN"
+    }
+  ],
+  "corrections_to_previous_review": [
+    "BFF-002 trigger uses a nonempty unrelated role in app B; empty roles fail validation.",
+    "BFF-004 downgrade to P2 policy-dependent behavior. Existing test codifies reduced result; no approved outage policy exists.",
+    "BFF-005 existing CSV updates preserve old entitlement fields. Only new rows default EMS2; the importer cannot migrate either.",
+    "Owners are unknown. Component names in earlier prose identify scope, not established accountable people."
+  ]
+}

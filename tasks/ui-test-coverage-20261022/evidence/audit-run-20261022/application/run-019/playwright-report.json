@@ -1,0 +1,795 @@
+{
+  "config": {
+    "argv": [
+      "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+      "test",
+      "notifications-expanded.spec.ts",
+      "--config=e2e/audit.config.ts",
+      "--workers=2"
+    ],
+    "configFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.config.ts",
+    "rootDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "snapshotDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "launchOptions": {
+            "channel": "chromium",
+            "headless": true,
+            "chromiumSandbox": true
+          },
+          "trace": "on",
+          "screenshot": "on",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.reporter.ts",
+        {
+          "output": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "notifications-expanded.spec.ts",
+      "file": "notifications-expanded.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UX-022 actual snackbar rendering",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UX-022"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3392,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given USER-A has an isolated error containing \"START-\" followed by 1988 letter A characters and \"-END!!\"",
+                      "duration": 1538
+                    },
+                    {
+                      "title": "2. When The error fixture dispatches the exact 2000-character message",
+                      "duration": 77
+                    },
+                    {
+                      "title": "3. Then The alert inside the snackbar with test ID \"${MFE_APP_PREFIX_STYLE}_snackbar\" on the current portal page contains the exact fixture message",
+                      "duration": 13
+                    },
+                    {
+                      "title": "4. When USER-A scrolls to the beginning of the alert inside the snackbar with test ID \"${MFE_APP_PREFIX_STYLE}_snackbar\" on the current portal page",
+                      "duration": 39
+                    },
+                    {
+                      "title": "5. Then The alert inside the snackbar with test ID \"${MFE_APP_PREFIX_STYLE}_snackbar\" on the current portal page has visible first marker \"START-\"",
+                      "duration": 16
+                    },
+                    {
+                      "title": "6. When USER-A scrolls to the end of the alert inside the snackbar with test ID \"${MFE_APP_PREFIX_STYLE}_snackbar\" on the current portal page",
+                      "duration": 14
+                    },
+                    {
+                      "title": "7. Then The alert inside the snackbar with test ID \"${MFE_APP_PREFIX_STYLE}_snackbar\" on the current portal page has visible final marker \"-END!!\"",
+                      "duration": 15
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:24:52.909Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UX-022"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--d16ea638eb1d52e3c3c90d1e55be7c04987ca614.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--d7dc4f302970329769b1d49cf17aaab6cad3d288.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--38ef05e55d5b4031d4080626d4a35222384d2777.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--33ab8223c4fa35495162cc8f5b638d2c4ae64b01.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--c134e3909ba32f2c8f130cb6badfb019cb36b08d.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--9007e81bf1c574ecbc87e8fbac6b95adda5b60d7.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--827c49ef9abbdee04348155af699ed7e775e6cbe.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--6e71f2d25ec97e7b17adca4881ddd91fad6472ca.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-022-actual-snackbar-rendering/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "41e9588bd6d60a29ae21-c90424ddc661d6cad2d0",
+          "file": "notifications-expanded.spec.ts",
+          "line": 9,
+          "column": 2
+        },
+        {
+          "title": "UX-039 actual snackbar rendering",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UX-039"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3151,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given USER-A has a script-dialog recorder and an isolated error containing \"<img src=x onerror=alert(1)>\"",
+                      "duration": 1678
+                    },
+                    {
+                      "title": "2. When The fixture dispatches the hostile error through the existing snackbar provider",
+                      "duration": 75
+                    },
+                    {
+                      "title": "3. Then The script-dialog recorder contains zero alert events",
+                      "duration": 6
+                    },
+                    {
+                      "title": "4. And The image labelled \"Markets Operations One logo\" on the Home page remains visible",
+                      "duration": 12
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:24:52.907Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UX-039"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-039-actual-snackbar-rendering/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--3e62f489705abde9e5c1c2516cefa366c05ab521.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-039-actual-snackbar-rendering/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--562d8795555862cc78140358e8d0e287d951f80b.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-039-actual-snackbar-rendering/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--d4fbfc4fc71d19b38d59ad4ef94c152f91d21e0a.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-039-actual-snackbar-rendering/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--a409e7e194697a5139fa7589c70e3dba8e062984.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-039-actual-snackbar-rendering/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-039-actual-snackbar-rendering/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--1fbaeb96171b5dd57a3e7b7773644b63fead2b7d.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-039-actual-snackbar-rendering/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "41e9588bd6d60a29ae21-814f305798b35b38110e",
+          "file": "notifications-expanded.spec.ts",
+          "line": 9,
+          "column": 2
+        },
+        {
+          "title": "UX-040 actual snackbar rendering",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UX-040"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2895,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given USER-A has an isolated error containing \"<b>Save failed</b>\"",
+                      "duration": 1697
+                    },
+                    {
+                      "title": "2. When The fixture dispatches the safe markup through the existing snackbar provider",
+                      "duration": 66
+                    },
+                    {
+                      "title": "3. Then The alert inside the snackbar with test ID \"${MFE_APP_PREFIX_STYLE}_snackbar\" on the current portal page contains text \"Save failed\"",
+                      "duration": 44
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:24:56.843Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UX-040"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-040-actual-snackbar-rendering/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--8800385f4d0f4bb9eaa1489701b73270a9bcea19.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-040-actual-snackbar-rendering/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--54e1a96baa5eb6e590c619c57db8534a05370ea8.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-040-actual-snackbar-rendering/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--8224b7cecf317270c7f2442bd51431b227144782.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-040-actual-snackbar-rendering/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-040-actual-snackbar-rendering/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--0d4b72ad589c35521b40c0c806b047576b952b08.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-040-actual-snackbar-rendering/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "41e9588bd6d60a29ae21-305e7d7e6bb57ee94d3a",
+          "file": "notifications-expanded.spec.ts",
+          "line": 9,
+          "column": 2
+        },
+        {
+          "title": "UX-041 actual support email link",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UX-041"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3835,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: not \u001b[32m\"SECRET-TEST\"\u001b[39m\nReceived string:        \u001b[31m\"\u001b[7mSECRET-TEST\u001b[27m\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: not \u001b[32m\"SECRET-TEST\"\u001b[39m\nReceived string:        \u001b[31m\"\u001b[7mSECRET-TEST\u001b[27m\"\u001b[39m\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:67:59\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:65:3",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                      "column": 59,
+                      "line": 67
+                    },
+                    "snippet": "  65 |   await audit.step(3,async()=>{\n  66 |    const url=new URL(captured!);\n> 67 |    if(n===41)expect(url.searchParams.get('body')??'').not.toContain('SECRET-TEST');\n     |                                                           ^\n  68 |    else expect(url.pathname).toBe('support@example.test');\n  69 |   });\n  70 |   if(n===42)await audit.step(4,async()=>{const url=new URL(captured!);expect(url.searchParams.getAll('body')).toEqual([stack]);});"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                        "column": 59,
+                        "line": 67
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: not \u001b[32m\"SECRET-TEST\"\u001b[39m\nReceived string:        \u001b[31m\"\u001b[7mSECRET-TEST\u001b[27m\"\u001b[39m\n\n  65 |   await audit.step(3,async()=>{\n  66 |    const url=new URL(captured!);\n> 67 |    if(n===41)expect(url.searchParams.get('body')??'').not.toContain('SECRET-TEST');\n     |                                                           ^\n  68 |    else expect(url.pathname).toBe('support@example.test');\n  69 |   });\n  70 |   if(n===42)await audit.step(4,async()=>{const url=new URL(captured!);expect(url.searchParams.getAll('body')).toEqual([stack]);});\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:67:59\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:65:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given USER-A has a controlled tile error containing stack marker \"SECRET-TEST\" and a mail-client capture fixture",
+                      "duration": 2379
+                    },
+                    {
+                      "title": "2. When USER-A clicks the link labelled \"Contact PSS\" in the tile error panel on the Home page",
+                      "duration": 95
+                    },
+                    {
+                      "title": "3. Then The captured decoded email body does not contain \"SECRET-TEST\"",
+                      "duration": 4,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: not \u001b[32m\"SECRET-TEST\"\u001b[39m\nReceived string:        \u001b[31m\"\u001b[7mSECRET-TEST\u001b[27m\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: not \u001b[32m\"SECRET-TEST\"\u001b[39m\nReceived string:        \u001b[31m\"\u001b[7mSECRET-TEST\u001b[27m\"\u001b[39m\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:67:59\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:65:3",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                          "column": 59,
+                          "line": 67
+                        },
+                        "snippet": "  65 |   await audit.step(3,async()=>{\n  66 |    const url=new URL(captured!);\n> 67 |    if(n===41)expect(url.searchParams.get('body')??'').not.toContain('SECRET-TEST');\n     |                                                           ^\n  68 |    else expect(url.pathname).toBe('support@example.test');\n  69 |   });\n  70 |   if(n===42)await audit.step(4,async()=>{const url=new URL(captured!);expect(url.searchParams.getAll('body')).toEqual([stack]);});"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:24:57.274Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UX-041"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-041-actual-support-email-link/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--6a315777cbf4eaf2ef7ddfb7f47e56ab273f9243.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-041-actual-support-email-link/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--a489f252788e62756a3c92a9bbb78e00b06b9cac.png"
+                    },
+                    {
+                      "name": "step-03-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-041-actual-support-email-link/attachments/step-03-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--b860354b5bcd02311e8a4ab755ecc872c3e57fc5.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-041-actual-support-email-link/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-041-actual-support-email-link/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--00eb64fddea29fa2a09272fb381bfdce04681775.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-041-actual-support-email-link/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-041-actual-support-email-link/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                    "column": 59,
+                    "line": 67
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "41e9588bd6d60a29ae21-cfe1eddff4eeb882670b",
+          "file": "notifications-expanded.spec.ts",
+          "line": 49,
+          "column": 2
+        },
+        {
+          "title": "UX-042 actual support email link",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UX-042"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 2852,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[32m-   \"line1 & line2 # ?\",\u001b[39m\n\u001b[31m+   \"line1 \",\u001b[39m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[32m-   \"line1 & line2 # ?\",\u001b[39m\n\u001b[31m+   \"line1 \",\u001b[39m\n\u001b[2m  ]\u001b[22m\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:70:111\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:70:13",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                      "column": 111,
+                      "line": 70
+                    },
+                    "snippet": "  68 |    else expect(url.pathname).toBe('support@example.test');\n  69 |   });\n> 70 |   if(n===42)await audit.step(4,async()=>{const url=new URL(captured!);expect(url.searchParams.getAll('body')).toEqual([stack]);});\n     |                                                                                                               ^\n  71 |  });\n  72 | }\n  73 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                        "column": 111,
+                        "line": 70
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[32m-   \"line1 & line2 # ?\",\u001b[39m\n\u001b[31m+   \"line1 \",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  68 |    else expect(url.pathname).toBe('support@example.test');\n  69 |   });\n> 70 |   if(n===42)await audit.step(4,async()=>{const url=new URL(captured!);expect(url.searchParams.getAll('body')).toEqual([stack]);});\n     |                                                                                                               ^\n  71 |  });\n  72 | }\n  73 |\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:70:111\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:70:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given USER-A has stack text \"line1 & line2 # ?\" and fixture recipient \"support@example.test\"",
+                      "duration": 1918
+                    },
+                    {
+                      "title": "2. When USER-A clicks the link labelled \"Contact PSS\" in the tile error panel on the Home page",
+                      "duration": 119
+                    },
+                    {
+                      "title": "3. Then The captured email recipient equals \"support@example.test\"",
+                      "duration": 0
+                    },
+                    {
+                      "title": "4. And The decoded draft contains one body value equal to \"line1 & line2 # ?\"",
+                      "duration": 3,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[32m-   \"line1 & line2 # ?\",\u001b[39m\n\u001b[31m+   \"line1 \",\u001b[39m\n\u001b[2m  ]\u001b[22m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[32m-   \"line1 & line2 # ?\",\u001b[39m\n\u001b[31m+   \"line1 \",\u001b[39m\n\u001b[2m  ]\u001b[22m\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:70:111\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts:70:13",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                          "column": 111,
+                          "line": 70
+                        },
+                        "snippet": "  68 |    else expect(url.pathname).toBe('support@example.test');\n  69 |   });\n> 70 |   if(n===42)await audit.step(4,async()=>{const url=new URL(captured!);expect(url.searchParams.getAll('body')).toEqual([stack]);});\n     |                                                                                                               ^\n  71 |  });\n  72 | }\n  73 |"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:25:00.082Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual React snackbar sanitization and error fallback. Controlled service errors and SystemJS exception. A click recorder captures mailto links and prevents external mail-client launch. No email is sent."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UX-042"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--4bf5edd3a576476d9a592447530b0e64bd2e55aa.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--a3d7059680bab5ec18b9e25a31c34345d4881137.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--2c0c05247ba316cd6edc386eee1210cb6e99cd19.png"
+                    },
+                    {
+                      "name": "step-04-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/attachments/step-04-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--cbc46cdbbdc3d8c221cdbd11ac5edc6e5019c89e.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--8f5184e08fc9cbf4dff4a5f4fe9ac85b6bf317ac.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/playwright-artifacts/notifications-expanded-UX-042-actual-support-email-link/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+                    "column": 111,
+                    "line": 70
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "41e9588bd6d60a29ae21-0f6ff2f452a6d2f1e01d",
+          "file": "notifications-expanded.spec.ts",
+          "line": 49,
+          "column": 2
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T05:24:51.913Z",
+    "duration": 11351.863,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

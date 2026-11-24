@@ -1,0 +1,250 @@
+{
+  "date": "2026-10-22",
+  "scope": "Synthetic cashflow POM mechanics and existing root POM regression tests",
+  "request": "e2e/traceability/cashflow-blotter-request.json",
+  "baselineWorkbenchRevision": "d688b5d3c692d857a5453d6606f6571db462b573",
+  "businessSourceRevision": null,
+  "checks": {
+    "typecheck": "PASSED",
+    "sourceInventories": {
+      "status": "PASSED",
+      "files": 150,
+      "ranges": 505,
+      "command": "node e2e/scripts/check-cashflow-sources.mjs"
+    },
+    "existingSourceAndCanonicalBindings": {
+      "status": "PASSED",
+      "contracts": 42,
+      "canonicalCases": 521,
+      "command": "npm run e2e:ai -- validate"
+    },
+    "playwright": {
+      "status": "PASSED",
+      "command": "PLAYWRIGHT_JSON_OUTPUT_NAME=e2e/validation/cashflow-playwright-20261022.json npm run e2e:test -- --reporter=line,json --workers=2",
+      "reporterOutputNote": "Playwright resolved the relative reporter output under e2e/. The new report was moved into e2e/validation/.",
+      "stats": {
+        "startTime": "2026-10-22T15:47:45.492Z",
+        "duration": 14037.323,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "retained": "e2e/validation/cashflow-playwright-20261022.json",
+      "cashflowCases": 22
+    },
+    "documentationLinks": "PASSED",
+    "diffWhitespace": "PASSED",
+    "proseSentenceLength": {
+      "status": "PASSED",
+      "limit": 20,
+      "findings": [],
+      "scope": "New cashflow guide prose; excludes code, tables, headings, and preserved user quotation."
+    }
+  },
+  "earlierAttempts": [
+    {
+      "scope": "Restricted sandbox browser launch",
+      "status": "BLOCKED_BROWSER_LAUNCH",
+      "assertionsExecuted": 0,
+      "reason": "Chromium SIGABRT and cleanup EPERM. Browser tests passed after permitted execution outside the restricted shell sandbox.",
+      "related": "e2e/validation/cashflow-dialog-launch-20261022.json"
+    },
+    {
+      "scope": "Initial cashflow harness tests outside sandbox",
+      "passed": 8,
+      "failed": 1,
+      "case": "CF-POM-009",
+      "reason": "The test used an unsupported asymmetric matcher with toHaveJSProperty.",
+      "resolution": "Replaced the assertion with explicit file count and filename comparisons. Final run passed."
+    },
+    {
+      "scope": "First complete root suite",
+      "passed": 43,
+      "failed": 0
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "e2e/pages/cashflow-blotter.page.ts",
+      "sha256": "bc350a4df806d607b2b60e243579f525b64c08cdb94e8004d620b12df94303b1"
+    },
+    {
+      "path": "e2e/components/cashflow/builders.ts",
+      "sha256": "50c0c4f46fc53cb8827fcd1237a43f8f9b8d236054199f655f55432c9c424492"
+    },
+    {
+      "path": "e2e/components/cashflow/control-scope.ts",
+      "sha256": "d393faacaf9a80b65bd197b3c47abda2faeaa91db089fc39b9c998068e7c5775"
+    },
+    {
+      "path": "e2e/components/cashflow/data-grid.component.ts",
+      "sha256": "ee536d30c9219710c9566eff240fdfe3203137639def1e60a89b0e14c42fbdde"
+    },
+    {
+      "path": "e2e/components/cashflow/dialogs.ts",
+      "sha256": "6a51db1e3bce3abbc6fe68b9f3ba8dfd49c7dafc4bbd39180cd4d9a479b5cd46"
+    },
+    {
+      "path": "e2e/specs/cashflow-blotter.spec.ts",
+      "sha256": "5995fed3dc1462dc6b7b8ff3e4930c5d7806b4838e9137f295a7a881d9c621e4"
+    },
+    {
+      "path": "e2e/specs/cashflow-dialogs.spec.ts",
+      "sha256": "7667b7054377699ce2cdd1a8c0f5e9e790c8602952efb0925a3835093e6652c9"
+    },
+    {
+      "path": "e2e/specs/cashflow-page.spec.ts",
+      "sha256": "ad78407c3a802dd3d9543c44b911f6822d29542b1b44787d5c61677a5c556a28"
+    },
+    {
+      "path": "e2e/scripts/check-cashflow-sources.mjs",
+      "sha256": "536a1af3e933f7989fe56bd6bc5ab57ffbffc86bfd28f71a96006c82b7d0f6c2"
+    },
+    {
+      "path": "e2e/traceability/cashflow-blotter-request.json",
+      "sha256": "5e9d05fdf71deca9c28758a272bbdd38c20839aecf09039cd2845df2d73702d7"
+    },
+    {
+      "path": "e2e/traceability/cashflow-dialog-inventory.json",
+      "sha256": "92e85caf7936c3a5b84251d13583ec6e18752603049c59bd1749d9003f109741"
+    },
+    {
+      "path": "e2e/traceability/cashflow-main-inventory.json",
+      "sha256": "d383484772c1ce39952bd27eba939f77c5dea673b173b33e81e187fc627e54a5"
+    },
+    {
+      "path": "e2e/traceability/cashflow-shared-inventory.json",
+      "sha256": "866bdc03c0801b52a4abac87b3bb82adb5ed15e8ffc97745a13a3610a6d34b40"
+    }
+  ],
+  "cashflowCases": [
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-001: Given duplicate outer fields, When filling wrapped and native fields, Then only the scoped fields change",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-002: Given two portalled lists, When selecting a quick filter, Then only its associated option is selected",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-003: Given an unassociated popup, When selecting an option, Then selection requires an explicit popup scope",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-004: Given disabled or ambiguous controls, When clicking, Then no matching handler executes",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-005: Given pinned row fragments, When selecting and reading a cashflow, Then stable row and column keys identify the controls",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-006: Given special identifier characters, When locating a cashflow cell, Then CSS characters remain literal",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-007: Given repeated query editors, When editing one explicit rule, Then adjacent rule values remain unchanged",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-008: Given identical view and query role selectors, When editing a view, Then controls stay within View Builder",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-009: Given hidden upload input and export link, When transferring synthetic files, Then filenames and download bytes match",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-014: Given virtual AntD options, When selecting a currency, Then the associated visible item receives the click",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-blotter.spec.ts",
+      "title": "CF-POM-015: Given a switch already enabled, When setting it enabled twice, Then no toggle occurs",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-dialogs.spec.ts",
+      "title": "CF-POM-010: Given a disabled footer Close, When closing a comment dialog, Then the header control closes its own dialog",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-dialogs.spec.ts",
+      "title": "CF-POM-011: Given duplicate generated SSI fields, When editing a Vostro section, Then the Nostro input remains unchanged",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-dialogs.spec.ts",
+      "title": "CF-POM-012: Given indexed splitting rows, When editing one child amount, Then adjacent amounts remain unchanged",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-dialogs.spec.ts",
+      "title": "CF-POM-013: Given the splitting affirmation submit literal, When submitting, Then the source-defined button receives the click",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-dialogs.spec.ts",
+      "title": "CF-POM-016: Given a portalled export dialog, When choosing XLSX, Then its filename and format controls hold the selected values",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-page.spec.ts",
+      "title": "CF-PAGE-001: Given separate blotter tiles, When using page controls, Then only the selected tile changes",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-page.spec.ts",
+      "title": "CF-PAGE-002: Given conditional search fields, When switching each variant, Then only the active field accepts input",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-page.spec.ts",
+      "title": "CF-PAGE-003: Given conditional amount inputs, When choosing each operator, Then the matching amount fields hold the values",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-page.spec.ts",
+      "title": "CF-PAGE-004: Given repeated quick-filter options, When choosing a filter, Then its associated popup receives the selection",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-page.spec.ts",
+      "title": "CF-PAGE-005: Given load-size settings, When selecting a new size, Then the footer uses that size and skips a repeated selection",
+      "status": "PASSED"
+    },
+    {
+      "file": "cashflow-page.spec.ts",
+      "title": "CF-PAGE-006: Given preset counters and a portalled notification, When activating them, Then their exact identities select the intended controls",
+      "status": "PASSED"
+    }
+  ],
+  "limits": [
+    "These fixtures do not execute the React application or real business transactions.",
+    "Deployed UI uniqueness and complete runtime coverage remain UNVERIFIED.",
+    "Remote trade and unnet implementations are unavailable. Their internals require runtime inspection.",
+    "The 521 canonical business cases retain their prior states; these mechanics tests do not verify them.",
+    "No Python runtime or packaging interface changed; Python runtime tests and wheel builds were outside this validation scope."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

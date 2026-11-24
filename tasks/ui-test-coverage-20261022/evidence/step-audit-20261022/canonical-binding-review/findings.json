@@ -1,0 +1,58 @@
+{
+  "reviewedAt": "2026-10-22T06:49:53.104545+00:00",
+  "head": "908f88117032e2a3a0e2c4db0c75f5dce630a643",
+  "mode": "worktree_vs_HEAD",
+  "sourceIdentities": {
+    "e2e/audit-specs/auth-remaining.spec.ts": {
+      "sha256": "5ebdae65834700e7b031fb5dbddcaf095f00bd8a8fccae6d72ee9cc558be8a21"
+    },
+    "e2e/audit-specs/auth-login-security-expanded.spec.ts": {
+      "sha256": "9b938d2bee745f3afb8beb37ea56321ea65d62e715e9b1ca1fdbbdb48dd98933"
+    },
+    "e2e/support/auth-session.ts": {
+      "sha256": "72c41aa4212a9bd16d66d9cdda84dbd259441afa78b650ab6389b6c68ed9b29b"
+    },
+    "tasks/ui-test-coverage-20261022/test-cases.md": {
+      "sha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4"
+    }
+  },
+  "findings": [
+    {
+      "id": "CANON-BIND-001",
+      "priority": "P2",
+      "case": "AUTH-098",
+      "source": "e2e/audit-specs/auth-remaining.spec.ts:45",
+      "assertionLines": [
+        49
+      ],
+      "canonicalLine": 3407,
+      "observedSource": "let transitions=0; ... 8:async s=>{await s.acceptRelogin();transitions++;},9:async()=>{expect(transitions).toBeLessThanOrEqual(1);}",
+      "consequence": "The assertion always counts one helper completion. Multiple application recovery transitions remain undetected.",
+      "owner": "Audit harness owner",
+      "nextAction": "Observe actual recovery transitions, then assert at most one after all queued responses settle.",
+      "status": "OPEN"
+    },
+    {
+      "id": "CANON-BIND-002",
+      "priority": "P2",
+      "case": "AUTH-143",
+      "source": "e2e/audit-specs/auth-login-security-expanded.spec.ts:32",
+      "assertionLines": [
+        33,
+        34,
+        35
+      ],
+      "canonicalLine": 5339,
+      "observedSource": "\n  test(`${id} source configured SSO navigation`,async({page,audit})=>{\n    const steps=await audit.defineCase(id);let login!:LoginPage;let expected='';let requested='';\n    for(const step of steps)await audit.step(step.number,async()=>{\n      if(step.number===1){await blockExternal(page);login=await openLogin(page);return;}\n      if(step.number===2){await login.expectVisible();expected=(await login.ssoLink.getAttribute('href'))!;\n        await page.route(expected,async route=>{requested=route.request().url();await route.fulfill({status:200,contentType:'text/html',body:'<main><h1>Controlled identity provider destination</h1></main>'});});\n        await audit.record('sso-destination',{expected,cancelledAttempt:id==='AUTH-143'?'SSO-A fixture':null,externalNetworkUsed:false});return;}\n      if(step.number===3){await login.clickSsoLink();return;}\n      if(step.number===4){await expect.poll(()=>requested).toBe(new URL(expected).toString());expect(page.url()).toBe(new URL(expected).toString());return;}\n      if(step.number===5){await expect(page.getByRole('tablist',{name:'workspaces',exact:true})).toHaveCount(0);return;}\n      throw new Error(`Missing ${id} step ${step.number}`);\n    });\n  });\n}\n",
+      "consequence": "A fresh login navigation can pass without any cancelled SSO attempt.",
+      "owner": "Audit harness owner",
+      "nextAction": "Perform a controlled provider start, cancellation, and return before testing the next navigation.",
+      "status": "FIX_AUTHORIZED_PENDING"
+    }
+  ],
+  "limits": [
+    "Read-only source review. No browser was run during review.",
+    "BFF and KNOW boundaries are excluded.",
+    "Existing raw-store and accessibility nuances were excluded."
+  ]
+}

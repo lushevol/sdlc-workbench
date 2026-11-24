@@ -1,0 +1,1 @@
+../../records/candidates/settlement/KT-settlement-fx-utilization-responsibilities.md

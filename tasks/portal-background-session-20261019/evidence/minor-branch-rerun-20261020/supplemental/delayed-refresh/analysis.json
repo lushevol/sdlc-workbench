@@ -1,0 +1,128 @@
+{
+  "id": "SUPPLEMENTAL-minor-delayed-refresh-20261020",
+  "recorded_at": "2026-10-20T14:28:47.015523+00:00",
+  "case_id": "minor-delayedRefresh-20261020T142505",
+  "inventory_membership": "SUPPLEMENTAL_NOT_PART_OF_22_CASE_SUITE",
+  "status": "FAILED",
+  "unit_failure_reproduced": true,
+  "owner": "unknown",
+  "source_binding": "source-binding.json",
+  "source_binding_sha256": "fea9d9310b43f2d1b3acd770d54c48eb4eb274c944eed9a562971d1a08e8aea7",
+  "raw_run": "run.json",
+  "raw_run_sha256": "fdc01a8570df82e2757cb87f30d2834806e61c1b96079f6c095e01d71bd8655a",
+  "derived_result": "result.json",
+  "derivation": "Extract the supplemental object from unchanged run.json. No raw run field was changed.",
+  "command": [
+    "python3",
+    ".workbench/session-minor-rerun-20261020/run-delayed-refresh.py"
+  ],
+  "effective_driver_command": [
+    "node",
+    ".workbench/session-minor-rerun-20261020/delayed-refresh-runner.mjs",
+    "delayedRefresh",
+    "fast",
+    "minor-delayedRefresh-20261020T142505"
+  ],
+  "driver_exit_code": 1,
+  "launch_scope": "One independent native Edge process with a fresh profile and one covering tab.",
+  "facts": [
+    "The actual service returned HTTP200 while the request access token remained valid.",
+    "The refresh response was withheld until the subject returned after real access expiry.",
+    "The returned page showed the timeout prompt with Extend disabled.",
+    "The held actual response reached the browser with usable refresh expiry remaining.",
+    "Extend remained disabled after delivery. No relogin request occurred.",
+    "The actual logout request returned HTTP200. Sign-in appeared and stored access was absent."
+  ],
+  "inferences": [
+    "The timeout starts logout while refresh credentials remain in transit.",
+    "The late usable response cannot restore the already disabled manual recovery path.",
+    "This actual-browser result reproduces the controlled unit failure within the disclosed fixture."
+  ],
+  "observed_outcome": "LOGGED_OUT_AFTER_DELAYED_REFRESH",
+  "request_response": {
+    "service_status": 200,
+    "request_access_valid_at_service_response": true,
+    "service_response_fetched_at": "2026-10-20T14:25:12.836Z",
+    "browser_response_fulfilled_at": "2026-10-20T14:26:11.373Z",
+    "controlled_response_hold_seconds": 58.537,
+    "refresh_usable_at_release": true,
+    "refresh_seconds_remaining_at_fulfillment": 84.627,
+    "request_access": {
+      "sha256": "5056218e081158e8b09b213ec27062bc76be8f4f6ea870833f23ea05bd2d575a",
+      "exp": 1792506371
+    },
+    "returned_refresh": {
+      "sha256": "f7f1f01e76087cb75803fe6a8686d5f6f252be75c06c7dcc604437f566eb3d09",
+      "exp": 1792506456
+    }
+  },
+  "manual_recovery": {
+    "prompt_observed_before_delivery": true,
+    "returned_after_access_expiry": true,
+    "extend_after_delivery": {
+      "visible": true,
+      "enabled": false,
+      "attempted": false
+    },
+    "relogin_request_count": 0,
+    "logout_request_count": 1,
+    "manual_renewal_succeeded": false
+  },
+  "retained_screenshots": [
+    {
+      "phase": "before",
+      "path": "before.png",
+      "sha256": "e8a53374c67572ec84eb1124d11721e39a6f51dc1707906373297ef306e329c2"
+    },
+    {
+      "phase": "return",
+      "path": "return.png",
+      "sha256": "37da5b295489a96f9cd232ea2fb0b653f6799196172c10b18832624f77e0e1c4"
+    },
+    {
+      "phase": "after",
+      "path": "after.png",
+      "sha256": "078919b51eab0e4d93dc61d2cfe9cdd2e2bfef5e2df13cf5c67300cf7aa95478"
+    }
+  ],
+  "lifecycle": "Each before, return, and after checkpoint retains the full subject event array.",
+  "consequence": "Late successful refresh delivery does not preserve usable manual renewal on this branch.",
+  "next_action": "Review the pending-refresh and timeout state path. Keep this failure before an authorized implementation change.",
+  "limits": [
+    "Response delivery timing is controlled. No clock override or fabricated authentication is used.",
+    "The local fixture uses actual BFF authentication classes with synthetic identity and integration adapters.",
+    "This run does not establish natural freezing or production provider behavior.",
+    "No click was sent to the disabled Extend control. Its disabled state prevented usable manual input.",
+    "The raw heldRefresh.requestAt value is invalid because CDP timing returned zero. Ignore that field.",
+    "Use fetchedAt, fulfilledAt, browser response times, credential expiry, and lifecycle timestamps for timing claims."
+  ],
+  "invalid_capture_fields": [
+    {
+      "path": "run.json#/supplemental/heldRefresh/requestAt",
+      "raw_value": "1970-01-01T00:00:00.000Z",
+      "status": "INVALID_IGNORE",
+      "reason": "The Playwright request timing startTime was unavailable and reported zero.",
+      "raw_bytes_preserved": true
+    }
+  ],
+  "automated_checks": {
+    "raw_run_preserved": true,
+    "driver_hash_matches_snapshot": true,
+    "all_fixture_source_hashes_match_git": true,
+    "suite_hash_matches_executed_revision": true,
+    "source_checkout_unchanged": true,
+    "pre_existing_cache_preserved": true,
+    "owned_contexts_closed": true,
+    "screenshots_match_hashes": true
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

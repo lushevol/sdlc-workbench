@@ -1,0 +1,2 @@
+- [RATAN - KT Sessions](https://confluence.global.standardchartered.com/display/PSS/RATAN+-+KT+Sessions)
+- [What is VOSTRO/NOSTRO?](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3722863416)

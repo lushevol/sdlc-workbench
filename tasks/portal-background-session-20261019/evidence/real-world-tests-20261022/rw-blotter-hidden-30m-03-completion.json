@@ -1,0 +1,76 @@
+{
+  "caseId": "RW-BLOTTER-HIDDEN-30M",
+  "runId": "rw-blotter-hidden-30m-03",
+  "status": "FAILED",
+  "passed": 33,
+  "assertions": 34,
+  "resultSha256": "38b7b1d585dd5a7959aae52c2c980839454cae9d2fab9440ce9f6dc4c4158c5b",
+  "driverSha256": "3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784",
+  "failedAssertions": [
+    {
+      "id": "fixed-expiry",
+      "name": "No successful extension changes settled access expiry",
+      "passed": false,
+      "evidence": {
+        "extensions": [
+          {
+            "time": 1792635242983,
+            "route": "http://localhost:8128/api/auth/v2/sso/extend",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:14:02 GMT",
+            "access": {
+              "sha256": "2127f76c70659017be4f2140905664d7e3e9e78f0c1746106a13f18bd85e576c",
+              "iat": 1792635242,
+              "exp": 1792664042,
+              "auth_time": 1792635242,
+              "max_age": 1792638842
+            },
+            "refresh": null
+          }
+        ],
+        "baselineAccess": {
+          "sha256": "58c1da08b1c45f8d86b04b5cc0db230fc7a15f6d14dcdba2b935f907b9f46656",
+          "iat": 1792635232,
+          "exp": 1792664032,
+          "auth_time": 1792635232,
+          "max_age": 1792638832
+        },
+        "finalAccess": {
+          "sha256": "2127f76c70659017be4f2140905664d7e3e9e78f0c1746106a13f18bd85e576c",
+          "iat": 1792635242,
+          "exp": 1792664042,
+          "auth_time": 1792635242,
+          "max_age": 1792638842
+        }
+      }
+    }
+  ],
+  "measurement": {
+    "hostStart": 1792635242618,
+    "deadline": 1792637042618,
+    "requestedMs": 1800000,
+    "baselineAccess": {
+      "sha256": "58c1da08b1c45f8d86b04b5cc0db230fc7a15f6d14dcdba2b935f907b9f46656",
+      "iat": 1792635232,
+      "exp": 1792664032,
+      "auth_time": 1792635232,
+      "max_age": 1792638832
+    },
+    "baselineRefresh": {
+      "sha256": "d17aa4d5b284960ab2ca609d5cc62af3b683caba3c3cb23ba27a7c90020af407",
+      "iat": 1792635232,
+      "exp": 1792648756,
+      "auth_time": null,
+      "max_age": null
+    },
+    "baselineTrustedActivity": {
+      "mousemove": 5,
+      "keydown": 0,
+      "scroll": 0
+    },
+    "hidden": true,
+    "actualWallMs": 1800122,
+    "actualMonotonicMs": 1800175.70875
+  },
+  "stackCleanup": true
+}

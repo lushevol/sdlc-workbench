@@ -1,0 +1,84 @@
+# dtp-tda-service stream configuration
+# ---------------------------------------------------------------------------
+# This file is managed by the hosting team.  It replaces the associated_builds.yaml
+# and the stream-specific sections of .env that each team previously maintained locally.
+#
+# One entry per stream.  Only the fields relevant to a given stream need to be
+# populated — missing optional fields fall back to server defaults.
+#
+# Fields:
+#   pit_url_template      — Confluence PIT page URL.  Use {{version}} (double
+#                           braces) as the placeholder for the release version
+#                           string — this must match tda/integrations/confluence.py's
+#                           _build_url(), which only substitutes {{version}}. A
+#                           single-brace {version} template is silently left
+#                           unresolved in the final URL.
+#   sonar_key_overrides   — Map of pipeline-name → Sonar project key, for
+#                           pipelines whose Sonar key does not follow the default
+#                           naming convention.
+#   ado_field_overrides   — Map of ADO custom field names that differ from the
+#                           division-wide defaults in ado_field_config.yaml.
+#                           Leave empty for most streams.
+#   genie_enabled         — Whether Genie regression collection is supported for
+#                           this stream.  Defaults to true when omitted.
+#                           Set to false for applications that do not use Genie.
+# ---------------------------------------------------------------------------
+
+streams:
+
+  RATES:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/Blade+Rates+Release+{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  FXO:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/Blade+FXO+Release+{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  RULES:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/FMDC+-+Post+Implementation+Testing+for+Rules+Release+{{version}}"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  SCM:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/SC+Markets+Release+{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  OMS:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/Blade+OMS+Release+{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  XAP:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/Blade+XAP+{{version}}+-+Post+implementation+testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  CREDIT:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/Blade+Credit+Release+{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  BCF:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  PLATFORM:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/Blade+Platform+Release+{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  ION:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/DTP/ION+Release+{{version}}+-+Post+Implementation+Testing"
+    sonar_key_overrides: {}
+    ado_field_overrides: {}
+
+  SCALE:
+    pit_url_template: "https://confluence.global.standardchartered.com/display/FXSCALE/{{version}}+FX+Scale+Post+Implementation+Testing"
+    genie_enabled: true           # Temporarily re-enabled; ADO-native regression to be revisited
+    regression_run_filter: ""
+    sonar_key_overrides: {}
+    ado_field_overrides: {}

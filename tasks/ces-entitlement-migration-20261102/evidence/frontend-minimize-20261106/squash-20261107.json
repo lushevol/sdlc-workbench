@@ -1,0 +1,125 @@
+{
+  "captured_at": "2026-11-07T00:34:55.095554+00:00",
+  "source": "user-squash-20261107.md#exact-user-input",
+  "status": "PASSED",
+  "repositories": [
+    {
+      "repository": "repos/ui/mfe-base",
+      "branch": "codex/ces-entitlement-migration-20261106",
+      "previous_commits": [
+        "23dfdf6d7184b4e8b7a27978cf3ae7d409999849",
+        "99fbd20346454ca570aff337fee2f52d5250cad8"
+      ],
+      "squashed_commit": "5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7",
+      "parent": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "tree_before": "2cc3ad425419f487ca98e3140ab89c1a3ef4a0ec",
+      "tree_after": "2cc3ad425419f487ca98e3140ab89c1a3ef4a0ec",
+      "source_bytes_unchanged": true,
+      "commits_above_baseline": 1,
+      "backup_ref": "refs/codex/ces-squash-20261107/before",
+      "worktree_clean": true,
+      "remotes": []
+    },
+    {
+      "repository": "repos/ui/mfe-ratan-container",
+      "branch": "codex/ces-entitlement-migration-20261106",
+      "previous_commits": [
+        "d5b5cc5251f820d71a48617c74c9732f3a3a31b7",
+        "78cc110c996b3e1d3af0082ddbc89909d8c025d4"
+      ],
+      "squashed_commit": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+      "parent": "647e6b3e703e5144ab4b37c4b43aa22a28dfdd07",
+      "tree_before": "796a2b3d4ff225ac6309f7c897de53eae45e6d65",
+      "tree_after": "796a2b3d4ff225ac6309f7c897de53eae45e6d65",
+      "source_bytes_unchanged": true,
+      "commits_above_baseline": 1,
+      "backup_ref": "refs/codex/ces-squash-20261107/before",
+      "worktree_clean": true,
+      "remotes": []
+    }
+  ],
+  "tests_rerun": false,
+  "test_evidence_disposition": "Prior results remain bound to identical Git trees and source hashes. Historical manifests retain original commit IDs.",
+  "push_or_deployment": false,
+  "independent_review": {
+    "agent": "verify_squash",
+    "status": "PASSED",
+    "checks": [
+      "One delivery commit above each original baseline.",
+      "Trees match previous heads exactly.",
+      "Frontend worktrees clean and backup refs preserve previous heads.",
+      "Base main, container snapshot, and BFF refs unchanged."
+    ]
+  },
+  "baseline_refs": {
+    "base_main": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+    "container_snapshot": "647e6b3e703e5144ab4b37c4b43aa22a28dfdd07",
+    "bff_head": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
+    "bff_main": "834b4155232222347220e47139a502ee43a9cbdf"
+  },
+  "document_validation": {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "core",
+      "lint",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/10-change-review-frontend-adapters.md"
+    ],
+    "exit_code": 0,
+    "result": {
+      "schema_version": 1,
+      "status": "PASSED",
+      "valid": true,
+      "artifacts": 1,
+      "findings": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/10-change-review-frontend-adapters.md",
+          "code": "owner_unknown",
+          "severity": "warning",
+          "message": "Artifact owner is unknown. Identify the responsible owner."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/10-change-review-frontend-adapters.md",
+          "code": "review_pending",
+          "severity": "warning",
+          "message": "Business review remains pending. Record actual review before applicable publication."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/10-change-review-frontend-adapters.md",
+          "code": "unresolved_content",
+          "severity": "warning",
+          "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ces-entitlement-migration-20261102/10-change-review-frontend-adapters.md",
+          "code": "writing_review_pending",
+          "severity": "warning",
+          "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+        }
+      ],
+      "limitations": [
+        "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+        "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+        "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+        "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+        "Gherkin checks cover an English subset. No business step definitions execute.",
+        "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+      ]
+    },
+    "report_sha256": "dbe5a38c18463fbf778328550f8446f997f2bf75d63664e131cae10ef7a42531",
+    "diff_checks": [
+      {
+        "repository": ".",
+        "exit_code": 0
+      },
+      {
+        "repository": "repos/ui/mfe-base",
+        "exit_code": 0
+      },
+      {
+        "repository": "repos/ui/mfe-ratan-container",
+        "exit_code": 0
+      }
+    ]
+  }
+}

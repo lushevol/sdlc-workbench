@@ -1,0 +1,716 @@
+{
+  "id": "PARITY-active-cutoff-fix-20261024",
+  "recorded_at": "2026-10-24T15:38:06.350323+00:00",
+  "scope": "Historical 22-case local browser outcomes versus the issue 1 correction.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "critical_conclusions": [
+    {
+      "conclusion": "Browser version and suite scheduling changed.",
+      "consequence": "Outcome gains cannot establish exclusive patch causality.",
+      "owner": "local verification owner",
+      "action": "Use a same-browser baseline counterfactual for causal attribution.",
+      "evidence": [
+        "#/browser_comparison",
+        "#/execution_scheduling"
+      ]
+    },
+    {
+      "conclusion": "The compared runtime source differs only by the Home expiry correction.",
+      "consequence": "The comparison can support the stated local mechanism, with disclosed environment limits.",
+      "owner": "local verification owner",
+      "action": "Retain original assertions and inspect each completed transition.",
+      "evidence": [
+        "#/mfe_source_comparison",
+        "#/assertions_and_driver"
+      ]
+    }
+  ],
+  "assessment": {
+    "comparability": "QUALIFIED_LOCAL_COMPARISON",
+    "exclusive_patch_attribution": "NOT_ESTABLISHED",
+    "permitted_claim": "Report observed outcome transitions under unchanged assertions and disclosed local fixture settings.",
+    "issue1_interpretation": "A passing cross-expiry case would support the corrected local mechanism. Browser and scheduling differences remain material.",
+    "other_gains": "Do not attribute unrelated activity, focus, suspension, or timing gains exclusively to the expiry patch.",
+    "production_equivalence": "NOT_ESTABLISHED",
+    "business_outcomes_assessed": false
+  },
+  "mfe_source_comparison": {
+    "prior_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "pre_fix_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "git_changed_paths": [
+      "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "src/pages/Home/index.test.tsx"
+    ],
+    "git_runtime_changed_paths": [],
+    "runtime_equivalence_before_patch": true,
+    "prior_binding": {
+      "path": "../../minor-branch-rerun-20261020/fixture-binding.json",
+      "sha256": "91917910ab1ba6de7e5229c0587911ccd36fcb8181118b78361eedb0b8446359"
+    },
+    "candidate_binding": {
+      "path": "source-binding.json",
+      "sha256": "238396320ddf051cd7a866f7df5871f49cef8c58f74a7699b51c25a6166fb06e"
+    },
+    "prior_source_files": 339,
+    "candidate_source_files": 339,
+    "changed_bound_source_files": [
+      {
+        "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+        "historical_sha256": "78ab0f5315a1d5c6eab73433fa55f3440c17d25f7ef89ee350240d3dac0164f1",
+        "candidate_sha256": "e2e470e9d4054063b4ba8bae06951a31eab64e4a09ac36a35bb205561c7a5d96",
+        "runtime_source": false
+      },
+      {
+        "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+        "historical_sha256": "887d051860b58ef58ddfaaca009b4ceea4cd0905d80e9dfaeb89e1e54a2c95ff",
+        "candidate_sha256": "b7f0fc9bee33cd5b273612829093ae9d3ff0aa92cde66e448381634a2108f95f",
+        "runtime_source": false
+      },
+      {
+        "path": "src/pages/Home/common/useController.ts",
+        "historical_sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+        "candidate_sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+        "runtime_source": true
+      },
+      {
+        "path": "src/pages/Home/index.test.tsx",
+        "historical_sha256": "744277717489659d612558f7940b2722bcee6626bfdfeaa3e1e536883f0ff7c6",
+        "candidate_sha256": "168989a972da97f6605fbd5559cf31973876b2e21b725624de67cb6a9b580904",
+        "runtime_source": false
+      }
+    ],
+    "only_runtime_change": "src/pages/Home/common/useController.ts",
+    "candidate_runtime_hashes_match_bound_inputs": true,
+    "served_home_source_binding": [
+      {
+        "source_map_path": "webpack://base/./src/pages/Home/common/useController.ts",
+        "source_sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+        "matches_candidate": true,
+        "asset": "d550bc34c93ed1cf4b59.src_pages_Home_index_tsx.base.js.map"
+      }
+    ],
+    "served_binding_evidence": {
+      "path": "runtime-readiness.json",
+      "sha256": "9b627f52e0271c51c913350ae5c13eec6ab1849d61e80a9a1052037468d21614"
+    },
+    "historical_deployment_limit": "Historical source hashes match the recorded revision. A historical served bundle digest was not retained."
+  },
+  "configuration_comparison": [
+    {
+      "profile": "natural",
+      "prior": {
+        "path": "../../minor-branch-rerun-20261020/config-natural.json",
+        "sha256": "02933f815b0d612b30f2e1bbaeaf7979b7d3be77d72f5b0f452af97794278c8c"
+      },
+      "candidate": {
+        "path": "config-natural.json",
+        "sha256": "0678bbcf6bb6b362eeb3a592facb6b09f3112f85015265ad82cd8223becee9c1"
+      },
+      "behavioral_fields_identical": true,
+      "differences": {
+        "artifactDir": {
+          "prior": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-minor-rerun-20261020/browser-results/natural",
+          "candidate": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-results/natural"
+        },
+        "sourceBinding": {
+          "prior": null,
+          "candidate": "Baseline commit plus saved working patch; exact hashes in setup/source-binding.json"
+        },
+        "sourceRevisions": {
+          "prior": {
+            "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+          },
+          "candidate": {
+            "mfe-base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+          }
+        }
+      },
+      "prior_profile": {
+        "url": "http://127.0.0.1:8101/",
+        "bff": 8088,
+        "access_seconds": 900,
+        "refresh_seconds": 13524
+      },
+      "current_service": {
+        "url": "http://127.0.0.1:8088/api/auth/local/health",
+        "status": 200,
+        "health": {
+          "absolute_minutes": 60,
+          "access_minutes": 15,
+          "scope": "actual BFF controller/JWT/session code with local fixtures",
+          "status": "UP",
+          "remote_access": "DISABLED",
+          "database": "isolated H2 memory; actual JPA session repository",
+          "refresh_extra_seconds": 24,
+          "refresh_minutes": 225
+        },
+        "response_sha256": "a7233145364f07cf9359d239d10adc11c338ae110224df3e7d35be3a55bc6bff"
+      }
+    },
+    {
+      "profile": "fast",
+      "prior": {
+        "path": "../../minor-branch-rerun-20261020/config-fast.json",
+        "sha256": "0d7aada0988068864548e882716fb794954b87a382732a2f48cc79907e502cd4"
+      },
+      "candidate": {
+        "path": "config-fast.json",
+        "sha256": "9a581f934800e59b1231c827d302cbed6de4a3c701497c7dea488fea90467c64"
+      },
+      "behavioral_fields_identical": true,
+      "differences": {
+        "artifactDir": {
+          "prior": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-minor-rerun-20261020/browser-results/fast",
+          "candidate": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-results/fast"
+        },
+        "sourceBinding": {
+          "prior": null,
+          "candidate": "Baseline commit plus saved working patch; exact hashes in setup/source-binding.json"
+        },
+        "sourceRevisions": {
+          "prior": {
+            "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+          },
+          "candidate": {
+            "mfe-base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+          }
+        }
+      },
+      "prior_profile": {
+        "url": "http://127.0.0.1:8103/",
+        "bff": 8091,
+        "access_seconds": 60,
+        "refresh_seconds": 144
+      },
+      "current_service": {
+        "url": "http://127.0.0.1:8091/api/auth/local/health",
+        "status": 200,
+        "health": {
+          "status": "UP",
+          "scope": "actual BFF controller/JWT/session code with local fixtures",
+          "access_minutes": 1,
+          "absolute_minutes": 60,
+          "refresh_minutes": 2,
+          "refresh_extra_seconds": 24,
+          "database": "isolated H2 memory; actual JPA session repository",
+          "remote_access": "DISABLED"
+        },
+        "response_sha256": "331212d5c22c776bbf4ac63eb6e159149de11e49c03af1721c164e4f18a4958a"
+      }
+    }
+  ],
+  "identical_supporting_files": [
+    {
+      "path": "mfe/mfe.local.webpack.cjs",
+      "prior": {
+        "path": "../../../../../.workbench/session-minor-rerun-20261020/mfe/mfe.local.webpack.cjs",
+        "sha256": "63ed64fea9273f53017227616071519215aaf4e38e6e6b95d73a16a8bc14d955"
+      },
+      "candidate": {
+        "path": "../../../../../.workbench/session-active-cutoff-fix-20261024/mfe/mfe.local.webpack.cjs",
+        "sha256": "63ed64fea9273f53017227616071519215aaf4e38e6e6b95d73a16a8bc14d955"
+      },
+      "bytes_identical": true,
+      "preserved_prior": {
+        "path": "../../minor-branch-rerun-20261020/fixture-config/mfe--mfe.local.webpack.cjs.snapshot",
+        "sha256": "63ed64fea9273f53017227616071519215aaf4e38e6e6b95d73a16a8bc14d955"
+      }
+    },
+    {
+      "path": "root-natural/root.webpack.cjs",
+      "prior": {
+        "path": "../../../../../.workbench/session-minor-rerun-20261020/root-natural/root.webpack.cjs",
+        "sha256": "63ba695d7278ed9535509bd595d13a57c118c46269419505dd313a3861592c59"
+      },
+      "candidate": {
+        "path": "../../../../../.workbench/session-active-cutoff-fix-20261024/root-natural/root.webpack.cjs",
+        "sha256": "63ba695d7278ed9535509bd595d13a57c118c46269419505dd313a3861592c59"
+      },
+      "bytes_identical": true,
+      "preserved_prior": {
+        "path": "../../minor-branch-rerun-20261020/fixture-config/root-natural--root.webpack.cjs.snapshot",
+        "sha256": "63ba695d7278ed9535509bd595d13a57c118c46269419505dd313a3861592c59"
+      }
+    },
+    {
+      "path": "root-fast/root.webpack.cjs",
+      "prior": {
+        "path": "../../../../../.workbench/session-minor-rerun-20261020/root-fast/root.webpack.cjs",
+        "sha256": "c5f0ec04fe44da31f6f289aa00f1e997e5b7d839f19a10059d28f01cd846ee9f"
+      },
+      "candidate": {
+        "path": "../../../../../.workbench/session-active-cutoff-fix-20261024/root-fast/root.webpack.cjs",
+        "sha256": "c5f0ec04fe44da31f6f289aa00f1e997e5b7d839f19a10059d28f01cd846ee9f"
+      },
+      "bytes_identical": true,
+      "preserved_prior": {
+        "path": "../../minor-branch-rerun-20261020/fixture-config/root-fast--root.webpack.cjs.snapshot",
+        "sha256": "c5f0ec04fe44da31f6f289aa00f1e997e5b7d839f19a10059d28f01cd846ee9f"
+      }
+    },
+    {
+      "path": "launch.py",
+      "prior": {
+        "path": "../../../../../.workbench/session-minor-rerun-20261020/launch.py",
+        "sha256": "449e4feb4180d7edbe2da83ff22dac0c58777ae33ebb53325161e4bde956ef07"
+      },
+      "candidate": {
+        "path": "../../../../../.workbench/session-active-cutoff-fix-20261024/launch.py",
+        "sha256": "449e4feb4180d7edbe2da83ff22dac0c58777ae33ebb53325161e4bde956ef07"
+      },
+      "bytes_identical": true
+    },
+    {
+      "path": "mfe/source/package.json",
+      "prior": {
+        "path": "../../../../../.workbench/session-minor-rerun-20261020/mfe/source/package.json",
+        "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348"
+      },
+      "candidate": {
+        "path": "../../../../../.workbench/session-active-cutoff-fix-20261024/mfe/source/package.json",
+        "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348"
+      },
+      "bytes_identical": true
+    }
+  ],
+  "assertions_and_driver": {
+    "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+    "assertion_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+    "assertions_identical": true,
+    "prior_snapshot": {
+      "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984"
+    },
+    "candidate_frozen_module": {
+      "path": "../../../../../.workbench/session-active-cutoff-fix-20261024/sessionRenewal.original.cjs",
+      "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984"
+    },
+    "prior_driver": {
+      "path": "../../../../../.workbench/session-minor-rerun-20261020/browser-runner.mjs",
+      "sha256": "f6db7caaf26f09604544186d5316a8cb0cea51de32ce1488896623bdaaa337e5"
+    },
+    "candidate_driver_snapshot": {
+      "path": "browser-runner.mjs.snapshot",
+      "sha256": "5eb880f3f4d0370d5710f64c901ff8c7956f778d1214cc7416d9c18ac9239846"
+    },
+    "normalized_driver_sha256": "11cb4e86137c8cdb6b7c45b25dda15012569d9aa266a31fc297409f627167ca8",
+    "driver_semantics_identical": true,
+    "driver_differences": [
+      "Runtime output directory changed.",
+      "The assertion module path now targets an identical frozen copy."
+    ],
+    "native_policy": "Fresh Edge process and default context per case context; CDP noDefaults=true; no focus or visibility emulation.",
+    "retention_hook": "The launcher now saves completed artifacts before the next case. Assertions remain unchanged."
+  },
+  "bff_comparison": {
+    "runtime_source_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+    "source_build_manifest": {
+      "path": "../../portal/setup/local-bff/source-build-manifest.json",
+      "sha256": "a587e01b89b32d281f695f661747ea26b2f46740c21dc4f095287c2d89cee11a"
+    },
+    "bound_source_files": 104,
+    "source_hash_mismatches": [],
+    "classpath_resolved_entries_identical": true,
+    "prior_fast_runtime": {
+      "path": "../../../../../.workbench/session-minor-rerun-20261020/bff-fast/runtime.json",
+      "sha256": "3e2a4bf20318316ff645d116c26bd8756dcdcd678ee9f4cb50d6810776496eaa"
+    },
+    "current_runtime_evidence": {
+      "path": "runtime-readiness.json",
+      "sha256": "9b627f52e0271c51c913350ae5c13eec6ab1849d61e80a9a1052037468d21614"
+    },
+    "fast_classes_same_resolved_directory": true,
+    "fast_class_hashes_identical": true,
+    "fast_class_hashes": [
+      {
+        "path": "local/portalsession/LocalSessionApplication$1.class",
+        "sha256": "722716284e2ac28dc4db99ee6ac1d29aaa0acb5439e3d5f03a6529d3e077cdfd"
+      },
+      {
+        "path": "local/portalsession/LocalSessionApplication$2.class",
+        "sha256": "caca6017261f91c427d6bde97d17374f02bab53026ea0cf773b991d7fd53dc5c"
+      },
+      {
+        "path": "local/portalsession/LocalSessionApplication$3.class",
+        "sha256": "92ce5a90ed2c783414858f898d060f673503dd8972a24234a09f8493fbbe6cfb"
+      },
+      {
+        "path": "local/portalsession/LocalSessionApplication$4.class",
+        "sha256": "c72d1485ef9d21d30286e8e38f7cd5445fe8cb7ffa05d4912e3a7a84e1a90b39"
+      },
+      {
+        "path": "local/portalsession/LocalSessionApplication$Health.class",
+        "sha256": "f77209d2b432a0663a125bb77ed17350c79531f2d77ed5549e57d36b37196fe1"
+      },
+      {
+        "path": "local/portalsession/LocalSessionApplication.class",
+        "sha256": "0d841e146c5a28bc9ffea9d2f188613990c48648aaf72e0ecbf8faca48e9292b"
+      }
+    ],
+    "shared_class_hashes": {
+      "definition": "runtime-readiness.json#/bff_class_bindings/shared",
+      "files": 132
+    },
+    "natural_process": {
+      "prior_pid": 98667,
+      "current_declared_process": "Existing PID98667 on8088; startup record in prior evidence.",
+      "original_start": {
+        "path": "../../portal/setup/local-bff/runtime-start.json",
+        "sha256": "b64060e67fb8de496918a4807bd3275b64b2277654c562642f801a90c93ba59d"
+      },
+      "same_process_reused": true
+    },
+    "production_limits": "Cached public verification dependencies with root-POM Spring/Tomcat overrides; H2 substituted for PostgreSQL; private starters absent",
+    "historical_class_limit": "Historical class digests were not retained. Matching paths, source manifests, and reused process records support continuity."
+  },
+  "dependencies": {
+    "mfe_node_modules_resolve_same": true,
+    "resolved_dependency_directory": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/portal-session-real-20261019/local-mfe/node_modules",
+    "browser_automation_import": "Both drivers import adapters/browser/node_modules/playwright/index.mjs.",
+    "limit": "Shared installed dependency paths support continuity. A full historical installation digest was not retained."
+  },
+  "browser_comparison": {
+    "prior_versions": [
+      "155.0.4283.62"
+    ],
+    "candidate_observed_versions": [
+      "156.0.4314.42"
+    ],
+    "same_version": false,
+    "prior_records": [
+      {
+        "id": "E2E-01",
+        "mode": "mouse",
+        "started_at": "2026-10-20T14:20:55.909Z",
+        "completed_at": "2026-10-20T14:21:25.991Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-mouse-20261020T142055/run.json",
+          "sha256": "dd4f3fca5722f80531703bc0aad458e6e61473c2d04ffccde4332577ff017724"
+        }
+      },
+      {
+        "id": "E2E-02",
+        "mode": "keyboard",
+        "started_at": "2026-10-20T14:21:28.207Z",
+        "completed_at": "2026-10-20T14:21:53.438Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-keyboard-20261020T142128/run.json",
+          "sha256": "4c5053d4696720d6ffeb50d17c46939415218b8b8e57ec4b095d965b3cab2b9d"
+        }
+      },
+      {
+        "id": "E2E-03",
+        "mode": "scroll",
+        "started_at": "2026-10-20T14:21:55.630Z",
+        "completed_at": "2026-10-20T14:22:20.387Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-scroll-20261020T142155/run.json",
+          "sha256": "f0b4b57ed62b27d829c971c6c353235f324e01792e7ab63c8ca3e5695748a276"
+        }
+      },
+      {
+        "id": "E2E-04",
+        "mode": "pending",
+        "started_at": "2026-10-20T14:22:22.567Z",
+        "completed_at": "2026-10-20T14:23:27.026Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-pending-20261020T142222/run.json",
+          "sha256": "2a820729d7a1af53cc9f1edb26bff20c572d30bde67590506eccdd967b8c4d3c"
+        }
+      },
+      {
+        "id": "E2E-05",
+        "mode": "retry",
+        "started_at": "2026-10-20T14:23:29.211Z",
+        "completed_at": "2026-10-20T14:24:32.692Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-retry-20261020T142329/run.json",
+          "sha256": "13a1637687dd3d2240dd4ead882e39c22d3d2fc6538aafe6958ccef2bee668c1"
+        }
+      },
+      {
+        "id": "E2E-06",
+        "mode": "cross",
+        "started_at": "2026-10-20T14:24:34.899Z",
+        "completed_at": "2026-10-20T14:27:09.205Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/run.json",
+          "sha256": "e80bcc752656c60002fd4815388a1c17881107fe6aa7eaa7b3d39f98aeec4fe0"
+        }
+      },
+      {
+        "id": "E2E-07",
+        "mode": "natural",
+        "started_at": "2026-10-20T14:19:53.272Z",
+        "completed_at": "2026-10-20T14:50:10.487Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/run.json",
+          "sha256": "a9f184f85001a8339e8c8512d4bdb3aa022c3a121a4538a48d62c763e28763ec"
+        }
+      },
+      {
+        "id": "E2E-08",
+        "mode": "single",
+        "started_at": "2026-10-20T14:27:11.524Z",
+        "completed_at": "2026-10-20T14:27:34.604Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-single-20261020T142711/run.json",
+          "sha256": "128d4339e19d1052e48e99855a3863f9a6b7908ae10de05f8305ebfdd487bbdb"
+        }
+      },
+      {
+        "id": "E2E-09",
+        "mode": "rapid",
+        "started_at": "2026-10-20T14:31:44.092Z",
+        "completed_at": "2026-10-20T14:33:17.620Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-rapid-20261020T143143/run.json",
+          "sha256": "d7421b8bd63e0231a4be54e0211202415a77ca976925da6e144359c1186903b4"
+        }
+      },
+      {
+        "id": "E2E-10",
+        "mode": "keyboardExtend",
+        "started_at": "2026-10-20T14:33:19.803Z",
+        "completed_at": "2026-10-20T14:34:24.924Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-keyboardExtend-20261020T143319/run.json",
+          "sha256": "18695cfe5506cfc18840f3ce5c7a801255b6f558bce111c08af74778b778b765"
+        }
+      },
+      {
+        "id": "E2E-11",
+        "mode": "activityRetry",
+        "started_at": "2026-10-20T14:34:27.110Z",
+        "completed_at": "2026-10-20T14:34:53.317Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-activityRetry-20261020T143426/run.json",
+          "sha256": "496c3b966304a832aaee87d750e1df394b492058e8db0a38dab27e10329dd6e2"
+        }
+      },
+      {
+        "id": "E2E-12",
+        "mode": "inconsistent",
+        "started_at": "2026-10-20T14:34:55.504Z",
+        "completed_at": "2026-10-20T14:35:12.352Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-inconsistent-20261020T143455/run.json",
+          "sha256": "f59bf6b2e5c01d9a7dfeb49518e3823d07ac7971fe62f778a486c9f00583007a"
+        }
+      },
+      {
+        "id": "E2E-13",
+        "mode": "promptActivity",
+        "started_at": "2026-10-20T14:35:14.660Z",
+        "completed_at": "2026-10-20T14:36:26.456Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-promptActivity-20261020T143514/run.json",
+          "sha256": "37954fc725644ae86dc559c1a48e8a85260e2a1ada6b897ebae05e7464dca605"
+        }
+      },
+      {
+        "id": "E2E-14",
+        "mode": "idleLogout",
+        "started_at": "2026-10-20T14:36:28.647Z",
+        "completed_at": "2026-10-20T14:37:33.133Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/run.json",
+          "sha256": "6814792069034368fc4918d28456970ca9152d9396abe627b1922a805e1c3d5b"
+        }
+      },
+      {
+        "id": "E2E-15",
+        "mode": "visibility",
+        "started_at": "2026-10-20T14:37:35.457Z",
+        "completed_at": "2026-10-20T14:37:54.217Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/run.json",
+          "sha256": "024ec8cafff4efaa03f8330cd1e5ed6f5195135adc9f5a54a2facc52daf027e2"
+        }
+      },
+      {
+        "id": "E2E-16",
+        "mode": "reload",
+        "started_at": "2026-10-20T14:37:56.404Z",
+        "completed_at": "2026-10-20T14:38:17.868Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/run.json",
+          "sha256": "d84a64946cf5554de4189a788b239b244001dd260490ba1de1e85d6bf29e3e40"
+        }
+      },
+      {
+        "id": "E2E-17",
+        "mode": "manualLogout",
+        "started_at": "2026-10-20T14:27:36.784Z",
+        "completed_at": "2026-10-20T14:28:39.803Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/run.json",
+          "sha256": "615b657cb4814b2a8f900aca93a250682101e2c895ac894256d1e699ad43e9c9"
+        }
+      },
+      {
+        "id": "E2E-18",
+        "mode": "activityLogout",
+        "started_at": "2026-10-20T14:28:42.000Z",
+        "completed_at": "2026-10-20T14:29:08.906Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/run.json",
+          "sha256": "bc31c642d541768de63d7d182c8ea9acc42895941fe1a5af4716b2323bfa0f0e"
+        }
+      },
+      {
+        "id": "E2E-19",
+        "mode": "late",
+        "started_at": "2026-10-20T14:29:11.086Z",
+        "completed_at": "2026-10-20T14:30:24.454Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-late-20261020T142910/run.json",
+          "sha256": "6b3367632434f92fc60a565f6988198193b39f07522da97514a1a0e580429f87"
+        }
+      },
+      {
+        "id": "E2E-20",
+        "mode": "expired",
+        "started_at": "2026-10-20T14:30:26.660Z",
+        "completed_at": "2026-10-20T14:31:31.653Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-expired-20261020T143026/run.json",
+          "sha256": "742cd221944075530b8ba8a655abde50d83efde8d8e2eabad6a9119fa7db2499"
+        }
+      },
+      {
+        "id": "E2E-21",
+        "mode": "missing",
+        "started_at": "2026-10-20T14:19:56.530Z",
+        "completed_at": "2026-10-20T14:50:16.940Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/run.json",
+          "sha256": "ff3b0fea937a577dc7858dbcaa74af5c91004b4a6aed567713c6404617ee8d8a"
+        }
+      },
+      {
+        "id": "E2E-22",
+        "mode": "workspace",
+        "started_at": "2026-10-20T14:31:33.958Z",
+        "completed_at": "2026-10-20T14:31:41.903Z",
+        "browser_version": "155.0.4283.62",
+        "evidence": {
+          "path": "../../minor-branch-rerun-20261020/browser/minor-workspace-20261020T143133/run.json",
+          "sha256": "c180fee13ad80ebe3085813b6cf271a90d955052763e9c6db7456adc22e75b03"
+        }
+      }
+    ],
+    "candidate_identity_snapshot": {
+      "path": "observed-native-identities.json",
+      "sha256": "2a328e5f0c34aaa0bd443c4a68f4fae0e1501093e6187e6ea8cb37673e7157a6"
+    },
+    "difference": "Edge changed from 155.0.4283.62 to 156.0.4314.42.",
+    "effect": "Browser scheduling, lifecycle events, native focus, and default suspension behavior can differ.",
+    "current_default_settings": "NOT_INDEPENDENTLY_INSPECTED",
+    "browser_ui_access_performed": false
+  },
+  "execution_scheduling": {
+    "historical_natural_interval": {
+      "id": "E2E-07",
+      "mode": "natural",
+      "started_at": "2026-10-20T14:19:53.272Z",
+      "completed_at": "2026-10-20T14:50:10.487Z",
+      "browser_version": "155.0.4283.62",
+      "evidence": {
+        "path": "../../minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/run.json",
+        "sha256": "a9f184f85001a8339e8c8512d4bdb3aa022c3a121a4538a48d62c763e28763ec"
+      }
+    },
+    "historical_missing_interval": {
+      "id": "E2E-21",
+      "mode": "missing",
+      "started_at": "2026-10-20T14:19:56.530Z",
+      "completed_at": "2026-10-20T14:50:16.940Z",
+      "browser_version": "155.0.4283.62",
+      "evidence": {
+        "path": "../../minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/run.json",
+        "sha256": "ff3b0fea937a577dc7858dbcaa74af5c91004b4a6aed567713c6404617ee8d8a"
+      }
+    },
+    "historical_fast_cases_overlap_both_long_cases": true,
+    "historical_order": "Natural and missing ran concurrently. Every fast case overlapped both long cases.",
+    "candidate_order": "Root selected sequential natural, missing, and twenty fast cases.",
+    "candidate_order_source": "Parent task instruction to cutoff_suite_inventory on 2026-10-24.",
+    "effect": "Independent drivers can change native foreground state outside another driver context set.",
+    "limit": "No cross-run visibility interference is proven. The historical overlap prevents strict scheduling parity."
+  },
+  "local_substitutions": [
+    "Synthetic OUD identity",
+    "Fixed empty application catalog",
+    "Fixed local EMS2 entitlements",
+    "No-op analytics",
+    "Isolated H2 memory database",
+    "Isolated Spring bootstrap without private starters",
+    "Local sc-button and sc-icon-card presentation substitutes",
+    "Development webpack without production type checker"
+  ],
+  "required_follow_up": [
+    {
+      "action": "Finish all original cases and retain each result before the next execution.",
+      "owner": "local verification owner",
+      "reason": "The comparison denominator remains 22 original cases."
+    },
+    {
+      "action": "Run the unpatched baseline with Edge 156 under the same sequential conditions for causal claims.",
+      "owner": "local verification owner",
+      "reason": "A historical transition alone cannot isolate browser and scheduling effects."
+    },
+    {
+      "action": "Keep diagnostic and observation outcomes outside business pass totals.",
+      "owner": "local verification owner",
+      "reason": "Their predicates do not establish approved business acceptance."
+    }
+  ],
+  "validation": {
+    "json_parse": "PASSED",
+    "git_runtime_diff": "PASSED",
+    "fixture_behavior_fields": "IDENTICAL",
+    "original_assertion_hash": "MATCHED",
+    "driver_semantics_after_path_normalization": "IDENTICAL",
+    "copied_339_source_hashes": "MATCHED",
+    "bff_104_source_hashes": "MATCHED",
+    "fast_bff_6_class_hashes": "MATCHED",
+    "browser_version_parity": "DIFFERENT",
+    "scheduling_parity": "DIFFERENT"
+  },
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "No browser was launched or controlled during this parity review.",
+    "No active fixture was changed.",
+    "Passing local outcomes cannot establish PROD settings, provider behavior, or deployment authorization."
+  ]
+}

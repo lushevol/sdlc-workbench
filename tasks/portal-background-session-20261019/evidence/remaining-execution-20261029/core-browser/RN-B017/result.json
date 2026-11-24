@@ -1,0 +1,143 @@
+{
+  "id": "RN-B017",
+  "title": "access and refresh expire at the same epoch timestamp",
+  "basis": "observed",
+  "started_at": "2026-10-29T02:06:08.561Z",
+  "status": "PASSED",
+  "expected": [
+    "the acquisition POST count after that timestamp equals 0"
+  ],
+  "assertions": [
+    {
+      "name": "zero acquisition after equal expiry",
+      "actual": 0,
+      "expected": 0,
+      "status": "PASSED"
+    }
+  ],
+  "observations": {
+    "relogin_count": 0
+  },
+  "source_revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "source_refs": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": "110-205",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    }
+  ],
+  "limits": [
+    "Actual Chromium portal, React hooks, reducers, Axios interceptors and services.",
+    "Controlled browser time, synthetic identity and auth responses. Protected peer assertions are fixture-level, not production RSA authorization.",
+    "Native device, VPN, real sleep, independent devices and unavailable target boundaries remain blocked."
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "8cefce948d6e51714a7b00fa7b651e5954cdeedba47d7d113af59de8bef67d3d"
+    }
+  ],
+  "initial": {
+    "expiry": 1793232063658,
+    "isOnLogout": false,
+    "loading": false,
+    "dialog": false,
+    "workspaceIds": [
+      "e8dc7bf6-7fb9-4b5f-9918-3c9f3bf1ddb2"
+    ],
+    "selected": "e8dc7bf6-7fb9-4b5f-9918-3c9f3bf1ddb2",
+    "probe": {
+      "opens": 0,
+      "closures": 0,
+      "events": [],
+      "activity": [],
+      "activeTimers": {
+        "1000000000000": {
+          "delay": 5000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at Object.execute (http://127.0.0.1:8343/js/external/single-spa.dev.js:2435:9)\n    at i (http://127.0.0.1:8343/js/external/system.min.js:305:35)\n    at e (http://127.0.0.1:8343/js/external/system.min.js:342:52)\n    at http://127.0.0.1:8343/js/external/system.min.js:336:35\n    at Array.forEach (<anonymous>)\n    at e (http://127.0.0.1:8343/js/external/system.min.js:334:27)\n    at http://127.0.0.1:8343/js/external/system.min.js:345:19"
+        },
+        "1000000000014": {
+          "delay": 56456,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2826:28\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        },
+        "1000000000017": {
+          "delay": 600,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at setTabPanel (http://127.0.0.1:8342/base.js:74872:14)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2178:63\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000019": {
+          "delay": 31098,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at scheduleAcquisition (http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2872:28)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2894:5\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)"
+        },
+        "1000000000020": {
+          "delay": 14400000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2896:49\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at http://127.0.0.1:8343/js/external/react-dom.development.js:31530:11"
+        }
+      },
+      "listeners": []
+    },
+    "token_sha256": "4a9a4920e457ccb426c31135985f7437e27bd6d8b4f0aba6231e8f52b6626b1f",
+    "refresh_sha256": "bfff603ff7452b9fa6e71ffbda52fdbb986be1868e295278894d0ccf125470d5"
+  },
+  "final": {
+    "expiry": 1793232067560,
+    "isOnLogout": true,
+    "loading": false,
+    "dialog": true,
+    "extendDisabled": true,
+    "workspaceIds": [
+      "e8dc7bf6-7fb9-4b5f-9918-3c9f3bf1ddb2"
+    ],
+    "selected": "e8dc7bf6-7fb9-4b5f-9918-3c9f3bf1ddb2",
+    "probe": {
+      "opens": 1,
+      "closures": 0,
+      "events": [
+        {
+          "visible": true,
+          "at": 1793232067561
+        }
+      ],
+      "activity": [],
+      "activeTimers": {
+        "1000000000026": {
+          "delay": 1000,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/base.js:74808:5\n    at new Promise (<anonymous>)\n    at waitFor (http://127.0.0.1:8342/base.js:74807:10)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2364:74\n    at http://127.0.0.1:8342/base.js:86174:18\n    at Generator.<anonymous> (http://127.0.0.1:8342/base.js:85952:51)\n    at Generator.next (http://127.0.0.1:8342/base.js:86083:21)\n    at asyncGeneratorStep (http://127.0.0.1:8342/base.js:86365:17)\n    at _next (http://127.0.0.1:8342/base.js:86379:9)"
+        },
+        "1000000000029": {
+          "delay": 225,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at Transition.onTransitionEnd (http://127.0.0.1:8342/base.js:83318:7)\n    at http://127.0.0.1:8342/base.js:83222:14\n    at Transition.nextCallback (http://127.0.0.1:8342/base.js:83288:9)\n    at callCallback (http://127.0.0.1:8343/js/external/react-dom.development.js:16458:14)\n    at commitUpdateQueue (http://127.0.0.1:8343/js/external/react-dom.development.js:16479:11)\n    at commitLayoutEffectOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:27821:13)\n    at commitLayoutMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29259:11)\n    at commitLayoutEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29241:9)\n    at commitLayoutEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29218:13)"
+        },
+        "1000000000030": {
+          "delay": 225,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at Transition.onTransitionEnd (http://127.0.0.1:8342/base.js:83318:7)\n    at http://127.0.0.1:8342/base.js:83222:14\n    at Transition.nextCallback (http://127.0.0.1:8342/base.js:83288:9)\n    at callCallback (http://127.0.0.1:8343/js/external/react-dom.development.js:16458:14)\n    at commitUpdateQueue (http://127.0.0.1:8343/js/external/react-dom.development.js:16479:11)\n    at commitLayoutEffectOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:27821:13)\n    at commitLayoutMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29259:11)\n    at commitLayoutEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29241:9)\n    at commitLayoutEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29218:13)"
+        },
+        "1000000000031": {
+          "delay": 0,
+          "stack": "Error\n    at window.setTimeout (<anonymous>:7:62)\n    at http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2896:49\n    at commitHookEffectListMount (http://127.0.0.1:8343/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://127.0.0.1:8343/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:8343/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:8343/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://127.0.0.1:8343/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://127.0.0.1:8343/js/external/react-dom.development.js:31747:16)\n    at performSyncWorkOnRoot (http://127.0.0.1:8343/js/external/react-dom.development.js:30777:5)"
+        }
+      },
+      "listeners": []
+    },
+    "token_sha256": "b7924e8d5c05ce9919ce09369bb81d3b277ddf474d1ab71e2ac3b1bbd66c566a",
+    "refresh_sha256": "3953a5b82ea9a5daac7893d1cd740799ea9635172b4054f6f91b56bbd290ddba"
+  },
+  "completed_at": "2026-10-29T02:06:16.256Z",
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793232003658,
+      "owner_sha256": null
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793232007560,
+      "owner_sha256": null
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793232007560,
+      "owner_sha256": null
+    }
+  ]
+}

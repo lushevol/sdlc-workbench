@@ -1,0 +1,977 @@
+/* Real-target Browser extension. Authentication responses and tokens are never fabricated. */
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const assert = require('node:assert/strict');
+const { isDeepStrictEqual } = require('node:util');
+const sessions = new WeakMap();
+const promptSelector = '#timeout-dialog-title';
+const extendSelector = '[data-testid="Extend_Btn"]';
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const hash = value => crypto.createHash('sha256').update(value).digest('hex');
+const claims = token => {
+  try { return JSON.parse(Buffer.from(token.trim().split(/\s+/).pop().split('.')[1], 'base64url')); }
+  catch { return {}; }
+};
+async function checkpoint(page, state, phase) {
+  const file = `${phase}.png`;
+  const entry = { phase, capturedAt: new Date().toISOString(), file };
+  try { await page.screenshot({ path: path.join(state.directory, file), timeout: 10000 }); }
+  catch (error) { entry.captureGap = publicError(error, state); }
+  state.result.screenshots.push(entry);
+}
+const tokenSummary = token => token ? { sha256: hash(token), exp: claims(token).exp, iat: claims(token).iat } : null;
+const publicError = (error, state) => {
+  let message = String(error.message);
+  const secrets = [state.initialAccess, state.latestAccess, state.refreshToken, ...(state.secrets || []),
+    process.env[state.config.usernameEnv], process.env[state.config.passwordEnv]].filter(Boolean);
+  for (const secret of secrets) {
+    for (const value of [secret, secret.trim().split(/\s+/).pop(), JSON.stringify(secret).slice(1, -1)]) {
+      if (value) message = message.split(value).join('[REDACTED]');
+    }
+  }
+  return message.replace(/https?:\/\/[^\s)"']+/g, value => {
+    try { const url = new URL(value); return url.origin + url.pathname; }
+    catch { return '[URL_REDACTED]'; }
+  });
+};
+const waitUntil = async (predicate, timeoutMs, message) => {
+  const deadline = Date.now() + timeoutMs;
+  while (!predicate() && Date.now() < deadline) await sleep(25);
+  assert.ok(predicate(), message);
+};
+
+async function openPortalSession(configFile, page) {
+  const raw = fs.readFileSync(configFile, 'utf8');
+  const config = JSON.parse(raw);
+  for (const key of ['targetUrl', 'readySelector', 'protectedResponseUrl', 'protectedJsonPath']) {
+    assert.ok(config[key], `Missing configuration: ${key}`);
+  }
+  assert.ok(config.protectedActionSelector || config.protectedNavigationUrl, 'Configure a protected UI action or portal navigation.');
+  assert.ok(Object.hasOwn(config, 'protectedExpectedValue'), 'Configure the protected response business assertion.');
+  const target = new URL(config.targetUrl);
+  assert.ok(!target.username && !target.password && !target.search && !target.hash, 'The target URL must contain no credentials, query, or fragment.');
+  for (const repository of ['mfe-base', 'single-ui-bff']) {
+    assert.match(config.sourceRevisions?.[repository] || '', /^[0-9a-f]{40}$/i, `Configure the exact ${repository} revision.`);
+  }
+  const state = { configFile, config, configHash: hash(raw), requests: [], renewals: [], navigations: [], refreshToken: null, latestAccess: null, inFlight: new Set(), secrets: new Set(), failures: [], dialogs: [] };
+  sessions.set(page, state);
+  if (config.viewport) await page.setViewportSize(config.viewport);
+  page.on('dialog', async dialog => {
+    state.dialogs.push({ type: dialog.type(), action: dialog.type() === 'beforeunload' ? 'ACCEPT' : 'DISMISS', time: Date.now() });
+    if (dialog.type() === 'beforeunload') await dialog.accept();
+    else await dialog.dismiss();
+  });
+  page.on('framenavigated', frame => {
+    if (frame !== page.mainFrame()) return;
+    const url = new URL(frame.url());
+    state.navigations.push({ origin: url.origin, pathname: url.pathname, time: Date.now() });
+  });
+  await page.addInitScript(({ promptSelector }) => {
+    const data = window.__sessionE2e = { events: [], promptVisible: false, closures: 0, activity: { mousemove: 0, keydown: 0, scroll: 0 } };
+    const record = event => data.events.push({ event, timestamp: new Date().toISOString(), visibility: document.visibilityState });
+    for (const event of ['visibilitychange', 'freeze', 'resume']) document.addEventListener(event, () => record(event));
+    for (const event of ['pageshow', 'pagehide']) window.addEventListener(event, () => record(event));
+    for (const event of ['mousemove', 'keydown', 'scroll']) {
+      document.addEventListener(event, value => { if (value.isTrusted) data.activity[event]++; }, { capture: true, passive: true });
+    }
+    new MutationObserver(() => {
+      const element = document.querySelector(promptSelector);
+      const visible = !!element && element.getClientRects().length > 0;
+      if (visible === data.promptVisible) return;
+      data.promptVisible = visible;
+      if (!visible) data.closures++;
+      record(visible ? 'prompt_opened' : 'prompt_closed');
+    }).observe(document, { subtree: true, childList: true, attributes: true });
+  }, { promptSelector });
+  page.on('request', request => { if (/\/sso\/(extend|relogin)$/.test(new URL(request.url()).pathname)) state.inFlight.add(request); });
+  page.on('requestfinished', request => state.inFlight.delete(request));
+  page.on('requestfailed', request => {
+    state.inFlight.delete(request);
+    const pathname = new URL(request.url()).pathname;
+    if (/\/sso\/(extend|relogin|refreshtoken)$/.test(pathname)) {
+      state.failures.push({ pathname, time: Date.now(), error: request.failure()?.errorText });
+    }
+  });
+  page.on('response', response => {
+    const pathname = new URL(response.url()).pathname;
+    if (!/\/sso\/(login|validate|extend|relogin|refreshtoken)$/.test(pathname)) return;
+    const headers = response.headers();
+    const access = headers['single-ui-authorization'];
+    const refresh = headers['single-ui-refresh'];
+    if (access) state.secrets.add(access);
+    if (refresh) state.secrets.add(refresh);
+    const item = { pathname, status: response.status(), time: Date.now(), access: tokenSummary(access), refresh: tokenSummary(refresh) };
+    state.requests.push(item);
+    if (access && response.ok()) state.latestAccess = access;
+    if (refresh && response.ok()) state.refreshToken = refresh;
+    if (/\/(extend|relogin)$/.test(pathname) && response.ok() && access) state.renewals.push(item);
+  });
+  await page.goto(config.loginUrl || config.targetUrl);
+  await signInIfNeeded(page, state);
+  state.initialAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+  state.secrets.add(state.initialAccess);
+  assert.ok(claims(state.initialAccess).exp > Date.now() / 1000, 'The initial access token must be valid.');
+  return { targetOrigin: new URL(config.targetUrl).origin, initialAccess: tokenSummary(state.initialAccess) };
+}
+
+async function signInIfNeeded(page, state) {
+  const config = state.config;
+  if (await page.evaluate(() => !!localStorage.getItem('SET_TOKEN'))) {
+    try {
+      await page.locator(config.readySelector).waitFor({ state: 'visible', timeout: 15000 });
+      return;
+    } catch {
+      // The stored access may have expired. Continue with the configured credential path.
+    }
+  }
+  if (!await page.locator(config.readySelector).isVisible()) {
+    const username = process.env[config.usernameEnv];
+    const password = process.env[config.passwordEnv];
+    assert.ok(username && password, 'Set the configured credential environment variables.');
+    try {
+      await page.locator(config.usernameSelector).fill(username);
+      await page.locator(config.passwordSelector).fill(password);
+      await page.locator(config.signInSelector).click();
+    } catch {
+      // Playwright call logs can include fill values. Do not propagate credential-bearing errors.
+      throw new Error('Portal sign-in did not complete. Check the configured selectors and environment access.');
+    }
+  }
+  await page.locator(config.readySelector).waitFor({ state: 'visible', timeout: 30000 });
+  const persistedRefresh = await page.evaluate(() => localStorage.getItem('SET_REFRESH_TOKEN'));
+  if (persistedRefresh) state.refreshToken = persistedRefresh;
+  if (persistedRefresh) state.secrets.add(persistedRefresh);
+}
+
+async function retain(page, caseId, operation) {
+  const state = sessions.get(page);
+  assert.ok(state, 'Open Portal Session must run first.');
+  const result = {
+    caseId, status: 'FAILED', startedAt: new Date().toISOString(), clock: 'REAL_WALL_CLOCK',
+    targetOrigin: new URL(state.config.targetUrl).origin, configSha256: state.configHash,
+    testSourceSha256: hash(fs.readFileSync(__filename)), sourceRevisions: state.config.sourceRevisions || {},
+    sourceRevisionLimit: 'Configuration declares revisions. Bind deployed bytes separately before verification.',
+    testDoubles: [], browserVersion: page.context().browser().version(), assertions: [], screenshots: [],
+  };
+  result.userAgent = await page.evaluate(() => navigator.userAgent);
+  result.lifecycleObservationLimits = ['Automation is attached. Browser suspension settings require separate retained evidence.'];
+  const directory = path.resolve(state.config.artifactDir || '.workbench/session-renewal', `${caseId}-${Date.now()}`);
+  fs.mkdirSync(directory, { recursive: true });
+  state.result = result;
+  state.directory = directory;
+  try {
+    await checkpoint(page, state, 'before');
+    await operation(state, result);
+    result.status = 'PASSED';
+    return result;
+  } catch (error) {
+    result.error = publicError(error, state);
+    throw new Error(result.error);
+  } finally {
+    result.completedAt = new Date().toISOString();
+    result.authenticationResponses = state.requests;
+    result.authenticationRequestFailures = state.failures;
+    result.browserDialogs = state.dialogs;
+    result.mainFrameNavigations = state.navigations;
+    result.initialAccess = tokenSummary(state.initialAccess);
+    result.latestAccess = tokenSummary(state.latestAccess);
+    result.refresh = tokenSummary(state.refreshToken);
+    result.lifecycle = await page.evaluate(() => window.__sessionE2e).catch(() => null);
+    await checkpoint(page, state, 'after');
+    fs.writeFileSync(path.join(directory, 'result.json'), JSON.stringify(result, null, 2) + '\n');
+  }
+}
+
+async function protectedRequest(page, state, expectedToken) {
+  const config = state.config;
+  await sleep(6000);
+  await waitUntil(() => state.inFlight.size === 0, 10000, 'Pending activity requests must settle before protected-token comparison.');
+  const installedBeforeOperation = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+  if (installedBeforeOperation) expectedToken = installedBeforeOperation;
+  const responsePromise = page.waitForResponse(response => response.url().includes(config.protectedResponseUrl), { timeout: 30000 });
+  await triggerProtectedOperation(page, config);
+  const response = await responsePromise;
+  assert.ok(response.ok(), 'The protected request must return a successful status.');
+  const requestToken = config.protectedRequestTokenJsonPath
+    ? config.protectedRequestTokenJsonPath.split('.').reduce((value, key) => value?.[key], response.request().postDataJSON())
+    : await response.request().headerValue('single-ui-authorization');
+  assert.ok(requestToken && expectedToken, 'The protected request and renewal must contain access tokens.');
+  assert.equal(hash(requestToken), hash(expectedToken), `The protected UI request must use the renewed access token. actual=${hash(requestToken)} expected=${hash(expectedToken)} installed=${installedBeforeOperation ? hash(installedBeforeOperation) : 'none'}`);
+  const body = await response.json();
+  const actual = config.protectedJsonPath.split('.').reduce((value, key) => value?.[key], body);
+  assert.ok(isDeepStrictEqual(actual, config.protectedExpectedValue), 'The protected response must satisfy the configured business assertion.');
+  await page.locator(config.readySelector).waitFor({ state: 'visible', timeout: 10000 });
+  return { status: response.status(), tokenSha256: hash(requestToken), jsonPath: config.protectedJsonPath, configuredAssertionPassed: true, operationScope: config.protectedOperationScope || 'CONFIGURED_READ_ONLY_BUSINESS_OPERATION' };
+}
+
+async function triggerProtectedOperation(page, config) {
+  if (config.protectedNavigationUrl) {
+    const destination = new URL(config.protectedNavigationUrl, config.targetUrl);
+    assert.equal(destination.origin, new URL(config.targetUrl).origin, 'Protected portal navigation must stay on the configured origin.');
+    await page.goto(destination.href);
+  } else {
+    await page.locator(config.protectedActionSelector).click();
+  }
+}
+
+async function emitActivity(page, state, kind, index) {
+  if (kind === 'mouse') {
+    await page.mouse.move(120 + index % 50, 150 + index % 30);
+  } else if (kind === 'keyboard') {
+    assert.ok(state.config.keyboardSelector, 'Configure an editable portal-document input for keyboard activity.');
+    await page.locator(state.config.keyboardSelector).press(index % 2 ? 'ArrowLeft' : 'ArrowRight');
+  } else if (kind === 'scroll') {
+    assert.ok(state.config.scrollSelector, 'Configure a scrollable portal-document element.');
+    await page.mouse.wheel(0, index % 2 ? -100 : 100);
+  } else throw new Error(`Unsupported activity: ${kind}`);
+}
+
+async function assertActivityRenewsSession(kind, page) {
+  return retain(page, `activity-${kind}`, async (state, result) => {
+    if (kind === 'scroll') {
+      assert.ok(state.config.scrollSelector, 'Configure a scrollable portal-document element.');
+      await page.locator(state.config.scrollSelector).hover();
+    }
+    // Login and pointer setup can schedule mouse renewal. Exclude it from every activity assertion window.
+    await sleep(6000);
+    await waitUntil(() => state.inFlight.size === 0, 10000, 'Setup renewal must finish before the activity assertion window.');
+    const baselineAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    result.activityBaselineAccess = tokenSummary(baselineAccess);
+    assert.ok(claims(baselineAccess).exp * 1000 - Date.now() >= 30000, 'AC-1–AC-3 require at least 30 seconds before access expiry.');
+    const initialCount = state.renewals.length;
+    const initialActivity = await page.evaluate(() => ({ ...window.__sessionE2e.activity }));
+    const started = Date.now();
+    let emitted = 0;
+    while (Date.now() - started < 15000) {
+      await emitActivity(page, state, kind, emitted++);
+      await sleep(100);
+    }
+    const accepted = state.renewals.slice(initialCount).filter(item => item.time <= started + 15000);
+    const activity = await page.evaluate(() => window.__sessionE2e.activity);
+    const eventName = { mouse: 'mousemove', keyboard: 'keydown', scroll: 'scroll' }[kind];
+    const trustedEvents = activity[eventName] - initialActivity[eventName];
+    assert.ok(trustedEvents >= Math.floor(emitted / 2), 'The portal document must receive repeated trusted activity events.');
+    assert.ok(accepted.length > 0, 'At least one successful renewal must finish within the 15-second continuous-activity interval.');
+    assert.ok(accepted.some(item => item.access.exp > claims(baselineAccess).exp), 'Renewal must move the access expiry forward.');
+    assert.equal(await page.locator(promptSelector).isVisible(), false, 'Activity must not produce an expiry prompt.');
+    await waitUntil(() => state.inFlight.size === 0, 10000, 'All activity renewals must settle before the protected request.');
+    const installedAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    assert.ok(installedAccess, 'Activity must install a renewed access token before the protected request.');
+    result.protectedRequest = await protectedRequest(page, state, installedAccess);
+    result.assertions.push({ kind, emitted, trustedEvents, intervalMs: 100, elapsedMs: Date.now() - started, successfulRenewals: accepted.length });
+  });
+}
+
+async function idlePrompt(page, state) {
+  const waitMs = Math.max(0, claims(state.initialAccess).exp * 1000 - Date.now()) + 30000;
+  await page.locator(promptSelector).waitFor({ state: 'visible', timeout: waitMs });
+  assert.ok(state.refreshToken, 'Idle recovery requires an observed refresh token from the actual service.');
+  assert.ok(claims(state.refreshToken).exp * 1000 - Date.now() > 30000, 'Idle recovery requires a usable refresh token.');
+  await page.locator(extendSelector).waitFor({ state: 'visible' });
+  await page.evaluate(() => { window.__sessionE2e.closures = 0; });
+  await checkpoint(page, state, 'expired-prompt');
+}
+
+async function completeHeldRenewal(page, state, result, options = {}) {
+  let pendingRoute;
+  await page.route('**/api/auth/v2/sso/relogin', route => { pendingRoute = route; });
+  result.testDoubles.push('The real relogin request is held before dispatch, then forwarded with route.fetch().');
+  try {
+    if (options.activation === 'keyboard') {
+      await page.locator(extendSelector).focus();
+      await page.keyboard.press('Enter');
+    } else {
+      await page.locator(extendSelector).click();
+    }
+    await waitUntil(() => pendingRoute, 10000, 'Extend must send relogin.');
+    await sleep(Number(state.config.pendingHoldMs || 1500));
+    assert.equal(await page.locator(promptSelector).isVisible(), true, 'The prompt must remain visible while renewal is pending.');
+    assert.equal(await page.evaluate(() => window.__sessionE2e.closures), 0, 'Pending renewal must have zero prompt closures.');
+    await checkpoint(page, state, 'pending-prompt');
+    const response = await pendingRoute.fetch({ timeout: 30000 });
+    assert.ok(response.ok(), 'The actual authentication service must accept relogin.');
+    const renewed = response.headers()['single-ui-authorization'];
+    assert.ok(renewed && claims(renewed).exp * 1000 > Date.now(), 'The actual service must return a usable access token.');
+    const completed = page.waitForResponse(value => value.url().includes('/api/auth/v2/sso/relogin'));
+    await pendingRoute.fulfill({ response });
+    await completed;
+    await page.locator(promptSelector).waitFor({ state: 'hidden', timeout: 10000 });
+    assert.equal(await page.evaluate(() => window.__sessionE2e.closures), 1, 'Successful renewal must close the prompt exactly once.');
+    const installed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    assert.ok(installed, 'The portal must retain the renewed token.');
+    assert.equal(hash(installed), hash(renewed), 'The portal must install the actual renewed token.');
+    if (!options.deferProtectedRequest) result.protectedRequest = await protectedRequest(page, state, renewed);
+    result.assertions.push({ pendingPromptClosures: 0, completedPromptClosures: 1 });
+  } finally {
+    if (pendingRoute) await pendingRoute.abort().catch(() => {});
+    await page.unroute('**/api/auth/v2/sso/relogin');
+  }
+}
+
+async function assertPendingRenewalCompletes(page) {
+  return retain(page, 'pending-renewal', async (state, result) => {
+    await idlePrompt(page, state);
+    await completeHeldRenewal(page, state, result);
+  });
+}
+
+async function assertRejectedRenewalCanRetry(page) {
+  return retain(page, 'rejected-renewal-retry', async (state, result) => {
+    await idlePrompt(page, state);
+    let rejected = false;
+    await page.route('**/api/auth/v2/sso/relogin', async route => { rejected = true; await route.abort('failed'); }, { times: 1 });
+    result.testDoubles.push('The first relogin request receives a controlled transport failure. The retry uses the actual service.');
+    await page.locator(extendSelector).click();
+    await waitUntil(() => rejected, 10000, 'The first relogin attempt must reach the controlled failure.');
+    await page.waitForFunction(selector => !document.querySelector(selector)?.disabled, extendSelector, { timeout: 10000 });
+    assert.equal(await page.locator(promptSelector).isVisible(), true, 'Rejected renewal must leave the prompt visible.');
+    assert.equal(await page.evaluate(() => window.__sessionE2e.closures), 0, 'Rejected renewal must have zero prompt closures.');
+    await checkpoint(page, state, 'rejected-prompt');
+    result.assertions.push({ rejectedAttempt: true, failedPromptClosures: 0, retryEnabled: true });
+    await completeHeldRenewal(page, state, result);
+  });
+}
+
+async function assertRapidExtendSharesRequest(page) {
+  return retain(page, 'rapid-extend-single-flight', async (state, result) => {
+    await idlePrompt(page, state);
+    const pendingRoutes = [];
+    const pattern = '**/api/auth/v2/sso/relogin';
+    await page.route(pattern, route => { pendingRoutes.push(route); });
+    result.testDoubles.push('The actual relogin request is held while a second rapid Extend activation is attempted.');
+    try {
+      await page.locator(extendSelector).click();
+      await waitUntil(() => pendingRoutes.length === 1, 10000, 'The first Extend activation must send relogin.');
+      const extendBox = await page.locator(extendSelector).boundingBox();
+      assert.ok(extendBox, 'Extend must remain rendered while the first renewal is pending.');
+      // Use a native pointer event for the second rapid activation. The browser
+      // must ignore the pointer activation because the control is disabled.
+      await page.mouse.click(extendBox.x + extendBox.width / 2, extendBox.y + extendBox.height / 2);
+      await sleep(500);
+      assert.equal(pendingRoutes.length, 1, 'Rapid Extend activations must share one pending relogin request.');
+      assert.equal(await page.evaluate(selector => document.querySelector(selector)?.disabled, extendSelector), true, 'Extend must be disabled while renewal is pending.');
+      assert.equal(await page.locator(promptSelector).isVisible(), true, 'The prompt must remain visible during rapid pending activation.');
+      assert.equal(await page.evaluate(() => window.__sessionE2e.closures), 0, 'Rapid pending activation must not close the prompt early.');
+      await checkpoint(page, state, 'rapid-pending-prompt');
+      const response = await pendingRoutes[0].fetch({ timeout: 30000 });
+      assert.ok(response.ok(), 'The actual authentication service must accept the shared relogin request.');
+      const renewed = response.headers()['single-ui-authorization'];
+      assert.ok(renewed && claims(renewed).exp * 1000 > Date.now(), 'The shared response must contain a usable access token.');
+      const completed = page.waitForResponse(value => value.url().includes('/api/auth/v2/sso/relogin'));
+      await pendingRoutes[0].fulfill({ response });
+      await completed;
+      await page.locator(promptSelector).waitFor({ state: 'hidden', timeout: 10000 });
+      assert.equal(await page.evaluate(() => window.__sessionE2e.closures), 1, 'Shared renewal must close the prompt exactly once.');
+      const installed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      assert.equal(hash(installed || ''), hash(renewed), 'The shared renewal must install the actual renewed token.');
+      result.protectedRequest = await protectedRequest(page, state, renewed);
+      result.assertions.push({ reloginRequests: pendingRoutes.length, rapidActivations: 2, pendingPromptClosures: 0, completedPromptClosures: 1 });
+    } finally {
+      await page.unroute(pattern);
+      for (const route of pendingRoutes) await route.abort().catch(() => {});
+    }
+  });
+}
+
+async function assertKeyboardExtendActivation(page) {
+  return retain(page, 'keyboard-extend-activation', async (state, result) => {
+    await idlePrompt(page, state);
+    await completeHeldRenewal(page, state, result, { activation: 'keyboard' });
+    result.assertions.push({ activation: 'keyboard', keyboardEvent: 'Enter' });
+  });
+}
+
+async function assertActivityFailureCanRetry(page) {
+  return retain(page, 'activity-renewal-retry', async (state, result) => {
+    const baseline = await settleSetup(page, state);
+    assert.ok(claims(baseline).exp * 1000 > Date.now() + 30000, 'The activity retry fixture needs at least 30 seconds of valid access.');
+    const pattern = '**/api/auth/v2/sso/extend';
+    let rejected = false;
+    const initialRenewals = state.renewals.length;
+    await page.route(pattern, async route => {
+      rejected = true;
+      await route.abort('failed');
+    }, { times: 1 });
+    result.testDoubles.push('The first activity extension receives a controlled transport failure. A later activity uses the actual service.');
+    try {
+      await emitActivity(page, state, 'mouse', 1);
+      await waitUntil(() => rejected, 15000, 'The first activity must reach the controlled failure.');
+      await waitUntil(() => state.failures.some(item => item.pathname.endsWith('/extend')), 10000, 'The first activity failure must be recorded.');
+      assert.equal(await page.locator(promptSelector).isVisible(), false, 'A failed activity renewal must not open the timeout prompt while access remains valid.');
+      await page.unroute(pattern);
+      await emitActivity(page, state, 'mouse', 2);
+      await waitUntil(() => state.renewals.length > initialRenewals, 15000, 'A later activity must retry extension against the actual service.');
+      const installed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      assert.ok(installed, 'The successful retry must retain an access token.');
+      result.protectedRequest = await protectedRequest(page, state, installed);
+      result.assertions.push({ failedActivityAttempts: 1, successfulActivityRetries: state.renewals.length - initialRenewals, promptVisibleAfterFailure: false });
+    } finally {
+      await page.unroute(pattern);
+    }
+  });
+}
+
+async function assertInconsistentActivityResponseRejected(page) {
+  return retain(page, 'inconsistent-activity-response-rejected', async (state, result) => {
+    const baseline = await settleSetup(page, state);
+    assert.ok(claims(baseline).exp * 1000 > Date.now() + 30000, 'The inconsistent response fixture needs at least 30 seconds of valid access.');
+    const beforeAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    const pattern = '**/api/auth/v2/sso/extend';
+    let intercepted;
+    await page.route(pattern, async route => {
+      const response = await route.fetch({ timeout: 30000 });
+      const access = response.headers()['single-ui-authorization'];
+      assert.ok(response.ok() && access, 'The negative fixture must preserve a valid actual access header.');
+      intercepted = { access, status: response.status() };
+      await route.fulfill({ response, contentType: 'application/json', body: JSON.stringify({ result: false }) });
+    }, { times: 1 });
+    result.testDoubles.push('One actual extension response keeps its valid authorization header but returns result=false.');
+    try {
+      const inconsistentResponse = page.waitForResponse(response => new URL(response.url()).pathname.endsWith('/sso/extend'), { timeout: 15000 });
+      await emitActivity(page, state, 'mouse', 1);
+      const rejected = await inconsistentResponse;
+      assert.equal((await rejected.json()).result, false, 'The browser must receive the controlled negative extension response.');
+      await waitUntil(() => intercepted && state.inFlight.size === 0, 10000, 'The inconsistent extension response must finish before retry.');
+      await sleep(1000);
+      const afterAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      assert.equal(hash(afterAccess || ''), hash(beforeAccess || ''), 'A result=false extension response must not install its authorization header.');
+      assert.equal(await page.locator(promptSelector).isVisible(), false, 'An inconsistent extension response must not open the timeout prompt while access remains valid.');
+      await page.unroute(pattern);
+      const retryResponse = page.waitForResponse(response => new URL(response.url()).pathname.endsWith('/sso/extend'), { timeout: 15000 });
+      await emitActivity(page, state, 'mouse', 2);
+      const retried = await retryResponse;
+      assert.ok(retried.ok(), 'Later activity must receive a successful actual extension response.');
+      assert.equal((await retried.json()).result, true, 'The actual extension retry must report success.');
+      const renewed = retried.headers()['single-ui-authorization'];
+      assert.ok(renewed && claims(renewed).exp * 1000 > Date.now(), 'The extension retry must return usable access.');
+      await page.waitForFunction(token => localStorage.getItem('SET_TOKEN') === token, renewed, { timeout: 10000 });
+      const installed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      assert.notEqual(hash(installed || ''), hash(beforeAccess || ''), 'A later successful activity retry must install a new access token.');
+      assert.equal(hash(installed), hash(renewed), 'The successful retry must install its actual authorization header.');
+      result.protectedRequest = await protectedRequest(page, state, installed);
+      result.assertions.push({ responseStatus: intercepted.status, responseResult: false, accessPreserved: true, retryStatus: retried.status(), retryResult: true, retryAccessInstalled: true, successfulRetry: true });
+    } finally {
+      await page.unroute(pattern);
+    }
+  });
+}
+
+async function assertPromptIgnoresActivity(page) {
+  return retain(page, 'prompt-ignores-activity', async (state, result) => {
+    await idlePrompt(page, state);
+    const extensionAttempts = [];
+    const pattern = '**/api/auth/v2/sso/extend';
+    await page.route(pattern, async route => {
+      extensionAttempts.push(route);
+      await route.abort('failed');
+    });
+    result.testDoubles.push('Physical mouse, keyboard, and scroll input is emitted while the timeout prompt is open. Any activity extension is rejected and counted.');
+    try {
+      const beforeFailures = state.failures.length;
+      for (let index = 0; index < 6; index++) {
+        await page.mouse.move(120 + index * 5, 150 + index * 3);
+        await page.keyboard.press(index % 2 ? 'Tab' : 'Shift+Tab');
+        await page.mouse.wheel(0, index % 2 ? -80 : 80);
+        await sleep(100);
+      }
+      await sleep(6000);
+      assert.equal(extensionAttempts.length, 0, 'Activity while the timeout prompt is open must not start extension requests.');
+      assert.equal(state.failures.length, beforeFailures, 'Ignored prompt activity must not create extension failures.');
+      assert.equal(await page.locator(promptSelector).isVisible(), true, 'Prompt activity must leave the timeout prompt open.');
+      assert.equal(await page.evaluate(() => window.__sessionE2e.closures), 0, 'Prompt activity must not close the prompt.');
+      await page.unroute(pattern);
+      await completeHeldRenewal(page, state, result);
+      result.assertions.push({ mouseEvents: 6, keyboardEvents: 6, scrollEvents: 6, extensionAttempts: 0, pendingPromptClosures: 0 });
+    } finally {
+      await page.unroute(pattern);
+    }
+  });
+}
+
+async function assertIdlePromptLogout(page) {
+  return retain(page, 'idle-prompt-logout', async (state, result) => {
+    await idlePrompt(page, state);
+    const beforeRelogin = state.requests.filter(item => item.pathname.endsWith('/relogin')).length;
+    const logoutRequest = page.waitForRequest(request => new URL(request.url()).pathname.endsWith('/sso/logout'), { timeout: 10000 });
+    await page.locator('[data-testid="Logout_Btn"]').click();
+    await logoutRequest;
+    await page.locator(state.config.signInSelector).waitFor({ state: 'visible', timeout: 15000 });
+    await sleep(500);
+    assert.equal(await page.evaluate(() => localStorage.getItem('SET_TOKEN')), null, 'Idle prompt logout must clear the stored access token.');
+    const persistedCredentials = await page.evaluate(() => ({
+      localAccess: localStorage.getItem('SET_TOKEN'),
+      sessionAccess: sessionStorage.getItem('SET_TOKEN'),
+      localRefresh: localStorage.getItem('SET_REFRESH_TOKEN'),
+      sessionRefresh: sessionStorage.getItem('SET_REFRESH_TOKEN'),
+    }));
+    assert.deepEqual(persistedCredentials, {
+      localAccess: null,
+      sessionAccess: null,
+      localRefresh: null,
+      sessionRefresh: null,
+    }, 'Idle prompt logout must leave no access or refresh credentials in either browser storage scope.');
+    assert.equal(await page.locator(state.config.readySelector).isVisible(), false, 'Idle prompt logout must return to sign-in.');
+    assert.equal(state.requests.filter(item => item.pathname.endsWith('/relogin')).length, beforeRelogin, 'Idle prompt logout must not send relogin.');
+    assert.equal(await page.locator(promptSelector).isVisible(), false, 'Idle prompt logout must close the prompt.');
+    result.assertions.push({ logoutRequestObserved: true, storedAccessCleared: true, persistedRefreshAbsentAfterLogout: true, signInVisibleAfterLogout: true, reloginRequests: 0 });
+    result.limitations = ['Absent refresh storage does not establish cleanup of the memory-only refresh credential or provider revocation.'];
+  });
+}
+
+async function assertQuickVisibilityRefresh(page) {
+  return retain(page, 'quick-visibility-refresh', async (state, result) => {
+    await settleSetup(page, state);
+    const beforeRefresh = state.requests.filter(item => item.pathname.endsWith('/refreshtoken')).length;
+    const cover = await page.context().newPage();
+    try {
+      await cover.goto('about:blank');
+      await cover.bringToFront();
+      await page.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 10000 });
+      await waitUntil(() => state.refreshToken, 10000, 'A quick background switch must acquire actual refresh credentials.');
+      await waitUntil(() => state.inFlight.size === 0, 10000, 'The quick visibility refresh must settle before counting requests.');
+      await sleep(500);
+      const afterRefresh = state.requests.filter(item => item.pathname.endsWith('/refreshtoken')).length;
+      assert.equal(afterRefresh - beforeRefresh, 1, 'A quick background switch must share one refresh acquisition.');
+      await page.bringToFront();
+      await cover.close();
+      await page.waitForFunction(() => document.visibilityState === 'visible', null, { timeout: 10000 });
+      await sleep(1000);
+      assert.equal(await page.locator(promptSelector).isVisible(), false, 'Returning before access expiry must not open the timeout prompt.');
+      assert.equal(await page.locator(state.config.readySelector).isVisible(), true, 'Returning before access expiry must keep the portal available.');
+      assert.equal(await page.locator(state.config.signInSelector).isVisible(), false, 'Returning before access expiry must not show sign-in.');
+      const installed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      result.protectedRequest = await protectedRequest(page, state, installed);
+      result.assertions.push({ hiddenRefreshRequests: afterRefresh - beforeRefresh, promptVisibleOnReturn: false, authenticatedOnReturn: true });
+    } finally {
+      await cover.close().catch(() => {});
+      await page.bringToFront().catch(() => {});
+    }
+  });
+}
+
+async function assertReloadPreservesRenewedSession(page) {
+  return retain(page, 'reload-preserves-renewed-session', async (state, result) => {
+    const baseline = await settleSetup(page, state);
+    assert.ok(baseline, 'The reload fixture needs an initial access token.');
+    const initialRenewals = state.renewals.length;
+    await emitActivity(page, state, 'mouse', 1);
+    await waitUntil(() => state.renewals.length > initialRenewals, 15000, 'Activity must complete a real renewal before reload.');
+    const renewed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    assert.ok(renewed && hash(renewed) !== hash(baseline), 'The reload fixture must rotate access before reload.');
+    const beforeReloadResponses = state.requests.length;
+    state.refreshToken = null;
+    const loginRequests = [];
+    const recordLoginRequest = request => {
+      if (new URL(request.url()).pathname.endsWith('/sso/login')) loginRequests.push(request);
+    };
+    page.on('request', recordLoginRequest);
+    try {
+      const validationResponse = page.waitForResponse(response => new URL(response.url()).pathname.endsWith('/sso/validate'), { timeout: 30000 });
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      const validation = await validationResponse;
+      const requestAccess = validation.request().postDataJSON()?.singleUIAuthorization;
+      assert.ok(requestAccess, 'Reload validation must include the retained access credential.');
+      assert.equal(hash(requestAccess), hash(renewed), 'Reload validation must use the exact access token renewed before reload.');
+      assert.ok(validation.ok(), 'The actual service must accept the reload validation request.');
+      assert.equal((await validation.json()).result, true, 'Reload validation must report authenticated access.');
+      const validatedAccess = validation.headers()['single-ui-authorization'];
+      assert.ok(validatedAccess && claims(validatedAccess).exp * 1000 > Date.now(), 'Reload validation must return usable access.');
+      await page.waitForFunction(token => localStorage.getItem('SET_TOKEN') === token, validatedAccess, { timeout: 10000 });
+      await page.locator(state.config.readySelector).waitFor({ state: 'visible', timeout: 30000 });
+      const installed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      assert.equal(hash(installed || ''), hash(validatedAccess), 'Reload must install the actual validation response access token.');
+      assert.equal(await page.locator(state.config.signInSelector).isVisible(), false, 'A full reload after renewal must not return to sign-in.');
+      await acquireRefresh(page, state);
+      const refreshAfterReload = state.requests.slice(beforeReloadResponses).find(item =>
+        item.pathname.endsWith('/refreshtoken') && item.status >= 200 && item.status < 300 &&
+        item.refresh?.sha256 === hash(state.refreshToken) && item.refresh.exp * 1000 > Date.now() + 30000);
+      assert.ok(refreshAfterReload, 'Reload must allow a new actual service response with usable refresh credentials.');
+      result.protectedRequest = await protectedRequest(page, state, installed);
+      assert.equal(loginRequests.length, 0, 'Reload and protected validation must require zero additional login requests.');
+      result.assertions.push({ preReloadRenewedAccessUsedForValidation: true, validationSucceeded: true, validationResponseAccessInstalled: true, validationRotatedAccess: hash(validatedAccess) !== hash(renewed), additionalLoginRequests: 0, refreshReacquiredAfterReload: true, signInVisibleAfterReload: false });
+      result.limitations = ['The actual validation service can rotate access. The request must use the pre-reload renewed token and the response token must be installed.', 'The refresh credential lives in memory. This case proves reacquisition after reload, not refresh-token persistence.'];
+    } finally {
+      page.off('request', recordLoginRequest);
+    }
+  });
+}
+
+async function assertActivityCrossesRefreshExpiry(page) {
+  return retain(page, 'activity-cross-refresh-expiry', async (state, result) => {
+    // Hide and restore once while access is valid, so the current refresh token can be observed.
+    const coveringPage = await page.context().newPage();
+    await coveringPage.goto('about:blank');
+    await coveringPage.bringToFront();
+    await page.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 10000 });
+    await waitUntil(() => state.refreshToken, 10000, 'Hide must acquire refresh credentials from the actual service.');
+    await page.bringToFront();
+    await coveringPage.close();
+    const originalRefreshExpiry = claims(state.refreshToken).exp * 1000;
+    const originalRefreshHash = hash(state.refreshToken);
+    const durationMs = originalRefreshExpiry - Date.now() + 30000;
+    assert.ok(durationMs > 0 && durationMs <= Number(state.config.maxRefreshBoundarySeconds || 18000) * 1000, 'The configured real-time limit must contain the initial refresh deadline.');
+    const started = Date.now();
+    const initialRenewals = state.renewals.length;
+    const initialLogins = state.requests.filter(item => /\/sso\/login$/.test(item.pathname)).length;
+    const initialNavigations = state.navigations.length;
+    const initialLifecycleEvents = await page.evaluate(() => window.__sessionE2e.events.length);
+    let emitted = 0;
+    while (Date.now() - started < durationMs) {
+      await emitActivity(page, state, 'mouse', emitted++);
+      await sleep(Number(state.config.crossRefreshActivityEveryMs || 10000));
+      assert.equal(await page.locator(promptSelector).isVisible(), false, 'Continued accepted activity must not open an elapsed-time-only expiry prompt.');
+      assert.equal(await page.locator(state.config.readySelector).isVisible(), true, 'The authenticated portal must remain available.');
+      assert.equal(await page.locator(state.config.signInSelector).isVisible(), false, 'Continued activity must not show fresh sign-in.');
+    }
+    assert.ok(state.renewals.length > initialRenewals, 'The real service must complete renewals during continued activity.');
+    assert.ok(claims(state.latestAccess).exp * 1000 > originalRefreshExpiry, 'The renewed access token must cross the initial refresh deadline.');
+    assert.ok(state.refreshToken && hash(state.refreshToken) !== originalRefreshHash, 'Continued activity must replace the refresh credential before its initial expiry.');
+    assert.ok(claims(state.refreshToken).exp * 1000 > originalRefreshExpiry, 'The replacement refresh credential must remain usable beyond the initial refresh deadline.');
+    assert.equal(state.requests.filter(item => /\/sso\/login$/.test(item.pathname)).length - initialLogins, 0, 'Continued activity must require zero additional login responses.');
+    assert.equal(state.navigations.length - initialNavigations, 0, 'Activity alone must cause zero additional main-frame navigations, including SSO navigation.');
+    const lifecycle = await page.evaluate(() => window.__sessionE2e);
+    const newPrompts = lifecycle.events.slice(initialLifecycleEvents).filter(event => event.event === 'prompt_opened');
+    assert.equal(newPrompts.length, 0, 'Continued activity must record zero timeout prompt openings, including transient prompts.');
+    result.protectedRequest = await protectedRequest(page, state, state.latestAccess);
+    result.assertions.push({ originalRefreshExpiry, originalRefreshHash, replacementRefreshHash: hash(state.refreshToken), replacementRefreshExpiry: claims(state.refreshToken).exp * 1000, elapsedMs: Date.now() - started, emitted, successfulRenewals: state.renewals.length - initialRenewals, additionalLogins: 0, additionalMainFrameNavigations: 0, timeoutPromptOpenings: 0 });
+    result.limitations = ['This real-time boundary check does not implement the controlled four-hour AC-4 fixture or prove indefinite execution.'];
+  });
+}
+
+async function assertNaturalBackgroundRecovery(page) {
+  return retain(page, 'natural-background-paired-control', async (state, result) => {
+    const context = await page.context().browser().newContext();
+    const control = await context.newPage();
+    try {
+      await openPortalSession(state.configFile, control);
+      await control.bringToFront();
+      await page.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 10000 });
+      await waitUntil(() => state.refreshToken, 10000, 'The hidden session must acquire refresh credentials before suspension.');
+      const seconds = Number(state.config.naturalBackgroundSeconds || 1800);
+      assert.ok(seconds >= 1800, 'The natural background fixture requires at least 30 minutes.');
+      const started = Date.now();
+      // No page evaluation, heartbeat, forced freeze, clock override, or protected request runs during this interval.
+      await sleep(seconds * 1000);
+      result.hiddenElapsedMs = Date.now() - started;
+      result.controlLifecycle = await control.evaluate(() => window.__sessionE2e);
+      result.controlAuthenticationResponses = sessions.get(control).requests;
+      await checkpoint(control, state, 'visible-control-return');
+      assert.equal(await control.locator(promptSelector).isVisible(), true, 'The idle visible control must expose access expiry.');
+      assert.equal(result.controlLifecycle.events.some(event => event.event === 'visibilitychange' && event.visibility === 'hidden'), false, 'The paired control must remain visible.');
+      await page.bringToFront();
+      await checkpoint(page, state, 'hidden-subject-return');
+      const lifecycle = await page.evaluate(() => window.__sessionE2e);
+      result.freezeObserved = lifecycle.events.some(event => event.event === 'freeze');
+      result.originalFrozenTabScenario = result.freezeObserved ? 'OBSERVED_FREEZE_RECOVERY_ASSERTIONS_RUN' : 'NOT_COVERED_NO_FREEZE_OBSERVED';
+      assert.ok(claims(state.refreshToken).exp * 1000 - Date.now() > 30000, 'This recovery fixture requires usable refresh credentials at return.');
+      await page.locator(promptSelector).waitFor({ state: 'visible', timeout: 10000 });
+      await page.evaluate(() => { window.__sessionE2e.closures = 0; });
+      await completeHeldRenewal(page, state, result);
+      result.limitations = ['Automation can affect browser suspension. Lifecycle events establish only the transitions actually recorded.', 'Without a recorded freeze, a passing hidden recovery case does not cover the original frozen-tab scenario.', 'Recovery without usable refresh credentials remains a separate unresolved acceptance policy.'];
+    } finally { await context.close(); }
+  });
+}
+
+async function settleSetup(page, state) {
+  await sleep(6000);
+  await waitUntil(() => state.inFlight.size === 0, 10000, 'Setup renewal must finish before this assertion window.');
+  return page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+}
+
+async function acquireRefresh(page, state) {
+  if (state.refreshToken && claims(state.refreshToken).exp * 1000 > Date.now() + 30000) return;
+  const cover = await page.context().newPage();
+  try {
+    await cover.goto('about:blank');
+    await cover.bringToFront();
+    await page.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 10000 });
+    await waitUntil(() => state.refreshToken, 10000, 'The actual service must issue refresh credentials before this assertion window.');
+  } finally {
+    await page.bringToFront();
+    await cover.close();
+  }
+  assert.ok(claims(state.refreshToken).exp * 1000 > Date.now() + 30000, 'This case needs at least 30 seconds of usable refresh credentials.');
+}
+
+async function standardLogout(page, state) {
+  const config = state.config;
+  await page.locator(config.userMenuSelector || '[data-testid$="_avatar_IconButton"]').click();
+  await page.locator(config.logoutMenuSelector || '[data-testid$="_avatar_Logout"]').click();
+  await page.locator(config.logoutConfirmSelector || '[data-testid="Logout_Btn"]').click();
+  await page.locator(config.signInSelector).waitFor({ state: 'visible', timeout: 10000 });
+}
+
+async function assertSlowActivitySharesRequest(page) {
+  return retain(page, 'slow-activity-single-flight', async (state, result) => {
+    const baseline = await settleSetup(page, state);
+    assert.ok(claims(baseline).exp * 1000 > Date.now() + 30000, 'The single-flight fixture needs at least 30 seconds of valid access.');
+    const requests = [];
+    const pattern = '**/api/auth/v2/sso/extend';
+    await page.route(pattern, route => { requests.push(route); });
+    result.testDoubles.push('The actual activity extension request is held before dispatch. Repeated input continues for 12 seconds.');
+    try {
+      const start = Date.now();
+      let events = 0;
+      while (Date.now() - start < 12000) {
+        await emitActivity(page, state, 'mouse', events++);
+        await sleep(100);
+      }
+      assert.equal(requests.length, 1, 'The same access token must share one pending extension during repeated activity.');
+      assert.equal(state.failures.filter(item => item.pathname.endsWith('/extend') && item.time >= start).length, 0, 'Repeated activity must not cancel the pending same-token request.');
+      await checkpoint(page, state, 'held-activity-request');
+      const response = await requests[0].fetch({ timeout: 30000 });
+      const renewed = response.headers()['single-ui-authorization'];
+      assert.ok(response.ok() && renewed, 'The actual service must complete the held extension.');
+      await requests[0].fulfill({ response });
+      state.inFlight.clear();
+      await page.waitForFunction(expected => localStorage.getItem('SET_TOKEN') === expected, renewed, { timeout: 10000 });
+      await page.unroute(pattern);
+      result.protectedRequest = await protectedRequest(page, state, renewed);
+      result.assertions.push({ repeatedActivityMs: Date.now() - start, emitted: events, pendingRequests: 1, pendingCancellations: 0 });
+    } finally {
+      await page.unroute(pattern);
+      for (const route of requests) await route.abort().catch(() => {});
+    }
+  });
+}
+
+async function retainLateResponse(route, state) {
+  const response = await route.fetch({ timeout: 30000 });
+  const access = response.headers()['single-ui-authorization'];
+  assert.ok(response.ok() && access, 'The held authentication response must come from the actual service.');
+  state.secrets.add(access);
+  return { route, response, access };
+}
+
+async function releaseLateResponse(held, result) {
+  try {
+    await held.route.fulfill({ response: held.response });
+    result.lateResponseRelease = 'FULFILL_ATTEMPT_COMPLETED';
+  } catch {
+    result.lateResponseRelease = 'BROWSER_REJECTED_CANCELLED_REQUEST';
+  }
+  await sleep(1500);
+}
+
+async function assertPendingManualLogoutCancels(page) {
+  return retain(page, 'pending-manual-logout-cancellation', async (state, result) => {
+    await idlePrompt(page, state);
+    let held;
+    let fetchError;
+    const pattern = '**/api/auth/v2/sso/relogin';
+    await page.route(pattern, async route => {
+      try { held = await retainLateResponse(route, state); }
+      catch (error) { fetchError = error; }
+    });
+    result.testDoubles.push('A successful real relogin response is held before browser delivery. Logout then cancels its browser request.');
+    try {
+      await page.locator(extendSelector).click();
+      await waitUntil(() => held || fetchError, 10000, 'Manual renewal must reach the actual authentication service.');
+      if (fetchError) throw fetchError;
+      assert.equal(await page.locator(promptSelector).isVisible(), true, 'Pending renewal must keep the timeout prompt visible.');
+      await page.locator('[data-testid="Logout_Btn"]').click();
+      await page.locator(state.config.signInSelector).waitFor({ state: 'visible', timeout: 10000 });
+      assert.equal(await page.evaluate(() => localStorage.getItem('SET_TOKEN')), null, 'Logout must clear retained access.');
+      await waitUntil(() => state.failures.some(item => item.pathname.endsWith('/relogin')), 10000, 'Logout must cancel the pending browser relogin request.');
+      await checkpoint(page, state, 'logged-out-before-late-response');
+      await releaseLateResponse(held, result);
+      assert.equal(await page.evaluate(() => localStorage.getItem('SET_TOKEN')), null, 'Late renewal must not restore access after logout.');
+      assert.equal(await page.locator(state.config.readySelector).isVisible(), false, 'Late renewal must not restore the authenticated portal.');
+      result.assertions.push({ browserReloginCancelled: true, retainedAccessAfterLogout: false, restoredAfterLateResponse: false });
+    } finally {
+      await page.unroute(pattern);
+      if (held) await held.route.abort().catch(() => {});
+    }
+  });
+}
+
+async function assertPendingActivityLogoutCancels(page) {
+  return retain(page, 'pending-activity-home-unmount-cancellation', async (state, result) => {
+    await settleSetup(page, state);
+    let held;
+    let fetchError;
+    const pattern = '**/api/auth/v2/sso/extend';
+    await page.route(pattern, async route => {
+      try { held = await retainLateResponse(route, state); }
+      catch (error) { fetchError = error; }
+    });
+    result.testDoubles.push('A successful real activity extension response is held before delivery. Portal logout unmounts Home.');
+    try {
+      await emitActivity(page, state, 'mouse', 1);
+      await waitUntil(() => held || fetchError, 15000, 'Activity must reach the actual extension service.');
+      if (fetchError) throw fetchError;
+      await standardLogout(page, state);
+      await waitUntil(() => state.failures.some(item => item.pathname.endsWith('/extend')), 10000, 'Logout or Home unmount must cancel the pending extension request.');
+      await checkpoint(page, state, 'home-unmounted');
+      await releaseLateResponse(held, result);
+      assert.equal(await page.evaluate(() => localStorage.getItem('SET_TOKEN')), null, 'Late activity renewal must not restore access after Home unmount.');
+      assert.equal(await page.locator(state.config.readySelector).isVisible(), false, 'Late activity renewal must not restore Home after logout.');
+      result.assertions.push({ homeUnmountedByLogout: true, browserExtensionCancelled: true, restoredAfterLateResponse: false });
+      result.limitations = ['Logout and Home unmount occur together. This case does not isolate arbitrary component unmount without logout.'];
+    } finally {
+      await page.unroute(pattern);
+      if (held) await held.route.abort().catch(() => {});
+    }
+  });
+}
+
+async function assertLateActivityCannotReplaceManualSuccess(page) {
+  return retain(page, 'late-activity-after-manual-success', async (state, result) => {
+    await acquireRefresh(page, state);
+    await settleSetup(page, state);
+    let held;
+    let fetchError;
+    const pattern = '**/api/auth/v2/sso/extend';
+    await page.route(pattern, async route => {
+      try { held = await retainLateResponse(route, state); }
+      catch (error) { fetchError = error; }
+    });
+    result.testDoubles.push('An earlier real activity extension response is held through access expiry and delivered after real manual renewal.');
+    try {
+      await emitActivity(page, state, 'mouse', 1);
+      await waitUntil(() => held || fetchError, 15000, 'Activity must reach the actual extension service.');
+      if (fetchError) throw fetchError;
+      await idlePrompt(page, state);
+      await waitUntil(() => state.failures.some(item => item.pathname.endsWith('/extend')), 10000, 'Opening the timeout prompt must cancel the earlier activity extension.');
+      await completeHeldRenewal(page, state, result, { deferProtectedRequest: true });
+      const manualAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      result.heldActivityAccess = tokenSummary(held.access);
+      result.manualAccess = tokenSummary(manualAccess);
+      assert.notEqual(hash(held.access), hash(manualAccess), 'The fixture needs distinct actual activity and manual renewal tokens.');
+      await releaseLateResponse(held, result);
+      const installed = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      assert.equal(hash(installed || ''), hash(manualAccess), 'The late activity response must not overwrite successful manual renewal.');
+      assert.equal(await page.evaluate(() => window.__sessionE2e.closures), 1, 'The late response must cause no extra prompt closure.');
+      result.protectedRequest = await protectedRequest(page, state, manualAccess);
+      result.assertions.push({ staleActivityCancelled: true, manualTokenPreserved: true, completedPromptClosures: 1 });
+    } finally {
+      await page.unroute(pattern);
+      if (held) await held.route.abort().catch(() => {});
+    }
+  });
+}
+
+async function assertActualExpiredCredentialDenied(page) {
+  return retain(page, 'TC-05-actual-expired-credential-denial', async (state, result) => {
+    const config = state.config;
+    const expiredCandidate = state.initialAccess;
+    const responsePromise = page.waitForResponse(response => response.url().includes(config.protectedResponseUrl), { timeout: 30000 });
+    await triggerProtectedOperation(page, config);
+    const initialResponse = await responsePromise;
+    assert.ok(initialResponse.ok(), 'The configured read-only operation must succeed before credential expiry.');
+    const request = initialResponse.request();
+    assert.ok(['GET', 'HEAD', 'POST'].includes(request.method()), 'Configure a read-only GET, HEAD, or POST operation.');
+    const waitMs = Math.max(0, claims(expiredCandidate).exp * 1000 - Date.now()) + 1500;
+    const limitMs = Number(config.maxExpiredCredentialWaitSeconds || 1200) * 1000;
+    assert.ok(waitMs <= limitMs, 'The configured wait limit must include actual service token expiry.');
+    await sleep(waitMs);
+    assert.ok(Date.now() > claims(expiredCandidate).exp * 1000, 'The original actual credential must expire before the denial check.');
+    const headers = { ...await request.allHeaders(), 'single-ui-authorization': expiredCandidate };
+    delete headers['content-length'];
+    let data = request.postDataBuffer() || undefined;
+    if (config.protectedRequestTokenJsonPath) {
+      const body = request.postDataJSON();
+      const parts = config.protectedRequestTokenJsonPath.split('.');
+      const last = parts.pop();
+      const parent = parts.reduce((value, key) => value?.[key], body);
+      assert.ok(parent && last, 'The captured request must contain the configured credential path.');
+      parent[last] = expiredCandidate;
+      data = JSON.stringify(body);
+    }
+    const denied = await page.context().request.fetch(request.url(), {
+      method: request.method(), headers, data,
+      failOnStatusCode: false, timeout: 30000,
+    });
+    assert.ok([401, 403].includes(denied.status()), 'The protected service must reject the actual expired credential with HTTP 401 or 403.');
+    result.assertions.push({ criterion: 'TC-05', expiredAccess: tokenSummary(expiredCandidate), actualExpiryElapsedMs: Date.now() - claims(expiredCandidate).exp * 1000, initialStatus: initialResponse.status(), deniedStatus: denied.status(), operationScope: config.protectedOperationScope || 'CONFIGURED_READ_ONLY_BUSINESS_OPERATION' });
+    result.limitations = ['The denial request uses the browser context HTTP client and an actual captured read-only request.', 'The check covers natural token expiry. Provider revocation remains a separate unsupported fixture.'];
+  });
+}
+
+async function observeBackgroundWithoutRefresh(page) {
+  return retain(page, 'TC-04-background-without-refresh-observation', async (state, result) => {
+    const context = await page.context().browser().newContext();
+    const subject = await context.newPage();
+    let blockedAcquisitions = 0;
+    await subject.route('**/api/auth/v2/sso/refreshtoken', async route => {
+      blockedAcquisitions++;
+      await route.abort('failed');
+    });
+    result.testDoubles.push('The isolated subject aborts actual refresh acquisition requests. No refresh credential is fabricated or removed from application memory.');
+    try {
+      await openPortalSession(state.configFile, subject);
+      const subjectState = sessions.get(subject);
+      await page.bringToFront();
+      await subject.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 10000 });
+      const seconds = Number(state.config.naturalBackgroundSeconds || 1800);
+      assert.ok(seconds >= 1800, 'The missing-credential background observation requires at least 30 minutes.');
+      const start = Date.now();
+      await sleep(seconds * 1000);
+      await subject.bringToFront();
+      await sleep(1500);
+      const lifecycle = await subject.evaluate(() => window.__sessionE2e);
+      const retainedAccess = await subject.evaluate(() => localStorage.getItem('SET_TOKEN'));
+      assert.equal(subjectState.refreshToken, null, 'The observation fixture must receive no successful refresh credential.');
+      assert.ok(blockedAcquisitions > 0, 'The subject must exercise actual refresh acquisition before the observation.');
+      await checkpoint(subject, state, 'missing-refresh-return');
+      result.verificationLevel = 'OBSERVATION_ONLY';
+      result.acceptancePolicy = 'O-001_OPEN_NO_EXPECTED_RECOVERY_OUTCOME_ASSERTED';
+      result.observation = { criterion: 'TC-04', elapsedMs: Date.now() - start, blockedAcquisitions, observedRefresh: false, retainedAccess: tokenSummary(retainedAccess), portalVisible: await subject.locator(state.config.readySelector).isVisible(), signInVisible: await subject.locator(state.config.signInSelector).isVisible(), timeoutPromptVisible: await subject.locator(promptSelector).isVisible(), lifecycle, authenticationResponses: subjectState.requests, authenticationRequestFailures: subjectState.failures };
+      result.freezeObserved = lifecycle.events.some(event => event.event === 'freeze');
+      result.originalFrozenTabScenario = result.freezeObserved ? 'OBSERVED_FREEZE_WITH_MISSING_REFRESH' : 'NOT_COVERED_NO_FREEZE_OBSERVED';
+      result.limitations = ['The outcome is an observation because missing-credential recovery policy remains unresolved.', 'An aborted acquisition is controlled. It does not establish the original PROD cause.', 'Automation can affect suspension. Without a freeze event, natural frozen-tab recovery remains uncovered.'];
+    } finally { await context.close(); }
+  });
+}
+
+async function workspaceSummary(page) {
+  const data = await page.evaluate(() => {
+    const parse = key => { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; } };
+    return { workspaces: parse('SET_WORKSPACES') || [], entities: parse('SET_ENTITIES'), user: parse('SET_USER') };
+  });
+  const identity = data.user?.userId || data.user?.id || data.user?.sub;
+  const descriptors = data.workspaces.map(workspace => ({
+    id: workspace.id,
+    containers: (workspace.containers || []).map(container => ({
+      id: container.id, container: container.container, module: container.module, tile: container.tile,
+      parametersSha256: hash(JSON.stringify(container.parameters ?? null)),
+      hasParameters: !!container.parameters && Object.keys(container.parameters).length > 0,
+    })),
+  })).sort((left, right) => String(left.id).localeCompare(String(right.id)));
+  return { count: descriptors.length, descriptors, descriptorsSha256: hash(JSON.stringify(descriptors)), entitiesSha256: hash(JSON.stringify(data.entities)), identitySha256: identity ? hash(String(identity)) : null };
+}
+
+async function observeWorkspaceDescriptorsAfterSignIn(page) {
+  return retain(page, 'TC-07-workspace-descriptor-observation', async (state, result) => {
+    const actions = state.config.workspaceSetupActions || [{ click: '[aria-label="Add Workspace"]' }];
+    for (const action of actions) {
+      if (action.click) await page.locator(action.click).click();
+      else if (action.fill && typeof action.value === 'string') await page.locator(action.fill).fill(action.value);
+      else throw new Error('Workspace setup actions need click, or fill and value.');
+    }
+    await sleep(500);
+    const before = await workspaceSummary(page);
+    assert.ok(before.count >= 2, 'The descriptor observation needs at least two real UI-created workspaces.');
+    await checkpoint(page, state, 'workspaces-before-logout');
+    await standardLogout(page, state);
+    result.afterLogout = await workspaceSummary(page);
+    await signInIfNeeded(page, state);
+    const after = await workspaceSummary(page);
+    await checkpoint(page, state, 'workspaces-after-sign-in');
+    result.verificationLevel = 'OBSERVATION_ONLY';
+    result.acceptancePolicy = 'O-004_OPEN_DESCRIPTOR_COMPARISON_ONLY';
+    result.observation = { criterion: 'TC-07', before, after, descriptorIdentityAndParametersSame: isDeepStrictEqual(before.descriptors, after.descriptors), entitlementsSame: before.entitiesSha256 === after.entitiesSha256, sameUser: !!before.identitySha256 && before.identitySha256 === after.identitySha256 };
+    const parameterized = before.descriptors.filter(workspace => workspace.containers.some(container => container.hasParameters)).length;
+    result.proposedParameterizedFixture = parameterized >= 2 ? 'TWO_PARAMETERIZED_DESCRIPTORS_OBSERVED' : 'NOT_COVERED_FEWER_THAN_TWO_PARAMETERIZED_DESCRIPTORS';
+    result.assertions.push({ fixtureWorkspaceCount: before.count, reauthenticationCompleted: true });
+    result.limitations = ['The case records descriptor equality. It does not assert an unresolved restoration policy.', 'Empty workspaces do not cover catalog eligibility or application parameters.', 'Application in-memory edits and cross-origin application contents remain outside this comparison.'];
+  });
+}
+
+exports.__esModule = true;
+for (const fn of [openPortalSession, assertActivityRenewsSession, assertPendingRenewalCompletes, assertRejectedRenewalCanRetry, assertRapidExtendSharesRequest, assertKeyboardExtendActivation, assertActivityFailureCanRetry, assertInconsistentActivityResponseRejected, assertPromptIgnoresActivity, assertIdlePromptLogout, assertQuickVisibilityRefresh, assertReloadPreservesRenewedSession, assertActivityCrossesRefreshExpiry, assertNaturalBackgroundRecovery, assertSlowActivitySharesRequest, assertPendingManualLogoutCancels, assertPendingActivityLogoutCancels, assertLateActivityCannotReplaceManualSuccess, assertActualExpiredCredentialDenied, observeBackgroundWithoutRefresh, observeWorkspaceDescriptorsAfterSignIn]) {
+  fn.rfdoc = 'Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots.';
+  exports[fn.name] = fn;
+}

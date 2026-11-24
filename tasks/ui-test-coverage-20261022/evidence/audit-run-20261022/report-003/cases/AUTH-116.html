@@ -1,0 +1,802 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AUTH-116</title><style>body{font:15px/1.5 system-ui,sans-serif;color:#18212d;margin:24px auto;padding:0 24px;max-width:1400px;background:#f7f9fc}a{color:#1354a4}h1,h2{line-height:1.2}.callout{border-left:5px solid #a66100;padding:12px 18px;background:#fff2d6}table{border-collapse:collapse;width:100%;background:white}th,td{padding:8px 12px;border-bottom:1px solid #d3d9e2;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#e9eef6}.PASS{color:#14613b}.FAIL{color:#a21724}.BLOCKED_NOT_EXECUTED{color:#835000}.badge{font-weight:700;white-space:nowrap}input,select{font:inherit;padding:8px;margin:8px}article,details{padding:16px;margin:18px 0;background:white;border:1px solid #d3d9e2;border-radius:6px}.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}figure{margin:0;border:1px solid #d3d9e2;padding:10px}img{max-width:100%;height:auto;background:#e9eef6}code,pre{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#eff3f8;padding:12px}small{font-size:12px}dt{font-weight:700}dd{margin:0 0 8px}footer{margin-top:30px;border-top:1px solid #d3d9e2;padding-top:18px}.muted{color:#526075}summary{cursor:pointer;font-weight:700}</style><body><p><a href="../index.html">All canonical cases</a></p><h1>AUTH-116: Keep different browser contexts independent</h1><p class="callout"><strong>Business acceptance remains unverified. Owner: unknown. Review the canonical definition and fixture limits before acceptance.</strong></p><h2>Latest local result: <span class="badge PASS">PASS</span></h2><p>Business acceptance: NOT_ESTABLISHED.</p><p>The latest local result describes execution. The historical definition review assesses the case design before execution.</p><p>Latest step screenshot bindings: <strong>COMPLETE</strong>. 10/10 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>CONTEXT_RECORDED</strong>. Recorded context does not establish human visual review.</p><p><a href="../../../../test-cases.md#auth-116">Canonical Gherkin definition</a>. Definition version: 2. SHA-256: <code>ef46ce690019b46b5fed8029dac4d0fe3f835667b91547dd522929a8e6629aef</code>.</p><details class="definition-review"><summary>Historical definition review (preflight): UNVERIFIED</summary><p>A definition review FAIL can coexist with local PASS. The definition failed preflight quality checks.</p><p>This historical review does not change the latest execution result. Resolve definition gaps before business acceptance.</p></details><details><summary>Canonical Gherkin steps</summary><pre>Feature: Multi-tab
+  @AUTH-116
+  Scenario: Keep different browser contexts independent
+    Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B
+    And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page
+    When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page
+    And the controlled browser clock advances through the 1000-millisecond logout delay
+    Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;
+    And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;
+    And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;
+    When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential
+    Then the CTX-B validation response has result=true and SESSION-B remains installed
+    And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B</pre></details><p>Acceptance and evidence limits: NO_COMPLETE_REAL_APPLICATION_BINDING, CANONICAL_REVIEW_OR_EVIDENCE_UNRESOLVED.</p><p>Planned essential canonical frames: 3. Plan completeness requires separate review.</p><section class="latest-attempt"><h2>Latest attempt</h2><article><h3>AUTH-116 independent contexts preserve separate server sessions</h3><p><span class="badge PASS">PASS</span> · application/run-082/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance.</p><p>2026-10-22T07:31:02.680Z to 2026-10-22T07:31:08.814Z</p><p><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-082/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>2dc728ae48887053dc0ed71cdafd3859766f2c1bd030bec38e5615ec92e3f3fd</code></small><p><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/attachments/015-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/context-b-validation.json">context-b-validation.json</a> <code>bc26746b5ca178339b47871c93936074a657d46becf3faef7f990836c14a3901</code></li><li><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/session-fixture.json">session-fixture.json</a> <code>9e1f1e4fe204b46119ad9c95d7354f0e04814df32185a2aebfd1f68065074e9b</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 12.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 10/10 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>CONTEXT_RECORDED</strong>. Recorded context: 12/12 frames. Identical image bytes: 6 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/001-context-b-initial.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/001-context-b-initial.png" alt="context-b-initial: CTX-B authenticated before CTX-A logs out."></a><figcaption><strong>1. context-b-initial</strong><p>CTX-B authenticated before CTX-A logs out.</p><small>2026-10-22T07:31:06.475Z · 1440×1000<br>Step: AUTH-116 step 1<br>SHA-256: <code>173819b107f9721ddd580be6e85c728fb50ae34f4f23504c76db9e83104ff541</code></small><p>Captured page: <strong>CTX-B</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); Extend disabled; dialog absent; page CTX-B.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/002-step-01.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/002-step-01.png" alt="step-01: Visible state after step 1: Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B"></a><figcaption><strong>2. step-01</strong><p>Visible state after step 1: Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B</p><small>2026-10-22T07:31:06.550Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4379<br>SHA-256: <code>173819b107f9721ddd580be6e85c728fb50ae34f4f23504c76db9e83104ff541</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/003-step-02.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/003-step-02.png" alt="step-02: Visible state after step 2: And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page"></a><figcaption><strong>3. step-02</strong><p>Visible state after step 2: And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page</p><small>2026-10-22T07:31:06.884Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4380<br>SHA-256: <code>dc7e7051c985e11d6d9f4f29a73084c9898187f90447706caf0a68d6eb03ef4c</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/004-step-03.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/004-step-03.png" alt="step-03: Visible state after step 3: When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page"></a><figcaption><strong>4. step-03</strong><p>Visible state after step 3: When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page</p><small>2026-10-22T07:31:06.989Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4381<br>SHA-256: <code>373711e22bfab842bf9659ba56dcedf0ea75dd5dfa705463f1dbb862b7bef785</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: true,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: true,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/005-step-04.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/005-step-04.png" alt="step-04: Visible state after step 4: And the controlled browser clock advances through the 1000-millisecond logout delay"></a><figcaption><strong>5. step-04</strong><p>Visible state after step 4: And the controlled browser clock advances through the 1000-millisecond logout delay</p><small>2026-10-22T07:31:07.311Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4382<br>SHA-256: <code>59c4e063cab140c3f713f0512ac90aebc5ae2dd3932cddd7e50e5f5f00d57386</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/006-step-05.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/006-step-05.png" alt="step-05: Visible state after step 5: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>6. step-05</strong><p>Visible state after step 5: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T07:31:07.462Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4383<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/007-step-06.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/007-step-06.png" alt="step-06: Visible state after step 6: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>7. step-06</strong><p>Visible state after step 6: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T07:31:07.623Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4384<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="muted">Image bytes match frame 6. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/008-step-07.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/008-step-07.png" alt="step-07: Visible state after step 7: And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>8. step-07</strong><p>Visible state after step 7: And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T07:31:07.800Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4385<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="8" data-step="8"><p><strong>When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/009-step-08.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/009-step-08.png" alt="step-08: Visible state after step 8: When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential"></a><figcaption><strong>9. step-08</strong><p>Visible state after step 8: When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential</p><small>2026-10-22T07:31:08.018Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4386<br>SHA-256: <code>173819b107f9721ddd580be6e85c728fb50ae34f4f23504c76db9e83104ff541</code></small><p>Captured page: <strong>CTX-B</strong>.</p><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); Extend disabled; dialog absent; page CTX-B.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="9" data-step="9"><p><strong>Then the CTX-B validation response has result=true and SESSION-B remains installed</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/010-step-09.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/010-step-09.png" alt="step-09: Visible state after step 9: Then the CTX-B validation response has result=true and SESSION-B remains installed"></a><figcaption><strong>10. step-09</strong><p>Visible state after step 9: Then the CTX-B validation response has result=true and SESSION-B remains installed</p><small>2026-10-22T07:31:08.085Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4387<br>SHA-256: <code>173819b107f9721ddd580be6e85c728fb50ae34f4f23504c76db9e83104ff541</code></small><p>Captured page: <strong>CTX-B</strong>.</p><p class="muted">Image bytes match frame 9. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); Extend disabled; dialog absent; page CTX-B.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="10" data-step="10"><p><strong>And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/011-step-10.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/011-step-10.png" alt="step-10: Visible state after step 10: And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B"></a><figcaption><strong>11. step-10</strong><p>Visible state after step 10: And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B</p><small>2026-10-22T07:31:08.150Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4388<br>SHA-256: <code>173819b107f9721ddd580be6e85c728fb50ae34f4f23504c76db9e83104ff541</code></small><p>Captured page: <strong>CTX-B</strong>.</p><p class="muted">Image bytes match frame 10. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); Extend disabled; dialog absent; page CTX-B.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-B&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456900000,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/012-final-result.png"><img loading="lazy" src="../../application/run-082/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/012-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>12. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T07:31:08.506Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:88<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p>Captured page: <strong>CTX-A</strong>.</p><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+1.000s (1000 ms); Extend disabled; dialog absent; page CTX-A.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456001000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;CTX-A&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456001000,
+        &quot;elapsedMs&quot;: 1000,
+        &quot;accessExpiryMs&quot;: 0,
+        &quot;refreshExpiryMs&quot;: null,
+        &quot;cutoffMs&quot;: null,
+        &quot;cutoffRemainingMs&quot;: null
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: false,
+        &quot;refreshPresent&quot;: false,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></section><details class="attempt-history"><summary>Earlier attempt history (2)</summary><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-116 independent contexts preserve separate server sessions</h3><p><span class="badge PASS">PASS</span> · application/run-075/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance.</p><p>2026-10-22T06:54:44.301Z to 2026-10-22T06:54:47.753Z</p><p><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-075/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>f135af4682940ff197bd688ba5edc43f7d9ce955e54b11ac86443751537ad191</code></small><p><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/attachments/015-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/context-b-validation.json">context-b-validation.json</a> <code>305ff04a78fb404904714fe8566d7694cf10b66892147d856b7f71ef2d179142</code></li><li><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/session-fixture.json">session-fixture.json</a> <code>2e72567bbd6780d20b042a5249e2a0092d87c288aa037ee4520420ab4e4dd3d1</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 11.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 10/10 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/11 frames. Identical image bytes: 6 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B</p><small>2026-10-22T06:54:45.805Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4379<br>SHA-256: <code>173819b107f9721ddd580be6e85c728fb50ae34f4f23504c76db9e83104ff541</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/002-step-02.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/002-step-02.png" alt="step-02: Visible state after step 2: And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page"></a><figcaption><strong>2. step-02</strong><p>Visible state after step 2: And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page</p><small>2026-10-22T06:54:45.933Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4380<br>SHA-256: <code>dc7e7051c985e11d6d9f4f29a73084c9898187f90447706caf0a68d6eb03ef4c</code></small></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/003-step-03.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/003-step-03.png" alt="step-03: Visible state after step 3: When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page"></a><figcaption><strong>3. step-03</strong><p>Visible state after step 3: When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page</p><small>2026-10-22T06:54:46.016Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4381<br>SHA-256: <code>373711e22bfab842bf9659ba56dcedf0ea75dd5dfa705463f1dbb862b7bef785</code></small></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/004-step-04.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/004-step-04.png" alt="step-04: Visible state after step 4: And the controlled browser clock advances through the 1000-millisecond logout delay"></a><figcaption><strong>4. step-04</strong><p>Visible state after step 4: And the controlled browser clock advances through the 1000-millisecond logout delay</p><small>2026-10-22T06:54:46.319Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4382<br>SHA-256: <code>59c4e063cab140c3f713f0512ac90aebc5ae2dd3932cddd7e50e5f5f00d57386</code></small></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/005-step-05.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/005-step-05.png" alt="step-05: Visible state after step 5: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>5. step-05</strong><p>Visible state after step 5: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T06:54:46.452Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4383<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/006-step-06.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/006-step-06.png" alt="step-06: Visible state after step 6: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>6. step-06</strong><p>Visible state after step 6: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T06:54:46.593Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4384<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 5. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/007-step-07.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/007-step-07.png" alt="step-07: Visible state after step 7: And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>7. step-07</strong><p>Visible state after step 7: And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T06:54:46.717Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4385<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 6. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="8" data-step="8"><p><strong>When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/008-step-08.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/008-step-08.png" alt="step-08: Visible state after step 8: When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential"></a><figcaption><strong>8. step-08</strong><p>Visible state after step 8: When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential</p><small>2026-10-22T06:54:46.846Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4386<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="9" data-step="9"><p><strong>Then the CTX-B validation response has result=true and SESSION-B remains installed</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/009-step-09.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/009-step-09.png" alt="step-09: Visible state after step 9: Then the CTX-B validation response has result=true and SESSION-B remains installed"></a><figcaption><strong>9. step-09</strong><p>Visible state after step 9: Then the CTX-B validation response has result=true and SESSION-B remains installed</p><small>2026-10-22T06:54:46.961Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4387<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="10" data-step="10"><p><strong>And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/010-step-10.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/010-step-10.png" alt="step-10: Visible state after step 10: And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B"></a><figcaption><strong>10. step-10</strong><p>Visible state after step 10: And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B</p><small>2026-10-22T06:54:47.134Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4388<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 9. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/011-final-result.png"><img loading="lazy" src="../../application/run-075/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/011-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>11. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T06:54:47.483Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:88<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 10. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-116 independent contexts preserve separate server sessions</h3><p><span class="badge PASS">PASS</span> · application/run-043/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance.</p><p>2026-10-22T05:51:04.427Z to 2026-10-22T05:51:07.189Z</p><p><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-043/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>98cebd32bd451ab5c6b6f4bd04e32bfd49c85d419a54f996d85f74c849a4e1da</code></small><p><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/attachments/015-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/context-b-validation.json">context-b-validation.json</a> <code>b453c577ea00cb38e06ddfbbaaaf8de2b71399a9a6aa3aaec257dd6e8f631440</code></li><li><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/session-fixture.json">session-fixture.json</a> <code>7e290f1aecb4754f4561511edd81f491ab8bc030f112f8f14761f80f70fa95ee</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 11.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 10/10 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/11 frames. Identical image bytes: 6 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given isolated browser contexts CTX-A and CTX-B use distinct user-a sessions SESSION-A and SESSION-B</p><small>2026-10-22T05:51:05.624Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4379<br>SHA-256: <code>173819b107f9721ddd580be6e85c728fb50ae34f4f23504c76db9e83104ff541</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/002-step-02.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/002-step-02.png" alt="step-02: Visible state after step 2: And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page"></a><figcaption><strong>2. step-02</strong><p>Visible state after step 2: And the dialog named &quot;Leave Now?&quot; is visible in CTX-A on the Home page</p><small>2026-10-22T05:51:05.708Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4380<br>SHA-256: <code>dc7e7051c985e11d6d9f4f29a73084c9898187f90447706caf0a68d6eb03ef4c</code></small></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/003-step-03.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/003-step-03.png" alt="step-03: Visible state after step 3: When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page"></a><figcaption><strong>3. step-03</strong><p>Visible state after step 3: When User A in browser context &quot;CTX-A&quot; clicks the button labelled &quot;Logout&quot; inside the dialog named &quot;Leave Now?&quot; on the Home page</p><small>2026-10-22T05:51:05.755Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4381<br>SHA-256: <code>373711e22bfab842bf9659ba56dcedf0ea75dd5dfa705463f1dbb862b7bef785</code></small></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the controlled browser clock advances through the 1000-millisecond logout delay</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/004-step-04.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/004-step-04.png" alt="step-04: Visible state after step 4: And the controlled browser clock advances through the 1000-millisecond logout delay"></a><figcaption><strong>4. step-04</strong><p>Visible state after step 4: And the controlled browser clock advances through the 1000-millisecond logout delay</p><small>2026-10-22T05:51:05.998Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4382<br>SHA-256: <code>59c4e063cab140c3f713f0512ac90aebc5ae2dd3932cddd7e50e5f5f00d57386</code></small></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/005-step-05.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/005-step-05.png" alt="step-05: Visible state after step 5: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>5. step-05</strong><p>Visible state after step 5: Then the textbox with placeholder &quot;Enter Username&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T05:51:06.098Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4383<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/006-step-06.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/006-step-06.png" alt="step-06: Visible state after step 6: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>6. step-06</strong><p>Visible state after step 6: And the text input with placeholder &quot;Enter Password&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T05:51:06.215Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4384<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 5. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/007-step-07.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/007-step-07.png" alt="step-07: Visible state after step 7: And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;"></a><figcaption><strong>7. step-07</strong><p>Visible state after step 7: And the button labelled &quot;Sign In&quot; on the login page is visible in browser context &quot;CTX-A&quot;</p><small>2026-10-22T05:51:06.332Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4385<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 6. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="8" data-step="8"><p><strong>When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/008-step-08.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/008-step-08.png" alt="step-08: Visible state after step 8: When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential"></a><figcaption><strong>8. step-08</strong><p>Visible state after step 8: When CTX-B sends a controlled POST &quot;/api/auth/v2/sso/validate&quot; using its separate access credential</p><small>2026-10-22T05:51:06.447Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4386<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="9" data-step="9"><p><strong>Then the CTX-B validation response has result=true and SESSION-B remains installed</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/009-step-09.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/009-step-09.png" alt="step-09: Visible state after step 9: Then the CTX-B validation response has result=true and SESSION-B remains installed"></a><figcaption><strong>9. step-09</strong><p>Visible state after step 9: Then the CTX-B validation response has result=true and SESSION-B remains installed</p><small>2026-10-22T05:51:06.547Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4387<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="10" data-step="10"><p><strong>And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/010-step-10.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/010-step-10.png" alt="step-10: Visible state after step 10: And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B"></a><figcaption><strong>10. step-10</strong><p>Visible state after step 10: And the tab labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page is visible in CTX-B</p><small>2026-10-22T05:51:06.716Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:4388<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 9. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/011-final-result.png"><img loading="lazy" src="../../application/run-043/cases/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1/011-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>11. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T05:51:06.980Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:88<br>SHA-256: <code>99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a</code></small><p class="muted">Image bytes match frame 10. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details></details><p>Related evidence outside actual application scope: <a href="../harness/application--run-081--auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1.html">application/run-081/auth-116-independent-contexts-preserve-separate-server-sessions-548fb9e4c550-attempt-1</a>.</p><footer><details><summary>Writing review</summary><pre>{
+  &quot;standard&quot;: &quot;ASD-STE100&quot;,
+  &quot;automated_check&quot;: &quot;PASSED&quot;,
+  &quot;asd_review&quot;: &quot;PENDING&quot;,
+  &quot;reviewer&quot;: null,
+  &quot;reviewed_at&quot;: null,
+  &quot;limitations&quot;: [
+    &quot;Automated checks do not check the complete approved dictionary or grammar rules.&quot;
+  ]
+}</pre></details></footer></body></html>

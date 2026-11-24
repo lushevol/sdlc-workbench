@@ -1,0 +1,86 @@
+import { chromium } from '../../adapters/browser/node_modules/playwright/index.mjs';
+import { spawn } from 'node:child_process';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+const root = process.cwd();
+const output = path.join(root, '.workbench/session-active-cutoff-fix-20261024', 'activation-diagnostic-' + Date.now());
+await fs.mkdir(output);
+const profile = path.join(output, 'profile');
+await fs.mkdir(profile);
+const args = [`--user-data-dir=${profile}`, '--remote-debugging-port=0',
+  '--remote-debugging-address=127.0.0.1', '--no-first-run', '--no-default-browser-check',
+  '--disable-background-networking', '--disable-component-update', '--disable-sync',
+  '--disable-edgeupdater', '--disable-updater-scheduler',
+  '--disable-features=msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion', 'about:blank'];
+const child = spawn('/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge', args, { stdio: 'ignore' });
+const exited = new Promise(resolve => child.once('exit', resolve));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const result = { startedAt: new Date().toISOString(), output, browserPid: child.pid,
+  setup: 'Fresh native Edge profile. CDP noDefaults=true. No business login or authentication.',
+  visibilityPropertyOverride: false, clockOverride: false, observations: [] };
+let browser;
+try {
+  let port;
+  for (let i = 0; i < 150; i++) {
+    try { port = Number((await fs.readFile(path.join(profile, 'DevToolsActivePort'), 'utf8')).split('\n')[0]); } catch {}
+    if (port > 0) break;
+    await sleep(100);
+  }
+  if (!port) throw new Error('Native browser did not expose CDP.');
+  browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`, { noDefaults: true });
+  result.browserVersion = browser.version();
+  const context = browser.contexts()[0];
+  const rootSession = await browser.newBrowserCDPSession();
+  const subject = await context.newPage();
+  await subject.goto('data:text/html,<title>Activation subject</title><p>Subject</p>');
+  await subject.evaluate(() => { window.activationEvents = []; document.addEventListener('visibilitychange', () => window.activationEvents.push({ visibility: document.visibilityState, time: Date.now() })); });
+  const subjectSession = await context.newCDPSession(subject);
+  const subjectInfo = (await subjectSession.send('Target.getTargetInfo')).targetInfo;
+  const cover = await context.newPage();
+  await cover.goto('data:text/html,<title>Activation cover</title><p>Cover</p>');
+  const coverSession = await context.newCDPSession(cover);
+  const coverInfo = (await coverSession.send('Target.getTargetInfo')).targetInfo;
+  const observe = async phase => {
+    await sleep(350);
+    result.observations.push({ phase, at: new Date().toISOString(),
+      subject: await subject.evaluate(() => ({ visibility: document.visibilityState, focused: document.hasFocus(), events: window.activationEvents })),
+      cover: await cover.evaluate(() => ({ visibility: document.visibilityState, focused: document.hasFocus() })),
+      subjectWindow: await rootSession.send('Browser.getWindowForTarget', { targetId: subjectInfo.targetId }),
+      coverWindow: await rootSession.send('Browser.getWindowForTarget', { targetId: coverInfo.targetId }) });
+    await fs.writeFile(path.join(output, 'result.json'), JSON.stringify(result, null, 2) + '\n');
+  };
+  await cover.bringToFront();
+  await observe('Playwright cover.bringToFront');
+  await subject.bringToFront();
+  await observe('Playwright subject.bringToFront');
+  await rootSession.send('Target.activateTarget', { targetId: coverInfo.targetId });
+  await observe('CDP Target.activateTarget cover');
+  await rootSession.send('Target.activateTarget', { targetId: subjectInfo.targetId });
+  await observe('CDP Target.activateTarget subject');
+  await subjectSession.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+  await coverSession.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+  await cover.bringToFront();
+  await observe('Disable focus emulation then cover.bringToFront');
+  await subject.bringToFront();
+  await observe('Disable focus emulation then subject.bringToFront');
+  const explicit = await rootSession.send('Target.createTarget', {
+    url: 'data:text/html,<title>Explicit native tab</title><p>Native tab</p>',
+    newWindow: false, forTab: true, background: false, focus: true,
+  });
+  result.explicitTarget = explicit;
+  await observe('Explicit native tab Target.createTarget');
+  result.status = 'COMPLETED';
+} catch (error) {
+  result.status = 'FAILED';
+  result.error = error.message;
+} finally {
+  result.completedAt = new Date().toISOString();
+  if (browser) await browser.close().catch(() => {});
+  if (child.exitCode === null && child.signalCode === null) child.kill('SIGTERM');
+  await Promise.race([exited, sleep(2000)]);
+  if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+  await fs.rm(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }).catch(error => result.cleanupError = error.message);
+  await fs.writeFile(path.join(output, 'result.json'), JSON.stringify(result, null, 2) + '\n');
+  console.log(JSON.stringify({ output, status: result.status, error: result.error, observations: result.observations }));
+}

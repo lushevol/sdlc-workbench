@@ -1,0 +1,200 @@
+{
+  "caseId": "TC-04-background-without-refresh-observation",
+  "status": "PASSED",
+  "startedAt": "2026-10-20T01:17:49.427Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8101",
+  "configSha256": "b4a2981334e0caa51d7e76511035d6ceff4d3e2d7d42064ff1d08806fc515d37",
+  "testSourceSha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+  "sourceRevisions": {
+    "mfe-base": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "The isolated subject aborts actual refresh acquisition requests. No refresh credential is fabricated or removed from application memory."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T01:17:49.442Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "missing-refresh-return",
+      "capturedAt": "2026-10-20T01:47:55.026Z",
+      "file": "missing-refresh-return.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T01:47:55.625Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "verificationLevel": "OBSERVATION_ONLY",
+  "acceptancePolicy": "O-001_OPEN_NO_EXPECTED_RECOVERY_OUTCOME_ASSERTED",
+  "observation": {
+    "criterion": "TC-04",
+    "elapsedMs": 1802220,
+    "blockedAcquisitions": 1,
+    "observedRefresh": false,
+    "retainedAccess": null,
+    "portalVisible": false,
+    "signInVisible": true,
+    "timeoutPromptVisible": false,
+    "lifecycle": {
+      "events": [
+        {
+          "event": "pageshow",
+          "timestamp": "2026-10-20T01:17:52.816Z",
+          "visibility": "visible"
+        },
+        {
+          "event": "visibilitychange",
+          "timestamp": "2026-10-20T01:17:53.233Z",
+          "visibility": "hidden"
+        },
+        {
+          "event": "freeze",
+          "timestamp": "2026-10-20T01:32:53.232Z",
+          "visibility": "hidden"
+        },
+        {
+          "event": "resume",
+          "timestamp": "2026-10-20T01:47:53.511Z",
+          "visibility": "hidden"
+        },
+        {
+          "event": "visibilitychange",
+          "timestamp": "2026-10-20T01:47:53.511Z",
+          "visibility": "visible"
+        },
+        {
+          "event": "prompt_opened",
+          "timestamp": "2026-10-20T01:47:53.533Z",
+          "visibility": "visible"
+        },
+        {
+          "event": "prompt_closed",
+          "timestamp": "2026-10-20T01:47:54.561Z",
+          "visibility": "visible"
+        }
+      ],
+      "promptVisible": false,
+      "closures": 1,
+      "activity": {
+        "mousemove": 1,
+        "keydown": 0,
+        "scroll": 0
+      }
+    },
+    "authenticationResponses": [
+      {
+        "pathname": "/api/auth/v2/sso/login",
+        "status": 200,
+        "time": 1792459073156,
+        "access": {
+          "sha256": "a8dbc76ea84217a1ab2fc515db1f615103ce25452ef5dfa7b2aa14309200fd04",
+          "exp": 1792459973,
+          "iat": 1792459073
+        },
+        "refresh": null
+      }
+    ],
+    "authenticationRequestFailures": [
+      {
+        "pathname": "/api/auth/v2/sso/refreshtoken",
+        "time": 1792459073256,
+        "error": "net::ERR_FAILED"
+      }
+    ]
+  },
+  "freezeObserved": true,
+  "originalFrozenTabScenario": "OBSERVED_FREEZE_WITH_MISSING_REFRESH",
+  "limitations": [
+    "The outcome is an observation because missing-credential recovery policy remains unresolved.",
+    "An aborted acquisition is controlled. It does not establish the original PROD cause.",
+    "Automation can affect suspension. Without a freeze event, natural frozen-tab recovery remains uncovered."
+  ],
+  "completedAt": "2026-10-20T01:47:55.622Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792459068638,
+      "access": {
+        "sha256": "2579e0c77281c827af284cf91671ac2bdfda5e7854e0400a5c70d1e7535572c8",
+        "exp": 1792459968,
+        "iat": 1792459068
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792459943056,
+      "access": null,
+      "refresh": {
+        "sha256": "1516d795d0193ae83ac75bd5ab7ec73845e994c0d31ba2f117b1d2e26c89443c",
+        "exp": 1792473467,
+        "iat": 1792459943
+      }
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8101",
+      "pathname": "/",
+      "time": 1792459064874
+    }
+  ],
+  "initialAccess": {
+    "sha256": "2579e0c77281c827af284cf91671ac2bdfda5e7854e0400a5c70d1e7535572c8",
+    "exp": 1792459968,
+    "iat": 1792459068
+  },
+  "latestAccess": {
+    "sha256": "2579e0c77281c827af284cf91671ac2bdfda5e7854e0400a5c70d1e7535572c8",
+    "exp": 1792459968,
+    "iat": 1792459068
+  },
+  "refresh": {
+    "sha256": "1516d795d0193ae83ac75bd5ab7ec73845e994c0d31ba2f117b1d2e26c89443c",
+    "exp": 1792473467,
+    "iat": 1792459943
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T01:17:48.245Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_opened",
+        "timestamp": "2026-10-20T01:32:48.037Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-20T01:47:53.403Z",
+        "visibility": "hidden"
+      }
+    ],
+    "promptVisible": true,
+    "closures": 0,
+    "activity": {
+      "mousemove": 1,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

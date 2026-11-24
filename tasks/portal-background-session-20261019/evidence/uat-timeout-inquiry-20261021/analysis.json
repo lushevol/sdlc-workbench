@@ -1,0 +1,503 @@
+{
+  "captured_at": "2026-10-21T07:16:15.911837+00:00",
+  "timezone_for_user_dates": "Asia/Singapore",
+  "scope": "Source explanation and audit of prior review for reported UAT missing timeout dialog.",
+  "workbench_revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+  "mfe_base": {
+    "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "runtime_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "deployment": "Latest feature/session-refresh-minor reported by user; exact UAT bytes unverified.",
+    "pre_existing_change": "tsconfig.tsbuildinfo; preserved."
+  },
+  "frozen_intake_sha256": "1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948",
+  "sources": [
+    {
+      "id": "E1",
+      "path": "tasks/portal-background-session-20261019/evidence/uat-timeout-inquiry-20261021/user-request.txt",
+      "repository": "ai-sdlc-workbench",
+      "revision": null,
+      "sha256": "22c09bd7875b6fbd6522832a7905494437710dbe7699ea260af13748ff55648d",
+      "revision_limit": "User report captured during this conversation.",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 17,
+          "text": "User report, 21 October 2026 (Asia/Singapore):\n\nI've deployed the MFE to the UAT environment and found a major issue: the timeout dialog never appears. No matter how long I wait, even after coming back a half hour later, it still isn't showing up.\n\nIs this expected? Was this caught during our code review and impact analysis?\n\nClarification question:\nWhich MFE commit or build did you deploy to UAT? During the wait, was the portal untouched in the foreground, in a background tab, or showing an embedded application?\n\nUser answer:\n1. lastest commit in feature/session-refresh-minor of mfe-base; 2. yes untouched in background tab.\n\nClarification question:\nWhich page was open inside the background portal tab?\n\nUser answer:\nCashflow Dashboard\n"
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "repository": "mfe-base",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 60,
+          "end": 68,
+          "text": "  const runExtend = () => {\n    extend(store?.expiredIn, store.isOnLogout, store.token);\n  };\n  const mouseMove = () => {\n    if (timerMouseMove.current) {\n      clearTimeout(timerMouseMove.current);\n    }\n    timerMouseMove.current = setTimeout(runExtend, 5000);\n  };\n"
+        },
+        {
+          "start": 90,
+          "end": 102,
+          "text": "  React.useEffect(() => {\n    if (store?.token && ready) {\n      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();\n      timerPopup.current = setTimeout(() => {\n        setShowTimeout(true);\n      }, difftime);\n    }\n    return () => {\n      if (timerPopup.current) {\n        clearTimeout(timerPopup.current);\n      }\n    };\n  }, [store?.token, store?.expiredIn, ready]);\n"
+        },
+        {
+          "start": 118,
+          "end": 125,
+          "text": "    const reconcileExpiry = () => {\n      if (\n        accessExpiresAt <= Date.now() ||\n        (refreshExpiresAt > 0 && refreshExpiresAt <= Date.now())\n      ) {\n        setShowTimeout(true);\n      }\n    };\n"
+        },
+        {
+          "start": 150,
+          "end": 160,
+          "text": "    const handleVisibilityChange = () => {\n      const visibility = document.visibilityState;\n      if (visibility === previousVisibility) return;\n      previousVisibility = visibility;\n      clearTimeout(acquisitionTimer);\n      if (visibility === \"hidden\") {\n        requestRefresh();\n      } else {\n        reconcileExpiry();\n        scheduleAcquisition();\n      }\n"
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+      "repository": "mfe-base",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 8,
+          "end": 32,
+          "text": "export const extend = async (expiredIn, isOnLogout, token) => {\n  if (signal?.extendToken) {\n    signal?.extendToken?.abort();\n  }\n  const difftime = 1000 * (expiredIn ?? 0) - new Date().getTime();\n  if (isOnLogout || difftime < 25000) {\n    return;\n  }\n  signal.extendToken = new AbortController();\n  service\n    .post(\n      getEndPoint(\"/auth/v2/sso/extend\"),\n      { singleUIAuthorization: token },\n      {\n        signal: signal.extendToken.signal,\n      }\n    )\n    .catch((e) => {\n      console.error(\"e\", e);\n    });\n};\nexport const extendToken = () => {\n  const { store } = getHooksBase();\n  extend(store.expiredIn, store.isOnLogout, store.token);\n};\n"
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "repository": "mfe-base",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 25,
+          "end": 41,
+          "text": "export const successHandler = (response: AxiosResponse): any => {\n  if (\n    response?.config?.url?.includes(\"/api/auth/v2/sso/login\") ||\n    response?.config?.url?.includes(\"/api/auth/v3/sso/login\") ||\n    response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n    response?.config?.url?.includes(\"/api/auth/v2/sso/validate\") ||\n    response?.config?.url?.includes(\"/api/auth/v2/sso/extend\")\n  ) {\n    handleDrawers(response);\n    handleEntities(response);\n    handleEntitlementsToken(response);\n    handleUser(response);\n    handleLogin(response);\n  }\n  if (response?.config?.url?.includes(\"/api/auth/v2/sso/refreshtoken\")) {\n    handleRefreshToken(response);\n  }\n"
+        }
+      ]
+    },
+    {
+      "id": "E5",
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "repository": "mfe-base",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 13,
+          "end": 38,
+          "text": "export const setAuthorization = (token) => {\n  const { baseDispatch } = getHooksBase();\n  baseDispatch({\n    type: ActionType.SET_TOKEN,\n    data: { token },\n  });\n  storeData(ActionType.SET_TOKEN, token);\n  const payload = getJWTPayload(token);\n  if (payload != \"\") {\n    dispacthUserLoginTime(payload);\n  }\n};\n\nexport const dispacthUserLoginTime = (payload: JWTPayload) => {\n  if (payload.exp && payload.iat) {\n    const { baseDispatch } = getHooksBase();\n    baseDispatch({\n      type: ActionType.SET_EXPIRED_TOKEN,\n      data: {\n        expiredIn: payload.exp,\n        iat: payload.iat,\n        userLoginTime: new Date(),\n      },\n    });\n  }\n};\n"
+        },
+        {
+          "start": 51,
+          "end": 67,
+          "text": "export const handleLogin = (response: AxiosResponse) => {\n  if (\n    response?.headers &&\n    (response?.headers[\"Single-UI-Authorization\"] ||\n      response?.headers[\"single-ui-authorization\"])\n  ) {\n    const token = `${\n      response.headers[\"Single-UI-Authorization\"] ??\n      response.headers[\"single-ui-authorization\"]\n    }`;\n    setAuthorization(token);\n  }\n};\n\nexport const handleUser = (response: AxiosResponse) => {\n  if (response?.data?.userInfo) {\n    const userInfo = JSON.parse(response?.data?.userInfo);\n"
+        }
+      ]
+    },
+    {
+      "id": "E6",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/components/Dashboard/index.tsx",
+      "repository": "mfe-cashflow-blotter",
+      "revision": null,
+      "sha256": "cb42fa47a761d0f9d53662a155dd366889f8c9c227948fad4e72c454112cb75b",
+      "revision_limit": "Supplied filesystem copy; independent revision and UAT deployment unavailable.",
+      "excerpts": [
+        {
+          "start": 14,
+          "end": 36,
+          "text": "export const Dashboard = () => {\n  const { triggerQuery } = useDashboardDataQuery();\n  const dashboardData = useAppSelector((state) => state.dashboardData);\n  const refreshTimer = useRef<NodeJS.Timeout | null>(null);\n  const isBigScreen = useMediaQuery(`(min-width:${BreakPoint.Middle}px)`);\n\n  const loopQuery = useCallback(async () => {\n    await triggerQuery();\n    if (refreshTimer.current === null) return;\n    refreshTimer.current = setTimeout(\n      () => loopQuery(),\n      DASHBOARD_REFRESH_INTERVAL\n    );\n  }, [triggerQuery]);\n\n  useEffect(() => {\n    refreshTimer.current = setTimeout(() => loopQuery(), 0);\n\n    return () => {\n      clearTimeout(refreshTimer.current ?? 0);\n      refreshTimer.current = null;\n    };\n  }, [loopQuery]);\n"
+        }
+      ]
+    },
+    {
+      "id": "E7",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/components/Dashboard/const.ts",
+      "repository": "mfe-cashflow-blotter",
+      "revision": null,
+      "sha256": "0d6eb524fdb1f09bb6e70d13b18be7f84b0f2f77c25b291fc2e7ef2b6d9deef1",
+      "revision_limit": "Supplied filesystem copy; independent revision and UAT deployment unavailable.",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 1,
+          "text": "export const DASHBOARD_REFRESH_INTERVAL = 120 * 1000;\n"
+        }
+      ]
+    },
+    {
+      "id": "E8",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/Main/hooks/useDashboardDataQuery.ts",
+      "repository": "mfe-cashflow-blotter",
+      "revision": null,
+      "sha256": "1343c1595a1bd0cc03a702d81b1895d1803d05fdda86c9f9e93c13579ce75d03",
+      "revision_limit": "Supplied filesystem copy; independent revision and UAT deployment unavailable.",
+      "excerpts": [
+        {
+          "start": 47,
+          "end": 101,
+          "text": "export const useDashboardDataQueryAPI = (globalQuery: RuleGroupType) => {\n  const dispatch = useAppDispatch();\n  const [queryCashflowCount] =\n    useLazySettlementCashflowDataUltraQueryCountQuery();\n  const [queryGroupCount] = useLazySettlementGroupMessageCountQuery();\n\n  const triggerQuery = useCallback(async () => {\n    dispatch(setIsSearching(true));\n    dispatch(setAllStatusLoading(true));\n    for (const statusConfig of StatusList) {\n      const { key, getfilters } = statusConfig;\n      try {\n        dispatch(setStatusLoadingByPath({ path: key, isLoading: true }));\n        if (key.toLowerCase().startsWith(\"group\")) {\n          const panelFilters = legacyFilters2Query(getfilters());\n          const finalFilters = convertFilter2GroupSearchCriteria(\n            convertRuleGroup2LegacyFilters(\n              filterOutDuplicateFieldsQuery(\n                combineRuleGroups(globalQuery, panelFilters)\n              )\n            )\n          );\n          const {\n            groupMessages: {\n              pageInfo: { totalHits },\n            },\n          } = await queryGroupCount({\n            filter: finalFilters,\n            pageNo: 0,\n            pageSize: 100,\n          }).unwrap();\n\n          dispatch(setStatusValueByPath({ path: key, value: totalHits }));\n        } else {\n          const panelFilters = legacyFilters2Query(getfilters());\n          const finalFilters = filterOutDuplicateFieldsQuery(\n            combineRuleGroups(globalQuery, panelFilters)\n          );\n          const {\n            cashflowUltraQueryCount: { count },\n          } = await queryCashflowCount({\n            payload: {\n              filters: convertRuleGroup2RatanUltraQueryFilters(finalFilters),\n            },\n          }).unwrap();\n\n          dispatch(setStatusValueByPath({ path: key, value: count }));\n        }\n      } catch (error) {\n      } finally {\n        dispatch(setStatusLoadingByPath({ path: key, isLoading: false }));\n      }\n    }\n    dispatch(setIsSearching(false));\n  }, [globalQuery]);\n"
+        }
+      ]
+    },
+    {
+      "id": "E9",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/Main/store-redux/index.ts",
+      "repository": "mfe-cashflow-blotter",
+      "revision": null,
+      "sha256": "528b1f0f1c4b5e2c617e2f6cddacaa28c7f06da1333325ad4dc23ad84dbabd3d",
+      "revision_limit": "Supplied filesystem copy; independent revision and UAT deployment unavailable.",
+      "excerpts": [
+        {
+          "start": 15,
+          "end": 18,
+          "text": "import { apiErrorHandlingMiddleware } from \"src/Root/rtk-query/apiErrorHandlingMiddleware\";\nimport { apiPerfMonitorMiddleware } from \"src/Root/rtk-query/apiPerfMonitorMiddleware\";\nimport { apiSessionExtendMiddleware } from \"src/Root/rtk-query/apiSessionExtendMiddleware\";\nimport { graphqlApi } from \"src/Root/rtk-query/baseGraphQLApi\";\n"
+        },
+        {
+          "start": 26,
+          "end": 44,
+          "text": "export const createStore = () =>\n  configureStore({\n    reducer: {\n      [dashboardSearchSlice.name]: dashboardSearchSlice.reducer,\n      [dashboardDataSlice.name]: dashboardDataSlice.reducer,\n      [graphqlApi.reducerPath]: graphqlApi.reducer,\n    },\n    middleware: (gDM) =>\n      gDM({\n        serializableCheck: {\n          ignoredActions: [\"dashboardSearch/setSearchFormInstance\"],\n          ignoredPaths: [\"dashboardSearch.searchFormInstance.resetFields\"],\n        },\n      })\n        .prepend(listenerMiddlewareInstance.middleware)\n        .concat(graphqlApi.middleware)\n        .concat(apiSessionExtendMiddleware.middleware)\n        .concat(apiPerfMonitorMiddleware.middleware)\n        .concat(apiErrorHandlingMiddleware.middleware),\n"
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.ts",
+      "repository": "mfe-cashflow-blotter",
+      "revision": null,
+      "sha256": "faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561",
+      "revision_limit": "Supplied filesystem copy; independent revision and UAT deployment unavailable.",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 14,
+          "text": "import { createListenerMiddleware } from \"@reduxjs/toolkit\";\n\nimport { ExtendTokenService } from \"../import\";\n\nexport const apiSessionExtendMiddleware = createListenerMiddleware();\n\napiSessionExtendMiddleware.startListening({\n  predicate: (action, _currentState, _prevState) => {\n    return action.type === \"graphqlApi/executeQuery/fulfilled\";\n  },\n  effect: async (_action, _lisenerApi) => {\n    ExtendTokenService();\n  },\n});\n"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/index.ts",
+      "repository": "mfe-cashflow-blotter",
+      "revision": null,
+      "sha256": "d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+      "revision_limit": "Supplied filesystem copy; independent revision and UAT deployment unavailable.",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 16,
+          "text": "//@ts-ignore\nimport * as Container from \"@fm/base\";\nexport const ErrorBoundry = Container.ErrorBoundry.default;\nexport const Splash = Container.Splash.default;\nexport const ContainerProvider = Container.Provider;\nexport const ReactRouterDom = Container.ReactRouterDom;\nexport const Service = Container.Service;\nexport const Hooks = Container.Hooks;\nexport const CommonUtil = Container.CommonUtil;\nexport const ChannelUtil = Container.ChannelUtil;\nexport const useContainerDispatcher = Container.Dispatcher.default;\nexport const ThemeConfig = Container.ThemeConfig.default;\nexport const ThemeUtil = Container.ThemeUtil;\nexport const { Time } = Container.Time;\nexport const Button = Container.Button.default;\nexport const ExtendTokenService = Container.ExtendService.extendToken;\n"
+        }
+      ]
+    },
+    {
+      "id": "E12",
+      "path": "tasks/portal-background-session-20261019/code-review.md",
+      "repository": "ai-sdlc-workbench",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "e1ab7362cf028529a2f44a24bf7496984751cb497c8a0823f6c4e7035a684a1b",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 119,
+          "end": 132,
+          "text": "The suggestions below identify unresolved risks and verification gaps.\nAll suggestions remain unapplied.\nThey do not claim a demonstrated production failure.\nPriority denotes review urgency, rather than measured incident severity.\n\n| Finding ID and priority | Evidence location | Consequence | Owner | Next action | Resolution evidence |\n| --- | --- | --- | --- | --- | --- |\n| R-001; P2; integration risk | `extend.ts:43`; public export `root.tsx:73`; consumer excerpts `apiSessionExtendMiddleware.ts:12` and `graphql.ts:166`. | API completion can request renewal outside Home activity and visibility checks. Idle evidence can depend on loaded application traffic. | unknown: portal and embedded-application owners. | Confirm which API traffic counts as activity. Execute visible-idle and hidden controls with representative embedded queries. | Open; no deployed consumer run exists. |\n| R-002; P2; browser verification gap | `Home/index.tsx:56`; lifecycle wrapper `sessionLifecycle.test.tsx:62` and assertions `:779`–`:803`; final native Edge manifest. | Controlled input success alone did not prove Home propagation, natural freezing, or request races. The final local browser suite now covers those listed paths. Embedded consumer propagation and deployed applicability remain open. | unknown: session and embedded-application owners. | Retain representative embedded traffic and bind deployed module revisions. | Partially resolved for local browser scope; see [execution report](test-execution-report.md). |\n| R-003; P3; capacity risk | `Home/common/useController.ts:17`, `:103`–`:111`; lifecycle assertions `:796`; extension request sharing `extend.ts:16`–`:20`. | Continuous input can produce approximately 720 activity extensions per hour, per eligible session. Additional external calls can increase traffic. | unknown: authentication service owner. | Measure extension counts and response latency under continuous activity. Compare results with an owner-approved capacity limit. | Open; no capacity limit or load execution was supplied. |\n\nR-001 describes an unchanged integration path through the changed shared helper.\nIt is not attributed to a new visibility bypass in this commit.\nR-003 estimates the five-second steady cadence with prompt successful responses.\n"
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "path": "tasks/portal-background-session-20261019/impact-analysis.md",
+      "repository": "ai-sdlc-workbench",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "b80226617d7f809529316d031e49888e08007d4966b5e843840b4e4857ba5dc4",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 85,
+          "end": 100,
+          "text": "| Journey and trigger | Previous behavior | Changed behavior and observable consequence | Evidence and confidence | Owner and next action |\n| --- | --- | --- | --- | --- |\n| Continuous mouse, keyboard, or scroll activity. | Mouse events reset the pending deadline. Keyboard and scroll had no Home bindings. | Eligible events retain the first five-second deadline. Keyboard and scroll use the same renewal path. | Confirmed source change; AC-1–AC-3 controlled assertions pass. | unknown: portal owner. Execute physical input in the complete Home document. |\n| Continued activity crosses initial refresh expiry. | The original refresh deadline could open timeout despite renewed valid access. | Recent eligible visible activity can replace refresh credentials. Initial refresh expiry alone no longer forces valid access into timeout. | Confirmed source change; four controlled hours and 240 extensions pass. | unknown: session owner. Execute the live boundary and confirm deployment identity. |\n| User selects Extend; request remains pending. | The dialog could close before the request completed. | Extend waits. The dialog stays visible, and duplicate renewal attempts are suppressed. | Confirmed source change; pending transport assertion passes. | unknown: session test owner. Capture pending state in the real browser. |\n| Manual Extend succeeds. | Early closure did not establish usable renewed access. | A usable token response precedes successful closure. The successful close occurs once. | Confirmed source change; token state and one-close assertions pass. | unknown: session test owner. Confirm protected UI work uses the renewed credentials. |\n| Eligible renewal has a transport failure. | The prompt could close before failure became known. | The dialog shows a retry message and allows another eligible attempt. | Confirmed for controlled HTTP 503 and resolved failure responses. Revocation recovery remains separate. | unknown: authentication owner. Run transport retry and provider-rejection cases with explicit expected results. |\n| User selects Logout during renewal. | Request completion was not owned by the prompt lifecycle. | Logout remains available. Cancellation prevents the inspected late response from restoring access. | Confirmed source change; controlled logout and late-response assertions pass. | unknown: session test owner. Run delayed-renewal logout in the real browser. |\n| User stops activity or returns from background. | Original refresh expiry could terminate otherwise valid renewed access. | Valid access remains usable until its own expiry. The existing idle prompt still uses eligible refresh credentials. | Confirmed source change; controlled idle and return assertions pass. Natural freezing remains unverified. | unknown: session owner. Run visible-idle and natural-background controls. |\n| User expects the workspace to remain after renewal. | Workspace-loss details remain unspecified. | No workspace serialization or descriptor mutation appears in this diff. Complete edit retention is not established. | Confirmed diff boundary; no application-edit acceptance result exists. | unknown: workspace owner. Identify lost descriptors and edits before defining retention acceptance. |\n\nThe complete Home document can contain child handlers and embedded applications.\nPortal keyboard and scroll bindings do not establish cross-origin event propagation.\nThe two inspected API-completion consumers can also request extension without Home activity checks.\nA representative idle control must therefore record embedded application traffic.\nThis is an existing integration boundary, not a confirmed new defect.\n"
+        },
+        {
+          "start": 117,
+          "end": 121,
+          "text": "| Public extension consumers | `extendToken` is exported through `root.tsx:73`. Cashflow middleware and GraphQL completion call it. | `apiSessionExtendMiddleware.ts:12`; `graphql.ts:166`; both ignore the return value. | Confirmed source relationships; unknown deployment revision. Existing call statements remain compatible. | Run representative embedded traffic and idle controls. Confirm deployed module versions. |\n| BFF HTTP contract | No BFF file changes. Existing extend, refresh, and relogin endpoints remain in use. | `JwtAuthenticationController.java:275`, `:303`, `:328`; `JwtTokenUtil.java:48`. | Confirmed unchanged source contract; no service deployment conclusion. | Bind frontend, gateway, and BFF runtime revisions before E2E claims. |\n| Error propagation | The unchanged error handler clears authentication for `TOKEN_INVALID_EXPIRED`. | `error.response.handler.ts:30`; routing switches away from Home when access is cleared. | Confirmed inherited rejection path; absent-credential recovery policy remains unresolved. | Separate transport retry from expired or revoked credential outcomes. |\n| State and persistence | Renewed access uses existing reducers and token storage. No schema or key changes appear. | `utils/login.ts:13`; `utils/common.ts:46`; shared reducers; workspace code. | Confirmed diff boundary; application-edit preservation remains unverified. | Inspect state before and after renewal. Confirm the required workspace-retention scope. |\n| Deployment | No release, gateway configuration, or environment policy changes appear. | Registered identities and local source hashes only. | Unknown deployment applicability. | Obtain exact deployed revisions and settings from the environment owner. |\n"
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "repository": "ai-sdlc-workbench",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 267,
+          "end": 275,
+          "text": "async function idlePrompt(page, state) {\n  const waitMs = Math.max(0, claims(state.initialAccess).exp * 1000 - Date.now()) + 30000;\n  await page.locator(promptSelector).waitFor({ state: 'visible', timeout: waitMs });\n  assert.ok(state.refreshToken, 'Idle recovery requires an observed refresh token from the actual service.');\n  assert.ok(claims(state.refreshToken).exp * 1000 - Date.now() > 30000, 'Idle recovery requires a usable refresh token.');\n  await page.locator(extendSelector).waitFor({ state: 'visible' });\n  await page.evaluate(() => { window.__sessionE2e.closures = 0; });\n  await checkpoint(page, state, 'expired-prompt');\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "E15",
+      "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json",
+      "repository": "ai-sdlc-workbench",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "b97b8b857c5f2c7bbfd105bcd8c821598f3cf2c1258975194625574cec3d8c15",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 15,
+          "text": "{\n  \"caseId\": \"idle-prompt-logout\",\n  \"status\": \"PASSED\",\n  \"startedAt\": \"2026-10-20T14:36:31.872Z\",\n  \"clock\": \"REAL_WALL_CLOCK\",\n  \"targetOrigin\": \"http://127.0.0.1:8103\",\n  \"configSha256\": \"0d7aada0988068864548e882716fb794954b87a382732a2f48cc79907e502cd4\",\n  \"testSourceSha256\": \"94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984\",\n  \"sourceRevisions\": {\n    \"mfe-base\": \"6d4c37c839b99d14ea41fd936da1a36cda526b17\",\n    \"single-ui-bff\": \"85d7cc03eb12710d6facf581987fd4ae24fc9844\"\n  },\n  \"sourceRevisionLimit\": \"Configuration declares revisions. Bind deployed bytes separately before verification.\",\n  \"testDoubles\": [],\n  \"browserVersion\": \"155.0.4283.62\",\n"
+        },
+        {
+          "start": 50,
+          "end": 72,
+          "text": "  \"authenticationResponses\": [\n    {\n      \"pathname\": \"/api/auth/v2/sso/login\",\n      \"status\": 200,\n      \"time\": 1792506991803,\n      \"access\": {\n        \"sha256\": \"e892a5aa65b0e9754c8c00558c505947094dd78fbe9633a035a4c1fc76859662\",\n        \"exp\": 1792507051,\n        \"iat\": 1792506991\n      },\n      \"refresh\": null\n    },\n    {\n      \"pathname\": \"/api/auth/v2/sso/refreshtoken\",\n      \"status\": 200,\n      \"time\": 1792507026044,\n      \"access\": null,\n      \"refresh\": {\n        \"sha256\": \"d52b445da30b67cda2d9cc8470c4796a6dc80d1118d72c5d22581aa244b5f8fa\",\n        \"exp\": 1792507170,\n        \"iat\": 1792507026\n      }\n    }\n"
+        },
+        {
+          "start": 83,
+          "end": 123,
+          "text": "  \"initialAccess\": {\n    \"sha256\": \"e892a5aa65b0e9754c8c00558c505947094dd78fbe9633a035a4c1fc76859662\",\n    \"exp\": 1792507051,\n    \"iat\": 1792506991\n  },\n  \"latestAccess\": {\n    \"sha256\": \"e892a5aa65b0e9754c8c00558c505947094dd78fbe9633a035a4c1fc76859662\",\n    \"exp\": 1792507051,\n    \"iat\": 1792506991\n  },\n  \"refresh\": {\n    \"sha256\": \"d52b445da30b67cda2d9cc8470c4796a6dc80d1118d72c5d22581aa244b5f8fa\",\n    \"exp\": 1792507170,\n    \"iat\": 1792507026\n  },\n  \"lifecycle\": {\n    \"events\": [\n      {\n        \"event\": \"pageshow\",\n        \"timestamp\": \"2026-10-20T14:36:31.423Z\",\n        \"visibility\": \"visible\"\n      },\n      {\n        \"event\": \"prompt_opened\",\n        \"timestamp\": \"2026-10-20T14:37:31.035Z\",\n        \"visibility\": \"visible\"\n      },\n      {\n        \"event\": \"prompt_closed\",\n        \"timestamp\": \"2026-10-20T14:37:32.523Z\",\n        \"visibility\": \"visible\"\n      }\n    ],\n    \"promptVisible\": false,\n    \"closures\": 1,\n    \"activity\": {\n      \"mousemove\": 2,\n      \"keydown\": 0,\n      \"scroll\": 0\n    }\n  }\n"
+        }
+      ]
+    },
+    {
+      "id": "E16",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "repository": "ai-sdlc-workbench",
+      "revision": "385a98b0abbdf162b165122993c98b11ba5adf74",
+      "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 119,
+          "end": 143,
+          "text": "After inactivity expires the access token, retain renewal through the existing refresh token.\nContinued eligible activity must preserve renewal across the initial refresh-token expiry.\nThe user confirmed this policy on 20 October 2026.\nThe requested policy comes from the user's recorded replies.\nIt does not establish that the supplied implementation already satisfies every scenario.\n\n## Rationale\n\nThe user requested continued renewal during eligible activity and refresh-token renewal after inactivity.\nThe requested behavior reduces repeated authentication during portal use.\nExpired or revoked credentials cannot authorize renewal.\nA valid access token can support replacement refresh credentials under the existing service contract.\nRecovery without any usable credential and provider failures remain separate boundaries.\nThe controlled intervals below define measurable scenarios. They introduce no production timeout setting.\n\n## Acceptance criteria\n\n```gherkin\nScenario: AC-1\n  Given a valid portal session with at least 30 seconds remaining before access expiry\n  When mouse movement occurs every 100 milliseconds for 15 seconds\n  Then at least one successful renewal occurs before the controlled interval ends\n```\n\n```gherkin\n"
+        }
+      ]
+    },
+    {
+      "id": "E17",
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts",
+      "repository": "mfe-ratan-container",
+      "revision": null,
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "revision_limit": "Supplied filesystem copy; independent revision and UAT deployment unavailable.",
+      "excerpts": [
+        {
+          "start": 162,
+          "end": 167,
+          "text": "  return queryClient\n    .query({ query })\n    .then(queryHandler(setErrorField))\n    .finally(() => {\n      ExtendTokenService(url);\n    });\n"
+        }
+      ]
+    },
+    {
+      "id": "E18",
+      "path": "repos/ui/mfe-base/src/root.tsx",
+      "repository": "mfe-base",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+      "revision_limit": null,
+      "excerpts": [
+        {
+          "start": 68,
+          "end": 75,
+          "text": "export * as TimePicker from \"./components/TimePicker\";\nexport * as SearchGrid from \"./components/SearchGrid\";\nexport * as ToggleButton from \"./components/ToggleButton\";\nexport * as SearchButton from \"./components/SearchButton\";\nexport * as Button from \"./components/Button\";\nexport * as ExtendService from \"./hooks/service/util/extend\";\nexport * as Analytics from \"./analytics\";\nexport * as Version from \"./components/Version\";\n"
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "path": "src/hooks/service/util/extend.ts",
+      "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "unchanged": true,
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "unchanged": true,
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a"
+    },
+    {
+      "path": "src/utils/login.ts",
+      "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "unchanged": true,
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+    },
+    {
+      "path": "src/root.tsx",
+      "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "unchanged": true,
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4"
+    },
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "unchanged": true,
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8"
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "base_sha256": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+      "base_excerpts": [
+        {
+          "start": 87,
+          "end": 102,
+          "text": "  React.useEffect(() => {\n    if (store?.token && ready) {\n      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();\n      timerPopup.current = setTimeout(() => {\n        setShowTimeout(true);\n      }, difftime);\n      timerRefreshToken.current = setTimeout(() => {\n        getRefreshToken();\n      }, difftime - 25000);\n    }\n    return () => {\n      clearAllTimeout();\n    };\n  }, [store?.token, store?.expiredIn, ready]);\n\n  React.useEffect(() => {\n"
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "class": "user_report",
+      "claim": "Latest minor branch deployed; untouched background tab; Cashflow Dashboard; no timeout dialog after approximately thirty minutes.",
+      "evidence": [
+        "E1"
+      ],
+      "limit": "No retained UAT deployment or network evidence."
+    },
+    {
+      "id": "C2",
+      "class": "inspected_implementation",
+      "claim": "Dashboard queries recur after completion with a 120-second delay. Successful query completions invoke the public base extension helper.",
+      "evidence": [
+        "E6",
+        "E7",
+        "E8",
+        "E9",
+        "E10",
+        "E11",
+        "E3",
+        "E18"
+      ],
+      "limit": "Supplied module bytes; loaded UAT module revision and network outcomes unavailable."
+    },
+    {
+      "id": "C3",
+      "class": "inspected_implementation",
+      "claim": "Successful extension updates JWT access expiry, which resets the Home dialog deadline. The helper has no human-activity or visibility guard.",
+      "evidence": [
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "limit": "Source mechanism; eligible credentials and successful renewal required."
+    },
+    {
+      "id": "C4",
+      "class": "inference",
+      "claim": "Automatic dashboard renewal likely explains the reported UAT condition.",
+      "evidence": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7",
+        "E8",
+        "E9",
+        "E10",
+        "E11"
+      ],
+      "limit": "Likely mechanism, not confirmed UAT causation. Correlate query completion, successful extension, and moving access expiry."
+    },
+    {
+      "id": "C5",
+      "class": "documented_review",
+      "claim": "Earlier R-001 and impact analysis flagged query-triggered renewal outside human activity and visibility; representative embedded idle execution remained open.",
+      "evidence": [
+        "E12",
+        "E13"
+      ],
+      "limit": "Broader runtime 4da985a9fa302d7f1ecc04a81b2924b49410ce6a. Not a reproduced specific UAT failure."
+    },
+    {
+      "id": "C6",
+      "class": "observed_execution",
+      "claim": "The retained local idle-prompt-logout case observed a visible dialog near its sixty-second access expiry.",
+      "evidence": [
+        "E14",
+        "E15"
+      ],
+      "limit": "Runtime 6d4c37c839b99d14ea41fd936da1a36cda526b17; shortened local lifetimes; no representative dashboard or UAT parity."
+    },
+    {
+      "id": "C7",
+      "class": "source_comparison",
+      "claim": "The shared extension, response acceptance, expiry parsing, export, and Timeout helper bytes are unchanged from baseline. Both Home versions schedule the dialog from access expiry.",
+      "evidence": [
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E18"
+      ],
+      "limit": "Inherited mechanism; no paired UAT execution. This does not prove which version introduced the reported UAT symptom."
+    }
+  ],
+  "discovery": {
+    "commands": [
+      {
+        "command": "ai-sdlc --workspace . status",
+        "exit_code": 127,
+        "result": "ai-sdlc absent from PATH."
+      },
+      {
+        "command": "python -m core --workspace . status",
+        "exit_code": 127,
+        "result": "python absent from PATH."
+      },
+      {
+        "command": "python3 -m core --workspace . status",
+        "exit_code": 1,
+        "result": "PyYAML unavailable to system python3."
+      }
+    ],
+    "fallback": "Direct local catalog, source, assertion, and retained-result inspection. No connector tools invoked."
+  },
+  "new_business_tests": "NOT_RUN",
+  "uat_execution": "NOT_RUN",
+  "knowledge_update": {
+    "status": "not applicable",
+    "reason": "Incident conditions and source explanation introduce no domain policy change."
+  },
+  "readiness": {
+    "source_explanation": "READY; completed within inspected scope.",
+    "uat_causal_confirmation": "READY_WITH_LIMITS; further evidence collection only.",
+    "blocked_actions": [
+      "Confirming UAT root cause",
+      "Accepting representative idle timeout behavior"
+    ],
+    "owner": "unknown application owner",
+    "next_action": "Bind loaded UAT modules; correlate dashboard queries, successful sso/extend responses, and access-expiry progression."
+  }
+}

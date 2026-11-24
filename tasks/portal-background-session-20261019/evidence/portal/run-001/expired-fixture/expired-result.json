@@ -1,0 +1,134 @@
+{
+  "status": "PASSED",
+  "base": "http://127.0.0.1:8089/api/auth",
+  "fixture_limit": "Access expiry was explicitly set one minute in the past. Normal controller timeouts remain15/225/60 minutes.",
+  "results": [
+    {
+      "name": "login",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Authorization": {
+        "sha256": "2081e357ec0e206da2a86d1a74a3a7fa18f179b73c4a479098a02aa50794214d",
+        "claims": {
+          "iss": "single-ui-bff",
+          "sub": "session-local",
+          "id": "D15BB2EFBE4C0897139C705C32EAC110",
+          "iat": 1792396352,
+          "exp": 1792397252,
+          "auth_time": 1792396352,
+          "max_age": 1792399952
+        }
+      }
+    },
+    {
+      "name": "issue_expired_fixture",
+      "status": 200,
+      "result": null,
+      "errorMessage": null,
+      "body_keys": [
+        "expired_access_minutes",
+        "normal_controller_timeouts_unchanged",
+        "scope"
+      ],
+      "Single-UI-Authorization": {
+        "sha256": "6a1c15d68b3767b1158a3838542a7ce67d5cc874bf1cb35e79dc802286b64fa7",
+        "claims": {
+          "iss": "single-ui-bff",
+          "sub": "session-local",
+          "id": "D15BB2EFBE4C0897139C705C32EAC110",
+          "iat": 1792396352,
+          "exp": 1792396292,
+          "auth_time": 1792396352,
+          "max_age": 1792399952
+        }
+      },
+      "Single-UI-Refresh": {
+        "sha256": "368441530857e4114da8c682f85dff32f2d2b0167faa28104a174dcaf3b4b74a",
+        "claims": {
+          "iss": "single-ui-bff-refresh",
+          "sub": "session-local",
+          "id": "D15BB2EFBE4C0897139C705C32EAC110",
+          "iat": 1792396352,
+          "exp": 1792409876
+        }
+      }
+    },
+    {
+      "name": "refresh_with_expired_access",
+      "status": 401,
+      "result": false,
+      "errorMessage": "TOKEN_INVALID_EXPIRED - token is expired - reached idle timeout",
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ]
+    },
+    {
+      "name": "extend_with_expired_access",
+      "status": 401,
+      "result": false,
+      "errorMessage": "TOKEN_INVALID_EXPIRED - token is expired - reached idle timeout",
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ]
+    },
+    {
+      "name": "relogin_with_valid_refresh",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Authorization": {
+        "sha256": "1c6df36832acf362889011383d29afc08b4570a01380c065cf06606b405a6756",
+        "claims": {
+          "iss": "single-ui-bff",
+          "sub": "session-local",
+          "id": "D15BB2EFBE4C0897139C705C32EAC110",
+          "iat": 1792396353,
+          "exp": 1792397253,
+          "auth_time": 1792396353,
+          "max_age": 1792399953
+        }
+      }
+    }
+  ],
+  "checks": {
+    "expired_fixture_past_exp": true,
+    "refresh_rejected_with_expired_access": true,
+    "extend_rejected_with_expired_access": true,
+    "valid_refresh_accepted_for_relogin": true
+  }
+}

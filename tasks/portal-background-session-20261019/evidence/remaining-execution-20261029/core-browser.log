@@ -1,0 +1,13 @@
+file:///Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser.mjs:48
+    const response=await route.fetch();if(response.status()!==200)throw new Error('Synthetic local login setup status '+response.status());state.body=await response.text();state.access=jwt(c.id+'-initial',now);return route.fulfill({response,headers:{...response.headers(),'single-ui-authorization':state.access},body:state.body});
+                                                                        ^
+
+Error: Synthetic local login setup status 400
+    at file:///Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser.mjs:48:73
+    at async Promise.all (index 1)
+    at async RouteHandler._handleInternal (/Users/lushevol/code/github/ratan-release-impact/workbench/adapters/browser/node_modules/playwright-core/lib/coreBundle.js:61685:27)
+    at async RouteHandler._handleImpl (/Users/lushevol/code/github/ratan-release-impact/workbench/adapters/browser/node_modules/playwright-core/lib/coreBundle.js:61654:18)
+    at async RouteHandler.handle (/Users/lushevol/code/github/ratan-release-impact/workbench/adapters/browser/node_modules/playwright-core/lib/coreBundle.js:61648:16)
+    at async _BrowserContext._onRoute (/Users/lushevol/code/github/ratan-release-impact/workbench/adapters/browser/node_modules/playwright-core/lib/coreBundle.js:63919:27)
+
+Node.js v24.16.0

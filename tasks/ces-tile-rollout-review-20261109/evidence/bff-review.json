@@ -1,0 +1,643 @@
+{
+  "repository": "single-ui-bff",
+  "base": "834b4155232222347220e47139a502ee43a9cbdf",
+  "head": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
+  "mode": "branch",
+  "selected_diff_sha256": "f893db9c17eaca394c2d5e14c8f340eeffa26f596854ca3e71274e9e76e50af4",
+  "worktree_clean": true,
+  "reviewed_at": "2026-11-09T15:55:19.643041+00:00",
+  "findings": [
+    {
+      "id": "BFF-DEP-001",
+      "priority": "P1",
+      "title": "Align the dependency overrides with the Spring Boot platform",
+      "path": "pom.xml",
+      "lines": [
+        249,
+        257
+      ],
+      "trigger": "Build the candidate with the committed Spring Boot 3.3.4 dependency management, then initialize Jackson or Hibernate Validator.",
+      "baseline": "Jackson 2.17.2 reads JSON successfully. Compatible cached Validator 8.0.2 initializes with the managed API/logging dependencies.",
+      "candidate": "Databind 2.21.8 fails ObjectMapper initialization with NoClassDefFoundError JsonSerializeAs. Validator 9.0.2 fails provider initialization with NoSuchMethodError Logger.getMessageLogger(MethodHandles.Lookup,Class,String).",
+      "cause": "Only databind and validator versions change. The parent still manages Jackson core/annotations at 2.17.2, Jakarta validation at 3.0.2, and JBoss Logging at 3.5.3.Final.",
+      "consequence": "JSON mapper initialization cannot complete. The service cannot initialize its JSON HTTP infrastructure under this committed dependency closure. Validator initialization independently fails.",
+      "owner": "unknown",
+      "next_action": "Choose a compatible dependency set and align each related dependency through its supported BOM. Verify the actual service startup and full owning Maven suite.",
+      "validation": "bff-dependencies.json",
+      "assertion_source": "probe_bff_dependencies.py",
+      "confidence": "high for the actual dependency linkage errors; source-inferred BFF startup consequence",
+      "limits": [
+        "Actual BFF startup remains blocked by unavailable private starter and build dependencies.",
+        "Validator baseline substitutes cached 8.0.2.Final for Boot-managed 8.0.1.Final. Jackson baseline and candidate override are exact.",
+        "No live service or deployment was exercised."
+      ]
+    }
+  ],
+  "shared_rollout_findings_delegated": [
+    {
+      "id": "CES-AGGREGATION",
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "lines": [
+        123,
+        136
+      ],
+      "behavior": "One failed CES application aborts the complete readEms3 aggregate. Dual mode retains only EMS2 grants. EMS3_ONLY propagates the failure through authentication.",
+      "probe_owner": "rollout_probe agent",
+      "status": "source-confirmed; runtime evidence owned by parallel probe"
+    }
+  ],
+  "other_observations": [
+    {
+      "topic": "Executor qualifier",
+      "disposition": "not a confirmed defect",
+      "reason": "Local source declares only one Executor bean. No ambiguous reachable injection was established. Do not flag field annotation placement alone."
+    },
+    {
+      "topic": "No CES network deadline",
+      "disposition": "conditional rollout risk",
+      "paths": [
+        "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/config/BeanConfig.java:11",
+        "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java:177"
+      ],
+      "reason": "The unchanged bare RestTemplate has no configured timeout. The new aggregate waits with future.join on the shared four-worker executor. No stalled-service execution was performed."
+    },
+    {
+      "topic": "Boot 4 RestTemplate imports in a Boot 3 parent",
+      "disposition": "pre-existing; excluded from introduced-defect findings",
+      "reason": "AuthConfig imports the same Boot 4 namespaces at main and candidate."
+    },
+    {
+      "topic": "Zero CES roles",
+      "disposition": "provider-contract limit",
+      "reason": "Service and mapper reject empty role_entitlements; existing tests explicitly assert rejection. Whether a live zero-assignment response uses this shape needs provider evidence."
+    }
+  ],
+  "validation_limits": [
+    {
+      "operation": "mvn -o help:effective-pom -Doutput=/private/tmp/bff-review-effective-pom.xml",
+      "status": "BLOCKED",
+      "reason": "The local Maven cache lacks maven-help-plugin. No dependencies were downloaded and no lifecycle build ran."
+    },
+    "Current source mapper/routing tests run by parallel agent use a controlled dependency closure. They do not validate the committed POM overrides."
+  ],
+  "source_bindings": [
+    {
+      "path": "pom.xml",
+      "sha256": "ef2526ef06b0b7d0925ce8c5029a407ade65b69cb67b6da29fae4ffa9425d2f3"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "sha256": "fcfdf57d6147f484edc1645da85dd04c99f73852dbe996ec9e4856142c2340b9"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "sha256": "2bf4aeb0704a338aab97a4a02e97168ef1c6e26e4b56af5c170ee4bfe5659b5b"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "sha256": "433f4105aec525afadde7d997f58220f9d09e101fe787a0568e278c81d03e4da"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementService.java",
+      "sha256": "6e499e741e9783252bb80527543b21830c1bb5d5fb1c12d2d897d59c737f535e"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/config/AuthConfig.java",
+      "sha256": "5f96be951d6065bb2b7f57b6040786d6f5bca61ba90f1dfb35814910c8665b4c"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/config/BeanConfig.java",
+      "sha256": "8d7a1d90e22b300fc727c745c8834a723785a5067dbdeacfae5d7a7331bc303e"
+    }
+  ],
+  "changed_path_dispositions": [
+    {
+      "path": "azure-pipelines-maven.yml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "pom.xml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "build-dependencies"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/config/AuthConfig.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "selected caller, constructor, or authorization method context read",
+      "limits": "Full unchanged enclosing file was not reviewed by this independent pass.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/config/AuthorizationMigrationMode.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/config/AuthorizationMigrationProperties.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationConfigController.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No execution claim. CSV and tile mutation are also owned by root rollout review.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No execution claim. CSV and tile mutation are also owned by root rollout review.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "selected caller, constructor, or authorization method context read",
+      "limits": "Full unchanged enclosing file was not reviewed by this independent pass.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/config/EntitlementSource.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Ems2Result.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Subject.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/request/RequestOfApplicationTile.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/response/ResponseOfAuthenticate.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/entity/ApplicationTileAudit.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v1/implementation/OUDAuthenticationService.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationComparisonService.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3TileReadResult.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationResult.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationService.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileFeatureMatcher.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/AuthFilterExecutor.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementService.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/config/Ems3Config.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/dto/Drawer.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "Schema and DTO consistency inspected; persistence execution and deployment remain unverified.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/exception/Ems3UnRetryableException.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/implementation/EMS2AuthorizationImplementation.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "selected caller, constructor, or authorization method context read",
+      "limits": "Full unchanged enclosing file was not reviewed by this independent pass.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/Constant.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/CsvUtility.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No execution claim. CSV and tile mutation are also owned by root rollout review.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/EntitlementRouting.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/JsonLogUtils.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/PerformanceLogUtil.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/util/TileEntitlementConfig.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "production-source"
+    },
+    {
+      "path": "src/main/resources/application-dev.yml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "src/main/resources/application-fmrp1.yml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "src/main/resources/application-uat2.yml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "src/main/resources/application-uat4.yml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "src/main/resources/application-uat6.yml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "src/main/resources/application.yml",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "inspected",
+      "enclosing_source": "changed hunks and available context",
+      "limits": "No live CI/deployment/configuration verification. Credential-like values are excluded from retained review content.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "src/main/resources/db/migration/V1_1_1__application_tile_add_entitlement.sql",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "covered by candidate and relevant baseline comparison",
+      "enclosing_source": "full candidate source read",
+      "limits": "No complete Maven or live service validation. Dependency probe covers POM linkage only.",
+      "kind": "configuration-or-schema"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileControllerTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationControllerEntraTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationControllerTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationComparisonServiceTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java",
+      "generated": false,
+      "disposition": "partially-inspected",
+      "diff": "selected assertion methods, test names, fixture or failure boundaries inspected",
+      "enclosing_source": "selected tests only",
+      "limits": "No claim that every unchanged or changed test body was inspected. Parallel probe owns current selected test execution.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3ApplicationNameAuthorizationTest.java",
+      "generated": false,
+      "disposition": "partially-inspected",
+      "diff": "selected assertion methods, test names, fixture or failure boundaries inspected",
+      "enclosing_source": "selected tests only",
+      "limits": "No claim that every unchanged or changed test body was inspected. Parallel probe owns current selected test execution.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3EntitlementsSeparationTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "candidate source read",
+      "enclosing_source": "full candidate test source read",
+      "limits": "Assertions inspected; no execution by this pass. Parallel probe owns current unit execution.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImplTest.java",
+      "generated": false,
+      "disposition": "partially-inspected",
+      "diff": "selected assertion methods, test names, fixture or failure boundaries inspected",
+      "enclosing_source": "selected tests only",
+      "limits": "No claim that every unchanged or changed test body was inspected. Parallel probe owns current selected test execution.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementServiceTest.java",
+      "generated": false,
+      "disposition": "partially-inspected",
+      "diff": "selected assertion methods, test names, fixture or failure boundaries inspected",
+      "enclosing_source": "selected tests only",
+      "limits": "No claim that every unchanged or changed test body was inspected. Parallel probe owns current selected test execution.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/filter/ems3/FmaaAuthTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/util/AdminModuleUtilTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "changed hunks and adjacent context only",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/util/EntitlementRoutingTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/util/TileEntitlementConfigTest.java",
+      "generated": false,
+      "disposition": "inspected",
+      "diff": "complete changed hunks read",
+      "enclosing_source": "full candidate source read as a newly added file",
+      "limits": "No complete unchanged test-body review or execution claimed. Parallel validation records own selected executions.",
+      "kind": "test"
+    }
+  ],
+  "disposition_summary": {
+    "inspected": 54,
+    "partially-inspected": 4,
+    "total": 58
+  },
+  "disposition_note": "All 58 changed paths have explicit dispositions. Complete changed hunks were read for newly accounted paths; four large authorization/service test files retain selected-assertion inspection. No claim covers every full unchanged enclosing test body. Root and parallel rollout records provide additional coverage."
+}

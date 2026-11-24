@@ -1,0 +1,333 @@
+{
+  "config": {
+    "argv": [
+      "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config=e2e/audit.config.ts",
+      "auth-final.spec.ts",
+      "--grep",
+      "AUTH-138",
+      "--workers=1"
+    ],
+    "configFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.config.ts",
+    "rootDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "snapshotDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "actionTimeout": 8000,
+          "navigationTimeout": 10000,
+          "launchOptions": {
+            "channel": "chromium",
+            "headless": true,
+            "chromiumSandbox": true
+          },
+          "trace": "on",
+          "screenshot": "on",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.reporter.ts",
+        {
+          "output": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "auth-final.spec.ts",
+      "file": "auth-final.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AUTH-138 recovery removes old entity and controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-138"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as user-a in an isolated browser context",
+                      "duration": 552
+                    },
+                    {
+                      "title": "2. And the selected fixture tab is labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page",
+                      "duration": 4
+                    },
+                    {
+                      "title": "3. And access A is expired; refresh R expires at controlled time T+600 seconds",
+                      "duration": 4
+                    },
+                    {
+                      "title": "4. And the dialog named \"Your session has been expired\" on the Home page is visible",
+                      "duration": 9
+                    },
+                    {
+                      "title": "5. And the relogin response removes ENTITY-A and its drawer",
+                      "duration": 7
+                    },
+                    {
+                      "title": "6. When User A clicks the button labelled \"Extend\" inside the dialog named \"Your session has been expired\"",
+                      "duration": 25
+                    },
+                    {
+                      "title": "7. And the fixture delivers the accepted recovery response without ENTITY-A",
+                      "duration": 1
+                    },
+                    {
+                      "title": "8. Then previous ENTITY-A application controls are absent from the portal; their component types and exact identities are UNVERIFIED",
+                      "duration": 691
+                    },
+                    {
+                      "title": "9. When User A clicks the icon button with test ID \"${MFE_APP_PREFIX_STYLE}_avatar_IconButton\" in the portal header on the Home page",
+                      "duration": 13
+                    },
+                    {
+                      "title": "10. And User A clicks the menu item containing \"user-a\" inside the menu with DOM ID \"menu-appbar-avatar\"",
+                      "duration": 35
+                    },
+                    {
+                      "title": "11. Then the text \"user-a\" is visible inside the dialog titled \"User Profile\" on the Home page",
+                      "duration": 2
+                    },
+                    {
+                      "title": "12. And the installed entities do not contain ENTITY-A",
+                      "duration": 2
+                    }
+                  ],
+                  "startTime": "2026-10-22T06:16:11.080Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-138"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--7b2cba81cc68bc7b5b81779fdd1c1eeca9dce019.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--438e5a171734dc2692e442b1dc6ec4ddc07d3939.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--2c31663437e7589a5cb988164f95e07f6cca4a85.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--f356878bf37dc966f4c96db8d2ade85804733ea5.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--9d591fcb99905384e74ae4a04116d75efc42a6c2.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--e67308ac39e6374df9c9d95346282257479ae6bc.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--a522378779c698b807c75cf527f42f26b5ede116.png"
+                    },
+                    {
+                      "name": "removed-entity-drawer-inspection (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/removed-entity-drawer-inspection-ACTUAL-APPLICATION-LOCAL-SERVICES--32a02625524db01af1b2c77808dc3e45f692479d.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--d269734de6b2124cd9c1f8023ce7e9470933aafc.png"
+                    },
+                    {
+                      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--a3d58cb1ec1f39f49cfd67afdf79777eced0ea8b.png"
+                    },
+                    {
+                      "name": "step-10 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-10-ACTUAL-APPLICATION-LOCAL-SERVICES--9f31c1985efb021f01e042b63308225cca32fef0.png"
+                    },
+                    {
+                      "name": "step-11 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-11-ACTUAL-APPLICATION-LOCAL-SERVICES--8b8ec240e38128a36fafe45954aa728baba5ecd1.png"
+                    },
+                    {
+                      "name": "step-12 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-12-ACTUAL-APPLICATION-LOCAL-SERVICES--e47435ec69bec8737d851715429337f8fb5f8580.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--51a74a1dd4a70adc26a4b5c5033da4b1e7d951ba.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-046/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-8cda7ce0f5b77d04df58",
+          "file": "auth-final.spec.ts",
+          "line": 56,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T06:16:10.685Z",
+    "duration": 2947.149,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

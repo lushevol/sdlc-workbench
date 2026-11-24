@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "fixtures": {
+    "task": {
+      "base": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"wait\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n",
+        "test_characterization.py": "import unittest\nfrom service import renewal_action\n\nclass CurrentBehavior(unittest.TestCase):\n    def test_rejection_logs_out(self):\n        self.assertEqual(renewal_action(refresh_failed=True), \"logout\")\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "candidate": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"logout\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n"
+      },
+      "files": {
+        "tasks/demo/intake.md": "# Synthetic intake: demo\n\nInvestigation is complete. Preserve this intake's bytes.\nPolicy question Q-1 is resolved in [the domain record](../../knowledge/session-policy.md#active-renewal).\nContinue work in [the stage record](stage-review.md).\n",
+        "knowledge/session-policy.md": "# Synthetic policy\n\nGovernance: candidate. Publication review is pending.\nSource: recorded user clarification Q-1. This records intent, without publication approval.\n\n## Active renewal\n\nContinued mouse, keyboard, and scroll activity renews the session indefinitely.\n",
+        "tasks/demo/stage-review.md": "# Synthetic stage review\n\nCurrent implementation: `{{HEAD}}` in `../../repo`.\nHistorical implementation: `{{BASE}}`.\nNext phase: local implementation verification.\nReadiness: READY for that local scope. Business approval remains pending.\n\n[TC-PENDING](test-cases.md#tc-pending) and [TC-RETRY](test-cases.md#tc-retry) are canonical.\n[Existing assertions](../../repo/test_characterization.py) characterize rejection behavior.\n[Earlier execution](evidence/earlier-run.json) tested the historical implementation.\nUAT configuration and access are unavailable. The release owner is unknown.\nDo not change business policy or publish knowledge during this stage.\n",
+        "tasks/demo/test-cases.md": "# Synthetic case definitions\n\n## TC-PENDING\n\n```gherkin\nScenario: Wait for a pending renewal\n  Given the user's renewal request is pending\n  When the user selects Extend\n  Then the client action is \"wait\"\n  And the client does not log out\n```\n\n## TC-RETRY\n\n```gherkin\nScenario: Retry a rejected renewal\n  Given the user's renewal request failed\n  When the user selects Extend\n  Then the client action is \"retry\"\n  And the client does not log out\n```\n",
+        "tasks/demo/evidence/earlier-run.json": "{\n  \"synthetic\": true,\n  \"revision\": \"{{BASE}}\",\n  \"case_id\": \"TC-PENDING\",\n  \"result\": \"PASSED\",\n  \"observed_action\": \"wait\",\n  \"environment\": \"isolated local fixture\",\n  \"limits\": [\n    \"No UAT or real browser was used.\"\n  ]\n}\n"
+      }
+    },
+    "review": {
+      "base": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"wait\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n",
+        "test_characterization.py": "import unittest\nfrom service import renewal_action\n\nclass CurrentBehavior(unittest.TestCase):\n    def test_rejection_logs_out(self):\n        self.assertEqual(renewal_action(refresh_failed=True), \"logout\")\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "candidate": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"logout\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n"
+      },
+      "files": {
+        "requirements.md": "# Synthetic intended behavior\n\nSource: supplied evaluation contract. No actual business approval is represented.\n\nA pending renewal must keep the client waiting.\nA rejected renewal must permit retry without logout.\nBoth rules apply to base and candidate.\n\nDefinitions: [TC-PENDING](test-cases.md#tc-pending), [TC-RETRY](test-cases.md#tc-retry).\n",
+        "test-cases.md": "# Synthetic case definitions\n\n## TC-PENDING\n\n```gherkin\nScenario: Wait for a pending renewal\n  Given the user's renewal request is pending\n  When the user selects Extend\n  Then the client action is \"wait\"\n  And the client does not log out\n```\n\n## TC-RETRY\n\n```gherkin\nScenario: Retry a rejected renewal\n  Given the user's renewal request failed\n  When the user selects Extend\n  Then the client action is \"retry\"\n  And the client does not log out\n```\n",
+        "review-request.md": "# Synthetic review scope\n\nRepository: `repo/`.\nSelected baseline: `{{BASE}}`.\nSelected candidate: `{{HEAD}}`.\nUse the same inputs on both sides.\nThe supplied test runner is Python unittest: `python -m unittest discover -s . -p 'test_*.py' -v`.\nInspect the test before execution.\nLocal source inspection and isolated local checks are authorized.\nApplication fixes, new tests, task creation, and external calls are outside scope.\n"
+      }
+    },
+    "readiness": {
+      "base": {
+        "README.md": "# Synthetic test repository\n\nThis fixture describes Robot Browser E2E tests for the orders UI.\nUse Robot Framework with Browser library in this repository Python environment.\nPlaywright investigation tooling is separate.\nThe frontend requires its local BFF before UI tests can run.\n",
+        "requirements.txt": "robotframework==7.2.2\nrobotframework-browser==19.1.1\n",
+        "tests/orders.robot": "*** Settings ***\nLibrary    Browser\n\n*** Test Cases ***\nOrders page loads\n    New Browser    chromium\n    New Page    http://localhost:4310/orders\n    Get Text    h1    ==    Orders\n",
+        "bundle-target.json": "{\"synthetic\": true, \"platform\": \"darwin\", \"architecture\": \"arm64\", \"python\": \"3.14\", \"contents\": [\"core wheels\", \"connector npm cache\"], \"robot_browser_assets\": false}\n"
+      },
+      "candidate": {
+        "revision.txt": "Synthetic setup revision 2\n"
+      },
+      "files": {
+        "request-context.md": "# Synthetic setup scope\n\nSelected suite: Robot Browser tests/orders.robot.\nCurrent host: macOS arm64. Handoff target: native Windows x64, Python 3.12, without package-index access.\nLocal file inspection is authorized. Do not install packages, launch apps, execute suites, use the network, or change source/catalogs.\nAll supplied results are synthetic evaluation inputs. No actual environment readiness is represented.\n",
+        "evidence/doctor.json": "{\n  \"synthetic\": true,\n  \"command\": \"ai-sdlc --workspace WORKSPACE doctor\",\n  \"revision\": \"{{HEAD}}\",\n  \"platform\": \"Darwin arm64\",\n  \"status\": \"INCOMPLETE\",\n  \"core_status\": \"READY\",\n  \"integration_access\": \"UNTESTED\",\n  \"features\": [\n    {\n      \"id\": \"core\",\n      \"status\": \"READY\"\n    },\n    {\n      \"id\": \"tests:orders-robot\",\n      \"status\": \"READY\",\n      \"limitations\": [\n        \"Package metadata and suite files only; no libraries or tests executed.\"\n      ]\n    },\n    {\n      \"id\": \"release-clinic\",\n      \"status\": \"INCOMPLETE\",\n      \"next_actions\": [\n        \"Configure collector variables.\"\n      ]\n    }\n  ]\n}\n",
+        "evidence/local-checks.json": "{\n  \"synthetic\": true,\n  \"revision\": \"{{HEAD}}\",\n  \"checks\": [\n    {\n      \"id\": \"robot-version\",\n      \"result\": \"PASSED\",\n      \"detail\": \"Robot Framework and Browser Python package metadata found in selected repository environment.\"\n    },\n    {\n      \"id\": \"robot-browser-assets\",\n      \"result\": \"FAILED\",\n      \"detail\": \"Browser library Node/browser assets are absent.\"\n    },\n    {\n      \"id\": \"frontend\",\n      \"result\": \"PASSED\",\n      \"detail\": \"Frontend responds on localhost:4310.\"\n    },\n    {\n      \"id\": \"bff-start\",\n      \"result\": \"FAILED\",\n      \"detail\": \"Required local BFF did not start; configuration file is absent.\"\n    },\n    {\n      \"id\": \"playwright-investigation-smoke\",\n      \"result\": \"PASSED\",\n      \"detail\": \"Separate Playwright adapter launched Chromium and switched isolated tabs.\"\n    }\n  ],\n  \"business_suite_execution\": \"NOT_RUN\",\n  \"target_windows_execution\": \"NOT_RUN\"\n}\n"
+      }
+    },
+    "deployment": {
+      "base": {
+        "application.yaml": "# Synthetic repository default; not deployed evidence.\njwt:\n  tokenExpiration: 15\n",
+        "launch-local.txt": "Synthetic local issuer launch override: -Djwt.tokenExpiration=480\n",
+        "session.js": "// Synthetic timing source. Values use milliseconds.\nexport function warningDelay(expiryEpochMs, nowEpochMs) {\n  return Math.max(0, expiryEpochMs - nowEpochMs - 60000);\n}\n",
+        "test_session.py": "# Synthetic characterization, not executed in this evaluation.\ndef test_warning_after_clock_advance():\n    expiry_ms = 28800000\n    now_ms = expiry_ms - 60000\n    assert max(0, expiry_ms - now_ms - 60000) == 0\n"
+      },
+      "candidate": {
+        "revision.txt": "Synthetic deployment candidate 2\n"
+      },
+      "files": {
+        "requirements.md": "# Synthetic supplied verification contract\n\nFor this exercise, the warning must appear 60 seconds before effective token expiry in the Cashflow Blotter embedded application.\nA warning must permit Extend while the token remains valid.\nThe contract is an evaluation input; no actual business approval is represented.\n",
+        "test-cases.md": "# Synthetic canonical cases\n\n## TC-WARNING\n\n```gherkin\nScenario: Show the warning before effective expiry\n  Given Cashflow Blotter runs within the deployed host\n  And the session token is valid\n  When token expiry is 60 seconds away\n  Then the warning is visible\n  And Extend is available before token expiry\n```\n",
+        "evidence/local-run.json": "{\n  \"synthetic\": true,\n  \"source_revision\": \"{{HEAD}}\",\n  \"environment\": \"isolated local services\",\n  \"case_id\": \"TC-WARNING\",\n  \"status\": \"PASSED\",\n  \"application\": \"Cashflow Blotter local stub\",\n  \"issuer_setting\": {\n    \"name\": \"jwt.tokenExpiration\",\n    \"value\": 480,\n    \"unit\": \"minutes\",\n    \"effective_source\": \"launch-local.txt JVM system property overrides application.yaml\",\n    \"observed_lifetime_seconds\": 28800\n  },\n  \"transforms\": [\n    \"Clock advanced to expiry minus 60 seconds.\",\n    \"Identity provider and embedded host replaced with local stubs.\"\n  ],\n  \"assertions\": [\n    \"Warning visible after clock advance.\"\n  ],\n  \"limits\": [\n    \"No Extend assertion.\",\n    \"No actual deployed host.\",\n    \"No continuous eight-hour wait.\"\n  ]\n}\n",
+        "evidence/uat-observation.json": "{\n  \"synthetic\": true,\n  \"environment\": \"UAT\",\n  \"requested_application\": \"Cashflow Blotter\",\n  \"captured_application\": \"Legacy Orders Blotter embedded in portal\",\n  \"host_revision\": \"portal-release-7\",\n  \"embedded_revision\": \"unknown\",\n  \"issuer_revision\": \"unknown\",\n  \"browser\": \"Edge, version unavailable\",\n  \"sample_token_lifetime_seconds\": 900,\n  \"token_values_retained\": false,\n  \"effective_issuer_configuration_source\": \"unknown\",\n  \"clock_offset\": \"unknown\",\n  \"observed_result\": \"Logout page captured. No warning or Extend event trace was retained.\",\n  \"limits\": [\n    \"Capture does not establish preceding event order.\",\n    \"One sample lifetime does not establish configuration precedence or policy.\"\n  ]\n}\n",
+        "evidence/release-note.md": "# Synthetic deployment note\n\nThe planned embedded application candidate is {{HEAD}}.\nDeployment completion and live artifact mapping are unconfirmed.\nNo UAT access or effective configuration export is available.\nThe release owner is unknown.\n"
+      }
+    },
+    "knowledge-enhancement": {
+      "base": {
+        "revision.txt": "Synthetic engineering baseline\n"
+      },
+      "candidate": {
+        "revision.txt": "Synthetic engineering candidate\n"
+      },
+      "files": {
+        "sources/portal/activity.md": "# Activity renewal\n\nDraft requirement, 1 November 2026. Applies to Portal operators.\n\nMouse, keyboard, and scroll activity keeps renewal eligible while refresh credentials remain usable. No fixed active-session duration is specified.\nBrowser suspension recovery is unresolved.\nThis source supplies no evidence of production adoption.\n",
+        "sources/portal/observation.md": "# Local renewal investigation\n\nHistorical execution, 24 October 2026; local fixture, source revision ui-42.\n\nMouse events every 100 ms during a 15-second observation produced zero renewal requests.\nInspected ui-42 code schedules runExtend after 5,000 ms. This delay describes implementation, not intended policy.\nThe fixture used a controlled clock and a stub issuer. It did not test UAT or continuous real-duration renewal.\n",
+        "sources/settlement/cutoff.md": "# Cutoff proposal\n\n2022 demonstration proposal, not confirmed current policy.\n\nWeekday cutoff is proposed as 16:00 Asia/Singapore.\nHoliday treatment is undecided and needs the settlement owner.\nAfter-cutoff items are proposed for the next business date, subject to owner approval.\n",
+        "sources/settlement/recovery.md": "# Payment recovery\n\nDraft target behavior, 10 November 2026.\n\nA rejected payment can be retried with its original payment reference.\nRepeating an accepted reference must not create a second payment.\nLate-arrival retention duration is unresolved; the document provides no default.\n",
+        "sources/access/grants.md": "# Entitlement evaluation\n\nDraft CES rule, 10 November 2026.\n\nEvaluate the union of grants through application, feature or subject, and action.\nSeveral roles can contribute grants. No primary scalar role is defined.\nA caller without a matching action grant is denied.\n",
+        "sources/access/migration.md": "# Existing caller contract\n\nInspected legacy API, revision api-9; supplied migration constraint, 15 November 2026.\n\nOmitting drawers preserves the existing state. An empty drawers array clears it.\nA replacement identifier may name a different entity. The identifier mapping is unresolved.\nThe target adapter must preserve existing upper-application calls without edits to those callers. Implementation parity is not established.\n",
+        "sources/operations/runtime.md": "# Environment comparison\n\nCaptured local evidence, 26 October 2026.\n\nThe YAML default is 15 minutes. The effective local JVM override is 480 minutes.\nOne UAT token sample has a 900-second lifetime. The effective issuer configuration and UAT clock offset are unknown.\nThe candidate release note is a deployment plan. Deployment completion is unconfirmed and the release owner is unknown.\n",
+        "sources/operations/retention.md": "# Evidence retention instruction\n\nRecorded maintainer instruction, 30 October 2026.\n\nReview consumers and provenance before deleting historical payloads.\nRetain meaningful failed traces and link one canonical payload instead of duplicating it.\nEqual hashes alone do not authorize deletion. The historical consumer inventory remains incomplete.\n",
+        "knowledge/records/portal.md": "# Portal candidate\n\n## Activity\nMouse, keyboard, and scroll activity keeps renewal eligible while refresh credentials are usable. No fixed duration is specified.\nBrowser suspension is unresolved. Production adoption is unverified.\n\n## Investigation evidence\nSee tasks/gaps.md for the historical local observation and inspected timing.\n",
+        "knowledge/records/settlement.md": "# Settlement candidate\n\n## Cutoff\nThe 2022 demonstration proposed a weekday 16:00 Asia/Singapore cutoff and next-business-date processing after cutoff.\nThis remains a proposal requiring owner approval. Holiday treatment is unresolved.\n\n## Recovery\nNo recovery source has been incorporated.\n",
+        "knowledge/records/access.md": "# Access candidate\n\n## Grants\nEvaluate the union of application, feature or subject, and action grants across roles.\nNo primary scalar role is defined.\n\n## Caller migration\nOmitted drawers preserves state; [] clears it. Identifier mapping is unresolved. Preserve upper-application calls. Parity is unverified.\n",
+        "knowledge/records/operations.md": "# Operations candidate\n\n## Retention\nReview consumers and provenance before historical cleanup. Retain meaningful failures and one canonical payload. Equal hashes do not authorize deletion.\nThe consumer inventory is incomplete. Environment observations are in tasks/gaps.md.\n",
+        "tasks/gaps.md": "# Observations and limits\n\n## Portal local investigation\nAt ui-42, mouse events every 100 ms during 15 seconds produced zero renewal requests on 24 October 2026. Code schedules runExtend after 5,000 ms. These are historical implementation and execution observations, not policy or production adoption. The controlled clock and stub issuer exclude UAT and real-duration conclusions.\n\n## Environment\nYAML default 15 minutes; local JVM override 480 minutes. UAT sample lifetime 900 seconds; issuer configuration and clock offset unknown. Deployment remains planned; completion and owner are unknown.\n",
+        "sources/context.md": "# Meeting navigation\n\nThis meeting agenda repeats the existing Portal Activity candidate verbatim. It introduces no new conditions, exceptions, or target behavior.\n",
+        "selection.json": "{\n  \"synthetic\": true,\n  \"note\": \"Fixture declarations, not runtime receipt schema.\",\n  \"selected\": [\n    \"portal/activity.md\",\n    \"settlement/recovery.md\",\n    \"access/grants.md\",\n    \"context.md\"\n  ],\n  \"source_hashes\": {\n    \"portal/activity.md\": \"584404867d329bdcf7e7cc596e196b14d3fa0228fe9649a94d37a83624785c24\",\n    \"settlement/recovery.md\": \"7873d7ffc27ae5a9631fafa8c2a2e99618558082b4906a4699b716eb0e8e4db6\",\n    \"access/grants.md\": \"c6fd5728e9254ead6e161621637de1d9293c3ba0c87fab184836ed26e42fb833\",\n    \"context.md\": \"c22959f0afa460d3ab28c82054719a714013081a2bc27f9ec450e27a714f1031\"\n  },\n  \"receipts\": [\n    {\n      \"source\": \"portal/activity.md\",\n      \"disposition\": \"no_change\",\n      \"reviewed\": true,\n      \"outputs\": [\n        \"knowledge/records/portal.md\"\n      ],\n      \"reason\": \"Activity intent already matches knowledge/records/portal.md#activity.\"\n    },\n    {\n      \"source\": \"settlement/recovery.md\",\n      \"disposition\": \"no_change\",\n      \"reviewed\": true,\n      \"outputs\": []\n    },\n    {\n      \"source\": \"access/grants.md\",\n      \"disposition\": \"no_change\",\n      \"reviewed\": true,\n      \"outputs\": []\n    },\n    {\n      \"source\": \"context.md\",\n      \"disposition\": \"no_change\",\n      \"reviewed\": true,\n      \"outputs\": [],\n      \"reason\": \"Navigation context; duplicate activity agenda, no new intent.\"\n    }\n  ],\n  \"wiki_fresh_inputs\": [\n    \"knowledge/records/portal.md\",\n    \"knowledge/records/settlement.md\",\n    \"knowledge/records/access.md\",\n    \"knowledge/records/operations.md\"\n  ],\n  \"publication\": \"candidate; no human approval\",\n  \"execution\": \"historical local fixture only\"\n}\n",
+        "tasks/checkpoint.json": "{\n  \"synthetic\": true,\n  \"accepted\": [\n    \"portal/activity.md\",\n    \"context.md\"\n  ],\n  \"unfinished\": \"settlement/recovery.md\",\n  \"draft\": \"tasks/recovery-draft.md\",\n  \"held\": \"access/grants.md\",\n  \"held_reason\": \"Denial clause still needs canonical review; no human answer is needed to retain draft intent.\",\n  \"saved_answers\": \"tasks/questions.md\",\n  \"owned_outputs\": [\n    \"outputs/\",\n    \"tasks/recovery-draft.md\"\n  ],\n  \"requested_worker\": {\n    \"model\": \"luna\",\n    \"reasoning\": \"max\"\n  },\n  \"observed_dispatch\": null\n}\n",
+        "tasks/recovery-draft.md": "# Recovery draft\n\nA rejected payment can be retried. Original-reference, duplicate, and unresolved late-arrival details still need source review.\n",
+        "tasks/progress.md": "# Progress\n\nSaved summary: all four selected sources are complete because all four have reviewed receipts and the wiki is fresh.\nResume from tasks/checkpoint.json. Changes to canonical records, receipts, wiki and publication are outside this exercise.\n",
+        "tasks/questions.md": "# Living questions\n\nNo machine Status column exists. Answers apply only to their exact question and scope.\n\n| ID | Authority | Actor | Environment | Version | Decision | Question | Answer | Owner | Source |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| KQ-01 | policy | operator | UAT | v1 | renewal-scope | Which input events qualify? | Mouse, keyboard, and scroll. | owner:portal | sources/portal/activity.md |\n| KQ-02 | policy | operator | UAT | v1 | renewal-scope | Do touch events qualify? |  | owner:portal | sources/portal/activity.md |\n| KQ-03 | policy | operator | PROD | v1 | renewal-scope | Do touch events qualify in PROD? |  | owner:portal | sources/portal/activity.md |\n| KQ-04 | engineering | operator | UAT | v1 | renewal-scope | Does ui-42 implement touch renewal? |  | unknown | sources/portal/observation.md |\n| KQ-05 | policy | operator | UAT | v1 | renewal-scope | Which keyboard and scroll inputs qualify? |  | owner:portal | sources/portal/activity.md |\n| KQ-06 | engineering | operator | UAT | v2 | renewal-timing | What delay does v2 use? |  | unknown | sources/portal/observation.md |\n| KQ-07 | policy | operator | UAT | v1 | renewal-scope | Are synthetic input events eligible? |  | owner:portal | sources/portal/activity.md |\n| KQ-08 | publication | reviewer | UAT | v1 | publish | May candidate bytes be published? |  | owner:portal | knowledge/records/portal.md |\n| KQ-09 | engineering | service | UAT | v1 | issuer | What is effective issuer configuration? |  | unknown | sources/operations/runtime.md |\n| KQ-10 | maintenance | agent | local | v1 | recovery | Where should resumed work start? | Continue the saved payment recovery draft; retain accepted work. | maintainer | tasks/checkpoint.json |\n| KQ-11 | policy | agent | local | v1 | retention | May equal hashes be deleted without consumer review? | No. Review consumers and provenance first. | maintainer | sources/operations/retention.md |\n| KQ-12 | policy | operator | UAT | v1 | late-arrival | How long must late arrivals be retained? |  | owner:settlement | sources/settlement/recovery.md |\n",
+        "questions.md": "# Reader questions\n\nQ-01: What activity extends a Portal session, is any fixed active duration specified, what remains unresolved about browser suspension, and what is established about production adoption?\n\nQ-02: What happened in the local observation, and is its timing a policy limit?\n\nQ-03: What cutoff applies, including holiday and after-cutoff treatment?\n\nQ-04: How must payment retry, duplicate references, and late-arrival retention work?\n\nQ-05: How do multiple roles determine an action grant?\n\nQ-06: What happens without a matching grant?\n\nQ-07: How must omitted and empty drawers behave during migration?\n\nQ-08: Can the replacement identifier and upper callers be assumed compatible?\n\nQ-09: What is known about local and UAT expiry settings?\n\nQ-10: Can the candidate be described as deployed?\n\nQ-11: What evidence may be cleaned up, and on what basis?\n\nQ-12: Where must meaningful failures be retained, and does hash equality permit deletion?\n\n",
+        "drafts/answer-a.md": "# Reader draft A\n\nQ-01: Mouse, keyboard, and scroll permit renewal while refresh credentials remain usable. Production adoption is unverified.\n\nQ-02: Mouse activity every 100 ms produced zero renewals over 15 seconds at ui-42 on 24 October. A 5,000 ms code delay is implementation evidence. Controlled clock and stub issuer exclude UAT claims.\n\nQ-03: The 2022 proposal suggests weekday 16:00 Asia/Singapore cutoff and next-business-date processing afterwards. Holiday treatment and owner approval remain pending.\n\nQ-04: Rejected payments are retried. Late-arrival retention is seven days.\n\nQ-05: Combine application, feature or subject, and action grants across roles. No primary scalar role is defined.\n\nQ-06: Without a matching action grant, allow navigation and use the first role.\n\nQ-07: Omitted drawers preserves state; [] clears it.\n\nQ-08: The adapter must preserve upper callers, but identifier meaning remains unresolved and parity is unverified.\n\nQ-09: YAML default is 15 minutes; effective local override is 480 minutes. The 900-second UAT sample proves the effective UAT configuration.\n\nQ-10: The release note is a plan; deployment completion and owner are unknown.\n\nQ-11: Review consumers and provenance before cleanup. Retain meaningful failures and one canonical payload.\n\nQ-12: Keep meaningful failed traces. Equal hashes alone do not authorize deletion; the inventory is incomplete.\n\n",
+        "drafts/answer-b.md": "# Reader draft B\n\nQ-01: Mouse, keyboard, and scroll qualify while refresh credentials are usable. Production is unverified.\nQ-04: Retry rejected payments with original references. Accepted duplicates must not create a second payment. Late-arrival retention is unresolved.\nQ-06: Missing action grant denies access.\nQ-09: Local override is 480 minutes versus YAML default 15 minutes. One UAT sample lived 900 seconds; configuration and clock offset are unknown.\n",
+        "wiki/proposed.md": "# Proposed wiki excerpt\n\nPortal activity renews for exactly 15 seconds in production.\nThe settlement cutoff is 16:00 every day.\nRoles have a single primary scalar identity.\nHistorical failed traces are noise and can be deleted when hashes match.\n"
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "known-policy",
+      "fixture": "task",
+      "skills": [
+        "analyze-requirement"
+      ],
+      "prompt": "In {{ROOT}}, use the existing task demo. Tell me what the active-renewal policy requires and what I must decide next. Update the existing current summary if needed. Do not change domain knowledge or execute business tests.",
+      "source_conversation": {
+        "id": "01a15450-d00a-7d32-91ee-34e5a648cb59",
+        "title": "Improve issue intake and stage readiness"
+      }
+    },
+    {
+      "id": "current-results",
+      "fixture": "task",
+      "skills": [
+        "verify-implementation",
+        "analyze-requirement"
+      ],
+      "prompt": "In {{ROOT}}, which task demo cases have current passing evidence? Show me the definitions, scripts, results, blockers, and next action in its existing stage record. Do not run new checks or modify completed intake.",
+      "source_conversation": {
+        "id": "01a156da-1075-7632-9775-744772db6d0b",
+        "title": "Find latest E2E coverage session"
+      }
+    },
+    {
+      "id": "regression-comparison",
+      "fixture": "review",
+      "skills": [
+        "code-review"
+      ],
+      "prompt": "Review {{ROOT}}/repo from {{BASE}} to {{HEAD}} against the supplied requirements and cases. Explain user-visible effects. Retain a concise review in {{ROOT}}/review.md. Keep the repository unchanged. Local isolated checks are authorized.",
+      "source_conversation": {
+        "id": "01a15b98-fd13-7f72-b1e5-b6bd6ee350b2",
+        "title": "Review mfe-base"
+      }
+    },
+    {
+      "id": "failure-assertion",
+      "fixture": "review",
+      "skills": [
+        "verify-implementation"
+      ],
+      "prompt": "In {{ROOT}}, inspect the supplied repository test and intended TC-RETRY behavior. Does a passing run verify that behavior for the candidate? Retain the assessment in {{ROOT}}/assessment.md. Keep source and tests unchanged. Local checks are authorized. This is a synthetic review exercise, without a business intake gate.",
+      "source_conversation": {
+        "id": "01a15b98-fd13-7f72-b1e5-b6bd6ee350b2",
+        "title": "Review mfe-base"
+      }
+    },
+    {
+      "id": "review-scope",
+      "fixture": "review",
+      "skills": [
+        "code-review"
+      ],
+      "prompt": "Review only the selected change in {{ROOT}}/repo, using {{ROOT}}/review-request.md. Give a short findings report at {{ROOT}}/review.md. Keep source and tests unchanged.",
+      "source_conversation": {
+        "id": "01a1554a-6156-79b1-9ea4-5f04b92a47bb",
+        "title": "Apply mfe-base diff"
+      }
+    },
+    {
+      "id": "setup-readiness",
+      "fixture": "readiness",
+      "skills": [
+        "repository-onboarding",
+        "connectors"
+      ],
+      "prompt": "Use {{ROOT}}/request-context.md and the retained evidence to prepare one current setup and E2E readiness view at {{ROOT}}/readiness.md. Explain what is usable, what blocks the selected suite, and the Windows offline handoff. Keep within the stated execution limits. This is a synthetic harness assessment; no business intake is required.",
+      "source_conversation": {
+        "id": "01a15450-e3f0-72f2-a158-88ecd9d0ea51",
+        "title": "Prepare isolated Playwright browser\u2026"
+      }
+    },
+    {
+      "id": "deployment-parity",
+      "fixture": "deployment",
+      "skills": [
+        "verify-implementation"
+      ],
+      "prompt": "Assess whether the supplied passing local session check in {{ROOT}} can establish TC-WARNING acceptance for UAT. Retain a compact environment comparison and next actions at {{ROOT}}/assessment.md. Use only supplied local files. Do not run tests, access UAT, change configuration, publish knowledge, or create a business task. This synthetic assessment has no business intake gate.",
+      "source_conversation": {
+        "id": "01a15d4a-1f38-7fc1-987f-987c961d96f7",
+        "title": "Investigate missing timeout dialog"
+      }
+    },
+    {
+      "id": "lifecycle-accounting",
+      "fixture": "knowledge-enhancement",
+      "skills": [
+        "manage-knowledge-lifecycle"
+      ],
+      "prompt": "In {{ROOT}}, Tell me where this knowledge workflow stands and what needs attention, using the supplied sources and saved progress. Retain a concise status at outputs/response.md. This status request is read-only for all inputs. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
+      "source_requirement": ".agents/skills/manage-knowledge-lifecycle/SKILL.md#reconcile-progress-before-choosing-the-next-action"
+    },
+    {
+      "id": "interrupted-handoff",
+      "fixture": "knowledge-enhancement",
+      "skills": [
+        "manage-knowledge-lifecycle",
+        "ingest-knowledge"
+      ],
+      "prompt": "In {{ROOT}}, Continue the authorized unfinished draft from the saved checkpoint and record a handoff at outputs/response.md. You may edit only tasks/recovery-draft.md and outputs/. Keep canonical records, saved answers, receipts and wiki unchanged. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
+      "source_requirement": ".agents/skills/manage-knowledge-lifecycle/SKILL.md#select-the-next-action"
+    },
+    {
+      "id": "source-dispositions",
+      "fixture": "knowledge-enhancement",
+      "skills": [
+        "ingest-knowledge",
+        "prepare-knowledge-sources"
+      ],
+      "prompt": "In {{ROOT}}, Review the selected sources and their current outputs. Explain which processing results can stand and which require work in outputs/response.md. Keep all inputs unchanged; do not create canonical records or receipts. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
+      "source_requirement": ".agents/skills/ingest-knowledge/references/source-preparation.md#record-canonical-processing-completion"
+    },
+    {
+      "id": "semantic-preservation",
+      "fixture": "knowledge-enhancement",
+      "skills": [
+        "review-knowledge-claims",
+        "maintain-wiki-content"
+      ],
+      "prompt": "In {{ROOT}}, Review the proposed wiki excerpt against the original sources and existing records. Retain a claim and omission review at outputs/response.md, including source destinations or dispositions. This is a read-only review of inputs. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
+      "source_requirement": ".agents/skills/review-knowledge-claims/SKILL.md#review"
+    },
+    {
+      "id": "decision-grouping",
+      "fixture": "knowledge-enhancement",
+      "skills": [
+        "resolve-knowledge-questions"
+      ],
+      "prompt": "In {{ROOT}}, Prepare a concise owner-decision view from the living questions, with enough detail to resolve the remaining decisions. Save it at outputs/response.md. Preserve the original question file and exact recorded answers. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
+      "source_requirement": ".agents/skills/resolve-knowledge-questions/SKILL.md#investigate-and-ask"
+    },
+    {
+      "id": "reader-usefulness",
+      "fixture": "knowledge-enhancement",
+      "skills": [
+        "query-knowledge",
+        "evaluate-knowledge-retrieval"
+      ],
+      "prompt": "In {{ROOT}}, Review both supplied reader drafts against the questions and sources. Save the evaluation and supported corrected answers to all twelve questions at outputs/response.md. Preserve drafts and source bytes. This is an evaluation exercise without ingestion or publication. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
+      "source_requirement": ".agents/skills/evaluate-knowledge-retrieval/SKILL.md#check-the-answer-against-its-evidence"
+    }
+  ]
+}

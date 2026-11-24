@@ -1,0 +1,162 @@
+--- a/src/Root/common/utils/featureFlagController.ts
++++ b/src/Root/common/utils/featureFlagController.ts
+@@ -17,17 +17,13 @@
+ // env allows single Env or multiple, e.g. "dev, uat, prod"
+ // NOT ALLOW to conflict with each other, otherwise will failed
+ // users:
+-// entitlements:
+-// if users and entitlements are both present, then have to match them both.
+-// if either one present, then have to match the one.
+-// if neither present, then feature is enable for all entitlements and all users.
++// If users are present, enable only for those users.
+ type PilotFeaturesType<T extends string> = {
+   [feature in T]?: {
+     [env in Env]:
+       | boolean
+       | {
+           users?: string[];
+-          entitlements?: string[];
+         };
+   };
+ };
+@@ -132,14 +128,10 @@
+       cachedFeatureFlagMap.set(f, settingsOfCurrentEnv);
+       return settingsOfCurrentEnv;
+     }
+-    const { users, entitlements } = settingsOfCurrentEnv || {};
++    const { users } = settingsOfCurrentEnv || {};
+     const userPassed = users?.length ? users.includes(curUser.id) : true;
+-    const entitlementPassed = entitlements?.length
+-      ? entitlements.every((et) => curUser.entitlements.includes(et))
+-      : true;
+-    const enabled = userPassed && entitlementPassed;
+-    cachedFeatureFlagMap.set(f, enabled);
+-    return enabled;
++    cachedFeatureFlagMap.set(f, userPassed);
++    return userPassed;
+   };
+ };
+ 
+--- a/src/Root/common/utils/featureFlagController.test.ts
++++ b/src/Root/common/utils/featureFlagController.test.ts
+@@ -13,7 +13,6 @@
+         "pre-prod": false,
+         prod: {
+           users: ["123456"],
+-          entitlements: ["TEST:entitlement_test"]
+         },
+       },
+     });
+@@ -24,7 +23,6 @@
+       TEST_FEATURE_FLAG: {
+         local: {
+           users: [],
+-          entitlements: ["TEST:entitlement_test"]
+         },
+         dev: true,
+         uat: false,
+@@ -41,7 +39,6 @@
+     const featureFlagEnabled3 = featureScopedEnabledFactor({
+       TEST_FEATURE_FLAG: {
+         local: {
+-          entitlements: ["TEST:entitlement_test"]
+         },
+         dev: true,
+         uat: false,
+@@ -59,7 +56,6 @@
+       TEST_FEATURE_FLAG: {
+         local: {
+           users: ["112233"],
+-          entitlements: ["TEST:entitlement_test"]
+         },
+         dev: true,
+         uat: false,
+@@ -73,42 +69,6 @@
+     expect(featureFlagEnabled4("TEST_FEATURE_FLAG")).toBe(false);
+     expect(featureFlagEnabled4("TEST_FEATURE_FLAG")).toBe(false);
+   });
+-  it("entitlements", () => {
+-    const featureFlagEnabled5 = featureScopedEnabledFactor({
+-      TEST_FEATURE_FLAG: {
+-        local: {
+-          users: ["123456"],
+-          entitlements: []
+-        },
+-        dev: true,
+-        uat: false,
+-        uat2: false,
+-        eks: false,
+-        sit: false,
+-        "pre-prod": false,
+-        prod: true,
+-      },
+-    });
+-    expect(featureFlagEnabled5("TEST_FEATURE_FLAG")).toBe(true);
+-    expect(featureFlagEnabled5("TEST_FEATURE_FLAG")).toBe(true);
+-
+-    const featureFlagEnabled6 = featureScopedEnabledFactor({
+-      TEST_FEATURE_FLAG: {
+-        local: {
+-          entitlements: ["TEST:another_entitlement_test"]
+-        },
+-        dev: true,
+-        uat: false,
+-        uat2: false,
+-        eks: false,
+-        sit: false,
+-        "pre-prod": false,
+-        prod: true,
+-      },
+-    });
+-    expect(featureFlagEnabled6("TEST_FEATURE_FLAG")).toBe(false);
+-    expect(featureFlagEnabled6("TEST_FEATURE_FLAG")).toBe(false);
+-  });
+   it("envs", () => {
+     const featureFlagEnabled6 = featureScopedEnabledFactor({
+       TEST_FEATURE_FLAG: {
+@@ -120,7 +80,6 @@
+         sit: false,
+         "pre-prod": {
+           users: ["123456"],
+-          entitlements: ["TEST:entitlement_test"]
+         },
+         prod: true,
+       },
+@@ -132,21 +91,17 @@
+       TEST_FEATURE_FLAG: {
+         local: {
+           users: ["123456"],
+-          entitlements: ["TEST:entitlement_test"]
+         },
+         dev: {
+           users: ["123456"],
+-          entitlements: ["TEST:entitlement_test"]
+         },
+         uat: {
+           users: ["123456"],
+-          entitlements: ["TEST:entitlement_test"]
+         },
+         uat2: false,
+         eks: false,
+         sit: {
+           users: ["112233"],
+-          entitlements: ["TEST:another_entitlement_test"]
+         },
+         "pre-prod": false,
+         prod: false,
+@@ -165,7 +120,6 @@
+         "pre-prod": true,
+         "sit": {
+           users: ["112233"],
+-          entitlements: ["TEST:another_entitlement_test"]
+         },
+         prod: true,
+       },
+@@ -183,7 +137,6 @@
+         "pre-prod": true,
+         "sit": {
+           users: ["112233"],
+-          entitlements: ["TEST:another_entitlement_test"]
+         },
+         prod: true,
+       },

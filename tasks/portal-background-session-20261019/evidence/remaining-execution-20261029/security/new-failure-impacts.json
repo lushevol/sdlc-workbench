@@ -1,0 +1,44 @@
+{
+  "findings": {
+    "RN-S023": {
+      "failure": "Conflicting duplicate refresh headers for A/B result in HTTP200 and one access credential for A, rather than zero.",
+      "impact": "An ambiguous multi-value input is accepted according to its first value in the mock servlet. Gateway normalization and organizational rejection policy remain unknown.",
+      "severity": "UNKNOWN; proposed ambiguous-input policy needs review. Do not label demonstrated cross-account takeover.",
+      "source": "../../comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L336-L366",
+      "result": "rn-s023/result.json",
+      "origin": "The selected BFF dependency receives this input; no claim of a new frontend regression.",
+      "owner": "unknown authentication and security owners",
+      "action": "Review duplicate-header policy and test the current HTTP/gateway path before acceptance."
+    },
+    "RN-S035": {
+      "failure": "Shared Axios request to an external HTTPS fixture includes Single-UI-Authorization.",
+      "impact": "A same-origin consumer using the public shared client for an external destination can send portal access credentials toward that destination. The fixture intercepted transport; no third party received credentials.",
+      "severity": "S2 High conditional, analyst proposal. A supported external-destination caller and effective deployment controls remain unknown.",
+      "source": "../../comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37",
+      "result": "rn-s035/result.json",
+      "origin": "Authorization-header attachment is unchanged from frontend baseline f025513f to66c6411. Existing shared-client risk.",
+      "owner": "unknown shared-client and security owners",
+      "action": "Establish supported destination policy and caller reachability; verify that external destinations receive no portal credentials."
+    },
+    "RN-S037": {
+      "failure": "A configured nonempty skip header reaches the protected synthetic SDK handler without any JWT.",
+      "impact": "An untrusted caller that reaches a configured skip-header route can bypass JWT validation in this SDK filter fixture. Gateway stripping and real business-service reachability remain unverified.",
+      "severity": "S2 High conditional, analyst proposal. This fixture establishes handler invocation, not unauthorized real business records.",
+      "source": "../../comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L72",
+      "result": "rn-s037/result.json",
+      "origin": "Current SDK dependency control flow; outside the frontend release delta. Historical baseline relationship not asserted.",
+      "owner": "unknown SDK, gateway, and security owners",
+      "action": "Verify trusted gateway header stripping and route isolation. Reject forged public skip headers through the actual composed service."
+    }
+  },
+  "additional_observations": {
+    "RN-S003": "Logout reports success after revocation-store write fails, and refresh replay still issues access. Characterization predicates pass.",
+    "RN-S004": "Logout with no access performs no revocation, and retained valid refresh still issues access. Characterization predicates pass.",
+    "RN-S009": "Replaced refresh R1 remains accepted; single-use policy remains open.",
+    "RN-S022": "Correctly signed refresh without exp is accepted; issuer/required-expiry policy remains open.",
+    "RN-S029": "Direct B access replacement retains A refresh and visible A user; relogin restores A. Supported direct-dispatch caller remains unknown.",
+    "RN-S032": "Rejected B login leaves A access/user but clears A refresh. Renewability is interrupted until another refresh path succeeds.",
+    "RN-S044": "Actual console arguments contain the raw synthetic access canary after acquisition failure. No sanitizer/export contract exists; canonical result remains blocked.",
+    "RN-S047": "Same-origin diagnostic script reads stored access, refresh from public store, and request configuration. This is not an XSS exploit or evidence of an injection vector."
+  }
+}

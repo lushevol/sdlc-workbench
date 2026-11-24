@@ -1,0 +1,77 @@
+{
+  "scope": "Minimal correction advice; reuse existing isolated proposal; no new business execution",
+  "baseline": "b8d4f1b837c6388452fbdc540f311257e805f932",
+  "runtime_candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+  "sources_sha256": {
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/proposal-v2.patch": "8e97e1d5b1a4cc8d7a23faeaef2e979081d67a3f8a0c615cc1247c39d944c2ae",
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/proposal-v2-binding.json": "796bc591fb460978d0c65ec0e7b1e9e06ab7f0220af507475e4971e565293bc3",
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/full-proposal-02/execution.json": "724f06b17edd33b3549933440f5c52e7f6ed72c09e09a3651950691c5950bd21",
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/full-proposal-02/results.json": "b13a09c3216928a8ead7d3ea7c6c994b575f818414952105dbc03c719baba355",
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/full-proposal-02/source-binding.json": "838000429e709b39d67329f5da859f181c405c25935e8d995fc5a29f3918041f",
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/typescript-v2.json": "072e731fa624687d171a3c60e93a15e08593eaa6800af4b8d864cb1b142f2cea",
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/proposal-review.json": "7259d9248d2648bdda7e8e9ecf4098c2cf754fd469ccdbdb7305338489720c08",
+    "tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/application-binding.json": "5ae004c5e88b3cb846f6d96aefbd2b84c96c209cdbb04165f5edc76c4388d7b4"
+  },
+  "corrections": {
+    "loading": "Track loading-enabled pending request identities per current session. Release final settled work. Preserve replacement loading and stale-session rejection.",
+    "timer": "Only the scheduled callback bypasses the 25-second lead guard. Preserve valid access, refresh validity, visibility, timeout, logout, and no-replay checks."
+  },
+  "inspected_assertions": [
+    {
+      "name": "Shared service cancellation preservation [DEL-14] clears the loading state after the final current-session request is canceled",
+      "status": "passed"
+    },
+    {
+      "name": "Shared service cancellation preservation [DEL-19] keeps loading while a replacement request remains pending after cancellation",
+      "status": "passed"
+    },
+    {
+      "name": "Shared service cancellation preservation [DEL-21] keeps loading when a silent request starts and finishes beside pending work",
+      "status": "passed"
+    },
+    {
+      "name": "Shared service cancellation preservation [DEL-22] ignores an old cancellation while the new session request remains pending",
+      "status": "passed"
+    },
+    {
+      "name": "Shared service cancellation preservation [DEL-23] clears loading after a response transform fails without request config",
+      "status": "passed"
+    },
+    {
+      "name": "Late acquisition with coincident credential expiry [DEL-20] preserves manual recovery after the acquisition callback runs one millisecond late",
+      "status": "passed"
+    }
+  ],
+  "retained_execution": {
+    "suites": 122,
+    "tests": 460,
+    "passed": 460,
+    "failed": 0,
+    "skipped": 0,
+    "normal_exit": true,
+    "typescript": "PASSED"
+  },
+  "independent_advice_review": {
+    "reviewer": "Codex /root/minimal_fix_check",
+    "status": "SUPPORTED_WITH_LIMITS",
+    "method": "Read-only source, direct assertions, retained results, and binding inspection"
+  },
+  "limitations": [
+    "The previously isolated patch is now applied and committed by parallel remediation. Its application binding matches 407 tested files.",
+    "No new browser or production execution covers this patch.",
+    "Errors without request config retain prior global cleanup. Their request/session ownership cannot be established.",
+    "Passing unit tests do not close deployment evidence gaps or establish absence of defects."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "JSON syntax and referenced retained identities checked.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "application_commit": "eed489469fb20a17a0c7853cf62368b9637d5c81"
+}

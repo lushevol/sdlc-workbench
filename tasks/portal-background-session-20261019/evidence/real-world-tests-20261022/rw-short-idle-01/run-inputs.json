@@ -1,0 +1,82 @@
+{
+  "caseId": "RW-SHORT-IDLE",
+  "runId": "rw-short-idle-01",
+  "mode": "local-fixture",
+  "profile": {
+    "name": "shortened-access60-control",
+    "purpose": "shortened-control",
+    "expectedAccessSeconds": 60,
+    "expectedRefreshSeconds": 144
+  },
+  "status": "STARTING",
+  "startedAt": "2026-10-22T02:46:59.962Z",
+  "target": "http://localhost:8128/",
+  "driverSha256": "3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784",
+  "configurationSha256": "605cb5201132c2642a8428d33492ea69009407b462f94f4d6caae44fb4937104",
+  "retainedConfigurationSha256": "605cb5201132c2642a8428d33492ea69009407b462f94f4d6caae44fb4937104",
+  "configurationRedacted": false,
+  "evidenceRedaction": "All serialized JSON replaces private credential environment values and JWT strings. Credential-bearing source bytes remain hash-only.",
+  "sourceRevisions": {
+    "mfe-base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+    "mfe-ratan-container": "SUPPLIED_FILESYSTEM_COPY",
+    "mfe-cashflow-blotter": "SUPPLIED_FILESYSTEM_COPY"
+  },
+  "sourceBindings": [
+    {
+      "label": "shell-source-binding",
+      "sha256": "a61a41c665f23cbcae7700e27a5f9e64598e1f59edd951f5d7ea3789c1b9a077",
+      "retained": "binding-001-shell-source-binding.json",
+      "retention": "EXACT_BYTES",
+      "expectedSha256": "a61a41c665f23cbcae7700e27a5f9e64598e1f59edd951f5d7ea3789c1b9a077"
+    },
+    {
+      "label": "blotter-source-binding",
+      "sha256": "dbfb3ff5b789dcaf892e195b47faa750cc097cd85342c2cc9eb332102109f9a0",
+      "retained": "binding-002-mfe-cashflow-blotter-source-inventory.json",
+      "retention": "EXACT_BYTES",
+      "expectedSha256": "dbfb3ff5b789dcaf892e195b47faa750cc097cd85342c2cc9eb332102109f9a0"
+    },
+    {
+      "label": "ratan-source-binding",
+      "sha256": "b939eb19cc62758bf4f4619a90539ed4d9dd95b26f00a436a2339070db02cc89",
+      "retained": "binding-003-mfe-ratan-container-source-inventory.json",
+      "retention": "EXACT_BYTES",
+      "expectedSha256": "b939eb19cc62758bf4f4619a90539ed4d9dd95b26f00a436a2339070db02cc89"
+    }
+  ],
+  "driverSources": [
+    {
+      "module": "runner.mjs",
+      "retained": "driver-runner.mjs.snapshot",
+      "sha256": "3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784"
+    },
+    {
+      "module": "../support/timing.cjs",
+      "retained": "driver-timing.cjs.snapshot",
+      "sha256": "bbf4c955e879f69bc4497fb3260003bbb4c7fd7a0c28f97319cc7ba88da73211"
+    },
+    {
+      "module": "../support/common.cjs",
+      "retained": "driver-common.cjs.snapshot",
+      "sha256": "5ba040b66b4ea13bfd7662a0e90aa5d2fe38af062175a6ef664f13a9de0e83e7"
+    }
+  ],
+  "serviceDates": [],
+  "clock": "REAL_WALL_CLOCK_AND_HOST_MONOTONIC",
+  "timerDelaysChanged": false,
+  "mainFrameNavigations": [],
+  "modulesResponse": [],
+  "apiResponses": [],
+  "requests": [],
+  "requestFailures": [],
+  "pageErrors": [],
+  "checkpoints": [],
+  "assertions": [],
+  "fixtureHits": [],
+  "limits": [
+    "CDP and a passive DOM observer remain attached. Natural freezing and device sleep are not established.",
+    "Timer observation delegates unchanged delay values to native setTimeout. Instrumentation can affect execution overhead.",
+    "Source revision declarations require separate deployment evidence. UAT parity is not established."
+  ]
+}

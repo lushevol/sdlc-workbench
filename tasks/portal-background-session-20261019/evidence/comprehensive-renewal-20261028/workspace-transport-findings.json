@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "findings": [
+    {
+      "id": "WSG-01",
+      "kind": "source-fact",
+      "evidence": [
+        {
+          "path": "repos/ui/mfe-base/src/components/TabPanel/index.tsx",
+          "lines": [
+            13,
+            46
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        },
+        {
+          "path": "repos/ui/mfe-base/src/utils/drawer.ts",
+          "lines": [
+            47,
+            67
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "cfedf4c4f8c1b3876f039c748b3444acc8085b2311d59b9e92465f13a1176a66",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "Loaded inactive workspace children remain mounted behind hidden panels.",
+      "consequence": "Background requests and subscriptions need coverage across renewal.",
+      "owner": "unknown application owner",
+      "next_action": "Bind hidden-workspace E2E cases to the selected real module."
+    },
+    {
+      "id": "WSG-02",
+      "kind": "source-fact",
+      "evidence": [
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+          "lines": [
+            10,
+            35
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "Each container uses lazy System.import with Suspense and an error boundary.",
+      "consequence": "Module import state and service loading can overlap independently.",
+      "owner": "unknown application owner",
+      "next_action": "Use separate import and request holds."
+    },
+    {
+      "id": "WSG-03",
+      "kind": "source-fact",
+      "evidence": [
+        {
+          "path": "repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts",
+          "lines": [
+            126,
+            240
+          ],
+          "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+          "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "GraphQL handshake reads current shell token through connectionParams. Reconnection state is keyed by URL.",
+      "consequence": "Reconnect credential propagation and same-URL consumers need distinct checks.",
+      "owner": "unknown transport owner",
+      "next_action": "Execute GraphQL reconnect and two-workspace subscription cases."
+    },
+    {
+      "id": "WSG-04",
+      "kind": "source-fact",
+      "evidence": [
+        {
+          "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/stomp.ts",
+          "lines": [
+            26,
+            141
+          ],
+          "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+          "sha256": "181b11c48c6f48c7c6ec145dac6cc5ac26882d08341474bd7f7dbd2f63ae38b1",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "STOMP CONNECT reads SET_TOKEN. Heartbeats and callback retries have separate transport lifecycle.",
+      "consequence": "HTTP renewal assertions do not establish socket authorization.",
+      "owner": "unknown transport owner",
+      "next_action": "Record CONNECT principal and messages across expiry, logout, and reconnect."
+    },
+    {
+      "id": "WSG-05",
+      "kind": "policy-gap",
+      "evidence": [
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "lines": [
+            165,
+            243
+          ],
+          "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+          "sha256": "3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        },
+        {
+          "path": "tasks/portal-background-session-20261019/evidence/user-input-20261028-comprehensive-renewal.txt",
+          "lines": [
+            1,
+            15
+          ],
+          "revision": null,
+          "sha256": "c82745858b57709daa801bd5730939b076123ec630ecfe3ff581d2b6db1001e4",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "No inspected rule makes heartbeats, pushed messages, polling, or progress eligible human activity.",
+      "consequence": "Those observations cannot receive business acceptance.",
+      "owner": "unknown session owner",
+      "next_action": "Retain observations and resolve policy before acceptance."
+    },
+    {
+      "id": "WSG-06",
+      "kind": "evidence-gap",
+      "evidence": [
+        {
+          "path": "repos/ui/mfe-base/src/services/index.ts",
+          "lines": [
+            20,
+            59
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "The inspected ssePublish method does not establish an EventSource consumer or protected SSE lifetime contract.",
+      "consequence": "SSE cases remain conditional to target composition.",
+      "owner": "unknown integration owner",
+      "next_action": "Identify an actual SSE consumer and inspect its authentication contract."
+    },
+    {
+      "id": "WSG-07",
+      "kind": "evidence-gap",
+      "evidence": [
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+          "lines": [
+            19,
+            127
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+          "lines": [
+            10,
+            59
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        },
+        {
+          "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+          "lines": [
+            1,
+            18
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "Source inspection does not establish cross-tab storage synchronization, global logout, or shared idle policy.",
+      "consequence": "Multi-tab acceptance remains unresolved.",
+      "owner": "unknown session owner",
+      "next_action": "Collect provider and storage identities across same-origin contexts."
+    },
+    {
+      "id": "WSG-08",
+      "kind": "verification-gap",
+      "evidence": [
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+          "lines": [
+            19,
+            127
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        },
+        {
+          "path": "repos/ui/mfe-base/src/components/Timeout/index.tsx",
+          "lines": [
+            17,
+            48
+          ],
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+          "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+        }
+      ],
+      "claim": "No browser runtime component uniqueness or new E2E execution occurred in this design pass.",
+      "consequence": "Definitions remain NOT_RUN and UI bindings remain UNVERIFIED.",
+      "owner": "unknown test owner",
+      "next_action": "Bind and execute cases against an identified target composition."
+    }
+  ]
+}

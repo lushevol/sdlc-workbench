@@ -1,0 +1,802 @@
+{
+  "recorded_at": "2026-10-29T02:23:00.375074+00:00",
+  "scope": "Audit of all 42 previously unrun security cases. No source changes or additional execution.",
+  "critical_conclusion": {
+    "action": "Resolve logout revocation and assess conditional credential exposure before security acceptance.",
+    "consequence": "Security acceptance remains blocked.",
+    "owner": "unknown authentication and security owners",
+    "evidence": [
+      "../../comprehensive-renewal-20261028/expired-logout-case.json",
+      "rn-s003/result.json",
+      "rn-s004/result.json",
+      "rn-s035/result.json",
+      "rn-s037/result.json"
+    ]
+  },
+  "counts": {
+    "requested": 42,
+    "passed": 21,
+    "failed": 3,
+    "complete_executed": 24,
+    "partial_blocked": 2,
+    "not_executed_blocked": 16,
+    "total_blocked": 18,
+    "unreconciled": 0
+  },
+  "count_rules": [
+    "Characterization passes establish retained observations only.",
+    "Proposed-security failures compare draft predicates with observed behavior. They do not establish approved policy violations.",
+    "Blocked and partial cases do not count as completed passing execution."
+  ],
+  "source_versions": {
+    "frontend": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+    "bff": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+    "sdk": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+  },
+  "failure_impacts": {
+    "RN-S023": {
+      "failure": "Conflicting duplicate refresh headers for A/B result in HTTP200 and one access credential for A, rather than zero.",
+      "impact": "An ambiguous multi-value input is accepted according to its first value in the mock servlet. Gateway normalization and organizational rejection policy remain unknown.",
+      "severity": "UNKNOWN; proposed ambiguous-input policy needs review. Do not label demonstrated cross-account takeover.",
+      "source": "../../comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L336-L366",
+      "result": "rn-s023/result.json",
+      "origin": "The selected BFF dependency receives this input; no claim of a new frontend regression.",
+      "owner": "unknown authentication and security owners",
+      "action": "Review duplicate-header policy and test the current HTTP/gateway path before acceptance."
+    },
+    "RN-S035": {
+      "failure": "Shared Axios request to an external HTTPS fixture includes Single-UI-Authorization.",
+      "impact": "A same-origin consumer using the public shared client for an external destination can send portal access credentials toward that destination. The fixture intercepted transport; no third party received credentials.",
+      "severity": "S2 High conditional, analyst proposal. A supported external-destination caller and effective deployment controls remain unknown.",
+      "source": "../../comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37",
+      "result": "rn-s035/result.json",
+      "origin": "Authorization-header attachment is unchanged from frontend baseline f025513f to66c6411. Existing shared-client risk.",
+      "owner": "unknown shared-client and security owners",
+      "action": "Establish supported destination policy and caller reachability; verify that external destinations receive no portal credentials."
+    },
+    "RN-S037": {
+      "failure": "A configured nonempty skip header reaches the protected synthetic SDK handler without any JWT.",
+      "impact": "An untrusted caller that reaches a configured skip-header route can bypass JWT validation in this SDK filter fixture. Gateway stripping and real business-service reachability remain unverified.",
+      "severity": "S2 High conditional, analyst proposal. This fixture establishes handler invocation, not unauthorized real business records.",
+      "source": "../../comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L72",
+      "result": "rn-s037/result.json",
+      "origin": "Current SDK dependency control flow; outside the frontend release delta. Historical baseline relationship not asserted.",
+      "owner": "unknown SDK, gateway, and security owners",
+      "action": "Verify trusted gateway header stripping and route isolation. Reject forged public skip headers through the actual composed service."
+    }
+  },
+  "characterization_risks": [
+    {
+      "cases": [
+        "RN-S003",
+        "RN-S004"
+      ],
+      "observation": "Logout returns success without persistent revocation; retained refresh then issues access.",
+      "impact": "A retained refresh credential can renew the session after the user believes logout completed.",
+      "severity": "S2 High, conditional production exposure; analyst proposal.",
+      "evidence": [
+        "rn-s003/result.json",
+        "rn-s004/result.json"
+      ],
+      "source": "../../comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L370-L382",
+      "owner": "unknown authentication and security owners",
+      "action": "Verify durable revocation and refresh replay rejection on every supported logout path.",
+      "limits": "Actual current controller with mocked persistence; target reachability and frequency remain unknown."
+    },
+    {
+      "cases": [
+        "RN-S009",
+        "RN-S022"
+      ],
+      "observation": "Old replaced refresh remains usable. Correctly signed refresh without expiry is accepted.",
+      "impact": "Retained signed credentials can remain usable under the observed rules.",
+      "severity": "Unrated policy question; single-use and required-expiry policy remain unresolved.",
+      "evidence": [
+        "rn-s009/result.json",
+        "rn-s022/result.json"
+      ],
+      "owner": "unknown authentication and security owners",
+      "action": "Review rotation and mandatory-claim rules before acceptance.",
+      "limits": "No signing-key compromise or production credential issuance is demonstrated."
+    },
+    {
+      "cases": [
+        "RN-S029"
+      ],
+      "observation": "Direct B access replacement retains A refresh and visible A identity; relogin restores A.",
+      "impact": "A caller using this direct replacement path can return to the previous account.",
+      "severity": "S2 High conditional; supported direct-dispatch caller remains unknown.",
+      "evidence": [
+        "rn-s029/result.json"
+      ],
+      "owner": "unknown shared-client and security owners",
+      "action": "Establish caller reachability and require account-consistent replacement."
+    },
+    {
+      "cases": [
+        "RN-S032"
+      ],
+      "observation": "Rejected B login preserves A access and user but clears A refresh.",
+      "impact": "A can lose refresh-based recovery after the current access credential expires.",
+      "severity": "S3 Medium conditional; earlier refresh reacquisition can avoid this outcome.",
+      "evidence": [
+        "rn-s032/result.json"
+      ],
+      "owner": "unknown authentication owner",
+      "action": "Verify the supported account-switch failure contract."
+    },
+    {
+      "cases": [
+        "RN-S044"
+      ],
+      "observation": "Actual console arguments contain the synthetic access canary after acquisition failure.",
+      "impact": "A diagnostic collector that exports these arguments could expose access credentials.",
+      "severity": "S2 High conditional; no exporter or recipient is demonstrated.",
+      "evidence": [
+        "rn-s044/result.json"
+      ],
+      "owner": "unknown diagnostics and security owners",
+      "action": "Provide the diagnostic export path and verify sanitization.",
+      "limits": "Canonical export predicate remains blocked."
+    },
+    {
+      "cases": [
+        "RN-S047"
+      ],
+      "observation": "An authorized same-origin script reads stored access, public refresh, and request configuration.",
+      "impact": "Same-origin script execution has access to these credential locations.",
+      "severity": "Architecture review required; no injection vulnerability or theft is demonstrated.",
+      "evidence": [
+        "rn-s047/result.json"
+      ],
+      "owner": "unknown security owner",
+      "action": "Review credential storage and actual injection controls."
+    }
+  ],
+  "rows": [
+    {
+      "case_id": "RN-S003",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s003/result.json",
+      "sha256": "cae2a6f6483c9aba49436581c5dfc6a046a8702fafffdcffbbc41e41738ba3fe",
+      "definition": "../../../06-test-cases.md#rn-s003",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "This observational case records a failure consequence; passing its recording predicates does not establish safe logout."
+      ]
+    },
+    {
+      "case_id": "RN-S004",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s004/result.json",
+      "sha256": "86a740ec9d6b1715eabdc6a23d01781a6780160b70f36a860b402afebcc9605e",
+      "definition": "../../../06-test-cases.md#rn-s004",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "The logout request has no access input. Refresh remains held for the explicit replay; logout has no refresh-input parameter."
+      ]
+    },
+    {
+      "case_id": "RN-S005",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s005/result.json",
+      "sha256": "88824e34a23fc0910bca10fb21ff4c7c97e3328de7ccc5d09167d4c94e765fc7",
+      "definition": "../../../06-test-cases.md#rn-s005",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S006",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s006/result.json",
+      "sha256": "d06d09e53c448350e720bb03d1fcfb386263d89530f68c136c0821a3d783528d",
+      "definition": "../../../06-test-cases.md#rn-s006",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service."
+      ]
+    },
+    {
+      "case_id": "RN-S007",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s007/result.json",
+      "sha256": "80af17ed97d75970f4953509f565ab086fd422f89ecb323effba7b24f74f29be",
+      "definition": "../../../06-test-cases.md#rn-s007",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "Thread scheduling is bounded by a repository-write latch. No distributed transaction or live replica race is established."
+      ]
+    },
+    {
+      "case_id": "RN-S008",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s008/result.json",
+      "sha256": "a3f74437241b8d78694bc245b82db2737b0976560d9b15846854e7fec52598bf",
+      "definition": "../../../06-test-cases.md#rn-s008",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service."
+      ]
+    },
+    {
+      "case_id": "RN-S009",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 3,
+      "result": "rn-s009/result.json",
+      "sha256": "d6437efbe7a4c3c481a16d12a2441d2fb1bc3c4b3acecc0d0579948fafba2a36",
+      "definition": "../../../06-test-cases.md#rn-s009",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "Replaced-token single-use policy remains unresolved. The result records that old signed refresh remains accepted."
+      ]
+    },
+    {
+      "case_id": "RN-S010",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s010/result.json",
+      "sha256": "84bbc38130b7ce0a80fa2d53e2352a7c83df91084054c25b52534fbf45ec2922",
+      "definition": "../../../06-test-cases.md#rn-s010",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "Two controller instances share fixture persistence. This is not database replication or deployment acceptance."
+      ]
+    },
+    {
+      "case_id": "RN-S022",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 3,
+      "result": "rn-s022/result.json",
+      "sha256": "7271f18b2fbae64599938627c6140544ef00967b784b96fc9f266f2ea9adcc40",
+      "definition": "../../../06-test-cases.md#rn-s022",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "Issuer-minted malformed-claim policy is not an accepted organizational requirement. No signing-key compromise is assumed."
+      ]
+    },
+    {
+      "case_id": "RN-S023",
+      "status": "FAILED",
+      "execution_status": "EXECUTED",
+      "assertions": 1,
+      "result": "rn-s023/result.json",
+      "sha256": "ac0c7ef8d574472c50298ef0c7a2b4be087416a401529cd979a5f111b3d3ddbe",
+      "definition": "../../../06-test-cases.md#rn-s023",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "Mock servlet request retains duplicate header values. No gateway/header-normalization filter or real HTTP transport is included. Proposed ambiguous-input rule remains unreviewed."
+      ]
+    },
+    {
+      "case_id": "RN-S024",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 3,
+      "result": "rn-s024/result.json",
+      "sha256": "22bcfe52d3f0ee88ae1b7da842cfcb5628c3607541228fa273e15db70ab525a6",
+      "definition": "../../../06-test-cases.md#rn-s024",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S025",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s025/result.json",
+      "sha256": "6c657f7f0b79b8dfec3238ba860fa016fbf6b547851a3ef627ef8b9e9ae37cf1",
+      "definition": "../../../06-test-cases.md#rn-s025",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S026",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 3,
+      "result": "rn-s026/result.json",
+      "sha256": "296bb2e23ba2de74a8ff4d438127c458de014c9e57c1bfb2cd1d530df70b1645",
+      "definition": "../../../06-test-cases.md#rn-s026",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S027",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 3,
+      "result": "rn-s027/result.json",
+      "sha256": "e2d08953bde1908348707a187f73a5b64544ea1ae8655bfadf88ac37b83605d3",
+      "definition": "../../../06-test-cases.md#rn-s027",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+        "Synthetic protected payload and consumer assertion. No real business application renderer was loaded."
+      ]
+    },
+    {
+      "case_id": "RN-S028",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 4,
+      "result": "rn-s028/result.json",
+      "sha256": "481cab583a2f4d9e5ae1002d3ed9cb3aa19bf29985a14465d02159c0166f9006",
+      "definition": "../../../06-test-cases.md#rn-s028",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S029",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s029/result.json",
+      "sha256": "2d0562e5e63bdf2fb8cdadb7c9e2ef543777f405bfd62705251515746723a8e9",
+      "definition": "../../../06-test-cases.md#rn-s029",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+        "Actual provider dispatch is retrieved through the mounted React provider for the declared direct-dispatch fixture. No deployed direct-token caller is established."
+      ]
+    },
+    {
+      "case_id": "RN-S030",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s030/result.json",
+      "sha256": "5f278df0161eb5ec934aa4655fbf044ca4d6af09d610e60165485ed22eb29039",
+      "definition": "../../../06-test-cases.md#rn-s030",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S031",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 3,
+      "result": "rn-s031/result.json",
+      "sha256": "48fe35817895ddd84895297de0ce95cde4b1a0f7d2c05d5d99e11ceb274fbf80",
+      "definition": "../../../06-test-cases.md#rn-s031",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+        "Synthetic protected consumer assertion; no actual financial business view."
+      ]
+    },
+    {
+      "case_id": "RN-S032",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s032/result.json",
+      "sha256": "2be3c28d4814604a178962fa371a01f7db88fc77872b88cadb3cb694672f0f48",
+      "definition": "../../../06-test-cases.md#rn-s032",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S033",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s033/result.json",
+      "sha256": "cf23250748ed8a89c10225f6856ca4b96ab0145560638ed3385870907fdbbce4",
+      "definition": "../../../06-test-cases.md#rn-s033",
+      "blocked_reason": "Current-source browser CORS/preflight endpoint is unavailable. Existing shared HTTP fixture uses historical server classes. Current direct-controller missing-header rejection does not establish lower-origin delivery or script exposure.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S034",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s034/result.json",
+      "sha256": "103bebfb08d579ba9e6e179f953aa65c9e8aef0c088c06c62a19f86c5c2e4c14",
+      "definition": "../../../06-test-cases.md#rn-s034",
+      "blocked_reason": "No reviewed cookie-only renewal contract or valid current-server cookie session fixture is available. The existing local HTTP identity fixture is historical.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S035",
+      "status": "FAILED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s035/result.json",
+      "sha256": "e05d3ed84f44688dd31c7a28594ba2d42b4bcca4a0689fe3f7e57e6cd777deea",
+      "definition": "../../../06-test-cases.md#rn-s035",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+        "Playwright intercepts the external HTTPS request before transport. No third-party host or credential was contacted."
+      ]
+    },
+    {
+      "case_id": "RN-S036",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s036/result.json",
+      "sha256": "d47adf9ea86a86011b0e1089f53cccffbdaff94c58a24bfc4ccfb2a14510c068",
+      "definition": "../../../06-test-cases.md#rn-s036",
+      "blocked_reason": "No named authorized WebSocket endpoint, source-bound server, or effective Origin enforcement configuration is available.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S037",
+      "status": "FAILED",
+      "execution_status": "EXECUTED",
+      "assertions": 1,
+      "result": "rn-s037/result.json",
+      "sha256": "9c5bcac173b6396f3c0a79ccae20ff98c7c1b29b3691ab08e699998e90ebe8b3",
+      "definition": "../../../06-test-cases.md#rn-s037",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "The fixture deliberately models the case prerequisite that an untrusted caller reaches a configured skip header. Actual gateway stripping and production reachability remain unknown. Synthetic handler invocation is the observed impact."
+      ]
+    },
+    {
+      "case_id": "RN-S038",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s038/result.json",
+      "sha256": "ccf6308aba118f3e7551205fe8078be8061041f86c0f8e6b58767e6aeec9f909",
+      "definition": "../../../06-test-cases.md#rn-s038",
+      "blocked_reason": "Application X, its protected service fixture, and B entitlement/data contract are not supplied. Shell descriptors cannot establish service authorization.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S039",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s039/result.json",
+      "sha256": "dffe6fb99f9c271a7299d82b52a89e05aafd30a7f401a7151c6b48a9a037d875",
+      "definition": "../../../06-test-cases.md#rn-s039",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.",
+        "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.",
+        "Synthetic handler consumes the SDK-verified request attribute. Independent business services that read untrusted headers instead are outside this case result."
+      ]
+    },
+    {
+      "case_id": "RN-S040",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s040/result.json",
+      "sha256": "2421cda3bb1d45ff8dde4a43413f455ced81bbe5b6e11051c93f68a694710b7d",
+      "definition": "../../../06-test-cases.md#rn-s040",
+      "blocked_reason": "Effective portal framing headers and an authenticated lower-origin framing fixture are not supplied. SDK response headers do not establish frontend document framing policy.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S041",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 4,
+      "result": "rn-s041/result.json",
+      "sha256": "bb0f1303c17e8f90dbcf6efec8840385c8095cd48d3ed412539190de4a7fed4e",
+      "definition": "../../../06-test-cases.md#rn-s041",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+      ]
+    },
+    {
+      "case_id": "RN-S042",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s042/result.json",
+      "sha256": "21aaeb4f02cfbdc5fae37569193ea03f7039a62c1f2a058873755f7d112b8adb",
+      "definition": "../../../06-test-cases.md#rn-s042",
+      "blocked_reason": "No source-bound business application, A-only record R, B permission fixture, or business data store is available.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S043",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s043/result.json",
+      "sha256": "9f554e9bd1766aeee830b3d863b8921b7aef93707b8500c8292b94eb54739248",
+      "definition": "../../../06-test-cases.md#rn-s043",
+      "blocked_reason": "A current composed server/browser revocation runtime is unavailable. Shared browser BFF fixture is historical; isolated current-controller revocation cannot establish cross-tab propagation.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S044",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s044/result.json",
+      "sha256": "4bffed658b8938832d001a70dc4559bbd9b9dde86312b47431ba336f65f6f6af",
+      "definition": "../../../06-test-cases.md#rn-s044",
+      "blocked_reason": "No application diagnostic exporter or sanitization contract is supplied. Actual console acquisition-failure observations are retained separately.",
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+        "No application diagnostic exporter or sanitization contract was supplied. Console observations cannot establish the canonical sanitized-export predicate."
+      ]
+    },
+    {
+      "case_id": "RN-S045",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s045/result.json",
+      "sha256": "d6091f67a7725dd42ca29ad9205888ffa974e7d834d70aabaa1992f5ac7c508a",
+      "definition": "../../../06-test-cases.md#rn-s045",
+      "blocked_reason": "No source-bound reconnecting authenticated application or referrer receiver is available. Current actual portal renewal URL observations are retained.",
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+        "No source-bound authenticated reconnecting application or referrer receiver is available. Renewal URL observations cannot complete reconnect/history coverage."
+      ]
+    },
+    {
+      "case_id": "RN-S046",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s046/result.json",
+      "sha256": "e32eb898f33432b542f48ee04acb1bc14c761020a9120b978fd1dabdc2eabc9c",
+      "definition": "../../../06-test-cases.md#rn-s046",
+      "blocked_reason": "No isolated caching proxy with source-bound cache policy and distinct A/B routing fixture is available. Generic proxy behavior would invent the cache contract.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S047",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 2,
+      "result": "rn-s047/result.json",
+      "sha256": "117fcc9a52f0fcb0666fec12f921e011b9782568d22a82a1dd7450079e1e1a15",
+      "definition": "../../../06-test-cases.md#rn-s047",
+      "blocked_reason": null,
+      "evidence_limits": [
+        "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+        "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+        "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+        "Authorized same-origin diagnostic script, not an XSS exploit. No injection vector, CSP bypass, or theft was tested."
+      ]
+    },
+    {
+      "case_id": "RN-S048",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s048/result.json",
+      "sha256": "ef541cff2d4ca406a049777c8aa993571120e2786e62de02d29461b00756b1d5",
+      "definition": "../../../06-test-cases.md#rn-s048",
+      "blocked_reason": "No authenticated stream server, publish fixture, or reviewed revocation deadline exists. Policy question Q-RN-06 remains unanswered.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S049",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s049/result.json",
+      "sha256": "12eb7b237cc32143c7f1a175c5d489725853a2eb83cc887d82cda02b73426773",
+      "definition": "../../../06-test-cases.md#rn-s049",
+      "blocked_reason": "No source-bound running stream client/server composition or credential/subscription observation point is loaded. The cited shared-HTTP interceptor is not a stream connection implementation.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S050",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s050/result.json",
+      "sha256": "51f85450527233016aa7e3d212fce70fe9bfa5bd13f17d518e50d31197849025",
+      "definition": "../../../06-test-cases.md#rn-s050",
+      "blocked_reason": "No running stream reconnect queue and authenticated subscription server is supplied. Session epoch and HTTP logout alone cannot prove stream lifecycle.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S051",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s051/result.json",
+      "sha256": "b18188e3b131ca6ef94a18eed06de2ff449bd91c01ce37ce7c63e0ad37f0994d",
+      "definition": "../../../06-test-cases.md#rn-s051",
+      "blocked_reason": "No topic-X entitlement fixture, stream server, or publish/delivery audit is supplied. Continued-authorization policy remains open.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S052",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s052/result.json",
+      "sha256": "3cd3cde924c94e95fd2c40b0f3166c5208f30603de18ec8e8e2b5c7bf189f922",
+      "definition": "../../../06-test-cases.md#rn-s052",
+      "blocked_reason": "The case declares a three-attempt experiment but supplies no bound stream client/server/retry scheduler. The cited HTTP interceptor has no stream retry budget.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S053",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s053/result.json",
+      "sha256": "b86526fcd35cad30021a972cffaecafbe5852c5fb6e25acb4b2fb34c1acc193e",
+      "definition": "../../../06-test-cases.md#rn-s053",
+      "blocked_reason": "No financial mutation service, OP-1 commit audit, idempotency contract, or retry fixture is supplied. One client POST cannot establish a single server commit.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S054",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s054/result.json",
+      "sha256": "823ddffb8d9a8fafbb6e556730ae74e16737504d6e4933b5ba6abe885af0c807",
+      "definition": "../../../06-test-cases.md#rn-s054",
+      "blocked_reason": "No upload target, permission-change fixture, completion authorization point, or object commit store is supplied.",
+      "evidence_limits": []
+    },
+    {
+      "case_id": "RN-S055",
+      "status": "BLOCKED",
+      "execution_status": "NOT_EXECUTED",
+      "assertions": 0,
+      "result": "rn-s055/result.json",
+      "sha256": "5a468333f87a0d59f8c2ec4d4bc1b97f88e29548f9ec948bbc6e27536ab87c39",
+      "definition": "../../../06-test-cases.md#rn-s055",
+      "blocked_reason": "No source-bound buffered stream consumer, B view, or message store is loaded. Synthetic shell descriptor continuity cannot establish protected payload isolation.",
+      "evidence_limits": []
+    }
+  ],
+  "root_runner_semantic_review": {
+    "runner": "../core-browser.mjs",
+    "recommendation": "Retain executed observations. Do not count narrower assertions as complete canonical passes.",
+    "gaps": [
+      {
+        "cases": [
+          "RN-R001",
+          "RN-R005"
+        ],
+        "canonical": "Zero credentials installed.",
+        "current": "Access-token stability only.",
+        "missing": "Refresh-credential installation assertion."
+      },
+      {
+        "cases": [
+          "RN-R002",
+          "RN-R008"
+        ],
+        "canonical": "Zero authentication-field changes.",
+        "current": "Access-token stability only.",
+        "missing": "All applicable authentication fields."
+      },
+      {
+        "cases": [
+          "RN-R003",
+          "RN-R004"
+        ],
+        "canonical": "Final installed identity equals B.",
+        "current": "Access-token stability with constant synthetic JWT subject.",
+        "missing": "Distinct A/B identity and visible-current-user assertion."
+      },
+      {
+        "cases": [
+          "RN-R016"
+        ],
+        "canonical": "Pending pointer identifies the new request.",
+        "current": "Pending pointer is truthy.",
+        "missing": "Exact pending promise/request identity comparison."
+      },
+      {
+        "cases": [
+          "RN-B014"
+        ],
+        "canonical": "Backward-clock reconciliation occurs on visibility return.",
+        "current": "Clock changed; expiry trace retained.",
+        "missing": "Visibility-return action before observation."
+      },
+      {
+        "cases": [
+          "RN-H008"
+        ],
+        "canonical": "Trace records each storage exception and installed state.",
+        "current": "Throwing storage setter; state retained.",
+        "missing": "Captured exception records."
+      }
+    ]
+  },
+  "validation": {
+    "result_hashes": "PASSED",
+    "result_ids_statuses_assertion_counts": "PASSED",
+    "failed_predicates_retained": "PASSED",
+    "all_42_dispositions_reconciled": "PASSED"
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

@@ -1,0 +1,1488 @@
+{
+  "recorded_at": "2026-10-29T01:57:34.044425+00:00",
+  "scope": "All 196 combination outline rows; current committed source integration. No application changes.",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "canonical_definition_sha256": "5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037",
+  "combination_design_sha256": "0f8714b5df40a1c3718f04b16412084395b0a6f98c94704f31695e58b99bd351",
+  "runner_sha256": "9b91b9fd6c6bd1e0b672a69e56acb1c37a3c8212f99cdeb8ef1f46bcddbd3e2a",
+  "source_hashes_checked": 348,
+  "source_mismatches": [],
+  "source_binding": "source-binding.json",
+  "full_canonical_results": {
+    "instances": 196,
+    "passed": 15,
+    "failed": 0,
+    "blocked_partially_executed": 181,
+    "unattempted": 0
+  },
+  "by_outline": {
+    "RN-C001": {
+      "total": 37,
+      "statuses": {
+        "BLOCKED": 37
+      }
+    },
+    "RN-C002": {
+      "total": 144,
+      "statuses": {
+        "BLOCKED": 144
+      }
+    },
+    "RN-O001": {
+      "total": 15,
+      "statuses": {
+        "PASSED": 15
+      }
+    }
+  },
+  "executed_source_predicates": {
+    "assertions": 283,
+    "passed": 283,
+    "failed": 0,
+    "raw_jest_tests": 196,
+    "raw_jest_passed": 196,
+    "limit": "Jest passes cover bounded source probes. They do not establish 196 complete canonical passing cases."
+  },
+  "blocked_predicate_groups": [
+    {
+      "cases": [
+        "RN-C001",
+        "RN-C002"
+      ],
+      "rows": 181,
+      "predicate": "unauthorized protected business mutations equal 0",
+      "reason": "No named protected mutation endpoint, live server authorization context, or durable commit observation exists in the design or isolated runtime.",
+      "owner": "unknown business-service and security owners",
+      "next_action": "Bind a named operation and authoritative transaction results before full execution."
+    },
+    {
+      "cases": [
+        "RN-C001"
+      ],
+      "rows": 37,
+      "predicate": "each business operation identifier has at most 1 committed mutation",
+      "reason": "No operation identifier or durable transaction/idempotency oracle is defined.",
+      "owner": "unknown business-service owner",
+      "next_action": "Provide the supported operation/idempotency contract and transaction service."
+    },
+    {
+      "cases": [
+        "RN-C001"
+      ],
+      "rows": 37,
+      "predicate": "the selected concurrent transport, network, and lifecycle schedule",
+      "reason": "Actual transport services and native browser/network controllers are not part of this jsdom runtime.",
+      "owner": "unknown transport and test owners",
+      "next_action": "Run each exact row with its actual selected service and browser lifecycle."
+    }
+  ],
+  "additional_observations": [
+    {
+      "instances": [
+        "RN-C002/RISK-106",
+        "RN-C002/RISK-118"
+      ],
+      "observation": "An activity renewal response with a malformed authorization header installs unreadable access in client state before payload parsing rejects.",
+      "result_refs": [
+        "RN-C002-RISK-106/result.json",
+        "RN-C002-RISK-118/result.json"
+      ],
+      "source": "../../comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L85-L99",
+      "impact": "If a supported provider returns this malformed header, client credentials can become unusable. Actual provider occurrence, subsequent user interruption, and protected-server acceptance were not verified.",
+      "severity": "UNKNOWN; conditional provider-contract impact",
+      "origin": "Not established by a paired baseline run.",
+      "owner": "unknown authentication-provider and application owners",
+      "next_action": "Inspect the supported response contract and reproduce the resulting user journey before severity or acceptance."
+    }
+  ],
+  "attempt_history": [
+    {
+      "attempt": 1,
+      "raw_result": "attempt1/jest-results.json",
+      "outcome": "194 bounded probes passed. Two snapshot observations errored while parsing installed malformed access.",
+      "resolution": "The snapshot recorder now labels unreadable access. Product source and asserted predicates remain unchanged.",
+      "rerun": "jest-results.json"
+    }
+  ],
+  "results": [
+    {
+      "instance_id": "RN-C001/PAIR-001",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-001/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-002",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-002/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-003",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-003/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-004",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-004/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-005",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-005/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-006",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-006/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-007",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-007/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-008",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-008/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-009",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-009/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-010",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-010/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-011",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-011/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-012",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-012/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-013",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-013/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-014",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-014/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-015",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-015/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-016",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-016/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-017",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-017/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-018",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-018/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-019",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-019/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-020",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-020/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-021",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-021/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-022",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-022/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-023",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-023/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-024",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-024/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-025",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-025/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-026",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-026/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-027",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-027/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-028",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-028/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-029",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-029/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-030",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-030/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-031",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-031/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-032",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-032/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-033",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-033/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-034",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-034/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-035",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-035/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-036",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-036/result.json"
+    },
+    {
+      "instance_id": "RN-C001/PAIR-037",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C001-PAIR-037/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-001",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-001/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-002",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-002/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-003",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-003/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-004",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-004/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-005",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-005/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-006",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-006/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-007",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-007/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-008",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-008/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-009",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-009/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-010",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-010/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-011",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-011/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-012",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-012/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-013",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-013/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-014",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-014/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-015",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-015/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-016",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-016/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-017",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-017/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-018",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-018/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-019",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-019/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-020",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-020/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-021",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-021/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-022",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-022/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-023",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-023/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-024",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-024/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-025",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-025/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-026",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-026/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-027",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-027/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-028",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-028/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-029",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-029/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-030",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-030/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-031",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-031/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-032",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-032/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-033",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-033/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-034",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-034/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-035",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-035/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-036",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-036/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-037",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-037/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-038",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-038/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-039",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-039/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-040",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-040/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-041",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-041/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-042",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-042/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-043",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-043/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-044",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-044/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-045",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-045/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-046",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-046/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-047",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-047/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-048",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-048/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-049",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-049/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-050",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-050/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-051",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-051/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-052",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-052/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-053",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-053/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-054",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-054/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-055",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-055/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-056",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-056/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-057",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-057/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-058",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-058/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-059",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-059/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-060",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-060/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-061",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-061/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-062",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-062/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-063",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-063/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-064",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-064/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-065",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-065/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-066",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-066/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-067",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-067/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-068",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-068/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-069",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-069/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-070",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-070/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-071",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-071/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-072",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-072/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-073",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-073/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-074",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-074/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-075",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-075/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-076",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-076/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-077",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-077/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-078",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-078/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-079",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-079/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-080",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-080/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-081",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-081/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-082",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-082/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-083",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-083/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-084",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-084/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-085",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-085/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-086",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-086/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-087",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-087/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-088",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-088/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-089",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-089/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-090",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-090/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-091",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-091/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-092",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-092/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-093",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-093/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-094",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-094/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-095",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-095/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-096",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-096/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-097",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-097/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-098",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-098/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-099",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-099/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-100",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-100/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-101",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-101/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-102",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-102/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-103",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-103/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-104",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-104/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-105",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-105/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-106",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-106/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-107",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-107/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-108",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-108/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-109",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-109/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-110",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-110/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-111",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-111/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-112",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-112/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-113",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-113/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-114",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-114/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-115",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-115/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-116",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-116/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-117",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-117/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-118",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-118/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-119",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-119/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-120",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-120/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-121",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-121/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-122",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-122/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-123",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-123/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-124",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-124/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-125",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-125/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-126",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-126/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-127",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-127/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-128",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-128/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-129",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-129/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-130",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-130/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-131",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-131/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-132",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-132/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-133",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-133/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-134",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-134/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-135",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-135/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-136",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-136/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-137",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-137/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-138",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-138/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-139",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-139/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-140",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-140/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-141",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-141/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-142",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-142/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-143",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-143/result.json"
+    },
+    {
+      "instance_id": "RN-C002/RISK-144",
+      "status": "BLOCKED",
+      "execution_status": "PARTIALLY_EXECUTED",
+      "assertions": 1,
+      "result": "RN-C002-RISK-144/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-001",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-001/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-002",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-002/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-003",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-003/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-004",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-004/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-005",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-005/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-006",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-006/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-007",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-007/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-008",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-008/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-009",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-009/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-010",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-010/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-011",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-011/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-012",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 7,
+      "result": "RN-O001-ORDER-012/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-013",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 6,
+      "result": "RN-O001-ORDER-013/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-014",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 6,
+      "result": "RN-O001-ORDER-014/result.json"
+    },
+    {
+      "instance_id": "RN-O001/ORDER-015",
+      "status": "PASSED",
+      "execution_status": "EXECUTED",
+      "assertions": 6,
+      "result": "RN-O001-ORDER-015/result.json"
+    }
+  ],
+  "limits": [
+    "Actual React Provider, reducers, Timeout hook, service helpers, and Axios request/response guards execute in jsdom.",
+    "The controlled adapter is not a live identity, transport, authorization, or business service.",
+    "Unsigned synthetic credentials establish client ownership behavior only.",
+    "ORDER cases are proposed-security invariants; execution does not approve business policy.",
+    "No native/browser screenshot exists for this jsdom-only execution."
+  ]
+}

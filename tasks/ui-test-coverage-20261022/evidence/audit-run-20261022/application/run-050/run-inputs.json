@@ -1,0 +1,4166 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-22T05:58:39.471Z",
+  "sourceRevision": "908f88117032e2a3a0e2c4db0c75f5dce630a643",
+  "worktreeStatus": "M e2e/audit-specs/callback-profile.spec.ts\n M e2e/audit-specs/login-environment.spec.ts\n M e2e/audit-specs/login-success.spec.ts\n M e2e/audit-specs/preferences.spec.ts\n M e2e/audit-specs/session-timing.spec.ts\n M e2e/audit-specs/workspace-edges.spec.ts\n M e2e/audit-specs/workspaces.spec.ts\n M e2e/audit.config.ts\n M e2e/audit.reporter.ts\n M e2e/scripts/summarize-audit.py\n M e2e/support/audit-fixture.ts\n M e2e/support/local-app.ts\n M tasks/ui-test-coverage-20261022/execution-stage.md\n?? e2e/audit-specs/additional-boundaries.spec.ts\n?? e2e/audit-specs/admin-auth.spec.ts\n?? e2e/audit-specs/admin-expanded.spec.ts\n?? e2e/audit-specs/admin-ux.spec.ts\n?? e2e/audit-specs/auth-boundary-expanded.spec.ts\n?? e2e/audit-specs/auth-current-bff-extra.spec.ts\n?? e2e/audit-specs/auth-current-bff.spec.ts\n?? e2e/audit-specs/auth-final.spec.ts\n?? e2e/audit-specs/auth-login-security-expanded.spec.ts\n?? e2e/audit-specs/auth-remaining.spec.ts\n?? e2e/audit-specs/auth-session-expanded.spec.ts\n?? e2e/audit-specs/bff-admin.spec.ts\n?? e2e/audit-specs/browser-compatibility.spec.ts\n?? e2e/audit-specs/browser-zoom.spec.ts\n?? e2e/audit-specs/cache-lifecycle.spec.ts\n?? e2e/audit-specs/catalog-profile-expanded.spec.ts\n?? e2e/audit-specs/conditional-module-launch.spec.ts\n?? e2e/audit-specs/dialog-ux.spec.ts\n?? e2e/audit-specs/module-risk-expanded.spec.ts\n?? e2e/audit-specs/modules-expanded.spec.ts\n?? e2e/audit-specs/notifications-expanded.spec.ts\n?? e2e/audit-specs/shell-expanded.spec.ts\n?? e2e/audit-specs/ux-shell.spec.ts\n?? e2e/fixtures/zoom-extension/\n?? e2e/scripts/test_summarize_audit.py\n?? e2e/support/admin-app.ts\n?? e2e/support/auth-session.ts\n?? e2e/support/bff-admin-app.ts\n?? e2e/support/cache-app.ts\n?? e2e/support/catalog-app.ts\n?? e2e/support/conditional-launch.ts\n?? e2e/support/login-audit.ts\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-007/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-008/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-009/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-010/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-011/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-012/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-013/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-014/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-015/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-016/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-017/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-018/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-019/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-020/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-021/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-022/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-023/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-024/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-026/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-027/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-028/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-029/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-030/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-031/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-032/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-033/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-034/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-035/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-036/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-037/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-038/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-039/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-040/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-041/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-042/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-043/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-045/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-052/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-053/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-055/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-056/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-057/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-058/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-059-refresh/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-059/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-060/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-061/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/environment/attempt-03/\n?? tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/source-variants/\n?? tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "nodeVersion": "v24.16.0",
+  "workers": 2,
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "fixture": "Final frozen frontend suite: actual current React, declared controlled identity/service/container/clock fixtures, real Chromium cache and native zoom. Actual-BFF cases execute in dedicated serial runs. Each executed canonical step retains a fresh screenshot.",
+  "command": [
+    "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+    "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+    "test",
+    "e2e/audit\\-specs/additional\\-boundaries\\.spec\\.ts$",
+    "e2e/audit\\-specs/admin\\-auth\\.spec\\.ts$",
+    "e2e/audit\\-specs/admin\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/admin\\-ux\\.spec\\.ts$",
+    "e2e/audit\\-specs/auth\\-boundary\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/auth\\-final\\.spec\\.ts$",
+    "e2e/audit\\-specs/auth\\-login\\-security\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/auth\\-remaining\\.spec\\.ts$",
+    "e2e/audit\\-specs/auth\\-session\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/browser\\-compatibility\\.spec\\.ts$",
+    "e2e/audit\\-specs/browser\\-zoom\\.spec\\.ts$",
+    "e2e/audit\\-specs/cache\\-lifecycle\\.spec\\.ts$",
+    "e2e/audit\\-specs/callback\\-profile\\.spec\\.ts$",
+    "e2e/audit\\-specs/catalog\\-profile\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/conditional\\-module\\-launch\\.spec\\.ts$",
+    "e2e/audit\\-specs/dialog\\-ux\\.spec\\.ts$",
+    "e2e/audit\\-specs/login\\-environment\\.spec\\.ts$",
+    "e2e/audit\\-specs/login\\-success\\.spec\\.ts$",
+    "e2e/audit\\-specs/module\\-risk\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/modules\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/notifications\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/preferences\\.spec\\.ts$",
+    "e2e/audit\\-specs/session\\-timing\\.spec\\.ts$",
+    "e2e/audit\\-specs/shell\\-expanded\\.spec\\.ts$",
+    "e2e/audit\\-specs/ux\\-shell\\.spec\\.ts$",
+    "e2e/audit\\-specs/workspace\\-edges\\.spec\\.ts$",
+    "e2e/audit\\-specs/workspaces\\.spec\\.ts$",
+    "--grep-invert",
+    "AUTH-116|AUTH-144",
+    "--config=e2e/audit.config.ts",
+    "--workers=2"
+  ],
+  "sourceHashes": [
+    {
+      "path": "e2e/ai/runner.ts",
+      "sha256": "f60cb257e5c53a8275c31eee6f67251c7f62c42dc3fc9956157321a2eb7e3806",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/ai/runner.ts"
+    },
+    {
+      "path": "e2e/ai/session-extension.sequence.json",
+      "sha256": "94e08f3f786cf9fc52ec78608d2954d42bcd99c84b278e5f3027932a075438de",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/ai/session-extension.sequence.json"
+    },
+    {
+      "path": "e2e/audit-specs/additional-boundaries.spec.ts",
+      "sha256": "5269148c137202889ba97d7e2c137549b3f9188e2f2df98fd8522cdc04045988",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/additional-boundaries.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/admin-auth.spec.ts",
+      "sha256": "ee12c6313503e5b6d282aa1c12285b4fcf84c698278e6d3a2c8e6d7420161567",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/admin-auth.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/admin-expanded.spec.ts",
+      "sha256": "baf41ded1203b8b3c783249f104a11b0435fd02df4b148b0336fee11778b72d9",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/admin-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/admin-ux.spec.ts",
+      "sha256": "198cd2b60c7dafc8856c6de69429785ff2a62e1d740a265772cf38ce869bbb3d",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/admin-ux.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/auth-boundary-expanded.spec.ts",
+      "sha256": "a64939ff59aed1265fd6944a24cd10e73e16560927d79ae30f89b60b0fbc28f0",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-boundary-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/auth-current-bff-extra.spec.ts",
+      "sha256": "66fdbdf12086a532f21cf6328c41039fa360bbe41f0af64bc1d2606ab89a13c3",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-current-bff-extra.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/auth-current-bff.spec.ts",
+      "sha256": "b62ca94d77f4d9fdd7dfaf9a4c5007cb199ce940eff5a27daf44372cfbe77b00",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-current-bff.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/auth-final.spec.ts",
+      "sha256": "133a5ec4632074a6d7527c9547510d890f4ede7d1533ab93947176e004455150",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-final.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/auth-login-security-expanded.spec.ts",
+      "sha256": "9b938d2bee745f3afb8beb37ea56321ea65d62e715e9b1ca1fdbbdb48dd98933",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-login-security-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/auth-remaining.spec.ts",
+      "sha256": "5ebdae65834700e7b031fb5dbddcaf095f00bd8a8fccae6d72ee9cc558be8a21",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-remaining.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/auth-session-expanded.spec.ts",
+      "sha256": "94faf718f8725b4dbc8ff0c1e5ce707acf79829dd67040d8fa1eae649e904168",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/auth-session-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/bff-admin.spec.ts",
+      "sha256": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/bff-admin.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/browser-compatibility.spec.ts",
+      "sha256": "5980a10c0cd5d507011e0ad91318bd697b17fba1c018a5327afba573bc18cdcf",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/browser-compatibility.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/browser-zoom.spec.ts",
+      "sha256": "f263940c96c954c83f70054bcf0ee2f8b33fb72fc3b3ce181393ae77966e8d32",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/browser-zoom.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/cache-lifecycle.spec.ts",
+      "sha256": "f46ee7a7d0117d31363b583a99ebc15a1b21efc3a8e8ced0ca55ee9639af18ca",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/cache-lifecycle.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/callback-profile.spec.ts",
+      "sha256": "008895e84acd051ee8d98cc1fcb6074049be551b0d32b53515f43c62633c55ca",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/callback-profile.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/catalog-profile-expanded.spec.ts",
+      "sha256": "7df74146ac43dbb6415b314add9486cff2dc3d9a8cd70eb980861dc2cb5458de",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/catalog-profile-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/conditional-module-launch.spec.ts",
+      "sha256": "33635879514a7b9b6897c42fb380b8ab0011281c67e00693447d88c8df8ba7f9",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/conditional-module-launch.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/dialog-ux.spec.ts",
+      "sha256": "ab29b93d912c96c4c1b6c75fdd82236d0aebd4cb99102db0291db63714f3f49c",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/dialog-ux.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/login-environment.spec.ts",
+      "sha256": "dcbb2e1f0d51f6cbb4e43bc9f619a75df428e1624dabe771b9888b70bbb1872f",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/login-environment.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/login-success.spec.ts",
+      "sha256": "111c9cb31da8ccf8b6f2a4f67724cb64519570c0adb8756c4b5c3ff9aa56874c",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/login-success.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/module-risk-expanded.spec.ts",
+      "sha256": "6df32fad09288b38749e7a98fd657560da207274fd4b10ce856f454b4e59c1fb",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/module-risk-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/modules-expanded.spec.ts",
+      "sha256": "2ebadd071cb6a96c2a42aa503e317c3284fc66713c155e8492af7e589093dde0",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/modules-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/notifications-expanded.spec.ts",
+      "sha256": "6794aee6fc178ed8a0f1d547b5962a37db1aa090a674c3e514a784ce18ac908c",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/notifications-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/preferences.spec.ts",
+      "sha256": "044b311c7211447e2dc1b65b1b70f29d852b7ba9a05ba21367360256e96156a9",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/preferences.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/session-timing.spec.ts",
+      "sha256": "260e6e7c1cd1bdc13d69d5f26aba88bde62cbeee8e624e2754f444fa83ad351e",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/session-timing.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/shell-expanded.spec.ts",
+      "sha256": "23126b1bda7a5ab8631115cd6a728cc2552ab7233ef589eac14934be37ec906b",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/shell-expanded.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/ux-shell.spec.ts",
+      "sha256": "cf6b86260efd547f75e24041a18514029e9efcf78f961cb75b6c609f35d0a4e2",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/ux-shell.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/workspace-edges.spec.ts",
+      "sha256": "b22bc73b1ce3a59d3ef669f61cd4e83cc537099c4c5f58f7dc0595311ea5bee5",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/workspace-edges.spec.ts"
+    },
+    {
+      "path": "e2e/audit-specs/workspaces.spec.ts",
+      "sha256": "3cec52ae16ccaaacb915815592272fb478b211628ba71262d96c0d8c4d5ec216",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit-specs/workspaces.spec.ts"
+    },
+    {
+      "path": "e2e/audit.config.ts",
+      "sha256": "eb70b0f1c514d69bab172b6eb06c9827f9d32fe0d3fde8f42f2a657cdb40a33c",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit.config.ts"
+    },
+    {
+      "path": "e2e/audit.reporter.ts",
+      "sha256": "0d409f94392399db29322d0a66321e25c226310e91d21e38de841e0b21cb04a1",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/audit.reporter.ts"
+    },
+    {
+      "path": "e2e/browser-config.ts",
+      "sha256": "3f4a3263d6c180bee25bd972dc7f817fd03a16f2130432fdc6ed84de09c0b748",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/browser-config.ts"
+    },
+    {
+      "path": "e2e/catalog/actions.ts",
+      "sha256": "105a0b7d2dcf6bb26ec47d5ae729d910a7e7c775b83cbcc12f93ebc4dfa220db",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/catalog/actions.ts"
+    },
+    {
+      "path": "e2e/catalog/ui-contracts.ts",
+      "sha256": "4eee9035d47dd644884497548476fefc39898c2d69aa38c887d2221e6c275ece",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/catalog/ui-contracts.ts"
+    },
+    {
+      "path": "e2e/components/category-detail.dialog.ts",
+      "sha256": "c07a7404dd5bd242bd51c02bcf1dbb7e7880bcc26b807aadb2d37e6c255df35b",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/components/category-detail.dialog.ts"
+    },
+    {
+      "path": "e2e/components/category-record-actions.component.ts",
+      "sha256": "8109f5638ad8cc075741288e030b7066d8ab476325fefc6ee58d92f1d46cae9d",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/components/category-record-actions.component.ts"
+    },
+    {
+      "path": "e2e/components/session-timeout.dialog.ts",
+      "sha256": "2bb3c7d4a92ea025ce7260ade11507ca2b151561599bb94334002d023aafe510",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/components/session-timeout.dialog.ts"
+    },
+    {
+      "path": "e2e/components/target.ts",
+      "sha256": "06c00cf7097115318e86e00ef9d9866c112cad0cd91c22adcfa87e4db6de6413",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/components/target.ts"
+    },
+    {
+      "path": "e2e/components/workspace-tab.component.ts",
+      "sha256": "a4ea431b300cfd9e2d5538c9e715237f2591fa3b1841b0aa361a35b8b187be69",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/components/workspace-tab.component.ts"
+    },
+    {
+      "path": "e2e/fixtures/portal.fixture.ts",
+      "sha256": "39b54fcc57a58aa32aa831accddfee688f1b0e019aa2eb9484cdf70d76ec6171",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/fixtures/portal.fixture.ts"
+    },
+    {
+      "path": "e2e/fixtures/zoom-extension/manifest.json",
+      "sha256": "7b20167fd9bec4bd44ca4a2f1beac1c4d142eac29f7293a599ea47020165a956",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/fixtures/zoom-extension/manifest.json"
+    },
+    {
+      "path": "e2e/fixtures/zoom-extension/worker.js",
+      "sha256": "1c5a564128085b8773d13cbd53f686d01c1225d5f5c0fde8431299a66082804c",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/fixtures/zoom-extension/worker.js"
+    },
+    {
+      "path": "e2e/flows/session-extension.flow.ts",
+      "sha256": "75b57281d493e15a6e24d3786d2845758bac3a43c2b512315d2778e0c97e1e77",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/flows/session-extension.flow.ts"
+    },
+    {
+      "path": "e2e/pages/category-administration.page.ts",
+      "sha256": "ef1d300506a052a9b22edc7616bedec8d6f9b126b9ff0ad48684f78d6416bb94",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/pages/category-administration.page.ts"
+    },
+    {
+      "path": "e2e/pages/login.page.ts",
+      "sha256": "d2460c93ff81609b728a5d9f332caf6e42ed2d5f627a78734810471201a3f571",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/pages/login.page.ts"
+    },
+    {
+      "path": "e2e/pages/portal.page.ts",
+      "sha256": "739879a73f26c4317975c77a447ae16b3de739dd73048ca1d54547daa2630853",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/pages/portal.page.ts"
+    },
+    {
+      "path": "e2e/playwright.config.ts",
+      "sha256": "35f07e271ffbe9e70d54659c45515c5c499c3a9d64e617887d47ad92bbc7a0bf",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/playwright.config.ts"
+    },
+    {
+      "path": "e2e/scripts/check-traceability.mjs",
+      "sha256": "88d9314951a162587a91492080e9d6b36df57d768fc1915e6baf87fc02cca362",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/scripts/check-traceability.mjs"
+    },
+    {
+      "path": "e2e/specs/components.spec.ts",
+      "sha256": "ab2121fccff7c553f4add448e1a47dc3bacde1561cddbdbbd68ff1b2bea0fa4c",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/specs/components.spec.ts"
+    },
+    {
+      "path": "e2e/specs/session-extension.spec.ts",
+      "sha256": "bd73bbd475d61f6cbc1551e6a1d5ef7f6f14b1b368d50ef30c67b945e3a29832",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/specs/session-extension.spec.ts"
+    },
+    {
+      "path": "e2e/support/admin-app.ts",
+      "sha256": "1cbc6a5995570abf017bcf7950b7055744cd50335b9b239a50781f05c0409f55",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/admin-app.ts"
+    },
+    {
+      "path": "e2e/support/audit-fixture.ts",
+      "sha256": "3b0106f0f98aa6ca6bc98cdf4cbb9ca9272b9d640fbf7ed0a0c041b808c70def",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/audit-fixture.ts"
+    },
+    {
+      "path": "e2e/support/auth-session.ts",
+      "sha256": "72c41aa4212a9bd16d66d9cdda84dbd259441afa78b650ab6389b6c68ed9b29b",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/auth-session.ts"
+    },
+    {
+      "path": "e2e/support/bff-admin-app.ts",
+      "sha256": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/bff-admin-app.ts"
+    },
+    {
+      "path": "e2e/support/cache-app.ts",
+      "sha256": "85c02498d4e1eec4cff4250ee723b66d6777482f05c2fa724ca5e2432fd07bb4",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/cache-app.ts"
+    },
+    {
+      "path": "e2e/support/catalog-app.ts",
+      "sha256": "fe89dac33e102f2ced0d241218a35e306335910f22f5cb0b260ff1a04e0d7bcb",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/catalog-app.ts"
+    },
+    {
+      "path": "e2e/support/conditional-launch.ts",
+      "sha256": "eb6684c9bc88b0035c5353adc598333f9fd7746533e5570e9f9c85b50fc982aa",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/conditional-launch.ts"
+    },
+    {
+      "path": "e2e/support/discovery.ts",
+      "sha256": "d848dcb34918267249fa36151d99d769496f4a8c15522a09974618cd552e9eb3",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/discovery.ts"
+    },
+    {
+      "path": "e2e/support/local-app.ts",
+      "sha256": "b372816bcaaff6aa6e5e798eaf7e5e439ab03fd59370f5ee2dec27cfd88ad76f",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/local-app.ts"
+    },
+    {
+      "path": "e2e/support/login-audit.ts",
+      "sha256": "dcb5a9dda2f7e24af907164fda50d5dc1f16c2543b542ee635313206b25ec83d",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/login-audit.ts"
+    },
+    {
+      "path": "e2e/support/results.ts",
+      "sha256": "04bf41db62ab81e6257b9a3eeac168db87289bc2db07eae04b4732fcfe6567a0",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/results.ts"
+    },
+    {
+      "path": "e2e/support/source-quality.ts",
+      "sha256": "70d6cb92622ae435033f0ad52a8e47bf7d29ff46d79b228a31610357d145891a",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/support/source-quality.ts"
+    },
+    {
+      "path": "e2e/traceability/bindings.json",
+      "sha256": "9833f1091a9033cc4e6c23d4a7950c9b4c4b6e1d3cd0a928ed02d0b8fa6b4b68",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/traceability/bindings.json"
+    },
+    {
+      "path": "e2e/traceability/cases.json",
+      "sha256": "b9a21824d8cb7ed219028b053ac389b0b06248d371b6851d87b4c94fe4077905",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/traceability/cases.json"
+    },
+    {
+      "path": "e2e/tsconfig.json",
+      "sha256": "492660e9326f62686df6e84350fd2b3f7b13e295225e0d66e37fc37b03379671",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/e2e/tsconfig.json"
+    },
+    {
+      "path": "package.json",
+      "sha256": "112f518e8ee413b0e7f7cfabb2d108880b8625eed13930ea25532c54a8b6033f",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/package.json"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "8ac06023e640ba6467a13a524ce18da1a1b8a1f5ab44b75d7233105d4ba199cb",
+      "snapshotPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-050/source-snapshots/package-lock.json"
+    }
+  ],
+  "planned": [
+    {
+      "caseId": "ux-036-thirty-workspace-tabs-remain-operable-b79e4908ea94-attempt-1",
+      "testId": "e13a4f34f9c6eb2030b6-ef251969203998b2134f",
+      "title": "UX-036 thirty workspace tabs remain operable",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/additional-boundaries.spec.ts",
+        "line": 12,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ux-043-captured-csv-retains-a-spreadsheet-viewer-prerequisite-6accac80f419-attempt-1",
+      "testId": "e13a4f34f9c6eb2030b6-be88700ed39a042e21c7",
+      "title": "UX-043 captured CSV retains a spreadsheet-viewer prerequisite",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/additional-boundaries.spec.ts",
+        "line": 30,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-115-shared-session-rejection-across-two-live-pages-af2f28b389a1-attempt-1",
+      "testId": "e13a4f34f9c6eb2030b6-22e1ccf7e51f9db65faf",
+      "title": "AUTH-115 shared-session rejection across two live pages",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/additional-boundaries.spec.ts",
+        "line": 60,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-128-category-update-response-handling-with-step-evidence-85cde3d01bcf-attempt-1",
+      "testId": "4030f0bfef91ae700c6b-e8570daa790efbf9d20a",
+      "title": "AUTH-128 Category update response handling with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-auth.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-129-category-update-response-handling-with-step-evidence-762da2fc2ac0-attempt-1",
+      "testId": "4030f0bfef91ae700c6b-7305d32ffad3443e71a4",
+      "title": "AUTH-129 Category update response handling with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-auth.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-131-category-update-response-handling-with-step-evidence-42d838af2e70-attempt-1",
+      "testId": "4030f0bfef91ae700c6b-b2d8f35a897921803a04",
+      "title": "AUTH-131 Category update response handling with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-auth.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-001-actual-administration-ui-with-step-evidence-0aa11780766c-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-fefc13e0a2d44209d3b2",
+      "title": "UI-ADM-CAT-001 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-002-actual-administration-ui-with-step-evidence-d7ba28e4b464-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-fa80efea471047af877c",
+      "title": "UI-ADM-CAT-002 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-003-actual-administration-ui-with-step-evidence-8276e1f3b0aa-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-7c3f676ee17c3fb2c594",
+      "title": "UI-ADM-CAT-003 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-004-actual-administration-ui-with-step-evidence-ac328a77136b-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-ba933e30634dddf1ab36",
+      "title": "UI-ADM-CAT-004 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-005-actual-administration-ui-with-step-evidence-d6bf568f3457-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-5f44923601d6b53ce3de",
+      "title": "UI-ADM-CAT-005 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-006-actual-administration-ui-with-step-evidence-5537e893c3c7-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-ed0a5c5249005c68dfc3",
+      "title": "UI-ADM-CAT-006 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-007-actual-administration-ui-with-step-evidence-7255a0523423-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-1f5a7946300ec6d53cd6",
+      "title": "UI-ADM-CAT-007 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-008-actual-administration-ui-with-step-evidence-0585e8db53cc-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-6ac120ddfef28f09a842",
+      "title": "UI-ADM-CAT-008 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-009-actual-administration-ui-with-step-evidence-8ce5302a681f-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-6f3c938f17b58d096d27",
+      "title": "UI-ADM-CAT-009 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-010-actual-administration-ui-with-step-evidence-dfed3208c9cc-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-a5ad15a46765058bff17",
+      "title": "UI-ADM-CAT-010 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-011-actual-administration-ui-with-step-evidence-215b2a46ffc5-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-daf70dec2c256eb3bea2",
+      "title": "UI-ADM-CAT-011 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-012-actual-administration-ui-with-step-evidence-c8711b4a003f-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-34208312207cb188e2c3",
+      "title": "UI-ADM-CAT-012 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-013-actual-administration-ui-with-step-evidence-4bb4993ff682-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-1cb24f238b9e72a9609a",
+      "title": "UI-ADM-CAT-013 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-cat-014-actual-administration-ui-with-step-evidence-c411119918ca-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-26c1336b49a85c573092",
+      "title": "UI-ADM-CAT-014 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-001-actual-administration-ui-with-step-evidence-b3edfa9e7cd7-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-418c4c3a02f0fef13edc",
+      "title": "UI-ADM-MAP-001 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-002-actual-administration-ui-with-step-evidence-704dd191c70f-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-e80e3339d8ed6ae8c731",
+      "title": "UI-ADM-MAP-002 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-003-actual-administration-ui-with-step-evidence-ae6155987216-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-da3f6666b3c39a4f8e42",
+      "title": "UI-ADM-MAP-003 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-004-actual-administration-ui-with-step-evidence-b0d5fb526664-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-632fb1bd2464597c6486",
+      "title": "UI-ADM-MAP-004 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-005-actual-administration-ui-with-step-evidence-25710836e26f-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-31794c6c90a3b1385dc5",
+      "title": "UI-ADM-MAP-005 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-006-actual-administration-ui-with-step-evidence-99eb5b1523c8-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-9c0580cbf99966bce247",
+      "title": "UI-ADM-MAP-006 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-007-actual-administration-ui-with-step-evidence-1c7d5b50e1a3-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-8cac5e8a7ef4d7708272",
+      "title": "UI-ADM-MAP-007 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-008-actual-administration-ui-with-step-evidence-1e52ef3e3f74-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-449bed8532b755a980b5",
+      "title": "UI-ADM-MAP-008 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-009-actual-administration-ui-with-step-evidence-1a6d7f6425cb-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-13c357edc6babe0f5960",
+      "title": "UI-ADM-MAP-009 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-010-actual-administration-ui-with-step-evidence-8eb3d4f16970-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-c6cdb93b83c95f4d5cca",
+      "title": "UI-ADM-MAP-010 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-011-actual-administration-ui-with-step-evidence-a37774a3e993-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-06e50185f6df1c50326d",
+      "title": "UI-ADM-MAP-011 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-012-actual-administration-ui-with-step-evidence-578df3679e8c-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-6207df7628c1d27829ae",
+      "title": "UI-ADM-MAP-012 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-013-actual-administration-ui-with-step-evidence-03d293836292-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-7e7ba37556b749eabbde",
+      "title": "UI-ADM-MAP-013 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-map-014-actual-administration-ui-with-step-evidence-918bd6204814-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-ac18273df81b3bbc5b22",
+      "title": "UI-ADM-MAP-014 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-001-actual-administration-ui-with-step-evidence-f311ed26257c-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-e0d7649a336e0372257b",
+      "title": "UI-ADM-TIL-001 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-002-actual-administration-ui-with-step-evidence-d6ca7c933d07-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-02676064b445ae973c15",
+      "title": "UI-ADM-TIL-002 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-003-actual-administration-ui-with-step-evidence-4f755f7e731c-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-e6dcda1fe44ced2838d1",
+      "title": "UI-ADM-TIL-003 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-004-actual-administration-ui-with-step-evidence-a11d53cc4bca-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-85fadd6466c23bcfe238",
+      "title": "UI-ADM-TIL-004 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-005-actual-administration-ui-with-step-evidence-b0b715747fbb-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-dd7e03517c242675856b",
+      "title": "UI-ADM-TIL-005 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-006-actual-administration-ui-with-step-evidence-9cd5bd5ef98a-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-fe7d433c4f921eb2af53",
+      "title": "UI-ADM-TIL-006 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-007-actual-administration-ui-with-step-evidence-835da6c4ba11-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-462363690376a3880d62",
+      "title": "UI-ADM-TIL-007 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-008-actual-administration-ui-with-step-evidence-ce20ad790326-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-29d78cdfbecf13174ab6",
+      "title": "UI-ADM-TIL-008 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-009-actual-administration-ui-with-step-evidence-342d97554056-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-852f035206264cbed8b6",
+      "title": "UI-ADM-TIL-009 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-010-actual-administration-ui-with-step-evidence-a6bf0c3f3a3c-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-159d8acfbd1920075fa8",
+      "title": "UI-ADM-TIL-010 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-011-actual-administration-ui-with-step-evidence-bd6e6bb9b7d2-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-0c665f6c793e4a739a6a",
+      "title": "UI-ADM-TIL-011 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-012-actual-administration-ui-with-step-evidence-cddb6f164010-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-05ce0e41994b33e02a81",
+      "title": "UI-ADM-TIL-012 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-013-actual-administration-ui-with-step-evidence-6fb4a61178cc-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-72719e50197e7ccf69eb",
+      "title": "UI-ADM-TIL-013 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-til-014-actual-administration-ui-with-step-evidence-8a0c2a783daa-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-d85a339c6b437689e97b",
+      "title": "UI-ADM-TIL-014 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-001-actual-administration-ui-with-step-evidence-d8c251aa4296-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-62e1ad28184883acd38f",
+      "title": "UI-ADM-FLD-001 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-002-actual-administration-ui-with-step-evidence-694f7d4214a9-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-37646ebd6435bf50969e",
+      "title": "UI-ADM-FLD-002 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-003-actual-administration-ui-with-step-evidence-919866c93682-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-5300f86f4c9c49d2cd4f",
+      "title": "UI-ADM-FLD-003 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-004-actual-administration-ui-with-step-evidence-32c304c04f24-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-235e677b6632734f7148",
+      "title": "UI-ADM-FLD-004 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-005-actual-administration-ui-with-step-evidence-3df5c3453fc4-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-d58ebf89512b26f6f233",
+      "title": "UI-ADM-FLD-005 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-006-actual-administration-ui-with-step-evidence-5646958279fb-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-98a2ede946c47ba75bf5",
+      "title": "UI-ADM-FLD-006 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-007-actual-administration-ui-with-step-evidence-e0031eee3495-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-52ede6e3df5622e2f605",
+      "title": "UI-ADM-FLD-007 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-fld-008-actual-administration-ui-with-step-evidence-256fe42211c3-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-2945da05c96c2ad5c30f",
+      "title": "UI-ADM-FLD-008 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-001-actual-administration-ui-with-step-evidence-436c54c0ead1-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-7d32200251dfce89ae22",
+      "title": "UI-ADM-SEL-001 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-002-actual-administration-ui-with-step-evidence-cda9174c1e88-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-d5f64f6412fd9ab06c14",
+      "title": "UI-ADM-SEL-002 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-003-actual-administration-ui-with-step-evidence-86e7460a5b4a-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-59fb07032b81f6db615c",
+      "title": "UI-ADM-SEL-003 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-004-actual-administration-ui-with-step-evidence-c22ec58bd6d9-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-b40681cb4ae5e372c0e0",
+      "title": "UI-ADM-SEL-004 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-005-actual-administration-ui-with-step-evidence-bd2bf42e2814-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-4eceab857e0cbd18b282",
+      "title": "UI-ADM-SEL-005 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-006-actual-administration-ui-with-step-evidence-5814899892ff-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-b238ee5ce56fb0eafc80",
+      "title": "UI-ADM-SEL-006 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-007-actual-administration-ui-with-step-evidence-9f3336891130-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-776aaeb1a6dfe4f078ab",
+      "title": "UI-ADM-SEL-007 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-008-actual-administration-ui-with-step-evidence-0b45d0656af5-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-062f4c02de12727776f1",
+      "title": "UI-ADM-SEL-008 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-009-actual-administration-ui-with-step-evidence-873a95ce706b-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-0b4108c1d4a15de559b9",
+      "title": "UI-ADM-SEL-009 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-010-actual-administration-ui-with-step-evidence-f4ace856f75f-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-3831dfd343f4f5071965",
+      "title": "UI-ADM-SEL-010 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-011-actual-administration-ui-with-step-evidence-f55e618c98f8-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-897f7aa0a69fc414b882",
+      "title": "UI-ADM-SEL-011 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-012-actual-administration-ui-with-step-evidence-3809e13b9044-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-4f0f9f647d8c03a795c1",
+      "title": "UI-ADM-SEL-012 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-013-actual-administration-ui-with-step-evidence-f0dc734cb1ea-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-a58c12aca1abaac5c250",
+      "title": "UI-ADM-SEL-013 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-014-actual-administration-ui-with-step-evidence-dc9e71a50d4f-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-d8218f32d26f228bea93",
+      "title": "UI-ADM-SEL-014 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-sel-015-actual-administration-ui-with-step-evidence-31351299f287-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-228a5641fe6e8c6cc2b5",
+      "title": "UI-ADM-SEL-015 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-001-actual-administration-ui-with-step-evidence-826aba2dcdc3-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-d7bf430c2cf5df2331c6",
+      "title": "UI-ADM-GRD-001 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-002-actual-administration-ui-with-step-evidence-6bdf4964e75d-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-eea2c39a3a8ccdb63ed1",
+      "title": "UI-ADM-GRD-002 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-003-actual-administration-ui-with-step-evidence-8532f4f0fee8-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-16fa13c1e001a1f7cb16",
+      "title": "UI-ADM-GRD-003 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-004-actual-administration-ui-with-step-evidence-5c5ecb736e6b-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-14155de699780c0c4539",
+      "title": "UI-ADM-GRD-004 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-005-actual-administration-ui-with-step-evidence-c05ee151cb5e-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-fe25fff1292f58835ca8",
+      "title": "UI-ADM-GRD-005 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-006-actual-administration-ui-with-step-evidence-111126f1ca33-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-2fc44f0e75fe851f232e",
+      "title": "UI-ADM-GRD-006 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-007-actual-administration-ui-with-step-evidence-8b89f3021322-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-ecee3c0a83644d0e363f",
+      "title": "UI-ADM-GRD-007 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-008-actual-administration-ui-with-step-evidence-a1798774c9a8-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-19595dc730ec42185be6",
+      "title": "UI-ADM-GRD-008 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-adm-grd-009-actual-administration-ui-with-step-evidence-06e762770821-attempt-1",
+      "testId": "f482abb32b6eb0ce9055-e8bc3adeb0fd220f25ea",
+      "title": "UI-ADM-GRD-009 actual administration UI with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+        "line": 15,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-014-administration-boundary-with-step-screenshots-420016d6f912-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-08a090b591fdaf77110c",
+      "title": "UX-014 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-015-administration-boundary-with-step-screenshots-1b68bb34e25f-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-0f8033e48cae74d46b56",
+      "title": "UX-015 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-016-administration-boundary-with-step-screenshots-c4034bd046ff-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-fa157c939763c3638e35",
+      "title": "UX-016 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-017-administration-boundary-with-step-screenshots-749286c5ca28-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-4d2946ffa4b1a3c972f9",
+      "title": "UX-017 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-018-administration-boundary-with-step-screenshots-dc295afc85ad-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-2ac24a71d6b6b00bd0c5",
+      "title": "UX-018 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-021-administration-boundary-with-step-screenshots-249cff05743c-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-95fdd6a0041dc11ed730",
+      "title": "UX-021 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-031-administration-boundary-with-step-screenshots-96689eeb62d2-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-16232244d82eb68989a8",
+      "title": "UX-031 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-038-administration-boundary-with-step-screenshots-635cd7a9489c-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-78bd87d30205cb2cb58b",
+      "title": "UX-038 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-045-administration-boundary-with-step-screenshots-a7fd9b94cad9-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-e16469d915e8a71a207f",
+      "title": "UX-045 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-047-administration-boundary-with-step-screenshots-8ece1377d4a7-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-e40fba626ac0e49e9f9b",
+      "title": "UX-047 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-051-administration-boundary-with-step-screenshots-cb82a63fff44-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-15978ddb5cbf750bfe4a",
+      "title": "UX-051 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-052-administration-boundary-with-step-screenshots-ecfd806a3600-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-1f2f02b9fd3e54ca8160",
+      "title": "UX-052 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-053-administration-boundary-with-step-screenshots-0b3e380eeadc-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-58dbfcb17298bf1402fc",
+      "title": "UX-053 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-054-administration-boundary-with-step-screenshots-48e82d94297f-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-4620dc1277b00c631c79",
+      "title": "UX-054 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-055-administration-boundary-with-step-screenshots-643806e944b9-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-7d20df4fae59e76d8652",
+      "title": "UX-055 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-056-administration-boundary-with-step-screenshots-24959110ab93-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-57fd629f1b7c730178f1",
+      "title": "UX-056 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-057-administration-boundary-with-step-screenshots-192e63f68e58-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-cce77dc4d94b33d7572a",
+      "title": "UX-057 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-058-administration-boundary-with-step-screenshots-29c198b46028-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-2abf1b0267f15f56ecc2",
+      "title": "UX-058 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-065-administration-boundary-with-step-screenshots-442b59626a94-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-1bd5cad2bf1a35cace74",
+      "title": "UX-065 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-066-administration-boundary-with-step-screenshots-cf12c78841f9-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-92e47a4692e86052bf64",
+      "title": "UX-066 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-067-administration-boundary-with-step-screenshots-8f6f78e3e064-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-49c2cca76c2412b10ab7",
+      "title": "UX-067 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-068-administration-boundary-with-step-screenshots-2dcfa9431d98-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-4203c9f61c975fb86159",
+      "title": "UX-068 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-069-administration-boundary-with-step-screenshots-164ba2a5e13a-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-7a788d7652b1ecbda469",
+      "title": "UX-069 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-070-administration-boundary-with-step-screenshots-ae00ae02eacf-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-76951e4eec2e9e2fa9e3",
+      "title": "UX-070 administration boundary with step screenshots",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-002-administration-source-risk-with-live-evidence-75245f7f210b-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-0c8507f9e873660c9d1f",
+      "title": "UI-RISK-002 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-003-administration-source-risk-with-live-evidence-15c0672669ea-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-f25fa58cc509e3a1c9bc",
+      "title": "UI-RISK-003 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-004-administration-source-risk-with-live-evidence-e9008a697174-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-38eca9027180ff62758f",
+      "title": "UI-RISK-004 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-005-administration-source-risk-with-live-evidence-747254ba8a22-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-8077fd975d6254407496",
+      "title": "UI-RISK-005 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-006-administration-source-risk-with-live-evidence-5bec670d0a50-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-b778e62874f55ca0ffd7",
+      "title": "UI-RISK-006 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-007-administration-source-risk-with-live-evidence-e0e16d61ed19-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-e1962eebac0d0f797f73",
+      "title": "UI-RISK-007 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-008-administration-source-risk-with-live-evidence-de0afd6e8ae4-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-153c2b516fc73420080f",
+      "title": "UI-RISK-008 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-009-administration-source-risk-with-live-evidence-2f9989889216-attempt-1",
+      "testId": "08f2aacf5ba4ea73f4eb-28743aa8ccdbacc22fe4",
+      "title": "UI-RISK-009 administration source risk with live evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-ux.spec.ts",
+        "line": 187,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-118-declared-validation-rejection-clears-ui-496b14769587-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-61e1bc9afd5a21b727d2",
+      "title": "AUTH-118 declared validation rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-119-declared-validation-rejection-clears-ui-7cee71c91d41-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-70b1d9698c4662723f5f",
+      "title": "AUTH-119 declared validation rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-120-declared-validation-rejection-clears-ui-4e0226770412-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-c04cc3b08506393a369c",
+      "title": "AUTH-120 declared validation rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-121-declared-validation-rejection-clears-ui-dd69d2537c35-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-f25576029d8601996480",
+      "title": "AUTH-121 declared validation rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-122-declared-validation-rejection-clears-ui-4d74282a2223-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-140cfb85a371a201cb9c",
+      "title": "AUTH-122 declared validation rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-123-declared-validation-rejection-clears-ui-5d05004539cd-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-744ac3089142515504b2",
+      "title": "AUTH-123 declared validation rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-124-declared-recovery-rejection-clears-ui-31b7680b74d9-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-a7b75929e62f655086c1",
+      "title": "AUTH-124 declared recovery rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 28,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-125-declared-recovery-rejection-clears-ui-cf16754e8f83-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-d0af856dc494332cc205",
+      "title": "AUTH-125 declared recovery rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 28,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-126-declared-recovery-rejection-clears-ui-991ab95d4757-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-9d3fba4f833631acd1ab",
+      "title": "AUTH-126 declared recovery rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 28,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-127-declared-recovery-rejection-clears-ui-f8e85dd32172-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-91a2eb0c985e7189515a",
+      "title": "AUTH-127 declared recovery rejection clears UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 28,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-130-controlled-service-error-presentation-62a5bc7bd4f8-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-8d9dadd0b573aa435a6d",
+      "title": "AUTH-130 controlled service error presentation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 36,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-132-controlled-service-error-presentation-7ee23478ec7b-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-fbdb4280825418450e8c",
+      "title": "AUTH-132 controlled service error presentation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 36,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-133-controlled-service-error-presentation-8833465460c8-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-4dc8a62e2b5b06071503",
+      "title": "AUTH-133 controlled service error presentation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 36,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-135-controlled-service-error-presentation-43868c76e345-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-43674c385eee28991be4",
+      "title": "AUTH-135 controlled service error presentation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 36,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-134-failed-analytics-leaves-theme-and-alerts-intact-d8a90e5f8512-attempt-1",
+      "testId": "ef6995ae8d301ffceb42-bd4180bb956362f6e034",
+      "title": "AUTH-134 failed analytics leaves theme and alerts intact",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-boundary-expanded.spec.ts",
+        "line": 63,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-066-short-access-home-mount-acquires-recovery-25e507f64b17-attempt-1",
+      "testId": "5bb4bb049a9f702dce74-2be6bde34ea32b3f9745",
+      "title": "AUTH-066 short access Home mount acquires recovery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+        "line": 13,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-112-fresh-login-acquires-distinct-recovery-0face8036278-attempt-1",
+      "testId": "5bb4bb049a9f702dce74-7ef8a2ceeb2115e84b29",
+      "title": "AUTH-112 fresh login acquires distinct recovery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+        "line": 30,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-117-stale-prior-user-response-cannot-overwrite-new-user-fcd7449b694d-attempt-1",
+      "testId": "5bb4bb049a9f702dce74-a6881b52c799b0d0d60d",
+      "title": "AUTH-117 stale prior-user response cannot overwrite new user",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+        "line": 46,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-138-recovery-removes-old-entity-and-controls-be0ad3149058-attempt-1",
+      "testId": "5bb4bb049a9f702dce74-8cda7ce0f5b77d04df58",
+      "title": "AUTH-138 recovery removes old entity and controls",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+        "line": 56,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-137-empty-new-login-removes-old-catalog-bfea4de8a187-attempt-1",
+      "testId": "5bb4bb049a9f702dce74-3f9c11cfe54302e71bee",
+      "title": "AUTH-137 empty new login removes old catalog",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+        "line": 64,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-041-malformed-successful-credential-response-abb43d61bd7b-attempt-1",
+      "testId": "20276c70321d0bf31157-90d5ab4a3fe9234d03c3",
+      "title": "AUTH-041 malformed successful credential response",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-042-malformed-successful-credential-response-cda07547c80a-attempt-1",
+      "testId": "20276c70321d0bf31157-1559c8f499b4486a2c28",
+      "title": "AUTH-042 malformed successful credential response",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-029-source-configured-sso-navigation-f7eb24accf80-attempt-1",
+      "testId": "20276c70321d0bf31157-b0b353311283f7fb72be",
+      "title": "AUTH-029 source configured SSO navigation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "line": 29,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-143-source-configured-sso-navigation-bddb5f7531d4-attempt-1",
+      "testId": "20276c70321d0bf31157-037f27135a18ecd0e1be",
+      "title": "AUTH-143 source configured SSO navigation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "line": 29,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-140-proposed-callback-safety-probe-d9ac86471644-attempt-1",
+      "testId": "20276c70321d0bf31157-1b19de3a2e1537552b4d",
+      "title": "AUTH-140 proposed callback safety probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "line": 44,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-141-proposed-callback-safety-probe-ab062cde338f-attempt-1",
+      "testId": "20276c70321d0bf31157-9e84906dd41bfaf8e71d",
+      "title": "AUTH-141 proposed callback safety probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "line": 44,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-142-proposed-callback-safety-probe-67bc3cddebfd-attempt-1",
+      "testId": "20276c70321d0bf31157-3dfd770cb9ab1f98d4bb",
+      "title": "AUTH-142 proposed callback safety probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-login-security-expanded.spec.ts",
+        "line": 44,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-062-access-acquisition-race-a0bf076df3ed-attempt-1",
+      "testId": "381432a5614ddc120fd7-7e005b0e47a1af3d0f4c",
+      "title": "AUTH-062 access acquisition race",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 11,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "auth-063-access-acquisition-race-5880ba871fde-attempt-1",
+      "testId": "381432a5614ddc120fd7-306bc54e0698eff25d84",
+      "title": "AUTH-063 access acquisition race",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 11,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "auth-093-logout-blocks-renewal-paths-08e2cdfdcafd-attempt-1",
+      "testId": "381432a5614ddc120fd7-c65b03e1a1bb57832eac",
+      "title": "AUTH-093 logout blocks renewal paths",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 31,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-097-late-recovery-cannot-restore-logout-27a83652d3d7-attempt-1",
+      "testId": "381432a5614ddc120fd7-2acbdfeed970d0549496",
+      "title": "AUTH-097 late recovery cannot restore logout",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 38,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-098-rapid-recovery-activation-cba34cc05986-attempt-1",
+      "testId": "381432a5614ddc120fd7-942a66dc0320740b44c5",
+      "title": "AUTH-098 rapid recovery activation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 44,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-099-malformed-refresh-timeout-mount-c8aa44a1d2df-attempt-1",
+      "testId": "381432a5614ddc120fd7-c5b45281750837d43336",
+      "title": "AUTH-099 malformed refresh timeout mount",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 53,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-104-feedback-popup-boundary-0ea96f2ae13a-attempt-1",
+      "testId": "381432a5614ddc120fd7-ad1fa756f9a24c029d7f",
+      "title": "AUTH-104 feedback popup boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 63,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "auth-105-feedback-popup-boundary-495ebd910e23-attempt-1",
+      "testId": "381432a5614ddc120fd7-52a9922ff7de31419cdd",
+      "title": "AUTH-105 feedback popup boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 63,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "auth-106-feedback-popup-boundary-7d052e0de1cb-attempt-1",
+      "testId": "381432a5614ddc120fd7-689d2c4563c015d5f1e8",
+      "title": "AUTH-106 feedback popup boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-remaining.spec.ts",
+        "line": 63,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "auth-045-controlled-visibility-acquisition-2ff7ff0acbc8-attempt-1",
+      "testId": "8dc08462ece484eed0db-eda3c5f4d28a4749c7ad",
+      "title": "AUTH-045 controlled visibility acquisition",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-046-controlled-visibility-acquisition-dceff6378d23-attempt-1",
+      "testId": "8dc08462ece484eed0db-f5fb915eb1cdf50632e3",
+      "title": "AUTH-046 controlled visibility acquisition",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-047-controlled-visibility-acquisition-6fca0acab63e-attempt-1",
+      "testId": "8dc08462ece484eed0db-86a18698d651d56d00c2",
+      "title": "AUTH-047 controlled visibility acquisition",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-048-controlled-visibility-acquisition-6de580c8927e-attempt-1",
+      "testId": "8dc08462ece484eed0db-90b1c014bf361f05201e",
+      "title": "AUTH-048 controlled visibility acquisition",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-049-controlled-visibility-acquisition-3fc4bb3c3670-attempt-1",
+      "testId": "8dc08462ece484eed0db-2cdf9b236e9c06faebea",
+      "title": "AUTH-049 controlled visibility acquisition",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-050-recovery-reuse-boundary-bd4d47fd8ab5-attempt-1",
+      "testId": "8dc08462ece484eed0db-cb4e3eb82e34bfd2e644",
+      "title": "AUTH-050 recovery reuse boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 44,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-051-recovery-reuse-boundary-37fac6828ac5-attempt-1",
+      "testId": "8dc08462ece484eed0db-ea05d1bfc63c579aa17d",
+      "title": "AUTH-051 recovery reuse boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 44,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-052-recovery-reuse-boundary-e6d0fa9216cf-attempt-1",
+      "testId": "8dc08462ece484eed0db-83ecb0bd3f177d5d89d0",
+      "title": "AUTH-052 recovery reuse boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 44,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-053-refresh-reuse-uses-current-controlled-time-0e3d5d73233d-attempt-1",
+      "testId": "8dc08462ece484eed0db-8639ab7667f585964340",
+      "title": "AUTH-053 refresh reuse uses current controlled time",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 51,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-054-replacement-acquisition-for-unusable-refresh-b586157fc9d4-attempt-1",
+      "testId": "8dc08462ece484eed0db-c3d6f69ca41235fe1f32",
+      "title": "AUTH-054 replacement acquisition for unusable refresh",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 62,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-055-replacement-acquisition-for-unusable-refresh-8cc8826d0c25-attempt-1",
+      "testId": "8dc08462ece484eed0db-cda16e351595e23ebaf0",
+      "title": "AUTH-055 replacement acquisition for unusable refresh",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 62,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-056-replacement-acquisition-for-unusable-refresh-d7bb5b05d903-attempt-1",
+      "testId": "8dc08462ece484eed0db-c4d8e377508532c57ad9",
+      "title": "AUTH-056 replacement acquisition for unusable refresh",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 62,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-057-replacement-acquisition-for-unusable-refresh-da9161ef28f3-attempt-1",
+      "testId": "8dc08462ece484eed0db-33d9b077160d2a91899e",
+      "title": "AUTH-057 replacement acquisition for unusable refresh",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 62,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-058-replacement-acquisition-for-unusable-refresh-9c3b75807a7f-attempt-1",
+      "testId": "8dc08462ece484eed0db-3cf95930ea8dc301071f",
+      "title": "AUTH-058 replacement acquisition for unusable refresh",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 62,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-059-replacement-acquisition-for-unusable-refresh-c606db794737-attempt-1",
+      "testId": "8dc08462ece484eed0db-5aa52242bc62341f0b2c",
+      "title": "AUTH-059 replacement acquisition for unusable refresh",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 62,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-060-retry-acquisition-after-network-failure-368f81b7cfa4-attempt-1",
+      "testId": "8dc08462ece484eed0db-d203939629c90b9f71e9",
+      "title": "AUTH-060 retry acquisition after network failure",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 76,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-061-retry-cancelled-acquisition-b1d8c781fb27-attempt-1",
+      "testId": "8dc08462ece484eed0db-211e7eebc38625931428",
+      "title": "AUTH-061 retry cancelled acquisition",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 83,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-064-last-moment-hide-preserves-manual-recovery-6333fd1d4b56-attempt-1",
+      "testId": "8dc08462ece484eed0db-a054c05356d1b5ae27b8",
+      "title": "AUTH-064 last-moment hide preserves manual recovery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 95,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-065-last-moment-hide-preserves-manual-recovery-5115dd453daf-attempt-1",
+      "testId": "8dc08462ece484eed0db-13aab910174965c645d8",
+      "title": "AUTH-065 last-moment hide preserves manual recovery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 95,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-067-missed-acquisition-does-not-replay-795f95ac92a9-attempt-1",
+      "testId": "8dc08462ece484eed0db-df002f9b419d35f4d466",
+      "title": "AUTH-067 missed acquisition does not replay",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 102,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-068-access-rotation-replaces-obsolete-timer-949bc62c64a5-attempt-1",
+      "testId": "8dc08462ece484eed0db-bf9302f55b461ae80f1e",
+      "title": "AUTH-068 access rotation replaces obsolete timer",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 109,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-069-paused-mouse-movement-renews-access-09c4bea5e0cc-attempt-1",
+      "testId": "8dc08462ece484eed0db-a3fb3946a026df06f143",
+      "title": "AUTH-069 paused mouse movement renews access",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 117,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-070-repeated-mouse-movements-debounce-573f333c157b-attempt-1",
+      "testId": "8dc08462ece484eed0db-2a66c2805678248397b6",
+      "title": "AUTH-070 repeated mouse movements debounce",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 120,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-071-mouse-renewal-lower-boundary-e0be37c04e5e-attempt-1",
+      "testId": "8dc08462ece484eed0db-4e8361da8928746afa0e",
+      "title": "AUTH-071 mouse renewal lower boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 127,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-072-mouse-renewal-lower-boundary-c85aac17786e-attempt-1",
+      "testId": "8dc08462ece484eed0db-dcaab1f4e4bc57f48199",
+      "title": "AUTH-072 mouse renewal lower boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 127,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-073-mouse-does-not-revive-expired-access-c4a1876c1650-attempt-1",
+      "testId": "8dc08462ece484eed0db-09913ecfd13435af94cb",
+      "title": "AUTH-073 mouse does not revive expired access",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 131,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-074-proposed-input-activity-renewal-cef1879119be-attempt-1",
+      "testId": "8dc08462ece484eed0db-56d0b0815e07735c82fb",
+      "title": "AUTH-074 proposed input activity renewal",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 138,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-075-proposed-input-activity-renewal-79e47e35ab16-attempt-1",
+      "testId": "8dc08462ece484eed0db-56cc618b01287863749e",
+      "title": "AUTH-075 proposed input activity renewal",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 138,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-079-no-silent-recovery-while-expiry-dialog-is-open-a474cbb80c16-attempt-1",
+      "testId": "8dc08462ece484eed0db-a8cf0e806dbbda34bcd4",
+      "title": "AUTH-079 no silent recovery while expiry dialog is open",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 157,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-085-controlled-suspension-expires-session-7d6960d203c9-attempt-1",
+      "testId": "8dc08462ece484eed0db-ee188a7ec634ad0f8519",
+      "title": "AUTH-085 controlled suspension expires session",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 163,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-086-controlled-suspension-expires-session-901311d1d8b9-attempt-1",
+      "testId": "8dc08462ece484eed0db-e9c4cb28408dd420cce9",
+      "title": "AUTH-086 controlled suspension expires session",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 163,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-087-controlled-suspension-expires-session-288a03acc02a-attempt-1",
+      "testId": "8dc08462ece484eed0db-c625f2bf4e643d4a0b72",
+      "title": "AUTH-087 controlled suspension expires session",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 163,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-088-controlled-suspension-expires-session-2f796abc28f9-attempt-1",
+      "testId": "8dc08462ece484eed0db-1d33056799143034184d",
+      "title": "AUTH-088 controlled suspension expires session",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 163,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-089-controlled-suspension-expires-session-7628682e6fa1-attempt-1",
+      "testId": "8dc08462ece484eed0db-20174a77a32a6a40d7e8",
+      "title": "AUTH-089 controlled suspension expires session",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 163,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-090-resume-before-expiry-and-renew-through-mouse-6fd67457362c-attempt-1",
+      "testId": "8dc08462ece484eed0db-6cf744cb84fb412947ba",
+      "title": "AUTH-090 resume before expiry and renew through mouse",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 171,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-091-resume-after-expiry-requires-manual-extend-350bf5ab3c96-attempt-1",
+      "testId": "8dc08462ece484eed0db-8ea5c2e937c49490c973",
+      "title": "AUTH-091 resume after expiry requires manual Extend",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 178,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-092-background-rotation-preserves-newer-access-f4ea9ab7b724-attempt-1",
+      "testId": "8dc08462ece484eed0db-ebbe549b45a8a3db3220",
+      "title": "AUTH-092 background rotation preserves newer access",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 185,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-095-relogin-failure-ui-11256f8b3ef4-attempt-1",
+      "testId": "8dc08462ece484eed0db-cdbb142ffba81bd944f7",
+      "title": "AUTH-095 relogin failure UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 192,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-096-relogin-failure-ui-dcfceae3a64e-attempt-1",
+      "testId": "8dc08462ece484eed0db-a0cad3b2dfb57e8ef786",
+      "title": "AUTH-096 relogin failure UI",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 192,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-100-forward-clock-jump-reconciles-expiry-3d681fad42f9-attempt-1",
+      "testId": "8dc08462ece484eed0db-978227ca0e2d74048133",
+      "title": "AUTH-100 forward clock jump reconciles expiry",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 199,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-082-access-rotation-does-not-postpone-refresh-expiry-b3d3bbc949fc-attempt-1",
+      "testId": "8dc08462ece484eed0db-a60b25e04f3a8c8d1a7c",
+      "title": "AUTH-082 access rotation does not postpone refresh expiry",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 205,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-094-late-manual-recovery-retains-refresh-cutoff-260baf1e1b23-attempt-1",
+      "testId": "8dc08462ece484eed0db-ce86c3605e958edaf1d7",
+      "title": "AUTH-094 late manual recovery retains refresh cutoff",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 211,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-101-server-expiry-response-after-backward-clock-jump-cb6a2ed517da-attempt-1",
+      "testId": "8dc08462ece484eed0db-8216bc6884b818fe22ef",
+      "title": "AUTH-101 server expiry response after backward clock jump",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 221,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-102-cancelling-logout-preserves-workspace-state-80d6d7226426-attempt-1",
+      "testId": "8dc08462ece484eed0db-520c42cb8be8ebb5208f",
+      "title": "AUTH-102 cancelling logout preserves workspace state",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 237,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-103-profile-logout-clears-session-defaults-a5310c6b0bb8-attempt-1",
+      "testId": "8dc08462ece484eed0db-059530de53f3774cdd4b",
+      "title": "AUTH-103 profile logout clears session defaults",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 248,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-107-logout-transport-failure-keeps-local-logout-e519d2d12eb8-attempt-1",
+      "testId": "8dc08462ece484eed0db-70de88e2704cf462a5fe",
+      "title": "AUTH-107 logout transport failure keeps local logout",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 259,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-108-logout-transport-failure-keeps-local-logout-47208e5c4e3b-attempt-1",
+      "testId": "8dc08462ece484eed0db-cac6cae6976f52579203",
+      "title": "AUTH-108 logout transport failure keeps local logout",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 259,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-109-logout-transport-failure-keeps-local-logout-3334704de6c3-attempt-1",
+      "testId": "8dc08462ece484eed0db-2ad6120f20134e3f891d",
+      "title": "AUTH-109 logout transport failure keeps local logout",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 259,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-110-logout-transport-failure-keeps-local-logout-45f1f6e4aa73-attempt-1",
+      "testId": "8dc08462ece484eed0db-5a666ff7533c1bab3f85",
+      "title": "AUTH-110 logout transport failure keeps local logout",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 259,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-113-browser-navigation-cannot-restore-logged-out-access-1cb8cf5e31ea-attempt-1",
+      "testId": "8dc08462ece484eed0db-6a0cd762da0a5315645a",
+      "title": "AUTH-113 browser navigation cannot restore logged out access",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 272,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-114-browser-navigation-cannot-restore-logged-out-access-d0685a2122a7-attempt-1",
+      "testId": "8dc08462ece484eed0db-d70815bea841031be337",
+      "title": "AUTH-114 browser navigation cannot restore logged out access",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-session-expanded.spec.ts",
+        "line": 272,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-059-open-cashflow-and-profile-76a8f42d3e09-attempt-1",
+      "testId": "701d30b8891140633b58-f82aec7026bd1787aad4",
+      "title": "UX-059 open Cashflow and profile",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+        "line": 12,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-029-real-chromium-tab-zoom-200-percent-af9df2010943-attempt-1",
+      "testId": "7b31f4c216d392dea10a-00306f7ef532b8d667d3",
+      "title": "UX-029 real Chromium tab zoom 200 percent",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-zoom.spec.ts",
+        "line": 28,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "ux-030-real-chromium-tab-zoom-400-percent-87d82f81a81e-attempt-1",
+      "testId": "7b31f4c216d392dea10a-15d57750a0e94b896ad4",
+      "title": "UX-030 real Chromium tab zoom 400 percent",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-zoom.spec.ts",
+        "line": 28,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "know-041-real-http-cache-and-controlled-tenant-lifecycle-854a2c145116-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-a7d1ee2ceb005941bc9b",
+      "title": "KNOW-041 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-042-real-http-cache-and-controlled-tenant-lifecycle-4a018a88e697-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-cf9bbb75b422c4b508ad",
+      "title": "KNOW-042 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-043-real-http-cache-and-controlled-tenant-lifecycle-76e420a940a5-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-74c6d4072b3a58130f30",
+      "title": "KNOW-043 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-044-real-http-cache-and-controlled-tenant-lifecycle-3e5aa514d3c0-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-8799a635c7dec4eb3208",
+      "title": "KNOW-044 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-045-real-http-cache-and-controlled-tenant-lifecycle-e290b2144dce-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-af51e62b9bf2c7ab4ac8",
+      "title": "KNOW-045 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-046-real-http-cache-and-controlled-tenant-lifecycle-f00789795eb6-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-0a0dead696bc390474ab",
+      "title": "KNOW-046 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-047-real-http-cache-and-controlled-tenant-lifecycle-4a4689d7ef72-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-dace0e21469bd0f493af",
+      "title": "KNOW-047 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-048-real-http-cache-and-controlled-tenant-lifecycle-36bdbfeb7e3b-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-c04b6e5968d8b0bd6451",
+      "title": "KNOW-048 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-049-real-http-cache-and-controlled-tenant-lifecycle-8515f655ec48-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-1c3d7b8c2280ae33a58f",
+      "title": "KNOW-049 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-050-real-http-cache-and-controlled-tenant-lifecycle-893509703097-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-68267168a49b0e71d2e4",
+      "title": "KNOW-050 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-051-real-http-cache-and-controlled-tenant-lifecycle-efa0556e039d-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-8772207c849b25d2c205",
+      "title": "KNOW-051 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "know-052-real-http-cache-and-controlled-tenant-lifecycle-2837c6bf8426-attempt-1",
+      "testId": "5125bc7fdd86445ecd8b-eb06bbf6216814e7c92e",
+      "title": "KNOW-052 real HTTP cache and controlled tenant lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/cache-lifecycle.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-030-callback-route-and-restored-workspace-e91e9e4d1093-attempt-1",
+      "testId": "9d747c96249833356fe7-28cc558c778b1960ce87",
+      "title": "AUTH-030 callback route and restored workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 20,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-031-callback-route-and-restored-workspace-c22cf7cec82f-attempt-1",
+      "testId": "9d747c96249833356fe7-486f7d3ebfd7aa5f975c",
+      "title": "AUTH-031 callback route and restored workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 20,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-032-callback-route-and-restored-workspace-7e305931e039-attempt-1",
+      "testId": "9d747c96249833356fe7-dd50c75d2def2bcf7f1a",
+      "title": "AUTH-032 callback route and restored workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 20,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-033-callback-route-and-restored-workspace-e2cda3983122-attempt-1",
+      "testId": "9d747c96249833356fe7-e13eb2f78803ed44c13f",
+      "title": "AUTH-033 callback route and restored workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 20,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-035-accepted-callback-removes-query-after-entitlement-validation-7245cff9f24f-attempt-1",
+      "testId": "9d747c96249833356fe7-50d4857559bfa3971626",
+      "title": "AUTH-035 accepted callback removes query after entitlement validation",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 44,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-034-rejected-callback-remains-anonymous-36a197b9f186-attempt-1",
+      "testId": "9d747c96249833356fe7-112edf58b2cc3cf023a2",
+      "title": "AUTH-034 rejected callback remains anonymous",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 63,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-036-rejected-callback-remains-anonymous-d1e409847d7f-attempt-1",
+      "testId": "9d747c96249833356fe7-9d44671709d3212df285",
+      "title": "AUTH-036 rejected callback remains anonymous",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 63,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-037-profile-preserves-directory-text-b9df869cfc85-attempt-1",
+      "testId": "9d747c96249833356fe7-3a6e319601ad349d417c",
+      "title": "AUTH-037 profile preserves directory text",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 103,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-038-profile-preserves-directory-text-35dae76d5568-attempt-1",
+      "testId": "9d747c96249833356fe7-f3b7c0902117bdb539fd",
+      "title": "AUTH-038 profile preserves directory text",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 103,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-039-profile-preserves-directory-text-13e7762d787a-attempt-1",
+      "testId": "9d747c96249833356fe7-be9ce6103ff7461f96a2",
+      "title": "AUTH-039 profile preserves directory text",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 103,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-040-profile-preserves-directory-text-ccaf5f638ac8-attempt-1",
+      "testId": "9d747c96249833356fe7-d9b3458570d85a3a446f",
+      "title": "AUTH-040 profile preserves directory text",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/callback-profile.spec.ts",
+        "line": 103,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-001-open-catalog-drawer-6cd194bcd8b1-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-0fd82b333ef637ac1681",
+      "title": "UI-CAT-001 open catalog drawer",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 8,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-002-close-drawer-without-selecting-a-tile-fb0b51330852-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-8e1ed1e02c9437c5f458",
+      "title": "UI-CAT-002 close drawer without selecting a tile",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 17,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-003-render-category-names-and-declared-tiles-2b40218727ba-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-509c4bd777780cee2382",
+      "title": "UI-CAT-003 render category names and declared tiles",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 34,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-004-combine-regional-entries-into-one-card-38bad929efef-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-31ce52efba9dba628d4d",
+      "title": "UI-CAT-004 combine regional entries into one card",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 52,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-005-keep-distinct-subtitles-in-separate-cards-7face3154664-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-0487f859357c5067ff25",
+      "title": "UI-CAT-005 keep distinct subtitles in separate cards",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 64,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-006-select-the-declared-default-regional-entry-c38d2ba8ea42-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-b4c46a27b5947b4a99af",
+      "title": "UI-CAT-006 select the declared default regional entry",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 77,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-007-select-the-declared-default-regional-entry-3961b202d63c-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-c62392cb5144c99691bd",
+      "title": "UI-CAT-007 select the declared default regional entry",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 77,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-010-select-the-declared-default-regional-entry-00cdadaf84a6-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-5f6749a8c10043da1fca",
+      "title": "UI-CAT-010 select the declared default regional entry",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 77,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-008-launch-indonesia-once-381b932e0a37-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-9271958506e0f09f1c04",
+      "title": "UI-CAT-008 launch Indonesia once",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 101,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-015-launch-indonesia-once-dc72eacc9ef0-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-10bcda30f0841e3b1884",
+      "title": "UI-CAT-015 launch Indonesia once",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 101,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-009-trim-regional-display-labels-18e774b766b9-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-7acde2377ea815370ca7",
+      "title": "UI-CAT-009 trim regional display labels",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 120,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-011-render-unnamed-entry-controls-bcf4860e05b8-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-fc22f4369bc0bd255d58",
+      "title": "UI-CAT-011 render unnamed entry controls",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 132,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-012-render-unnamed-entry-controls-3928cc78ffd9-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-4511c4b480e65946daa0",
+      "title": "UI-CAT-012 render unnamed entry controls",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 132,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-013-keep-every-disabled-entry-inactive-e2ac2917b21d-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-85beb6e2150428ab3686",
+      "title": "UI-CAT-013 keep every disabled entry inactive",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 154,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-014-disable-only-the-unavailable-entry-92828ded92f4-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-aa177f05ba8ccf00afea",
+      "title": "UI-CAT-014 disable only the unavailable entry",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 178,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-cat-016-choose-the-active-theme-image-6e680236780e-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-11b64d758ee18d2e59aa",
+      "title": "UI-CAT-016 choose the active theme image",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 190,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-017-choose-the-active-theme-image-ac25d417cfcc-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-7c094638da28fe24de04",
+      "title": "UI-CAT-017 choose the active theme image",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 190,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-018-transfer-the-declared-parameter-object-1ef34d80aae6-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-c2a08e4d8ce9e9c90594",
+      "title": "UI-CAT-018 transfer the declared parameter object",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 217,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-019-transfer-the-declared-parameter-object-7ef16be25f0c-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-410b3c90a3a73e18dcc4",
+      "title": "UI-CAT-019 transfer the declared parameter object",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 217,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-cat-020-show-the-empty-catalog-3aa71d5b7051-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-a3418f91bd2acfe92533",
+      "title": "UI-CAT-020 show the empty catalog",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 242,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-pref-006-show-profile-identity-fields-112b410f72dd-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-105d55c94c20d5cb53f7",
+      "title": "UI-PREF-006 show profile identity fields",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 252,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-pref-007-separate-functional-and-data-entitlement-profiles-d3149abbf7c1-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-41e50afcd98ebbedb8cd",
+      "title": "UI-PREF-007 separate functional and data entitlement profiles",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 266,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-pref-008-separate-functional-and-data-entitlement-profiles-da52b93e85de-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-589bccc4d324cce75de7",
+      "title": "UI-PREF-008 separate functional and data entitlement profiles",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 266,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-pref-009-expand-a-role-and-its-entitlement-actions-53f4d6431b75-attempt-1",
+      "testId": "44c17f4762ab76afbf3c-176c494536577abb62e3",
+      "title": "UI-PREF-009 expand a role and its entitlement actions",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/catalog-profile-expanded.spec.ts",
+        "line": 290,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-mfe-007-another-tile-remains-usable-after-a-module-failure-a9eb1652dfda-attempt-1",
+      "testId": "878baeb66372eacef2db-3da28fe73808a37702a4",
+      "title": "UI-MFE-007 another tile remains usable after a module failure",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/conditional-module-launch.spec.ts",
+        "line": 9,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-mfe-011-explicitly-mounted-conditional-url-hook-827c8e6a673b-attempt-1",
+      "testId": "878baeb66372eacef2db-f02d666126b516a59cc1",
+      "title": "UI-MFE-011 explicitly mounted conditional URL hook",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/conditional-module-launch.spec.ts",
+        "line": 33,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-012-explicitly-mounted-conditional-url-hook-9793daaf0add-attempt-1",
+      "testId": "878baeb66372eacef2db-e806655f840d873de97f",
+      "title": "UI-MFE-012 explicitly mounted conditional URL hook",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/conditional-module-launch.spec.ts",
+        "line": 33,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-013-actual-home-fdc3-handler-with-declared-intent-delivery-f93639bed3a1-attempt-1",
+      "testId": "878baeb66372eacef2db-977099833d58fc21f6ce",
+      "title": "UI-MFE-013 actual Home FDC3 handler with declared intent delivery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/conditional-module-launch.spec.ts",
+        "line": 71,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-014-actual-home-fdc3-handler-with-declared-intent-delivery-d2987fb8fe7a-attempt-1",
+      "testId": "878baeb66372eacef2db-77e8bf29286561219eca",
+      "title": "UI-MFE-014 actual Home FDC3 handler with declared intent delivery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/conditional-module-launch.spec.ts",
+        "line": 71,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-015-actual-home-fdc3-handler-with-declared-intent-delivery-f2efa45c641b-attempt-1",
+      "testId": "878baeb66372eacef2db-b5d732f3d09dc508368e",
+      "title": "UI-MFE-015 actual Home FDC3 handler with declared intent delivery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/conditional-module-launch.spec.ts",
+        "line": 71,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-032-actual-dialog-boundaries-with-step-evidence-3ee4a6c55a03-attempt-1",
+      "testId": "3e6bfc360e6ff4de970c-db4c06ec32eb183a04b5",
+      "title": "UX-032 actual dialog boundaries with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1",
+      "testId": "3e6bfc360e6ff4de970c-4f94ea4ebe22a24ab9be",
+      "title": "UX-033 actual dialog boundaries with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-034-actual-dialog-boundaries-with-step-evidence-d46e7f040071-attempt-1",
+      "testId": "3e6bfc360e6ff4de970c-36f5eeee593058b82748",
+      "title": "UX-034 actual dialog boundaries with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-035-actual-dialog-boundaries-with-step-evidence-97fc64499277-attempt-1",
+      "testId": "3e6bfc360e6ff4de970c-318c80d1d0571486001c",
+      "title": "UX-035 actual dialog boundaries with step evidence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/dialog-ux.spec.ts",
+        "line": 14,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-001-actual-react-canonical-steps-f60f661651c6-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-006f270812862b7623dc",
+      "title": "AUTH-001 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-002-actual-react-canonical-steps-d75eeea0c5ec-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-4c6adbe7c91eeefe5311",
+      "title": "AUTH-002 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-003-actual-react-canonical-steps-c2384cb546e5-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-b308d541b76a6fbc6dbf",
+      "title": "AUTH-003 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-004-actual-react-canonical-steps-d965bbf18891-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-3710b7be1c44e5b2a209",
+      "title": "AUTH-004 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-005-actual-react-canonical-steps-8caab76b6d23-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-d6c9467d925442c6795a",
+      "title": "AUTH-005 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-006-actual-react-canonical-steps-7ec6b4cefa2e-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-e918afb5dc2860de0a2b",
+      "title": "AUTH-006 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-007-actual-react-canonical-steps-4c1fec230394-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-1233a167deac32320f0d",
+      "title": "AUTH-007 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-008-actual-react-canonical-steps-9e968fb0606b-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-b762c011c9fab98a1360",
+      "title": "AUTH-008 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-009-actual-react-canonical-steps-16efdc165d41-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-72aa78ff4b7c127276e6",
+      "title": "AUTH-009 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-010-actual-react-canonical-steps-a73922a30f8d-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-8e9eb1ec980850ca586d",
+      "title": "AUTH-010 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-011-actual-react-canonical-steps-cf7ed6158dc9-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-6b90ca918a0f8c22e8dc",
+      "title": "AUTH-011 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-012-actual-react-canonical-steps-52fa3db30e98-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-2786d3f2cedcf6f747fd",
+      "title": "AUTH-012 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-013-actual-react-canonical-steps-525304b57429-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-bb100bba4a86d1c8f83c",
+      "title": "AUTH-013 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-014-actual-react-canonical-steps-86e7fd5afb17-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-c8a1f368886c89582b69",
+      "title": "AUTH-014 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-015-actual-react-canonical-steps-5a16587ba61b-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-3e3c9d81db47739dff78",
+      "title": "AUTH-015 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-021-actual-react-canonical-steps-2bf883a1b263-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-09ed9770da0b714e30e0",
+      "title": "AUTH-021 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-022-actual-react-canonical-steps-34991d65fa55-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-15ca205c181c13cf3772",
+      "title": "AUTH-022 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-023-actual-react-canonical-steps-376b8b09e2be-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-f5487be4ff76b0ca7a81",
+      "title": "AUTH-023 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-024-actual-react-canonical-steps-4ce986f49f37-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-a057f621448af2b8fedb",
+      "title": "AUTH-024 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-025-actual-react-canonical-steps-3e565073d031-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-4a004f014efb9f9dc273",
+      "title": "AUTH-025 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-026-actual-react-canonical-steps-12fc1d4eef98-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-deef55171a6b5bbb49da",
+      "title": "AUTH-026 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-027-actual-react-canonical-steps-4dc4daeb05fc-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-36a9dce39a54b26b88e0",
+      "title": "AUTH-027 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-028-actual-react-canonical-steps-09df3d2b9653-attempt-1",
+      "testId": "d1d1c462ba1576d791c3-07c321d7cde0c1476931",
+      "title": "AUTH-028 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-environment.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-016-actual-react-canonical-steps-4cf4d671b97d-attempt-1",
+      "testId": "5a5079e470f4306da614-e3816f7aff7c1bcc4180",
+      "title": "AUTH-016 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-success.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-017-actual-react-canonical-steps-2b49cfa82164-attempt-1",
+      "testId": "5a5079e470f4306da614-f7794b28278532358504",
+      "title": "AUTH-017 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-success.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-018-actual-react-canonical-steps-4b28664cc645-attempt-1",
+      "testId": "5a5079e470f4306da614-0d0660dffcd2375b21a2",
+      "title": "AUTH-018 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-success.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-019-actual-react-canonical-steps-09273d28f197-attempt-1",
+      "testId": "5a5079e470f4306da614-a03572e126f639f8ba19",
+      "title": "AUTH-019 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-success.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-020-actual-react-canonical-steps-4d193430cc0d-attempt-1",
+      "testId": "5a5079e470f4306da614-c2163c2cf389f2ca564b",
+      "title": "AUTH-020 actual React canonical steps",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/login-success.spec.ts",
+        "line": 9,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-008-open-the-internal-import-map-module-7631ea379ac4-attempt-1",
+      "testId": "234e9e4c407037380719-5b42c3bb3d868f8bb8d0",
+      "title": "UI-MFE-008 open the internal Import Map module",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-009-open-the-internal-category-module-ea38e020d58a-attempt-1",
+      "testId": "234e9e4c407037380719-f49358f122c09322dfba",
+      "title": "UI-MFE-009 open the internal Category module",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-010-open-the-internal-tile-module-ecdaa7be5ec0-attempt-1",
+      "testId": "234e9e4c407037380719-d9b6c5d91647d6ea0872",
+      "title": "UI-MFE-010 open the internal Tile module",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+        "line": 13,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-risk-001-reject-the-disabled-global-default-0be958aabe27-attempt-1",
+      "testId": "234e9e4c407037380719-95969d31312d544e6504",
+      "title": "UI-RISK-001 reject the disabled Global default",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+        "line": 39,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-risk-010-show-an-explicit-unsupported-internal-module-message-ef6d019d651d-attempt-1",
+      "testId": "234e9e4c407037380719-dea8913d5438b3e57ff0",
+      "title": "UI-RISK-010 show an explicit unsupported internal module message",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/module-risk-expanded.spec.ts",
+        "line": 63,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-mfe-001-actual-module-lifecycle-2b699c636a3c-attempt-1",
+      "testId": "99c9118e01701dd29e21-c3abc5fbb586abec1521",
+      "title": "UI-MFE-001 actual module lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/modules-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-002-actual-module-lifecycle-eb6c7eb902c2-attempt-1",
+      "testId": "99c9118e01701dd29e21-113edd9982273aa3354a",
+      "title": "UI-MFE-002 actual module lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/modules-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-003-actual-module-lifecycle-5f2eb946884c-attempt-1",
+      "testId": "99c9118e01701dd29e21-7c3490c312bcdd028215",
+      "title": "UI-MFE-003 actual module lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/modules-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-004-actual-module-lifecycle-93f04785be8e-attempt-1",
+      "testId": "99c9118e01701dd29e21-a8833629b785c09b2fbd",
+      "title": "UI-MFE-004 actual module lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/modules-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-005-actual-module-lifecycle-bac8484bbad1-attempt-1",
+      "testId": "99c9118e01701dd29e21-6ba94e6213e5589dac2b",
+      "title": "UI-MFE-005 actual module lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/modules-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-mfe-006-actual-module-lifecycle-31038a656d6f-attempt-1",
+      "testId": "99c9118e01701dd29e21-5179c5cd4c4084be58a6",
+      "title": "UI-MFE-006 actual module lifecycle",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/modules-expanded.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-022-actual-snackbar-rendering-b0f4521f1ac6-attempt-1",
+      "testId": "41e9588bd6d60a29ae21-c90424ddc661d6cad2d0",
+      "title": "UX-022 actual snackbar rendering",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+        "line": 9,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "ux-039-actual-snackbar-rendering-8a3b2d82673c-attempt-1",
+      "testId": "41e9588bd6d60a29ae21-814f305798b35b38110e",
+      "title": "UX-039 actual snackbar rendering",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+        "line": 9,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "ux-040-actual-snackbar-rendering-9ebd131a7577-attempt-1",
+      "testId": "41e9588bd6d60a29ae21-305e7d7e6bb57ee94d3a",
+      "title": "UX-040 actual snackbar rendering",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+        "line": 9,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "ux-041-actual-support-email-link-e356926336fd-attempt-1",
+      "testId": "41e9588bd6d60a29ae21-cfe1eddff4eeb882670b",
+      "title": "UX-041 actual support email link",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+        "line": 49,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "ux-042-actual-support-email-link-ba2c0cba4b35-attempt-1",
+      "testId": "41e9588bd6d60a29ae21-0f6ff2f452a6d2f1e01d",
+      "title": "UX-042 actual support email link",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/notifications-expanded.spec.ts",
+        "line": 49,
+        "column": 2
+      }
+    },
+    {
+      "caseId": "ui-pref-001-theme-selection-and-persistence-11fe8740fe94-attempt-1",
+      "testId": "14778efd97370ce75a77-32e3fec4dd0bebe9ee59",
+      "title": "UI-PREF-001 theme selection and persistence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/preferences.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-pref-002-theme-selection-and-persistence-9ccbe02b7f30-attempt-1",
+      "testId": "14778efd97370ce75a77-7725cd022cc8a2044532",
+      "title": "UI-PREF-002 theme selection and persistence",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/preferences.spec.ts",
+        "line": 10,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-pref-003-time-display-uses-the-selected-clock-mode-c55eff543bce-attempt-1",
+      "testId": "14778efd97370ce75a77-38496e6ee389363856d9",
+      "title": "UI-PREF-003 time display uses the selected clock mode",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/preferences.spec.ts",
+        "line": 45,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-pref-004-time-display-uses-the-selected-clock-mode-012725b0dfc2-attempt-1",
+      "testId": "14778efd97370ce75a77-adbf878b3669df55390e",
+      "title": "UI-PREF-004 time display uses the selected clock mode",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/preferences.spec.ts",
+        "line": 45,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-pref-005-time-display-uses-the-selected-clock-mode-0bf99bf32082-attempt-1",
+      "testId": "14778efd97370ce75a77-d27e2891884f8e5c9b7c",
+      "title": "UI-PREF-005 time display uses the selected clock mode",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/preferences.spec.ts",
+        "line": 45,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-043-recovery-acquisition-timer-boundary-c9e1406ac6a2-attempt-1",
+      "testId": "08b4f815e9f638911245-8189dd80e8abfbfeefd3",
+      "title": "AUTH-043 recovery acquisition timer boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 8,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-044-recovery-acquisition-timer-boundary-e891b11888e0-attempt-1",
+      "testId": "08b4f815e9f638911245-c395ef539d7cd1e34eca",
+      "title": "AUTH-044 recovery acquisition timer boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 8,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-076-access-expiry-boundary-d7d346f1c386-attempt-1",
+      "testId": "08b4f815e9f638911245-e049bd9b9cd12b639f8b",
+      "title": "AUTH-076 access expiry boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 17,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-077-access-expiry-boundary-62fcb2292828-attempt-1",
+      "testId": "08b4f815e9f638911245-0ff1551635d6f1c5bd07",
+      "title": "AUTH-077 access expiry boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 17,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1",
+      "testId": "08b4f815e9f638911245-2b108579e1f0a6a068dd",
+      "title": "AUTH-080 Logout clears local access after delay",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 24,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-081-expiry-without-refresh-logs-out-483cb13ab495-attempt-1",
+      "testId": "08b4f815e9f638911245-28375255927f4aa838e1",
+      "title": "AUTH-081 expiry without refresh logs out",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 31,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "auth-083-timeout-refresh-cutoff-83cf1da5d3f3-attempt-1",
+      "testId": "08b4f815e9f638911245-4465b43b3c5f5b53fbd3",
+      "title": "AUTH-083 timeout refresh cutoff",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 40,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1",
+      "testId": "08b4f815e9f638911245-ac44a0c5469d22d6cd49",
+      "title": "AUTH-084 timeout refresh cutoff",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 40,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "auth-078-manual-extend-installs-b-and-validates-b-1b3c66cc1d67-attempt-1",
+      "testId": "08b4f815e9f638911245-77aa6a0b8ef303a1a86c",
+      "title": "AUTH-078 manual Extend installs B and validates B",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts",
+        "line": 47,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-006-switch-the-active-workspace-58e2689e9511-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-b9834b79ff665e1dfc0c",
+      "title": "UI-SHL-006 switch the active workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 12,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-007-preserve-mounted-container-state-across-switches-e537303ec00c-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-a3f327305939caacf9fe",
+      "title": "UI-SHL-007 preserve mounted container state across switches",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 25,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-012-remove-selected-middle-workspace-4f28533cd4d6-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-aad74624d1e54dae7acd",
+      "title": "UI-SHL-012 remove selected middle workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 39,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-013-remove-selected-first-workspace-18387668686c-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-a44523d19c1e0502133d",
+      "title": "UI-SHL-013 remove selected first workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 52,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-014-remove-an-earlier-tab-and-retain-selected-workspace-94407178ad86-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-97d97f4db052c84d2628",
+      "title": "UI-SHL-014 remove an earlier tab and retain selected workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 65,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-017-place-the-first-tile-in-an-empty-workspace-2fcca5b43dc3-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-392d9d99821fc7405a45",
+      "title": "UI-SHL-017 place the first tile in an empty workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 77,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-018-open-a-tile-from-an-occupied-workspace-a100ea577a3f-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-4e0a947caf7ef9c4fd51",
+      "title": "UI-SHL-018 open a tile from an occupied workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 89,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-019-open-the-same-tile-in-a-second-workspace-9252f7e9900b-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-69c13f3f3e3893edd985",
+      "title": "UI-SHL-019 open the same tile in a second workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 101,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-020-show-refresh-only-for-the-registered-active-tab-c22f92dfc3dd-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-2351be33371e44fc8b3d",
+      "title": "UI-SHL-020 show refresh only for the registered active tab",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 116,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-022-refresh-data-without-adding-a-workspace-9a52924e364f-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-5960b02eb9235ec4780d",
+      "title": "UI-SHL-022 refresh data without adding a workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 125,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-023-restore-the-declared-permitted-workspace-b0b9f0ce6921-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-414c52bdf1d33610bad5",
+      "title": "UI-SHL-023 restore the declared permitted workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 140,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-shl-026-restore-the-declared-permitted-workspace-726809bc13bd-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-09009b74e4c5e9f777d5",
+      "title": "UI-SHL-026 restore the declared permitted workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 140,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-shl-027-render-the-regional-workspace-marker-dac602249daa-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-765133c4ded4f30138a8",
+      "title": "UI-SHL-027 render the regional workspace marker",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 158,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-shl-028-render-the-regional-workspace-marker-071fe7d293bf-attempt-1",
+      "testId": "8a8d3366f6b035fd5a9e-33faa58839fb5a99c85f",
+      "title": "UI-SHL-028 render the regional workspace marker",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/shell-expanded.spec.ts",
+        "line": 158,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-001-keyboard-and-accessibility-probe-aa89dc4df1df-attempt-1",
+      "testId": "60fe6e2e205782fec624-bb5a63555ab2eed144ea",
+      "title": "UX-001 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-002-keyboard-and-accessibility-probe-928adc4978a7-attempt-1",
+      "testId": "60fe6e2e205782fec624-4ab5d9c82f87480030e1",
+      "title": "UX-002 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-003-keyboard-and-accessibility-probe-7311b9029a35-attempt-1",
+      "testId": "60fe6e2e205782fec624-ee9b3776044aba332489",
+      "title": "UX-003 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-004-keyboard-and-accessibility-probe-5097a2dd67b6-attempt-1",
+      "testId": "60fe6e2e205782fec624-0066615c645b24ad6647",
+      "title": "UX-004 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-005-keyboard-and-accessibility-probe-f90f99417368-attempt-1",
+      "testId": "60fe6e2e205782fec624-984a237a9ffa3e111992",
+      "title": "UX-005 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-006-keyboard-and-accessibility-probe-fabc645b4121-attempt-1",
+      "testId": "60fe6e2e205782fec624-20d87920c878c68532c3",
+      "title": "UX-006 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-007-keyboard-and-accessibility-probe-7756c4d1f99b-attempt-1",
+      "testId": "60fe6e2e205782fec624-53e2e723ffc353476630",
+      "title": "UX-007 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-008-keyboard-and-accessibility-probe-05c029896a3c-attempt-1",
+      "testId": "60fe6e2e205782fec624-09813b59320280846fb9",
+      "title": "UX-008 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-009-keyboard-and-accessibility-probe-c89cb128d57f-attempt-1",
+      "testId": "60fe6e2e205782fec624-ae6fb749cb054495384d",
+      "title": "UX-009 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-010-keyboard-and-accessibility-probe-7e56ccc1ea33-attempt-1",
+      "testId": "60fe6e2e205782fec624-699c0304c1227c3abbfc",
+      "title": "UX-010 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-011-keyboard-and-accessibility-probe-517f82edf288-attempt-1",
+      "testId": "60fe6e2e205782fec624-aeb509c8142247b6cf7a",
+      "title": "UX-011 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-012-keyboard-and-accessibility-probe-8aa642e85e56-attempt-1",
+      "testId": "60fe6e2e205782fec624-1062ea7b4e9fb6c9ae02",
+      "title": "UX-012 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-013-keyboard-and-accessibility-probe-6242970ecd1e-attempt-1",
+      "testId": "60fe6e2e205782fec624-db8a175a899862eb3325",
+      "title": "UX-013 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-019-keyboard-and-accessibility-probe-45a2243c2d18-attempt-1",
+      "testId": "60fe6e2e205782fec624-0e2495bda3d985a58fb2",
+      "title": "UX-019 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-020-keyboard-and-accessibility-probe-ec3dc8bb2db8-attempt-1",
+      "testId": "60fe6e2e205782fec624-c4031b8228c714e15dfb",
+      "title": "UX-020 keyboard and accessibility probe",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 39,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-023-responsive-shell-320x568-0f515ebd070e-attempt-1",
+      "testId": "60fe6e2e205782fec624-eaccc4ac1b131f8fe54b",
+      "title": "UX-023 responsive shell 320x568",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 113,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-024-responsive-shell-375x812-f4820c0ed250-attempt-1",
+      "testId": "60fe6e2e205782fec624-837b91e2d27eead6966f",
+      "title": "UX-024 responsive shell 375x812",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 113,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-025-responsive-shell-768x1024-b8d78b918037-attempt-1",
+      "testId": "60fe6e2e205782fec624-c56245bb193c98fdfc33",
+      "title": "UX-025 responsive shell 768x1024",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 113,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-026-responsive-shell-1024x768-9d5402154bf2-attempt-1",
+      "testId": "60fe6e2e205782fec624-48cafab7505e1d1c37ae",
+      "title": "UX-026 responsive shell 1024x768",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 113,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-027-responsive-shell-1366x768-b463e9210d52-attempt-1",
+      "testId": "60fe6e2e205782fec624-4cfe9a7153459058a511",
+      "title": "UX-027 responsive shell 1366x768",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 113,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-028-responsive-shell-1920x1080-cf3bfdd5899d-attempt-1",
+      "testId": "60fe6e2e205782fec624-d185f7e6a0433d0cf322",
+      "title": "UX-028 responsive shell 1920x1080",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 113,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-037-workspace-text-boundary-fc2fdb77b58b-attempt-1",
+      "testId": "60fe6e2e205782fec624-f4be38eedf2696eafa5e",
+      "title": "UX-037 workspace text boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 133,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-044-workspace-text-boundary-20bf91432217-attempt-1",
+      "testId": "60fe6e2e205782fec624-b3695697dfee93e02fdd",
+      "title": "UX-044 workspace text boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 133,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-046-workspace-text-boundary-a9e58f664870-attempt-1",
+      "testId": "60fe6e2e205782fec624-bfefea7f690b620fc8a6",
+      "title": "UX-046 workspace text boundary",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 133,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-048-profile-or-catalog-resilience-22a10cf3c515-attempt-1",
+      "testId": "60fe6e2e205782fec624-fd9b896513e5f72b7953",
+      "title": "UX-048 profile or catalog resilience",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 153,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-049-profile-or-catalog-resilience-c470ae5084df-attempt-1",
+      "testId": "60fe6e2e205782fec624-87b45c84fba6c37d103d",
+      "title": "UX-049 profile or catalog resilience",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 153,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-050-profile-or-catalog-resilience-5fe48ea37856-attempt-1",
+      "testId": "60fe6e2e205782fec624-26d16c9c29bce41b8c2b",
+      "title": "UX-050 profile or catalog resilience",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 153,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-063-profile-or-catalog-resilience-8ea22166d112-attempt-1",
+      "testId": "60fe6e2e205782fec624-e4fe796c1a157d6ace39",
+      "title": "UX-063 profile or catalog resilience",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 153,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-064-profile-or-catalog-resilience-ca9a66aadd14-attempt-1",
+      "testId": "60fe6e2e205782fec624-5c54689b9d8887db6e39",
+      "title": "UX-064 profile or catalog resilience",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 153,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-071-profile-or-catalog-resilience-324b59a1ef11-attempt-1",
+      "testId": "60fe6e2e205782fec624-1856079a9a0d9a9148c2",
+      "title": "UX-071 profile or catalog resilience",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 153,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ux-072-profile-or-catalog-resilience-44c0c75f49ba-attempt-1",
+      "testId": "60fe6e2e205782fec624-655c1d8519cf72691493",
+      "title": "UX-072 profile or catalog resilience",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/ux-shell.spec.ts",
+        "line": 153,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-shl-005-number-workspace-after-custom-label-038a35f5f046-attempt-1",
+      "testId": "3a450eaebd9e006838be-893e103b9f421ad25cec",
+      "title": "UI-SHL-005 number workspace after custom label",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 42,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-008-double-click-focuses-workspace-name-e68dffc5b9b9-attempt-1",
+      "testId": "3a450eaebd9e006838be-2ab98e0cbf6c382d9232",
+      "title": "UI-SHL-008 double-click focuses workspace name",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 53,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-009-rename-workspace-and-show-exact-tooltip-f890cecec19e-attempt-1",
+      "testId": "3a450eaebd9e006838be-54a21d58e97e908feaf7",
+      "title": "UI-SHL-009 rename workspace and show exact tooltip",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 62,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-010-restore-renamed-workspace-after-reload-19c4f5e0755f-attempt-1",
+      "testId": "3a450eaebd9e006838be-3c7e33d030ef4da6977b",
+      "title": "UI-SHL-010 restore renamed workspace after reload",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 73,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-011-only-workspace-has-no-delete-action-cb6a0dbd6244-attempt-1",
+      "testId": "3a450eaebd9e006838be-2d641fbba9ea6696e21b",
+      "title": "UI-SHL-011 only workspace has no delete action",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 86,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-015-removing-later-tab-preserves-selected-workspace-cc249eced7fb-attempt-1",
+      "testId": "3a450eaebd9e006838be-3d25fee8bc728e96b76b",
+      "title": "UI-SHL-015 removing later tab preserves selected workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 95,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-016-deleted-workspace-stays-absent-after-reload-543d1e2de021-attempt-1",
+      "testId": "3a450eaebd9e006838be-c020390f7c13a66955a3",
+      "title": "UI-SHL-016 deleted workspace stays absent after reload",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 105,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-021-unregistered-workspace-has-no-refresh-action-0101a5b44aa1-attempt-1",
+      "testId": "3a450eaebd9e006838be-1b4e56a7ffd7cad81f3e",
+      "title": "UI-SHL-021 unregistered workspace has no refresh action",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 117,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-024-discard-unauthorized-saved-workspace-b0e29139aa73-attempt-1",
+      "testId": "3a450eaebd9e006838be-8cc578870e46756fe32b",
+      "title": "UI-SHL-024 discard unauthorized saved workspace",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 129,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-025-replace-wholly-invalid-saved-workspaces-5445f6c24ab3-attempt-1",
+      "testId": "3a450eaebd9e006838be-ade9d93fdc179e61ec73",
+      "title": "UI-SHL-025 replace wholly invalid saved workspaces",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspace-edges.spec.ts",
+        "line": 146,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-001-empty-workspace-offers-tile-discovery-acb9dc0a6975-attempt-1",
+      "testId": "0b3020e30ee1e091bcf5-443cf4db5fb8f0b3bf2e",
+      "title": "UI-SHL-001 empty workspace offers tile discovery",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspaces.spec.ts",
+        "line": 8,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-002-find-tile-opens-drawer-b7e6c800a7cf-attempt-1",
+      "testId": "0b3020e30ee1e091bcf5-cfa404e9e2e71e5e280e",
+      "title": "UI-SHL-002 Find tile opens drawer",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspaces.spec.ts",
+        "line": 19,
+        "column": 1
+      }
+    },
+    {
+      "caseId": "ui-shl-003-add-blank-workspace-after-workspace-1-ab2811b77377-attempt-1",
+      "testId": "0b3020e30ee1e091bcf5-8e16c4ce2cf174e63983",
+      "title": "UI-SHL-003 add blank workspace after Workspace 1",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspaces.spec.ts",
+        "line": 32,
+        "column": 3
+      }
+    },
+    {
+      "caseId": "ui-shl-004-add-blank-workspace-after-workspace-7-9b9f3e919eee-attempt-1",
+      "testId": "0b3020e30ee1e091bcf5-0cfeeb7e0cc0121a6ba4",
+      "title": "UI-SHL-004 add blank workspace after Workspace 7",
+      "source": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/workspaces.spec.ts",
+        "line": 32,
+        "column": 3
+      }
+    }
+  ],
+  "canonicalBusinessExecution": "LOCAL_CONTROLLED_ASSERTIONS",
+  "limits": [
+    "Per-case scope and assertion mappings determine the supported execution claim. A title or screenshot does not establish a canonical business pass."
+  ]
+}

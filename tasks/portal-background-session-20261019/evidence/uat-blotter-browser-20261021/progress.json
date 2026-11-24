@@ -1,0 +1,37 @@
+{
+  "captured_at": "2026-10-21T08:57:49.842723+00:00",
+  "stage": "UAT photograph and actual Blotter diagnosis",
+  "status": "COMPLETE_WITH_UAT_CONFIGURATION_LIMIT",
+  "completed_case_ids": [
+    "UAT-BLOTTER-VISIBLE",
+    "UAT-BLOTTER-HIDDEN",
+    "UAT-BLOTTER-LATE-RETURN",
+    "UAT-BLOTTER-PRIOR-TILE",
+    "UAT-BLOTTER-480-SCHEDULE"
+  ],
+  "case_totals": {
+    "executed": 5,
+    "passed": 4,
+    "failed": 1,
+    "not_run": 1
+  },
+  "assertion_totals": {
+    "total": 26,
+    "passed": 24
+  },
+  "canonical_results": "summary.json",
+  "screenshots": "screenshots.json",
+  "critical_observation": "The UAT photograph shows28,788,109ms before the access-popup callback.",
+  "confirmed_local_mechanism": "JVM480-minute access setting yields28800-second JWT lifetime and matching Home timer.",
+  "uat_configuration_origin": "Inferred. Effective property source and clock agreement remain unverified.",
+  "prior_tile_removal": "FAILED_CONTROL_INPUT_CONTAMINATION",
+  "not_run": [
+    {
+      "case_id": "UAT-BLOTTER-NO-REFRESH",
+      "reason": "Actual acquired-refresh expiry was tested instead. The rejected-acquisition case remains unexecuted."
+    }
+  ],
+  "next_action": "Bind UAT property origin, exp-iat, refresh expiry, clocks and deployed artifact before configuration correction.",
+  "application_runtime_modified": false,
+  "cleanup": "cleanup.json and uat-screenshot/schedule-480-final-receipt.json"
+}

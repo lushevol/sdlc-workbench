@@ -1,0 +1,94 @@
+FAIL src/pages/Home/common/sessionLifecycle.test.tsx
+  ● Session lifecycle across browser minimize and return › [SR11] Given repeated successful activity, When the original refresh expires, Then access remains active and later renewal uses its replacement
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 2
+    Received length: 1
+    Received array:  [{"adapter": [Function adapter], "allowAbsoluteUrls": true, "data": "{\"singleUIAuthorization\":\"Bearer e30.eyJzdWIiOiJpbml0aWFsLWFjY2VzcyIsImlhdCI6MTc4OTk0ODgwMCwiZXhwIjoxNzg5OTQ5NzAwfQ==.test-signature\"}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": {"Accept": "application/json, text/plain", "Cache-Control": "no-store", "Content-Type": "application/json", "X-Content-Type-Options": "nosniff", "X-XSS-Protection": "1;mode:block"}, "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "signal": {}, "timeout": 60000, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"advertiseZstdAcceptEncoding": false, "clarifyTimeoutError": false, "forcedJSONParsing": true, "legacyInterceptorReqResOrdering": true, "silentJSONParsing": true, "validateStatusUndefinedResolves": true}, "url": "/api/auth/v2/sso/refreshtoken", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}]
+
+      571 |     await advanceTime(now + refreshLifetime - Date.now());
+      572 |     await advanceTime(0);
+    > 573 |     expect(requestsTo("refreshtoken")).toHaveLength(2);
+          |                                        ^
+      574 |     expect(JSON.parse(requestsTo("refreshtoken")[1].data)).toEqual({
+      575 |       singleUIAuthorization: activeAccessToken,
+      576 |     });
+
+      at Object.<anonymous> (src/pages/Home/common/sessionLifecycle.test.tsx:573:40)
+
+  ● Session lifecycle across browser minimize and return › Given manual Extend just before refresh expiry, When the original refresh expires, Then renewed access stays active and refresh is replaced
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      657 |     await advanceTime(minute);
+      658 |     await advanceTime(0);
+    > 659 |     expect(getHooksBase().store.isOnLogout).toBe(false);
+          |                                             ^
+      660 |     await advanceTime(1000);
+      661 |
+      662 |     expect(screen.getByTestId("session-workspace")).toBeInTheDocument();
+
+      at Object.<anonymous> (src/pages/Home/common/sessionLifecycle.test.tsx:659:45)
+
+FAIL src/pages/Home/common/sessionRefresh.test.tsx
+  ● Home session refresh › [SR11] Given valid access, when refresh expires, then replacement is requested without opening the alert
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      340 |       jest.advanceTimersByTime(1);
+      341 |     });
+    > 342 |     expect(result.current.showTimeout).toBe(false);
+          |                                        ^
+      343 |     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+      344 |     expect(mockStore.token).toBe('access-token');
+      345 |   });
+
+      at Object.<anonymous> (src/pages/Home/common/sessionRefresh.test.tsx:342:40)
+
+  ● Home session refresh › [SR11] Given repeated successful access renewals, when refresh expires, then valid access remains active while replacement is requested
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      446 |     expect(result.current.showTimeout).toBe(false);
+      447 |     act(() => jest.advanceTimersByTime(1));
+    > 448 |     expect(result.current.showTimeout).toBe(false);
+          |                                        ^
+      449 |     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+      450 |     expect(mockStore.token).toBe('access-at-minute-220');
+      451 |   });
+
+      at Object.<anonymous> (src/pages/Home/common/sessionRefresh.test.tsx:448:40)
+
+  ● Home session refresh › [SR05] Given valid access but expired refresh, when restoring, then refresh is replaced without opening the alert
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      459 |       setVisibility('visible');
+      460 |     });
+    > 461 |     expect(result.current.showTimeout).toBe(false);
+          |                                        ^
+      462 |     expect(mockRefreshToken).toHaveBeenCalledTimes(2);
+      463 |     expect(mockStore.token).toBe('access-token');
+      464 |   });
+
+      at Object.<anonymous> (src/pages/Home/common/sessionRefresh.test.tsx:461:40)
+
+Test Suites: 2 failed, 2 total
+Tests:       5 failed, 74 passed, 79 total
+Snapshots:   0 total
+Time:        2.007 s
+Ran all test suites matching /src\/pages\/Home\/common\/sessionRefresh.test.tsx|src\/pages\/Home\/common\/sessionLifecycle.test.tsx/i.
+Test results written to: ../../../tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/baseline-home-focused-result.json

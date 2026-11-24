@@ -1,0 +1,107 @@
+{
+  "reviewer": "agent:/root/refinement_review",
+  "reviewed_at": "2026-10-26T01:35:03.956642+00:00",
+  "review_kind": "independent agent review; no human approval",
+  "reviewed_document": "tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+  "reviewed_document_sha256": "cd71ffb9645222b3dde5b077110bacb0d97e058dc877d3aa526b0a8337eed04e",
+  "reviewed_reconciliation_document_binding": "cd71ffb9645222b3dde5b077110bacb0d97e058dc877d3aa526b0a8337eed04e",
+  "checks": {
+    "unique_question_headings": 60,
+    "map_questions": 60,
+    "document_map_id_sets_match": true,
+    "editable_entries": 9,
+    "existing_sec17_answer_exact": true,
+    "existing_sec18_answer_exact": true,
+    "unselected_options_allow_other_unknown_contact": true,
+    "unique_source_bindings_hash_checked": 147,
+    "source_hash_mismatches": 0
+  },
+  "status": "CHANGES_REQUESTED",
+  "issues": [
+    {
+      "id": "IR-01",
+      "severity": "medium",
+      "entry": "KQ-SEC-09",
+      "finding": "The consequence instructs publication now while required human review remains pending.",
+      "evidence": "Consequence: Publish the evidenced client flow now with limits.",
+      "action": "Retain the evidenced flow as candidate knowledge. Apply the required review before publication. Update both document and reconciliation."
+    },
+    {
+      "id": "IR-02",
+      "severity": "medium",
+      "entry": "KQ-OPS-004; KQ-REL-003",
+      "finding": "Two source line ranges exceed physical source length.",
+      "evidence": [
+        {
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/entity/ApplicationTile.java",
+          "last_line": 77,
+          "cited_end": 79
+        },
+        {
+          "path": "repos/ui/mfe-base/azure-pipelines-npm.yml",
+          "last_line": 47,
+          "cited_end": 48
+        }
+      ],
+      "action": "Correct locator ends in reconciliation and displayed source links."
+    },
+    {
+      "id": "IR-03",
+      "severity": "low",
+      "entry": "KQ-OBS-002; KQ-OBS-005",
+      "finding": "LOW source-finding confidence conflates source facts with missing intended policy after the fields were separated.",
+      "evidence": "Both entries cite direct draft or implementation evidence. Intended-policy confidence is separately UNKNOWN.",
+      "action": "Calibrate source confidence to directly supported bounded facts. Keep intended policy UNKNOWN."
+    },
+    {
+      "id": "IR-04",
+      "severity": "low",
+      "entry": "KQ-SEC-07",
+      "finding": "The current provider deployment-evidence limit points to a fallback-policy answer rather than the deployment follow-up.",
+      "evidence": "The limit points to KQ-SEC-05. The next action points to KQ-SEC-06.",
+      "action": "Direct missing current-provider deployment bindings to KQ-SEC-05. Keep fallback permission in KQ-SEC-06."
+    }
+  ],
+  "limits": [
+    "Source relevance received bounded inspection of key claims, not a repeated full business-source investigation.",
+    "This review does not approve policy, publication, deployment, or business execution.",
+    "A final hash check is required after corrections."
+  ],
+  "final_review": {
+    "reviewer": "agent:/root/refinement_review",
+    "reviewed_at": "2026-10-26T01:39:24.235991+00:00",
+    "review_kind": "independent agent review; no human approval",
+    "document_sha256": "5c34eec853b67329c2f8ae6a4760619112c198076b626d140ed2a1c9afd3c864",
+    "reconciliation_sha256": "4d8713e1026edee42e38599b95f8992e9cc05a06b8761a3bf6094a1a09edfc08",
+    "status": "PASSED",
+    "issues": [],
+    "resolved_issues": [
+      "IR-01",
+      "IR-02",
+      "IR-03",
+      "IR-04"
+    ],
+    "checks": {
+      "unique_ids": 60,
+      "editable_entries": 9,
+      "source_binding_hashes_checked": 147,
+      "source_locator_bounds": "PASSED",
+      "original_sec17_sec18_answers": "EXACT",
+      "document_map_binding": "PASSED",
+      "source_and_intended_policy_confidence": "SEPARATE"
+    },
+    "historical_bindings": [
+      {
+        "id": "KQ-SEC-20",
+        "source": "tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "snapshot": "tasks/ui-test-coverage-20261022/evidence/question-refinement-20261026/05-entry-clarification-input.md.snapshot",
+        "revision": "568b480e0bfe11f9922d8d133fdd4ed22dd81479"
+      }
+    ],
+    "limits": [
+      "This result concerns the question-refinement document and its source map.",
+      "No human review, business policy, publication, deployment, or business execution approval is supplied.",
+      "The expected metadata-only automated_check update requires the root final hash check."
+    ]
+  }
+}

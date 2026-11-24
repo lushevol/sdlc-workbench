@@ -1,0 +1,268 @@
+{
+  "date": "2026-10-27",
+  "timezone": "Asia/Singapore",
+  "locations": [
+    {
+      "id": "AUTH-01",
+      "priority": "P1",
+      "classification": "Source defect",
+      "title": "Separate data-only reads from full authorization",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems3LegacyEntitlementReader.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/migration/Ems3LegacyEntitlementReader.java",
+        "side": "right",
+        "start": 19,
+        "end": 21,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "comment_body": "This data-only lookup calls the full mapper, which requires functional actions. A bank user with only data entitlements cannot authenticate. Separate data-role projection from full authorization mapping.",
+      "case_id": "TC-AUTH-01",
+      "source_audit": "auth-comment-audit.json"
+    },
+    {
+      "id": "AUTH-02",
+      "priority": "P2",
+      "classification": "Source defect; P2 narrowed",
+      "title": "Validate data lists at the data-filter boundary",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+        "side": "right",
+        "start": 95,
+        "end": 99,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "comment_body": "Role-only responses now pass this validation, but the data-filter caller dereferences data_entitlements. Preserve endpoint-specific validation before conversion. The previous path also rejected this payload; this finding concerns null handling and error classification.",
+      "case_id": "TC-AUTH-02",
+      "source_audit": "auth-comment-audit.json"
+    },
+    {
+      "id": "AUTH-03",
+      "priority": "P1",
+      "classification": "Source defect",
+      "title": "Preserve EMS2 role filtering and aggregation",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
+        "side": "right",
+        "start": 99,
+        "end": 101,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "comment_body": "Keeping the first role changes ordinary EMS2 behavior. Main aggregates non-super roles and rejects a super-user-only account. Preserve those semantics for EMS2_ONLY and add both boundary cases.",
+      "case_id": "TC-AUTH-03",
+      "source_audit": "auth-comment-audit.json"
+    },
+    {
+      "id": "AUTH-04",
+      "priority": "P2",
+      "classification": "Policy question; earlier P1 fallback claim withdrawn",
+      "title": "Clarify unused EMS3 failure configuration",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/configuration/Ems3Config.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/configuration/Ems3Config.java",
+        "side": "right",
+        "start": 19,
+        "end": 22,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "comment_body": "The new failClosed setting has no consumer. Tests explicitly require no EMS2 fallback after EMS3 failure. Clarify the property contract and disable-setting scope before changing failure behavior.",
+      "case_id": "TC-AUTH-04",
+      "source_audit": "auth-comment-audit.json"
+    },
+    {
+      "id": "AUTH-05",
+      "priority": "P2",
+      "classification": "Source defect; operational exposure unverified",
+      "title": "Disable raw migration logging by default",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+        "side": "right",
+        "start": 85,
+        "end": 89,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "comment_body": "Default migration settings enable these raw cache dumps at INFO. This adds user authorization and data-role details to logs. Disable raw diagnostics by default and use aggregate comparison information.",
+      "case_id": "TC-AUTH-05",
+      "source_audit": "auth-comment-audit.json"
+    },
+    {
+      "id": "AUTH-06",
+      "priority": "P2",
+      "classification": "Source defect",
+      "title": "Honor cache disabling and mapping version changes",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+        "side": "right",
+        "start": 39,
+        "end": 44,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "comment_body": "Cache reads ignore enabled and accept envelopes without checking the configured mapping version. The mapper also hardcodes ems3-v1. Honor disabling and reject old mapping versions before returning cached permissions.",
+      "case_id": "TC-AUTH-06",
+      "source_audit": "auth-comment-audit.json"
+    },
+    {
+      "id": "AUTH-07",
+      "priority": "P2",
+      "classification": "Compatibility finding; external consumers unverified",
+      "title": "Resolve removal of the scoped Kong token contract",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+        "side": "left",
+        "start": 207,
+        "end": 210,
+        "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee"
+      },
+      "comment_body": "This deletion removes the tested v4 scoped-token contract. Existing clients lose the route, and v3 uses a fixed scope. Restore the contract or provide retirement and consumer migration evidence.",
+      "case_id": "TC-AUTH-07",
+      "source_audit": "auth-comment-audit.json"
+    },
+    {
+      "id": "BFF-001",
+      "priority": "P1",
+      "classification": "Source defect",
+      "title": "Preserve trusted role identity for admin tokens",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 46,
+        "end": 48
+      },
+      "comment_body": "EMS3 entities have no roleName. Admin token construction emits ENTITY:null, and ownership checks then use null as the role. Preserve trusted role identity across mapping and admin validation.",
+      "case_id": "TC-BFF-001",
+      "source_audit": "bff-comment-audit.json"
+    },
+    {
+      "id": "BFF-002",
+      "priority": "P1",
+      "classification": "Source defect",
+      "title": "Preserve application boundaries during permission merging",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 189,
+        "end": 192
+      },
+      "comment_body": "Merging by entity name discards application identity. If A grants S and B grants only T for entity E, B gains S through the union. Preserve application boundaries through the final tile filter.",
+      "case_id": "TC-BFF-002",
+      "source_audit": "bff-comment-audit.json"
+    },
+    {
+      "id": "BFF-003",
+      "priority": "P1",
+      "classification": "Source defect",
+      "title": "Preserve settings omitted by legacy tile updates",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 105,
+        "end": 108
+      },
+      "comment_body": "Legacy payloads omit these fields, so the DTO supplies EMS2. This update overwrites the stored EMS3 source and clears application fields. Preserve stored settings when fields are absent.",
+      "case_id": "TC-BFF-003",
+      "source_audit": "bff-comment-audit.json"
+    },
+    {
+      "id": "BFF-004",
+      "priority": "P2",
+      "classification": "Policy-dependent finding",
+      "title": "Align advertised fallback with actual failure behavior",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 74,
+        "end": 78
+      },
+      "comment_body": "This catch advertises EMS2 fallback, but EMS2 reads exclude migrated scopes. Failed migrated tiles disappear. Confirm the outage policy, then implement per-scope fallback or describe deliberate fail-closed behavior accurately.",
+      "case_id": "TC-BFF-004",
+      "source_audit": "bff-comment-audit.json"
+    },
+    {
+      "id": "BFF-005",
+      "priority": "P2",
+      "classification": "Integration gap; bulk migration intent unconfirmed",
+      "title": "Connect entitlement fields to CSV import",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/config/ApplicationTileConfig.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 31,
+        "end": 33
+      },
+      "comment_body": "These bulk-import fields are never parsed or persisted. New CSV-created tiles default to EMS2; existing records keep their old settings. Complete the import path or reject unsupported entitlement columns explicitly.",
+      "case_id": "TC-BFF-005",
+      "source_audit": "bff-comment-audit.json"
+    },
+    {
+      "id": "BFF-006",
+      "priority": "P2",
+      "classification": "Source defect",
+      "title": "Retain authorization settings in tile audit history",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/resources/db/migration/V1_1_1__application_tile_add_entitlement.sql",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 2,
+        "end": 4
+      },
+      "comment_body": "Only the live table receives authorization source and application fields. Audit records omit them, so historical configuration cannot be reconstructed. Extend the audit schema, entity, and builders.",
+      "case_id": "TC-BFF-006",
+      "source_audit": "bff-comment-audit.json"
+    },
+    {
+      "id": "BFF-007",
+      "priority": "P2",
+      "classification": "Source defect",
+      "title": "Compare equivalent authorization scopes",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 80,
+        "end": 81
+      },
+      "comment_body": "These permission sets cover different tile scopes. Comparing them produces routing-induced DIFFs, including empty EMS2 versus populated EMS3 after full migration. Compare equivalent scopes or report missing baselines separately.",
+      "case_id": "TC-BFF-007",
+      "source_audit": "bff-comment-audit.json"
+    },
+    {
+      "id": "BFF-008",
+      "priority": "P2",
+      "classification": "Source defect; operational exposure unverified",
+      "title": "Remove complete authorization payloads from INFO logs",
+      "owner": "unknown",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "side": "right",
+        "start": 23,
+        "end": 23
+      },
+      "comment_body": "This INFO statement logs the complete functional authorization response. New merge and login logs also publish permission sets. Replace payloads with counts and status, and verify default log content.",
+      "case_id": "TC-BFF-008",
+      "source_audit": "bff-comment-audit.json"
+    }
+  ]
+}

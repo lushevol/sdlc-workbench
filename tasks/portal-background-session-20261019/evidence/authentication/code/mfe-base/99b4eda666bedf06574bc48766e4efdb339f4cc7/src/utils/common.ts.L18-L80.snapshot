@@ -1,0 +1,63 @@
+export const getLocalStorage = (): Storage => {
+  const { localStorage } = window;
+  return localStorage;
+};
+
+export const getWindowOpen = (): Window["open"] => {
+  const { open } = window;
+  return open;
+};
+
+export const getSessionStorage = () => {
+  const { sessionStorage } = window;
+  return sessionStorage;
+};
+export interface JWTPayload {
+  exp?: number;
+  iat?: number;
+  entitlements?: string;
+  sub?: string;
+  date?: unknown;
+}
+export const getJWTPayload = (token: string): JWTPayload | "" => {
+  const payload = token.split(" ");
+  if (payload && payload[1]) {
+    const tokenParts: string[] = payload[1].split(".");
+    return JSON.parse(Buffer.from(tokenParts[1], "base64").toString("utf8"));
+  }
+  return "";
+};
+
+export const storeData = (key: string, data: string): void => {
+  getLocalStorage().setItem(key, data);
+  getSessionStorage().setItem(key, data);
+};
+
+export const clearLocalStorage = (
+  dispacth?: Dispatch<IAction>,
+  actionTypes?: ActionType[]
+): void => {
+  if (actionTypes && actionTypes.length > 0) {
+    actionTypes.forEach((actionType) => {
+      getLocalStorage().removeItem(actionType);
+    });
+  } else {
+    getLocalStorage().clear();
+  }
+  getSessionStorage().clear();
+  if (dispacth) {
+    dispacth({
+      type: ActionType.CLEAR,
+      data: {},
+    });
+  }
+};
+
+export const clearStorageWhenLogout = (dispacth: React.Dispatch<IAction>) => {
+  clearLocalStorage(dispacth, [
+    ActionType.SET_TOKEN,
+    ActionType.SET_USER,
+    ActionType.SET_EXPIRED_TOKEN,
+    ActionType.SET_ENTITIES,
+  ]);
+};

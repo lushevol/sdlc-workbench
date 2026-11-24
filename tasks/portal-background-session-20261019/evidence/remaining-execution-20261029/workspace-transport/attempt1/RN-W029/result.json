@@ -1,0 +1,128 @@
+{
+  "id": "RN-W029",
+  "title": "Mouse activity in an active populated workspace",
+  "started_at": "2026-10-29T02:07:52.077Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w029",
+  "definition_sha256": "e6e28e070609178c226078d0571def8171e49c8379c932c70fbb6f8a1afa8430",
+  "status": "FAILED",
+  "assertions": [
+    {
+      "label": "at least one completed renewal within 15-second activity interval",
+      "actual": false,
+      "expected": true,
+      "status": "FAILED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239201460,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239202846,
+      "page": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "attempt-failed.png"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        32,
+        299
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "lines": [
+        165,
+        243
+      ],
+      "revision": "6d706c072586d5b32e3456bd6ac965c2d6adb78d",
+      "sha256": "3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js"
+  ],
+  "setup_complete": true,
+  "error": "at least one completed renewal within 15-second activity interval\n\nfalse !== true\n",
+  "setup_debug": {
+    "body": "New Tile\nDark\n02:00 UTC\nSynthetic W-A\nLoad fixture W-A\ntrade-X",
+    "store": {
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "drawers": [
+        {
+          "id": 1,
+          "label": "Synthetic fixture",
+          "tiles": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              },
+              "isTemplate": true
+            },
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              },
+              "isTemplate": true
+            }
+          ]
+        }
+      ],
+      "mounts": {
+        "W-A": 1
+      }
+    }
+  },
+  "completed_at": "2026-10-29T02:07:57.523Z"
+}

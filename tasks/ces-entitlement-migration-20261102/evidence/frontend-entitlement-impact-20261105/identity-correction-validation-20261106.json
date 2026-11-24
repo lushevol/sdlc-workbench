@@ -1,0 +1,63 @@
+{
+  "recorded_at": "2026-11-06T05:30:14.383319+00:00",
+  "status": "PASSED_WITH_LIMITS",
+  "scope": "CES legacy applicationName mapping correction",
+  "mapping": {
+    "ces_name": "RATAN_ENTITLEMENT_RULE",
+    "legacy_application_name": "RATAN",
+    "application_id": "51358",
+    "legacy_entity": "X_RATANONE"
+  },
+  "checks": [
+    {
+      "name": "bff_diff_check",
+      "status": "PASSED",
+      "command": "git -C repos/services/single-ui-bff diff --check"
+    },
+    {
+      "name": "source_review",
+      "status": "PASSED",
+      "details": "Mapper keeps CES name and response applicationId, and copies only the explicitly configured legacy team label into applicationName."
+    },
+    {
+      "name": "mapper_test",
+      "status": "NOT_RUN",
+      "details": "Java 17 runner is unavailable. The available Java 26 runtime cannot run the cached Lombok processor."
+    },
+    {
+      "name": "maven_selected_tests",
+      "status": "BLOCKED_BEFORE_TESTS",
+      "details": "Offline Maven resolution lacks private ratanone-service-spring-boot-starter and ratanone-hashicorp-integrator-spring-boot-starter 6.3.1."
+    }
+  ],
+  "sources": [
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/config/AuthorizationMigrationProperties.java",
+      "sha256": "a705a77d885e9aa76ec646bdb031ae68bbffbf1260939f1d29ccba44d4926fba"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "sha256": "433f4105aec525afadde7d997f58220f9d09e101fe787a0568e278c81d03e4da"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "sha256": "2bf4aeb0704a338aab97a4a02e97168ef1c6e26e4b56af5c170ee4bfe5659b5b"
+    },
+    {
+      "path": "src/main/resources/application.yml",
+      "sha256": "02cba99f96e5564bb431aa55e85a92e61f7d218f2a97f403fcf64acbca7ea520"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java",
+      "sha256": "3fec852040758338b548d4588b49b8175dc2fd0f3bec1b1d6d854aa4dd63405b"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImplTest.java",
+      "sha256": "7095192249675fa7c99da59c3c2b5c9c62ae0065eede9f796e3f3cce3bf259e2"
+    }
+  ],
+  "limits": [
+    "No live CES request, application startup, browser run, deployment, or complete Maven suite.",
+    "The explicit mapping is configured for application ID 51358; other CES applications require their own reviewed mapping."
+  ]
+}

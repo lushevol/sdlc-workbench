@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BFF-ADM-024</title><style>body{font:15px/1.5 system-ui,sans-serif;color:#18212d;margin:24px auto;padding:0 24px;max-width:1400px;background:#f7f9fc}a{color:#1354a4}h1,h2{line-height:1.2}.callout{border-left:5px solid #a66100;padding:12px 18px;background:#fff2d6}table{border-collapse:collapse;width:100%;background:white}th,td{padding:8px 12px;border-bottom:1px solid #d3d9e2;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#e9eef6}.PASS{color:#14613b}.FAIL{color:#a21724}.BLOCKED_NOT_EXECUTED{color:#835000}.badge{font-weight:700;white-space:nowrap}input,select{font:inherit;padding:8px;margin:8px}article,details{padding:16px;margin:18px 0;background:white;border:1px solid #d3d9e2;border-radius:6px}.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}figure{margin:0;border:1px solid #d3d9e2;padding:10px}img{max-width:100%;height:auto;background:#e9eef6}code,pre{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#eff3f8;padding:12px}small{font-size:12px}dt{font-weight:700}dd{margin:0 0 8px}footer{margin-top:30px;border-top:1px solid #d3d9e2;padding-top:18px}.muted{color:#526075}summary{cursor:pointer;font-weight:700}</style><body><p><a href="../index.html">All canonical cases</a></p><h1>BFF-ADM-024: Reject Tile Filter Rule {}</h1><p class="callout"><strong>Business acceptance remains unverified. Owner: unknown. Review the canonical definition and fixture limits before acceptance.</strong></p><p>Local predicate: <span class="badge BLOCKED_NOT_EXECUTED">BLOCKED_NOT_EXECUTED</span>. Canonical quality: UNVERIFIED.</p><p><a href="../../../../test-cases.md#bff-adm-024">Canonical Gherkin definition</a>. Definition version: 2. SHA-256: <code>7a1c0830e2be2150a8515b9ddb9840ceeaa4e7cb5a9847bc92ed841085d4a78f</code>.</p><details><summary>Canonical Gherkin steps</summary><pre>Feature: Admin validation
+  @BFF-ADM-024
+  Scenario: Reject Tile Filter Rule {}
+    Given Admin A uses subject &quot;admin-a&quot; with role &quot;FMO_ADMIN&quot; in an isolated authenticated browser
+    And the controlled Tile fixture records the initial grid rows and persisted values
+    And Category 101 has label &quot;category-a&quot; and Import Map 201 has Module Name &quot;container-a&quot;
+    And both references belong to &quot;FMO_ADMIN&quot; and the Tile page category filter value is Category 101
+    And the controlled creation clock returns 1700000000000 milliseconds
+    And the baseline fixture data defines &quot;Tile Name&quot; as &quot;tile-024&quot;
+    And the baseline fixture data defines &quot;Module Path&quot; as &quot;/fixture&quot;
+    And the baseline fixture data defines &quot;Tile Path&quot; as &quot;/case-024&quot;
+    And the baseline fixture data defines &quot;Role Entities&quot; as &quot;E-TRADE&quot;
+    And the baseline fixture data defines &quot;Filter Rule&quot; as &quot;&quot;
+    And the baseline Tile references use &quot;Aplication Category&quot; &quot;category-a&quot; and &quot;Container&quot; &quot;container-a&quot;
+    When Admin A clicks the button labeled &quot;Create New Tile&quot; on the Tile administration page
+    Then the dialog titled &quot;new ID: 1700000000000&quot; is visible on the Tile administration page
+    When Admin A clicks the combobox labeled &quot;Container&quot; in dialog &quot;new ID: 1700000000000&quot;
+    And Admin A clicks the option labeled &quot;container-a&quot; in the expanded &quot;Container&quot; listbox for dialog &quot;new ID: 1700000000000&quot;
+    And Admin A fills the textbox labeled &quot;Tile Name&quot; with &quot;tile-024&quot; in dialog &quot;new ID: 1700000000000&quot;
+    And Admin A fills the textbox labeled &quot;Module Path&quot; with &quot;/fixture&quot; in dialog &quot;new ID: 1700000000000&quot;
+    And Admin A fills the textbox labeled &quot;Tile Path&quot; with &quot;/case-024&quot; in dialog &quot;new ID: 1700000000000&quot;
+    And Admin A fills the textarea labeled &quot;Role Entities&quot; with &quot;E-TRADE&quot; in dialog &quot;new ID: 1700000000000&quot;
+    And Admin A fills the textarea labeled &quot;Filter Rule&quot; with &quot;{}&quot; in dialog &quot;new ID: 1700000000000&quot;
+    And Admin A clicks the button labeled &quot;Create&quot; in dialog &quot;new ID: 1700000000000&quot;
+    Then the dialog titled &quot;new ID: 1700000000000&quot; remains visible on the Tile administration page
+    And the alert with severity &quot;error&quot; in the portal snackbar displays the captured rejection response message
+    And the Tile data grid with column &quot;Record Id&quot; row identifiers and loaded field values equal the initial grid snapshot on the Tile administration page</pre></details><p>Preflight reasons: NO_COMPLETE_REAL_APPLICATION_BINDING, CANONICAL_REVIEW_OR_EVIDENCE_UNRESOLVED.</p><p>Planned essential canonical frames: 3. Plan completeness requires separate review.</p><p>No actual application attempt was retained. No screenshot is claimed.</p><footer><details><summary>Writing review</summary><pre>{
+  &quot;standard&quot;: &quot;ASD-STE100&quot;,
+  &quot;automated_check&quot;: &quot;PASSED&quot;,
+  &quot;asd_review&quot;: &quot;PENDING&quot;,
+  &quot;reviewer&quot;: null,
+  &quot;reviewed_at&quot;: null,
+  &quot;limitations&quot;: [
+    &quot;Automated checks do not check the complete approved dictionary or grammar rules.&quot;
+  ]
+}</pre></details></footer></body></html>

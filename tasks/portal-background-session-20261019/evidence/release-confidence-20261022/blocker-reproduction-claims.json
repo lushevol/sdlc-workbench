@@ -1,0 +1,122 @@
+{
+  "status": "EXPLANATION_SOURCE_CHECKED",
+  "operation": "Explain existing canonical reproductions; no new case definitions or execution.",
+  "candidate": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "request": "blocker-reproduction-request.md",
+  "claims": [
+    {
+      "id": "C1",
+      "class": "Inspected implementation and retained observed execution",
+      "claim": "Refresh expiry can trigger frontend logout while extended access remains valid.",
+      "definition": "06-test-cases.md#review-f01",
+      "source": [
+        {
+          "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+          "lines": "118-173"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+          "lines": "25-51"
+        }
+      ],
+      "observation": "evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/actual.json",
+      "limits": [
+        "Original refresh remains unreplaced. Each activity cycle needs five quiet seconds.",
+        "This does not establish server rejection of still-valid access or a separate backend deadline."
+      ]
+    },
+    {
+      "id": "C2",
+      "class": "Inspected implementation and retained controlled execution",
+      "claim": "A late ended-session response can persist stale refresh credentials; the candidate skips replacement and rejected recovery clears the fresh session.",
+      "definitions": [
+        "06-test-cases.md#review-f03a",
+        "06-test-cases.md#review-f03b",
+        "06-test-cases.md#review-f03-control"
+      ],
+      "source": [
+        {
+          "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+          "lines": "28-48"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+          "lines": "39-40"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts",
+          "lines": "29-31"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/hooks/reducer/root0.reducers.ts",
+          "lines": "6-9"
+        }
+      ],
+      "observation": "evidence/code-review-refresh-20261021/races-candidate-f03-after/actual.json",
+      "limits": [
+        "Stale refresh needs strictly more than three hours remaining at replacement time.",
+        "Revocation and rejection are modeled. The response includes TOKEN_INVALID_EXPIRED, not an arbitrary HTTP 401.",
+        "Both versions accept a late response. Candidate replacement behavior worsens the race.",
+        "Acquisition and recovery are directly invoked service operations; Home delivery is outside this controlled case."
+      ]
+    },
+    {
+      "id": "C3",
+      "class": "Inspected implementation and retained controlled execution",
+      "claim": "Timeout mounts without a refresh token and starts logout. A usable response delivered immediately afterward does not cancel logout or enable Extend.",
+      "definitions": [
+        "06-test-cases.md#review-delayed-scheduled",
+        "06-test-cases.md#review-delayed-hide"
+      ],
+      "source": [
+        {
+          "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+          "lines": "25-51"
+        },
+        {
+          "path": "repos/ui/mfe-base/src/components/LoadingButton/index.tsx",
+          "lines": "9-12"
+        }
+      ],
+      "observation": "evidence/code-review-refresh-20261021/lifecycle-candidate-delayed_recovery/actual.json",
+      "limits": [
+        "Deliver the usable response after Timeout mounts but before the one-second logout completes.",
+        "The common scheduled-acquisition pair fails in both revisions.",
+        "The hide-specific original baseline was not rerun. Clock and transport are controlled."
+      ]
+    }
+  ],
+  "sources_sha256": {
+    "repos/ui/mfe-base/src/pages/Home/common/useController.ts": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+    "repos/ui/mfe-base/src/components/Timeout/common/useController.ts": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+    "repos/ui/mfe-base/src/hooks/service/index.ts": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc",
+    "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+    "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+    "repos/ui/mfe-base/src/hooks/reducer/root0.reducers.ts": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+    "repos/ui/mfe-base/src/components/LoadingButton/index.tsx": "89dc97920127a6ba801cf5c9f87c227fa259593a26b25b85cb242273298cbc97",
+    "tasks/portal-background-session-20261019/06-test-cases.md": "1cbfe5833964dfda9dd9920fbba0429231f13e086c1c6bb724287dd181ae0bcb"
+  },
+  "knowledge_update": "Not applicable. The answer explains inspected behavior and existing expected outcomes without changing policy.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "validation": {
+    "status": "PASSED",
+    "source_and_evidence_hash_checks": 23,
+    "exact_user_input_preserved": true,
+    "canonical_case_anchors_and_source_ranges": "PASSED",
+    "new_index_links": "PASSED",
+    "frozen_intake_and_requirement_hashes": "UNCHANGED",
+    "new_business_execution": "NOT_RUN",
+    "application_edits": "NONE",
+    "scope": "Source identities, JSON parsing, exact input preservation, local links, and frozen hashes. This does not validate ASD dictionary or grammar."
+  }
+}

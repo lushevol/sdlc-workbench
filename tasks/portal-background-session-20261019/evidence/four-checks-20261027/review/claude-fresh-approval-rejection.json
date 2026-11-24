@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-10-27T06:49:16.710142+00:00",
+  "reviewer": "automatic approval review",
+  "action": "Run two source-only Claude Code independent reviews with provider network access.",
+  "disposition": "REJECTED",
+  "attempted_commands": [
+    "python3 tasks/portal-background-session-20261019/evidence/four-checks-20261027/review/run-claude.py session connected",
+    "python3 tasks/portal-background-session-20261019/evidence/four-checks-20261027/review/run-claude.py interceptors connected"
+  ],
+  "reason": "This sends private authentication/session source code to an external Claude/DeepSeek provider; the user requested Claude review but did not specifically authorize exporting this sensitive payload to that destination.",
+  "instruction": "Do not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval.",
+  "dependent_action": "A fresh external review requires explicit payload/destination approval.",
+  "unaffected_actions": [
+    "Complete Codex source review.",
+    "Reconcile retained successful earlier Claude Code reviews against final source.",
+    "Retain unit, E2E, and coverage execution separately."
+  ]
+}

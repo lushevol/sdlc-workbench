@@ -1,0 +1,12 @@
+--- a/src/hooks/service/util/extend.ts
++++ b/src/hooks/service/util/extend.ts
+@@ -14,7 +14,8 @@
+   const difftime = 1000 * (expiredIn ?? 0) - Date.now();
+   if (isOnLogout || !token || difftime < 25000) return;
+   if (
+-    extensionRequest?.token === token &&
++    extensionRequest &&
++    extensionRequest.token === token &&
+     !extensionRequest.controller.signal.aborted
+   ) {
+     return extensionRequest.promise;

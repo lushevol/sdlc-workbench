@@ -1,0 +1,232 @@
+{
+  "status": "COMPLETED_NO_SOURCE_EDITS_OR_EXECUTION",
+  "scope": "Explain the three blockers through existing canonical cases and retained evidence. This is not a fresh reproduction.",
+  "candidate_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "source_checks": {
+    "repos/ui/mfe-base/src/pages/Home/common/useController.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/components/Timeout/common/useController.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/components/Timeout/index.tsx": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/hooks/service/index.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/hooks/service/util/extend.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/hooks/reducer/root0.reducers.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/services/index.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+      "matches_commit": true
+    },
+    "repos/ui/mfe-base/src/utils/login.ts": {
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "matches_commit": true
+    }
+  },
+  "retained_evidence_sha256": {
+    "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/actual.json": "6bbbebe6479521fd2fa5d990f439d2f21f13682df3077589b57a23563d1f651d",
+    "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-after/actual.json": "824b7c5fb84616445951d2b0f553dab0c25bd26c457eb7b518a0a7a801ffb0b5",
+    "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-delayed_recovery/actual.json": "b1afd52b8000aa8422e54980e785f8cd52aa2b64c3bab58d9d7f78c989f5c975",
+    "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot": "38955c555dd92e61dcdaed638be2c9ea3107f0ff1eaa42ebadd6f8841e7182d0",
+    "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/races/raceComparison.test.tsx": "8e394c61871e789406cb51f75a59f53833c96816d8a5ab8684831b4870c91d1c"
+  },
+  "case_explanation_checks": [
+    {
+      "canonical_case": "tasks/portal-background-session-20261019/06-test-cases.md#review-f01",
+      "key_answer": "Access remains valid at the initial refresh deadline in this controlled execution. The frontend explicitly opens Timeout on refresh expiry.",
+      "cause_chain": [
+        {
+          "source": "repos/ui/mfe-base/src/pages/Home/common/useController.ts#L118-L123",
+          "claim": "The expiry condition uses access-expired OR refresh-expired."
+        },
+        {
+          "source": "repos/ui/mfe-base/src/pages/Home/common/useController.ts#L171-L173",
+          "claim": "A timer runs that condition at refresh expiry."
+        },
+        {
+          "source": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L25-L51",
+          "claim": "Expired refresh starts automatic logout. Logout clears local credentials after a one-second wait."
+        }
+      ],
+      "presentation_steps": [
+        "Seed 15-minute access and an original four-hour refresh credential.",
+        "Keep the page visible. Every ten minutes, move the mouse once and wait five quiet seconds.",
+        "Return access with another fifteen minutes of validity for each successful extension.",
+        "Repeat until 23 extensions finish, with no replacement acquisition.",
+        "Cross original refresh expiry while installed access remains valid, then advance one second."
+      ],
+      "intended_result": "No expiry-only logout while access remains usable under the recorded active-session intent.",
+      "retained_candidate_result": {
+        "access_valid_across_refresh_deadline": true,
+        "refresh_acquisition_count": 0,
+        "logout_requests_after_one_second": 1,
+        "authenticated": false
+      },
+      "caveats": [
+        "Four hours is a fixture lifetime, not a verified PROD setting.",
+        "This is not every possible activity sequence. The original refresh must remain unreplaced.",
+        "Mouse movement must be followed by five quiet seconds. Continuous mouse movement postpones extension.",
+        "Server revocation and independent absolute deadlines remain separate conditions.",
+        "Do not describe the observed logout as the backend rejecting an otherwise valid access token."
+      ],
+      "owner": "unknown application owner"
+    },
+    {
+      "canonical_cases": [
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-f03a",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-f03b",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-f03-control"
+      ],
+      "key_answer": "A prior-session response can arrive in the same running page after logout. The candidate can retain and reuse that credential.",
+      "cause_chain": [
+        {
+          "source": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts#L39-L41",
+          "claim": "Refresh responses enter the shared refresh handler without a session-generation check."
+        },
+        {
+          "source": "repos/ui/mfe-base/src/utils/login.ts#L117-L127",
+          "claim": "The handler stores the response refresh credential."
+        },
+        {
+          "source": "repos/ui/mfe-base/src/hooks/service/index.ts#L28-L48",
+          "claim": "Acquisition returns early when the stored credential has strictly more than three hours remaining."
+        },
+        {
+          "source": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts#L29-L31",
+          "claim": "A TOKEN_INVALID_EXPIRED response clears local session storage."
+        }
+      ],
+      "presentation_steps": [
+        "Start session A and hold delivery of its refresh response.",
+        "Use the fixture to revoke A on logout and clear local credentials.",
+        "Sign in to session B in the same running page without a full reload.",
+        "Deliver A's held response, with more than three hours of validity remaining.",
+        "Invoke acquisition 25 seconds before session-B access expiry.",
+        "At access expiry invoke relogin. Reject stale session-A recovery with HTTP 401 and TOKEN_INVALID_EXPIRED."
+      ],
+      "intended_result": "Recovery uses session-B credentials and preserves session B. This expectation is an inspected review inference.",
+      "retained_candidate_result": {
+        "replacement_requests_after_login": 0,
+        "recovery_header_session": "session-A",
+        "fresh_session_cleared": true
+      },
+      "caveats": [
+        "The strict more-than-three-hour reuse threshold is necessary for this recorded skip-replacement mechanism.",
+        "The revoked-token rejection is modeled fixture behavior, not a newly observed live provider response.",
+        "Both revisions can accept a late response after sign-in. The changed replacement rule worsens that existing race.",
+        "Without a replacement opportunity, the baseline control also fails.",
+        "Do not reduce the rejection condition to arbitrary HTTP 401. The fixture uses the token-invalid marker.",
+        "Acquisition and relogin are direct service calls in the retained diagnostic. No complete manual browser flow was freshly reproduced."
+      ],
+      "owner": "unknown application owner"
+    },
+    {
+      "canonical_cases": [
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-delayed-scheduled",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-delayed-hide"
+      ],
+      "key_answer": "No stored refresh credential exists when Timeout mounts. Automatic logout begins before the held usable credential arrives.",
+      "cause_chain": [
+        {
+          "source": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L25-L41",
+          "claim": "The mount effect invokes logout when no refresh exists. Its empty dependency list does not reconsider later delivery."
+        },
+        {
+          "source": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L43-L51",
+          "claim": "Logout sets loading and isOnLogout before its one-second wait."
+        },
+        {
+          "source": "repos/ui/mfe-base/src/components/Timeout/index.tsx#L30-L36",
+          "claim": "The Extend control receives the loading state during automatic logout."
+        }
+      ],
+      "presentation_steps": [
+        "Start visible Home with fifteen-minute access and no refresh credential.",
+        "At 25 seconds before access expiry start scheduled acquisition and hold only response delivery.",
+        "Cross access expiry and let Timeout mount with no refresh in the store.",
+        "Deliver the usable held response before the one-second automatic logout wait finishes.",
+        "Attempt Extend and advance the remaining logout delay."
+      ],
+      "intended_result": "The usable late refresh enables recovery. Successful recovery installs access and closes the prompt.",
+      "retained_candidate_result": {
+        "usable_refresh_stored": true,
+        "extend_disabled": true,
+        "relogin_requests": 0,
+        "logout_requests": 1,
+        "authenticated_after_one_second": false
+      },
+      "caveats": [
+        "Release after Timeout mounts but before logout completes. Later delivery is a different ordering.",
+        "The paired common scheduled-acquisition case fails in both revisions.",
+        "The hide-specific variant starts acquisition 26 seconds before access expiry and makes the page visible at expiry.",
+        "Old hide-specific execution is NOT_RUN in the fresh review. Do not claim paired hide-specific proof.",
+        "Clock and service responses are controlled. This does not establish production latency frequency."
+      ],
+      "owner": "unknown application owner"
+    }
+  ],
+  "checks": {
+    "tracked_source_bytes_match_selected_commit": true,
+    "source_files_checked": 10,
+    "retained_json_results_read": 3,
+    "new_business_execution": "NOT_RUN"
+  },
+  "limitations": [
+    "This is a read-only explanation check against existing cases.",
+    "No application source, case definition, or production setting changed.",
+    "No PROD frequency, real provider revocation behavior, or new reproduction result was established."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "baseline_source_comparison": {
+    "repos/ui/mfe-base/src/hooks/reducer/root0.reducers.ts": {
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "sha256": "9adfdb9bfeafa6e27fca8147dde6c5524d3266359a6690418973e4ea87722329",
+      "claim": "SET_TOKEN clears refreshToken in the baseline. The candidate retains it."
+    },
+    "repos/ui/mfe-base/src/pages/Home/common/useController.ts": {
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "sha256": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+      "claim": "The baseline schedules access-expiry Timeout and near-access acquisition. It has no added refresh-expiry reconciliation timer."
+    }
+  }
+}

@@ -1,0 +1,458 @@
+{
+  "artifact_kind": "source-lifecycle-inspection",
+  "id": "INSPECT-session-ratan-mounted-container-20261021",
+  "recorded_at": "2026-10-21T08:15:18.517056+00:00",
+  "assessor": "Codex review_history subagent",
+  "question": "Does the Ratan container lifecycle mounted around Cashflow Blotter cause recurring requests or direct authentication renewal?",
+  "scope": "Ratan container root, App, /cashflow_blotter_cn route, CashFlowCN import wrapper, RatanProvider, PageContainer and mounted header children, MfeThemeProvider, shared init, GraphQL query/subscription handling, and analytics initialization.",
+  "sources": [
+    {
+      "id": "entry",
+      "path": "repos/ui/mfe-ratan-container/src/root.tsx",
+      "sha256": "d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 24,
+          "text": "import \"./Root/polyfill/requestIdleCallback\";\nimport Root from \"./App\";\nimport { getUser } from \"./ratanutils/authenticator\";\n\n// common\nexport * as RatanProvider from \"./Root/hooks/provider\";\nexport * as RatanDispatcher from \"./Root/hooks/dispatcher\";\n// utils\nexport * as ratanConfig from \"./ratanstatic\";\nexport * as RatanutilsInit from \"./ratanutils/init\";\nexport * as RatanutilsDB from \"./ratanutils/holidayDB\";\nexport * as RatanutilsAuthenticator from \"./ratanutils/authenticator\";\nexport * as RatanutilsUtils from \"./ratanutils/utils\";\nexport * as RatanutilsComponentEnabling from \"./ratanutils/componentEnabling\";\nexport * as RatanutilsHttpApi from \"./ratanutils/http/api\";\nexport * as RatanutilsHttpGraphql from \"./ratanutils/http/graphql\";\nexport * as RatanutilsInfiniteScrollData from \"./ratanutils/infiniteScrollData\";\nexport * as RatanutilsLogger from \"./ratanutils/logger\";\nexport * as RatanutilsConversion from \"./ratanutils/conversion\";\nexport * as RatanutilsFilteringData from \"./ratanutils/filteringData\";\nexport * as RatanutilsEventBus from \"./ratanutils/eventBus\";\nexport * as RatanutilsSetDefaultFilter from \"./ratanutils/setDefaultFilter\";\n\n// components"
+        },
+        {
+          "start_line": 80,
+          "end_line": 90,
+          "text": "export * as RatanLazyAndtdSelect from \"./LazyAntd/Select\";\nexport * as RatanLazyAndtdTheme from \"./LazyAntd/Theme\";\nexport * as RatanLazyAndtdTimePicker from \"./LazyAntd/TimePicker\";\n\n// packages\nexport * as Amounty from \"./packages/Amounty\";\nexport * as Analysis from \"./packages/Analysis\";\nexport * as AnalysisV2 from \"./packages/Analysis/v2/export\";\nexport * as FeatureFlag from \"./packages/FeatureFlag\";\n\nexport default Root;"
+        }
+      ]
+    },
+    {
+      "id": "app",
+      "path": "repos/ui/mfe-ratan-container/src/App.tsx",
+      "sha256": "10f4768df54c4a800ef79f47f44c53e16646e6db3588d06c2a6263ca16cd4368",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 21,
+          "text": "import React from \"react\";\nimport MfeThemeProvider from \"./Root/component/MfeThemeProvider\";\nimport Routing from \"./Root/routing\";\nimport { ContainerProps } from \"./Root/routing/common/interface\";\nimport { ReactRouterDom } from \"./Root/import\";\nconst { Routes, Route, MemoryRouter } = ReactRouterDom;\nconst App: React.FC<ContainerProps> = (\n  props: ContainerProps\n): React.ReactElement => {\n  return (\n    <MfeThemeProvider>\n      <MemoryRouter>\n        <Routes>\n          <Route path=\"*\" element={<Routing {...props} />}></Route>\n        </Routes>\n      </MemoryRouter>\n    </MfeThemeProvider>\n  );\n};\n\nexport default App;"
+        }
+      ]
+    },
+    {
+      "id": "route",
+      "path": "repos/ui/mfe-ratan-container/src/Root/routing/index.tsx",
+      "sha256": "7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 36,
+          "text": "import React, { ReactElement, Suspense } from \"react\";\nimport { ReactRouterDom, Splash } from \"../import\";\nimport { APPLICATION_MENU, ContainerProps } from \"./common/interface\";\nconst { Routes, Route } = ReactRouterDom;\nimport useController from \"./common/useController\";\nimport TradeBlotter from \"../import/TradeBlotter\";\nimport CashflowBlotter from \"../import/CashFlow\";\nimport CashflowBlotterCN from \"../import/CashFlowCN\";\nimport Exception from \"../import/Exception\";\nimport Rule from \"../import/Rule\";\nimport AuthorizationLimits from \"../import/AuthorizationLimits\";\nimport NostroStatic from \"../import/NostroStatic\";\nconst Routing: React.FC<ContainerProps> = (\n  props: ContainerProps\n): ReactElement => {\n  useController(props);\n  return (\n    <Suspense fallback={<Splash />}>\n      <Routes>\n        <Route\n          path={APPLICATION_MENU.TRADE_BLOTTER}\n          element={<TradeBlotter {...props} />}\n        ></Route>\n        <Route\n          path={APPLICATION_MENU.CASHFLOW_BLOTTER}\n          element={<CashflowBlotter {...props} />}\n        ></Route>\n        <Route\n          path={APPLICATION_MENU.CASHFLOW_BLOTTER_CN}\n          element={<CashflowBlotterCN {...props} />}\n        ></Route>\n        <Route\n          path={APPLICATION_MENU.EXCEPTIONS_BLOTTER}\n          element={<Exception {...props} />}\n        ></Route>\n        <Route"
+        }
+      ]
+    },
+    {
+      "id": "route-id",
+      "path": "repos/ui/mfe-ratan-container/src/Root/routing/common/interface.ts",
+      "sha256": "97522faee9846b03c5a8b148a625ced14aeb8493ef146d3b6627ce894a5d98be",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 24,
+          "end_line": 40,
+          "text": "  NEW_NETTING_RULES = \"/new_netting_rules\",\n  SETTLEMENT_NSTP_RULES = \"/settlement_nstp_rules\",\n  SUPPRESSION_RULES = \"/suppression_rules\",\n  NETTING_RULES = \"/netting_rules\",\n  AUTHORIZATION_LIMITS = \"/authorization_limits\",\n  NOSTRO_STATIC = \"/nostro_static\",\n}\n\nexport enum APPLICATION_MENU {\n  TRADE_BLOTTER = \"/trade_blotter/*\",\n  CASHFLOW_BLOTTER = \"/cashflow_blotter/*\",\n  CASHFLOW_BLOTTER_CN = \"/cashflow_blotter_cn/*\",\n  EXCEPTIONS_BLOTTER = \"/exceptions_blotter/*\",\n  RULES_BLOTTER = \"/rules_blotter/*\",\n  AUTHORIZATION_LIMITS_CONTAINER = \"/authorization_limits_container/*\",\n  NOSTRO_STATIC_CONTAINER = \"/nostro_static_container/*\",\n}"
+        }
+      ]
+    },
+    {
+      "id": "route-controller",
+      "path": "repos/ui/mfe-ratan-container/src/Root/routing/common/useController.ts",
+      "sha256": "1eaf767e9beec9ff5e7336884c366c17483eb59887862d1eaf619da51bb2f9a4",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 17,
+          "text": "import React from \"react\";\nimport { ContainerProps } from \"./interface\";\nimport { ReactRouterDom } from \"../../import\";\nconst { useNavigate } = ReactRouterDom;\n\nconst useController = (props: ContainerProps) => {\n  const navigate = useNavigate();\n\n  React.useEffect(() => {\n    if (props.module && props.module.length) {\n      navigate(props.module);\n    }\n  }, []);\n  return {};\n};\n\nexport default useController;"
+        }
+      ]
+    },
+    {
+      "id": "cashflow-mount",
+      "path": "repos/ui/mfe-ratan-container/src/Root/import/CashFlowCN.tsx",
+      "sha256": "3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 27,
+          "text": "import React, { ReactElement, Suspense } from \"react\";\nimport { ContainerProps } from \"../routing/common/interface\";\nimport { Splash } from \"./index\";\nimport RatanProvider from \"../hooks/provider\";\nimport PageContainer from \"../../ratancomponents/PageContainer\";\n\nconst Mfe = React.lazy(() =>\n  // @ts-ignore\n  System.import(\"@fm/ratan_cashflow_blotter\").then((a) => a)\n);\n\nconst CashFlowCN: React.FC<ContainerProps> = (\n  props: ContainerProps\n): ReactElement => {\n  return (\n    <Suspense fallback={<Splash />}>\n      <RatanProvider>\n        <PageContainer>\n          {/*@ts-ignore*/}\n          <Mfe {...props} />\n        </PageContainer>\n      </RatanProvider>\n    </Suspense>\n  );\n};\n\nexport default React.memo(CashFlowCN);"
+        }
+      ]
+    },
+    {
+      "id": "provider",
+      "path": "repos/ui/mfe-ratan-container/src/Root/hooks/provider/index.tsx",
+      "sha256": "f259c4ed4e80e4f7686a3a451079a82a9a188c764b7ead65fa8fc2017eb23a7d",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 36,
+          "text": "import React, { ReactElement } from \"react\";\nimport { ProviderPropsDefault, RootModel, initialData } from \"../model/root\";\nimport { reducers } from \"../reducer\";\nimport { hooks } from \"..\";\nimport { IAction } from \"../reducer/actions/ActionType\";\n\nexport const emptyFunction = () => {\n  console.info(\"AppContext\");\n};\n\nexport const AppContext = React.createContext<\n  [RootModel, React.Dispatch<IAction>]\n>([initialData, emptyFunction]);\n\nexport const useContext = (): [RootModel, React.Dispatch<IAction>] =>\n  React.useContext(AppContext);\n\nconst RatanProvider: React.FC<ProviderPropsDefault> = (\n  props: ProviderPropsDefault\n): ReactElement => {\n  const [store, dispatch] = React.useReducer(reducers, {\n    ...initialData,\n    ...props.data,\n  });\n  React.useEffect(() => {\n    hooks.setRatanDispatch(dispatch);\n    hooks.setStore(store);\n  }, []);\n  return (\n    <AppContext.Provider value={[store, dispatch]}>\n      {props.children}\n    </AppContext.Provider>\n  );\n};\n\nexport default RatanProvider;"
+        }
+      ]
+    },
+    {
+      "id": "hooks",
+      "path": "repos/ui/mfe-ratan-container/src/Root/hooks/index.ts",
+      "sha256": "ccc1be493cd3ba82bf0d0d81cafd1172a104d41d4cb95b6d00c383236bdf0987",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 24,
+          "text": "import React from \"react\";\nimport { RootModel, initialData } from \"./model/root\";\nimport { IAction } from \"./reducer/actions/ActionType\";\n\nexport interface Hooks {\n  store: RootModel;\n  setStore: (store: RootModel) => void;\n  ratanDispatch: React.Dispatch<IAction>;\n  setRatanDispatch: (dispacth: React.Dispatch<IAction>) => void;\n}\n\nexport const hooks: Hooks = {\n  store: initialData,\n  setStore(store: RootModel) {\n    this.store = store;\n  },\n  ratanDispatch: () => {\n    console.info(\"ratanDispatch\");\n  },\n  setRatanDispatch(dispatch: React.Dispatch<IAction>) {\n    this.ratanDispatch = dispatch;\n  },\n};\nexport const getHooks = () => hooks;"
+        }
+      ]
+    },
+    {
+      "id": "page",
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/PageContainer/index.tsx",
+      "sha256": "9f80088b19aaf94029474dc04ca4e1dc45d633c6bdd2d4dcabd21ef8c9b53e20",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 41,
+          "text": "import { Version } from \"../Version\";\nimport StyledPageContainer, { classes } from \"./common/StyledPageContainer\";\nimport Status from \"../Status\";\nimport RefreshBlotterBtn from \"../RefreshBlotterBtn\";\nimport { Loading } from \"../Loading\";\nimport { useContext } from \"../../Root/hooks/provider\";\nimport { useEffect, useState } from \"react\";\nconst PageContainer = ({ children }) => {\n  const [store] = useContext();\n  const [isLoading, setIsLoading] = useState(false);\n\n  useEffect(() => {\n    if (store.refreshState != 0) {\n      setIsLoading(true);\n    }\n    setTimeout(() => {\n      setIsLoading(false);\n    }, 300);\n  }, [store.refreshState]);\n  return (\n    <StyledPageContainer>\n      <div className={classes.header}>\n        <div>\n          <Version />\n        </div>\n        <div className={classes.headerItem}>\n          <Status />\n          <RefreshBlotterBtn />\n        </div>\n      </div>\n      <div className={classes.page}>\n        {isLoading ? (\n          <Loading loading={true} size={70} text=\"loading...\" />\n        ) : (\n          children\n        )}\n      </div>\n    </StyledPageContainer>\n  );\n};\nexport default PageContainer;"
+        }
+      ]
+    },
+    {
+      "id": "theme",
+      "path": "repos/ui/mfe-ratan-container/src/Root/component/MfeThemeProvider/index.tsx",
+      "sha256": "8350b8e64955ede2cb8a12fef7b136221e6f53abd6681311dbe9fbceaaf87859",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 75,
+          "text": "import { FC, PropsWithChildren, useMemo, useEffect } from \"react\";\nimport { ConfigProvider, theme, message } from \"antd\";\nimport { ContainerProvider, ThemeConfig, ThemeUtil } from \"../../import\";\nimport { ThemeProvider, CssBaseline } from \"@mui/material\";\nimport { createTheme, darken } from \"@mui/material/styles\";\n\nconst defaultFontSize = 12;\nconst defaultFontFamily = '\"Poppins\",Helvetica!important';\n\nconst MfeThemeProvider: FC<PropsWithChildren> = ({ children }) => {\n  const [ContainerStore] = ContainerProvider.useContext();\n  useEffect(() => {\n    message.config({\n      top: 80,\n    });\n  }, []);\n  const muiTheme = useMemo(() => {\n    let { config } = ThemeConfig(ThemeUtil.getTheme(ContainerStore.theme));\n    const bgColor = ContainerStore.theme === \"dark\" ? \"#39a1cd\" : \"#EAEEF4\";\n    const scrollbarStyle = {\n      height: \"9px\",\n      width: \"9px\",\n      borderRadius: \"5px\",\n    };\n    const scrollbarthumbStyle = {\n      background: darken(bgColor, 0.2),\n      borderRadius: \"6px\",\n      border: \"2px solid transparent\",\n      backgroundClip: \"padding-box\",\n    };\n    config = createTheme(config, {\n      components: {\n        MuiCssBaseline: {\n          styleOverrides: {\n            body: {\n              \"::-webkit-scrollbar\": scrollbarStyle,\n              \"::-webkit-scrollbar-thumb\": scrollbarthumbStyle,\n              \"*\": {\n                \"::-webkit-scrollbar\": scrollbarStyle,\n                \"::-webkit-scrollbar-thumb\": scrollbarthumbStyle,\n              },\n            },\n          },\n        },\n      },\n    });\n    return config;\n  }, [ContainerStore.theme]);\n\n  const antdTheme = useMemo(() => {\n    const themeAlgo =\n      ContainerStore.theme === \"dark\"\n        ? theme.darkAlgorithm\n        : theme.defaultAlgorithm;\n    return {\n      theme: {\n        algorithm: themeAlgo,\n        token: {\n          fontSize: defaultFontSize,\n          fontFamily: defaultFontFamily,\n          zIndexPopupBase: 1500,\n          colorBgSpotlight: \"var(--theme-color-antd-tooltip-bg)\",\n        },\n      },\n    };\n  }, [ContainerStore.theme]);\n  return (\n    <ThemeProvider theme={muiTheme}>\n      <CssBaseline />\n      <ConfigProvider {...antdTheme}>{children}</ConfigProvider>\n    </ThemeProvider>\n  );\n};\n\nexport default MfeThemeProvider;"
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/Status/common/useController.ts",
+      "sha256": "e1604272924e83ef652ed3b140e43ba6092155f0e9a7216391e947f89fb489ba",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 47,
+          "text": "import React, { useCallback, useEffect, useMemo } from \"react\";\nimport { useContext } from \"../../../Root/hooks/provider\";\nimport useDispatcher from \"../../../Root/hooks/dispatcher\";\nimport { ApiStatus } from \"../../../@types/apiStatus\";\nimport { initApiStatus } from \"../../../Root/hooks/model/root\";\nimport { Service, Hooks } from \"../../../Root/import\";\nimport { getEnable } from \"../../../ratanutils/componentEnabling\";\n\nconst { getHooks } = Hooks;\nconst { postService, getService } = Service;\n\nconst useController = () => {\n  const [store] = useContext();\n  const apiStatusData = store.apiStatus?.data || {};\n  const apiStatusList = store.apiStatus?.displayStatusIds || [];\n\n  const [anchorElStatus, setAnchorElStatus] =\n    React.useState<null | HTMLElement>(null);\n  const { dispatchApiStatus, dispatchApiStatusList } = useDispatcher();\n  const handleOpenStatusMenu = (event: React.MouseEvent<HTMLElement>) => {\n    setAnchorElStatus(event.currentTarget);\n  };\n  const handleCloseStatusMenu = () => {\n    setAnchorElStatus(null);\n  };\n  const getapistatus = async (): Promise<ApiStatus> => {\n    try {\n      const hooks = getHooks();\n      const username = hooks.store?.user?.id;\n      const daData = await getService(\"/ratan/da/v1/monitor\", {\n        headers: { PSID: username },\n      });\n      return daData as unknown as ApiStatus;\n    } catch (e) {}\n    return initApiStatus;\n  };\n\n  useEffect(() => {\n    getapistatus().then((res: ApiStatus) => {\n      if (res) {\n        dispatchApiStatus(res);\n      }\n    });\n  }, []);\n\n  const enableStatus = useMemo(() => {\n    if (apiStatusList && apiStatusList.length > 0) {"
+        }
+      ]
+    },
+    {
+      "id": "version",
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/Version/index.tsx",
+      "sha256": "5dad1972a1cd35761cd1b1881eb0fe35b3205a28eb6a5e0467131840327e3ab2",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 24,
+          "end_line": 33,
+          "text": "  const [store] = useContext();\n  const versionValue = store?.versionState?.version || version;\n  const envValue = store?.versionState?.env || env;\n  return !isProduction() ? (\n    <VersionStyle data-testid=\"version\">\n      {versionValue && <span>Version: {versionValue}</span>}\n      {envValue && <span>Env: {envValue}</span>}\n    </VersionStyle>\n  ) : null;\n};"
+        }
+      ]
+    },
+    {
+      "id": "refresh-button",
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/RefreshBlotterBtn/index.tsx",
+      "sha256": "926374dbb934cf5bf1afc03fc8e52f1f466e4a2944b9c165447694f66fe89122",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 33,
+          "text": "import { Button } from \"@mui/material\";\nimport RefreshIcon from \"@mui/icons-material/Refresh\";\nimport useDispatcher from \"../../Root/hooks/dispatcher\";\nimport { useContext } from \"../../Root/hooks/provider\";\nimport { ReactRouterDom } from \"../../Root/import\";\n\nconst RefreshBlotterBtn = () => {\n  const { useNavigate, useResolvedPath } = ReactRouterDom;\n  const { pathname } = useResolvedPath();\n  const navi = useNavigate();\n  const { dispatchRefreshState } = useDispatcher();\n  const [store] = useContext();\n\n  const click = () => {\n    const pathArr = pathname.split(\"/\").slice(0, 2);\n    navi(pathArr.join(\"/\"));\n    const refreshState = store.refreshState || 0;\n    dispatchRefreshState(refreshState + 1);\n  };\n\n  return (\n    <Button\n      className=\"button\"\n      variant=\"outlined\"\n      size=\"small\"\n      onClick={click}\n      startIcon={<RefreshIcon style={{ fontSize: \"14px\" }} />}\n    >\n      Refresh Page\n    </Button>\n  );\n};\nexport default RefreshBlotterBtn;"
+        }
+      ]
+    },
+    {
+      "id": "shared-init",
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/init.ts",
+      "sha256": "4e3a943fd7406be9e8044ee196f3f21a95269827e506d618260be453fa3d111f",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 22,
+          "end_line": 43,
+          "text": "export const getParent = () => {\n  const { getSessionStorage } = CommonUtil;\n  const initPayload = getSessionStorage().getItem(\"initPayload\");\n  return JSON.parse(initPayload || \"{}\").parent || {};\n};\n\nexport const useParentData = () => {\n  const [isInitComplete, setIsInitComplete] = useState(false);\n  const { getSessionStorage } = CommonUtil;\n  useEffect(() => {\n    // when logout, refresh tile or refresh whole page, will remove getSessionStorage() rosseta fields.\n    getSessionStorage().removeItem(\"businessFieldsTrade\");\n    getSessionStorage().removeItem(\"businessFieldsCashflow\");\n    getSessionStorage().removeItem(\"businessFieldsCashflowCN\");\n\n    setIsInitComplete(true);\n  }, []);\n\n  return {\n    isInitComplete,\n  };\n};"
+        },
+        {
+          "start_line": 122,
+          "end_line": 190,
+          "text": "export const autoRefreshFields = async (\n  storageKey: string,\n  customFields: any,\n  params: string,\n  isDateFormater,\n  getBusinessFields: Function,\n  getBusinessFieldsLatestVersion: Function\n) => {\n  // if exist in session, use session's directly\n  const { getLocalStorage, getSessionStorage, storeData } = CommonUtil;\n  if (getSessionStorage().getItem(storageKey)) {\n    const sessionFields: any = JSON.parse(\n      getSessionStorage().getItem(storageKey) as string\n    );\n    const fields = mergeFields(sessionFields, customFields, isDateFormater);\n\n    if (fields.length === 0) {\n      triggerError(FIELDS_CONFIG_NOT_AVAILABLE);\n    }\n\n    return fields;\n  } else if (getLocalStorage().getItem(storageKey)) {\n    // if exist in localstorage, check active version, if valid, use local's directly, and put in session, otherwise get the latest version and restore it.\n    const localFields: any = JSON.parse(\n      getLocalStorage().getItem(storageKey) as string\n    );\n    try {\n      // if fields version respond successfully\n      const versionRes: any = await getBusinessFieldsLatestVersion();\n      if (\n        localFields.version.fieldsConfig ===\n          versionRes.ratan_suppression_fields_config.activedVersion &&\n        localFields.version.fields ===\n          versionRes.ratan_suppression_fields.activedVersion\n      ) {\n        getSessionStorage().setItem(\n          storageKey,\n          getLocalStorage().getItem(storageKey) as string\n        );\n        return mergeFields(localFields, customFields, isDateFormater);\n      }\n    } catch (error) {\n      // if response failed, still use data in localstorage\n      message.error(\n        \"Unable to fetch latest field list from server, use local cache instead.\"\n      );\n      getSessionStorage().setItem(\n        storageKey,\n        getLocalStorage().getItem(storageKey) as string\n      );\n      return mergeFields(localFields, customFields, isDateFormater);\n    }\n  }\n\n  // else get from back-end\n  const res: any = await getBusinessFields(params);\n  sortAsAlphabeticalOrder(res.fields);\n  storeData(storageKey, JSON.stringify(res));\n  getSessionStorage().setItem(storageKey, JSON.stringify(res));\n\n  return mergeFields(res, customFields, isDateFormater);\n};\n\nfunction filterDisabledFields(fields: any, flag) {\n  return fields.filter((item) => {\n    const scope = JSON.parse(item.scope);\n    return !scope.disabledBlotter.includes(flag);\n  });\n}"
+        }
+      ]
+    },
+    {
+      "id": "graphql",
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts",
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 126,
+          "end_line": 241,
+          "text": "export const queryGraphql = (\n  url: string,\n  query: any,\n  setErrorField?: boolean,\n  headers = {}\n) => {\n  const httpLink = new HttpLink({\n    uri: url,\n  });\n\n  const authMiddleware = new ApolloLink((operation, forward) => {\n    // add the token to the headers\n    const hooks = getHooks();\n    operation.setContext({\n      headers: {\n        \"Single-UI-Authorization\": hooks.store?.token,\n        // \"Frontend-Version\": \"mfe\",\n        ...headers,\n      },\n    });\n    return forward(operation);\n  });\n\n  const queryClient = new ApolloClient({\n    link: from([authMiddleware, errorLink(url), httpLink]),\n    cache: new InMemoryCache({\n      addTypename: false,\n    }),\n    defaultOptions: {\n      query: {\n        fetchPolicy: \"no-cache\",\n        errorPolicy: \"all\",\n      },\n    },\n  });\n\n  return queryClient\n    .query({ query })\n    .then(queryHandler(setErrorField))\n    .finally(() => {\n      ExtendTokenService(url);\n    });\n};\n\nexport const reconnectionAttempts = new Map<\n  string,\n  { num: number; updateTime: number }\n>();\nexport const timeout = (url, query, next, error, complete, num) => () => {\n  reconnectionAttempts.set(url, { num: num + 1, updateTime: 0 });\n  subscribeGraphqlNotification(url, query, next, error, complete);\n};\nexport const onDisconnected = (url, query, next, error, complete) => () => {\n  const { num, updateTime } = reconnectionAttempts.get(url) || {\n    num: 0,\n    updateTime: 0,\n  };\n  console.info(\"onDisconnected\", url, num, updateTime);\n  if (num < 5 && new Date().getTime() - updateTime > 5000) {\n    setTimeout(timeout(url, query, next, error, complete, num), num * 1000);\n  } else if (num <= 5) {\n    reconnectionAttempts.set(url, { num: 6, updateTime: 0 });\n    logger.error(`Subscription error, url: ${url}`);\n  }\n};\nexport const onConnected = (url) => () => {\n  const { num } = reconnectionAttempts.get(url) || { num: 0, updateTime: 0 };\n  if (num <= 5) {\n    reconnectionAttempts.set(url, {\n      num: 0,\n      updateTime: new Date().getTime(),\n    });\n  }\n};\nexport const connectionParams = () => ({\n  \"Single-UI-Authorization\": `${getHooks().store?.token}`,\n});\nexport const nextWrap = (next) => (res: any) => {\n  const data = res.data\n    ? res.data.onExceptionEvent.payload\n    : res.onExceptionEvent.payload;\n  logger.info(\n    `Receive exception notification: exceptionId: ${data.exceptionId}, exceptionCode: ${data.exceptionCode}`\n  );\n  next(res);\n};\nconst subscribeGraphqlNotification = (\n  url: string,\n  query: any,\n  next: (value: any) => void,\n  error?: (error: any) => void,\n  complete?: () => void\n) => {\n  const wsClient = new SubscriptionClient(`${url}`, {\n    timeout: 60000,\n    connectionParams,\n  });\n  const wsLink = new WebSocketLink(wsClient);\n  // @ts-ignore\n  wsLink.subscriptionClient.onDisconnected(\n    onDisconnected(url, query, next, error, complete)\n  );\n  // @ts-ignore\n  wsLink.subscriptionClient.onConnected(onConnected(url));\n\n  const subscriptionClient = new ApolloClient({\n    link: from([errorLink(url), wsLink]),\n    cache: new InMemoryCache({\n      addTypename: false,\n    }),\n  });\n\n  subscriptionClient\n    .subscribe({ fetchPolicy: \"no-cache\", query })\n    .subscribe(nextWrap(next), error, complete);\n};"
+        }
+      ]
+    },
+    {
+      "id": "authenticator",
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 45,
+          "text": "import { Hooks } from \"../Root/import\";\nconst { getHooks } = Hooks;\n\nconst X_RATANONE = \"X_RATANONE\";\n\nexport const getUser = () => {\n  const hooks = getHooks();\n\n  const entities = hooks.store?.entities;\n  let entitlements = hooks.store?.user?.entitlements;\n  let role =\n    hooks.store?.user?.entitlement?.dataEntitlementRoles ||\n    hooks.store?.user?.entitlement?.role;\n\n  if (entities) {\n    entitlements = {};\n    entities.forEach((item) => {\n      const entity = {};\n      entitlements[item.name] = entity;\n      item.subjects.forEach((subject) => {\n        entity[subject.name] = subject.actions.map((action) => action.name);\n      });\n      if (item.name === X_RATANONE) {\n        role = item.roleName;\n      }\n    });\n  }\n\n  return {\n    id: hooks.store?.user?.id,\n    name: hooks.store?.user?.fullName,\n    role: role,\n    actions: hooks.store?.user?.entitlement?.actions,\n    entitlements: entitlements,\n  };\n};\n\nexport const hasPermission = (module: string) => {\n  const user = getUser();\n\n  if (user && user.actions && user.actions.includes(module)) {\n    return true;\n  }\n  const moduleArr = module.split(\":\");\n  const [subject, action] = moduleArr;"
+        }
+      ]
+    },
+    {
+      "id": "analysis-init",
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/init.ts",
+      "sha256": "4d9ba63e841d63cb49dc7cbd83379f81ed16e96232689a8e52983af5843db572",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 10,
+          "text": "import { featureScopedEnabled } from \"../../FeatureFlag/controller\";\nimport { Station } from \"./Station\";\n\nexport const init = () => {\n  return new Station();\n};\n\nif (featureScopedEnabled(\"PM_Client_SDK_V2\")) {\n  init();\n}"
+        }
+      ]
+    },
+    {
+      "id": "analysis-station",
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/Station/index.ts",
+      "sha256": "ccf5abfd293916b36744eae47c0491bd9d78b466640116b3192a823f73ec368f",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 18,
+          "end_line": 91,
+          "text": "export class Station {\n  isIdle = false;\n  monitorDatas: MonitorEvent[] = [];\n  sendingAbortController: AbortController | null = null;\n  constructor() {\n    this.read();\n    this.addListener();\n  }\n\n  eventHandler(v: EET[\"event\"]) {\n    this.monitorDatas.push(new MonitorEvent(v.event, v.payloads));\n    this.save();\n  }\n\n  addListener() {\n    MonitorEventEmitter.on(\n      EVENT_EMITTER_KEY_EVENT,\n      this.eventHandler.bind(this)\n    );\n    window.addEventListener(\"visibilitychange\", this.process.bind(this));\n    document.body.addEventListener(\"click\", MouseEventCapture);\n  }\n  removeListener() {\n    MonitorEventEmitter.off(EVENT_EMITTER_KEY_EVENT);\n    window.removeEventListener(\"visibilitychange\", this.process);\n  }\n\n  read() {\n    requestIdleCallback(() => {\n      const cachedMonitorEvents = readMonitorEvents();\n      this.monitorDatas = [...cachedMonitorEvents, ...this.monitorDatas];\n    });\n  }\n\n  save() {\n    requestIdleCallback(() => {\n      saveMonitorEvents(this.monitorDatas);\n    });\n  }\n\n  send() {\n    const [sendingStatus, abortController] = smartSender(this.monitorDatas);\n    this.sendingAbortController = abortController;\n    sendingStatus.then((res) => {\n      const succeedEvents = res\n        .filter((r) => r.status === \"fulfilled\")\n        .flatMap((r) => (r as PromiseFulfilledResult<MonitorEvent[]>).value);\n      const succeedEventIds = new Set(succeedEvents.map((i) => i.id));\n      this.monitorDatas = this.monitorDatas.filter(\n        (d) => !succeedEventIds.has(d.id)\n      );\n      this.save();\n    });\n  }\n\n  abortSend() {\n    this.sendingAbortController?.abort();\n  }\n\n  process(ev: Event) {\n    if (this.isIdle !== checkIfIdle(ev)) {\n      this.isIdle = !this.isIdle;\n      if (this.isIdle) {\n        this.send();\n      } else {\n        this.abortSend();\n      }\n    }\n  }\n\n  destory() {\n    this.removeListener();\n  }\n}"
+        }
+      ]
+    },
+    {
+      "id": "analysis-sender",
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/Station/Sender.ts",
+      "sha256": "e85375fa5309a26082e4ef010598cdf4a05542aad76e8820520cdca528e877aa",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 11,
+          "end_line": 67,
+          "text": "export const sender = async (\n  events: MonitorEvent[],\n  serviceConfig: ServiceConfig = defaultServiceConfig,\n  signal?: AbortSignal\n): Promise<MonitorEvent[]> => {\n  const singleUIAuthorization = sessionStorage.getItem(\"SET_TOKEN\");\n  if (featureScopedEnabled(\"PM_Client_SDK_V2_Sender_v2\")) {\n    try {\n      await fetch(serviceConfig.url, {\n        method: \"post\",\n        headers: {\n          \"Content-Type\": \"application/json\",\n          \"Single-Ui-Authorization\": sessionStorage.getItem(\"SET_TOKEN\") + \"\",\n        },\n        body: JSON.stringify({\n          events: events.map((e) => encode(JSON.stringify(e))),\n        }),\n        keepalive: true,\n        signal,\n      });\n      return events;\n    } catch (error) {\n      return [];\n    }\n  } else {\n    const res = await Promise.allSettled(\n      events.map((e) =>\n        Service.service.post(\n          serviceConfig.url,\n          {\n            ...RatanAnalysis2SingleUIBffAnalyze(v2EventTov1Event(e)),\n            singleUIAuthorization,\n          },\n          {\n            signal,\n          }\n        )\n      )\n    );\n    return events.filter((r, i) => res[i].status === \"fulfilled\");\n  }\n};\n\nexport const smartSender = (\n  events: MonitorEvent[],\n  serviceConfig: ServiceConfig = defaultServiceConfig\n): [Promise<PromiseSettledResult<MonitorEvent[]>[]>, AbortController] => {\n  const controller = new AbortController();\n  const groupEvents: MonitorEvent[][] = [];\n  for (let i = 0; i < events.length; i += serviceConfig.maxGroupCount) {\n    groupEvents.push(events.slice(i, i + serviceConfig.maxGroupCount));\n  }\n  const res = Promise.allSettled(\n    groupEvents.map((group) => sender(group, serviceConfig, controller.signal))\n  );\n  return [res, controller];\n};"
+        }
+      ]
+    },
+    {
+      "id": "analysis-config",
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/Config/index.ts",
+      "sha256": "d99ce050e8e57cc1b7898bf31696c67f8d2d992f03c61a4d98697d7c4a96c5eb",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 12,
+          "text": "import { featureScopedEnabled } from \"../import\";\nimport { ServiceConfig } from \"./type\";\n\nexport const defaultServicePath = \"/api/ratan/v1/ratan-analytic\";\nexport const legacyServicePath = \"/api/analytics/v1/fmo/print?extend=false\";\n\nexport const defaultServiceConfig: ServiceConfig = {\n  url: featureScopedEnabled(\"PM_Client_SDK_V2_Sender_v2\")\n    ? defaultServicePath\n    : legacyServicePath,\n  maxGroupCount: featureScopedEnabled(\"PM_Client_SDK_V2_Sender_v2\") ? 10 : 1,\n};"
+        }
+      ]
+    },
+    {
+      "id": "analysis-graphql",
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/Station/GraphQLWrap.ts",
+      "sha256": "5d79578e66d04e60642c48094240fca43ead5b277a1fb18ffe700e09d1a94ccd",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 44,
+          "text": "import { emit } from \"../Sensor\";\nimport { MonitorEventType, MonitorEventSubType } from \"../Event/type\";\nimport { queryGraphql } from \"../import\";\nimport { ItemType } from \"../Item/type\";\n\nexport const getWrappedGraphQLQuery =\n  (path: string) =>\n  (url: string, query: any, setErrorField?: boolean, headers = {}) => {\n    const t = performance.now();\n    return queryGraphql(url, query, setErrorField, headers).then((resp) => {\n      const payload = query?.loc?.source?.body ?? \"\";\n      emit(\n        {\n          name: url,\n          type: MonitorEventType.PERF,\n          subType: MonitorEventSubType.RTT,\n          ...(path\n            ? {\n                item: {\n                  name: \"\",\n                  path: path,\n                  type: ItemType.Page,\n                },\n              }\n            : {}),\n        },\n        [\n          {\n            tag: \"Response Time (ms)\",\n            value: Math.round(performance.now() - t) + \"\",\n          },\n          {\n            tag: \"API Type\",\n            value: \"graphql\",\n          },\n          {\n            tag: \"Payload\",\n            value: typeof payload === \"string\" ? payload : \"\",\n          },\n        ]\n      );\n      return resp;\n    });\n  };"
+        }
+      ]
+    },
+    {
+      "id": "analysis-axios",
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/Station/AxiosWrap.ts",
+      "sha256": "cfd93fa5b2e557203bdc1a2a23bc3f763c2c865a5e73b1e774a004d02a097a39",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 48,
+          "text": "import { MonitorEventSubType, MonitorEventType } from \"../Event/type\";\nimport { ItemType } from \"../Item/type\";\nimport { emit } from \"../Sensor\";\nimport { Service } from \"../import\";\n\nconst { service } = Service;\n\nexport const getWrappedAxiosService = (path: string) =>\n  new Proxy(service, {\n    get(target, key, receiver) {\n      return TrackWrap(Reflect.get(target, key, receiver), path);\n    },\n  });\n\nconst TrackWrap = (fn: (a, b, c) => Promise<any>, path?: string) => {\n  return function (url: string, param1, param2): Promise<any> {\n    const t = performance.now();\n    return fn(url, param1, param2).then((resp) => {\n      emit(\n        {\n          name: url,\n          type: MonitorEventType.PERF,\n          subType: MonitorEventSubType.RTT,\n          ...(path\n            ? {\n                item: {\n                  name: \"\",\n                  path: path,\n                  type: ItemType.Page,\n                },\n              }\n            : {}),\n        },\n        [\n          {\n            tag: \"Response Time (ms)\",\n            value: Math.round(performance.now() - t) + \"\",\n          },\n          {\n            tag: \"API Type\",\n            value: \"restful\",\n          },\n        ]\n      );\n      return resp;\n    });\n  };\n};"
+        }
+      ]
+    },
+    {
+      "id": "idle-polyfill",
+      "path": "repos/ui/mfe-ratan-container/src/Root/polyfill/requestIdleCallback.ts",
+      "sha256": "fe78944da4a15bb06a4d13f8494a34892d30e5ddc9f4792f0d565c6f32644877",
+      "revision": null,
+      "authority": "Supplied filesystem copy. Independent Git and deployment identities are not established.",
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 21,
+          "text": "export const requestIdleCallbackPolyfill = function (cb) {\n  var start = Date.now();\n  return setTimeout(function () {\n    cb({\n      didTimeout: false,\n      timeRemaining: function () {\n        return Math.max(0, 50 - (Date.now() - start));\n      },\n    });\n  }, 1);\n};\n\nexport const cancelIdleCallbackPolyfill = function (id) {\n  clearTimeout(id);\n};\n\nwindow.requestIdleCallback =\n  window.requestIdleCallback || requestIdleCallbackPolyfill;\n\nwindow.cancelIdleCallback =\n  window.cancelIdleCallback || cancelIdleCallbackPolyfill;"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "MC-01",
+      "class": "inspected-implementation",
+      "evidence": [
+        "entry",
+        "app",
+        "route",
+        "route-id",
+        "cashflow-mount"
+      ],
+      "conclusion": "The route mounts @fm/ratan_cashflow_blotter inside RatanProvider and PageContainer under MfeThemeProvider.",
+      "consequence": "The wrapper and its mounted header are part of the idle investigation.",
+      "owner": "unknown application owner",
+      "next_action": "Bind the deployed route and modules to these source bytes."
+    },
+    {
+      "id": "MC-02",
+      "class": "inspected-implementation",
+      "evidence": [
+        "provider",
+        "hooks",
+        "theme",
+        "route-controller"
+      ],
+      "conclusion": "Provider registration, theme configuration, and initial navigation do not start a recurring request in the inspected code.",
+      "consequence": "These wrappers do not supply a demonstrated recurring renewal source.",
+      "owner": "unknown application owner",
+      "next_action": "Keep runtime call tracing open for any different deployed wrapper."
+    },
+    {
+      "id": "MC-03",
+      "class": "inspected-implementation",
+      "evidence": [
+        "page",
+        "status",
+        "version",
+        "refresh-button"
+      ],
+      "conclusion": "PageContainer starts a 300-millisecond loading timer for each refreshState change. Status performs one mount-time monitor GET.",
+      "consequence": "No periodic authentication renewal is shown by these header paths.",
+      "owner": "unknown application owner",
+      "next_action": "Record mount counts and response headers if repeated remounts or monitor traffic appear.",
+      "limit": "A remount can repeat the monitor call. This inspection does not determine that response header or backend behavior."
+    },
+    {
+      "id": "MC-04",
+      "class": "inspected-implementation",
+      "evidence": [
+        "shared-init",
+        "authenticator"
+      ],
+      "conclusion": "Shared init retrieves cached fields or versions when called. The authenticator reads the shared user state.",
+      "consequence": "Names such as autoRefreshFields do not establish a timed refresh loop.",
+      "owner": "unknown application owner",
+      "next_action": "Trace callers if repeated field requests appear in runtime evidence."
+    },
+    {
+      "id": "MC-05",
+      "class": "inspected-implementation",
+      "evidence": [
+        "graphql"
+      ],
+      "conclusion": "Query completion calls ExtendTokenService. Subscription reconnect handlers schedule bounded reconnection attempts without that direct extension call.",
+      "consequence": "Repeated queries can renew access, but this wrapper supplies no demonstrated periodic query cadence.",
+      "owner": "unknown application owner",
+      "next_action": "Correlate actual query completions and access-extension responses.",
+      "limit": "Subscription events or downstream callers can initiate queries outside this inspected wrapper scope."
+    },
+    {
+      "id": "MC-06",
+      "class": "inspected-implementation",
+      "evidence": [
+        "analysis-init",
+        "analysis-station",
+        "analysis-sender",
+        "analysis-config",
+        "analysis-graphql",
+        "analysis-axios",
+        "idle-polyfill"
+      ],
+      "conclusion": "Feature-gated analytics sends queued events on visibility transitions. Its wrappers record request timing without a polling interval.",
+      "consequence": "Analytics can cause transition-time requests, but no periodic direct session renewal was identified here.",
+      "owner": "unknown application owner",
+      "next_action": "Retain analytics request and authorization-response evidence if it changes access expiry.",
+      "limit": "Effective feature flags and provider response headers remain unverified."
+    }
+  ],
+  "conclusion": {
+    "recurring_direct_auth_renewal_found_in_mounted_wrapper_scope": false,
+    "api_completion_extension_path_exists": true,
+    "sustained_idle_blotter_renewal_cause": "UNCONFIRMED",
+    "general_absence_claim": false
+  },
+  "checks": {
+    "source_hashes_computed": true,
+    "json_parse": "PASSED",
+    "business_tests_run": false,
+    "browser_execution_run": false
+  },
+  "limits": [
+    "Source inspection predicts client behavior only. No UAT execution occurs in this audit.",
+    "Supplied Ratan container copy has no established independent Git revision or deployed-byte binding.",
+    "This bounded audit covers mounted wrapper code. It does not prove that the embedded Blotter and all descendants never issue recurring requests.",
+    "Ordinary service responses could carry authentication headers. Their deployed behavior requires separate evidence."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

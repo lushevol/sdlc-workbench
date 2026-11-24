@@ -1,0 +1,128 @@
+import { act, cleanup, renderHook } from "@testing-library/react";
+import type { RootModel } from "../../../hooks/model/root";
+import {
+  currentSessionEpoch,
+  invalidateSession,
+} from "../../../utils/sessionEpoch";
+import useController from "./useController";
+
+let mockStore: RootModel;
+const mockLogout = jest.fn();
+const mockRelogin = jest.fn();
+const mockLogoutDispatch = jest.fn();
+
+jest.mock("../../../hooks/provider", () => ({
+  useContext: () => [mockStore, jest.fn()],
+}));
+jest.mock("../../../services", () => () => ({ logout: mockLogout }));
+jest.mock("../../../hooks/service", () => ({
+  getPendingRefreshToken: () => undefined,
+  relogin: () => mockRelogin(),
+  signal: {},
+}));
+jest.mock("../../../hooks/dispathcer", () => () => ({
+  dispacthIsOnLogout: (value: boolean) => mockLogoutDispatch(value),
+}));
+jest.mock("../../../analytics", () => () => ({
+  ButtonEvent: jest.fn(), ModalEvent: jest.fn(),
+}));
+
+describe("Timeout controller boundary preservation", () => {
+  const now = Date.parse("2026-10-27T00:00:00Z");
+  const refresh = `Bearer e30.${btoa(JSON.stringify({ exp: (now + 240_000) / 1000 }))}.test`;
+  let close: jest.Mock;
+  let resolveRenewal: () => void;
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(now);
+    jest.clearAllMocks();
+    mockStore = { token: "session-a", refreshToken: refresh, workspaces: [] };
+    close = jest.fn();
+    mockRelogin.mockImplementation(() => new Promise<void>(resolve => { resolveRenewal = resolve; }));
+  });
+
+  afterEach(() => {
+    cleanup();
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
+  it("[FOUR-COV-01] applies logout fallback to malformed refresh JSON without throwing", async () => {
+    mockStore.refreshToken = "Bearer e30.ew==.test";
+    const { result } = renderHook(() => useController({ setOpen: close }));
+    expect(result.current.canExtend).toBe(false);
+    expect(mockLogoutDispatch).toHaveBeenCalledTimes(1);
+    expect(mockLogoutDispatch).toHaveBeenCalledWith(true);
+    await act(async () => { jest.advanceTimersByTime(1000); });
+    expect(mockLogout).toHaveBeenCalledTimes(1);
+    expect(close).toHaveBeenCalledTimes(1);
+    expect(close).toHaveBeenCalledWith(false);
+  });
+
+  it("[FOUR-COV-02] permits only one logout sequence after repeated callback invocation", async () => {
+    const { result } = renderHook(() => useController({ setOpen: close }));
+    let first: Promise<void>;
+    await act(async () => {
+      first = result.current.continuLogout();
+      await result.current.continuLogout();
+    });
+    expect(mockLogoutDispatch).toHaveBeenCalledTimes(1);
+    expect(mockLogout).not.toHaveBeenCalled();
+    await act(async () => { jest.advanceTimersByTime(1000); await first!; });
+    expect(mockLogout).toHaveBeenCalledTimes(1);
+    expect(close).toHaveBeenCalledTimes(1);
+  });
+
+  it("[FOUR-COV-03] preserves replacement session during an old delayed logout", async () => {
+    const { result, rerender } = renderHook(() => useController({ setOpen: close }));
+    let logout: Promise<void>;
+    act(() => { logout = result.current.continuLogout(); });
+    invalidateSession();
+    mockStore = { ...mockStore, token: "session-b", isOnLogout: false };
+    rerender();
+    await act(async () => { jest.advanceTimersByTime(1000); await logout!; });
+    expect(mockLogoutDispatch).toHaveBeenCalledTimes(1);
+    expect(mockLogout).not.toHaveBeenCalled();
+    expect(close).not.toHaveBeenCalled();
+    expect(mockStore.token).toBe("session-b");
+  });
+
+  it("[FOUR-COV-04] rejects a retained logout callback after session replacement", async () => {
+    const { result } = renderHook(() => useController({ setOpen: close }));
+    const oldLogout = result.current.continuLogout;
+    invalidateSession();
+    const replacementEpoch = currentSessionEpoch();
+    await act(async () => { await oldLogout(); jest.advanceTimersByTime(1000); });
+    expect(currentSessionEpoch()).toBe(replacementEpoch);
+    expect(mockLogoutDispatch).not.toHaveBeenCalled();
+    expect(mockLogout).not.toHaveBeenCalled();
+    expect(close).not.toHaveBeenCalled();
+  });
+
+  it("[FOUR-COV-05] avoids closing an unmounted prompt when manual renewal succeeds", async () => {
+    const { result, unmount } = renderHook(() => useController({ setOpen: close }));
+    let renewal: Promise<void>;
+    act(() => { renewal = result.current.extend(); });
+    expect(mockRelogin).toHaveBeenCalledTimes(1);
+    expect(result.current.loading).toBe(true);
+    unmount();
+    await act(async () => { resolveRenewal(); await renewal!; });
+    expect(close).not.toHaveBeenCalled();
+    expect(mockLogout).not.toHaveBeenCalled();
+  });
+
+  it("[FOUR-COV-06] avoids closing a replacement session after old renewal settlement", async () => {
+    const { result, rerender } = renderHook(() => useController({ setOpen: close }));
+    let renewal: Promise<void>;
+    act(() => { renewal = result.current.extend(); });
+    invalidateSession();
+    mockStore = { ...mockStore, token: "session-b" };
+    rerender();
+    await act(async () => { resolveRenewal(); await renewal!; });
+    expect(mockRelogin).toHaveBeenCalledTimes(1);
+    expect(close).not.toHaveBeenCalled();
+    expect(mockLogout).not.toHaveBeenCalled();
+    expect(mockStore.token).toBe("session-b");
+  });
+});

@@ -1,0 +1,1 @@
+../../records/candidates/operations/KT-day2-manual-entity-settlement.md

@@ -1,0 +1,142 @@
+{
+  "config": {
+    "argv": [
+      "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+      "test",
+      "browser-compatibility.spec.ts",
+      "--config=e2e/audit.config.ts",
+      "--workers=2"
+    ],
+    "configFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.config.ts",
+    "rootDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-034/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "",
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-034/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "snapshotDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "launchOptions": {
+            "channel": "chromium",
+            "headless": true,
+            "chromiumSandbox": true
+          },
+          "trace": "on",
+          "screenshot": "on",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.reporter.ts",
+        {
+          "output": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-034"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-034/playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-034/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Cannot use({ launchOptions }) in a describe group, because it forces a new worker.\nMake it top-level in the test file or put in the configuration file.",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+        "line": 8,
+        "column": 8
+      },
+      "snippet": "\u001b[90m   at \u001b[39mbrowser-compatibility.spec.ts:8\n\n   6 | for (const [id, browser] of [['UX-059', 'chromium'], ['UX-060', 'msedge']] as const) {\n   7 |  test.describe(`${id} ${browser}`, () => {\n>  8 |   test.use({ auditScope:'ACTUAL_APPLICATION_LOCAL_SERVICES', launchOptions:{ channel:browser, headless:true,chromiumSandbox:true },\n     |        ^\n   9 |    auditFixture:`Actual React shell in ${browser}; controlled accepted identity and Cashflow SystemJS module. Real identity and business tenant results remain unverified.` });\n  10 |   test(`${id} open Cashflow and profile`, async({page,audit})=>{\n  11 |    await audit.defineCase(id);let login:LoginPage;const portal=new PortalPage(page,localPrefix);"
+    },
+    {
+      "message": "Cannot use({ launchOptions }) in a describe group, because it forces a new worker.\nMake it top-level in the test file or put in the configuration file.",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+        "line": 8,
+        "column": 8
+      },
+      "snippet": "\u001b[90m   at \u001b[39mbrowser-compatibility.spec.ts:8\n\n   6 | for (const [id, browser] of [['UX-059', 'chromium'], ['UX-060', 'msedge']] as const) {\n   7 |  test.describe(`${id} ${browser}`, () => {\n>  8 |   test.use({ auditScope:'ACTUAL_APPLICATION_LOCAL_SERVICES', launchOptions:{ channel:browser, headless:true,chromiumSandbox:true },\n     |        ^\n   9 |    auditFixture:`Actual React shell in ${browser}; controlled accepted identity and Cashflow SystemJS module. Real identity and business tenant results remain unverified.` });\n  10 |   test(`${id} open Cashflow and profile`, async({page,audit})=>{\n  11 |    await audit.defineCase(id);let login:LoginPage;const portal=new PortalPage(page,localPrefix);"
+    }
+  ],
+  "stats": {
+    "startTime": "2026-10-22T05:29:35.970Z",
+    "duration": 312.51099999999997,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

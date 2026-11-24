@@ -1,0 +1,111 @@
+{
+  "finished_at": "2026-11-06T01:16:16.843593+00:00",
+  "repository": "single-ui-bff",
+  "head": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+  "candidate": "Uncommitted five-file change; exact final hashes below.",
+  "changed_files": [
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java",
+      "sha256": "789381977813168ce8fbf33043b654c3aec0dbea41d8a78f1b2e3d525382cc18"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "sha256": "1a30c8e8b135117216d7d73563387bfc73e4af1d4a7d527f31408c756dec0b97"
+    },
+    {
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "sha256": "310b6a1210ce52e6d38064289be15f163c27a04bdf1ace193eb5b640b61aa43a"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java",
+      "sha256": "7c6b2e468ac00a6b33442095f1c93d30dd8f0caa41984c8bd5bcf478a22ae604"
+    },
+    {
+      "path": "src/test/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3ApplicationNameAuthorizationTest.java",
+      "sha256": "676e899e4b13fc942c40399261dc88ddee14fa8a8c7d68b5532f4bddfece58b7"
+    }
+  ],
+  "assertion_review": {
+    "exposesCesApplicationIdAndAllEntitlementNamesWithoutInventingLegacyFields": "JSON deserialization of a CES example; applicationId string matches response itam_id, seven role names preserved, roleName/roleId/id remain null, effective read action retained.",
+    "missingOptionalCesMetadataDoesNotDiscardEffectiveGrants": "Missing user_data omits serialized applicationId; missing entitlement_name produces roleList:[]; read grant remains.",
+    "legacyEntityJsonKeepsExistingFieldsWithoutAddingNullCesFields": "Exact JSON-tree round trip preserves every supplied legacy field and omits both new CES fields.",
+    "preservesApplicationIdsAndRoleListsForEqualNamesAcrossDifferentApplications": "Source assertion inspected: same entity name, distinct IDs, independent role lists and action lists remain separate. Execution unavailable because service compile closure requires uncached private dependencies."
+  },
+  "normal_maven": {
+    "status": "BLOCKED_BEFORE_TESTS",
+    "executed_test_count": 0,
+    "result": "bff-entity-fields-maven-result.json",
+    "log": "bff-entity-fields-maven.log"
+  },
+  "initial_isolated_attempt": {
+    "status": "HARNESS_SETUP_FAILED_BEFORE_TESTS",
+    "result": "bff-entity-fields-isolated-20261106/result.json",
+    "meaning": "Initial compiler failure does not establish an application failure. All first-attempt diagnostics remain retained."
+  },
+  "isolated_mapper": {
+    "status": "PASSED",
+    "requested_class_count": 1,
+    "executed_class_count": 1,
+    "counts": {
+      "found": 33,
+      "started": 33,
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "aborted": 0,
+      "failed_containers": 0
+    },
+    "result": "bff-entity-fields-mapper-20261106/result.json",
+    "production_source_count": 7,
+    "test_source_count": 1
+  },
+  "isolated_service": {
+    "status": "BLOCKED_BEFORE_TESTS",
+    "requested_classes": [
+      "Ems3ApplicationNameAuthorizationTest",
+      "TileAuthorizationServiceImplTest"
+    ],
+    "executed_class_count": 0,
+    "log": "bff-entity-fields-isolated-20261106/service-compile.log",
+    "blockers": [
+      "com.scb.ratan.commons and com.scb.ratan.commons.exception unavailable in local cache",
+      "com.scb.fmaa.client.oauth2 dependencies unavailable in local cache"
+    ]
+  },
+  "source_reconciliation": {
+    "mapper_run_sources_unchanged": true,
+    "mismatches": []
+  },
+  "whitespace_check": {
+    "command": [
+      "git",
+      "-c",
+      "core.whitespace=cr-at-eol",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  "runner": {
+    "path": "verify_bff_entity_fields.py",
+    "sha256": "1a08e068eb4a47b1137124c5e16495bd74bf2453b72d07bcfaca0beedefa2e46",
+    "command": [
+      "python3",
+      "verify_bff_entity_fields.py",
+      "--repo",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+      "--java-home",
+      "/opt/homebrew/Cellar/openjdk@17/17.0.19",
+      "--mapper-only",
+      "--output",
+      "NEW_EMPTY_OUTPUT_DIRECTORY"
+    ]
+  },
+  "limits": [
+    "No dependency download, application startup, live CES request, browser run or deployment occurred.",
+    "All 33 invocations in the selected mapper class passed. This is not complete candidate unit-suite execution.",
+    "The identity-isolation service assertion was inspected but not executed.",
+    "The runner uses real cached dependencies and actual source files. No application or starter classes were fabricated."
+  ]
+}

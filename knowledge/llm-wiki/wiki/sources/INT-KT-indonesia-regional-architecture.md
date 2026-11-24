@@ -1,0 +1,1 @@
+../../../records/candidates/settlement/INT-KT-indonesia-regional-architecture.md

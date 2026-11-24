@@ -1,0 +1,1 @@
+[Tranche:1 Countries (Bangladesh, Tanzania, Sri Lanka, Pakistan, Kenya, Vietnam,  Zambia )Manual entities cash Settlements Migration Day 2 - Operational readiness & Post go live Issue Tracker - FM re-platforming - Confluence](https://confluence.global.standardchartered.com/pages/viewpage.action?pageId=3790204945)

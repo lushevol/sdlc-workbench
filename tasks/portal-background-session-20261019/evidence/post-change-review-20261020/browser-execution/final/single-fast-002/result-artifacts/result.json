@@ -1,0 +1,148 @@
+{
+  "caseId": "slow-activity-single-flight",
+  "status": "PASSED",
+  "startedAt": "2026-10-19T19:19:09.096Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "f6983029b26919fee547929231fb995c57f648f863d424eb59fc09dadd9d8d9a",
+  "testSourceSha256": "41d3ee444936039f1ec09cdca12bee8a3fdca5d25d2c5ec741c753e5c43a8b3a",
+  "sourceRevisions": {
+    "mfe-base": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "The actual activity extension request is held before dispatch. Repeated input continues for 12 seconds."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [
+    {
+      "repeatedActivityMs": 18427,
+      "emitted": 115,
+      "pendingRequests": 1,
+      "pendingCancellations": 0
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-19T19:19:09.097Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "held-activity-request",
+      "capturedAt": "2026-10-19T19:19:27.254Z",
+      "file": "held-activity-request.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-19T19:19:33.635Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "0ae298620ca29d0b0c53e41dace09bd3a48404938b52a01fb71fd776e7aad0ae",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "completedAt": "2026-10-19T19:19:33.630Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792437549037,
+      "access": {
+        "sha256": "2dc4be16e2782c4fdb2c101a05f3206bd911e450b6afed92ac25201f954e6a3f",
+        "exp": 1792437609,
+        "iat": 1792437549
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/extend",
+      "status": 200,
+      "time": 1792437567334,
+      "access": {
+        "sha256": "2004163fe251df9c7f3f48635f5d61ce1ab2cf9977fd86e1edd2677e9e542300",
+        "exp": 1792437627,
+        "iat": 1792437567
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/extend",
+      "status": 200,
+      "time": 1792437570281,
+      "access": {
+        "sha256": "0ae298620ca29d0b0c53e41dace09bd3a48404938b52a01fb71fd776e7aad0ae",
+        "exp": 1792437630,
+        "iat": 1792437570
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792437573590,
+      "access": {
+        "sha256": "f1a1829f56c243a9bc78e8fb3d8d6eda9798ca563936d7a1520dedbfac2f74e7",
+        "exp": 1792437633,
+        "iat": 1792437573
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792437573358
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792437547325
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792437573490
+    }
+  ],
+  "initialAccess": {
+    "sha256": "2dc4be16e2782c4fdb2c101a05f3206bd911e450b6afed92ac25201f954e6a3f",
+    "exp": 1792437609,
+    "iat": 1792437549
+  },
+  "latestAccess": {
+    "sha256": "f1a1829f56c243a9bc78e8fb3d8d6eda9798ca563936d7a1520dedbfac2f74e7",
+    "exp": 1792437633,
+    "iat": 1792437573
+  },
+  "refresh": null,
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-19T19:19:33.501Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

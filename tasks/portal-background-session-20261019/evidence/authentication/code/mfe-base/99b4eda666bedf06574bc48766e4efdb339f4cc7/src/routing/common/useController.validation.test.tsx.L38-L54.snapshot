@@ -1,0 +1,17 @@
+    Object.defineProperty(window, "fin", {
+      configurable: true,
+      value: {},
+    });
+  });
+
+  it("rejects an invalid OpenFin token before storage", async () => {
+    renderHook(() => useController());
+
+    await waitFor(() =>
+      expect(mockDispatchErrorMessage).toHaveBeenCalledWith(
+        "Invalid authentication token."
+      )
+    );
+    expect(mockStoreData).not.toHaveBeenCalled();
+  });
+});

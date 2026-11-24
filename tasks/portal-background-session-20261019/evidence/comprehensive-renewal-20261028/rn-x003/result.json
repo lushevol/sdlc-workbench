@@ -1,0 +1,92 @@
+{
+  "id": "RN-X003",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "started_at": "2026-10-28T15:57:32.584Z",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "name": "three workspace descriptors",
+      "actual": 3,
+      "expected": 3,
+      "status": "PASSED"
+    },
+    {
+      "name": "Logout sets logout state while renewal held",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "late renewal cannot authenticate after Logout",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "name": "single held renewal request",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    }
+  ],
+  "cycles": [],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793145601101
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793145602497
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793145661001,
+      "attempt": 1,
+      "mode": "hold"
+    },
+    {
+      "endpoint": "logout",
+      "at": 1793145662001
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "logout-during-pending.png",
+      "phase": "logout-during-pending",
+      "captured_at": "2026-10-28T15:57:35.348Z",
+      "sha256": "e0af039f542fff9dfa3b762fc6ee4660bc8aeb27b4bbea8b96f94f06cd25112e"
+    },
+    {
+      "file": "logged-out.png",
+      "phase": "logged-out",
+      "captured_at": "2026-10-28T15:57:35.555Z",
+      "sha256": "d0788ab590f8b9fce9267bae7f986e9ae2ec4ca60fd0c34504e0bdb9072f68df"
+    }
+  ],
+  "source_binding": "../execution-source-binding.json",
+  "initial": {
+    "authenticated": true,
+    "expiry": 1793145661000,
+    "workspaceIds": [
+      "9b836a4a-f6e4-4dfc-a1e1-1818c7df98a6",
+      "46062f61-4fd4-4bbc-9a2b-f571c72b04da",
+      "a97a8ae7-6fbd-46b5-9798-c5bae50d2be3"
+    ],
+    "workspaceLabels": [
+      "Workspace 1",
+      "Workspace 2",
+      "Workspace 3"
+    ],
+    "dialog": false,
+    "isOnLogout": false,
+    "events": {
+      "opens": 0,
+      "closures": 0,
+      "events": []
+    },
+    "token_sha256": "8ae0bd91093f3033a5fdd4a020f13733120e4275771a48ba958b5b7b19066e40"
+  },
+  "late_delivery": "fulfilled",
+  "completed_at": "2026-10-28T15:57:35.555Z"
+}

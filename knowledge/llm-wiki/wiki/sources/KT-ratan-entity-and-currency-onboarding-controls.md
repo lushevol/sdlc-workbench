@@ -1,0 +1,1 @@
+../../../records/candidates/operations/KT-ratan-entity-and-currency-onboarding-controls.md

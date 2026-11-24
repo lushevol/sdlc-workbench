@@ -1,0 +1,1 @@
+../../records/candidates/architecture/KT-static-data-cache-p3.md

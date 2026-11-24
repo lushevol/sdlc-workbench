@@ -1,0 +1,24 @@
+jest.mock('./common', () => {
+  return {
+    getEnv: () => "LOCAL",
+    getLocalStorage: () => ({
+      setItem: (v) => { },
+      getItem: () => undefined,
+      clear: () => { }
+    }),
+    getSessionStorage: () => ({
+      setItem: (v) => { },
+      getItem: () => undefined,
+      clear: () => { }
+    }),
+    uuidv4: () => "id",
+    storeData: jest.fn(),
+    getJWTPayload: (t) => ({ exp: "a", iat: "b", userLoginTime: new Date().toISOString(), entitlements: JSON.stringify({ "FSS_PAYMENTS_SERVICES_TH:FSS_PS_SUPER_USER": {} }) }),
+    clearStorageWhenLogout: jest.fn(),
+  }
+});
+import { AxiosResponse } from "axios";
+import { handleEntities, handleLogin, handleUser, handleRefreshToken, handleEntitlementsToken, handleLoginEntities, dispacthUserLoginTime, handleDrawers } from "./login";
+
+describe("Login Util", () => {
+  it("should be true", () => {

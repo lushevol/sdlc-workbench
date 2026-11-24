@@ -1,0 +1,212 @@
+2026-10-19T15:37:14.527+08:00  WARN 96451 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController': Unsatisfied dependency expressed through field 'sessionService': Error creating bean with name 'sessionService' defined in local.portalsession.LocalSessionApplication: Unsatisfied dependency expressed through method 'sessionService' parameter 0: Error creating bean with name 'applicationSessionRepo' defined in local.portalsession.LocalSessionApplication: Failed to instantiate [com.scb.sso.singleuibff.repository.ApplicationSessionRepo]: Factory method 'applicationSessionRepo' threw exception with message: EntityPathResolver must not be null
+2026-10-19T15:37:14.543+08:00 ERROR 96451 --- [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController': Unsatisfied dependency expressed through field 'sessionService': Error creating bean with name 'sessionService' defined in local.portalsession.LocalSessionApplication: Unsatisfied dependency expressed through method 'sessionService' parameter 0: Error creating bean with name 'applicationSessionRepo' defined in local.portalsession.LocalSessionApplication: Failed to instantiate [com.scb.sso.singleuibff.repository.ApplicationSessionRepo]: Factory method 'applicationSessionRepo' threw exception with message: EntityPathResolver must not be null
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.4.jar:3.3.4]
+	at local.portalsession.LocalSessionApplication.main(LocalSessionApplication.java:72) ~[classes/:na]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sessionService' defined in local.portalsession.LocalSessionApplication: Unsatisfied dependency expressed through method 'sessionService' parameter 0: Error creating bean with name 'applicationSessionRepo' defined in local.portalsession.LocalSessionApplication: Failed to instantiate [com.scb.sso.singleuibff.repository.ApplicationSessionRepo]: Factory method 'applicationSessionRepo' threw exception with message: EntityPathResolver must not be null
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 18 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'applicationSessionRepo' defined in local.portalsession.LocalSessionApplication: Failed to instantiate [com.scb.sso.singleuibff.repository.ApplicationSessionRepo]: Factory method 'applicationSessionRepo' threw exception with message: EntityPathResolver must not be null
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:636) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 31 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.scb.sso.singleuibff.repository.ApplicationSessionRepo]: Factory method 'applicationSessionRepo' threw exception with message: EntityPathResolver must not be null
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:178) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 45 common frames omitted
+Caused by: java.lang.IllegalArgumentException: EntityPathResolver must not be null
+	at org.springframework.util.Assert.notNull(Assert.java:172) ~[spring-core-6.1.14.jar:6.1.14]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.setEntityPathResolver(JpaRepositoryFactory.java:155) ~[spring-data-jpa-3.3.4.jar:3.3.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.createRepositoryFactory(JpaRepositoryFactoryBean.java:117) ~[spring-data-jpa-3.3.4.jar:3.3.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.doCreateRepositoryFactory(JpaRepositoryFactoryBean.java:108) ~[spring-data-jpa-3.3.4.jar:3.3.4]
+	at org.springframework.data.repository.core.support.TransactionalRepositoryFactoryBeanSupport.createRepositoryFactory(TransactionalRepositoryFactoryBeanSupport.java:80) ~[spring-data-commons-3.3.4.jar:3.3.4]
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:260) ~[spring-data-commons-3.3.4.jar:3.3.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:132) ~[spring-data-jpa-3.3.4.jar:3.3.4]
+	at local.portalsession.LocalSessionApplication.applicationSessionRepo(LocalSessionApplication.java:99) ~[classes/:na]
+	at local.portalsession.LocalSessionApplication$$SpringCGLIB$$0.CGLIB$applicationSessionRepo$6(<generated>) ~[classes/:na]
+	at local.portalsession.LocalSessionApplication$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-6.1.14.jar:6.1.14]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:348) ~[spring-context-6.1.14.jar:6.1.14]
+	at local.portalsession.LocalSessionApplication$$SpringCGLIB$$0.applicationSessionRepo(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 46 common frames omitted
+
+2026-10-19T15:39:17.877+08:00  WARN 97006 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController': Unsatisfied dependency expressed through field 'applicationCategoryService': Error creating bean with name 'applicationCategoryService' defined in local.portalsession.LocalSessionApplication: Unexpected exception during bean creation
+2026-10-19T15:39:17.891+08:00 ERROR 97006 --- [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController': Unsatisfied dependency expressed through field 'applicationCategoryService': Error creating bean with name 'applicationCategoryService' defined in local.portalsession.LocalSessionApplication: Unexpected exception during bean creation
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.4.jar:3.3.4]
+	at local.portalsession.LocalSessionApplication.main(LocalSessionApplication.java:72) ~[classes/:na]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'applicationCategoryService' defined in local.portalsession.LocalSessionApplication: Unexpected exception during bean creation
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:535) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 18 common frames omitted
+Caused by: java.lang.UnsupportedOperationException: Catalog operation disabled in local session fixture: hashCode
+	at local.portalsession.LocalSessionApplication.lambda$applicationCategoryService$2(LocalSessionApplication.java:132) ~[classes/:na]
+	at jdk.proxy2/jdk.proxy2.$Proxy135.hashCode(Unknown Source) ~[na:na]
+	at java.base/java.util.concurrent.ConcurrentHashMap.get(ConcurrentHashMap.java:936) ~[na:na]
+	at java.base/java.util.concurrent.ConcurrentHashMap.containsKey(ConcurrentHashMap.java:964) ~[na:na]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.requiresDestruction(PersistenceAnnotationBeanPostProcessor.java:401) ~[spring-orm-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.hasApplicableProcessors(DisposableBeanAdapter.java:459) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.requiresDestruction(AbstractBeanFactory.java:1894) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.registerDisposableBeanIfNecessary(AbstractBeanFactory.java:1911) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:640) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 26 common frames omitted
+
+2026-10-19T15:42:17.387+08:00  WARN 97438 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController': Unsatisfied dependency expressed through field 'adminModuleUtil': Error creating bean with name 'adminModuleUtil': Unsatisfied dependency expressed through field 'ems2ConfigProperties': No qualifying bean of type 'com.scb.sso.singleuibff.config.EMS2ConfigProperties' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2026-10-19T15:42:17.408+08:00 ERROR 97438 --- [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field ems2ConfigProperties in com.scb.sso.singleuibff.util.AdminModuleUtil required a bean of type 'com.scb.sso.singleuibff.config.EMS2ConfigProperties' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.scb.sso.singleuibff.config.EMS2ConfigProperties' in your configuration.
+
+{"event":"local_http","started_at":"2026-10-19T07:43:39.282217Z","method":"GET","route":"/api/auth/local/health","status":200,"elapsed_ms":18.624708,"issued_tokens":{}}
+2026-10-19T15:46:30.131+08:00  INFO 97687 --- [0.1-8088-exec-3] c.s.s.s.c.v.JwtAuthenticationController  : login failed, reason: Invalid synthetic local credentials
+{"event":"local_http","started_at":"2026-10-19T07:46:30.084588Z","method":"POST","route":"/api/auth/v2/sso/login","status":400,"elapsed_ms":55.582375,"issued_tokens":{}}
+{"event":"local_http","started_at":"2026-10-19T07:46:30.259435Z","method":"POST","route":"/api/auth/v2/sso/login","status":200,"elapsed_ms":26.992334,"issued_tokens":{"Single-UI-Authorization":{"sha256":"3b881500651c915dd8114d3b2ac7e981a4625f65b9e71131431fcc6c57f42e5a","iss":"single-ui-bff","iat":"2026-10-19T07:46:30Z","exp":"2026-10-19T08:01:30Z"}}}
+2026-10-19T15:46:30.439+08:00  WARN 97687 --- [0.1-8088-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 42102, SQLState: 42S02
+2026-10-19T15:46:30.439+08:00 ERROR 97687 --- [0.1-8088-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : Table "application_session" not found; SQL statement:
+SELECT c.*  FROM application_session c WHERE c.session_id = ? [42102-240]
+2026-10-19T15:46:30.445+08:00  INFO 97687 --- [0.1-8088-exec-6] c.s.s.s.c.v.JwtAuthenticationController  : token refreshtoken failed, reason: could not prepare statement [Table "application_session" not found; SQL statement:
+SELECT c.*  FROM application_session c WHERE c.session_id = ? [42102-240]] [SELECT c.*  FROM application_session c WHERE c.session_id = ?]; SQL [SELECT c.*  FROM application_session c WHERE c.session_id = ?]
+{"event":"local_http","started_at":"2026-10-19T07:46:30.385061Z","method":"POST","route":"/api/auth/v2/sso/refreshtoken","status":401,"elapsed_ms":60.947083,"issued_tokens":{}}
+2026-10-19T15:49:41.743+08:00 DEBUG 98319 --- [           main] org.hibernate.SQL                        : drop table if exists post_trade_portal_service.ApplicationSession cascade 
+2026-10-19T15:49:41.747+08:00 DEBUG 98319 --- [           main] org.hibernate.SQL                        : drop sequence if exists post_trade_portal_service.application_session_seq
+2026-10-19T15:49:41.748+08:00 DEBUG 98319 --- [           main] org.hibernate.SQL                        : create sequence post_trade_portal_service.application_session_seq start with 1 increment by 1
+2026-10-19T15:49:41.750+08:00 DEBUG 98319 --- [           main] org.hibernate.SQL                        : create table post_trade_portal_service.ApplicationSession (applicationSessionId bigint not null, createdAt timestamp(6) not null, sessionId varchar(255) not null, primary key (applicationSessionId))
+{"event":"local_http","started_at":"2026-10-19T07:49:42.963919Z","method":"GET","route":"/api/auth/local/health","status":200,"elapsed_ms":21.765125,"issued_tokens":{}}
+2026-10-19T15:50:00.994+08:00  INFO 98319 --- [0.1-8088-exec-3] c.s.s.s.c.v.JwtAuthenticationController  : login failed, reason: Invalid synthetic local credentials
+{"event":"local_http","started_at":"2026-10-19T07:50:00.945244Z","method":"POST","route":"/api/auth/v2/sso/login","status":400,"elapsed_ms":56.052041,"issued_tokens":{}}
+{"event":"local_http","started_at":"2026-10-19T07:50:01.078139Z","method":"POST","route":"/api/auth/v2/sso/login","status":200,"elapsed_ms":27.354709,"issued_tokens":{"Single-UI-Authorization":{"sha256":"c41e822e8f60ad5d9432ebab35803c40c49a43bae498bd414f83235b9a369c09","iss":"single-ui-bff","iat":"2026-10-19T07:50:01Z","exp":"2026-10-19T08:05:01Z"}}}
+2026-10-19T15:50:01.230+08:00 DEBUG 98319 --- [0.1-8088-exec-6] org.hibernate.SQL                        : SELECT c.*  FROM application_session c WHERE c.session_id = ?
+2026-10-19T15:50:01.237+08:00  WARN 98319 --- [0.1-8088-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 42102, SQLState: 42S02
+2026-10-19T15:50:01.237+08:00 ERROR 98319 --- [0.1-8088-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : Table "application_session" not found; SQL statement:
+SELECT c.*  FROM application_session c WHERE c.session_id = ? [42102-240]
+2026-10-19T15:50:01.241+08:00  INFO 98319 --- [0.1-8088-exec-6] c.s.s.s.c.v.JwtAuthenticationController  : token refreshtoken failed, reason: could not prepare statement [Table "application_session" not found; SQL statement:
+SELECT c.*  FROM application_session c WHERE c.session_id = ? [42102-240]] [SELECT c.*  FROM application_session c WHERE c.session_id = ?]; SQL [SELECT c.*  FROM application_session c WHERE c.session_id = ?]
+{"event":"local_http","started_at":"2026-10-19T07:50:01.177606Z","method":"POST","route":"/api/auth/v2/sso/refreshtoken","status":401,"elapsed_ms":63.880625,"issued_tokens":{}}
+2026-10-19T15:50:24.625+08:00 DEBUG 98319 --- [ionShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2026-10-19T15:50:24.625+08:00 DEBUG 98319 --- [ionShutdownHook] org.hibernate.SQL                        : drop table if exists post_trade_portal_service.ApplicationSession cascade 
+2026-10-19T15:50:24.626+08:00 DEBUG 98319 --- [ionShutdownHook] org.hibernate.SQL                        : drop sequence if exists post_trade_portal_service.application_session_seq
+2026-10-19T15:50:45.150+08:00 DEBUG 98667 --- [           main] org.hibernate.SQL                        : drop table if exists post_trade_portal_service.application_session cascade 
+2026-10-19T15:50:45.154+08:00 DEBUG 98667 --- [           main] org.hibernate.SQL                        : drop sequence if exists post_trade_portal_service.application_session_seq
+2026-10-19T15:50:45.155+08:00 DEBUG 98667 --- [           main] org.hibernate.SQL                        : create sequence post_trade_portal_service.application_session_seq start with 1 increment by 1
+2026-10-19T15:50:45.157+08:00 DEBUG 98667 --- [           main] org.hibernate.SQL                        : create table post_trade_portal_service.application_session (application_session_id bigint not null, created_at timestamp(6) not null, session_id varchar(255) not null, primary key (application_session_id))
+{"event":"local_http","started_at":"2026-10-19T07:50:46.349747Z","method":"GET","route":"/api/auth/local/health","status":200,"elapsed_ms":29.088959,"issued_tokens":{}}
+2026-10-19T15:50:55.884+08:00  INFO 98667 --- [0.1-8088-exec-3] c.s.s.s.c.v.JwtAuthenticationController  : login failed, reason: Invalid synthetic local credentials
+{"event":"local_http","started_at":"2026-10-19T07:50:55.862089Z","method":"POST","route":"/api/auth/v2/sso/login","status":400,"elapsed_ms":29.906167,"issued_tokens":{}}
+{"event":"local_http","started_at":"2026-10-19T07:50:56.001677Z","method":"POST","route":"/api/auth/v2/sso/login","status":200,"elapsed_ms":30.842416,"issued_tokens":{"Single-UI-Authorization":{"sha256":"4a62943d241060279dbd5b77656504a5b0413b9a2695be0fb2e724695be1e4a0","iss":"single-ui-bff","iat":"2026-10-19T07:50:56Z","exp":"2026-10-19T08:05:56Z"}}}
+2026-10-19T15:50:56.208+08:00 DEBUG 98667 --- [0.1-8088-exec-6] org.hibernate.SQL                        : SELECT c.*  FROM application_session c WHERE c.session_id = ?
+{"event":"local_http","started_at":"2026-10-19T07:50:56.170154Z","method":"POST","route":"/api/auth/v2/sso/refreshtoken","status":200,"elapsed_ms":62.404875,"issued_tokens":{"Single-UI-Refresh":{"sha256":"a818ffa38f3c05e6867bb53a31ebb7adf2b80ba67192207be8dab355e3adffa5","iss":"single-ui-bff-refresh","iat":"2026-10-19T07:50:56Z","exp":"2026-10-19T11:36:20Z"}}}
+2026-10-19T15:50:56.302+08:00 DEBUG 98667 --- [0.1-8088-exec-8] org.hibernate.SQL                        : SELECT c.*  FROM application_session c WHERE c.session_id = ?
+{"event":"local_http","started_at":"2026-10-19T07:50:56.300264Z","method":"POST","route":"/api/auth/v2/sso/extend","status":200,"elapsed_ms":4.50325,"issued_tokens":{"Single-UI-Authorization":{"sha256":"4a62943d241060279dbd5b77656504a5b0413b9a2695be0fb2e724695be1e4a0","iss":"single-ui-bff","iat":"2026-10-19T07:50:56Z","exp":"2026-10-19T08:05:56Z"}}}
+2026-10-19T15:50:56.391+08:00 DEBUG 98667 --- [.1-8088-exec-10] org.hibernate.SQL                        : SELECT c.*  FROM application_session c WHERE c.session_id = ?
+{"event":"local_http","started_at":"2026-10-19T07:50:56.388818Z","method":"POST","route":"/api/auth/v2/sso/relogin","status":200,"elapsed_ms":6.765209,"issued_tokens":{"Single-UI-Authorization":{"sha256":"4a62943d241060279dbd5b77656504a5b0413b9a2695be0fb2e724695be1e4a0","iss":"single-ui-bff","iat":"2026-10-19T07:50:56Z","exp":"2026-10-19T08:05:56Z"}}}
+2026-10-19T15:50:56.494+08:00 DEBUG 98667 --- [0.1-8088-exec-2] org.hibernate.SQL                        : select next value for post_trade_portal_service.application_session_seq
+2026-10-19T15:50:56.503+08:00 DEBUG 98667 --- [0.1-8088-exec-2] org.hibernate.SQL                        : insert into post_trade_portal_service.application_session (created_at,session_id,application_session_id) values (?,?,?)
+{"event":"local_http","started_at":"2026-10-19T07:50:56.485993Z","method":"POST","route":"/api/auth/v2/sso/logout","status":200,"elapsed_ms":20.117167,"issued_tokens":{}}
+2026-10-19T15:50:56.592+08:00 DEBUG 98667 --- [0.1-8088-exec-4] org.hibernate.SQL                        : SELECT c.*  FROM application_session c WHERE c.session_id = ?
+2026-10-19T15:50:56.597+08:00  INFO 98667 --- [0.1-8088-exec-4] c.s.s.s.c.v.JwtAuthenticationController  : token refreshtoken failed, reason: invalid token
+{"event":"local_http","started_at":"2026-10-19T07:50:56.590181Z","method":"POST","route":"/api/auth/v2/sso/refreshtoken","status":401,"elapsed_ms":8.108458,"issued_tokens":{}}
+2026-10-19T15:50:56.737+08:00 DEBUG 98667 --- [0.1-8088-exec-6] org.hibernate.SQL                        : SELECT c.*  FROM application_session c WHERE c.session_id = ?
+2026-10-19T15:50:56.740+08:00  INFO 98667 --- [0.1-8088-exec-6] c.s.s.s.c.v.JwtAuthenticationController  : token extend failed, reason: invalid token
+{"event":"local_http","started_at":"2026-10-19T07:50:56.734381Z","method":"POST","route":"/api/auth/v2/sso/extend","status":401,"elapsed_ms":6.606583,"issued_tokens":{}}
+{"event":"local_http","started_at":"2026-10-19T07:51:33.345249Z","method":"POST","route":"/api/auth/v2/sso/login","status":200,"elapsed_ms":5.025791,"issued_tokens":{"Single-UI-Authorization":{"sha256":"c0e8c75c49a6538aac0e4d5ad2029a5a91bfa2004dba2293966730fbfcb0404b","iss":"single-ui-bff","iat":"2026-10-19T07:51:33Z","exp":"2026-10-19T08:06:33Z"}}}
+2026-10-19T15:53:50.485+08:00  INFO 98667 --- [.1-8088-exec-10] c.s.s.s.c.v.JwtAuthenticationController  : login failed, reason: Invalid synthetic local credentials
+{"event":"local_http","started_at":"2026-10-19T07:53:50.475819Z","method":"POST","route":"/api/auth/v2/sso/login","status":400,"elapsed_ms":18.505208,"issued_tokens":{}}
+{"event":"local_http","started_at":"2026-10-19T07:54:02.931926Z","method":"POST","route":"/api/auth/v2/sso/login","status":200,"elapsed_ms":11.647167,"issued_tokens":{"Single-UI-Authorization":{"sha256":"6e9b26b7f22c06524013b7ffdf5c0cd938958a9159b10f43874d2494c1df6220","iss":"single-ui-bff","iat":"2026-10-19T07:54:02Z","exp":"2026-10-19T08:09:02Z"}}}
+{"event":"local_http","started_at":"2026-10-19T07:55:49.977405Z","method":"GET","route":"/api/auth/local/health","status":200,"elapsed_ms":10.625917,"issued_tokens":{}}
+{"event":"local_http","started_at":"2026-10-19T07:55:50.615620Z","method":"GET","route":"/api/auth/local/health","status":200,"elapsed_ms":1.777167,"issued_tokens":{}}
+2026-10-19T16:23:06.461+08:00  INFO 98667 --- [0.1-8088-exec-4] c.s.s.s.c.v.JwtAuthenticationController  : token refreshtoken failed, reason: token is expired - reached idle timeout
+{"event":"local_http","started_at":"2026-10-19T08:23:06.447352Z","method":"POST","route":"/api/auth/v2/sso/refreshtoken","status":401,"elapsed_ms":20.147375,"issued_tokens":{}}
+2026-10-19T16:23:07.420+08:00  INFO 98667 --- [0.1-8088-exec-7] c.s.s.s.c.v.JwtAuthenticationController  : token logout failed, reason: token is expired - reached idle timeout
+{"event":"local_http","started_at":"2026-10-19T08:23:07.416732Z","method":"POST","route":"/api/auth/v2/sso/logout","status":200,"elapsed_ms":5.431958,"issued_tokens":{}}
+2026-10-19T16:27:23.787+08:00  INFO 98667 --- [0.1-8088-exec-9] c.s.s.s.c.v.JwtAuthenticationController  : token refreshtoken failed, reason: token is expired - reached idle timeout
+{"event":"local_http","started_at":"2026-10-19T08:27:23.747678Z","method":"POST","route":"/api/auth/v2/sso/refreshtoken","status":401,"elapsed_ms":57.541083,"issued_tokens":{}}
+2026-10-19T16:27:24.631+08:00  INFO 98667 --- [0.1-8088-exec-2] c.s.s.s.c.v.JwtAuthenticationController  : token logout failed, reason: token is expired - reached idle timeout
+{"event":"local_http","started_at":"2026-10-19T08:27:24.628990Z","method":"POST","route":"/api/auth/v2/sso/logout","status":200,"elapsed_ms":5.691709,"issued_tokens":{}}

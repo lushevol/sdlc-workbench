@@ -1,0 +1,536 @@
+{
+  "status": "PASSED",
+  "started_at": "2026-10-21T04:34:39.533244+00:00",
+  "check": "INSTALLED_BROWSER_EXTENSION_DISCOVERY",
+  "versions": {
+    "robotframework": "7.2.2",
+    "robotframework-browser": "19.1.2",
+    "node": "v24.16.0"
+  },
+  "baseline": {
+    "repository": "ratan-test-engine",
+    "revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+    "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+    "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984"
+  },
+  "current": {
+    "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+    "sha256": "406a84436fae71c0ab3f4c31e87a9f5ced887b00f40ae5b9473638b089a58a00"
+  },
+  "boundary": {
+    "private_configuration_loaded": false,
+    "business_keywords_invoked": false,
+    "browser_opened": false,
+    "service": "Fresh installed Browser local Node service; keyword initialization only"
+  },
+  "limitations": [
+    "Keyword discovery does not verify live portal behavior or execute case assertions."
+  ],
+  "prior_attempts": [
+    {
+      "status": "FAILED",
+      "started_at": "2026-10-21T04:34:06.699432+00:00",
+      "completed_at": "2026-10-21T04:34:06.746442+00:00",
+      "error": {
+        "type": "PermissionError",
+        "message": "[Errno 1] Operation not permitted"
+      }
+    }
+  ],
+  "browser_catalog_before": [],
+  "baseline_keywords": [
+    {
+      "name": "openPortalSession",
+      "arguments": "configFile, page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActivityRenewsSession",
+      "arguments": "kind, page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPendingRenewalCompletes",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertRejectedRenewalCanRetry",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertRapidExtendSharesRequest",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertKeyboardExtendActivation",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActivityFailureCanRetry",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertInconsistentActivityResponseRejected",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPromptIgnoresActivity",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertIdlePromptLogout",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertQuickVisibilityRefresh",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertReloadPreservesRenewedSession",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActivityCrossesRefreshExpiry",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertNaturalBackgroundRecovery",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertSlowActivitySharesRequest",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPendingManualLogoutCancels",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPendingActivityLogoutCancels",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertLateActivityCannotReplaceManualSuccess",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActualExpiredCredentialDenied",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "observeBackgroundWithoutRefresh",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "observeWorkspaceDescriptorsAfterSignIn",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    }
+  ],
+  "current_keywords": [
+    {
+      "name": "openPortalSession",
+      "arguments": "configFile, page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActivityRenewsSession",
+      "arguments": "kind, page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPendingRenewalCompletes",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertRejectedRenewalCanRetry",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertRapidExtendSharesRequest",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertKeyboardExtendActivation",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActivityFailureCanRetry",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertInconsistentActivityResponseRejected",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPromptIgnoresActivity",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertIdlePromptLogout",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertQuickVisibilityRefresh",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertReloadPreservesRenewedSession",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActivityCrossesRefreshExpiry",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertNaturalBackgroundRecovery",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertSlowActivitySharesRequest",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPendingManualLogoutCancels",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertPendingActivityLogoutCancels",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertLateActivityCannotReplaceManualSuccess",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "assertActualExpiredCredentialDenied",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "observeBackgroundWithoutRefresh",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    },
+    {
+      "name": "observeWorkspaceDescriptorsAfterSignIn",
+      "arguments": "page",
+      "rfdoc": "Run the named session check against the configured real portal. Retain token hashes, assertions, lifecycle events, and screenshots."
+    }
+  ],
+  "browser_catalog_after": [],
+  "checks": {
+    "keyword_count": 21,
+    "names_arguments_rfdoc_unchanged": true,
+    "no_browser_opened": true
+  },
+  "completed_at": "2026-10-21T04:34:40.965285+00:00",
+  "module_graph_and_provenance": {
+    "status": "PASSED",
+    "module_count": 28,
+    "acyclic": true,
+    "common_singleton": true,
+    "graph": {
+      "sessionRenewal.cjs": [
+        "cases/e2e-01.cjs",
+        "cases/e2e-02.cjs",
+        "cases/e2e-03.cjs",
+        "cases/e2e-04.cjs",
+        "cases/e2e-05.cjs",
+        "cases/e2e-06.cjs",
+        "cases/e2e-07.cjs",
+        "cases/e2e-08.cjs",
+        "cases/e2e-09.cjs",
+        "cases/e2e-10.cjs",
+        "cases/e2e-11.cjs",
+        "cases/e2e-12.cjs",
+        "cases/e2e-13.cjs",
+        "cases/e2e-14.cjs",
+        "cases/e2e-15.cjs",
+        "cases/e2e-16.cjs",
+        "cases/e2e-17.cjs",
+        "cases/e2e-18.cjs",
+        "cases/e2e-19.cjs",
+        "cases/e2e-20.cjs",
+        "cases/e2e-21.cjs",
+        "cases/e2e-22.cjs",
+        "support/activity.cjs",
+        "support/session.cjs"
+      ],
+      "support/session.cjs": [
+        "support/common.cjs",
+        "support/provenance.cjs"
+      ],
+      "support/common.cjs": [],
+      "support/provenance.cjs": [
+        "support/common.cjs"
+      ],
+      "support/activity.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "support/browser.cjs": [
+        "support/common.cjs"
+      ],
+      "cases/e2e-01.cjs": [
+        "support/activity.cjs"
+      ],
+      "cases/e2e-02.cjs": [
+        "support/activity.cjs"
+      ],
+      "cases/e2e-03.cjs": [
+        "support/activity.cjs"
+      ],
+      "cases/e2e-04.cjs": [
+        "support/browser.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-05.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-06.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-07.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-08.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-09.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-10.cjs": [
+        "support/browser.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-11.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-12.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-13.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-14.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-15.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-16.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-17.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-18.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-19.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-20.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-21.cjs": [
+        "support/common.cjs",
+        "support/session.cjs"
+      ],
+      "cases/e2e-22.cjs": [
+        "support/browser.cjs",
+        "support/common.cjs",
+        "support/session.cjs"
+      ]
+    },
+    "provenance": {
+      "testSourceSha256": "406a84436fae71c0ab3f4c31e87a9f5ced887b00f40ae5b9473638b089a58a00",
+      "testSourceManifestSha256": "a6e1e68349cdcd2742e3bde1308d2b077b53851a106547747df3a5ffef56bc71",
+      "testSourceFiles": [
+        {
+          "path": "cases/e2e-01.cjs",
+          "sha256": "05b5abfb03481f51df1f9886d19609610c6f5d55eb3f9912828c0fe0394fbc4a"
+        },
+        {
+          "path": "cases/e2e-02.cjs",
+          "sha256": "754f3750c2bf24d0666132d29284503a232ce9bd40a9e71e0ab43cb6749bddaa"
+        },
+        {
+          "path": "cases/e2e-03.cjs",
+          "sha256": "4f159659acd2b971242945f5b386cebc2539f226793c57eb9ec22ae20e82c9c9"
+        },
+        {
+          "path": "cases/e2e-04.cjs",
+          "sha256": "fb956a6fbf208dff92771e7c141b5015b76a68e5bd8ab9a13aeaa111c851b84a"
+        },
+        {
+          "path": "cases/e2e-05.cjs",
+          "sha256": "b97c222968ee29c7271f7f11be8d5a8b8877fe8fef85c3c9d9323c39c5f28a64"
+        },
+        {
+          "path": "cases/e2e-06.cjs",
+          "sha256": "95f40a10bdc00e476b869e7a54e28346d0855f1d70ba10f60c43ca945fe4c59c"
+        },
+        {
+          "path": "cases/e2e-07.cjs",
+          "sha256": "1d2459f5b1ec491e9c33a4fc6ade4cd08b0096a3004963b1c9555ac4cd134334"
+        },
+        {
+          "path": "cases/e2e-08.cjs",
+          "sha256": "67c0132459a874137792851d6b4abebec0edd26bd83f2f6232b178b1be335323"
+        },
+        {
+          "path": "cases/e2e-09.cjs",
+          "sha256": "2f3839642fbbcb0263f20020c5074e1ba1b0f89aae2dc9b4ef8d18733649a01d"
+        },
+        {
+          "path": "cases/e2e-10.cjs",
+          "sha256": "eef67498793ecc75628c7339fce79be57b00f3af1e0bff9f0f3536f59db15506"
+        },
+        {
+          "path": "cases/e2e-11.cjs",
+          "sha256": "56b402e352d90fd69ac996704d812a5ec22263ca5fa05a2bdbc1d004fd974a43"
+        },
+        {
+          "path": "cases/e2e-12.cjs",
+          "sha256": "2a886d005c5a5f9ca92ad1182dba0b66d678aaa522e95033fd4a5b56e3064786"
+        },
+        {
+          "path": "cases/e2e-13.cjs",
+          "sha256": "60f9e3709f920c413b0db89e2cfecf9df105e69a5508df8119d232ba8a6cb06c"
+        },
+        {
+          "path": "cases/e2e-14.cjs",
+          "sha256": "f2d71a1cbc54fa0205a78e4ae126c17cae4799b35c7a11bac91cc95137952521"
+        },
+        {
+          "path": "cases/e2e-15.cjs",
+          "sha256": "4a991681ee5fd041133e7256d0483202e43796a5be59060701ce29ba702aedc8"
+        },
+        {
+          "path": "cases/e2e-16.cjs",
+          "sha256": "a186771b73777437c4874c77577cdb006673cfea184c1994a1da4a3f3be8ba2a"
+        },
+        {
+          "path": "cases/e2e-17.cjs",
+          "sha256": "948cc85ca932508c2521f44bdd4a04cec11be30e4bb2921bbba9c0d42f43e200"
+        },
+        {
+          "path": "cases/e2e-18.cjs",
+          "sha256": "b1a4a1d8be21caafdb1c730da658772e8715ea9d923caa32d7c2443a862cabe1"
+        },
+        {
+          "path": "cases/e2e-19.cjs",
+          "sha256": "5dbcc38fecfd612837930f744414f61ff613dd0434e1b763775369498fa4208e"
+        },
+        {
+          "path": "cases/e2e-20.cjs",
+          "sha256": "bbf3a5ec54d0d37e0f73e5c3b537088203c19e77cf57de9d95179705db814c0e"
+        },
+        {
+          "path": "cases/e2e-21.cjs",
+          "sha256": "adcf4268a29b5e57eab10cb1d7533996ff769966ef08af325d1e75d687dea49b"
+        },
+        {
+          "path": "cases/e2e-22.cjs",
+          "sha256": "c1db82d280869fc8ca3f55f59cd55b71981499430d246521a0c8f12434f3e2e0"
+        },
+        {
+          "path": "sessionRenewal.cjs",
+          "sha256": "406a84436fae71c0ab3f4c31e87a9f5ced887b00f40ae5b9473638b089a58a00"
+        },
+        {
+          "path": "session_renewal.robot",
+          "sha256": "27b26a7d9152154e712833ae27ca7b044759b74bb4ab23e4631f338314f07520"
+        },
+        {
+          "path": "support/activity.cjs",
+          "sha256": "cff93d755ace0501a37df41d3447a0f9894f03532cae11fd179606c64633e348"
+        },
+        {
+          "path": "support/browser.cjs",
+          "sha256": "dff78cb3078193353cb561387e17cc49da2f395630801c65d0dc0f426cf3280d"
+        },
+        {
+          "path": "support/common.cjs",
+          "sha256": "3e680ed0411b4f3de90842346dd1beb25c53c4eba38dfea2b5f08ed254d465df"
+        },
+        {
+          "path": "support/provenance.cjs",
+          "sha256": "3dd38fd11ed9b8b78f0b57f8dbf0f149a01db22e0fa292a729dd31861cbd42ff"
+        },
+        {
+          "path": "support/session.cjs",
+          "sha256": "dc723b50afaeade75ccf22a74e3d96bc96782de67f9080d3f24ebed84d21cf97"
+        }
+      ],
+      "testSourceHashScope": "testSourceSha256 identifies the entry point. The manifest binds the Robot suite and all case and support modules."
+    }
+  }
+}

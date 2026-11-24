@@ -1,0 +1,51 @@
+/* Real-target Browser extension. Authentication responses and tokens are never fabricated. */
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const assert = require('node:assert/strict');
+const { isDeepStrictEqual } = require('node:util');
+const sessions = new WeakMap();
+const promptSelector = '#timeout-dialog-title';
+const extendSelector = '[data-testid="Extend_Btn"]';
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const hash = value => crypto.createHash('sha256').update(value).digest('hex');
+const claims = token => {
+  try { return JSON.parse(Buffer.from(token.trim().split(/\s+/).pop().split('.')[1], 'base64url')); }
+  catch { return {}; }
+};
+async function checkpoint(page, state, phase) {
+  const file = `${phase}.png`;
+  const entry = { phase, capturedAt: new Date().toISOString(), file };
+  try {
+    const mask = [state.config.usernameSelector, state.config.passwordSelector]
+      .filter(Boolean).map(selector => page.locator(selector));
+    await page.screenshot({ path: path.join(state.directory, file), timeout: 10000, mask });
+    entry.method = 'page.screenshot; configured credential fields masked';
+  }
+  catch (error) { entry.captureGap = publicError(error, state); }
+  state.result.screenshots.push(entry);
+}
+const tokenSummary = token => token ? { sha256: hash(token), exp: claims(token).exp, iat: claims(token).iat } : null;
+const publicError = (error, state) => {
+  let message = String(error.message);
+  const secrets = [state.initialAccess, state.latestAccess, state.refreshToken, ...(state.secrets || []),
+    process.env[state.config.usernameEnv], process.env[state.config.passwordEnv]].filter(Boolean);
+  for (const secret of secrets) {
+    for (const value of [secret, secret.trim().split(/\s+/).pop(), JSON.stringify(secret).slice(1, -1)]) {
+      if (value) message = message.split(value).join('[REDACTED]');
+    }
+  }
+  return message.replace(/https?:\/\/[^\s)"']+/g, value => {
+    try { const url = new URL(value); return url.origin + url.pathname; }
+    catch { return '[URL_REDACTED]'; }
+  });
+};
+const waitUntil = async (predicate, timeoutMs, message) => {
+  const deadline = Date.now() + timeoutMs;
+  while (!predicate() && Date.now() < deadline) await sleep(25);
+  assert.ok(predicate(), message);
+};
+
+
+module.exports = { fs, path, crypto, assert, isDeepStrictEqual, sessions, promptSelector, extendSelector, sleep, hash, claims, tokenSummary, publicError, waitUntil, checkpoint };

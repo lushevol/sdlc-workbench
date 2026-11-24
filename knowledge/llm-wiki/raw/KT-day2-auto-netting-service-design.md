@@ -1,0 +1,1 @@
+../../records/candidates/architecture/KT-day2-auto-netting-service-design.md

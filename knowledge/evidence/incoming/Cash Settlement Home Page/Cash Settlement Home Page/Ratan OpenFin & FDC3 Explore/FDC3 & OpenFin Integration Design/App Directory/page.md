@@ -1,0 +1,1 @@
+Functionality of App Directory is provided by Admin Module.

@@ -1,0 +1,88 @@
+{
+  "assessed_at": "2026-11-07T16:22:57.056679+00:00",
+  "mode": "Read-only source and retained API gap explanation; no new SDK/business execution",
+  "source_revisions": {
+    "workbench": "7b1b38b2ace6752fccf8ed2a5ecc5cdb781f003b",
+    "sdk_baseline": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+    "sdk_candidate": "0240b1c260337bf3c38f2b5ecaad2d1ec157296d",
+    "auth_server": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
+    "bff": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
+    "cashflow": null
+  },
+  "reused_api_evidence": {
+    "path": "tasks/single-ui-sdk-optimization-20261107/evidence/api-compatibility-20261108.json",
+    "sha256": "8b3c8ad6db68a97ef3b5de56271979e9809af832ca39c2fcb8cb04d3882ae4e6",
+    "all_18_input_hashes_still_match": true
+  },
+  "source_hashes": {
+    "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImpl.java": "c52b6834105970075afe4060aa794a7d78ea9c61b8b8cb4c2dfa140329278a79",
+    "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/properties/AuthProperties.java": "e6ac8c3a6c56feaeb04f25852664d1415126ae89ad9b68cfd67811dc3b075acc",
+    "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/entity/CesRole.java": "17d22acbe6e1a9767a2d63b40fa76468da3f976c6dba0cdad2ebc62c47b470e4",
+    "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java": "09d8595302dd702b8f38c298ff9e5a91f6107678ffd61714b540253605bcc161",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java": "922c8220b61264e0fd2fb0221b7d616ca2628b663a3deab48177012667bda157",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/Ems3DataRoleResolver.java": "7fb38af53112320cd195b8b34e2bf692723aaf4324431b1ba52a978a6b321811",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java": "0b742443ebf92d4ca730af934c53b381f3cc9aaf2577d71e34c1511eae7039cf",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/dataentitlement/DataEntitlementService.java": "5c2fecd3a002da9584a971524a04f9eec96903e68d630ab2f2af3fc37faefab4",
+    "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java": "433f4105aec525afadde7d997f58220f9d09e101fe787a0568e278c81d03e4da",
+    "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementService.java": "6e499e741e9783252bb80527543b21830c1bb5d5fb1c12d2d897d59c737f535e",
+    "knowledge/candidates/security/KT-sdk-and-entitlements.md": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+    "knowledge/candidates/security/KT-ces-migration-parity.md": "4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5",
+    "tasks/ces-entitlement-migration-20261102/spring-verifier/src/main/java/com/example/migration/VerificationRunner.java": "18169b401ad03aca91a07643920996c9d95aa7f025736710e74025dc56846e12",
+    "tasks/ces-entitlement-migration-20261102/spring-verifier/README.md": "3fe843879ffb8d59c7cdd7880b66d25f47ec85fdd971eb8b61545eb5a42f9639",
+    "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts": "e6419242c777cf9eede5bcd84aad138f430bf330765b6a67a3d9c5aafcc7ef9c",
+    "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts": "7d04dabfd16ae7a3b315125519eeeb5431ea8fed7826676f944ee570a82b834f"
+  },
+  "additional_static_case": {
+    "legacy_environment": "UAT",
+    "legacy_role": "FMO_OPS_BOM",
+    "feature": "RATAN_VALIDATION_EXCEPTION",
+    "old_actions": [
+      "ACCESS_FMO_POST_TRADE_PORTAL"
+    ],
+    "ces_actions": [
+      "ACCESS_FMO_POST_TRADE_PORTAL",
+      "F_Custom_View_Builder_Private",
+      "F_Custom_View_Builder_Public",
+      "F_Manually_Close_Exception",
+      "F_Replay_Exception",
+      "F_Trade_Affirmation_Status_Change"
+    ],
+    "comparison_kind": "Retained role definitions, not synchronized SDK execution",
+    "sdk_limit": "feature-names selects the entire feature; action names are emitted unchanged. No per-action selector exists."
+  },
+  "verification_tool_limit": {
+    "source": "tasks/ces-entitlement-migration-20261102/spring-verifier/src/main/java/com/example/migration/VerificationRunner.java",
+    "pinned_candidate": "fd9a157e260850b6d9efa10da3223950ea61133a",
+    "latest_sdk": "0240b1c260337bf3c38f2b5ecaad2d1ec157296d",
+    "migrationVerified": false,
+    "limit": "Existing actual-SDK replay evidence uses the earlier candidate and synthetic HTTP services."
+  },
+  "limits": [
+    "No live CES/FMAA request, real consumer build, browser journey, or deployment occurred.",
+    "Complete account and role populations are unknown.",
+    "Current source does not establish organizational ownership or business approval.",
+    "The data/profile findings concern cross-component responsibilities, not a new SDK data-policy requirement."
+  ],
+  "unversioned_source_evidence": [
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts",
+      "identity": "Filesystem source; no independent Git repository. Parent Workbench revision does not identify these ignored source bytes.",
+      "whole_file_sha256": "e6419242c777cf9eede5bcd84aad138f430bf330765b6a67a3d9c5aafcc7ef9c",
+      "first_line": 683,
+      "last_line": 697,
+      "excerpt_sha256": "76ec133c9a6c4cdd9cf050c3965119d4859143ccf3d7366775cbba00acd84bb1",
+      "excerpt": "  const hasAuthLimit = useCallback((cashflowDetail: GraphqlCashflowDetails) => {\n    if (\n      cashflowDetail.cashflow?.Cashflow?.Cashflow_Sub_State ===\n      CashflowSubStateTypes.PendingVerification\n    ) {\n      const profile = getUserRole();\n      const currency = cashflowDetail.cashflow?.Cashflow?.Payment_Currency;\n      const amount = cashflowDetail.cashflow?.Cashflow?.Payment_Amount;\n      checkAuthLimit({\n        profile,\n        currency,\n        amount,\n      })\n        .then((res) => {\n          if (res?.success === false) {\n",
+      "limit": "Only decisive source lines retained; no runtime execution or deployment identity."
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts",
+      "identity": "Filesystem source; no independent Git repository. Parent Workbench revision does not identify these ignored source bytes.",
+      "whole_file_sha256": "7d04dabfd16ae7a3b315125519eeeb5431ea8fed7826676f944ee570a82b834f",
+      "first_line": 128,
+      "last_line": 133,
+      "excerpt_sha256": "3afc51a8fc15790803c1feacb38f44d235ef22bbad0eaf84ca2ca8f3eeeb60c8",
+      "excerpt": "export const checkAuthLimit = (\n  data: any\n): Promise<{ success: boolean; reason: string }> =>\n  service.get(\n    `${CHECK_AUTH_LIMIT}/${data.profile}/${data.currency}/${data.amount}`\n  );\n",
+      "limit": "Only decisive source lines retained; no runtime execution or deployment identity."
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "recorded_at": "2026-10-27T06:53:21.819595+00:00",
+  "reviewer": "Codex /root/complete_review",
+  "case": "FOUR-AC4-BROWSER",
+  "requirement": "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria; candidate version 5",
+  "disposition": "AC4_CONTROLLED_BROWSER_PREDICATES_SUPPORTED",
+  "findings": [],
+  "claim": "The actual unchanged MFE retains the authenticated workspace through exactly four controlled hours of accepted mouse renewal, including initial refresh expiry.",
+  "evidence": {
+    "run.mjs": "f775bad036f6405cc456fca25c144de9a083c240af63140b688f52534e97d528",
+    "candidate-attempt-02/result.json": "57f84d5cce2aa6dda479b8e5d9a8778cd397da3effadc66b0fb34a524e07c69a",
+    "main-attempt-02/result.json": "35290f2d8bcaadc1627f8cc849561b522242a00ee306bdd2b0193341421e96d0",
+    "candidate-served-binding.json": "0570df301290c83b27f5f224dcda5f0203a353f4742ac0656cf65caa7e345717",
+    "main-served-binding.json": "b68266fa1cb000eb8bfe99c3e31a84ed5eaf5bb5447d46ffb3d08ae9902358c1"
+  },
+  "checks": [
+    {
+      "label": "candidate",
+      "status": "PASSED",
+      "core_ac4_status": "PASSED",
+      "cycles": 24,
+      "assertions": 128,
+      "clock_duration_ms": 14400000,
+      "all_cycles_authenticated": true,
+      "all_cycles_access_usable": true,
+      "all_cycles_zero_prompt": true,
+      "trusted_mouse_observed_each_cycle": true,
+      "exact_24_extensions": true,
+      "all_extension_inputs_valid_current": true,
+      "runner_hash_matches": true,
+      "source_binding_status": "PASSED",
+      "matched_source_count": 137,
+      "source_mismatches": [],
+      "required_missing": []
+    },
+    {
+      "label": "main",
+      "status": "FAILED",
+      "core_ac4_status": "PASSED",
+      "cycles": 24,
+      "assertions": 126,
+      "clock_duration_ms": 14400000,
+      "all_cycles_authenticated": true,
+      "all_cycles_access_usable": true,
+      "all_cycles_zero_prompt": true,
+      "trusted_mouse_observed_each_cycle": true,
+      "exact_24_extensions": true,
+      "all_extension_inputs_valid_current": true,
+      "runner_hash_matches": true,
+      "source_binding_status": "PASSED",
+      "matched_source_count": 135,
+      "source_mismatches": [],
+      "required_missing": []
+    }
+  ],
+  "limits": [
+    "Authentication response headers are synthetic. The browser does not validate server signatures or establish live BFF acceptance across four hours.",
+    "Headless Edge and controlled clock execution establish neither four elapsed wall-clock hours nor native suspension.",
+    "MutationObserver queries current DOM after batched changes. An insertion and removal within one delivery could escape its prompt transition counter.",
+    "The trusted mouse count is recorded in each cycle. The runner has no separate explicit assertion on that count.",
+    "The same original requirement remains candidate knowledge with human review pending. Passing this controlled criterion does not supply business approval."
+  ],
+  "reasoning": [
+    "AC4 explicitly specifies a controlled clock, successful renewals, and accepted activity before each access deadline.",
+    "Fifteen-minute access with ten-minute activity permits five minutes of margin at each cycle.",
+    "The post-debounce store wait requires more than fourteen minutes of access validity. Previous access has less than five minutes remaining, so a request count alone cannot satisfy it.",
+    "Every extension fixture checks the submitted access against the current response credential and requires it to remain valid.",
+    "The initial two-hour refresh expiry lies strictly within the exact four-hour assertion interval.",
+    "The candidate passes all 128 predicates. Main passes 126 core predicates and fails the extra replacement-refresh retention predicate.",
+    "The inherited extra predicate failure does not contradict the separately recorded core AC4 result.",
+    "Current source maps bind 137 candidate files and 135 main files, including Home, Axios, response, Timeout and reducer paths."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "JSON syntax, exact runner hashes, counters and retained source-binding reports were inspected.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "definition_hashes": {
+    "knowledge/candidates/requirements/REQ-active-session-renewal.md": "f6bb1b8e68d67325a9b6b2a72be6d8320e197443686be1f30ae4ba075227684d",
+    "tasks/portal-background-session-20261019/06-test-cases.md": "6fb44edffd2868ab45d5e3f9726227bebcf72fc6fdb1b366defa74cb27491377"
+  }
+}

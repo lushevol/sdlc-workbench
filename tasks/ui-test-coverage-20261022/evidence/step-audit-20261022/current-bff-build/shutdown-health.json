@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-10-22T06:59:18.165863+00:00",
+  "beforeShutdownHealth": "final-runtime/manifest.json",
+  "afterShutdown": {
+    "bff": {
+      "url": "http://127.0.0.1:8090/api/auth/local/health",
+      "status": "UNREACHABLE_AS_EXPECTED",
+      "errorType": "HTTPError",
+      "detail": "HTTP Error 503: Service Unavailable"
+    },
+    "postgres": {
+      "command": [
+        "/opt/homebrew/bin/pg_ctl",
+        "-D",
+        ".workbench/current-bff-audit/pg-data",
+        "status"
+      ],
+      "exitCode": 3,
+      "stdout": "pg_ctl: no server running\n",
+      "stderr": ""
+    }
+  },
+  "logs": [
+    {
+      "path": "shutdown-runtime.stdout.log.gz",
+      "sha256": "17973ddd2ff453f8bb6906a5341a7bc784863491ffee1d77bc59e45704fa7c1d",
+      "uncompressedSha256": "1231f3717dc88c8cd126ecf9b1fce3d39f00c8d7f751cc599b9a757c02a2aa8a",
+      "uncompressedBytes": 4783217
+    },
+    {
+      "path": "shutdown-runtime.stderr.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "uncompressedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedBytes": 0
+    },
+    {
+      "path": "shutdown-postgres.log.gz",
+      "sha256": "e1d950ebf784a78916be6cce7c21400b714f647260ae28a5372ac29ae4dfd81f",
+      "uncompressedSha256": "4c1713a2ce8ce70d3a220cf2cd64ade2d3b4a191c7c53bca1478bf57995ee1a6",
+      "uncompressedBytes": 43506
+    }
+  ],
+  "status": "PASSED"
+}

@@ -1,0 +1,1979 @@
+{
+  "recorded_at": "2026-10-29T08:55:23.517702+00:00",
+  "scope": "Successor issue-priority assessment only. No application execution, result changes, or deployment authorization.",
+  "user_input": "evidence/user-input-20261029-impact-priority-layout.txt",
+  "policy": "Lower priority when evidence shows no material user effect, only minimal impact, or missing execution prerequisites. Retain urgency for demonstrated session disruption, unusable recovery, or a genuine security blocker. Priority does not change case results or prove production reachability.",
+  "sources": [
+    {
+      "path": "evidence/release-report-execution-20261029/failure-impacts.json",
+      "sha256": "2653bd6fd57c16bc804ad1ec678a53cae3cb7db12a846cceb3a7c40851abc75c",
+      "revision_at_inspection": "531d285d5"
+    },
+    {
+      "path": "10-issue-catalog.md",
+      "sha256": "0f71b1d19648285561d9f297c1e6b3df39185c69b39e608d49d55de5ebf3044f",
+      "revision_at_inspection": "531d285d5"
+    },
+    {
+      "path": "evidence/review-e2e-20261028/results.json",
+      "sha256": "1d49194df350a2937a7e57d1f97a1ad02a78797a387822c3673f2c862f118a89",
+      "revision_at_inspection": "531d285d5"
+    }
+  ],
+  "summary": {
+    "retained_impact_rows": 28,
+    "review_entries": 18,
+    "additional_and_general_controls": 16,
+    "impact_priority_counts": {
+      "P1": 1,
+      "P2": 1,
+      "P4": 18,
+      "P3": 8
+    },
+    "review_priority_counts": {
+      "P2": 1,
+      "P3": 9,
+      "P4": 8
+    },
+    "additional_priority_counts": {
+      "P2": 1,
+      "P1": 2,
+      "P3": 9,
+      "NONE_CLOSED": 2,
+      "P4": 1,
+      "NOT_A_DEFECT_PRIORITY": 1
+    },
+    "retained_critical_issue_ids": [
+      "RN-S002",
+      "REVIEW-E2E-01",
+      "RN-R020"
+    ],
+    "alias_limits": "REVIEW-01 aliases REVIEW-E2E-01. REVIEW-13 overlaps RN-Q009. Counts are inventory records, not distinct defects.",
+    "result_paths_checked": 65,
+    "execution_status_changes": 0,
+    "new_case_executions": 0
+  },
+  "recommendation": {
+    "release_status": "NO_GO",
+    "recommendation": "DO_NOT_RECOMMEND",
+    "controlling_issue": "RN-S002",
+    "rationale": "Demonstrated expired-access logout does not revoke a valid refresh credential. This is a genuine source-bound security blocker. Minimal-impact and unverified issues are not blanket release holds.",
+    "session_risks": [
+      "REVIEW-E2E-01: proven local unusable recovery; current supported caller must be established.",
+      "RN-R020: source integration clears renewed credentials; verify a matching supported provider schedule."
+    ],
+    "limits": [
+      "NO_GO applies to the assessed source composition. No production incident or frequency is established.",
+      "P3 and P4 disposition is prioritization, not proof of passing behavior or deployment approval."
+    ]
+  },
+  "issues": [
+    {
+      "id": "RN-S002",
+      "finding_id": "SEC-01",
+      "source": "retained-impact-row",
+      "previous_priority": "P1",
+      "previous_severity": "S2 high security impact, conditional; P1 investigation/correction priority",
+      "new_priority": "P1",
+      "severity": "S2 high security impact, conditional; P1 investigation/correction priority",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "SECURITY_RELEASE_BLOCKER",
+      "reason": "The actual RSA-validating controller returns logout success without revocation. Valid same-session refresh replay issues access. This is a genuine logout-security failure.",
+      "observed_user_impact": "The isolated server path leaves the logged-out session renewable. The valid-access control revokes and rejects replay.",
+      "conditional_user_impact": "A party already holding a copied valid refresh credential could recover authenticated access after apparent logout in a matching deployment. Credential theft and production access were not demonstrated.",
+      "limits": [
+        "Actual controller, RSA verification, and session-service logic; mocked repository, entitlement, and servlet dependencies. No HTTP server, browser, external provider, or production test.",
+        "Security suite reports 12 passed and one failed. Java process exit 0 is not passing status: the Python wrapper returns failure from the failed-assertion count.",
+        "BFF source bound directly to the failing controlled execution. Frontend 66c6411 passes do not resolve server revocation."
+      ],
+      "owner": "unknown authentication owner",
+      "next_action": "Correct revocation through a reviewed authenticated credential path, preserve forged-JWT rejection, and retain server, browser, and replica regression evidence.",
+      "definition": "06-test-cases.md#rn-s002",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L370-L383",
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L340-L367"
+      ],
+      "assertion_links": [
+        "evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java#L110-L125"
+      ],
+      "result_links": [
+        "evidence/comprehensive-renewal-20261028/expired-logout-case.json",
+        "evidence/comprehensive-renewal-20261028/valid-logout-case.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "c20da15ddc4af87640939c2be8af9cedb41714f21b9f107a15f0504067c6be2f",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "REVIEW-E2E-01",
+      "finding_id": "REVIEW-01",
+      "source": "retained-impact-row",
+      "previous_priority": "P2",
+      "previous_severity": "S2 high availability impact conditional; P2",
+      "new_priority": "P2",
+      "severity": "S2 high availability impact conditional; P2",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "SCOPED_SESSION_BLOCKER",
+      "reason": "An actual browser shows a valid replacement session behind a stale recovery dialog. Extend is disabled and Logout starts no request. Supported deployed caller remains unknown.",
+      "observed_user_impact": "BFF-valid replacement access returns protected validation HTTP 200, but the visible recovery actions cannot recover the workspace in the controlled browser flow.",
+      "conditional_user_impact": "A supported in-place replacement-login caller with this timing could leave a user unable to continue through the dialog. Supported deployed caller and workaround remain unknown.",
+      "limits": [
+        "Public in-place login models a consumer; it does not establish a deployed caller.",
+        "The diagnostic runner records COMPLETED because it observed the impact. This is not an additional failure within the 27-case business inventory.",
+        "66c6411 Timeout source differs by analytics/effect lint maintenance. Relevant logoutStarted and epoch-guard logic is unchanged by exact Git comparison; persistence is a source prediction, not a new 66c6411 reproduction."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Trace supported replacement-login callers. Close stale dialog ownership when applicable and rerun the paired case.",
+      "definition": "06-test-cases.md#review-e2e-01",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L103-L145"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json",
+        "evidence/review-e2e-20261028/final-focused/review-01-baseline/result.json"
+      ],
+      "result_status": "COMPLETED_WITH_LOCAL_IMPACT",
+      "result_sha256": "7a961a32d88a1859a4f7ba5e96687c014e12c4f04f9fd1b05d74c4c5583e5ae5",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "E2E-01",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 minor; P4 backlog",
+      "new_priority": "P4",
+      "severity": "S4 minor; P4 backlog",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#e2e-01",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/native-mouse-20261027T064442/artifacts/activity-mouse-1793083491523/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "fdad47549dc80dba35378bdb8f320e760f0fe11b697ac049ec52ad06f408a839",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "E2E-02",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 minor; P4 backlog",
+      "new_priority": "P4",
+      "severity": "S4 minor; P4 backlog",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#e2e-02",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/native-keyboard-20261027T064514/artifacts/activity-keyboard-1793083523326/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "b597e2c7540e78e17d51b86a23fe0d83c1296e700ef1948b0589dcd67c23eba6",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "E2E-03",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 minor; P4 backlog",
+      "new_priority": "P4",
+      "severity": "S4 minor; P4 backlog",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#e2e-03",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/native-scroll-20261027T064546/artifacts/activity-scroll-1793083554616/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "445000b068ac78cca31f088670c7cf342bff61ff337d4597d96106efe2575183",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "E2E-08",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 minor; P4 backlog",
+      "new_priority": "P4",
+      "severity": "S4 minor; P4 backlog",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The sequence never starts renewal. The case stops before it can test request sharing.",
+      "conditional_user_impact": "A user relying on continuous movement can still reach expiry. Sharing correctness and later recovery are not established by this failed run.",
+      "limits": [
+        "No protected-response, logout, or lost-work assertion executes after the first failure.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#e2e-08",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-08.cjs#L15-L24"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/native-single-20261027T065231/artifacts/slow-activity-single-flight-1793083961157/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "0fd2ce9bb2fb9683b052d7507a51a8a4ffeda1c83d480f593ef57a3841ac99d5",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "BROWSER-SHARING-PENDING",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S3 moderate conditional; P4 backlog",
+      "new_priority": "P4",
+      "severity": "S3 moderate conditional; P4 backlog",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The original pending renewal is canceled and replaced. Duplicate request work is observed.",
+      "conditional_user_impact": "Repeated activity on a slow connection could delay renewal and increase service load. User blocking and session loss remain unmeasured.",
+      "limits": [
+        "DOM/service headless boundary. Later original-response completion and protected-access predicates did not execute.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#browser-sharing-pending",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L55-L70"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/headless-sharingPending-20261027T064826/artifacts/BROWSER-SHARING-PENDING-1793083716933/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "2be990d77105dc44027c4506187bbcec58b567317da4dcba9e9c3dfacaac3b63",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "E2E-12",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P3",
+      "previous_severity": "UNKNOWN; P3 investigation",
+      "new_priority": "P3",
+      "severity": "UNKNOWN; P3 investigation",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "A controlled inconsistent provider response changes credentials. A supported provider shape and user disruption are unverified.",
+      "observed_user_impact": "Client credential state changes despite the negative response body.",
+      "conditional_user_impact": "An inconsistent provider response could cause confusing renewal state or an interruption. No valid-provider occurrence, unauthorized access, or user loss was demonstrated.",
+      "limits": [
+        "Controlled fixture replaces the body while retaining a valid access header. No paired baseline run. Later retry and protected-call checks did not execute.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Check whether a supported provider can emit this shape; verify that negative-body responses preserve intended client state.",
+      "definition": "06-test-cases.md#e2e-12",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L85-L99",
+        "evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts#L13-L43"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-12.cjs#L12-L31"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/native-inconsistent-20261027T065615/artifacts/inconsistent-activity-response-rejected-1793084182571/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "d010d805d57ec2b3375a9f5c1402e2977b0a2dacbeb45bd46a382c7ae65079ce",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "E2E-18",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 minor; P4 backlog",
+      "new_priority": "P4",
+      "severity": "S4 minor; P4 backlog",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The browser request remains pending after the UI leaves the active session.",
+      "conditional_user_impact": "Residual service work can continue. Restoration of access or Home after the late response was not tested because the cancellation prerequisite failed.",
+      "limits": [
+        "Logout and Home unmount occur together. Stale-session guards exist; later late-response assertions did not run.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#e2e-18",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26",
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-18.cjs#L17-L29"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/native-activityLogout-20261027T070124/artifacts/pending-activity-home-unmount-cancellation-1793084494188/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "6c257bddbbdf00cd4d199ec5e168eb205b3f64c0cc310fcfa85dcae359856110",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "E2E-19",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 minor; P4 backlog",
+      "new_priority": "P4",
+      "severity": "S4 minor; P4 backlog",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "Old request remains pending behind the expiry prompt.",
+      "conditional_user_impact": "A later completion could interfere with manual recovery, but token overwrite and extra closure were not observed in this run.",
+      "limits": [
+        "The case stops before manual renewal, held-token delivery, token preservation, and closure assertions.",
+        "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#e2e-19",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26",
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-19.cjs#L19-L34"
+      ],
+      "result_links": [
+        "evidence/four-checks-20261027/e2e/native-late-20261027T070159/artifacts/late-activity-after-manual-success-1793084525224/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "1aa5505ddb84a490754a2ea72efef14d9ccef3bcfe263eccb44774ca6c515e3b",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-S023",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNKNOWN; proposed ambiguous-input policy needs review. Do not label demonstrated cross-account takeover.",
+      "new_priority": "P3",
+      "severity": "UNKNOWN; proposed ambiguous-input policy needs review. Do not label demonstrated cross-account takeover.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "A proposed ambiguous-header rejection policy failed. Gateway behavior and actual user consequences remain unknown.",
+      "observed_user_impact": "An ambiguous multi-value input is accepted according to its first value in the mock servlet. Gateway normalization and organizational rejection policy remain unknown.",
+      "conditional_user_impact": "Production reachability and business consequences remain unverified.",
+      "limits": [
+        "Actual source under isolated controls; gateway and production reachability remain unknown.",
+        ""
+      ],
+      "owner": "unknown authentication and security owners",
+      "next_action": "Review duplicate-header policy and test the current HTTP/gateway path before acceptance.",
+      "definition": "06-test-cases.md#rn-s023",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L336-L366"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/security/RemainingSecurityProbe.java#L148"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s023/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "ac0c7ef8d574472c50298ef0c7a2b4be087416a401529cd979a5f111b3d3ddbe",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-S035",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S2 High conditional, analyst proposal. A supported external-destination caller and effective deployment controls remain unknown.",
+      "new_priority": "P3",
+      "severity": "S2 High conditional, analyst proposal. A supported external-destination caller and effective deployment controls remain unknown.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "The source fixture shows a security risk. Actual third-party delivery or protected business-service exposure is unverified.",
+      "observed_user_impact": "A same-origin consumer using the public shared client for an external destination can send portal access credentials toward that destination. The fixture intercepted transport; no third party received credentials.",
+      "conditional_user_impact": "Production reachability and business consequences remain unverified.",
+      "limits": [
+        "Actual source under isolated controls; gateway and production reachability remain unknown.",
+        ""
+      ],
+      "owner": "unknown shared-client and security owners",
+      "next_action": "Trace a supported caller and actual receiving service. Escalate if credential delivery or protected authorization bypass is demonstrated.",
+      "definition": "06-test-cases.md#rn-s035",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/security/browser-security.mjs#L82-L85"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s035/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "e05d3ed84f44688dd31c7a28594ba2d42b4bcca4a0689fe3f7e57e6cd777deea",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-S037",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S2 High conditional, analyst proposal. This fixture establishes handler invocation, not unauthorized real business records.",
+      "new_priority": "P3",
+      "severity": "S2 High conditional, analyst proposal. This fixture establishes handler invocation, not unauthorized real business records.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "The source fixture shows a security risk. Actual third-party delivery or protected business-service exposure is unverified.",
+      "observed_user_impact": "An untrusted caller that reaches a configured skip-header route can bypass JWT validation in this SDK filter fixture. Gateway stripping and real business-service reachability remain unverified.",
+      "conditional_user_impact": "Production reachability and business consequences remain unverified.",
+      "limits": [
+        "Actual source under isolated controls; gateway and production reachability remain unknown.",
+        ""
+      ],
+      "owner": "unknown SDK, gateway, and security owners",
+      "next_action": "Trace a supported caller and actual receiving service. Escalate if credential delivery or protected authorization bypass is demonstrated.",
+      "definition": "06-test-cases.md#rn-s037",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L72"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/security/RemainingSecurityProbe.java#L153"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s037/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "9c5bcac173b6396f3c0a79ccae20ff98c7c1b29b3691ab08e699998e90ebe8b3",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-W029",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S4 Minor under the recorded activity backlog direction",
+      "new_priority": "P4",
+      "severity": "S4 Minor under the recorded activity backlog direction",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated.",
+      "conditional_user_impact": "Later expiry can interrupt work; actual logout and lost work remain unobserved.",
+      "limits": [
+        "Synthetic workspace and controlled browser time; no production-frequency claim.",
+        ""
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-w029",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/RN-W029/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "9a70009b5952d77157ddb07b0e233a8a9163f720ecdb0dd757931b308861c57a",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-W030",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S4 Minor under the recorded activity backlog direction",
+      "new_priority": "P4",
+      "severity": "S4 Minor under the recorded activity backlog direction",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated.",
+      "conditional_user_impact": "Later expiry can interrupt work; actual logout and lost work remain unobserved.",
+      "limits": [
+        "Synthetic workspace and controlled browser time; no production-frequency claim.",
+        ""
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-w030",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/RN-W030/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "28fe1c5cfeb5c3cd77cc072b160468d07bd754c8df230135f0c4ead5955837a1",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-W031",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S4 Minor under the recorded activity backlog direction",
+      "new_priority": "P4",
+      "severity": "S4 Minor under the recorded activity backlog direction",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated.",
+      "conditional_user_impact": "Later expiry can interrupt work; actual logout and lost work remain unobserved.",
+      "limits": [
+        "Synthetic workspace and controlled browser time; no production-frequency claim.",
+        ""
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-w031",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/RN-W031/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "e9d2338d7828e9a9bd0a93c7a4c261c1a2ccec63c8e6ae244bc747837d06d8bc",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-Q009",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S4 Minor observed visual impact; production occurrence remains unknown",
+      "new_priority": "P4",
+      "severity": "S4 Minor observed visual impact; production occurrence remains unknown",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "The misleading spinner is visual. The evidence shows no session disruption, blocked action, or data loss.",
+      "observed_user_impact": "The global loading indicator disappears while W-B still awaits an undelivered response. W-B data loss or repeated business submission was not demonstrated.",
+      "conditional_user_impact": "A misleading readiness indication is observed. Repeat business submission remains unproved.",
+      "limits": [
+        "The shared Axios browser path executed with an injected response transform in the retained synthetic module. No production application consumer of a throwing Axios transform was identified in the inspected UI source paths.",
+        ""
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-q009",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L36-L42",
+        "evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L50",
+        "evidence/remaining-execution-20261029/workspace-transport/baseline/error.response.handler.ts#L40"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L149"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/workspace-transport/RN-Q009/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "8589f95cfc868da3e9a06003d25ea58d5a507a5de9bb962175bfde8d55c6d145",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-A001",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "new_priority": "P4",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted.",
+        ""
+      ],
+      "owner": "unknown portal application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-a001",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt3.mjs#L107"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt3/RN-A001/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "974cf5d33d9562c89f7ebfc7cae408eadee3007d0ee976bec6ba449d8e710c4a",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-A002",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "new_priority": "P4",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted.",
+        ""
+      ],
+      "owner": "unknown portal application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-a002",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser/RN-A002/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "97bc063512077619c950119546cefd39e57d3d230d732ca179c48f3716931501",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-A003",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "new_priority": "P4",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted.",
+        ""
+      ],
+      "owner": "unknown portal application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-a003",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser/RN-A003/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "cfe5dc2cd5be64e87fd26019b86f11e9b9c6063b221e88209c89893e690c582e",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-A004",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "new_priority": "P4",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted.",
+        ""
+      ],
+      "owner": "unknown portal application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-a004",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser/RN-A004/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "199ce52a255dbf5ceec916ca09dc035721f628752387a795a9461889a297e167",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-A005",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "new_priority": "P4",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted.",
+        ""
+      ],
+      "owner": "unknown portal application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-a005",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt2.mjs#L106"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt2/RN-A005/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "38085bc2f1833abf61521807e60ab11890439c6fd0476a7307cd1fff5b05c47f",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-A006",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "new_priority": "P4",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted.",
+        ""
+      ],
+      "owner": "unknown portal application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-a006",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser/RN-A006/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "d17142fa825d90487ce761614166b5db980e24afb81a8477702382332256fe22",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-A013",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "P4",
+      "previous_severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "new_priority": "P4",
+      "severity": "S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "No session interruption, forced logout, unusable application, or user loss was demonstrated.",
+      "observed_user_impact": "The requested activity pattern did not renew the controlled session during 15 seconds.",
+      "conditional_user_impact": "Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed.",
+      "limits": [
+        "Current committed frontend executes with synthetic authentication responses and controlled browser time.",
+        "Keyboard and pointer use browser drivers. Scroll uses dispatched DOM events.",
+        "The case stops at failed renewal count. Later expiry, logout, and lost work are not asserted.",
+        ""
+      ],
+      "owner": "unknown portal application owner",
+      "next_action": "Retain as backlog. Escalate if a supported session interruption, forced logout, unusable application, or material loss is demonstrated.",
+      "definition": "06-test-cases.md#rn-a013",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt2.mjs#L106"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt2/RN-A013/result.json"
+      ],
+      "result_status": "FAILED",
+      "result_sha256": "ed7e252449d4ac66f225c0e55ad355e78c68a2e66b8560ca59a16ceebff6f251",
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "RN-L004",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "new_priority": "P3",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Listener comparisons use different page states. No leak or user failure is demonstrated.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete.",
+        ""
+      ],
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "definition": "06-test-cases.md#rn-l004",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L004/result.json"
+      ],
+      "result_status": "PARTIALLY_EXECUTED",
+      "result_sha256": "87292b8a1563674ebee9a49142caf4c976cf2bdbb6e64e10bbd5b3724ea3e1d2",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-L005",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "new_priority": "P3",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Listener comparisons use different page states. No leak or user failure is demonstrated.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete.",
+        ""
+      ],
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "definition": "06-test-cases.md#rn-l005",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L005/result.json"
+      ],
+      "result_status": "PARTIALLY_EXECUTED",
+      "result_sha256": "16c4f3398dd7ef300c0e97f8fb4bcf6c599044115c1461ade713ad1fa725cd4e",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-L006",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "new_priority": "P3",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Listener comparisons use different page states. No leak or user failure is demonstrated.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete.",
+        ""
+      ],
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "definition": "06-test-cases.md#rn-l006",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L006/result.json"
+      ],
+      "result_status": "PARTIALLY_EXECUTED",
+      "result_sha256": "cf40768ac81d3acd8f2f15ae388900670a185168eddffd7b0eb9f81f44b5e1a3",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    },
+    {
+      "id": "RN-L010",
+      "finding_id": null,
+      "source": "retained-impact-row",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "new_priority": "P3",
+      "severity": "UNRATED evidence gap. No application defect severity is assigned.",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Listener comparisons use different page states. No leak or user failure is demonstrated.",
+      "observed_user_impact": "No user failure was demonstrated. Required recovery or switch cycles completed.",
+      "conditional_user_impact": "Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption.",
+      "limits": [
+        "The original raw assertion remains FAILED. The canonical case remains partially verified.",
+        "L004 completed1000 recovery cycles with2000 passing per-cycle assertions.",
+        "Error/load asset listeners disappeared for L004. L005/L006 retain a rejection notification. L010 removes popover listeners.",
+        "A later image-completion attempt blocked before cycles because shell image requests remained incomplete.",
+        ""
+      ],
+      "owner": "unknown portal verification owner",
+      "next_action": "Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers.",
+      "definition": "06-test-cases.md#rn-l010",
+      "source_links": [
+        "evidence/remaining-execution-20261029/execution-source-binding.json"
+      ],
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt7/runner.mjs#L180"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt7/RN-L010/result.json"
+      ],
+      "result_status": "PARTIALLY_EXECUTED",
+      "result_sha256": "781e68a8dd07dcc7feea5bf10e2e6470d5ff09f6ed2ddf873e9a77a277b5b57c",
+      "priority_change": "ASSIGNED_FROM_CURRENT_RULE"
+    }
+  ],
+  "review_entries": [
+    {
+      "id": "REVIEW-01",
+      "alias_of": "REVIEW-E2E-01",
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-01\"></a> Stale timeout dialog \u2014 P2 / S2 conditional, proposed",
+      "new_priority": "P2",
+      "severity": "S2 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "SCOPED_SESSION_BLOCKER",
+      "reason": "The browser demonstrates unusable recovery actions behind a stale dialog. Deployed caller applicability remains unknown.",
+      "observed_user_impact": "Valid replacement session remains behind stale dialog; production caller unknown.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Trace supported replacement-login callers. Correct and retest dialog ownership if applicable.",
+      "definition": "10-issue-catalog.md#review-01",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/stale-modal-probe/execution.json",
+        "evidence/review-e2e-20261028/final-focused/browser-summary.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json",
+        "evidence/review-e2e-20261028/final-focused/review-01-baseline/result.json"
+      ],
+      "result_status": "REPRODUCED_LOCAL_IMPACT",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json": "7a961a32d88a1859a4f7ba5e96687c014e12c4f04f9fd1b05d74c4c5583e5ae5",
+        "evidence/review-e2e-20261028/final-focused/review-01-baseline/result.json": "8addd4335e4438523c38732b1edeb14f3438b44824bb182c61cc638e5bc499e2"
+      },
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "REVIEW-02",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-02\"></a> [Renewal token format](evidence/claude-coordination-20261027/reconciliation/adversarial-client.json) \u2014 P2 / S2 conditional, proposed",
+      "new_priority": "P3",
+      "severity": "S2 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "The rejected tokens are unsupported substitutes. Valid retries recover in the same dialog.",
+      "observed_user_impact": "Opaque and missingiat are rejected; valid retry succeeds. Local provider emits finite exp and iat.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Confirm the supported provider token contract. Escalate only for a valid supported response that blocks renewal.",
+      "definition": "10-issue-catalog.md#review-02",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/adversarial-client.json",
+        "evidence/review-e2e-20261028/contracts-summary.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/contracts-02-opaque-candidate/result.json",
+        "evidence/review-e2e-20261028/contracts-02-opaque-baseline/result.json",
+        "evidence/review-e2e-20261028/contracts-02-missingiat-candidate/result.json",
+        "evidence/review-e2e-20261028/contracts-02-missingiat-baseline/result.json"
+      ],
+      "result_status": "UNSUPPORTED_PROVIDER_SHAPE_RECOVERS_WITH_VALID_RESPONSE",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/contracts-02-opaque-candidate/result.json": "c7284009f658634a8d908d35947a9375fcd72f2694a5a776f244d59c635bdb5d",
+        "evidence/review-e2e-20261028/contracts-02-opaque-baseline/result.json": "0af75acca9a9df6b5416c0ae5dd59a870cc47a4d0fe667df0fcffceea6019d44",
+        "evidence/review-e2e-20261028/contracts-02-missingiat-candidate/result.json": "a44160889ef44345e637290d0d822cfbb75d4fbb6cc5463659db261ebc59ee11",
+        "evidence/review-e2e-20261028/contracts-02-missingiat-baseline/result.json": "11717775743ab670c5ff27b281bb77aa966ac5e0402ef9e7721a82b64c8cb784"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-03",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-03\"></a> [Failed replacement login](evidence/claude-coordination-20261027/reconciliation/adversarial-client.json) \u2014 P2 / S2 conditional, proposed",
+      "new_priority": "P4",
+      "severity": "S2 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "The suspected recovery block was not reproduced. Actual Home reacquires refresh and protected validation succeeds.",
+      "observed_user_impact": "Failed fresh login clears refresh; actual Home reacquires and Extend recovers.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain the observed state transition. Escalate if supported recovery fails.",
+      "definition": "10-issue-catalog.md#review-03",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/adversarial-client.json",
+        "evidence/review-e2e-20261028/rerun/review-03-candidate/result.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/rerun/review-03-candidate/result.json",
+        "evidence/review-e2e-20261028/rerun/review-03-baseline/result.json"
+      ],
+      "result_status": "BLOCKING_IMPACT_NOT_REPRODUCED",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/rerun/review-03-candidate/result.json": "515367c5a4a7ed7e4d6be8fc0f95b93ca4ca373eeaade2bbeb482217b12301e5",
+        "evidence/review-e2e-20261028/rerun/review-03-baseline/result.json": "729b9d51640d367b1815f36bf790f236967d61551b1fdfac9cd327caea9fbf63"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-04",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-04\"></a> [Direct token replacement](evidence/claude-coordination-20261027/reconciliation/adversarial-support.json) \u2014 P2 / S2 conditional, proposed",
+      "new_priority": "P3",
+      "severity": "S2 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Direct state replacement retains old refresh. No supported caller or distinct-user impact is demonstrated.",
+      "observed_user_impact": "Direct setter retains old refresh with new access; same local identity; distinct-user variant NOT_RUN.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Identify supported direct setters and separate identities before assigning security impact.",
+      "definition": "10-issue-catalog.md#review-04",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/adversarial-support.json",
+        "evidence/review-e2e-20261028/rerun/review-04-candidate/result.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/rerun/review-04-candidate/result.json",
+        "evidence/review-e2e-20261028/rerun/review-04-baseline/result.json"
+      ],
+      "result_status": "STATE_DIFFERENCE_OBSERVED_IDENTITY_IMPACT_UNVERIFIED",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/rerun/review-04-candidate/result.json": "e910d2db9405ac900999e78d64f661b3adf50b60654cd8a9169136191d729b4b",
+        "evidence/review-e2e-20261028/rerun/review-04-baseline/result.json": "fb550af420596689a3e225bd7ec69b0b5ad4c529150ba22056d26c14282f497a"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-05",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-05\"></a> [Pending acquisition wait](evidence/claude-coordination-20261027/reconciliation/adversarial-session.json) \u2014 P2 / S3 conditional, proposed",
+      "new_priority": "P3",
+      "severity": "S3 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Extend is unavailable while acquisition is pending. Logout remains available and released failure reaches Sign In.",
+      "observed_user_impact": "Extend disabled during actual pending acquisition; Logout remains available; released failure settles. Suspended wall-clock duration unknown.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Measure supported wait limits only if actual unusable recovery or unbounded waiting is reported.",
+      "definition": "10-issue-catalog.md#review-05",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/adversarial-session.json",
+        "evidence/review-e2e-20261028/focused/browser-summary.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/focused/review-05-candidate/result.json",
+        "evidence/review-e2e-20261028/focused/review-05-baseline/result.json"
+      ],
+      "result_status": "BOUNDED_WAIT_OBSERVED",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/focused/review-05-candidate/result.json": "e8527d7f19724790fd0e658bc8445f84fcd27eb8c10ad8f27619745c1539c357",
+        "evidence/review-e2e-20261028/focused/review-05-baseline/result.json": "265617bd22f524a6d2e992420950e9152b3902d5a34f4c5db1130831e87dc001"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-06",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-06\"></a> [Unusable refresh expiry](evidence/claude-coordination-20261027/reconciliation/adversarial-session.json) \u2014 P2 / S2 conditional, proposed",
+      "new_priority": "P3",
+      "severity": "S2 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Logout occurs only after an injected missing-expiry token with an invalid signature. The inspected provider never emits it.",
+      "observed_user_impact": "Missingexp with invalid signature forces logout. Inspected local provider never emits this shape.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Confirm provider validity rules. Escalate if a valid supported refresh credential causes forced logout.",
+      "definition": "10-issue-catalog.md#review-06",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/adversarial-session.json",
+        "evidence/review-e2e-20261028/review-06-candidate/result.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/review-06-candidate/result.json",
+        "evidence/review-e2e-20261028/review-06-baseline/result.json"
+      ],
+      "result_status": "MALFORMED_FIXTURE_ONLY",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/review-06-candidate/result.json": "691356ecd4709c985ed5acc1bda42a6778a0743628c52b7e75e9253c5c9ab3ca",
+        "evidence/review-e2e-20261028/review-06-baseline/result.json": "e645039ea9b95811877c8d874ab3d7cbb07a8b2d4ca09157da592a05954ba86c"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-07",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-07\"></a> [Near-expiry acquisition](evidence/claude-coordination-20261027/reconciliation/adversarial-session.json) \u2014 P2 / S3 conditional, proposed",
+      "new_priority": "P4",
+      "severity": "S3 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "The suspected near-expiry recovery block was not reproduced. Actual renewal and protected validation succeed.",
+      "observed_user_impact": "Candidate remounts with usable refresh and under25seconds; no catch-up; actual Extend succeeds. Baseline clears refresh and reacquires.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain successful recovery evidence. Reassess only after new session-disruption evidence.",
+      "definition": "10-issue-catalog.md#review-07",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/adversarial-session.json",
+        "evidence/review-e2e-20261028/near-expiry-final/browser-summary.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/near-expiry-final/review-07-candidate/result.json",
+        "evidence/review-e2e-20261028/near-expiry-final/review-07-baseline/result.json"
+      ],
+      "result_status": "RECOVERY_BLOCK_NOT_REPRODUCED",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/near-expiry-final/review-07-candidate/result.json": "f623ae3dc81e3858b6e7f35d6c4dcb278e7317d13f6864ab063565ab4ad48167",
+        "evidence/review-e2e-20261028/near-expiry-final/review-07-baseline/result.json": "9065ca2e1b10e983df83c80ba2093415cda7a12647e68c8f1e4a9e320b4b6179"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-08",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-08\"></a> [Loopback chunk path](evidence/delivery-confidence-20261026/independent-review/build-config-effects.json) \u2014 P2 investigation / S2 conditional, proposed",
+      "new_priority": "P3",
+      "severity": "S2 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "A source configuration could affect chunks. No applicable built or deployed load failure is demonstrated.",
+      "observed_user_impact": "Inherited public-path rule; no matching non-loopback server artifact/deployment proof.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown release or maintenance owner",
+      "next_action": "Inspect effective settings only when a supported load failure or matching composition becomes available.",
+      "definition": "10-issue-catalog.md#review-08",
+      "source_links": [
+        "evidence/delivery-confidence-20261026/independent-review/build-config-effects.json"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_APPLICABLE_ARTIFACT_UNAVAILABLE",
+      "result_sha256": {},
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-09",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-09\"></a> [Development remote](evidence/delivery-confidence-20261026/independent-review/build-config-effects.json) \u2014 P2 investigation / S unknown, proposed",
+      "new_priority": "P3",
+      "severity": "S unknown, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "No actual consumer imports the declared development remote in retained evidence. No app failure is demonstrated.",
+      "observed_user_impact": "Development remote declaration; no actual importing journey or deployed composition identified.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown release or maintenance owner",
+      "next_action": "Identify an actual importing consumer before treating the declaration as a delivery blocker.",
+      "definition": "10-issue-catalog.md#review-09",
+      "source_links": [
+        "evidence/delivery-confidence-20261026/independent-review/build-config-effects.json"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_CONSUMER_UNAVAILABLE",
+      "result_sha256": {},
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-10",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P3",
+      "previous_severity": "<a id=\"review-10\"></a> [One-byte body limit](evidence/delivery-confidence-20261026/independent-review/build-config-effects.json) \u2014 P3 investigation / S unknown, proposed",
+      "new_priority": "P3",
+      "severity": "S unknown, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "The parser evaluates to one byte. No supported body-reading route or rejected business action is identified.",
+      "observed_user_impact": "Parser evaluation is retained; no supported body-reading route identified.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown release or maintenance owner",
+      "next_action": "Identify a supported route and observable business failure before escalating.",
+      "definition": "10-issue-catalog.md#review-10",
+      "source_links": [
+        "evidence/delivery-confidence-20261026/independent-review/build-config-effects.json"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_ROUTE_UNAVAILABLE",
+      "result_sha256": {},
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "REVIEW-11",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P3",
+      "previous_severity": "<a id=\"review-11\"></a> [External pipeline template](#gl-04) \u2014 P3 investigation / S unknown, proposed",
+      "new_priority": "P4",
+      "severity": "S unknown, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "OUTSIDE_ARTIFACT_EXCLUDED_SCOPE",
+      "reason": "Missing external pipeline bytes establish no user failure. Release artifacts are excluded from this report.",
+      "observed_user_impact": "Exact external pipeline template and artifact unavailable.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown release or maintenance owner",
+      "next_action": "Retain the source gap. Revisit only within an authorized artifact assessment or demonstrated runtime effect.",
+      "definition": "10-issue-catalog.md#review-11",
+      "source_links": [
+        "10-issue-catalog.md#gl-04"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_EXTERNAL_TEMPLATE_UNAVAILABLE",
+      "result_sha256": {},
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-12",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P2",
+      "previous_severity": "<a id=\"review-12\"></a> [Stale loader completion](evidence/claude-coordination-20261027/reconciliation/retry-findings.json) \u2014 P2 / S3 conditional, proposed",
+      "new_priority": "P4",
+      "severity": "S3 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "The actual authentication-error route clears the loader. Sign In stays actionable. A persistent blocking loader is unproved.",
+      "observed_user_impact": "Actual auth-error route clears loader and leaves SignIn actionable. Other stale completion routes unverified.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain the successful recovery. Investigate another trigger only with concrete blocked-action evidence.",
+      "definition": "10-issue-catalog.md#review-12",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/retry-findings.json",
+        "evidence/review-e2e-20261028/loader-summary.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/loader-candidate/result.json",
+        "evidence/review-e2e-20261028/loader-baseline/result.json"
+      ],
+      "result_status": "PERSISTENT_LOADER_NOT_REPRODUCED",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/loader-candidate/result.json": "f9d3edb076da94e2adbae55a9c735a67c5d91861eff886e5a22148c9edaccb83",
+        "evidence/review-e2e-20261028/loader-baseline/result.json": "8da5a12df2cec9694dde32b5af2f800bc9c3e1249aba5b67a6cc2554615cdae6"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-13",
+      "alias_of": "RN-Q009",
+      "source": "review-register",
+      "previous_priority": "P4",
+      "previous_severity": "<a id=\"review-13\"></a> [Configless error cleanup](evidence/ut-remediation-20261027/claude-reconciliation.md) \u2014 P4 / S3 conditional, proposed",
+      "new_priority": "P4",
+      "severity": "S3 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "Current RN-Q009 demonstrates an early-cleared visual indicator. No session loss, blocked action, or data loss is demonstrated.",
+      "observed_user_impact": "Inherited fallback; no source-bound browser path to a configless transport error identified.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Track visual loading correctness in backlog; escalate on demonstrated material user impact.",
+      "definition": "10-issue-catalog.md#review-13",
+      "source_links": [
+        "evidence/ut-remediation-20261027/claude-reconciliation.md"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_UNREACHED_CONFIGLESS_ERROR",
+      "result_sha256": {},
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "REVIEW-14",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P3",
+      "previous_severity": "<a id=\"review-14\"></a> [Stale response rejection](evidence/claude-coordination-20261027/reconciliation/adversarial-client.json) \u2014 P3 / S3 conditional, proposed",
+      "new_priority": "P3",
+      "severity": "S3 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Known callers handle stale cancellation. No concrete downstream failure is identified.",
+      "observed_user_impact": "Local consumers catch stale cancellations; no concrete consumer failure identified.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Identify a supported caller that mishandles cancellation before escalating.",
+      "definition": "10-issue-catalog.md#review-14",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/adversarial-client.json"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "result_sha256": {},
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "REVIEW-15",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P3",
+      "previous_severity": "<a id=\"review-15\"></a> [Relogin rejection contract](evidence/claude-coordination-20261027/reconciliation/retry-findings.json) \u2014 P3 / S3 conditional, proposed",
+      "new_priority": "P3",
+      "severity": "S3 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Timeout handles relogin rejection. No affected external consumer or unusable journey is identified.",
+      "observed_user_impact": "Timeout catches relogin rejection; no affected external consumer identified.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Trace a supported external consumer only if a rejection causes a material user failure.",
+      "definition": "10-issue-catalog.md#review-15",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/retry-findings.json"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "result_sha256": {},
+      "priority_change": "RETAINED"
+    },
+    {
+      "id": "REVIEW-16",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P3",
+      "previous_severity": "<a id=\"review-16\"></a> [Cancellation error shape](evidence/claude-coordination-20261027/reconciliation/retry-findings.json) \u2014 P3 investigation / S unknown, proposed",
+      "new_priority": "P4",
+      "severity": "S unknown, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "The error object differs. No consumer depends on its identity and no user effect is demonstrated.",
+      "observed_user_impact": "Error-object identity differs; no identified consumer depends on that identity.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain contract difference. Escalate on a supported affected consumer.",
+      "definition": "10-issue-catalog.md#review-16",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/retry-findings.json"
+      ],
+      "result_links": [],
+      "result_status": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "result_sha256": {},
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-17",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P3",
+      "previous_severity": "<a id=\"review-17\"></a> [Renewal finishes after deadline](evidence/renewed-review-20261027/codex/review.md) \u2014 P3 investigation / S unknown, proposed",
+      "new_priority": "P4",
+      "severity": "S unknown, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "Usable accepted access delivered after the deadline installs and validates. The suspected late-delivery recovery block is not reproduced.",
+      "observed_user_impact": "Actual provider acceptance before expiry and usable response delivery afterward recover. Longer response hold separately reaches timeout.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain successful late-delivery evidence. Escalate on an actual unsupported interruption.",
+      "definition": "10-issue-catalog.md#review-17",
+      "source_links": [
+        "evidence/renewed-review-20261027/codex/review.md",
+        "evidence/review-e2e-20261028/contracts-summary.json",
+        "evidence/review-e2e-20261028/contracts-near-deadline-summary.json"
+      ],
+      "result_links": [
+        "evidence/review-e2e-20261028/contracts17-near-deadline-candidate/result.json",
+        "evidence/review-e2e-20261028/contracts17-near-deadline-baseline/result.json"
+      ],
+      "result_status": "VALID_LATE_DELIVERY_RECOVERS",
+      "result_sha256": {
+        "evidence/review-e2e-20261028/contracts17-near-deadline-candidate/result.json": "b11b55aa79cdc65c0cf0402a8d9112cbe6cde5094e41813794dcbe47cfe99b19",
+        "evidence/review-e2e-20261028/contracts17-near-deadline-baseline/result.json": "dc52ef79acbd252142a345af9d2d7f84be007871d5ddece226b5187285b1b687"
+      },
+      "priority_change": "LOWERED"
+    },
+    {
+      "id": "REVIEW-18",
+      "alias_of": null,
+      "source": "review-register",
+      "previous_priority": "P4",
+      "previous_severity": "<a id=\"review-18\"></a> [Ignore pattern](evidence/claude-coordination-20261027/reconciliation/independent-support.json) \u2014 P4 / S4 conditional, proposed",
+      "new_priority": "P4",
+      "severity": "S4 conditional, proposed",
+      "severity_disposition": "Unchanged historical impact classification; priority reassessed separately.",
+      "blocking_disposition": "NONBLOCKING_BACKLOG",
+      "reason": "The ignore typo has no tracked lockfile or formatter consumer. It has no demonstrated business impact.",
+      "observed_user_impact": "Ignore typo has no tracked pnpm lockfile or formatter consumer. Business E2E not applicable.",
+      "limits": [
+        "Historical browser comparison candidate e0030f5. Current persistence requires exact source comparison. Production applicability remains unverified."
+      ],
+      "owner": "unknown release or maintenance owner",
+      "next_action": "Treat as maintenance backlog.",
+      "definition": "10-issue-catalog.md#review-18",
+      "source_links": [
+        "evidence/claude-coordination-20261027/reconciliation/independent-support.json"
+      ],
+      "result_links": [],
+      "result_status": "STATIC_MAINTENANCE_ONLY",
+      "result_sha256": {},
+      "priority_change": "RETAINED"
+    }
+  ],
+  "additional_controls": [
+    {
+      "id": "RN-R020",
+      "source": "passing-characterization-risk",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S3 Moderate, conditional, proposed",
+      "new_priority": "P2",
+      "severity": "S3 Moderate, conditional, proposed",
+      "blocking_disposition": "SCOPED_SESSION_DISRUPTION",
+      "reason": "The current source integration clears renewed access and refresh after an older same-epoch unauthorized response. It emits an expired-session login-again error.",
+      "observed_user_impact": "Renewed session credentials are removed. This can force fresh authentication in a matching supported response schedule.",
+      "limits": [
+        "Actual React, reducers, services, and interceptors run in jsdom with synthetic credentials, controlled adapter, and fake clock.",
+        "No actual browser, live business service, provider occurrence, or production environment was observed. Policy remains open."
+      ],
+      "owner": "unknown authentication and application owners",
+      "next_action": "Reproduce with valid provider responses and supported consumer. Resolve whether same-epoch older failure may clear renewed credentials.",
+      "definition": "06-test-cases.md#rn-r020",
+      "source_links": [
+        "evidence/remaining-execution-20261029/core-integration/source-binding.json"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-integration/RN-R020/result.json"
+      ],
+      "result_status": "PASSED_OBSERVATION_WITH_SESSION_RISK"
+    },
+    {
+      "id": "RN-S003",
+      "alias_of": "RN-S002",
+      "source": "passing-or-partial-observation-risk",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S2 High, conditional",
+      "new_priority": "P1",
+      "severity": "S2 High, conditional",
+      "blocking_disposition": "SECURITY_RELEASE_BLOCKER",
+      "reason": "This is another demonstrated revocation failure within SEC-01. It is not a separate root blocker.",
+      "observed_user_impact": "Revocation storage failure still returns logout success. Same-session refresh replay issues access.",
+      "limits": [
+        "Retained local fixture only. Production reachability and frequency remain unverified.",
+        "Passing observation status records behavior; it does not approve that behavior."
+      ],
+      "owner": "unknown authentication owner",
+      "next_action": "Verify durable revocation or honest failure reporting, then reject replay.",
+      "definition": "06-test-cases.md#rn-s003",
+      "source_links": [
+        "evidence/remaining-execution-20261029/security/final-audit.json"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s003/result.json"
+      ],
+      "result_status": "RETAINED_OBSERVATION"
+    },
+    {
+      "id": "RN-S004",
+      "alias_of": "RN-S002",
+      "source": "passing-or-partial-observation-risk",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "S2 High, conditional",
+      "new_priority": "P1",
+      "severity": "S2 High, conditional",
+      "blocking_disposition": "SECURITY_RELEASE_BLOCKER",
+      "reason": "This extends SEC-01 to a missing-access input. It is not a separate root blocker.",
+      "observed_user_impact": "Logout without access reports success. Retained valid refresh still replays and issues access.",
+      "limits": [
+        "Retained local fixture only. Production reachability and frequency remain unverified.",
+        "Passing observation status records behavior; it does not approve that behavior."
+      ],
+      "owner": "unknown authentication owner",
+      "next_action": "Verify the supported logout credential contract and effective session revocation.",
+      "definition": "06-test-cases.md#rn-s004",
+      "source_links": [
+        "evidence/remaining-execution-20261029/security/final-audit.json"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s004/result.json"
+      ],
+      "result_status": "RETAINED_OBSERVATION"
+    },
+    {
+      "id": "RN-S029",
+      "related_to": "REVIEW-04",
+      "source": "passing-or-partial-observation-risk",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNKNOWN",
+      "new_priority": "P3",
+      "severity": "UNKNOWN",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "No deployed direct setter or cross-account protected records are demonstrated.",
+      "observed_user_impact": "Direct access replacement retains prior-user refresh and visible identity in the synthetic browser fixture.",
+      "limits": [
+        "Retained local fixture only. Production reachability and frequency remain unverified.",
+        "Passing observation status records behavior; it does not approve that behavior."
+      ],
+      "owner": "unknown application, provider, or security owner",
+      "next_action": "Trace supported direct setters and complete the real identity transition.",
+      "definition": "06-test-cases.md#rn-s029",
+      "source_links": [
+        "evidence/remaining-execution-20261029/security/final-audit.json"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s029/result.json"
+      ],
+      "result_status": "RETAINED_OBSERVATION"
+    },
+    {
+      "id": "RN-S032",
+      "related_to": "REVIEW-03",
+      "source": "passing-or-partial-observation-risk",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNKNOWN",
+      "new_priority": "P3",
+      "severity": "UNKNOWN",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "A supported complete journey and persistent unusable state remain unproved. Earlier paired recovery succeeds.",
+      "observed_user_impact": "Rejected replacement login clears prior refresh. The observed prompt has Extend disabled.",
+      "limits": [
+        "Retained local fixture only. Production reachability and frequency remain unverified.",
+        "Passing observation status records behavior; it does not approve that behavior."
+      ],
+      "owner": "unknown application, provider, or security owner",
+      "next_action": "Complete supported failed-login recovery before claiming disruption.",
+      "definition": "06-test-cases.md#rn-s032",
+      "source_links": [
+        "evidence/remaining-execution-20261029/security/final-audit.json"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s032/result.json"
+      ],
+      "result_status": "RETAINED_OBSERVATION"
+    },
+    {
+      "id": "RN-S044",
+      "alias_of": null,
+      "source": "passing-or-partial-observation-risk",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNKNOWN; conditional credential exposure",
+      "new_priority": "P3",
+      "severity": "UNKNOWN; conditional credential exposure",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Missing export and sanitization contracts are verification gaps. They do not demonstrate credential delivery.",
+      "observed_user_impact": "Synthetic access appears in console arguments. No exported diagnostic or unauthorized reader is observed.",
+      "limits": [
+        "Retained local fixture only. Production reachability and frequency remain unverified.",
+        "Passing observation status records behavior; it does not approve that behavior."
+      ],
+      "owner": "unknown application, provider, or security owner",
+      "next_action": "Identify actual diagnostic export readers and sanitization before escalating.",
+      "definition": "06-test-cases.md#rn-s044",
+      "source_links": [
+        "evidence/remaining-execution-20261029/security/final-audit.json"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/security/rn-s044/result.json"
+      ],
+      "result_status": "RETAINED_OBSERVATION"
+    },
+    {
+      "id": "RN-C002",
+      "alias_of": null,
+      "source": "passing-or-partial-observation-risk",
+      "previous_priority": "UNSPECIFIED",
+      "previous_severity": "UNKNOWN",
+      "new_priority": "P3",
+      "severity": "UNKNOWN",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Real provider occurrence, session interruption, and later user consequence are unverified.",
+      "observed_user_impact": "Two partial malformed-response combinations install unreadable access in a substitute provider flow.",
+      "limits": [
+        "Retained local fixture only. Production reachability and frequency remain unverified.",
+        "Passing observation status records behavior; it does not approve that behavior."
+      ],
+      "owner": "unknown application, provider, or security owner",
+      "next_action": "Confirm supported provider response shapes and complete the real user journey.",
+      "definition": "06-test-cases.md#rn-c002",
+      "source_links": [],
+      "result_links": [
+        "evidence/remaining-execution-20261029/combinations/combination-summary.json"
+      ],
+      "result_status": "RETAINED_OBSERVATION"
+    },
+    {
+      "id": "VERIFICATION-GAPS",
+      "source": "historical-verification-gap-group",
+      "previous_priority": "Historical acceptance prerequisites; no numbered priority",
+      "previous_severity": "Evidence gaps; no runtime severity",
+      "new_priority": "P3",
+      "severity": "No new user severity assigned",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Incomplete assertions, case labels, provider scope, and target parity do not themselves demonstrate a user failure.",
+      "observed_user_impact": "No user failure is established by the listed traceability and execution omissions.",
+      "limits": [
+        "Four-hour real SSO, proposed AC predicates, unknown workspace-loss report, full behavioral equivalence, ambiguous SR labels, fragmented provider review, and target parity remain unverified."
+      ],
+      "owner": "unknown test and application owners",
+      "next_action": "Preserve gaps. Prioritize an omitted check only when it resolves a specific demonstrated material effect or mandatory condition.",
+      "definition": "10-issue-catalog.md#verification-and-traceability-gaps",
+      "source_links": [],
+      "result_links": [],
+      "result_status": "EVIDENCE_GAPS"
+    },
+    {
+      "id": "GL-01",
+      "source": "general-release-control",
+      "title": "PageLoader after cancellation",
+      "previous_priority": "P2 closed local defect",
+      "previous_severity": "See historical issue register",
+      "new_priority": "NONE_CLOSED",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "CLOSED_LOCAL",
+      "reason": "The local correction passes its cancellation control. No open failure remains.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain closed local evidence.",
+      "definition": "10-issue-catalog.md#delivery-01",
+      "source_links": [],
+      "result_links": [
+        "evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json"
+      ],
+      "result_status": "CLOSED_LOCAL"
+    },
+    {
+      "id": "GL-02",
+      "source": "general-release-control",
+      "title": "Missed acquisition callback",
+      "previous_priority": "P2 closed local defect",
+      "previous_severity": "See historical issue register",
+      "new_priority": "NONE_CLOSED",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "CLOSED_LOCAL",
+      "reason": "The local correction passes its timer control. No open failure remains.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Retain closed local evidence.",
+      "definition": "10-issue-catalog.md#delivery-02",
+      "source_links": [],
+      "result_links": [
+        "evidence/ut-remediation-20261027/final-timer-control/comparison.json"
+      ],
+      "result_status": "CLOSED_LOCAL"
+    },
+    {
+      "id": "GL-03",
+      "source": "general-release-control",
+      "title": "Artifact identity",
+      "previous_priority": "Historical release hold; no numbered priority",
+      "previous_severity": "See historical issue register",
+      "new_priority": "P4",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "OUTSIDE_ARTIFACT_EXCLUDED_SCOPE",
+      "reason": "Artifact identity is outside the user-requested source report. Missing artifact proof is not a demonstrated user failure.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown release, business, or authorizing owner",
+      "next_action": "Handle only within the applicable scope. Escalate if a specific material user effect or mandatory condition is established.",
+      "definition": "10-issue-catalog.md#gl-03",
+      "source_links": [],
+      "result_links": [
+        "evidence/four-checks-20261027/release-evidence/closure-audit.md"
+      ],
+      "result_status": "EVIDENCE_OR_DECISION_GAP"
+    },
+    {
+      "id": "GL-04",
+      "source": "general-release-control",
+      "title": "Target composition",
+      "previous_priority": "Historical release hold; no numbered priority",
+      "previous_severity": "See historical issue register",
+      "new_priority": "P3",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Missing effective settings or consumer versions alone do not demonstrate a user failure. Follow up only for a specific material issue.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown release, business, or authorizing owner",
+      "next_action": "Handle only within the applicable scope. Escalate if a specific material user effect or mandatory condition is established.",
+      "definition": "10-issue-catalog.md#gl-04",
+      "source_links": [],
+      "result_links": [
+        "evidence/four-checks-20261027/release-evidence/closure-audit.md"
+      ],
+      "result_status": "EVIDENCE_OR_DECISION_GAP"
+    },
+    {
+      "id": "GL-05",
+      "source": "general-release-control",
+      "title": "Target recovery evidence",
+      "previous_priority": "Historical release hold; no numbered priority",
+      "previous_severity": "See historical issue register",
+      "new_priority": "P3",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "A missing target recovery test is an evidence limit. It does not itself establish session disruption.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown release, business, or authorizing owner",
+      "next_action": "Handle only within the applicable scope. Escalate if a specific material user effect or mandatory condition is established.",
+      "definition": "10-issue-catalog.md#gl-05",
+      "source_links": [],
+      "result_links": [
+        "evidence/four-checks-20261027/release-evidence/closure-audit.md"
+      ],
+      "result_status": "EVIDENCE_OR_DECISION_GAP"
+    },
+    {
+      "id": "GL-06",
+      "source": "general-release-control",
+      "title": "Operations evidence",
+      "previous_priority": "Historical release hold; no numbered priority",
+      "previous_severity": "See historical issue register",
+      "new_priority": "P3",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "Missing smoke checks and monitoring evidence do not establish a runtime failure. They remain a separate operational decision.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown release, business, or authorizing owner",
+      "next_action": "Handle only within the applicable scope. Escalate if a specific material user effect or mandatory condition is established.",
+      "definition": "10-issue-catalog.md#gl-06",
+      "source_links": [],
+      "result_links": [
+        "evidence/four-checks-20261027/release-evidence/closure-audit.md"
+      ],
+      "result_status": "EVIDENCE_OR_DECISION_GAP"
+    },
+    {
+      "id": "GL-07",
+      "source": "general-release-control",
+      "title": "Business acceptance record",
+      "previous_priority": "Historical release hold; no numbered priority",
+      "previous_severity": "See historical issue register",
+      "new_priority": "P3",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "NONBLOCKING_FOLLOW_UP",
+      "reason": "No recorded acceptance exists. This is a decision gap, not demonstrated user harm or a new technical defect.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown release, business, or authorizing owner",
+      "next_action": "Handle only within the applicable scope. Escalate if a specific material user effect or mandatory condition is established.",
+      "definition": "10-issue-catalog.md#gl-07",
+      "source_links": [],
+      "result_links": [
+        "evidence/four-checks-20261027/release-evidence/closure-audit.md"
+      ],
+      "result_status": "EVIDENCE_OR_DECISION_GAP"
+    },
+    {
+      "id": "GL-08",
+      "source": "general-release-control",
+      "title": "Deployment authorization",
+      "previous_priority": "Historical release hold; no numbered priority",
+      "previous_severity": "See historical issue register",
+      "new_priority": "NOT_A_DEFECT_PRIORITY",
+      "severity": "Unchanged historical scope; no new user severity assigned",
+      "blocking_disposition": "SEPARATE_DEPLOYMENT_AUTHORIZATION",
+      "reason": "Actual deployment authorization remains separate. A priority change neither grants deployment authority nor invents a runtime failure.",
+      "observed_user_impact": "No current open user failure established by this control record.",
+      "limits": [
+        "Source assessment only. Release artifacts remain excluded. Human acceptance and deployment authorization remain separate."
+      ],
+      "owner": "unknown release, business, or authorizing owner",
+      "next_action": "Handle only within the applicable scope. Escalate if a specific material user effect or mandatory condition is established.",
+      "definition": "10-issue-catalog.md#gl-08",
+      "source_links": [],
+      "result_links": [
+        "evidence/four-checks-20261027/release-evidence/closure-audit.md"
+      ],
+      "result_status": "EVIDENCE_OR_DECISION_GAP"
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "validation": {
+    "status": "PASSED",
+    "retained_impact_rows": 28,
+    "review_rows": 18,
+    "result_paths_checked": 65,
+    "problems": []
+  }
+}

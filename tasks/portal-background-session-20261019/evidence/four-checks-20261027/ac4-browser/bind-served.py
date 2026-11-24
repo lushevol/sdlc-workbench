@@ -1,0 +1,36 @@
+from pathlib import Path
+import datetime, hashlib, json, re, subprocess, urllib.request
+
+root=Path.cwd(); out=Path(__file__).parent; app=root/'repos/ui/mfe-base'
+opener=urllib.request.build_opener(urllib.request.ProxyHandler({})); summaries=[]
+for port,commit,label in [(8152,'1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303','candidate'),(8154,'f025513f696476a9cc8162681410cbd21e029bcb','main')]:
+    host='http://127.0.0.1:'+str(port)
+    bundle=opener.open(host+'/base.js').read(); listing=opener.open(host+'/webpack-dev-server').read().decode()
+    urls=['base.js.map']+[name+'.map' for name in re.findall(r'[^"\s<>/]*src_pages_Home_index_tsx[^"\s<>/]*\.js',listing)]
+    matches={}; mismatches=[]; maps=[]
+    for url in dict.fromkeys(urls):
+        try:
+            raw=opener.open(host+'/'+url).read(); data=json.loads(raw)
+        except Exception:
+            continue
+        maps.append({'url':url,'sha256':hashlib.sha256(raw).hexdigest()})
+        for name,content in zip(data['sources'],data.get('sourcesContent',[])):
+            if '/src/' not in name or content is None:
+                continue
+            local='src/'+name.split('/src/',1)[1].split('?',1)[0]
+            kind=subprocess.run(['git','-C',str(app),'cat-file','-t',commit+':'+local],capture_output=True,text=True)
+            if kind.returncode or kind.stdout.strip()!='blob':
+                continue
+            source=subprocess.run(['git','-C',str(app),'show',commit+':'+local],capture_output=True)
+            if source.returncode:
+                continue
+            expected=hashlib.sha256(source.stdout).hexdigest(); actual=hashlib.sha256(content.encode()).hexdigest()
+            matches[local]={'expected':expected,'served':actual,'map':url}
+            if expected!=actual:
+                mismatches.append(local)
+    required=['src/pages/Home/common/useController.ts','src/hooks/service/index.ts','src/hooks/service/util/extend.ts','src/hooks/service/util/succes.response.handler.ts','src/components/Timeout/common/useController.ts','src/hooks/reducer/root0.reducers.ts']
+    missing=[name for name in required if name not in matches]
+    report={'candidate_commit':commit,'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'base_bundle_sha256':hashlib.sha256(bundle).hexdigest(),'matched_source_count':len(matches),'files':matches,'maps':maps,'mismatches':mismatches,'required_missing':missing,'status':'PASSED' if not mismatches and not missing else 'FAILED'}
+    (out/(label+'-served-binding.json')).write_text(json.dumps(report,indent=2)+'\n')
+    summaries.append({key:report[key] for key in ['candidate_commit','matched_source_count','mismatches','required_missing','status']})
+print(json.dumps(summaries)); assert all(row['status']=='PASSED' for row in summaries)

@@ -1,0 +1,44 @@
+{
+  "candidate_runtime": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "scope": "Test-only additions for reachable previously unexecuted controller branches. Existing assertions remain unchanged.",
+  "qualitative_risk": "Low for runtime behavior because no runtime source changes. Tests exercise authentication guards with disclosed collaborator doubles.",
+  "new_cases": {
+    "FOUR-COV-01": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-01",
+    "FOUR-COV-02": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-02",
+    "FOUR-COV-03": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-03",
+    "FOUR-COV-04": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-04",
+    "FOUR-COV-05": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-05",
+    "FOUR-COV-06": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-06",
+    "FOUR-COV-07": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-07",
+    "FOUR-COV-08": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-08",
+    "FOUR-COV-09": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-09",
+    "FOUR-COV-10": "tasks/portal-background-session-20261019/06-test-cases.md#four-cov-10"
+  },
+  "edited_application_paths": [
+    "src/components/Timeout/common/coverageBoundaries.test.tsx",
+    "src/pages/Home/common/sessionRefresh.test.tsx"
+  ],
+  "inspected_callers_and_paths": [
+    "src/components/Timeout/index.tsx -> Timeout/common/useController.ts",
+    "src/pages/Home/common/sessionPending.test.tsx -> actual Timeout and service integration",
+    "src/pages/Home/common/sessionRefresh.test.tsx -> actual Home hook",
+    "src/utils/sessionEpoch.ts -> request and response ownership guards",
+    "src/utils/common.ts:38 getJWTPayload; :293 validateWorkspace; :314 waitFor",
+    "src/services/index.ts:20 logout; src/hooks/dispathcer/index.ts:236 dispacthIsOnLogout"
+  ],
+  "red_green_limit": "No confirmed new runtime defect is asserted. These boundary tests are expected to pass the already corrected runtime. Initial execution and any failure remain retained.",
+  "unreachable_branch": {
+    "path": "src/pages/Home/common/useController.ts",
+    "line": 298,
+    "predicate": "validWorkspaces[0] is absent after validateWorkspace returns",
+    "evidence": "src/utils/common.ts:293-311 returns one firstWorkspace() whenever filtering removes all descriptors.",
+    "classification": "UNREACHABLE_WITH_SUPPORTED_UNMOCKED_CALLEE_CONTRACT",
+    "action": "Retain the measured branch gap. Do not mock an impossible empty return to force a percentage."
+  },
+  "constraints": [
+    "No removed checks, skip, expected failure, or narrowed complete-suite scope.",
+    "The suite uses fake timers and controlled service doubles only for the stated controller cases.",
+    "No production artifact, browser parity or full behavior equivalence is established by these tests."
+  ],
+  "additional_boundary": "Unmount the actual controller during its logout delay. Logout remains required; only obsolete prompt closure is suppressed."
+}

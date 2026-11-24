@@ -1,0 +1,1 @@
+../../../records/candidates/operations/KT-day2-self-service-entity-onboarding.md

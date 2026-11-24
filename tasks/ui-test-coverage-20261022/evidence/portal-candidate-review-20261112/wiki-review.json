@@ -1,0 +1,1095 @@
+{
+  "schema_version": 1,
+  "scope": "Independent scoped review of REQ-active-session-renewal v9 wiki correction; 96-output dependency closure",
+  "reviewer": "agent:codex",
+  "reviewed_at": "2026-11-13T00:12:30.025128+08:00",
+  "engine": "llm-wiki-agent",
+  "mode": "independent current-session scoped semantic review; no provider call",
+  "outcome": "PASS_SCOPED_REVIEW",
+  "canonical_source": {
+    "id": "REQ-active-session-renewal",
+    "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+    "version": 9,
+    "sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+    "governance_state": "candidate",
+    "status": "draft"
+  },
+  "planning_evidence": [
+    {
+      "path": ".workbench/wiki/portal-candidate-review-20261112/plan.json",
+      "sha256": "8cd6eace6cdbddd84b3d0c63cb863c9bb7833b523dc8402c99cf1fddeaa829d7"
+    },
+    {
+      "path": ".workbench/wiki/portal-candidate-review-20261112/output-before.json",
+      "sha256": "e73be643f7f3d66dbc1be7a4e29551d6804a5a15759110ec14a3f60bae36c726"
+    },
+    {
+      "path": ".workbench/wiki/portal-candidate-review-20261112/before/source-manifest.json",
+      "sha256": "2d7e5616bae249507a176195d4d49b09375c69a8a7f7976915f82d8dfc2b86f9"
+    }
+  ],
+  "prior_review": {
+    "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/completion.json",
+    "sha256": "344bc3cda4c39aa270a4e236249d7f5d4efa932755262be9d15248ced5821a66",
+    "completed_at": "2026-11-12T15:31:20.783915+00:00",
+    "original_reviewed_outputs": 96,
+    "case_evidence_hashes_verified": [
+      {
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/architecture.json",
+        "sha256": "2d03db4826634bc666e2693f16c373325f579335f37b99a22eb3db9746cc1911"
+      },
+      {
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/interoperability-evolution.json",
+        "sha256": "55adde1afe6afbfab6fa82ad67cc2cc6ba4fe2ac50bbd4ee3ad0e222ca9368e6"
+      },
+      {
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/ces.json",
+        "sha256": "eff0ce42708e835e21a08ef13cdcd1cc147c33cbf629f5304bd0c7de3e43bc4f"
+      },
+      {
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/shared-context.json",
+        "sha256": "985bdee20b5778dcfd42b8b5521bc67f19f56db4a6361550089f6f7b73b62e44"
+      },
+      {
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/cross-review.json",
+        "sha256": "3ce11cc9e742230d3a67c9995301af59fa6cb659e61a4ebfdaa0bbeb2a8692c3"
+      },
+      {
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/architecture-cross-review.json",
+        "sha256": "2833bfd3ead3da7fea9fa19e50dbc74b2a54a296f81fbbb9ab3660f14f59660e"
+      },
+      {
+        "path": "tasks/ui-test-coverage-20261022/evidence/portal-wiki-legacy-review-20261112/integrity.json",
+        "sha256": "9a03a0a596dab3000012c2e7c611206a126789c8f76262345e93dd184bd9b8de"
+      }
+    ],
+    "reuse_reason": "Untouched source and output bytes match prior reviewed hashes. Reuse the existing 96-page semantic review for unchanged claims; this case is not a fresh all-source or full 96-page reading.",
+    "per_output_reference": "Use each output path in the paired source-manifest before-image incremental.outputs map for its original reviewer note and existing source owners; the matched durable case files remain listed above."
+  },
+  "counts": {
+    "expected_outputs": 96,
+    "changed_outputs_independently_reviewed": 7,
+    "unchanged_outputs_with_matching_prior_review_hashes": 89,
+    "unexpected_output_changes": 0,
+    "unqualified_removed_timing_claims": 0,
+    "v8_as_current_claims": 0,
+    "shared_owner_lists_changed": 0,
+    "canonical_source_changes": 1,
+    "findings": 0
+  },
+  "changed_claim_reviews": [
+    {
+      "path": "wiki/summaries/REQ-active-session-renewal.md",
+      "claims": [
+        "Current canonical version is 9, owned by RATAN team, candidate/draft.",
+        "AC-1, AC-2 and AC-3 each require at least one renewal when renewal is due before both deadlines.",
+        "No fixed activity cadence/renewal interval is prescribed; old timing/four-hour fixtures remain historical."
+      ],
+      "canonical_sections": [
+        "frontmatter version/owner/governance_state/status",
+        "frontmatter acceptance_criteria AC-1 through AC-3",
+        "Rationale final paragraph and Gherkin AC-1 through AC-3"
+      ],
+      "result": "SUPPORTED",
+      "note": "Reopened summary in full. Remaining criteria, human-review limits and current ceilings remain intact."
+    },
+    {
+      "path": "wiki/concepts/session-activity-renewal.md",
+      "claims": [
+        "Each continuing eligible activity type supports renewal when due, before access expiry and the absolute deadline.",
+        "Version 9 prescribes no fixed cadence/interval; earlier timing fixtures are historical."
+      ],
+      "canonical_sections": [
+        "acceptance_criteria AC-1 through AC-3",
+        "Rationale final paragraph"
+      ],
+      "result": "SUPPORTED",
+      "note": "Read full focused concept. Unchanged implementation suggestions remain qualified by the no-approved-coalescing-criterion boundary and retain their prior review."
+    },
+    {
+      "path": "wiki/entities/mfe-base.md",
+      "claims": [
+        "Current requirement version is 9.",
+        "AC-1 through AC-3 renew when due before both deadlines, without fixed cadence/interval."
+      ],
+      "canonical_sections": [
+        "frontmatter version",
+        "acceptance_criteria AC-1 through AC-3",
+        "Rationale final paragraph"
+      ],
+      "result": "SUPPORTED",
+      "note": "Read changed session table and surrounding responsibility/governance context; all other page claims reuse prior reviewed bytes."
+    },
+    {
+      "path": "wiki/entities/single-ui-bff.md",
+      "claims": [
+        "Eligible activity supports at least one renewal when due before both deadlines without fixed cadence/interval.",
+        "Requirement remains version 9 candidate with human review/conformance pending."
+      ],
+      "canonical_sections": [
+        "frontmatter version/governance_state/status/verified",
+        "acceptance_criteria AC-1 through AC-3",
+        "Rationale final paragraph"
+      ],
+      "result": "SUPPORTED",
+      "note": "Read session/auth section in context. BFF association remains explicitly an inference, without a prescribed endpoint or implementation."
+    },
+    {
+      "path": "wiki/entities/fmo-post-trade-portal.md",
+      "claims": [
+        "Current session requirement references are v9 candidate/draft."
+      ],
+      "canonical_sections": [
+        "frontmatter version/governance_state/status",
+        "Intended scope and Description"
+      ],
+      "result": "SUPPORTED",
+      "note": "Both edited references now identify exact current version; surrounding renewal, limit and execution qualifications remain unchanged."
+    },
+    {
+      "path": "wiki/explorations/how-should-the-portal-preserve-an-active-session-across-refr.md",
+      "claims": [
+        "Saved answer reflects v7.",
+        "Current v9 retains 15/60-minute ceilings and removes 100ms/15s/30s setups from current AC-1 through AC-3.",
+        "Initial-refresh-expiry and eligible manual recovery remain within absolute deadline."
+      ],
+      "canonical_sections": [
+        "frontmatter version/previous_version and Git HEAD predecessor comparison",
+        "Rationale final paragraph",
+        "Description and AC-4 through AC-9"
+      ],
+      "result": "SUPPORTED_HISTORICAL_QUALIFICATION",
+      "note": "Read entire saved answer and updated notice; the original answer body is byte-identical and is not promoted as current guidance."
+    },
+    {
+      "path": "wiki/index.md",
+      "claims": [
+        "Current candidate v9 supports activity-driven renewal within credential deadlines and manual recovery within session ceilings, with no fixed activity cadence."
+      ],
+      "canonical_sections": [
+        "Description",
+        "Rationale final paragraph",
+        "AC-1 through AC-7"
+      ],
+      "result": "SUPPORTED",
+      "note": "Reviewed changed navigation entry against exact canonical and focused summary; other navigation entries reuse prior reviewed hashes."
+    }
+  ],
+  "closure_search": {
+    "paths": "Exact 96 expected_outputs from local plan; canonical aliases excluded from derived-text search",
+    "regex": "100\\s*(?:ms|milliseconds?)\\b|15[- ]second|15\\s*s(?:econds?)?\\b|30[- ]second|30\\s*s(?:econds?)?\\b|\\bv8\\b|version\\s+8\\b",
+    "matches": [
+      {
+        "path": "wiki/explorations/how-should-the-portal-preserve-an-active-session-across-refr.md",
+        "line": 7,
+        "disposition": "HISTORICAL_QUALIFIED",
+        "reason": "Top-of-page notice explicitly identifies v7 answer and removes the old activity fixtures from current v9; saved original answer retained."
+      },
+      {
+        "path": "wiki/explorations/how-should-the-portal-preserve-an-active-session-across-refr.md",
+        "line": 18,
+        "disposition": "HISTORICAL_QUALIFIED",
+        "reason": "Top-of-page notice explicitly identifies v7 answer and removes the old activity fixtures from current v9; saved original answer retained."
+      }
+    ],
+    "result": "Only explicitly historical exploration contains the removed timing figures; no v8 claim appears in closure."
+  },
+  "saved_answer_preservation": {
+    "path": "wiki/explorations/how-should-the-portal-preserve-an-active-session-across-refr.md",
+    "body_marker": "## Preserving an active session across refresh-token expiry",
+    "body_unchanged": true,
+    "body_sha256": "40f453e77b74dbce6a88c46ee165afb36e54511fcf5c8a9acad8aa8d706ab9e6",
+    "baseline": "Git HEAD matches output-before hash before qualification update"
+  },
+  "source_checks": [
+    {
+      "id": "ARC-portal-service-relationships",
+      "path": "knowledge/candidates/architecture/ARC-portal-service-relationships.md",
+      "before_sha256": "08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5",
+      "current_sha256": "08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-frontend-composition",
+      "path": "knowledge/candidates/architecture/KT-frontend-composition.md",
+      "before_sha256": "700d44d622d5c2cdb8655f1bd096574fee6dd95f5b6909d383efee22ab304668",
+      "current_sha256": "700d44d622d5c2cdb8655f1bd096574fee6dd95f5b6909d383efee22ab304668",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-portal-purpose",
+      "path": "knowledge/candidates/background/KT-portal-purpose.md",
+      "before_sha256": "29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620",
+      "current_sha256": "29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-architecture-evolution",
+      "path": "knowledge/candidates/evolution/KT-architecture-evolution.md",
+      "before_sha256": "e89f82a3803eb61b562c419e82df1ed29f44c1510d6499aa731821ae08114552",
+      "current_sha256": "e89f82a3803eb61b562c419e82df1ed29f44c1510d6499aa731821ae08114552",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-application-interoperability",
+      "path": "knowledge/candidates/interoperability/KT-application-interoperability.md",
+      "before_sha256": "6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72",
+      "current_sha256": "6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-observability-and-performance",
+      "path": "knowledge/candidates/observability/KT-observability-and-performance.md",
+      "before_sha256": "edd20330c29cfddf534f0836ad529c115cb61e39d9f1d53435f106eb2fc3510d",
+      "current_sha256": "edd20330c29cfddf534f0836ad529c115cb61e39d9f1d53435f106eb2fc3510d",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-admin-and-onboarding",
+      "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+      "before_sha256": "ccdbb0e15f134a8d97981d1fc8b88955b9bd826a7dcef4c3e423ae17b48fa8f9",
+      "current_sha256": "ccdbb0e15f134a8d97981d1fc8b88955b9bd826a7dcef4c3e423ae17b48fa8f9",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-release-operations",
+      "path": "knowledge/candidates/operations/KT-release-operations.md",
+      "before_sha256": "6abb62a2b36ae98527801d1d81b22b89a353b883de7a52706311573defd33600",
+      "current_sha256": "6abb62a2b36ae98527801d1d81b22b89a353b883de7a52706311573defd33600",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "REQ-active-session-renewal",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "before_sha256": "7d90d20b35c205940107951497b2b3a48e01d2a8f41bbf573e2ad18250f15779",
+      "current_sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1",
+      "disposition": "CURRENT_V9_REOPENED"
+    },
+    {
+      "id": "KT-authentication-and-sessions",
+      "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+      "before_sha256": "4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06",
+      "current_sha256": "4c21dede2d9031b4994617670806713b1357c35d78f217f41b8d3ed7ba1eaf06",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-ces-migration-parity",
+      "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+      "before_sha256": "9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0",
+      "current_sha256": "9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-sdk-and-entitlements",
+      "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+      "before_sha256": "dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe",
+      "current_sha256": "dda5236db1f4c742a30af8d04a191aa7ef62352cb722b7f9c1f53323fa403fbe",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    },
+    {
+      "id": "KT-settlement-auto-netting",
+      "path": "knowledge/candidates/settlement/KT-settlement-auto-netting.md",
+      "before_sha256": "248069796fe584472124e471fd2f1e81d98cb7da5fd86defa39bec464a282fbb",
+      "current_sha256": "248069796fe584472124e471fd2f1e81d98cb7da5fd86defa39bec464a282fbb",
+      "disposition": "UNCHANGED_SOURCE_PRIOR_REVIEW_REUSED"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "wiki/concepts/admin-catalog-configuration.md",
+      "sha256": "812b807d8cdd4d18dd8e487a7d7e4add7c5a24f10d19bced5607185ea09d9e76",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/application-ownership.md",
+      "sha256": "1b8ce824939622caf3546add9a86acf3a6f158deb218f5e804688a99b453142a",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/auto-netting-rule-selection.md",
+      "sha256": "031aea7b0a417d4e8419ea235fc79c0524fba6a07d702c1bbd5dfa5d162607a7",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 13,
+      "preserved_owner_list_sha256": "c5daf079fe553eea94fe59ba7390c0b28bcb6993ea7b710eab835aa27bf26b24",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/auto-netting-scheduling.md",
+      "sha256": "82d00d4c855f68658fe4f1eafb4f4c162bd8d5563827654de4a3f0bf2b3e8ec8",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 13,
+      "preserved_owner_list_sha256": "c5daf079fe553eea94fe59ba7390c0b28bcb6993ea7b710eab835aa27bf26b24",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/build-tool-migration.md",
+      "sha256": "d938d39f67bb62fa793367f0c7f5765fb95c4c44fbc59c558a9d3216c5afca11",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/cashflow-netting-grouping-and-outcomes.md",
+      "sha256": "df33a7ee49addb14943e4512bd118b9f1c89d49bf2fd8750e924dd12bcc60141",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 13,
+      "preserved_owner_list_sha256": "c5daf079fe553eea94fe59ba7390c0b28bcb6993ea7b710eab835aa27bf26b24",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/ces-role-multiplicity.md",
+      "sha256": "70be92228bf8ce013431cbb54eb6a53f9cc14b9290b575e6831d3dcbafd407f5",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/component-library-selection.md",
+      "sha256": "3588d85add9a14ee03a4962b72bd65645951bec5123642e6dc5813c9a948102c",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/configuration-promotion.md",
+      "sha256": "7d9ecb2628e3371e3fd83d8519cb98cdb8e0df3c9f140889c4cacbdb0bbc4e2f",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/cross-application-authentication-handoff.md",
+      "sha256": "d2f20e1d39319e7b72aaa5f086d6a636882d14a675257f1709ba8ce854d8f2ac",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/ems2-entitlement-provisioning.md",
+      "sha256": "6b7a783d5cb7ed41c23ea8434d59f2212bfc5aa4ad11815d0de573b47762ffa3",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/ems2-to-ces-permission-mapping.md",
+      "sha256": "e219150cc0b4fc5b3b3d1b96e8ee1069f7cefcf0e02392312420b44eb3ed9bca",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/entitlement-retrieval.md",
+      "sha256": "2a0933cfa4817808627c8f57b4eb8cd18ebc62c95a71a64bf1417d5f1f0f96b2",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/frontend-onboarding.md",
+      "sha256": "7af84e1ceaec5cd3245ad26f3341fe5a1bfe4c00c8956ff1ab0af319a34fe5d9",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/frontend-performance.md",
+      "sha256": "831541f4159eed0558d672a27698e3cf6569113c125d08714c96c35c857f064f",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/identity-profile-attribute-migration.md",
+      "sha256": "13bf84ee3ca91eb7ddae6ff26cefc96a688327f0d255c298542ebd2a44551691",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/identity-provider-delegation.md",
+      "sha256": "18d17a3cc1f7dc91f38e6a7d368ae976de11001ec0901d1e24c95dbee54ba799",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/intent-based-application-interoperability.md",
+      "sha256": "f745cd6860cc195792ca6bd241b8a1f2db91bd4bc0789fcf303ad98fd3895830",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/interaction-analytics.md",
+      "sha256": "6a99156ecf8689c56744947d11dc061120e8637f25297ae4088c1aeb48ff170b",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/interoperability-contract-governance.md",
+      "sha256": "1ce3fc37cc26ca74569540a5f12d56aa1b0fb025c1c7d01f7c9e687bf7a1981d",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/machine-to-machine-authentication.md",
+      "sha256": "4f08d5b218f972b707feda56464049ede80c70adbb5bea9c97804b983d264723",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/maker-checker-verification-workflow.md",
+      "sha256": "e1b5d6424f03fca086d35f5b0ec73c3945dd8cedeb9d83e071cfb975c5c15a9e",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/mfe-cache-strategy.md",
+      "sha256": "3c67cf0b8c79c0a7563e026ae15a64f79b8af5209b61adf80683655f3377b84f",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/microfrontend-layering.md",
+      "sha256": "2a435cece89066e86c179be8b221b08faf41c4b6926b7df31fd5831643254cd7",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/per-tile-provider-selection.md",
+      "sha256": "c6459e64995868b50a6a320b090f24bddebdda3ac5fe975ab1eddd39ba90a6e2",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/permission-check-provider-union.md",
+      "sha256": "627a4631ea1543165b134cbe74611eb4e009b27127ee311d952161874fe09a0c",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/portal-entry-and-tile-authorization.md",
+      "sha256": "c3c3ce093bff918fd8d9adbb49d4db7372fd296957e7fa0f5f28d19d22765aad",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/portal-ingress-path.md",
+      "sha256": "7e320d4b2abf41067063d1032be1664388732abfe4fe8d6fe8e4aaa9946b5ecc",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/portal-tile-workspace-model.md",
+      "sha256": "449e798eb024cf3e74fac8e7b72f16126be45f95c7fe4f7117ecae02868ab43c",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/realtime-notification-delivery.md",
+      "sha256": "2147bc189341cce7cb515e105603f5ce7be2c9205a13e0bc3a3d86a52cd9392a",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/release-window-governance.md",
+      "sha256": "c1ede45733e1a03e12c7d8be8d400cd99b2a3b30f2aaa3afdfcf4fae16d8f2e5",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/session-activity-renewal.md",
+      "sha256": "a961094cfbdf3134f62ea2a83203125db1134cc407e52f609d283c53e2519298",
+      "before_sha256": "0f68084e55689a3bfe68e90dc18bf4675ee678fa3bc715bb69b04b8508ec6e15",
+      "disposition": "CHANGED_CLAIMS_REVIEWED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": false
+    },
+    {
+      "path": "wiki/concepts/session-expiry-prompt-recovery.md",
+      "sha256": "4a93c063e55b399dc33e88115524d3606f75ac8607c888e3709b6fc971b68862",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/shared-dependency-governance.md",
+      "sha256": "e307bcb72fc295ac098e889ae9cb70eabe367e748ef5ca6b872d75b93bcb6d97",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/single-ui-sdk-authentication.md",
+      "sha256": "2cbd045bd493c1b29fe4ec70d1d9ebaed20d77bcd3c9dc438626ac5a10f4129b",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/tenant-production-readiness.md",
+      "sha256": "5de485a8107c05528240939948ddf37724b6c611bdadb0238d5db68ee735a962",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/concepts/token-lifecycle-and-timeout-policy.md",
+      "sha256": "2e95bfab6f49bd8bf5cde429960000566ff0db6b46ef0fabb5662d78ede6635f",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/admin-module.md",
+      "sha256": "29a7b7af2543d2b9dc544dd5cac0f1f747019f0579b061ed68fe933ace9cda94",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ag-grid.md",
+      "sha256": "528f0c7a7033ea79690d49fa7b43d86d4ea0553662c73ba978964ab8a2325261",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ant-design.md",
+      "sha256": "5f3d52ed9869a2a4d14cd28163f045745c00782a1bc2b75fb3d884b0c2086efc",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/apache-jmeter.md",
+      "sha256": "f8b2671cbb7867cda5651c4acc4cda8dfa6941540de5a9958a461bc98b24c267",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/api-gateway.md",
+      "sha256": "0c75f36f644a527fbabd6eeea7d1d921fe618fc9df8b8213792860a497757faf",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/cdups.md",
+      "sha256": "df5f66406ab0a6ba0e6c86bec3bbb53e01b0df963a33b45351a8e33ab5a8fcd6",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ces.md",
+      "sha256": "d2cdfcf7942cdd33b4794ee78f77adb2b42a21a43d3780f99fbf7aeba4a24b99",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ddr.md",
+      "sha256": "3d046c91afdffcee8a3e145d1537e3dbec7ed4340aba71e02fe28d7cd90ad3c1",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ems2.md",
+      "sha256": "531789b6d93e3024d58a2c00055a886dd0ec4c7f1d1182b6634c34f257776106",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ems3.md",
+      "sha256": "24f2b08c57ff7081da814f3236a8dbaea4e513541b936a5d8cc04f383e6ff178",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/entra.md",
+      "sha256": "331e56f51bf817f753690523c56b9be3e4558a52b8adc45a2cbe21c190e5b336",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/fdc3.md",
+      "sha256": "8a0d6d9e39b0c2b11dcc20f6228916a839717735e2f083d92c4e37f4b54fc9e0",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/flyway.md",
+      "sha256": "316268e58f4fc63f9f39e8528e987bdf5b013feb544bfd2006df0f979e83782d",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/fmaa.md",
+      "sha256": "9f491dc3ffe1ff10c55dd253655ed054882ac33ebe5256cdc7b9f6b1b4f1f84d",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/fmo-post-trade-portal.md",
+      "sha256": "8e4e26ceed7c7d7111692798749b75f3b951a53218e758c23a3ab75106d9e584",
+      "before_sha256": "be4bc95c819c103f1a4e5548aaaa44980b74939067cc93a0878eb43c6fe0ff1c",
+      "disposition": "CHANGED_CLAIMS_REVIEWED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": false
+    },
+    {
+      "path": "wiki/entities/fss.md",
+      "sha256": "47f7d4eb2b2ca5295ba8e1d78247b6eaffe9026b06f3306340b12bea52960044",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/graphql.md",
+      "sha256": "b290f89ea6a99970f5772e9b304d17c18226741e1600df5cd8c442ebaba1fbde",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/kibana.md",
+      "sha256": "07c29c119b1129af5fd274c53518d40b9f050794694f5501d4e11203557275ea",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/markets-operations-one-release.md",
+      "sha256": "2cd6d7892106d4e5a93feae2a3839b323a4e86cd614965a3e8dff5ebdb353df3",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/mfe-base.md",
+      "sha256": "b5dfe3db58d7507f8af35d6653477c0674d40444727374b19067df3838dd50b4",
+      "before_sha256": "b67f1d6b9ebbfea247aa0d08738ade5544b11fc72b7b0be91d5956e69c2bf4c4",
+      "disposition": "CHANGED_CLAIMS_REVIEWED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": false
+    },
+    {
+      "path": "wiki/entities/mfe-cashflow-blotter.md",
+      "sha256": "c5c95fdfc0f64d7c21c66a2d8ee8f476dd362e70665cb8bf6fa3d3f5f252f7ad",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/mfe-ratan-container.md",
+      "sha256": "282f8756d655a9802b806b16f3f276fc7e2fe6a4805391be56569220283cb330",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/mfe-root-config.md",
+      "sha256": "104b242cd386b41999cb8c6ca69e7adc1ad57ee41b2e90693b7bcce085fffa3e",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/mui.md",
+      "sha256": "96b70cf2b6f888bdf025ac39ff285ba539d4c7c3b7b53bf7257684d99c128b2c",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/nginx.md",
+      "sha256": "f2f6ca47bd0da8ca23bb922bc403bffd82bf35a5836f2016c8578e0ee1e51f2c",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/openfin.md",
+      "sha256": "a1f8eacf885436e20367ae316ab635d4c49ce8edd20fbca9e8d74aa210673cad",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/portal-team.md",
+      "sha256": "d836b37566f98110a7fb40b539aef66be8136c5205ec9e35b2f471a263944458",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ratan-auth-server.md",
+      "sha256": "fa663f22d2fc606c281a7fb44244bc11c10d74468a842cb328565b79ed096e87",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/ratan.md",
+      "sha256": "9a83df09e6d4a138f5d3c19a8bf9a215c81780c54b53875df9c076c7986cf1f5",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/react.md",
+      "sha256": "c80abaad6baefd32d843a623c3c2b25499cac3a2854a4781dfea6321630e16f5",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/rspack.md",
+      "sha256": "7ee5c8a7e4704760ff7b6d014a286aece2ff963e44d6c5212085193c3f3442fd",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/single-spa.md",
+      "sha256": "46852604c18778b6e43c3f55e4f7c314d09ff869dae4ea77762795269de36bee",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/single-ui-bff.md",
+      "sha256": "e3aa7afd9eeb97d42803d9029b9ed17dc05712f8511b011f005b4a2613d6f991",
+      "before_sha256": "22bac79dc8584c0c81f9a70a88ade696bef03bed67037224b9426afaa888d105",
+      "disposition": "CHANGED_CLAIMS_REVIEWED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": false
+    },
+    {
+      "path": "wiki/entities/single-ui-sdk.md",
+      "sha256": "a33744ab2888b1bd4cdbcd5dc3e0b3efe8fbf5df31351081eff4b8c662f19823",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/spring-boot.md",
+      "sha256": "6ede05030e728f514e4357ad5fbb80e0cf7932a22cb625c3052667681c7fe8ff",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/systemjs.md",
+      "sha256": "af9e120a1f442ab1b0c45fccdc86b6d99fcd568d2314094c15029543277ac2d7",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/vite.md",
+      "sha256": "0033ff5af2e38ab720e28a28ecf418f6b59b3c26a5fef3dd0737377383c96cde",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/vpa.md",
+      "sha256": "d17b00c9b62fa98bf38a7e82e420d358aeffa5a58edf2bae9292b87451bf4eb8",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/entities/webpack.md",
+      "sha256": "ba23c05092c0eb891c75abd7ef807062f81f353ea8df2998e0b147d2be0c7c94",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/explorations/how-should-the-portal-preserve-an-active-session-across-refr.md",
+      "sha256": "e42fe5c854261efea0581073d5bd4a955e00dd87e97d6607856182420c4eb033",
+      "before_sha256": "4026d5294a7266fab2628fbb4ab89bd57df4adec26890be347557d92fc70d84b",
+      "disposition": "CHANGED_CLAIMS_REVIEWED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": false
+    },
+    {
+      "path": "wiki/explorations/what-are-the-portal-frontend-composition-layers-and-ownershi.md",
+      "sha256": "cfe13aabe9be29084ea369f9c7aacfd686b3e13627c64f75eb2447c72230e927",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/explorations/what-candidate-interoperability-contract-and-openfin-fdc3-co.md",
+      "sha256": "a9a80df34fde78ec7103b18cb8eea128e3f39a4e3288b767654f84e84c63e42d",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/explorations/what-candidate-mapping-rules-map-ems2-roles-and-entitlements.md",
+      "sha256": "1f9cb203236fa4a4986e562efb964e9ddfe5e843eff494ed24e1621de957e37e",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/explorations/what-telemetry-and-performance-or-capacity-evidence-exists-f.md",
+      "sha256": "6959a1c7dbf528c8b45547c5ccf0ffb3f155d4e042f103dd6b7288274c47b307",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/explorations/which-responsibilities-belong-to-portal-and-tenant-teams-for.md",
+      "sha256": "75c136a06b5c07ea4fbbe25d6bf6653dbc5987f97dff3f2199f6be176851adbe",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/index.md",
+      "sha256": "2b843d4830c338ce4d9f0635ef41e225555a68d23b10a8a3979f747cb7dde056",
+      "before_sha256": "17e88a0e224a374525ea2e83bf2cfe90cda29a7cb5c202383f423d76f3bf3d71",
+      "disposition": "CHANGED_CLAIMS_REVIEWED",
+      "preserved_owner_count": 13,
+      "preserved_owner_list_sha256": "c5daf079fe553eea94fe59ba7390c0b28bcb6993ea7b710eab835aa27bf26b24",
+      "matches_prior_reviewed_hash": false
+    },
+    {
+      "path": "wiki/summaries/ARC-portal-service-relationships.md",
+      "sha256": "0cdc30ad62c943567aa782790d30478cd6be195bf0f1c8f496f42653cf1a30f2",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-admin-and-onboarding.md",
+      "sha256": "dcb1b45ceb1144a6e63be46874e4b9d9c4072767d6c3668bbf0df8d4fe97bd31",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-application-interoperability.md",
+      "sha256": "24a3a6a90b92251a96ffe755d86855ba95b75ebe4601a016a410782b6a5a8cfe",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-architecture-evolution.md",
+      "sha256": "9a9698beb50f64d3704795133f81d43dd70263135b569316447c9fdf145e45cd",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-authentication-and-sessions.md",
+      "sha256": "4673a7b1c1e0a9c1fc08d68519a55eddaeeba6e26c33ae7c9795ee69dffe499f",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-ces-migration-parity.md",
+      "sha256": "e454860deeb0f5044d15e9afca72273c5573ef5f56f1a5b1af554f38f3c5f2a2",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-frontend-composition.md",
+      "sha256": "18a048a2652cd2c2bd461f85ce6025e1a50559e63e9db216cb95f088601f4c46",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-observability-and-performance.md",
+      "sha256": "a00bcb716abf3ad64ae970f1f1d2a54cd1fc6008cfd7d1f0489a6ded53d8971a",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-portal-purpose.md",
+      "sha256": "067575196d1ca2242ff5dc84b1b827310b349b2d2c9c5fad28cf41e6959e6215",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-release-operations.md",
+      "sha256": "64e9b16966831253286e368d303c90826bcfac9a309558918b469459bdd960f4",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-sdk-and-entitlements.md",
+      "sha256": "638329e99fd065e2a29434f63db8deb14432af1499e68fe30984b6ec0f9cab2d",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/KT-settlement-auto-netting.md",
+      "sha256": "b7dc5e6337e2923c6ce90af0164808864314b1db462f9706f2fd34c64f1bb5f7",
+      "disposition": "UNCHANGED_PRIOR_REVIEW_REUSED",
+      "preserved_owner_count": 13,
+      "preserved_owner_list_sha256": "c5daf079fe553eea94fe59ba7390c0b28bcb6993ea7b710eab835aa27bf26b24",
+      "matches_prior_reviewed_hash": true
+    },
+    {
+      "path": "wiki/summaries/REQ-active-session-renewal.md",
+      "sha256": "84717a56852ba5ca41a1497c9ba4efa2d62edf29fb5d78e12c9e2442c2f58fad",
+      "before_sha256": "096b83bbf26d77071da4f01a031c7a9daa4544f8d920be933599f5d8e251219a",
+      "disposition": "CHANGED_CLAIMS_REVIEWED",
+      "preserved_owner_count": 12,
+      "preserved_owner_list_sha256": "582924e5bd89975a609ca1d31b23a63eddf5a20bab788eeaf7bd509f238ab655",
+      "matches_prior_reviewed_hash": false
+    }
+  ],
+  "aliases": {
+    "raw": "raw/REQ-active-session-renewal.md",
+    "native": "wiki/sources/REQ-active-session-renewal.md",
+    "both_relative_symlinks_to_exact_current_source": true,
+    "resolved_sha256": "13b4fe75337340b933e3bec1a7d30d65827ff2549cbe7282e2a39d6805b06da1"
+  },
+  "ownership": {
+    "preserve": "All original shared sources lists in page frontmatter and source-manifest incremental outputs.",
+    "current_manifest_matches_before_image": true,
+    "finalization_note": "Provenance is still the before image at review time. Parent must use the existing review command and preserve owner lists when completing the new source hash.",
+    "reference_template": ".workbench/wiki/portal-candidate-review-20261112/before/source-manifest.json#/incremental/outputs/<output path>/sources"
+  },
+  "impact": "Derived current guidance now follows v9 conditions without adding activity timings. Historical saved synthesis remains available behind a current qualification. The 89 untouched outputs need no semantic rewrite.",
+  "findings": [],
+  "required_user_actions_for_this_review": [],
+  "limits": [
+    "This review records supported derived claims and hash continuity, not human publication approval or runtime conformance.",
+    "Untouched claims reuse the prior reviewed evidence; original raw sources were not reread in this scoped correction.",
+    "ICS policy sourcing/revision/applicability remains DEFERRED_NONBLOCKING; no ICS investigation or clarification was requested.",
+    "No canonical, wiki, audit, receipt or provenance files were changed by this reviewer."
+  ]
+}

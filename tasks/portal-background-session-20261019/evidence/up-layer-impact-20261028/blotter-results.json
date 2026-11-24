@@ -1,0 +1,252 @@
+{
+  "kind": "retained-execution-evidence-inspection",
+  "date": "2026-10-28",
+  "scope": "Upper-layer application impact; Cashflow Blotter",
+  "new_execution": false,
+  "claims": [
+    {
+      "id": "BR1",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "Actual Cashflow Blotter and grid remained mounted after thirty real hidden minutes.",
+      "evidence": [
+        "thirty_minute"
+      ],
+      "assertions": [
+        "actual-blotter",
+        "actual-module-responses",
+        "elapsed-observation",
+        "returned-component"
+      ],
+      "values": {
+        "wall_ms": 1800122,
+        "monotonic_ms": 1800175.70875,
+        "passed": 33,
+        "total": 34
+      },
+      "limit": "MFE 6e34da3, local fixtures, empty business data, notification HTTP503; not final candidate or UAT parity."
+    },
+    {
+      "id": "BR2",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "The thirty-minute fixed-expiry assertion failed. One extension arrived 365 ms after measurement start and moved access expiry by ten seconds.",
+      "evidence": [
+        "thirty_minute",
+        "queued_setup_activity"
+      ],
+      "assertions": [
+        "fixed-expiry"
+      ],
+      "limit": "A pending setup mouse debounce is strongly supported; direct callback-to-request stack correlation was absent. Keep the failure."
+    },
+    {
+      "id": "BR3",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "The actual-Blotter shortened hidden expiry control passed thirty of thirty checks. Timeout opened after access expiry, remained visible on return, and Blotter/grid remained mounted.",
+      "evidence": [
+        "short_idle"
+      ],
+      "assertions": [
+        "fixed-expiry",
+        "timeout-at-expiry",
+        "returned-component",
+        "returned-timeout"
+      ],
+      "limit": "MFE 6e34da3; 60-second access and 144-second refresh; real time, substitute external dependencies."
+    },
+    {
+      "id": "BR4",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "Prior actual-Blotter controls show that return after both credential deadlines can reach Sign in. The fix does not promise unlimited hidden-tab recovery.",
+      "evidence": [
+        "actual_blotter_summary"
+      ],
+      "assertions": [
+        "UAT-BLOTTER-LATE-RETURN: six passed assertions"
+      ],
+      "limit": "Old candidate, short lifetimes, no natural-freeze proof. Missing-refresh actual-Blotter branch was NOT_RUN."
+    },
+    {
+      "id": "BR5",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "A hidden Dashboard retained behind Blotter continued polling and extended the shared portal session.",
+      "evidence": [
+        "actual_blotter_summary"
+      ],
+      "values": {
+        "prior_phase_passed": 4,
+        "recurring_queries": 10,
+        "moved_extensions": 11
+      },
+      "limit": "Conditional on Dashboard having mounted. Overall case FAILED: pointer activity invalidated removal comparison. Not a proven UAT incident cause."
+    },
+    {
+      "id": "BR6",
+      "class": "Inspected implementation and observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "Access lifetime settings independently control the popup deadline. The unchanged packaged 480-minute override differs from the 15-minute YAML default.",
+      "evidence": [
+        "config_audit",
+        "long_schedule"
+      ],
+      "assertions": [
+        "settled-issued-lifetime",
+        "settled-access-timer",
+        "settled-refresh-timer"
+      ],
+      "values": {
+        "override_access_seconds": 28800,
+        "default_access_seconds": 900,
+        "long_schedule_checks_passed": 34,
+        "long_schedule_checks_total": 34
+      },
+      "limit": "480 is minutes, 900 is seconds. Refresh expiry has a separate timer. The run observed fifteen seconds and does not prove eight-hour firing or effective deployed settings."
+    },
+    {
+      "id": "BR7",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "Final reviewed portal runtime recovered after 1800006 hidden milliseconds with recorded freeze, usable refresh, successful Extend, and protected validation HTTP200.",
+      "evidence": [
+        "final_natural",
+        "final_runtime_binding"
+      ],
+      "assertions": [
+        "pendingPromptClosures = 0",
+        "completedPromptClosures = 1",
+        "protectedRequest.configuredAssertionPassed = true"
+      ],
+      "limit": "Portal authentication validation, not a Cashflow business operation. Actual relogin request was held then forwarded; usable refresh required. Runtime 1b7de4f binds by bytes to e0030f5."
+    },
+    {
+      "id": "BR8",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "Final reviewed portal runtime retained two empty workspace descriptors across sign-out and sign-in. Populated Cashflow state preservation is unverified.",
+      "evidence": [
+        "final_workspace",
+        "final_runtime_binding"
+      ],
+      "assertions": [
+        "fixtureWorkspaceCount = 2",
+        "reauthenticationCompleted = true"
+      ],
+      "limit": "OBSERVATION_ONLY. Both containers arrays are empty. No assertion accepts a restoration policy. In-memory edits and cross-origin contents were excluded."
+    },
+    {
+      "id": "BR9",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "Final reviewed portal runtime completed activity beyond the initial refresh expiry without another login or navigation.",
+      "evidence": [
+        "final_cross",
+        "final_runtime_binding"
+      ],
+      "assertions": [
+        "successfulRenewals = 18",
+        "additionalLogins = 0",
+        "additionalMainFrameNavigations = 0",
+        "timeoutPromptOpenings = 0"
+      ],
+      "limit": "One 186677 ms local portal sequence. Not indefinite uptime or actual Blotter traffic."
+    },
+    {
+      "id": "BR10",
+      "class": "Observed execution",
+      "confidence": "HIGH_LOCAL",
+      "claim": "The final portal browser suite remains nineteen passing and eight failed cases. It cannot establish complete downstream conformance.",
+      "evidence": [
+        "final_suite"
+      ],
+      "limit": "Failed continuous activity, single-flight, inconsistent response, and cancellation predicates remain. No actual final-candidate Cashflow business test was located in this retained suite."
+    }
+  ],
+  "sources": {
+    "actual_blotter_summary": {
+      "path": "uat-blotter-browser-20261021/summary.json",
+      "sha256": "3a830b369fc29375672219a5e56b2685dfac0dd45eb78e956d5f6751314f83b5"
+    },
+    "old_shell_binding": {
+      "path": "uat-blotter-browser-20261021/setup/shell-source-binding.json",
+      "sha256": "a61a41c665f23cbcae7700e27a5f9e64598e1f59edd951f5d7ea3789c1b9a077"
+    },
+    "thirty_minute": {
+      "path": "real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json",
+      "sha256": "38b7b1d585dd5a7959aae52c2c980839454cae9d2fab9440ce9f6dc4c4158c5b"
+    },
+    "queued_setup_activity": {
+      "path": "real-world-tests-20261022/run03-queued-extension-finding.json",
+      "sha256": "68bcdf9881a91144d588991a6b3d9bf6223046b5415418d28d22046dcbf1dbd8"
+    },
+    "short_idle": {
+      "path": "real-world-tests-20261022/rw-short-idle-02/result.json",
+      "sha256": "25ff1720a621145501c854fe0e3624bca8fc915353e03f582a783dd98e7d9889"
+    },
+    "long_schedule": {
+      "path": "real-world-tests-20261022/rw-480-schedule-03/result.json",
+      "sha256": "e3bb8a64ffd0762cb4fe97a60a428eb27aaf9add72d7c5633caf0e9f53a89423"
+    },
+    "config_audit": {
+      "path": "uat-blotter-browser-20261021/uat-screenshot/review-config-audit.json",
+      "sha256": "4092bfdbdb43f62287e068ba5d5266f6a99dd51543746252d483718e2c7dd727"
+    },
+    "final_suite": {
+      "path": "four-checks-20261027/e2e/reconciliation.json",
+      "sha256": "0d6cbec5c22ab7205db8fb7485bcc0a40fc8ce5eb6cb1c5def9cb85225577f6a"
+    },
+    "final_runtime_binding": {
+      "path": "four-checks-20261027/e2e/final-release-binding.json",
+      "sha256": "5d68362e3e2d6caa6d3c4b8142ceafad10e40ca9963be6621556a00336d67e97"
+    },
+    "final_natural": {
+      "path": "four-checks-20261027/e2e/natural-natural-20261027T071704/artifacts/natural-background-paired-control-1793085432457/result.json",
+      "sha256": "057d1a06b4e8331b35a1849cf91efda79cebef6e405edeba1efd7e212eaf6f37"
+    },
+    "final_workspace": {
+      "path": "four-checks-20261027/e2e/native-workspace-20261027T070427/artifacts/TC-07-workspace-descriptor-observation-1793084678025/result.json",
+      "sha256": "a6011d3d116be29df9129b11677704157d3ebb89bbbc1a334c8e19e159844889"
+    },
+    "final_cross": {
+      "path": "four-checks-20261027/e2e/native-cross-20261027T064903/artifacts/activity-cross-refresh-expiry-1793083760950/result.json",
+      "sha256": "63e442fbeafc35ca06e58946780d564f8edecd7063bd5080622318dde4f6f3db"
+    }
+  },
+  "assertion_source_inspections": [
+    {
+      "repository": "ratan-test-engine",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "path": "Tests/ratan/plugin/ui/session/cases/e2e-22.cjs",
+      "sha256": "c1db82d280869fc8ca3f55f59cd55b71981499430d246521a0c8f12434f3e2e0",
+      "inspection": "Read complete source assertions and helper chain."
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "path": "Tests/ratan/plugin/ui/session/cases/e2e-07.cjs",
+      "sha256": "1d2459f5b1ec491e9c33a4fc6ade4cd08b0096a3004963b1c9555ac4cd134334",
+      "inspection": "Read complete source assertions and helper chain."
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "path": "Tests/ratan/plugin/ui/session/support/browser.cjs",
+      "sha256": "dff78cb3078193353cb561387e17cc49da2f395630801c65d0dc0f426cf3280d",
+      "inspection": "Read complete source assertions and helper chain."
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks verify evidence paths and calculate hashes. They do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "source_path_root": "tasks/portal-background-session-20261019/evidence"
+}

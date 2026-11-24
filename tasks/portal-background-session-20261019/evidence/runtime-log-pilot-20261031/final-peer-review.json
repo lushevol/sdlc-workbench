@@ -1,0 +1,25 @@
+{
+  "reviewed_at": "2026-10-31T04:24:13.192343+00:00",
+  "reviewer_kind": "independent_agent",
+  "reviewer": "/root/pilot_review",
+  "scope": "Read-only final pilot report and evidence audit",
+  "human_approval": false,
+  "findings": [
+    {
+      "id": "OBS-06-CORRELATION",
+      "evidence": [
+        "instrumentation.patch#L48",
+        "analyze.py#L43-L45"
+      ],
+      "observation": "Discard instrumentation omits path; analyzer requires the relogin endpoint. Cancellation is not the only qualification limit.",
+      "disposition": "Recorded in report, observation result, finding and next action. Raw instrumentation and executions remain unchanged."
+    }
+  ],
+  "confirmed": [
+    "Both runner snapshots match their saved execution hashes.",
+    "Each run retains 192 candidate events and 22 baseline events with contiguous unique sequences.",
+    "Final candidate assertions pass 44 + 8 + 4 = 56. Baseline retains two pending-renewal failures.",
+    "Final console totals reproduce: 76 HTTP 404 signals, 30 development warnings, six injected 503 signals.",
+    "No new candidate defect is established. Remote UAT remains NOT_RUN."
+  ]
+}

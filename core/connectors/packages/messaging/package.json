@@ -1,0 +1,57 @@
+{
+  "name": "@sc-node-mcp/messaging",
+  "version": "2.12.7",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "MCP server for messaging automation - Outlook email and Microsoft Teams",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "sc-node-mcp-messaging": "src/index.js"
+  },
+  "files": [
+    "src/**/*",
+    "scripts/**/*",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://artifactory.global.standardchartered.com/artifactory/api/npm/npm-release"
+  },
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "mcp",
+    "email",
+    "outlook",
+    "teams",
+    "messaging",
+    "standard-chartered"
+  ],
+  "author": "Standard Chartered",
+  "license": "ISC",
+  "dependencies": {
+    "@sc-node-mcp/ado-core": "^1.2.11",
+    "@sc-node-mcp/core": "^2.16.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@sc-node-mcp/shared-tests": "^2.10.3",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./connection": "./src/connection.js",
+    "./tools": "./src/tools.js",
+    "./package.json": "./package.json"
+  }
+}
