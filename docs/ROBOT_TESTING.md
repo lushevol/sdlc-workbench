@@ -137,8 +137,10 @@ It does not expose the hand-written session suite or generated business suites.
 The provider also cannot accept arbitrary case-selection options.
 
 Run these commands from the Workbench source root:
+Replace `TASK-ID` with the existing owning task identifier before setting its log root.
 
 ```sh
+TASK_LOG_ROOT="$PWD/tasks/TASK-ID/logs"
 cd repos/testing/ratan-test-engine
 
 # Prepare dependencies and browser assets only when needed.
@@ -167,21 +169,21 @@ Use the test repository's Python environment for the session suite:
 ```sh
 # Execute one stable case ID.
 .venv/bin/python -m robot \
-  --outputdir .workbench/session-renewal/robot-run-001 \
+  --outputdir "$TASK_LOG_ROOT/session-run-001" \
   --include E2E-15 \
   --variable SESSION_CONFIG:.workbench/session-renewal/config.json \
   Tests/ratan/plugin/ui/session/session_renewal.robot
 
 # Execute the short batch in a separate output directory.
 .venv/bin/python -m robot \
-  --outputdir .workbench/session-renewal/robot-run-002 \
+  --outputdir "$TASK_LOG_ROOT/session-run-002" \
   --exclude long-running --exclude diagnostic \
   --variable SESSION_CONFIG:.workbench/session-renewal/config.json \
   Tests/ratan/plugin/ui/session/session_renewal.robot
 
 # Execute one expiry case with explicit long-running opt-in.
 .venv/bin/python -m robot \
-  --outputdir .workbench/session-renewal/robot-run-003 \
+  --outputdir "$TASK_LOG_ROOT/session-run-003" \
   --include E2E-04 \
   --variable SESSION_ALLOW_LONG_RUNNING:True \
   --variable SESSION_CONFIG:.workbench/session-renewal/config.json \
@@ -189,6 +191,7 @@ Use the test repository's Python environment for the session suite:
 ```
 
 Use a fresh Robot output directory and configuration `artifactDir` for each run.
+Set `artifactDir` to that run's owning-task log directory.
 The default session browser is installed Edge with a visible window.
 Expiry cases wait for real time and can take hours.
 Missing long-running opt-in skips gated cases. A skip supplies no passing assertion evidence.
@@ -201,7 +204,7 @@ This command selects one existing HOLD case; its environment identifiers are exa
 
 ```sh
 .venv/bin/python -m robot \
-  --outputdir .workbench/business-ui/run-001 \
+  --outputdir "$TASK_LOG_ROOT/business-ui-run-001" \
   --variable ENV:uat2 --variable SECRET:secret --variable LANG:0 \
   --test "CN-UI-E2E-HOLD-OO1-OO1" \
   Tests/ratan/workspace/ui/CN-UI-E2E-HOLD.robot
@@ -212,9 +215,15 @@ Omit `--test` to execute the full selected file. Use `--include TAG` for tag sel
 Executing existing suites does not require workbook generation or report-upload utilities.
 
 Open `report.html` or `log.html` under the selected Robot output directory.
-Retain `output.xml`, the command, exit code, configuration hash, application revisions, and test source hashes.
+Routine generated reports and troubleshooting logs stay in the owning task's ignored `logs/` directory.
+For a reported business verification claim, retain `output.xml` under the owning task's `evidence/` directory.
+Bind it to the command, exit code, configuration hash, application revisions, and test source hashes.
+Keep exploratory and routine native output in the owning task's `logs/` directory.
+Record a compact receipt in the living record.
 The session `artifactDir` contains case JSON and screenshots.
 Save each completed case immediately under the owning task's evidence rules.
+Promote additional log content only when a consequential claim or required procedure needs it.
+Keep necessary raw context under the [evidence and log boundary](../tasks/README.md#git-managed-evidence-and-local-logs).
 Review private data before moving local artifacts into retained task evidence.
 Inspect the assertions and matching results before reporting verified behavior.
 
@@ -230,6 +239,7 @@ The session suite accepts complete configurations under an `environments` mappin
 Each entry supplies its own target URL, credentials' environment-variable names, selectors, timing expectations, and source revisions.
 The [named example](../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/config.environments.example.json) includes nonproduction and production placeholders.
 Run these commands from the test repository root:
+First set `TASK_LOG_ROOT` from the Workbench source root, as shown in [direct execution](#run-ratan-business-cases-directly).
 
 ```sh
 mkdir -p .workbench/session-renewal
@@ -237,7 +247,7 @@ cp -n Tests/ratan/plugin/ui/session/config.environments.example.json .workbench/
 
 # Edit complete profiles before execution.
 .venv/bin/python -m robot \
-  --outputdir .workbench/session-renewal/nonprod-run-001 \
+  --outputdir "$TASK_LOG_ROOT/nonprod-run-001" \
   --include E2E-15 \
   --variable SESSION_CONFIG:.workbench/session-renewal/environments.json \
   --variable SESSION_ENVIRONMENT:nonprod \

@@ -203,17 +203,23 @@ The renderer does not grant business acceptance or deployment authorization.
 
 ## Scope and verification
 
-The [canonical report cases](../tasks/workbench-release-report-20261024/06-test-cases.md) retain RR-1 through RR-8 and RR-P1 through RR-P6.
-They define collection, rendering, evidence, and scheduling boundaries.
-The source checkout's [integration checks](../tests/test_release_report_integration.py), [renderer checks](../tests/test_release_report_render.py), and [comparison checks](../tests/test_release_report_checks.py) contain implementation assertions.
-The [retained assertion map](../tasks/workbench-release-report-20261024/evidence/release-report-implementation-20261024/integration-case-map.json) distinguishes exact case coverage from related boundary checks.
-Case definitions, inspected assertions, and retained executions remain separate evidence.
+The source checkout maintains executable assertions for collection, rendering, retained evidence, and scheduling.
+
+| Maintained checks | Assertions |
+| --- | --- |
+| [Integration checks](../tests/test_release_report_integration.py) | Preserve collected records, partial results, capped pages, and unavailable baselines. Check batching, retry pacing, concurrency, grants, attachment hashes, deadlines, and resume source identity. |
+| [Renderer checks](../tests/test_release_report_render.py) | Render offline without source mutation. Reject modified evidence, unsafe paths, conflicting identities, and executable URLs. Preserve complete data behind bounded previews. |
+| [Comparison checks](../tests/test_release_report_checks.py) | Preserve failure reasons, unknown evidence, build-specific counts, comparison direction, and deterministic ordering. Distinguish unavailable evidence from failed checks. |
+
+The tests retain individual assertion identifiers where applicable.
+Assertion source does not establish a passing execution or complete business-case coverage.
+Bind any reported execution to its exact test revision, environment, inputs, and retained outcomes.
 
 Existing verification uses controlled loopback ADO and Sonar services and synthetic timing.
 It does not establish company endpoint compatibility, native Windows behavior, measured live speedup, or a production recommendation.
 Use [release confidence](../.agents/skills/release-confidence/SKILL.md) for an actual candidate assessment, including business and system impact and required operational evidence.
 The installed report renderer does not supply the proposed weekly board or five-destination application design.
-Keep unimplemented presentation proposals in task history until their implementation is authorized and verified.
+Assess presentation extensions as new work with explicit scope, authorization, and verification.
 
 ## Python and MCP interfaces
 

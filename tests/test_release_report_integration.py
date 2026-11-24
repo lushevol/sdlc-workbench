@@ -1,7 +1,7 @@
 """Verify the public report API against loopback ADO and Sonar services.
 
-Canonical cases: tasks/workbench-release-report-20261024/06-test-cases.md,
-RR-1 through RR-8 and RR-P1 through RR-P6.
+Maintained behavior: docs/RELEASE_REPORT.md, Scope and verification.
+Individual tests retain their RR assertion identifiers.
 These tests use actual connector HTTP reads. No target environment is contacted.
 """
 from __future__ import annotations

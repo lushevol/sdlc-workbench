@@ -194,7 +194,7 @@
         "manage-knowledge-lifecycle"
       ],
       "prompt": "In {{ROOT}}, Tell me where this knowledge workflow stands and what needs attention, using the supplied sources and saved progress. Retain a concise status at outputs/response.md. This status request is read-only for all inputs. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
-      "source_requirement": "tasks/workbench-session-retrospective-20261117/06-optimization-plan.md#stage-0--establish-the-behavioral-baseline"
+      "source_requirement": ".agents/skills/manage-knowledge-lifecycle/SKILL.md#reconcile-progress-before-choosing-the-next-action"
     },
     {
       "id": "interrupted-handoff",
@@ -204,7 +204,7 @@
         "ingest-knowledge"
       ],
       "prompt": "In {{ROOT}}, Continue the authorized unfinished draft from the saved checkpoint and record a handoff at outputs/response.md. You may edit only tasks/recovery-draft.md and outputs/. Keep canonical records, saved answers, receipts and wiki unchanged. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
-      "source_requirement": "tasks/workbench-session-retrospective-20261117/06-optimization-plan.md#stage-0--establish-the-behavioral-baseline"
+      "source_requirement": ".agents/skills/manage-knowledge-lifecycle/SKILL.md#select-the-next-action"
     },
     {
       "id": "source-dispositions",
@@ -214,7 +214,7 @@
         "prepare-knowledge-sources"
       ],
       "prompt": "In {{ROOT}}, Review the selected sources and their current outputs. Explain which processing results can stand and which require work in outputs/response.md. Keep all inputs unchanged; do not create canonical records or receipts. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
-      "source_requirement": "tasks/workbench-session-retrospective-20261117/06-optimization-plan.md#stage-0--establish-the-behavioral-baseline"
+      "source_requirement": ".agents/skills/ingest-knowledge/references/source-preparation.md#record-canonical-processing-completion"
     },
     {
       "id": "semantic-preservation",
@@ -224,7 +224,7 @@
         "maintain-wiki-content"
       ],
       "prompt": "In {{ROOT}}, Review the proposed wiki excerpt against the original sources and existing records. Retain a claim and omission review at outputs/response.md, including source destinations or dispositions. This is a read-only review of inputs. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
-      "source_requirement": "tasks/workbench-session-retrospective-20261117/06-optimization-plan.md#stage-0--establish-the-behavioral-baseline"
+      "source_requirement": ".agents/skills/review-knowledge-claims/SKILL.md#review"
     },
     {
       "id": "decision-grouping",
@@ -233,7 +233,7 @@
         "resolve-knowledge-questions"
       ],
       "prompt": "In {{ROOT}}, Prepare a concise owner-decision view from the living questions, with enough detail to resolve the remaining decisions. Save it at outputs/response.md. Preserve the original question file and exact recorded answers. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
-      "source_requirement": "tasks/workbench-session-retrospective-20261117/06-optimization-plan.md#stage-0--establish-the-behavioral-baseline"
+      "source_requirement": ".agents/skills/resolve-knowledge-questions/SKILL.md#investigate-and-ask"
     },
     {
       "id": "reader-usefulness",
@@ -243,7 +243,7 @@
         "evaluate-knowledge-retrieval"
       ],
       "prompt": "In {{ROOT}}, Review both supplied reader drafts against the questions and sources. Save the evaluation and supported corrected answers to all twelve questions at outputs/response.md. Preserve drafts and source bytes. This is an evaluation exercise without ingestion or publication. The fixture is synthetic. Local file reading and the named output writes are authorized; network calls and business transitions are not. Use the selected skills from evaluation-input.json.",
-      "source_requirement": "tasks/workbench-session-retrospective-20261117/06-optimization-plan.md#stage-0--establish-the-behavioral-baseline"
+      "source_requirement": ".agents/skills/evaluate-knowledge-retrieval/SKILL.md#check-the-answer-against-its-evidence"
     }
   ]
 }

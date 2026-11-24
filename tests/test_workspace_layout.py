@@ -419,6 +419,47 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(set(git(self.root, "ls-files", "--", "repos").splitlines()),
                          {"repos/README.md", "repos/services/README.md"})
 
+    @unittest.skipUnless(shutil.which("git"), "Git is required for evidence retention checks.")
+    def test_generated_workspace_ignores_task_logs_but_tracks_decision_evidence(self):
+        environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+        environment.update(GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull)
+
+        def git(*arguments, check=True):
+            return subprocess.run(
+                ["git", "-C", str(self.root), *arguments], env=environment,
+                check=check, capture_output=True, text=True)
+
+        git("init", "--template=")
+        routine = (
+            "tasks/TASK-1/logs/RUN-1/stdout.log",
+            "tasks/TASK-1/logs/RUN-1/checks.json",
+            "tasks/TASK-2/logs/RUN-2/stdout.log",
+        )
+        evidence = (
+            "tasks/TASK-1/evidence/decision.log",
+            "tasks/TASK-1/evidence/decision.json",
+            "tasks/TASK-1/evidence/raw-output.txt",
+            "tasks/TASK-1/evidence/logs/decision.log",
+        )
+        visible_paths = (*evidence, "logs/stdout.log")
+        for relative in (*routine, *visible_paths):
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("controlled retention probe\n", encoding="utf-8")
+
+        ignored = git("check-ignore", "--no-index", "--", *routine)
+        self.assertEqual(ignored.returncode, 0)
+        self.assertEqual(set(ignored.stdout.splitlines()), set(routine))
+        visible = git("check-ignore", "--no-index", "--", *visible_paths, check=False)
+        self.assertEqual(visible.returncode, 1)
+        self.assertEqual(visible.stdout, "")
+
+        git("add", "--", *evidence)
+        self.assertEqual(set(git("ls-files", "--", "tasks/TASK-1/evidence").stdout.splitlines()),
+                         set(evidence))
+        self.assertNotEqual(git("add", "--", *routine, check=False).returncode, 0)
+        self.assertEqual(git("ls-files", "--", *routine).stdout, "")
+
     def test_initialization_excludes_project_records_and_preserves_source_bytes(self):
         source = self.root.parent / "project-source"
         shutil.copytree(self.root, source)

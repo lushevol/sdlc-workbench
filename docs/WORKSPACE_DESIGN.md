@@ -295,6 +295,7 @@ Keep temporary imports and local configuration ignored. Preserve exact source by
 `knowledge/evidence/sources/` preserves domain source snapshots before interpretation.
 Incoming files and retained originals use separate lifecycles within the same evidence area.
 Task-owned investigation captures and source excerpts stay in `tasks/<task-id>/evidence/`.
+Routine task logs stay in ignored `tasks/<task-id>/logs/<run-id>/` beside their owning record.
 `knowledge/evidence/manifest.yaml` records source IDs, locators, revisions, hashes, retrieval times, classifications, and optional snapshot paths.
 The runtime accepts source manifests up to 16 MiB. Individual governed records and audit events retain a one MiB limit.
 `knowledge/records/candidates/` retains draft domain explanations. `knowledge/evidence/findings/` retains investigation findings.
@@ -362,8 +363,6 @@ These folders do not establish complete ingestion, governance, or behavior verif
 
 ## Documentation ownership
 
-High-priority source: [living-documentation clarification and migration authorization, 13 November 2026](../tasks/workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
-
 `docs/` provides the stable, integrated current view of the adopting system across its lifecycles and domains.
 It includes system responsibilities, requirements and design context, contracts and dependencies, implementation and migration guidance, verification and release procedures, and operation and recovery where supported.
 Workbench setup and tooling guides form part of this view. They are not its entire scope.
@@ -374,7 +373,7 @@ Add a page only when a distinct lasting responsibility has a current reader and 
 | Location | Authority and update rule |
 | --- | --- |
 | `docs/` | Integrated current explanations and procedures. Summarize supported state, link authoritative sources, and update affected sections during work. |
-| `tasks/<task-id>/` | Incremental request, decisions, investigation, change and verification history, with supporting evidence. Reuse the owning scope rather than splitting work into `docs/` reports. |
+| `tasks/<task-id>/` | Incremental request, decisions, investigation, change and verification history, with selected Git-managed evidence. Routine `logs/` stays ignored. Reuse the owning scope rather than splitting work into `docs/` reports. |
 | `knowledge/records/` | Canonical business intent, applicability and reviewed domain decisions under knowledge governance. Documentation links the applicable record and version. |
 | `knowledge/integrations/` | Reusable technical contracts, workflows, tools, failures, and background with exact source bindings. Links canonical intent and task evidence. |
 | `knowledge/evidence/` | Retained knowledge source revisions, selections, processing receipts, findings and immutable governance events. |
@@ -409,13 +408,14 @@ Keep authoritative domain source snapshots and audit event files in their establ
 An explicitly authorized relocation can move task-generated materials while preserving their exact bytes and source identities.
 Archive the old manifest and record old-to-new locators and hashes.
 Update active snapshot references and append a new relocation audit event.
-Historical locators resolve through the relocation map and retained Git revision.
+Resolve historical locators through the recorded relocation map.
+Git revisions require a retained source checkout or backup.
+A clean-root branch omits those old commits.
 
 Use three primary inputs: canonical intent in `knowledge/records/`, registered repository code and tests, and investigation results.
 Knowledge supplies requirements and ideal target behavior. Source and execution supply evidence of actual behavior.
 Compare them in an independent [task gap document](../tasks/README.md#compare-behavior-for-gap-analysis).
 Keep actual-behavior narratives and conformance results outside domain knowledge.
-Source: [user clarification, 1 November 2026](../tasks/workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Read existing reports as additional evidence.
 Inspect test assertions and retained executions before inferring behavior.
 Use authorized browser, Playwright, service, and live data-flow investigations when they resolve material intake questions.

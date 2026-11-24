@@ -14,7 +14,10 @@ dist/
 !/knowledge/llm-wiki/.openkb/
 /knowledge/llm-wiki/.openkb/*
 !/knowledge/llm-wiki/.openkb/hashes.json
+# Local runtime state stays outside source control.
 .workbench/
+# Routine task logs stay local; selected decision evidence belongs under evidence/.
+/tasks/*/logs/
 # Native hook registrations and installation ownership remain local to each workspace.
 /.codex/hooks.json
 /.github/hooks/workbench.json
@@ -45,7 +48,5 @@ relationships/service-dependencies/generated/
 /tasks/*/evidence/**/html-report/
 # Keep new browser trace archives local.
 *trace*.zip
-# Preserve the three published trace archives and their existing evidence consumers.
+# Preserve the published Portal trace archive and its existing evidence consumers.
 !/tasks/portal-background-session-20261019/evidence/browser-final/edge/trace.zip
-!/tasks/release-clinic-html-20261020/evidence/parity-browser/included/trace.zip
-!/tasks/release-clinic-html-20261020/evidence/parity-browser/upstream/trace.zip

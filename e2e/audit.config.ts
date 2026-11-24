@@ -8,7 +8,7 @@ import { auditHtmlReport, auditTraceMode } from './support/audit-settings.js';
 rejectEnvironmentForFixtures();
 const workspace = fileURLToPath(new URL('../', import.meta.url));
 process.env.E2E_AUDIT_OUTPUT ??= path.join(workspace,
-  'tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/harness',
+  'tasks/e2e-audit/logs',
   new Date().toISOString().replace(/[:.]/g, '-'));
 const output = path.resolve(process.env.E2E_AUDIT_OUTPUT);
 const trace = auditTraceMode();

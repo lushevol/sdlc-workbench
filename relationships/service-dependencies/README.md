@@ -120,6 +120,6 @@ For a flat repository parent, use `build --repos PATH --layout flat`; repository
 Use `patterns` with `service_only: true` and `include_snippets: true` to inspect service call candidates.
 Search related symbols or destinations with `query`, then trace wrappers, configuration, routes, and providers.
 
-The [18 November clarification](../../tasks/workbench-graph-instruction-integration-20261028/evidence/snippet-discovery-20261118/user-input.txt) identifies Solace as the future messaging platform.
+Project direction identifies Solace as the future messaging platform.
 Review Solace publishers, consumers, broker/VPN settings, queue/topic destinations, subscriptions, and request/reply bindings when sources contain them.
 Keep current Kafka evidence until actual source changes support its removal or replacement.

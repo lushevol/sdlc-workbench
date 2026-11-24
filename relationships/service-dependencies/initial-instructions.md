@@ -4,8 +4,6 @@ The skill discovers dependencies from repository sources without requiring this 
 Optional notes can record corrections, source locations, and hypotheses. English or Chinese input is supported.
 These notes supply regression expectations. They do not establish source facts, provider identity, or runtime behavior.
 
-Entry point source: [user request](../../tasks/workbench-graph-instruction-integration-20261028/evidence/graph-instruction-integration-20261028/user-input-instruction-location-20261028.txt), 28 October 2026.
-
 ## Existing architecture notes
 
 Compare independent discovery with the [preserved architecture explanation](../../knowledge/evidence/sources/user-clarifications/architecture-20261022/user-message.txt).

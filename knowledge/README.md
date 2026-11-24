@@ -24,7 +24,6 @@ The sibling `knowledge/llm-wiki/` holds the single derived wiki, relative canoni
 
 ## Intended behavior and independent gaps
 
-The [1 November user clarification](../tasks/workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input) controls this boundary.
 Keep actual source behavior, deployment state, observations, and conformance assessments in independent gap Markdown under the owning task.
 Use the [gap comparison rules](../tasks/README.md#compare-behavior-for-gap-analysis) and link canonical intent from each finding.
 Keep intended, old actual, new actual, and observed results separate, with exact versions and evidence limits.
@@ -152,6 +151,13 @@ Important requirements and decisions retain their human review gates.
 
 ## Authorized evidence relocation
 
+The source checkout's [24 November cleanup receipt](../tasks/cleanup-manifest.json) maps retired maintenance-task locators to retained provenance.
+Canonical record bytes, existing audit events, and prior processing receipts remain unchanged.
+Resolve their historical task paths through the receipt's `old_locator_map`.
+Active source snapshot and selection-context paths use the new locations with identical source hashes.
+Prior selection and manifest bytes remain available under `knowledge/evidence/sources/task-provenance-20261124/binding-baseline/`.
+Replan before resuming ingestion. Locator changes do not advance semantic completion or publication.
+
 Task-generated materials can move into their owning task when the user authorizes the relocation.
 Preserve every moved file's exact bytes, source ID, resource, revision, and SHA-256.
 Retain the previous manifest bytes outside canonical records before changing active snapshot locators.
@@ -161,7 +167,9 @@ Append new records for genuinely new evidence and append a relocation audit even
 Keep existing audit event bytes unchanged.
 
 Historical reports and audit metadata can retain their original locators.
-Resolve those locators through the relocation map and recorded Git revision.
+Resolve historical locators through the recorded relocation map.
+Git revisions require a retained source checkout or backup.
+A clean-root branch omits those old commits.
 An earlier ingestion baseline remains historical because it correctly records the earlier storage layout.
 Create a new baseline after validating the authorized migration.
 During authorized cleanup, remove files that have no current consumer or meaningful evidence value.

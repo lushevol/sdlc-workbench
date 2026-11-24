@@ -14,6 +14,7 @@ Each retained item needs a current consumer, observable benefit, and supporting 
 
 Use [the documentation index](docs/README.md) for the maintained current guides across lifecycle and domain responsibilities.
 Tasks retain incremental work history and supporting evidence; current guides summarize the supported result.
+Use the [business task index](tasks/index.md) to find retained Portal, CES, and SDK work in this source checkout.
 The approved v2 plan and subsequent recorded clarifications control the folder and knowledge contracts.
 
 ## Adopt an existing project

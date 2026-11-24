@@ -107,7 +107,9 @@ Preserve failed approaches when their conditions or corrections help avoid repea
 Record confirmed causes separately from hypotheses and unresolved issues. Include a successful correction only when supported.
 Keep an unsuccessful attempt scoped to its inputs, version, environment, and permissions.
 Do not convert one failure into a universal prohibition or erase useful failures after recording success.
-Keep long logs and incident timelines in task evidence and link the relevant ranges.
+Keep routine troubleshooting logs in ignored local storage.
+Retain log content and incident timelines as task evidence when consequential findings, reproduction, or recovery require them.
+Link the relevant ranges and preserve necessary raw context.
 
 ### Optional executable support
 

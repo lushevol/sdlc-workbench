@@ -20,7 +20,7 @@ Keep shared skills independent of business domain, source host, language, test e
 Use specialized helpers only within their evidenced coverage; inspect source directly when extraction is unsupported.
 An empty graph does not prove no dependencies. Metadata classifications do not add parsers, connectors, or execution grants.
 Keep tenant settings in project configuration or evidence; generated defaults remain empty and unset.
-Authority: [brownfield portability request](tasks/workbench-generic-brownfield-portability-20261030/evidence/generic-brownfield-portability-20261030/user-input.md).
+Authority: the [brownfield adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary).
 
 ## User input and reference priority
 
@@ -33,8 +33,8 @@ A continuation request supplies no missing answer or approval.
 
 ### Investigation-first source
 
-The exact [26 October user direction](tasks/workbench-conversation-improvements-20261030/evidence/conversation-retrospective-20261030/workflow-chat-evidence.md#u1-investigate-before-asking) remains preserved.
-Historical authority links refer to source-checkout evidence; generated workspaces follow the current procedures linked here.
+The [investigate-before-asking procedure](tasks/README.md#investigate-before-asking) governs source review before meaningful questions.
+Historical authority links can refer to source-checkout evidence. Generated workspaces follow the current procedures linked here.
 
 ## Documentation and task ownership
 
@@ -55,6 +55,9 @@ Only evidence-backed `READY` permits the named phase within existing authorizati
 Follow [task document order](tasks/README.md#document-order), [baseline comparisons](tasks/README.md#compare-behavior-for-gap-analysis), and [knowledge reconciliation](tasks/README.md#update-knowledge-after-clarification).
 Save each completed case immediately, including parallel completions, under the [resume checkpoint rules](tasks/README.md#save-case-evidence-and-resume-checkpoints).
 Apply [critical evidence retention](tasks/README.md#critical-evidence-and-reusable-payloads), [growth controls](tasks/README.md#control-evidence-growth-before-execution), and [cleanup rules](tasks/README.md#evidence-priorities-and-cleanup).
+Commit selected decision evidence under the [evidence and log boundary](tasks/README.md#git-managed-evidence-and-local-logs).
+Keep routine command output and troubleshooting logs in ignored `tasks/<task-id>/logs/<run-id>/`.
+Promote log content when consequential claims, required procedures, or protected provenance require it. Preserve necessary raw context.
 Retain one canonical payload. Preserve meaningful failures, contradictory evidence, registered snapshots, immutable audits, and recovery information.
 Authorized cleanup records paths, hashes, prior revisions, and reasons. Relocation preserves bytes and identities, records mappings, and repairs active references.
 
@@ -108,7 +111,7 @@ Show AC-to-test, AC-to-code-change, and code-change-to-test matrices with separa
 `TC >= AC = Code Change` means behavior containment and equivalence, not matching artifact counts.
 Inspect direct assertion chains; shared AC links do not prove change-to-test coverage.
 Keep missing, contradictory, extra, untraced, unchanged, maintenance, and test-only scope explicit. Links, line coverage, and passing commands cannot prove exact conformance.
-Authority: [coverage output request](tasks/workbench-coverage-output-20261025/evidence/coverage-output-20261025/user-request.txt).
+Authority: the [coverage output procedure](docs/BEHAVIOR_REVIEW.md#coverage-output-for-requirements-and-defects).
 
 ## Migration compatibility in code review
 
@@ -128,7 +131,7 @@ Design changes so existing production consumers can upgrade without modification
 For every portal change, review API compatibility, data structure compatibility, downstream-observable behavior, and whether existing APIs become slower.
 Follow the [backward compatibility review procedure](docs/BEHAVIOR_REVIEW.md#review-backward-compatibility).
 If a downstream-visible change is unavoidable, minimize API changes and highlight the before-and-after contracts and behavior.
-Authority: [15 November portal compatibility direction](tasks/workbench-portal-compatibility-rule-20261115/01-maintenance.md#exact-user-input).
+Authority: the [backward compatibility review procedure](docs/BEHAVIOR_REVIEW.md#review-backward-compatibility).
 
 ## Code review verification
 

@@ -262,7 +262,9 @@ Its published directories hold reviewed domain knowledge with evidence reference
 `knowledge/evidence/sources/` retains original snapshots outside the canonical record tree.
 Keep these lifecycles separate within the evidence area. New exports must not overwrite retained snapshot bytes.
 `knowledge/evidence/manifest.yaml` records their identities, revisions, locators, retrieval times, and hashes.
-Task-generated logs, execution captures, investigation reports, and incident excerpts belong under the owning task.
+Task evidence holds selected decision records, required execution captures, and claim-bearing logs or incident excerpts.
+Routine command output and troubleshooting logs stay in ignored `tasks/<task-id>/logs/<run-id>/`.
+Apply the [evidence and log boundary](tasks/README.md#git-managed-evidence-and-local-logs) before promoting local output into Git-managed evidence.
 The source manifest can reference those task paths while retaining stable source identities and hashes.
 An authorized relocation preserves prior manifest bytes and records old-to-new locators without rewriting audit history.
 `knowledge/evidence/findings/` retains governance findings, conflicts, missing evidence, and open questions.

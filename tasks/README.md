@@ -9,7 +9,7 @@ Business work follows the [intake skill](../.agents/skills/analyze-requirement/S
 Maintenance follows the lightweight route and shared documentation and evidence rules; it does not enter the business lifecycle gates.
 Agents assess business readiness. The core runtime does not enforce workflow transitions.
 
-High-priority source: [living-documentation clarification and migration authorization, 13 November 2026](workbench-documentation-migration-20261113/evidence/knowledge-layout-assessment-20261113/user-input.md#living-documentation-model-clarification).
+Use the [documentation ownership contract](../docs/WORKSPACE_DESIGN.md#documentation-ownership) as the current authority for integrated documentation.
 
 ## Scope
 
@@ -39,6 +39,7 @@ Keep the following information proportionate to the work in that record:
 - Links to necessary supporting evidence and the current documentation sections updated or assessed.
 
 Put task-generated evidence under the same task's `evidence/` directory when retained payloads are needed.
+Keep routine task logs in its ignored `logs/<run-id>/` directory.
 Link protected sources and existing results at their established locations instead of copying them.
 Use the maintenance record itself as the evidence index for small work; add a separate index only when navigation needs it.
 Do not create empty evidence folders, extra stage documents, business ACs, or readiness fields to satisfy this convention.
@@ -76,9 +77,11 @@ tasks/
     ├── 01-intake.md               # Initial issue, investigation, and named readiness decision.
     ├── 06-test-cases.md           # Canonical Gherkin case definitions, when cases are defined.
     ├── 10-change-review.md        # Later change scope, impact, and stage readiness when needed.
-    └── evidence/
-        ├── index.md               # Source, claim, revision, hash, result, and limits.
-        └── ...                    # New source captures, investigation outputs, and checks.
+    ├── evidence/
+    │   ├── index.md               # Source, claim, revision, hash, result, and limits.
+    │   └── ...                    # Selected Git-managed source captures, investigation outputs, and checks.
+    └── logs/
+        └── <run-id>/              # Ignored routine command output and troubleshooting logs.
 ```
 
 Keep `01-intake.md` as the living issue or requirement document during initial investigation.
@@ -204,7 +207,9 @@ Use `null` for an unavailable prior revision and identify unrecoverable untracke
 Repair active links and validate retained hashes. Preserve frozen documents and registered evidence identities.
 Record authorized deletions and historical locator recovery under [evidence priorities and cleanup](#evidence-priorities-and-cleanup).
 Keep an old compatibility link only when a current consumer requires it. Do not retain redundant aliases for retired reports.
-Frozen historical references can resolve through the cleanup record and retained Git revision.
+Resolve frozen historical references through the recorded cleanup or relocation map.
+Git revisions require a retained source checkout or backup.
+A clean-root branch omits those old commits.
 Generated workspaces contain this guide without project task files or compatibility links.
 
 ## Standard task document content
@@ -499,7 +504,7 @@ Keep requirements and ideal target behavior in `knowledge/records/`.
 Record implementation, observed behavior, and intent-to-reality differences in an independent task gap Markdown document.
 Use a stable purpose name such as `09-intent-reality-gaps.md` for evidence comparison.
 Select the existing authoring form that matches the findings. No new artifact kind is required.
-Source: [user clarification, 1 November 2026](workbench-knowledge-intent-boundary-20261101/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
+Use the [knowledge contract](../knowledge/README.md#intended-behavior-and-independent-gaps) for intended behavior and independent gaps.
 Update the gap when a fix changes conformance. Update knowledge only when sourced intent changes.
 Record supported matches separately from open gaps. Missing execution evidence does not establish an application defect.
 
@@ -547,6 +552,32 @@ Keep provenance manifest records and immutable audit events. Validate relocated 
 Governed publication still uses the existing knowledge contracts and append-only audit events.
 Keep the task evidence and link any additional governance snapshot or record.
 
+### Git-managed evidence and local logs
+
+Keep selected decision evidence in Git with the owning task record.
+Examples include requirements, decisions, material findings, assertion results, review evidence, source snapshots, and required recovery information.
+Record its purpose, source revision or capture time, hash, and owning claim.
+Review and commit the selected files after applicable checks.
+Git tracking preserves selected bytes. It does not establish correctness, approval, or business acceptance.
+
+Write routine command output and troubleshooting diagnostics to `tasks/<task-id>/logs/<run-id>/`.
+Keep task logs beside their owning record. The `/tasks/*/logs/` Git rule excludes them from commits.
+This includes verbose stdout, stderr, clean-build output, repeated diagnostics, and disposable report exports.
+File extensions do not determine retention. A JSON result can be disposable, and a `.log` can be required evidence.
+
+Promote log content into task evidence when a consequential decision or claim requires it.
+Also promote content required by an applicable procedure or protected provenance.
+Examples include material failures, contradictions, timing, correlations, reproduction, and recovery.
+Retain the necessary raw bytes when a reviewer needs full context.
+Use an excerpt only when omitted context cannot change the supported conclusion.
+Label excerpts and state their scope and omitted-context limits.
+A hash identifies bytes. It cannot replace necessary raw content.
+
+Keep routine check receipts in the living record.
+Include the command, source identity, environment, exit status, assertion outcomes, counts, and material limits.
+Before staging evidence, inspect ignore rules and select exact files. Do not stage a complete diagnostic output directory.
+Preserve existing required logs and provenance. This boundary does not authorize historical deletion or untracking.
+
 ### Critical evidence and reusable payloads
 
 Apply this policy to business tasks and harness maintenance evidence.
@@ -577,6 +608,12 @@ Keep full logs when their contents support those claims or an applicable procedu
 Label excerpts as excerpts. Record omitted context and its effect on the conclusion.
 Lossless compression can retain large required text when consumers support it. Record original and compressed hashes separately.
 
+Apply the [evidence and log boundary](#git-managed-evidence-and-local-logs) while a run is active.
+Promote required raw output to the owning task `evidence/` directory before case completion, handoff, or runtime cleanup.
+Promotion requires a consequential finding, necessary assertion, correlation, timing claim, recovery need, or protected provenance.
+Record the promoted path, source identity, capture time, and hash in the living record or evidence index.
+Do not promote repeated clean output or empty files without another evidentiary purpose.
+
 Before retaining a payload, check existing task and governed evidence for the same source or capture.
 Reuse its canonical path and SHA-256. Cross-task consumers link that path instead of copying its bytes.
 For recoverable Git sources, verify retrieval at the exact revision before relying on a locator alone.
@@ -588,7 +625,8 @@ Never substitute an earlier screenshot for a newly required observation.
 Capture required observations first. Reuse identical payload storage only while preserving their separate capture records.
 Do not rewrite frozen manifests or registered snapshots to deduplicate existing history without authorized relocation.
 
-Use ignored `.workbench/` storage for optional exports, scratch analysis, and routine diagnostics.
+Use ignored `.workbench/` storage for runtime state, optional exports, and scratch analysis.
+Keep routine task diagnostics in the owning task's ignored `logs/<run-id>/` directory.
 Required evidence must have a durable canonical path before case completion, handoff, or runtime cleanup.
 Check inherited ignore rules before using a new canonical evidence path.
 When necessary, select an unignored path or explicitly track the required file after checking its contents and consumer.
@@ -673,7 +711,8 @@ An identical hash identifies duplicate bytes. It does not establish that a linke
 For authorized cleanup, record removed paths, SHA-256 hashes, prior Git revisions, and reasons in one machine-readable record.
 Use `null` for an unavailable prior revision. State when Git cannot recover an untracked artifact.
 Keep registered raw snapshots, stable source identities, prior provenance manifests, and immutable audit events unchanged.
-Repair active links and inventories. Historical locators can resolve through the cleanup record and retained Git revision.
+Repair active links and inventories. Resolve historical locators through the recorded cleanup or relocation map.
+Git revisions require a retained source checkout or backup. A clean-root branch omits those old commits.
 Validate retained hashes and references after cleanup. Remove empty directories and redundant check outputs.
 
 ### Promote reusable domain experience

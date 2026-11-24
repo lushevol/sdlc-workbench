@@ -11,8 +11,9 @@ These skills guide agents. They do not add a workflow runner or an automatic app
 Use [manage-knowledge-lifecycle](../.agents/skills/manage-knowledge-lifecycle/SKILL.md) at workflow entry, resumption, status review and handoff.
 When progress prose, receipts, and outputs disagree, reconcile selected identities, reviewed receipts, output links, justified `no_change`, and held or missing scope before reporting completion. Selected identities without a justified output disposition remain pending.
 
-The current [Portal and Settlement intake](../tasks/workbench-knowledge-raw-import-20261113/01-maintenance.md) records checked progress and remaining work.
-Its [single editable question document](../tasks/workbench-knowledge-raw-import-20261113/evidence/canonical-draft-questions-20261115.md) collects investigated decisions for batch handling.
+Inspect current [processing receipts](../knowledge/evidence/processing/) and canonical records to establish Portal and Settlement progress.
+The retained [question snapshot](../knowledge/evidence/sources/task-provenance-20261124/workbench-knowledge-raw-import-20261113/evidence/canonical-draft-questions-20261115.md) preserves investigated questions and recorded answers.
+Record new answers in the owning business task, then reconcile their intended meaning through the existing knowledge workflow.
 Candidate review, source completion, wiki freshness, and human publication remain separate stages.
 It inspects current source queues, processing receipts, canonical reviews/audit, and wiki bindings before selecting existing major-step skills.
 It reports source coverage, canonical processing, governance, publication, wiki freshness and requested business verification separately.

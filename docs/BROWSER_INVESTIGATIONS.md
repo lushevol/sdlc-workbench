@@ -207,7 +207,9 @@ On Windows, use `.venv\Scripts\ai-sdlc.exe`.
 Generated workspaces have empty catalogs.
 Configure their resource path to this optional environment without copying runtime source.
 Command actions retain stdout, stderr, and the helper's evidence path.
-Preserve the referenced browser artifacts separately before sharing an action record.
+Routine action output remains in ignored runtime storage.
+Before sharing decision evidence, retain its required browser artifacts and source bindings under the owning task.
+Apply the [evidence and log boundary](../tasks/README.md#git-managed-evidence-and-local-logs); preserve necessary raw context and referenced payloads.
 Use a scoped workspace timeout for long investigations.
 
 Inspect a retained trace locally:

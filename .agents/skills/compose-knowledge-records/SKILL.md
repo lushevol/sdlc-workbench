@@ -43,7 +43,8 @@ Retain domain rules, contracts, decisions, and intended business-system architec
 Exclude Workbench maintenance, raw sources, code copies, fixtures, execution results, reports, and intermediate files from canonical knowledge.
 Keep implementation facts, deployment status, observations, and conformance results outside canonical intent.
 Store `GovernanceFinding` records under `knowledge/evidence/findings/`.
-Keep logs, captures, assertions, investigation reports, and old/new gap Markdown under the owning task.
+Keep claim-bearing logs, required captures, assertions, investigation reports, and old/new gap Markdown under the owning task.
+Keep routine diagnostics in ignored local storage under the [evidence and log boundary](../../../tasks/README.md#git-managed-evidence-and-local-logs).
 Keep harness checkpoints in ignored working storage or required retained evidence.
 When useful, link stable gap IDs from reports and navigation without importing their results as intent.
 
