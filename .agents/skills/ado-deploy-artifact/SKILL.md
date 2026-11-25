@@ -31,4 +31,4 @@ Record the observed artifact names and the proposed rule separately.
 Submit the candidate against `ado-deploy-artifact` so future conditions improve the same capability.
 Pass each projected receipt path with `learning checkpoint --ado-observation PATH`.
 Repeat the flag for an independent result and include the task with `--task PATH`.
-Follow the shared learning and review policy. [Capability learning](../capability-learning/SKILL.md)
+Follow the shared learning and review policy. [Session learning registry mode](../learn-from-sessions/references/capability-registry.md)

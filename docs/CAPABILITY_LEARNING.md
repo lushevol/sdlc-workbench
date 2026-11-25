@@ -10,6 +10,11 @@ limitations:
 
 # Capability learning
 
+Use [learn-from-sessions](../.agents/skills/learn-from-sessions/SKILL.md) for session review, reusable assets, experience packaging, and registry reconciliation.
+It combines the former history, packaging, and registry skills without changing runtime operations or packet formats.
+Its [extraction reference](../.agents/skills/learn-from-sessions/references/extraction.md) separates explicit preferences, observations, inferences, and useful failed attempts.
+Use only the applicable mode. Registry reconciliation is optional for direct extraction.
+
 ## Extract domain capabilities
 
 Use [domain-capability-extractor](../.agents/skills/domain-capability-extractor/SKILL.md) to retain useful integration discoveries from engineering work.

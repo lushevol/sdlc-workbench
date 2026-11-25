@@ -281,8 +281,11 @@ Business-system technical explanations qualify when they describe domain behavio
 `core/knowledge/` holds reusable schemas and templates outside the domain knowledge base.
 
 Reusable task experience has a separate project-owned boundary under `assets/experience/`.
-The `package-domain-experience` skill stores concise execution cards, sanitized scripts, safe variable templates, synthetic or redacted fixtures, and links to canonical knowledge.
-The `learn-domain-experience` skill scans retained task and explicitly supplied session material to prepare candidate packets.
+The `learn-from-sessions` skill reviews current sessions or bounded retained history for reusable assets and sourced preferences.
+Its packet mode stores successful recipes, sanitized scripts, safe variable templates, fixtures, and canonical knowledge links.
+Its registry mode uses existing capability operations without adding another engine.
+Explicit preferences retain their scope. Inferred preferences remain candidates; global memory changes require an explicit request.
+Useful failures and partial discoveries remain supported lessons without becoming successful packets.
 Packets retain source tasks, evidence hashes, tested conditions, status, and limits. They do not duplicate canonical knowledge or grant execution authority.
 Generated workspaces receive the skills and guide without the adopting project's experience packets.
 

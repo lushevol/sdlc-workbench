@@ -153,8 +153,11 @@ Use [domain-capability-extractor](.agents/skills/domain-capability-extractor/SKI
 Maintain linked Contracts, Workflows, and Knowledge under `knowledge/integrations/<domain>/` through ordinary agent tools.
 Extraction requires no hook, learning engine, or experience packet. Keep canonical business intent under existing governance.
 
-Use [capability-learning](.agents/skills/capability-learning/SKILL.md) when scoped registry retrieval or reconciliation is relevant to the task.
-For that workflow, search the registry at entry. Load linked skills and contracts, then check scope and permissions.
+Use [learn-from-sessions](.agents/skills/learn-from-sessions/SKILL.md) for session retrospectives, sourced preferences, reusable assets, and scoped registry learning.
+Review current sessions or bounded retained history. Preserve user input, useful attempts, failures, scope, and evidence limits.
+Update existing asset owners. Keep inferred preferences as candidates and global memory changes explicitly authorized.
+Use its packet mode only for supported successful recipes within the requested scope.
+For registry work, search at entry. Load linked skills and contracts, then check scope and permissions.
 Use granted connectors and retain exact evidence. Reconcile reusable discoveries at its checkpoints and handoff.
 Submit minimized evidence references without waiting for a separate learning request when registry learning applies.
 Use validated rules in future sessions. Recheck uncertain evidence when it could change the outcome.

@@ -139,7 +139,7 @@ Prompts, tool arguments, detailed responses, transcripts, paths, and raw session
 The retained outcome describes the native tool event. It cannot establish command success or verify task behavior.
 Identical event classes for a session coalesce under the ignored `.workbench/learning/events/` directory.
 Explicit task checkpoints and retained task evidence drive semantic extraction and verification.
-Use the [capability-learning skill](../.agents/skills/capability-learning/SKILL.md) if native hooks are restricted or unavailable.
+Use [learn-from-sessions registry mode](../.agents/skills/learn-from-sessions/references/capability-registry.md) if native hooks are restricted or unavailable.
 
 Set `WORKBENCH_LEARNING_CAPTURE=0`, `false`, or `off` in the client environment to disable capture.
 Capture failures leave completion checks available.

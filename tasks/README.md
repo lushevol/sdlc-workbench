@@ -722,9 +722,14 @@ Maintain linked Contracts, Workflows, and Knowledge under `knowledge/integration
 This direct extraction requires no experience packet or learning-engine promotion.
 Use the packet workflow below when a reviewed successful recipe is the requested deliverable.
 
-After a supported successful result and a short retrospective, use [package-domain-experience](../.agents/skills/package-domain-experience/SKILL.md) to select one minimal end-to-end script, workflow, or instruction set as the primary recipe, then retain only supporting procedures, scripts, fixtures, variable templates, references, and recovery steps.
-Use [learn-domain-experience](../.agents/skills/learn-domain-experience/SKILL.md) to scan retained task records or explicitly supplied session exports for repeated patterns. Session scans require a past duration and default to one week. Unchanged sessions are skipped from the recorded scan state.
-Learning produces a pending review bundle. Ask for explicit candidate decisions before invoking the packaging skill.
+Use [learn-from-sessions](../.agents/skills/learn-from-sessions/SKILL.md) to extract sourced preferences, scripts, workflows, knowledge, and useful attempts.
+It reviews current sessions, retained tasks, or explicitly supplied session exports.
+Historical scans default to one week and record unchanged source fingerprints.
+Inventory completion does not establish semantic review or a completed reusable output.
+Keep inferred preferences as candidates and meaningful failures as scoped lessons.
+After a supported successful result, select one minimal end-to-end recipe when packaging is useful and authorized.
+Keep only supporting procedures, scripts, fixtures, variable templates, references, and recovery steps.
+Historical discovery produces pending candidates. Reuse explicit selection and packaging authorization, or obtain specific candidate decisions.
 After approval, promote generalizable guidance or tooling into `AGENTS.md`, canonical `.agents/skills/`, `core/skills/`, or `scripts/` when the packet identifies a shared Workbench benefit. Record the exact target and before and after hashes in the packet manifest.
 Keep scratch scans in ignored `.workbench/experience/` storage and promote selected packets under `assets/experience/`.
 Link each packet from the owning task and preserve its evidence paths and hashes.

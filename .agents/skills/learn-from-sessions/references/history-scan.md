@@ -9,4 +9,20 @@ The ignored `.workbench/experience/scan-state.json` records each session's lates
 
 Treat every signal as a search hint. Read the source file and its evidence before using it. A filename, heading, status word, or passing command does not prove a successful domain outcome.
 
-The scanner output is disposable review working state with `review_status: PENDING`. It never creates a packet or changes the experience index. Promote only after the user approves selected candidate IDs, then preserve the review bundle and packet provenance.
+Run from the workspace root:
+
+```sh
+python3 .agents/skills/learn-from-sessions/scripts/scan_history.py --workspace . --past-duration 7d --path RETAINED_EXPORT --output .workbench/experience/history.json
+```
+
+The scanner output is disposable review working state with `review_status: PENDING`.
+It never creates a packet or changes the experience index.
+Preserve candidate decisions before packaging selected recipes through [experience-packets.md](experience-packets.md).
+Reuse explicit authorization that already selects the candidates and packaging scope.
+Otherwise, obtain their approve, reject, or revise decisions.
+Keep the review bundle and packet provenance.
+
+Signals include preferences, corrections, exploration, and failed attempts.
+These hints do not establish a durable preference, verified explanation, or successful recipe.
+A scan-state fingerprint records inventory work only.
+If semantic review or its output is missing, inspect the earlier inventory and source despite an unchanged fingerprint.

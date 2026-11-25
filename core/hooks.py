@@ -305,7 +305,7 @@ def run_hook(root, client, event, payload):
         else:
             lines += ["No task or collection is bound. Reuse tasks/README.md or .agents/skills/manage-knowledge-lifecycle/SKILL.md.",
                       "Before scoped edits, bind the existing living record: " + command]
-        lines.append("Use .agents/skills/capability-learning/SKILL.md to look up capabilities and capture reusable findings at task checkpoints.")
+        lines.append("Use .agents/skills/learn-from-sessions/SKILL.md to look up capabilities and capture reusable findings at task checkpoints.")
         lines.append("Reuse existing authorization and recorded answers. " + _LIMIT)
         return _native(client, "\n".join(lines)[:2000]), "", 0
     if payload.get("stop_hook_active"):

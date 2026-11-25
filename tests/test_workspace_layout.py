@@ -34,8 +34,8 @@ CANONICAL_SKILL_IDS = (
     "prepare-knowledge-transition", "record-knowledge-audit", "check-knowledge-integrity",
     "evaluate-knowledge-retrieval", "evaluate-harness", "classify-knowledge-change", "bind-wiki-sources",
     "maintain-wiki-content", "finalize-wiki-update", "check-wiki-health",
-    "manage-knowledge-lifecycle", "package-domain-experience", "learn-domain-experience", "workbench-ready",
-    "capability-learning", "ado-deploy-artifact", "ces-domain-capability", "domain-capability-extractor",
+    "manage-knowledge-lifecycle", "learn-from-sessions", "workbench-ready",
+    "ado-deploy-artifact", "ces-domain-capability", "domain-capability-extractor",
 )
 
 BROWSER_LOCAL_FILES = (

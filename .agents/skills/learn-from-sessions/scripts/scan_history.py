@@ -21,6 +21,7 @@ TEXT_SUFFIXES = {".md", ".txt", ".json", ".yaml", ".yml", ".log", ".robot", ".fe
 SIGNAL_WORDS = {
     "workflow", "steps", "commands", "result", "outcome", "validation", "recovery", "variable",
     "url", "knowledge", "evidence", "limit", "success", "passed", "assertion", "fixture",
+    "preference", "clarification", "decision", "attempt", "failure", "failed", "exploration", "correction",
 }
 HEADING = re.compile(r"^#{1,4}\s+(.+?)\s*$")
 DURATION = re.compile(r"^(?P<value>[1-9][0-9]*)(?P<unit>[hdw])$")
@@ -230,7 +231,7 @@ def scan(workspace: Path, explicit: list[str], include_workbench: bool, max_file
                          "cutoff": cutoff.isoformat(), "scanned_sessions": scanned_sessions,
                          "skipped_sessions": skipped_sessions, "out_of_window_sessions": out_of_window_sessions},
         "review": {"review_status": "PENDING", "candidates": candidates,
-                    "decision_required": "Approve, reject, or revise candidate IDs before invoking package-domain-experience."},
+                    "decision_required": "Approve, reject, or revise candidate IDs before learn-from-sessions packages selected recipes."},
         "promotion": {"status": "BLOCKED_UNTIL_EXPLICIT_REVIEW", "packets_created": 0, "index_changed": False},
         "files": records,
         "limits": [f"Scanned at most {max_files} files and {max_bytes} bytes.",

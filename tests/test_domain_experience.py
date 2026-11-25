@@ -14,9 +14,9 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VALIDATOR = ROOT / ".agents/skills/package-domain-experience/scripts/validate_packet.py"
-INDEXER = ROOT / ".agents/skills/package-domain-experience/scripts/rebuild_index.py"
-SCANNER = ROOT / ".agents/skills/learn-domain-experience/scripts/scan_history.py"
+VALIDATOR = ROOT / ".agents/skills/learn-from-sessions/scripts/validate_packet.py"
+INDEXER = ROOT / ".agents/skills/learn-from-sessions/scripts/rebuild_index.py"
+SCANNER = ROOT / ".agents/skills/learn-from-sessions/scripts/scan_history.py"
 
 
 class DomainExperienceScriptsTests(unittest.TestCase):
@@ -177,6 +177,20 @@ class DomainExperienceScriptsTests(unittest.TestCase):
         paths = {item["path"] for item in json.loads(output.read_text(encoding="utf-8"))["files"]}
         self.assertIn("retained-session/recent.md", paths)
         self.assertNotIn("retained-session/old.md", paths)
+
+    def test_history_scanner_keeps_preferences_and_failed_attempts_as_candidates(self):
+        session = self.workspace / "retained-session.md"
+        session.write_text("# Session\n## User preferences\n## Failed attempts\n## Exploration\n", encoding="utf-8")
+        output = self.workspace / ".workbench/experience/lessons.json"
+        result = self.run_script(SCANNER, "--workspace", self.workspace, "--path", session, "--output", output)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        payload = json.loads(output.read_text(encoding="utf-8"))
+        self.assertEqual(len(payload["review"]["candidates"]), 1)
+        candidate = payload["review"]["candidates"][0]
+        self.assertTrue({"preference", "failed", "attempt", "exploration"} <= set(candidate["signals"]))
+        self.assertEqual(candidate["decision"], "PENDING")
+        self.assertIsNone(candidate["proposed_primary_recipe"])
+        self.assertFalse((self.workspace / "assets/experience").exists())
 
     def test_history_scanner_skips_unchanged_sessions_and_rescans_changes(self):
         session = self.workspace / "retained-session"
