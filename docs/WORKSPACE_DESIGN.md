@@ -284,6 +284,8 @@ Reusable task experience has a separate project-owned boundary under `assets/exp
 The `learn-from-sessions` skill reviews current sessions or bounded retained history for reusable assets and sourced preferences.
 Its packet mode stores successful recipes, sanitized scripts, safe variable templates, fixtures, and canonical knowledge links.
 Its registry mode uses existing capability operations without adding another engine.
+Learning remains in task evidence or draft review storage until the human confirms the concrete presented changes.
+This confirmation precedes updates to shared assets, the domain library, packets, indexes, and active registry rules.
 Explicit preferences retain their scope. Inferred preferences remain candidates; global memory changes require an explicit request.
 Useful failures and partial discoveries remain supported lessons without becoming successful packets.
 Packets retain source tasks, evidence hashes, tested conditions, status, and limits. They do not duplicate canonical knowledge or grant execution authority.

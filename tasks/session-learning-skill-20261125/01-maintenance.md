@@ -10,7 +10,13 @@ limitations:
 
 # Consolidate session learning skills
 
-> **The consolidated skill is implemented and verified.**
+> **Human confirmation must precede finalizing extracted learning.**
+> The [latest clarification](#human-confirmation-clarification) requires a visible proposal and explicit confirmation.
+> The skill and governing procedures now include that gate.
+> Follow-up checks and an isolated unconfirmed scenario passed.
+> The scenario retained candidate drafts and left active assets unchanged.
+>
+> **The initial consolidation passed its baseline checks.**
 > Use [`learn-from-sessions`](../../.agents/skills/learn-from-sessions/SKILL.md) for the three combined responsibilities and session extraction.
 > All 1,166 runtime tests passed without skips; the wheel and isolated trial passed.
 > See [verification.json](evidence/verification.json) for commands, source hashes, and limits.
@@ -111,4 +117,58 @@ Use `$learn-from-sessions` for current sessions, selected history, successful pa
 Read only the references needed by the requested responsibility.
 Formal ASD writing review, Windows behavior, and live agent dispatch were not established.
 No business publication, global memory update, deployment, or external message occurred.
-The authorized consolidation is complete; the scoped commit follows staged diff review.
+The initial consolidation was committed as `502856727`.
+
+## Human confirmation clarification
+
+Source: this Codex chat, 25 November 2026.
+
+> one thing that add human confirmation before you finalize the learning to workbench, don't do in silence.
+
+This clarification requires visible human confirmation before applying extracted learning to reusable Workbench assets.
+Preparation, evidence retention, draft scripts, and offline checks may continue before confirmation.
+Present concrete proposed changes, destinations, evidence, checks, risks, and limits for review.
+Record confirmation against the reviewed scope before finalization.
+Silence, continuation, broad learning requests, and automated checks cannot supply that confirmation.
+
+The worktree was clean at this follow-up's entry.
+Baseline: consolidation commit `502856727`.
+Scope includes the skill and current project procedures; existing runtime operations remain unchanged.
+Risk is moderate because registry checkpoint commands can activate allowlisted discoveries automatically.
+Inspect that behavior and keep pre-confirmation checkpoint submissions candidate-only.
+This instruction authorizes the confirmation-rule update itself.
+The new confirmation requirement applies to extracted learning finalization.
+The skill now separates candidate preparation from finalization.
+The gate covers scripts, workflows, knowledge, preferences, instructions, domain references, packets, indexes, and active registry rules.
+Specific candidate confirmation must precede finalization, including delegated extraction.
+Only exact presented changes can reuse recorded confirmation.
+Material revisions need confirmation of their updated proposal.
+
+The registry guidance requires `WORKBENCH_LEARNING_PROMOTION=0` for checkpoint and promotion operations.
+Confirmed manual promotion retains existing approval and independent verification requirements.
+The underlying runtime and its default switches remain unchanged.
+The existing candidate from the initial consolidation remains unpromoted.
+Its linked skill changed; revalidate the candidate and present its current proposal before any future promotion.
+
+The 11 capability-learning tests and 24 workspace-layout tests passed with no failures or skips.
+These include candidate-only capture for an otherwise auto-eligible discovery.
+Both changed skill entry points passed skill validation.
+The 170 inspected local links resolved, including links to the confirmation gate.
+Workspace validation remained `VALID`, with 119 documents and no findings.
+The updated wheel installed outside this checkout and initialized a valid empty workspace.
+It preserved all 14 session-learning files and six changed guides exactly.
+See the [wheel check](evidence/confirmation-gate-wheel-smoke.json) and [follow-up verification](evidence/confirmation-gate-verification.json).
+
+This guidance-only update did not change runtime implementation, schemas, or helper code.
+The earlier full-suite result remains bound to the initial consolidation's source hashes.
+The new confirmation gate is an agent procedure using the existing runtime promotion switch.
+Direct commands outside that procedure can still enable automatic promotion.
+The [isolated scenario](evidence/confirmation-gate-input.json) completed with no human confirmation available.
+The agent prepared three candidates, an exact patch, evidence, checks, risks, and limits.
+It retained an unanswered decision table and an empty confirmed scope.
+All four original input hashes remained unchanged.
+No active extracted script or experience packet was installed.
+The [assessment](evidence/confirmation-gate-assessment.json) passed six criteria; the draft checker passed all 11 checks.
+The [result archive](evidence/confirmation-gate-result.tar.gz) preserves the inspected output.
+This synthetic scenario does not establish universal compliance or live client behavior.
+The requested procedure update is complete.

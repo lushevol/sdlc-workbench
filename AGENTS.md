@@ -149,17 +149,26 @@ Use direct inspection without a usable index; do not invent a GitNexus score or 
 
 ### Learn reusable capabilities
 
+Prepare extracted learning as task evidence and draft changes before finalization.
+Present concrete candidates, target paths, changes, evidence, checks, risks, and limits to the human.
+Wait for explicit confirmation of the presented changes before updating reusable Workbench assets or active rules.
+Record the answer and confirmed scope. Do not finalize learning silently.
+Broad learning requests, continuation, silence, and automated checks do not supply that confirmation.
+Follow the [human confirmation gate](.agents/skills/learn-from-sessions/SKILL.md#human-confirmation-before-finalization).
+
 Use [domain-capability-extractor](.agents/skills/domain-capability-extractor/SKILL.md) for reusable domain contracts, workflows, failures, tools, and background context.
 Maintain linked Contracts, Workflows, and Knowledge under `knowledge/integrations/<domain>/` through ordinary agent tools.
 Extraction requires no hook, learning engine, or experience packet. Keep canonical business intent under existing governance.
 
 Use [learn-from-sessions](.agents/skills/learn-from-sessions/SKILL.md) for session retrospectives, sourced preferences, reusable assets, and scoped registry learning.
 Review current sessions or bounded retained history. Preserve user input, useful attempts, failures, scope, and evidence limits.
-Update existing asset owners. Keep inferred preferences as candidates and global memory changes explicitly authorized.
+Prepare updates for existing asset owners. Finalize only human-confirmed changes.
+Keep inferred preferences as candidates and global memory changes explicitly authorized.
 Use its packet mode only for supported successful recipes within the requested scope.
 For registry work, search at entry. Load linked skills and contracts, then check scope and permissions.
 Use granted connectors and retain exact evidence. Reconcile reusable discoveries at its checkpoints and handoff.
-Submit minimized evidence references without waiting for a separate learning request when registry learning applies.
+Submit minimized candidate evidence with `WORKBENCH_LEARNING_PROMOTION=0` when registry learning applies.
+Present the resulting proposal and obtain human confirmation before recorded manual promotion.
 Use validated rules in future sessions. Recheck uncertain evidence when it could change the outcome.
 Keep unresolved registry claims as candidates. Follow canonical governance for business intent and entitlement decisions.
 Continue the primary task if registry learning fails. Use its [checkpoint fallback](docs/CAPABILITY_LEARNING.md#configure-and-diagnose) when native hooks are unavailable.

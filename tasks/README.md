@@ -729,7 +729,11 @@ Inventory completion does not establish semantic review or a completed reusable 
 Keep inferred preferences as candidates and meaningful failures as scoped lessons.
 After a supported successful result, select one minimal end-to-end recipe when packaging is useful and authorized.
 Keep only supporting procedures, scripts, fixtures, variable templates, references, and recovery steps.
-Historical discovery produces pending candidates. Reuse explicit selection and packaging authorization, or obtain specific candidate decisions.
+Keep current-session and historical learning as pending candidates until the human confirms concrete presented changes.
+Prepare draft scripts, packets, and patches with their evidence and checks before asking.
+Show candidate IDs, target paths, changes, risks, and limits; then wait for explicit approval, rejection, or revision.
+Record the answer and apply only the confirmed changes. Do not finalize learning silently.
+Keep `WORKBENCH_LEARNING_PROMOTION=0` for candidate checkpoint and promotion operations; use recorded approval for confirmed manual promotion.
 After approval, promote generalizable guidance or tooling into `AGENTS.md`, canonical `.agents/skills/`, `core/skills/`, or `scripts/` when the packet identifies a shared Workbench benefit. Record the exact target and before and after hashes in the packet manifest.
 Keep scratch scans in ignored `.workbench/experience/` storage and promote selected packets under `assets/experience/`.
 Link each packet from the owning task and preserve its evidence paths and hashes.

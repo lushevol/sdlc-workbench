@@ -1,0 +1,69 @@
+{
+  "status": "PASSED",
+  "baseline_revision": "502856727981641e604b663a7012e4b86966db95",
+  "scope": "Skill and guide changes only; runtime implementation and schemas are unchanged.",
+  "focused_tests": [
+    {
+      "log": "capability-tests.log",
+      "passed": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "log": "workspace-tests.log",
+      "passed": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "total_passed": 35,
+  "test_commands": [
+    ".venv/bin/python -m unittest discover -s tests -p test_capability_learning.py -v",
+    ".venv/bin/python -m unittest discover -s tests -p test_workspace_layout.py -v"
+  ],
+  "original_test_output": "confirmation-gate-tests.json.gz",
+  "test_output_sha256": "ac66281f541790ba687f3c3e72301736036aef01c02037bd5a276905fdff20e3",
+  "skill_validation": "PASSED for learn-from-sessions and domain-capability-extractor",
+  "workspace_validation": {
+    "schema_version": 1,
+    "status": "VALID",
+    "valid": true,
+    "documents": 119,
+    "findings": [],
+    "catalogs": {
+      "repositories": 9,
+      "services": 2,
+      "capabilities": 7,
+      "contracts": 16,
+      "sources": 14,
+      "tools": 15
+    }
+  },
+  "wheel_smoke": "confirmation-gate-wheel-smoke.json",
+  "local_links_checked": 170,
+  "candidate_source_hashes": {
+    ".agents/skills/domain-capability-extractor/SKILL.md": "812d62d24c69e0bf73a81e0d5f4fbbafd799413551fb745678276e8f9946565e",
+    ".agents/skills/learn-from-sessions/SKILL.md": "8af75f4826bb2e243eb487ada880c460f1a9e24d6b1bbc791ba430f63274d291",
+    ".agents/skills/learn-from-sessions/agents/openai.yaml": "feede24eb583ebf58b131d115cfccb7883457c8c1a154f2d627d53be8b39dd83",
+    ".agents/skills/learn-from-sessions/references/capability-registry.md": "025dbd46a6f1cedf8a2583f442f4477906424f38abed4266bdddb46dcd0c45ac",
+    ".agents/skills/learn-from-sessions/references/experience-packets.md": "e66105f6ae77fe68ce5a7dbdc8557250f41e5aa248568e8e96e405b5e8ac2ad4",
+    ".agents/skills/learn-from-sessions/references/extraction.md": "a89b511bedcf9a4c406ed69a92836ded36b1dc034b2b7a6030179b5e2d737c35",
+    ".agents/skills/learn-from-sessions/references/history-scan.md": "e154109aa84ec80f0fe029f1ae0f02742e64cec5be16772bea32bb1ae2aa7239",
+    ".agents/skills/learn-from-sessions/references/workbench-promotion.md": "4c4da09b0d2c9a004b70e69a374a7fa745a985ef957819405a497e6bc78b8ee6",
+    "AGENTS.md": "f315c09072aac4581cdbeac5aaa6edfaf1dffa5f5787c445e8237cb3de7680f1",
+    "docs/CAPABILITY_LEARNING.md": "d0ab4b55bb901202f35fb4ba6359a985a330be00a5a655401c78516c68863384",
+    "docs/EXPERIENCE_ASSETS.md": "1214a593dca51998563ffcab192f0cb2f0da9868c857fc2cdc3460eb72d54482",
+    "docs/WORKSPACE_DESIGN.md": "321d97966f921d500526b72ef0c5d898ff26b058a4da9171c45ab56561bebaa7",
+    "tasks/README.md": "5ba64d9ccad58fc5afe9eeaa1cd0e0607456c090699a0de23c7256d9141771dd"
+  },
+  "limits": [
+    "The complete 1166-test suite belongs to the earlier consolidation baseline. This guidance-only update ran 35 applicable focused tests.",
+    "Human confirmation is an agent procedure. The existing runtime can still auto-promote if called outside this procedure with promotion enabled.",
+    "Formal ASD writing review, Windows execution, and live agent dispatch remain unverified."
+  ],
+  "isolated_trial": "confirmation-gate-assessment.json",
+  "isolated_trial_criteria_passed": 6,
+  "isolated_trial_draft_checks_passed": 11
+}

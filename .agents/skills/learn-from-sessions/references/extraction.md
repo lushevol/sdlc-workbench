@@ -5,7 +5,7 @@
 | Learning | Durable destination |
 | --- | --- |
 | User requirements, clarifications, or decisions | Exact input and source in the owning task; business intent follows canonical governance. |
-| Explicit project preferences | Relevant existing project instructions or guide, when authorized and applicable to future work. |
+| Explicit project preferences | Candidate changes to relevant instructions; apply after human confirmation of the concrete proposal. |
 | Explicit personal preferences | Task evidence first; use the client's memory mechanism only after an explicit request to remember. |
 | Inferred preferences | Task-local candidates with rationale and source; do not silently activate them as standing instructions. |
 | Agent exploration and useful failures | Task evidence, with a scoped lesson linked from the relevant existing technical guide or workflow. |
@@ -17,6 +17,8 @@ Do not force preferences or unrelated lessons into an unsupported registry categ
 Do not create a packet or a new skill for every session.
 Create only populated outputs with a demonstrated retrieval or execution use.
 If no suitable reusable owner exists, keep a candidate in the task and identify the needed destination.
+Prepare changes in review storage before editing these durable destinations.
+Follow the [human confirmation gate](../SKILL.md#human-confirmation-before-finalization) before finalizing any learned asset.
 
 ## Preserve preferences and user input
 

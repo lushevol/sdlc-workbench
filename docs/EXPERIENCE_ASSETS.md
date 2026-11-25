@@ -13,11 +13,27 @@ Use only the responsibilities needed by the request.
 | Reconcile scoped capabilities | Existing Workbench registry operations, verification rules, and revision history. |
 
 Use [domain capability extraction](CAPABILITY_LEARNING.md#extract-domain-capabilities) for cumulative API, workflow, failure, and background references.
-That extraction writes domain files directly and requires no experience packet approval.
+That extraction prepares domain file changes without requiring an experience packet.
+Human confirmation still precedes finalizing those changes.
 Use the same skill's [registry mode](../.agents/skills/learn-from-sessions/references/capability-registry.md) when scoped reconciliation is needed.
 Use the experience packet workflow when a successful procedure needs a reviewed reusable package.
 Direct extraction requires no packet, registry promotion, or native hook.
 Business intent retains its canonical governance.
+
+## Human confirmation
+
+Prepare source-backed lessons, draft assets, proposed patches, and applicable offline checks first.
+Keep unconfirmed changes in the owning task or ignored review storage.
+Show candidate IDs, target paths, concrete changes, evidence, checks, risks, and limits.
+Ask the human to approve, reject, or revise those candidates and wait for an explicit answer.
+Record the answer and confirmed scope before applying the learned changes.
+Material revisions require confirmation of the revised proposal.
+Do not finalize learning silently.
+
+This applies to scripts, workflows, knowledge, preferences, project instructions, domain references, packets, indexes, and active registry rules.
+Broad learning requests, continuation, silence, and passing checks do not provide confirmation.
+Keep `WORKBENCH_LEARNING_PROMOTION=0` during checkpoint and promotion operations and use recorded approval for confirmed manual promotion.
+The [skill gate](../.agents/skills/learn-from-sessions/SKILL.md#human-confirmation-before-finalization) defines the complete procedure.
 
 ## Storage
 
@@ -59,7 +75,7 @@ Session scans require `--past-duration` and default to one week. The ignored sca
 Inventory fingerprints do not establish semantic review or a completed output.
 Reopen earlier inventories and sources when their reviewed result is missing.
 Historical discovery ends with `review_status: PENDING`.
-Reuse explicit candidate selection and packaging authorization, or obtain specific approve, reject, or revise decisions.
+Prepare and validate a draft, then obtain explicit confirmation of the presented packet and index changes before finalization.
 The scan does not establish success, business approval, production reachability, or knowledge publication.
 
 Package review also checks whether the result should update a shared Workbench asset. Keep domain-specific material in the packet. Apply the smallest compatible shared-asset change and record its target, purpose, before and after hashes, source section, and checks.
@@ -70,7 +86,7 @@ Preserve earlier packets when later replay disagrees.
 ## Preferences, exploration, and failures
 
 Preserve exact explicit preferences with their source, date, scope, conditions, and exceptions.
-Update applicable project instructions only within existing authorization.
+Present proposed instruction updates and obtain human confirmation before applying them.
 Keep inferred preferences in the owning task as candidates.
 Global memory changes require an explicit request to remember.
 Do not generalize a task-specific workaround into a universal preference.

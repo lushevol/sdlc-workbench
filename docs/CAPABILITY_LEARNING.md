@@ -49,8 +49,10 @@ Canonical skills follow the [Agent Skills specification](https://agentskills.io/
 1. Search with `ai-sdlc --workspace . learning list --query "artifact"`.
 2. Read linked skills and contracts. Match the task's exact selectors before using a learned rule.
 3. Capture provenance as part of the task. Prefer precise source locators and minimal evidence receipts.
-4. At a meaningful checkpoint, submit the discoveries. One discovery describes one reusable claim.
-5. Review conflicts and verification limits at handoff.
+4. At a meaningful checkpoint, submit candidate discoveries with `WORKBENCH_LEARNING_PROMOTION=0` in the process environment.
+5. Present concrete changes, evidence, scope, checks, risks, and limits to the human.
+6. Wait for explicit confirmation before applying or activating the presented learning.
+7. Review conflicts and verification limits at handoff.
 
 `learning use CAPABILITY --scope '{"system":"ado"}'` evaluates applicability.
 Supply all selectors needed for a rule. An omitted selector only matches rules that do not require it.
@@ -106,11 +108,19 @@ Replace all example identifiers and hashes with actual task references.
 
 ## Promotion and security
 
-Automatic promotion accepts an allowlisted ADO artifact name for the exact selector scope.
+Workbench learning requires the [human confirmation gate](../.agents/skills/learn-from-sessions/SKILL.md#human-confirmation-before-finalization).
+Prepare candidates and checks first, then present concrete changes and wait for explicit confirmation.
+Keep `WORKBENCH_LEARNING_PROMOTION=0` for checkpoint and promotion operations.
+Use recorded approval for confirmed manual promotion.
+Do not finalize learned assets or active registry rules silently.
+
+The underlying runtime can automatically promote an allowlisted ADO artifact name when its promotion switch is enabled.
 The resolver must independently validate at least two distinct builds and source commits.
 Each build must publish exactly one artifact to qualify for automatic promotion.
 Fixture observations use a reserved instance and only establish fixture behavior.
-The engine applies a qualifying CREATE or EXTEND. Other modifications require explicit review.
+The runtime can apply a qualifying CREATE or EXTEND automatically.
+The skill disables that automatic path; technical eligibility does not replace human confirmation.
+Other modifications retain their existing review requirements.
 
 For ordinary read-only guidance, a workspace authority records approval under a reviewed workspace-relative path.
 Use fields `change_id`, `authority`, `verification`, and `evidence`.
@@ -170,9 +180,10 @@ In Workbench, submit reusable CES findings against the existing capability ID `c
 
 ## Configure and diagnose
 
-Capture and automatic promotion default to enabled.
+The underlying runtime's capture and automatic promotion switches default to enabled.
 Set `WORKBENCH_LEARNING_CAPTURE=0` in the agent launch environment to disable capture.
-Set `WORKBENCH_LEARNING_PROMOTION=0` to keep verified discoveries as candidates for explicit review.
+The learning skill requires `WORKBENCH_LEARNING_PROMOTION=0` for checkpoint and promotion commands.
+This keeps verified discoveries as candidates until human confirmation and recorded manual approval.
 Existing active rules remain available with either switch disabled.
 
 Install [native hooks](HOOKS.md) for lightweight lifecycle capture.

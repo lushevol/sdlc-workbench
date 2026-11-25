@@ -18,8 +18,9 @@ python3 .agents/skills/learn-from-sessions/scripts/scan_history.py --workspace .
 The scanner output is disposable review working state with `review_status: PENDING`.
 It never creates a packet or changes the experience index.
 Preserve candidate decisions before packaging selected recipes through [experience-packets.md](experience-packets.md).
-Reuse explicit authorization that already selects the candidates and packaging scope.
-Otherwise, obtain their approve, reject, or revise decisions.
+Prepare draft recipes and checks before requesting confirmation.
+Present specific candidate changes and obtain explicit approve, reject, or revise decisions before finalization.
+Reuse a recorded answer only for the exact presented changes it confirms.
 Keep the review bundle and packet provenance.
 
 Signals include preferences, corrections, exploration, and failed attempts.

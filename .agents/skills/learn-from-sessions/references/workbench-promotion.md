@@ -12,6 +12,11 @@ Use these targets.
 Keep application source, business-repository files, credentials, private configuration, and environment-specific values in their existing owners.
 Keep canonical domain meaning in `knowledge/records/` and link it from the packet.
 
+Prepare candidate patches and checks before changing shared assets.
+Follow the [human confirmation gate](../SKILL.md#human-confirmation-before-finalization).
+Show target paths, concrete changes, evidence, risks, and limits; wait for explicit human confirmation.
+Record the confirmed scope in the owning task and apply only those changes.
+
 Before changing a shared asset, inspect its callers and existing instructions. Apply the smallest compatible change. Preserve unrelated text and behavior.
 
 Record the target, `add` or `update` action, purpose, packet source section, before hash, after hash, and checks in `manifest.yaml` under `promotions`.

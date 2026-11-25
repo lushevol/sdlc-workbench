@@ -20,8 +20,10 @@ Missing selectors cannot establish broader applicability.
 2. Separate observed facts, derived conclusions, and verification method.
 3. Select one supported primary category and the smallest applicable scope.
 4. Write a minimized discovery in ignored storage.
-5. Submit it through `learning checkpoint --input PATH`.
-6. Retain conflicts, candidate decisions, and material limits at handoff.
+5. Set `WORKBENCH_LEARNING_PROMOTION=0` in the checkpoint process environment before submitting `learning checkpoint --input PATH`.
+6. Present the concrete candidate, evidence, scope, checks, risks, and proposed registry change to the human.
+7. Wait for explicit confirmation and record it against that presented change before any promotion.
+8. Retain conflicts, candidate decisions, and material limits at handoff.
 
 Use the [learning guide](../../../../docs/CAPABILITY_LEARNING.md#submit-a-discovery) for the exact input contract.
 Its categories cover system knowledge, contracts, business rules, workflows, and operational experience.
@@ -29,8 +31,11 @@ Preferences remain in their appropriate instruction or task owner unless a suppo
 Do not add a parallel preference registry or another learning state machine.
 
 The checkpoint validates references and reconciles the current revision.
-It may promote an allowlisted independent result under existing controls.
-Other changes retain their required review and approval evidence.
+The runtime can auto-promote allowlisted results when its promotion switch is enabled.
+Keep `WORKBENCH_LEARNING_PROMOTION=0` for this skill's checkpoint and promotion operations.
+Use confirmed manual promotion with recorded approval instead of enabling automatic promotion.
+Follow the [human confirmation gate](../SKILL.md#human-confirmation-before-finalization), including for technically auto-eligible results.
+Retain all existing independent review and approval evidence.
 Review and test skill or script changes before registry promotion.
 New business intent and entitlement decisions follow canonical knowledge governance.
 

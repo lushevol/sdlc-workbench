@@ -31,7 +31,8 @@ Use relative links between the three folders. Keep each definition in one place.
 2. Read relevant user clarifications, source revisions, API exchanges, commands, assertions, and existing domain files.
 3. Classify each useful discovery as a contract, workflow, or knowledge item. One task can enrich all three.
 4. Read the applicable sections of [construction.md](references/construction.md). Preserve technical detail and useful failures.
-5. Merge matching operations, examples, scenarios, and facts. Preserve valid content and flag contradictory evidence with its scope.
+5. Prepare changes to matching operations, examples, scenarios, and facts. In Workbench, obtain human confirmation before applying them.
+   Preserve valid content and flag contradictory evidence with its scope.
 6. Check schemas, paired cases, actionable steps, evidence links, and the index. Run applicable existing tools and tests.
 7. Save completed files and task evidence as work progresses. Report changed capabilities, actual checks, and unresolved material gaps.
 
@@ -50,6 +51,8 @@ Keep meaningful failures and conflicting sources. A correction needs evidence; a
 Use stable case identities. Repeated extraction should enrich existing files without duplicating content or erasing earlier conditions.
 
 In Workbench, these files are technical integration references, outside canonical `knowledge/records/` and derived wiki ownership.
+Prepare learned changes as drafts and follow the [human confirmation gate](../learn-from-sessions/SKILL.md#human-confirmation-before-finalization).
+Present the concrete proposal and obtain explicit confirmation before finalizing changes to the Workbench domain library or shared assets.
 Link approved business rules by record identity and version. Route new business intent through existing knowledge governance.
 Keep implementation gaps and necessary execution evidence in the owning task.
 Keep routine logs in ignored local storage. Promote required raw context when consequential claims need it.
