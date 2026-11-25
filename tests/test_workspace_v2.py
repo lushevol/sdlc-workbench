@@ -33,6 +33,58 @@ class WorkspaceV2Tests(unittest.TestCase):
         (self.root / "workspace.local.yaml").write_text(yaml.safe_dump({
             "schema_version": 1, "repository_paths": paths}), encoding="utf-8")
 
+    def test_commit_policy_defaults_preserve_existing_yaml_and_legacy_json_without_rewriting(self):
+        path = self.root / "workspace.yaml"
+        generated = yaml.safe_load(path.read_text(encoding="utf-8"))
+        self.assertEqual(generated.pop("settings"), {"auto_commit_staged_changes": True})
+        for filename in ("workspace.yaml", "workspace.json"):
+            path.unlink(missing_ok=True)
+            path = self.root / filename
+            for settings in (None, {}):
+                with self.subTest(filename=filename, settings=settings):
+                    payload = dict(generated)
+                    if settings is not None:
+                        payload["settings"] = settings
+                    path.write_text(json.dumps(payload), encoding="utf-8")
+                    before = path.read_bytes()
+                    configuration, _ = load_workspace(self.root)
+                    self.assertEqual(configuration["settings"], {"auto_commit_staged_changes": True})
+                    self.assertEqual(path.read_bytes(), before)
+                    self.assertFalse((self.root / ".workbench").exists())
+
+    def test_status_reports_explicit_commit_policy_in_yaml_and_legacy_json(self):
+        path = self.root / "workspace.yaml"
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for filename in ("workspace.yaml", "workspace.json"):
+            path.unlink(missing_ok=True)
+            path = self.root / filename
+            for enabled in (True, False):
+                with self.subTest(filename=filename, enabled=enabled):
+                    payload["settings"] = {"auto_commit_staged_changes": enabled}
+                    path.write_text(json.dumps(payload), encoding="utf-8")
+                    output = io.StringIO()
+                    with redirect_stdout(output):
+                        code = main(["--workspace", str(self.root), "status"])
+                    self.assertEqual(code, 0)
+                    self.assertEqual(json.loads(output.getvalue())["settings"], payload["settings"])
+
+    def test_invalid_commit_settings_fail_validation_instead_of_enabling_commits(self):
+        path = self.root / "workspace.yaml"
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for settings in (None, [], True, {"auto_commit_staged_changes": "false"},
+                         {"auto_commit_staged_changes": 0}, {"auto_commit_staged_changes": 1},
+                         {"auto_commit_staged_changes": None}, {"auto_commit": False}):
+            with self.subTest(settings=settings):
+                payload["settings"] = settings
+                path.write_text(yaml.safe_dump(payload), encoding="utf-8")
+                with self.assertRaises(WorkbenchError):
+                    load_workspace(self.root)
+                output = io.StringIO()
+                with redirect_stdout(output):
+                    code = main(["--workspace", str(self.root), "validate"])
+                self.assertEqual(code, 1)
+                self.assertEqual(json.loads(output.getvalue())["findings"][0]["code"], "WORKSPACE_ERROR")
+
     def test_local_mapping_resolves_paths_without_changing_catalog_bytes_or_grants(self):
         catalog = self.register_repository()
         original = catalog.read_bytes()

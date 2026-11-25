@@ -9,6 +9,15 @@
     "id": {"type": "string", "minLength": 1, "maxLength": 100},
     "name": {"type": "string", "minLength": 1, "maxLength": 200},
     "timeout_seconds": {"type": "number", "minimum": 1, "maximum": 3600},
+    "settings": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "auto_commit_staged_changes": {
+          "type": "boolean", "default": true,
+          "description": "Commit reviewed task-owned staged changes after required checks pass. Agents follow this policy; the runtime does not commit."
+        }
+      }
+    },
     "plugins": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "registries": {
       "type": "object", "additionalProperties": false,

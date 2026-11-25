@@ -182,6 +182,47 @@ class HookRuntimeTests(unittest.TestCase):
             "codex": {"start": 1}, "copilot": {"start": 1}, "claude": {"start": 1}})
         self.assertFalse((self.root / ".workbench/hooks").exists())
 
+    def test_start_context_reports_commit_policy_for_bound_and_unbound_clients(self):
+        path = self.root / "workspace.yaml"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for client in ("codex", "copilot", "claude"):
+            for bound in (False, True):
+                if bound:
+                    self.bind(client)
+                for enabled in (None, True, False):
+                    with self.subTest(client=client, bound=bound, enabled=enabled):
+                        payload.pop("settings", None)
+                        if enabled is not None:
+                            payload["settings"] = {"auto_commit_staged_changes": enabled}
+                        path.write_text(json.dumps(payload), encoding="utf-8")
+                        before = self.snapshot()
+                        with self.successful_runner() as runner:
+                            output, diagnostic, code = module.run_hook(self.root, client, "start", self.payload(client))
+                        context = (output["additionalContext"] if client == "copilot" else
+                                   output["hookSpecificOutput"]["additionalContext"])
+                        self.assertEqual((diagnostic, code), ("", 0))
+                        self.assertIn("settings.auto_commit_staged_changes=" +
+                                      str(enabled is not False).lower(), context)
+                        self.assertIn("Leave changes staged unless the user explicitly requests a commit."
+                                      if enabled is False else "commit only reviewed task-owned staged changes.", context)
+                        self.assertEqual(self.snapshot(), before)
+                        runner.assert_not_called()
+
+    def test_invalid_commit_policy_cannot_supply_an_automatic_commit_start_cue(self):
+        path = self.root / "workspace.yaml"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload["settings"] = {"auto_commit_staged_changes": "false"}
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        for client in ("codex", "copilot", "claude"):
+            with self.subTest(client=client):
+                result = self.cli("run", "--client", client, "--event", "start",
+                                  payload=json.dumps(self.payload(client)))
+                self.assertEqual(result.returncode, 2 if client == "copilot" else 0)
+                output = json.loads(result.stdout)
+                self.assertNotIn("hookSpecificOutput", output)
+                self.assertNotIn("additionalContext", output)
+                self.assertIn("Load a valid workspace.yaml or legacy workspace.json.", result.stdout + result.stderr)
+
     def test_public_cli_rejects_malformed_and_oversized_payloads_without_leaking_input(self):
         private = "private-input-must-not-be-printed"
         payloads = [f'{{"session_id": "{private}", "session_id": "duplicate"}}',

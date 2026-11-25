@@ -109,6 +109,10 @@ ai-sdlc --workspace . hooks clear --client codex --session SESSION
 ## Shared behavior and limits
 
 The session hook supplies compact workspace and scope pointers.
+It includes effective `settings.auto_commit_staged_changes` from the selected workspace.
+Agents follow [the configured commit policy](../README.md#configure-automatic-commits) after required checks and staged review.
+They reread status before stage completion if configuration changes during the session.
+The hooks do not stage files or execute Git commits.
 It points to existing skills and living records instead of replaying every instruction.
 Without an explicit binding, it supplies neutral navigation and skips task-specific validation.
 

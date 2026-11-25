@@ -291,6 +291,10 @@ def run_hook(root, client, event, payload):
     if event not in ("start", "stop"):
         return {}, "", 0
     if event == "start":
+        from .workspace import load_workspace
+
+        configuration, _ = load_workspace(root)
+        auto_commit = configuration["settings"]["auto_commit_staged_changes"]
         state = _load(root, client, session)
         relative_root = os.path.relpath(root, Path(cwd).resolve()).replace(os.sep, "/")
         argv = ["ai-sdlc", "--workspace", relative_root, "hooks", "bind", "--client", client,
@@ -298,7 +302,10 @@ def run_hook(root, client, event, payload):
         command = ("& " + " ".join("'" + value.replace("'", "''") + "'" for value in argv)
                    if sys.platform == "win32" else shlex.join(argv))
         lines = ["Workbench workspace (relative to native cwd): " + relative_root,
-                 "Native hook client/session: " + client + "/" + session]
+                 "Native hook client/session: " + client + "/" + session,
+                 "Workspace setting settings.auto_commit_staged_changes=" + str(auto_commit).lower() + ". " + (
+                     "After required checks pass, commit only reviewed task-owned staged changes."
+                     if auto_commit else "Leave changes staged unless the user explicitly requests a commit.")]
         if state:
             lines += ["Declared living record: " + state["scope"]["record"],
                       "Next check: inspect this record and its sources; completion checks run after declared inputs change."]

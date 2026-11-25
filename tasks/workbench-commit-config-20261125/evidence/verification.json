@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "task": "workbench-commit-config-20261125",
+  "source_revision": "800e283950f70e34b30bbcb80b5dca6073e9a769",
+  "remote_comparison": "origin/feature/knowledge-layout-consolidation",
+  "implementation": {
+    "setting": "settings.auto_commit_staged_changes",
+    "default": true,
+    "current_workspace_value": true,
+    "runtime_commits": false,
+    "invalid_settings_fail_validation": true
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_workspace_v2 tests.test_hooks tests.test_workspace_layout -v",
+      "status": "PASSED",
+      "count": 64
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "status": "PASSED",
+      "count": 1171,
+      "skipped": 2,
+      "skipped_reason": "Optional Node integration flag was unset."
+    },
+    {
+      "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest tests.test_connector_provider.NativeConnectorIntegrationTests -v",
+      "status": "PASSED",
+      "count": 2
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "status": "PASSED",
+      "documents": 119,
+      "findings": 0
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "status": "PASSED"
+    },
+    {
+      "command": "isolated installed-wheel smoke test",
+      "status": "PASSED",
+      "outside_checkout": true
+    },
+    {
+      "command": "git diff --check",
+      "status": "PASSED"
+    },
+    {
+      "command": "changed Markdown link and anchor check",
+      "status": "PASSED",
+      "links_checked": 13
+    }
+  ],
+  "evidence_files": {
+    "evidence/unit-suite.txt.gz": {
+      "sha256": "1650fe2bc632ff271f0acd206a696ba6e242aa109c2f2fba3fcb1d6005671b92",
+      "bytes": 39630
+    },
+    "evidence/optional-node-integration.txt": {
+      "sha256": "2d5f18ef201fc3e8409abf3e754ea89064be435498cb96aa6652d10d1b3c9dc5",
+      "bytes": 492
+    },
+    "evidence/wheel-smoke.json": {
+      "sha256": "891f894e9cf526e0a348b988a54b0fa51453ff52a39b6c0df94124953bb1ff5e",
+      "bytes": 1061
+    }
+  },
+  "limitations": [
+    "Deterministic checks do not establish that every agent follows the setting.",
+    "The runtime and hooks do not execute Git commits.",
+    "No live native client or Windows execution was included in the controlled checks."
+  ],
+  "environment": {
+    "python": "3.14.5",
+    "platform": "Darwin",
+    "machine": "arm64",
+    "test_runtime": ".venv",
+    "execution_scope": "local fixtures; no live external service mutation"
+  },
+  "source_files": {
+    "AGENTS.md": "7fa6ec8f98b006c047bbf23e3e596ecc0a2afa4c567f331ce55094d48b29cbc5",
+    "README.md": "4dd8fb35ec982f233d8a555f2c5eb4b3f4033e058aef119ec518f96b89887f92",
+    "core/workspace.py": "d7a5d688eab3fbc6b4d3ba0af342e4a0da3c584f50f68f93c20ccb532504d209",
+    "core/schemas/workspace.schema.json": "f9153058750ac20f27b2d2b0b36510d9c2bc98c1210292e771f47c8c1b6cfea2",
+    "core/runtime.py": "09e7bae65ae8fc7d64545268d4f4c53383ecf22273fea2805afa864e4eee2e89",
+    "core/hooks.py": "bbe02c9904c290e0e483b3a83cdd2b0e31976ef07d8cbfc71bfe2e4618b29294",
+    "docs/HOOKS.md": "7368cbf79a17a2760f36caa551183d8d1b8e172b71839681e379596c4b23268a",
+    "docs/WORKSPACE_DESIGN.md": "c6cc4af30f8fc6156ca2dc3b61f04b05560a9435c2081d954860f1d53d1430be",
+    "tests/test_workspace_v2.py": "d0b219e56049588594603bc5baa6f05a49da7cf36c94ddf4a0d5eadc3e04e22a",
+    "tests/test_hooks.py": "718f1caa20a3994babce396688f1d4309bd948cde71fa5d8a242453847b1d4bf",
+    "tests/test_workspace_layout.py": "7e03dabe9cea6734092c46f4fca590da6e1448bb03e83604dad74b490b13f17a",
+    "workspace.yaml": "1652a30302d46da7e9fb5f2432be39978cf28aa5537234b8e3a6081b199aba9d"
+  },
+  "corrected_check_assumptions": [
+    {
+      "test": "test_invalid_commit_policy_cannot_supply_an_automatic_commit_start_cue",
+      "initial_run": "40 tests; three failing client subtests in one test",
+      "initial_assertion": "Expected auto_commit_staged_changes in the error message.",
+      "observed": "Load a valid workspace.yaml or legacy workspace.json. Use init for a new workspace.",
+      "correction": "Assert the existing sanitized workspace error and the absence of automatic-commit context; validation code unchanged."
+    },
+    {
+      "probe": "isolated wheel attempt 1",
+      "initial_assertion": "Resolved module path must be below unresolved installed path.",
+      "correction": "Resolve temporary directory aliases on macOS before comparison; use the existing requirement schema filename."
+    }
+  ]
+}

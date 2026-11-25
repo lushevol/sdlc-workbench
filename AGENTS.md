@@ -250,7 +250,15 @@ ai-sdlc --workspace PATH validate
 
 For package/distribution changes, initialize from the built wheel outside this checkout and verify shipped guides, skills, schemas, and templates.
 Generated workspaces omit runtime source, `pyproject.toml`, and runtime tests. Do not rebuild unrelated indexes or generated graphs.
-After a completed stage passes required checks, explicitly stage its complete change, review the staged diff, and commit automatically.
+At workspace entry and before stage completion, read `settings.auto_commit_staged_changes` with `ai-sdlc --workspace . status`.
+Configure it in `workspace.yaml`, or legacy `workspace.json` when YAML is absent. Missing settings default to `true`.
+
+After a completed stage passes required checks, explicitly stage its complete change and review the staged diff.
+When this setting is `true`, commit the reviewed task-owned changes automatically.
+When this setting is `false`, leave those changes staged unless the user explicitly requests a commit.
+An explicit user instruction overrides the workspace default. Invalid settings require correction before automatic commits.
+
+This setting guides agents; the runtime and hooks do not execute Git commits.
 Keep commits scoped and preserve unrelated edits. Never use `git add repos/`. Report commit, checks, and remaining blockers.
 
 ## SDLC output standard

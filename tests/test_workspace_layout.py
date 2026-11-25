@@ -304,7 +304,12 @@ class WorkspacePackagingTests(unittest.TestCase):
                 sys.executable, "-c",
                 "import pathlib, sys; import ai_sdlc_workbench.workspace as workspace; "
                 "assert pathlib.Path(workspace.__file__).resolve().is_relative_to(pathlib.Path(sys.argv[1]).resolve()); "
-                "workspace.initialize_workspace(sys.argv[2])",
+                "root = workspace.initialize_workspace(sys.argv[2]); "
+                "config, _ = workspace.load_workspace(root); "
+                "assert config['settings']['auto_commit_staged_changes'] is True; "
+                "from ai_sdlc_workbench.runtime import Workbench; "
+                "assert Workbench(root).describe()['settings']['auto_commit_staged_changes'] is True; "
+                "assert 'settings.auto_commit_staged_changes' in (root / 'AGENTS.md').read_text()",
                 str(installed), str(workspace),
             ], cwd=base, env={**environment, "PYTHONPATH": str(installed)}, capture_output=True,
                 text=True, timeout=60)
@@ -483,7 +488,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
             (source / f"registry/{category}.yaml").write_text(
                 yaml.safe_dump({"schema_version": 1, category: entries}), encoding="utf-8")
         configuration = yaml.safe_load((source / "workspace.yaml").read_text(encoding="utf-8"))
-        configuration.update(plugins=["project.provider"], resources=[{**tool, "id": "inline-project-tool"}])
+        configuration.update(plugins=["project.provider"], resources=[{**tool, "id": "inline-project-tool"}],
+                             settings={"auto_commit_staged_changes": False})
         (source / "workspace.yaml").write_text(yaml.safe_dump(configuration), encoding="utf-8")
         private_paths = (
             "knowledge/raw/project-source.bin", "knowledge/records/candidates/project.md",
@@ -508,6 +514,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         generated, resources = load_workspace(target)
         self.assertEqual(generated["plugins"], [])
         self.assertEqual(generated["resources"], [])
+        self.assertEqual(generated["settings"], {"auto_commit_staged_changes": True})
         self.assertEqual(resources, {})
         self.assertTrue(all(entries == [] for entries in generated["_catalogs"].values()))
         self.assertEqual(yaml.safe_load((target / "knowledge/evidence/manifest.yaml").read_text()),

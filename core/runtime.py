@@ -46,6 +46,7 @@ class Workbench:
                                              for name, operation in provider.operations.items()]})
         return {"schema_version": 1,
                 "workspace": {"id": self.config["id"], "name": self.config["name"], "root": str(self.root)},
+                "settings": dict(self.config["settings"]),
                 "providers": self.registry.describe(), "resources": resources,
                 "catalogs": {name: {"count": len(entries), "ids": [item["id"] for item in entries]}
                              for name, entries in self.config.get("_catalogs", {}).items() if name != "tools"},

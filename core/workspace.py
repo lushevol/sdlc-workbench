@@ -30,6 +30,7 @@ def load_workspace(root: Path) -> tuple[dict, dict[str, Resource]]:
     _apply_local_repository_paths(root, catalogs)
     payload["resources"] = [*payload["resources"], *tools]
     validate_arguments(payload, schema, "workspace")
+    payload.setdefault("settings", {}).setdefault("auto_commit_staged_changes", True)
     payload["_catalogs"] = catalogs
     resources = {}
     for item in payload["resources"]:
@@ -127,6 +128,7 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace") -> P
     (evidence / "manifest.yaml").write_text(
         yaml.safe_dump({"schema_version": 1, "sources": []}, sort_keys=False), encoding="utf-8")
     payload = {"schema_version": 1, "id": uuid.uuid4().hex, "name": name, "timeout_seconds": 30,
+               "settings": {"auto_commit_staged_changes": True},
                "plugins": [], "resources": [], "registries": registries}
     (root / "workspace.yaml").write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
     return root

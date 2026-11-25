@@ -73,6 +73,15 @@ Preserve independent repository ownership and use separate working checkouts for
 Reading a shared source grants no execution or publication authority.
 The current workspace configuration defines no foundation inheritance or automatic cross-workspace discovery.
 
+Workspace `settings.auto_commit_staged_changes` controls agent commits after required checks and staged review.
+It defaults to `true`; `false` leaves task-owned changes staged until the user requests a commit.
+Explicit user instructions take precedence. Unrelated staged files retain their ownership.
+
+Status reports the effective value, and native session-start context includes it.
+Agents reread status before stage completion. The runtime and hooks do not execute commits.
+New workspaces write the default explicitly. Older YAML and JSON declarations can omit it.
+Use [the configuration guide](../README.md#configure-automatic-commits) for the supported format and limits.
+
 Implementation evidence for these boundaries is in the complete source checkout at `core/workspace.py`, `core/store.py`, and `core/schemas/workspace.schema.json`.
 Generated workspaces use the installed runtime and omit those implementation files.
 

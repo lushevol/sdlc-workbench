@@ -174,6 +174,32 @@ Existing `workspace.json` configurations remain supported when YAML is absent.
 The runtime merges tool registry records with inline `resources` and rejects duplicate IDs.
 Restart CLI or MCP processes after configuration changes.
 
+### Configure automatic commits
+
+Set the agent commit policy in `workspace.yaml`:
+
+```yaml
+settings:
+  auto_commit_staged_changes: true
+```
+
+The default is `true`, including configurations that omit this field.
+Agents commit reviewed, task-owned staged changes after the completed stage passes its required checks.
+Set this option to `false` to leave changes staged until you explicitly request a commit.
+Explicit user instructions take precedence over this default.
+Unrelated staged files retain their ownership in both modes.
+The setting does not authorize pushes, publication, or deployment.
+
+`ai-sdlc --workspace . status` reports effective settings.
+Session-start hooks include the current commit setting for each supported agent client.
+Without hooks, agents read status as directed by [the project guide](AGENTS.md#validation-and-commits).
+Agents reread status before stage completion to detect changes during a session.
+
+The runtime and hooks supply policy context; they do not run Git commits.
+Use YAML booleans `true` or `false`; invalid values and unknown setting names fail validation.
+Legacy `workspace.json` supports the same `settings` object when YAML is absent.
+`workspace.local.yaml` continues to supply repository paths only.
+
 ## Preserve and govern knowledge
 
 Use full raw export → filtered source view → canonical knowledge → derived wiki.
