@@ -19,6 +19,9 @@ Manage business changes through that repository's existing source control proces
 GitHub, GitLab, Azure DevOps (ADO), self-hosted Git, and local Git repositories use the same checkout registration.
 Existing checkouts outside the workspace remain supported.
 
+Before any codebase action, follow the [repository freshness rule](../AGENTS.md#repository-freshness-before-codebase-actions) inside each target checkout.
+Fetching Workbench does not refresh independent repositories.
+
 ## Quick setup on another computer
 
 Install Workbench through [the setup guide](../docs/SETUP.md).

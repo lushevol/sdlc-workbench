@@ -22,6 +22,21 @@ An empty graph does not prove no dependencies. Metadata classifications do not a
 Keep tenant settings in project configuration or evidence; generated defaults remain empty and unset.
 Authority: the [brownfield adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary).
 
+## Repository freshness before codebase actions
+
+Before any codebase action, fetch the latest refs from that repository's configured remotes.
+This includes investigation, review, testing, and editing in Workbench and independent repositories.
+Inspect `git status --short --branch` and `git remote -v`, then run `git fetch --all` inside the target repository.
+Compare the checkout with its fetched upstream or the task's explicit target branch.
+
+Highlight incoming commits, divergence, unpublished local commits, and uncommitted changes before further codebase work.
+Identify the repository, branch, compared refs, and relevant changed files when differences exist.
+Never pull, merge, rebase, or reset to integrate fetched changes without explicit user instruction.
+Fetching does not update checked-out files or authorize integration.
+
+Report failed fetches, missing remotes, or unavailable comparison refs; do not claim the checkout is current.
+Repeat the check when work resumes or remote changes could make the earlier comparison stale.
+
 ## User input and reference priority
 
 Preserve exact user input, source, and date in the owning task before investigation or delegation. Link it from the current record.
