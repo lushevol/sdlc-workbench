@@ -112,7 +112,7 @@ Read these artifacts as needed:
 - `coverage-declarations.json`: file fingerprints, parse results, declaration dispositions, and independent audit candidates.
 - `repository-relationships.json`: resolved joins, candidates, and unresolved boundaries.
 - `graph.json`: canonical nodes, edges, and evidence.
-- `relationship-viewer.html`: interactive projection of the same snapshot.
+- `relationship-viewer.html` and `relationship-viewer.data/`: progressive interactive projection of the same snapshot.
 - `manifest.json`: artifact checksums and snapshot identity.
 - `architecture-context.json`: optional applied investigation context, with separate provenance and captured source bytes.
 
@@ -229,27 +229,19 @@ It does not establish a resolved provider or active deployment.
 `UNRESOLVED` means missing, conflicting, dynamic, or unsupported evidence prevents resolution.
 These states do not mean a dependency is broken.
 
-The viewer uses three presentation levels:
+The viewer opens one repository relationship map.
+Click repositories to expand collapsible dependency groups, then load direct neighborhoods in the same graph.
+Use **Load more** to append bounded batches and collapse branches when needed.
+Use the complete declaration indexes for isolated nodes and remaining source detail.
+Architecture inventory, legend, and evidence start collapsed.
+Read the [viewer guide](references/architecture/viewer-hierarchy.md) for filters, evidence, and trace limits.
 
-- Highest: resolved system links and investigated architecture, with separate evidence assessments.
-- Medium: individual APIs, storage access, module imports, handler mappings, and uncertain boundaries.
-- Lowest: package and build-tool declarations.
-
-The hierarchy controls navigation depth and does not assign business criticality.
-Ownership context remains optional within the medium view.
-Graph roots are analysis identities, not service catalog declarations or deployments.
-Include supported application shells and foundation repositories.
-
-Use the legend for relationship colors, node roles, arrow direction, and provider status.
-Filters select repository, family, provider status, boundary, relationship, and search text.
-The relationship list retains every filtered match across pages.
-Diagram limits do not remove canonical evidence.
-
-Start with the architecture cards to inspect each repository's available interfaces, configuration, data, and unresolved boundaries.
-Select an API or client trace to follow supported calls and inspect related declarations.
-Method paths require recorded caller methods; class context cannot establish an API-specific call.
-Implementation alternatives remain unselected, and deferred callbacks remain separate from direct calls.
-Inspect trace breaks and limits before describing a complete path.
+Keep `relationship-viewer.html` beside its `relationship-viewer.data/` directory.
+The HTML embeds the repository summary. Compressed local data loads only when requested.
+A current browser with gzip `DecompressionStream` support is required.
+No server, external script, or additional Python package is required.
+Canonical graph facts and CLI query contracts remain unchanged.
+Navigation groups establish no runtime service or invocation relationship.
 
 Exact module names establish `IMPORTS_MODULE` joins with `dependency_kind=MODULE` and evidence from both sides.
 Namespace matching only controls scan scope and cannot prove aliases.

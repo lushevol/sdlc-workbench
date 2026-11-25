@@ -460,7 +460,10 @@ It adds no runtime package, service, download domain, startup updater, or runtim
 Agent access and costs follow the existing agent configuration.
 Connected setup and offline preparation include the skill through the existing wheel; regenerate bundles after source changes.
 
-The Workbench service graph viewer embeds its CSS, JavaScript, and graph data.
+The Workbench service graph viewer embeds its CSS, JavaScript, and repository summary.
+It loads compressed evidence and navigation from sibling local data files when requested.
+Python standard-library gzip writes those files. Browser-native `DecompressionStream` reads them.
+Keep the HTML and its `.data/` directory together. Use a current browser with gzip decompression support.
 The [service dependency graph](../.agents/skills/service-dependencies-graph/SKILL.md) uses existing Python, PyYAML, and jsonschema dependencies.
 It adds no database, service, package prerequisite, download domain, or runtime network call.
 Connected and prepared-bundle installation use the same existing package paths.
@@ -611,7 +614,7 @@ Reinspect their current bytes before making a new dependency or endpoint claim; 
 | E10 | `core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda/http_client.py`, `get_remote_skill_version`, `download_build_artifact_zip`, `get_artifactory_build_info`; `core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda/version_check.py`, `check_skill_staleness`; `core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda/build_resolver.py`, line 705; `core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/esdlc_kb/fetch_esdlc_kb.py`, lines 77–148 | Optional cloud probe, service-returned downloads, metadata reads, explicit refresh. |
 | E11 | `core/release-clinic/plugins/test/dtp-tda-service/service/main.py`, `lifespan`; `core/release-clinic/plugins/test/dtp-tda-service/service/vault_client.py`, lines 65–147 | Startup authentication, routing settings, and credential reads. |
 | E12 | `core/providers/discovery.py`, lines 31–57 | Configured HTTP/S registry access on explicit invocation. |
-| E13 | [graph renderer](../.agents/skills/service-dependencies-graph/tools/render_graph.py), lines 14–41; [viewer](../.agents/skills/service-dependencies-graph/tools/viewer.html) | Embedded CSS, JavaScript, and graph data; no external asset call observed in these files. |
+| E13 | [graph renderer](../.agents/skills/service-dependencies-graph/tools/render_graph.py), lines 14–41; [viewer](../.agents/skills/service-dependencies-graph/tools/viewer.html) | Embedded application and repository summary; compressed sibling data loads locally without an external asset service. |
 | E14 | `core/release-clinic/plugins/test/dtp-tda-service/service/main.py`, lines 136–145; installed FastAPI `0.143.3`, `fastapi/openapi/docs.py`, lines 79, 92, 100, 236, 244, 252, and 277 | Default documentation assets from the inspected installed version; other permitted versions need reinspection. |
 | E15 | `core/models.py`, lines 69–111; `core/artifact_lint.py`, lines 46 and 323; `core/assurance.py`, lines 29 and 153; `core/governance/validation.py`, line 149; [graph validator](../.agents/skills/service-dependencies-graph/tools/validate_graph.py), lines 18–35 | Local schema loaders and bounded validation; inventory covered `core/schemas`, `registry`, `core/knowledge/schemas`, and graph schemas. |
 | E16 | `core/offline.py`, `prepare`, `target`, `validate_bundle`; `core/bootstrap.py`, `install`, `main` | Matching-target bundles, source and file checks, offline package commands, and automatic bundle selection. |

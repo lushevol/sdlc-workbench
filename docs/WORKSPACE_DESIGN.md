@@ -611,6 +611,9 @@ The installed `graph build` command delegates to that skill.
 The `graph.snapshot` provider delegates queries through CLI and MCP resource operations.
 Its graphs contain runtime, business architecture, code, and package dependency relationships.
 The viewer and bounded queries use the same checksum-validated snapshot.
+The viewer expands dependency groups within one graph and loads compressed local detail on demand.
+Keep its small HTML entry point beside the matching `.data/` directory.
+Navigation groups do not create canonical relationships.
 Source evidence remains authoritative; graph navigation cannot establish runtime execution or business conformance.
 Complete automatic traceability and behavior verification remain future work.
 

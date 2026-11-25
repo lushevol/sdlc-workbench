@@ -178,7 +178,7 @@ def _edge_label(edge: dict[str, Any], target: dict[str, Any]) -> str:
     return _LABELS.get(relation, relation.replace('_', ' ').capitalize())
 
 
-def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
+def build_viewer_model(graph: dict[str, Any], *, include_traces: bool = True) -> dict[str, Any]:
     """Return display metadata without changing canonical nodes or relationships."""
     canonical_nodes = {node['id']: node for node in graph.get('nodes', [])}
     repositories = {repository['id']: repository for repository in graph.get('repositories', [])}
@@ -287,7 +287,7 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
     edge_values = list(edges.values())
     return {
         'schema_version': '1.0.0', 'nodes': nodes, 'edges': edges,
-        **build_trace_model(graph),
+        **(build_trace_model(graph) if include_traces else {}),
         'repository_roots': {key: roots[key] for key in sorted(roots)}, 'system_links': system_links,
         'counts': {
             'nodes': len(nodes), 'edges': len(edges), 'system_links': len(system_links),

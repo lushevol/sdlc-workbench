@@ -206,7 +206,7 @@ class ArchitectureContextTests(unittest.TestCase):
         self.assertIn('architecture-context-sources/0000.source', {row['path'] for row in manifest['artifacts']})
         viewer = (output / 'relationship-viewer.html').read_text(encoding='utf-8')
         self.assertIn('User-reported architecture', viewer)
-        self.assertIn('architecture-context-data', viewer)
+        self.assertIn('context-panel', viewer)
         self.assertNotIn('</script><script>unsafe()', viewer)
         queried = json.loads(command('query', '--data-dir', 'generated', 'coverage').stdout)
         self.assertEqual(queried['architecture_context']['document'], document)

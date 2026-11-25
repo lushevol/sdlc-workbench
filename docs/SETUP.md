@@ -487,7 +487,10 @@ Python installation compatibility does not establish compatibility for every bus
 Static source graph extraction uses the Python parsers and does not require Java or Maven.
 The [service dependency graph](../.agents/skills/service-dependencies-graph/SKILL.md) uses the installed Python environment.
 Run `ai-sdlc --workspace PATH graph build` to generate its snapshot and viewer.
-It needs no graph database, LLM service, API key, or additional installation step.
+Keep `relationship-viewer.html` beside its `relationship-viewer.data/` directory.
+Open the HTML in a current browser with gzip `DecompressionStream` support.
+It loads local graph detail progressively and needs no server.
+It needs no graph database, LLM service, API key, or additional Python installation step.
 Connected setup and prepared offline bundles already contain its dependencies.
 The [knowledge wiki](#openkb-primary-wiki) uses a separate Python environment for OpenKB operations and its original local visualizer.
 Its project wiki content and installed environment are excluded from initialized workspace defaults.

@@ -209,264 +209,197 @@ class GraphViewerModelTests(unittest.TestCase):
         self.assertEqual(model["nodes"]["CONFIGURATION_KEY"]["family"], "configuration")
 
 
+def read_chunk(path):
+    import base64
+    import gzip
+    import re
+    text = path.read_text(encoding='utf-8')
+    match = re.fullmatch(r'window.serviceGraphChunk\(("[^"\n]+"),("[^"\n]+")\);\n', text)
+    if not match:
+        raise AssertionError('Invalid local chunk: ' + str(path))
+    return json.loads(match[1]), json.loads(gzip.decompress(base64.b64decode(json.loads(match[2]))))
+
+
+def logical_chunks(folder):
+    return {key: value for path in folder.glob('bucket-*.js')
+            for key, value in read_chunk(path)[1].items()}
+
+
 class GraphViewerRendererTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.render_graph = staticmethod(load_tool("render_graph").main)
+        cls.render_graph = staticmethod(load_tool('render_graph').main)
 
-    def test_template_and_malformed_payload_show_visible_recovery_instead_of_a_blank_graph(self):
-        """Given a template or invalid JSON, when opened, then recovery replaces the empty graph and links the generated viewer."""
-        node = shutil.which('node')
-        if node is None:
-            self.skipTest('Node.js is unavailable for the isolated JavaScript interaction check.')
-        template = Path(__file__).parents[1] / 'tools/viewer.html'
-        with tempfile.TemporaryDirectory(prefix='graph-startup-recovery-') as temporary:
-            root = Path(temporary)
-            source, output = root / 'graph.json', root / 'viewer.html'
-            source.write_text(json.dumps(graph_fixture()), encoding='utf-8')
-            with redirect_stdout(io.StringIO()):
-                self.render_graph([str(source), '--output', str(output)])
-            text = output.read_text(encoding='utf-8')
-            start = text.index('>', text.index('<script id="graph-data"')) + 1
-            end = text.index('</script>', start)
-            output.write_text(text[:start] + 'Invalid JSON' + text[end:], encoding='utf-8')
-            for path, mode in [(template, 'template-error'), (output, 'payload-error')]:
-                with self.subTest(mode=mode):
-                    result = subprocess.run([node, str(Path(__file__).with_name('viewer_interactions.cjs')),
-                                             str(path), mode], capture_output=True, text=True, timeout=15)
-                    self.assertEqual(result.returncode, 0, result.stderr)
-                    self.assertTrue(json.loads(result.stdout)['visible_recovery'])
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(prefix='service-viewer-')
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        self.output = self.root / 'relationship-viewer.html'
 
-    def test_investigation_filters_and_layer_lanes_use_canonical_review_metadata(self):
-        """Given reviewed and extracted edges, when filtered, then unrelated nodes and claims disappear."""
-        node = shutil.which('node')
-        if node is None:
-            self.skipTest('Node.js is unavailable for the isolated JavaScript interaction check.')
-        graph = graph_fixture()
-        for identifier, statuses in [('edge:rest:get', ['SUPPORTED', 'CONFLICTED']),
-                                     ('edge:external', ['UNVERIFIED'])]:
-            edge = next(row for row in graph['edges'] if row['id'] == identifier)
-            edge['properties']['architecture_claims'] = [
-                {'claim_id': identifier + value, 'investigation_status': value,
-                 'family': 'api', 'kind': 'CALLS_API', 'rationale': 'Inspected caller and provider; deployment remains unknown.',
-                 'source_refs': []} for value in statuses]
-        graph['nodes'][0]['properties']['architecture_subjects'] = [
-            {'id': 'shell', 'label': 'Portal shell', 'role': 'SHELL', 'layer_id': 'shell-layer',
-             'layer_label': 'Shell', 'layer_order': 2}]
-        with tempfile.TemporaryDirectory(prefix='graph-investigation-viewer-') as temporary:
-            root = Path(temporary)
-            source, output = root / 'graph.json', root / 'viewer.html'
-            source.write_text(json.dumps(graph), encoding='utf-8')
-            with redirect_stdout(io.StringIO()):
-                self.render_graph([str(source), '--output', str(output)])
-            result = subprocess.run([node, str(Path(__file__).with_name('viewer_interactions.cjs')),
-                                     str(output), 'investigated'], capture_output=True, text=True, timeout=15)
-        self.assertEqual(result.returncode, 0, result.stderr)
-
-    def test_script_payload_round_trip_preserves_untrusted_names_without_creating_script_elements(self):
-        graph = graph_fixture()
-        marker = '</script><script id="injected">alert("fixture")</script> __GRAPH__ __VIEWER__ __SOURCE_PREFIX__'
-        graph["nodes"][0]["name"] = marker
-        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-") as temporary:
-            root = Path(temporary)
-            source, output = root / "graph.json", root / "viewer.html"
-            source.write_text(json.dumps(graph), encoding="utf-8")
-            with redirect_stdout(io.StringIO()):
-                result = self.render_graph([str(source), "--output", str(output), "--source-prefix",
-                                            '</script><script id="prefix-injected">alert("fixture")</script>'])
-            self.assertEqual(result, 0)
-            parser = ScriptCollector()
-            parser.feed(output.read_text(encoding="utf-8"))
-        self.assertNotIn("injected", parser.ids)
-        self.assertNotIn("prefix-injected", parser.ids)
-        payloads = {script["attributes"].get("id"): json.loads(script["text"])
-                    for script in parser.scripts if script["attributes"].get("type") == "application/json"}
-        self.assertEqual(payloads["graph-data"], graph)
-        self.assertEqual(payloads["viewer-data"], build_viewer_model(graph))
-
-    def test_viewer_exposes_priority_filters_legend_and_an_accessible_relationship_table(self):
-        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-") as temporary:
-            root = Path(temporary)
-            source, output = root / "graph.json", root / "viewer.html"
-            source.write_text(json.dumps(graph_fixture()), encoding="utf-8")
-            with redirect_stdout(io.StringIO()):
-                self.render_graph([str(source), "--output", str(output)])
-            parser = ScriptCollector()
-            parser.feed(output.read_text(encoding="utf-8"))
-        self.assertTrue({"priority", "scope", "status", "boundary", "relationship", "search", "sort"} <= parser.ids)
-        self.assertTrue({"highest", "medium", "low"} <= {
-            attributes.get("data-level") for tag, attributes in parser.elements if tag == "button"})
-        self.assertTrue({"all", "resolved", "declared", "unresolved", "ambiguous", "candidate"} <= {
-            attributes.get("value") for tag, attributes in parser.elements if tag == "option"})
-        self.assertTrue({"api", "data", "shared", "package"} <= {
-            attributes.get("value") for tag, attributes in parser.elements
-            if tag == "input" and attributes.get("name") == "family"})
-        self.assertTrue(any(tag == "svg" and attributes.get("aria-label")
-                            for tag, attributes in parser.elements))
-        self.assertTrue(any(tag == "table" and (attributes.get("aria-label") or attributes.get("aria-labelledby"))
-                            for tag, attributes in parser.elements))
-
-    def test_viewer_has_only_dependency_navigation_and_no_knowledge_interface(self):
-        template = (Path(__file__).parents[1] / 'tools/viewer.html').read_text(encoding='utf-8')
-        self.assertNotIn('knowledge', template.casefold())
+    def render(self, graph=None):
+        graph = graph or graph_fixture()
+        source = self.root / 'graph.json'
+        source.write_text(json.dumps(graph), encoding='utf-8')
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(self.render_graph([str(source), '--output', str(self.output)]), 0)
+        self.html = self.output.read_text(encoding='utf-8')
         parser = ScriptCollector()
-        parser.feed(template)
-        self.assertNotIn('explorer-tabs', parser.ids)
-        self.assertNotIn('architecture-tab', parser.ids)
-        self.assertTrue({'viewer-workspace', 'priority', 'dimension', 'repository-view'} <= parser.ids)
-        self.assertTrue({'RUNTIME', 'BUSINESS', 'provided', 'outbound', 'components'} <= {
-            attributes.get('value') for tag, attributes in parser.elements if tag == 'option'})
+        parser.feed(self.html)
+        self.parser = parser
+        self.bootstrap = json.loads(next(row['text'] for row in parser.scripts
+                                         if row['attributes'].get('id') == 'bootstrap-data'))
+        self.data = self.output.with_suffix('.data')
+        return self.bootstrap
 
-    def test_shipped_script_filters_unknown_providers_and_lists_every_package_across_pages(self):
-        node = shutil.which("node")
-        if node is None:
-            self.skipTest("Node.js is unavailable for the isolated JavaScript interaction check.")
+    def interactions(self, mode='progressive'):
+        node = shutil.which('node')
+        self.assertIsNotNone(node, 'Node.js is required for supported viewer interactions.')
+        result = subprocess.run([node, str(Path(__file__).with_name('viewer_interactions.cjs')),
+                                 str(self.output), mode], capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        return json.loads(result.stdout)
+
+    def test_overview_contains_every_repository_and_only_repository_links(self):
         graph = graph_fixture()
-        external = deepcopy(next(item for item in graph["nodes"] if item["id"] == "external:orders"))
-        external.update(id="external:graphql", name="GraphQL endpoint")
-        external["properties"] = {"protocol": "GRAPHQL"}
-        graph["nodes"].append(external)
-        edge = deepcopy(next(item for item in graph["edges"] if item["id"] == "edge:external"))
-        edge.update(id="edge:graphql:external", target="external:graphql", relationship="CALLS_GRAPHQL")
-        graph["edges"].append(edge)
-        package = next(item for item in graph["nodes"] if item["id"] == "external:package")
-        dependency = next(item for item in graph["edges"] if item["id"] == "edge:package")
-        for index in range(31):
-            target = deepcopy(package)
-            target.update(id=f"external:package:{index}", name=f"npm:fixture-{index}")
-            graph["nodes"].append(target)
-            edge = deepcopy(dependency)
-            edge.update(id=f"edge:package:{index}", target=target["id"])
-            graph["edges"].append(edge)
-        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-") as temporary:
-            root = Path(temporary)
-            source, output = root / "graph.json", root / "viewer.html"
-            source.write_text(json.dumps(graph), encoding="utf-8")
-            with redirect_stdout(io.StringIO()):
-                self.render_graph([str(source), "--output", str(output)])
-            result = subprocess.run([node, str(Path(__file__).with_name("viewer_interactions.cjs")), str(output)],
-                                    capture_output=True, text=True, timeout=15)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        result = json.loads(result.stdout)
-        self.assertEqual(result["package_relationships"], 32)
-        self.assertEqual(result["pages"], 2)
-        self.assertEqual(len(result["checks"]), 8)
+        graph['repositories'].append({'id':'repo:inventory','name':'Inventory','kind':'SOURCE_ONLY','visible':True})
+        graph['nodes'].append({'id':'inventory:anchor','name':'Inventory anchor','type':'COMPONENT',
+                               'repository':'repo:inventory','dimensions':['RUNTIME']})
+        bootstrap = self.render(graph)
+        self.assertEqual(set(bootstrap['roots']), {row['id'] for row in graph['repositories']})
+        self.assertEqual(len(bootstrap['nodes']), len(graph['repositories']))
+        roots = set(bootstrap['roots'].values())
+        self.assertTrue(all(row['source'] in roots and row['target'] in roots for row in bootstrap['links']))
+        self.assertTrue(all('edge_ids' not in row and 'evidence' not in row for row in bootstrap['links']))
+        self.assertEqual(graph['nodes'][-1]['id'], 'inventory:anchor')
 
-    def test_complete_indexes_diagram_pages_repository_slices_and_isolated_node_focus(self):
-        node = shutil.which("node")
-        if node is None:
-            self.skipTest("Node.js is unavailable for the isolated JavaScript interaction check.")
+    def test_canonical_records_round_trip_once_and_untrusted_source_stays_inert(self):
         graph = graph_fixture()
-        sample = deepcopy(graph["nodes"][1])
+        marker = '</script><script id="injected">unsafe()</script> __BOOTSTRAP__\u2028\u2029\u0085'
+        graph['nodes'][0]['name'] = marker
+        graph['evidence'][0]['declaration'] = marker
+        self.render(graph)
+        self.assertNotIn('injected', self.parser.ids)
+        for kind in ('nodes','edges','evidence'):
+            rows = [row for key, batch in logical_chunks(self.data).items() if key.startswith(kind+'-') for row in batch]
+            for row in rows:
+                row.pop('evidence_chunks', None)
+            self.assertEqual(sorted(rows,key=lambda row:row['id']), sorted(graph[kind],key=lambda row:row['id']))
+        data=logical_chunks(self.data)
+        for kind in ('node','edge'):
+            ids=[row['id'] for key, rows in data.items() if key.startswith(kind+'-index-') for row in rows]
+            self.assertEqual(len(ids),len(set(ids)))
+            self.assertEqual(set(ids),{row['id'] for row in graph[kind+'s']})
+        neighborhoods=[value for value in data.values() if isinstance(value,dict) and 'node_refs' in value]
+        self.assertTrue(neighborhoods)
+        self.assertTrue(all(row.get('navigation') for value in neighborhoods for row in value['edges']))
+        self.assertTrue(all(row['id'].startswith('viewer-') for value in neighborhoods for row in value['nodes']))
+        self.assertEqual(next(row for row in self.bootstrap['nodes'] if row['id']=='application:client')['name'], marker)
+        self.assertNotIn('</script><script id="injected">', self.html)
 
-        def add_node(identifier, kind, name, **extra):
-            item = deepcopy(sample)
-            item.update(id=identifier, type=kind, name=name, repository="repo:orders", **extra)
-            graph["nodes"].append(item)
+    def test_html_does_not_grow_with_evidence_and_data_is_compressed(self):
+        small = graph_fixture()
+        self.render(small)
+        small_bytes = self.output.stat().st_size
+        graph = deepcopy(small)
+        graph['evidence'] = [{'id':f'ev:{index}', 'repository':None, 'path':'fixture.txt', 'line':index+1,
+                              'declaration':'large source declaration '*200, 'extractor':'fixture', 'directness':'DIRECT'}
+                             for index in range(900)]
+        for edge in graph['edges']:
+            edge['evidence'] = []
+        self.render(graph)
+        self.assertEqual(self.output.stat().st_size, small_bytes)
+        self.assertLess(self.output.stat().st_size, 100_000)
+        self.assertLess(sum(path.stat().st_size for path in self.data.glob('bucket-*.js')), 150_000)
+        self.assertNotIn('large source declaration', self.html)
 
-        def add_edge(identifier, source, target, relation, **extra):
-            graph["edges"].append({"id": identifier, "source": source, "target": target,
-                                   "relationship": relation, "dimension": "RUNTIME", "evidence": ["ev:get"],
-                                   "assertion_status": "CONFIRMED", **extra})
-
-        add_node("component:orders:handler", "COMPONENT", "OrdersHandler", component_kind="CONTROLLER",
-                 business_meaning="Handles order creation", source_paths=["repos/orders/OrdersHandler.java"],
-                 properties={"layer": "entrypoint", "client_secret": "fixture-secret"})
-        for index in range(60):
-            operation = f"operation:detail:{index}"
-            add_node(operation, "API_OPERATION", f"GET /detail/{index}", properties={"protocol": "REST"})
-            add_edge(f"edge:exposes:{index}", "service:orders", operation, "EXPOSES")
-            add_edge(f"edge:invokes:{index}", operation, "component:orders:handler", "INVOKES")
-        tables = ["table:orders"]
-        for index in range(6):
-            identifier = f"table:detail:{index}"
-            tables.append(identifier)
-            add_node(identifier, "TABLE", f"detail_table_{index}", properties={"access": "READ"})
-        for index in range(7):
-            add_edge(f"edge:read:{index}", "component:orders:handler", tables[index], "READS")
-        add_node("column:orders:id", "COLUMN", "orders.id", properties={"column": "id"})
-        add_node("entity:orders", "ENTITY", "OrderEntity")
-        add_edge("edge:column", "entity:orders", "column:orders:id", "MAPS_TO_COLUMN")
-        add_node("config:orders", "CONFIGURATION_KEY", "orders.timeout", properties={"key": "orders.timeout", "value": "fixture-value"})
-        add_edge("edge:config", "component:orders:handler", "config:orders", "READS_CONFIG")
-        add_node("topic:orders", "MESSAGE_CHANNEL", "orders.events", properties={"protocol": "KAFKA"})
-        add_edge("edge:publish", "component:orders:handler", "topic:orders", "PUBLISHES")
-        add_node("component:orders:isolated", "COMPONENT", "IsolatedOrdersUtility")
-        add_node("capability:orders", "BUSINESS_CAPABILITY", "Order placement", dimensions=["BUSINESS"])
-        add_edge("edge:business", "service:orders", "capability:orders", "IMPLEMENTS",
-                 dimension="BUSINESS", assertion_status="INFERRED")
-        add_edge("edge:class", "service:orders", "component:orders:handler", "CONTAINS_COMPONENT",
-                 assertion_status="INFERRED")
-        graph['repositories'].append({**graph['repositories'][0], 'id': 'repo:testing', 'name': 'testing',
-                                      'path': 'repos/testing', 'kind': 'TESTING'})
-        for identifier, kind, source_path in [('component:testing:root', 'COMPONENT', 'repos/testing'),
-                                               ('operation:testing', 'API_OPERATION', 'repos/testing/client.py'),
-                                               ('component:testing:resource', 'COMPONENT', 'repos/testing/common.resource')]:
-            graph['nodes'].append({**deepcopy(sample), 'id': identifier, 'type': kind, 'name': identifier,
-                                   'repository': 'repo:testing', 'component_kind': 'TESTING',
-                                   'source_paths': [source_path], 'properties': {'dependency_scope': 'TESTING'}})
-        add_edge('edge:testing:http', 'component:testing:root', 'operation:testing', 'CALLS_REST',
-                 resolution_status='UNRESOLVED', properties={'dependency_scope': 'TESTING'})
-        add_edge('edge:testing:resource', 'component:testing:root', 'component:testing:resource',
-                 'IMPORTS_TEST_RESOURCE', resolution_status='RESOLVED', properties={'dependency_scope': 'TESTING'})
-        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-recovery-") as temporary:
-            root = Path(temporary)
-            source, output = root / "graph.json", root / "viewer.html"
-            source.write_text(json.dumps(graph), encoding="utf-8")
-            with redirect_stdout(io.StringIO()):
-                self.render_graph([str(source), "--output", str(output)])
-            result = subprocess.run([node, str(Path(__file__).with_name("viewer_interactions.cjs")),
-                                     str(output), "recovery"], capture_output=True, text=True, timeout=15)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        result = json.loads(result.stdout)
-        self.assertGreater(result["diagram_pages"], 1)
-        self.assertEqual(result["storage_tables"], 7)
-        self.assertEqual(result["storage_reads"], 8)
-        self.assertEqual(len(result["checks"]), 8)
-
-    def test_repository_inventory_full_labels_semantic_routes_and_api_trace(self):
-        node = shutil.which("node")
-        if node is None:
-            self.skipTest("Node.js is unavailable for the isolated JavaScript interaction check.")
+    def test_groups_and_batches_preserve_all_dependencies_and_isolated_nodes(self):
         graph = graph_fixture()
-        sample = deepcopy(graph["nodes"][1])
+        sample = deepcopy(graph['nodes'][1])
+        for index in range(47):
+            graph['nodes'].append({**sample,'id':f'isolated:{index}','name':f'Isolated {index}'})
+        self.render(graph)
+        result = self.interactions('complete')
+        self.assertEqual(result['canonical_nodes'],len(graph['nodes']))
+        self.assertEqual(result['canonical_edges'],len(graph['edges']))
+        self.assertGreater(result['batches'],1)
 
-        def add_node(identifier, kind, name, **extra):
-            graph["nodes"].append({**deepcopy(sample), "id": identifier, "type": kind, "name": name,
-                                   "repository": "repo:orders", **extra})
+    def test_progressive_graph_keeps_overview_deduplicates_loads_and_collapses_branches(self):
+        self.render()
+        result=self.interactions()
+        self.assertTrue(result['same_graph'])
+        self.assertTrue(result['all_roots_retained'])
+        self.assertTrue(result['collapsed'])
+        self.assertTrue(result['deduplicated_requests'])
 
-        def add_edge(identifier, source, target, relation, **extra):
-            graph["edges"].append({"id": identifier, "source": source, "target": target,
-                                   "relationship": relation, "dimension": "RUNTIME", "evidence": ["ev:get"],
-                                   "assertion_status": "CONFIRMED", **extra})
+    def test_failure_is_retryable_and_does_not_leave_loading_or_expansion_stuck(self):
+        self.render()
+        result=self.interactions('recovery')
+        self.assertTrue(result['retry_succeeded'])
+        self.assertTrue(result['loading_cleared'])
 
-        add_node("controller:orders", "COMPONENT", "OrderRequestController", component_kind="CONTROLLER",
-                 properties={"declared_methods": [{"name": "getOrder", "line": 4, "arity": 0}]})
-        add_node("implementation:orders", "JAVA_TYPE", "OrderPlacementService")
-        add_node("implementation:repository", "JAVA_TYPE", "OrderPersistenceRepository")
-        add_edge("edge:fixture:invoke", "operation:orders:get", "controller:orders", "INVOKES",
-                 properties={"handler": "getOrder", "handler_line": 4, "handler_arity": 0})
-        add_edge("edge:fixture:call", "controller:orders", "implementation:orders", "CALLS_COMPONENT",
-                 properties={"call_sites": [{"source_method": "getOrder", "source_method_line": 4,
-                                              "target_method": "load", "line": 6}]})
-        add_edge("edge:fixture:inject", "implementation:orders", "implementation:repository", "INJECTS")
-        add_edge("edge:fixture:type", "implementation:orders", "implementation:repository", "DEPENDS_ON_TYPE")
-        for index in range(14):
-            add_node(f"config:fixture:{index}", "CONFIGURATION_KEY",
-                     "orders.integration.authentication.client.connection.timeout.milliseconds"
-                     if index == 0 else f"orders.client.request.{index}.timeout.milliseconds")
-            add_edge(f"edge:fixture:config:{index}", "controller:orders", f"config:fixture:{index}", "READS_CONFIG")
-        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-architecture-") as temporary:
-            root = Path(temporary)
-            source, output = root / "graph.json", root / "viewer.html"
-            source.write_text(json.dumps(graph), encoding="utf-8")
-            with redirect_stdout(io.StringIO()):
-                self.render_graph([str(source), "--output", str(output)])
-            result = subprocess.run([node, str(Path(__file__).with_name("viewer_interactions.cjs")),
-                                     str(output), "architecture"], capture_output=True, text=True, timeout=15)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(len(json.loads(result.stdout)["checks"]), 7)
+    def test_filters_and_source_inspection_keep_status_and_redact_properties(self):
+        graph=graph_fixture()
+        edge=next(row for row in graph['edges'] if row['id']=='edge:external')
+        edge['properties']={'secret':'DO_NOT_DISPLAY','resolution_rule':'fixture rule'}
+        self.render(graph)
+        result=self.interactions('inspection')
+        self.assertTrue(result['unresolved_preserved'])
+        self.assertTrue(result['source_evidence'])
+        self.assertTrue(result['redacted'])
+
+    def test_compact_layout_removes_graph_pagination_and_collapses_help(self):
+        self.render()
+        self.assertNotIn('Inspect unresolved',self.html)
+        self.assertNotIn('Next diagram',self.html)
+        self.assertNotIn('Previous diagram',self.html)
+        self.assertEqual(self.html.count('<h1>'),1)
+        elements={attrs['id']:attrs for _,attrs in self.parser.elements if attrs.get('id')}
+        self.assertNotIn('open',elements['overview'])
+        self.assertNotIn('open',elements['legend'])
+        self.assertTrue({'graph','fit','collapse','scope','status','family','index-panel'}<=elements.keys())
+        self.assertIn('overflow:hidden',self.html)
+
+    def test_trace_streaming_preserves_existing_method_scopes_without_retaining_all_traces(self):
+        graph=graph_fixture()
+        tool=load_tool('viewer_traces')
+        expected=tool.build_trace_model(graph)
+        actual=[]
+        streamed=tool.build_trace_model(graph,trace_sink=actual.append)
+        self.assertEqual({row['id']:row for row in actual},expected['traces'])
+        self.assertEqual(streamed['traces'],{})
+        self.assertEqual(streamed['trace_index']['counts'],expected['trace_index']['counts'])
+        self.render(graph)
+        data=logical_chunks(self.data)
+        index=data['trace-index']
+        for identifier,key in index.items():
+            self.assertEqual(data[key],expected['traces'][identifier])
+        self.assertNotIn('selected_call_sites',self.html.split('<script>')[0])
+
+    def test_failed_renderer_preserves_previous_html_and_bucket_bytes(self):
+        graph=graph_fixture()
+        self.render(graph)
+        before={path.name:path.read_bytes() for path in self.data.glob('*.js')}
+        html=self.output.read_bytes()
+        graph['edges'][0]['target']='missing-provider-node'
+        (self.root/'graph.json').write_text(json.dumps(graph))
+        with self.assertRaises(KeyError), redirect_stdout(io.StringIO()):
+            self.render_graph([str(self.root/'graph.json'),'--output',str(self.output)])
+        self.assertEqual(self.output.read_bytes(),html)
+        self.assertEqual({path.name:path.read_bytes() for path in self.data.glob('*.js')},before)
+
+    def test_renderer_rejects_foreign_data_without_overwriting_it(self):
+        self.render()
+        protected=self.data/'keep.txt'
+        protected.write_text('Unrelated user content')
+        with self.assertRaisesRegex(ValueError,'generated data buckets'), redirect_stdout(io.StringIO()):
+            self.render_graph([str(self.root/'graph.json'),'--output',str(self.output)])
+        self.assertEqual(protected.read_text(),'Unrelated user content')
+
+    def test_invalid_template_shows_recovery_message(self):
+        self.output.write_text((Path(__file__).parents[1]/'tools/viewer.html').read_text())
+        result=self.interactions('template-error')
+        self.assertTrue(result['visible_recovery'])
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

@@ -1,145 +1,98 @@
-# Viewer hierarchy, legend, and filters
+# Progressive graph viewer
 
-The skill owns the viewer template, presentation model, renderer, and regressions.
-Keep enhancements under this skill's assets, tools, references, and tests.
-Workbench adapters query canonical evidence and do not own presentation rules.
+Open `relationships/service-dependencies/generated/relationship-viewer.html`.
+Keep its sibling `relationship-viewer.data/` folder beside it.
+Both belong to the same checksum-backed snapshot.
+The viewer uses local files and needs no server or external asset service.
+Use a current browser with `DecompressionStream` support for gzip data.
 
-Open `relationships/service-dependencies/generated/relationship-viewer.html` to inspect the generated graph.
-The skill's `tools/viewer.html` is a template without repository data.
-Opening that template shows a recovery notice and a link to the default generated viewer.
-Invalid embedded JSON also shows a visible recovery notice.
+## One graph
 
-## Presentation levels
+The initial map contains every repository, including disconnected inventory roots.
+Repository links aggregate canonical relationships by endpoints, family, scope, and evidence status.
+These links retain separate provider matching and investigation assessments.
+They do not establish deployment or runtime calls.
 
-| Level | Content | Evidence boundary |
-| --- | --- | --- |
-| Highest | Resolved system links and investigated architecture, including explicit uncertainty. | Investigation assessments and provider matching remain separate. |
-| Medium | APIs, data access, module imports, handler mappings, and uncertain boundaries. | Complete function reuse and execution are not extracted. |
-| Lowest | Package and build-tool declarations. | Build dependency does not establish runtime invocation. |
+Click a repository to expand its dependency groups inside the graph.
+Click an API, data, shared-code, configuration, package, or ownership group to load its first batch.
+Click individual services or declarations to expand their direct neighborhoods.
+Use **Load more** to append another batch to the existing graph.
+Previously loaded branches remain visible. Duplicate nodes and edges share one identity.
+Click an expanded node to collapse its branch. Shared nodes remain when another branch references them.
+Use **Collapse all** to restore the repository map.
 
-The highest view includes repository cards with interface, configuration, data, code, and unresolved boundary counts.
-Card controls open the corresponding repository details without adding canonical relationships.
-The connection diagram aggregates canonical links by repository roots, family, direction, and status.
-Aggregation retains all canonical edge IDs and source evidence.
-Unmatched repositories can remain visible without implying independence.
+Groups describe navigation only. They add no canonical service or relationship.
+Group records are explicitly separate from canonical source declarations.
+Source-only repositories remain inventory identities without inferred runtime providers.
 
-Ownership and navigation edges remain optional context within the medium view.
-The Components view enables ownership context by default.
-Inferred containment describes grouping. It does not establish runtime calls.
+Use the wheel to zoom and drag the background to pan.
+Use **Fit graph** to fit the current expanded graph.
+The desktop workspace fits the viewport. The inspector scrolls independently when details require space.
+Small phone screens stack the inspector below the graph.
+The architecture inventory, legend, evidence, and extra filters start collapsed.
 
-## Repository exploration
+## Filters and complete indexes
 
-Select a repository and choose Provided APIs, Outbound APIs, Messages, Storage, Configuration, or Components.
-The All view retains every owned node within the selected dimension.
-The node index includes isolated nodes and supports exact-name search.
-Select Runtime, Business, or both dimensions independently from presentation priority.
-The Business dimension enables structural context.
+Filter visible declarations by repository, relationship family, provider status, dependency scope, dimension, and assessment.
+Search names and recorded paths in the loaded graph.
+Use **Browse all declarations** to inspect the complete node or relationship index in bounded batches.
+Filters apply within the current index batch. Continue through remaining batches before claiming absence.
+A node selected from the index can expand its neighborhood in the same graph.
+Isolated canonical nodes remain available through the index and repository groups.
 
-Dependency scope selects Production, Testing, or both.
-Production is the initial scope. Selecting a testing repository enables its testing declarations.
-Testing nodes and relationships retain a `TESTING` label.
-Selecting both scopes retains every matching canonical declaration in the indexes.
-Testing declarations do not establish execution or passing behavior.
+Resolved means consumer and provider evidence matched.
+Declared only means a declaration exists without a separate provider match.
+Unresolved means a provider could not be matched. It does not mean broken.
+Ambiguous means several providers match. Candidate means the relationship is inferred.
+Solid lines show resolved or declared relationships. Dashed lines show unresolved or ambiguous links.
+Dotted lines identify candidates. Colors identify relationship families.
+The inspector retains exact statuses and investigated assessments.
 
-Storage includes extracted entities, tables, columns, access, and mapping relationships.
-Configuration includes declared keys, references, bindings, and supported topic configuration.
-Component dependencies retain their exact recorded relationship and assertion status.
-Imports, injection, mappings, and calls remain distinct.
-An empty view can reflect unsupported extraction. Check coverage before claiming absent behavior.
+## Evidence and traces
 
-## Legend and uncertainty
+Select a relationship to inspect its source and target, family, provider status, and assessment.
+Expand source edges from an aggregate link to inspect its individual declarations.
+Open **Source details** to load canonical fields and attached source evidence.
+Secret-bearing properties and configuration values remain redacted in the inspector.
+Source links retain exact recorded paths and independent revisions when available.
+Original architecture context remains available under **Architecture evidence**.
+Its layers and source details are collapsible.
 
-Line color identifies API, data, shared code, package, or ownership relationships.
-Card markers identify UI, service/library, infrastructure, source inventory, data, and external/unknown roles.
-The source inventory lane establishes no runtime service or provider identity.
-Arrows follow the recorded relationship.
-Calls point toward providers; reads point toward data sources.
+Select **Trace** on a recorded API or client to append its bounded dependency trace to this graph.
+Trace records preserve canonical IDs, selected callsites, method scopes, implementation alternatives, and explicit stops.
+Source identity bridges supply declaration context. They do not create canonical call edges.
+Type dependencies, unselected implementations, and callbacks do not establish executed API paths.
+Each recorded trace retains its existing six-hop, 160-node, and 240-edge bounds.
+Open the trace evidence stops and source details before interpreting a complete path.
 
-Solid lines show resolved or declared-only relationships.
-Dashed lines show unresolved or ambiguous relationships.
-Dotted lines show inferred candidates.
-Inspect badges and canonical fields to distinguish states sharing a line style.
+## Size and performance
 
-`Resolved` means consumer and provider evidence matched.
-`Declared only` means a source relationship exists without a separate provider match.
-`Unresolved` means the extractor cannot establish a provider from available evidence.
-`Ambiguous` means more than one provider matches.
-`Candidate` means the relationship is inferred.
+The HTML contains the application and repository summary, without canonical evidence or expanded trace bodies.
+Local data buckets use deterministic gzip compression through the Python standard library.
+The browser loads a bucket only when its content is requested and caches at most eight decoded buckets.
+Repeated concurrent requests share one promise. Failed requests clear their loading state and can retry.
+Neighborhoods append at most twelve entries per action.
+Canonical records, evidence, and declaration summaries are stored once in the viewer data.
+Neighborhoods contain references to those records.
+Trace generation writes each trace as it completes, without retaining the complete trace set in the renderer.
 
-Unknown configuration, missing source, and dynamic expressions can prevent resolution.
-Unresolved does not mean broken.
-External or unknown targets do not prove third-party ownership.
-Declaration confirmation and provider resolution remain separate fields.
+The HTML size follows repository summary size rather than full source evidence size.
+The complete data bundle still grows with canonical records, links, and trace evidence.
+Compression and lazy loading do not make arbitrary graph sizes constant or prove a memory limit.
+One unusually large canonical record can exceed the ordinary 192 KiB logical batch target.
+Keep the complete manifest and bundle for CLI queries and checksum verification.
 
-## Filters and inspection
+## Validation
 
-Filter by repository, relationship family, provider status, boundary, exact relationship, or search text.
-Search covers names, paths, operations, and attached source evidence.
-Sort by connection count, name, family, or provider status.
-Highest view includes investigated instructions and their uncertain boundaries.
-Investigation filters select source support, inference, conflicts, unverified claims, or excluded boundaries.
-Evidence-origin filters select investigated instructions or static extraction.
-Ordered layer lanes place related frontend components in their architectural sequence.
-The inspector retains the specific relationship kind, review rationale, and exact source citations.
-Original instructions remain in a collapsed evidence section below the main graph.
+Skill regressions check complete navigation, uncertainty, evidence retention, escaping, retries, and compressed data recovery.
+The interaction harness executes the shipped JavaScript with a DOM substitute.
+Browser verification is separate:
 
-Each diagram page limits nodes and edges for legibility.
-Additional pages retain every filtered relationship and indexed node.
-No degree ranking can remove a matching item from the complete page sequence.
-The node and relationship indexes retain all filtered results across pages.
-Select any indexed node to focus its neighborhood, including an isolated node.
-Use the return control to restore the complete diagram sequence.
+```sh
+node .agents/skills/service-dependencies-graph/tests/viewer_browser.cjs PATH_TO_HTML TASK_LOG_DIRECTORY
+```
 
-Rendered counts and indexed counts remain separate.
-The overview summarizes unresolved, ambiguous, candidate, and declared boundaries outside resolved system links.
-Select a relationship to inspect direction, canonical edges, resolution rule, evidence, and IDs.
-Node inspection includes kind, dimensions, assertion status, descriptions, source paths, properties, and evidence.
-Relationship inspection retains all canonical properties.
-
-## API and client traces
-
-Select an API or client in the trace selector, or use its inspector trace control.
-The trace projection retains canonical edge IDs, evidence, selected callsites, and explicit stops.
-Exact caller methods restrict API paths to their supported callsites.
-Unique local helper calls can continue within the same class.
-Deferred callbacks remain declaration context; they cannot become direct method-path steps.
-
-The initial trace hides type, import, and injection context to keep the selected path readable.
-Select `Include type/import context` to restore every retained trace node and relationship.
-Visible and retained counts remain separate.
-The complete canonical indexes remain available when you leave the trace.
-
-`method_path` identifies supported caller-method links.
-`implementation_context` shows declared implementation alternatives without selecting runtime dispatch.
-`declaration_context` includes type dependencies, imports, and ORM mappings.
-`class_context` identifies unscoped class dependencies and legacy calls.
-Identity context requires unique repository, qualified type, and concrete source-path evidence.
-It does not add a canonical invocation edge.
-
-Missing method evidence, ambiguous declarations, unknown providers, and unselected implementations retain explicit trace breaks.
-Each trace permits six hops, 160 nodes, and 240 relationships.
-Limit records retain omitted canonical edge IDs.
-Canonical indexes remain available beyond the trace limits.
-Trace counts measure navigation entries; they do not measure complete behavior coverage.
-
-The diagram wraps complete names and separates APIs, handlers, interfaces, implementations, data access, and external targets.
-Configuration, storage, and messages have separate columns.
-Directed routes retain relationship labels, including relationships within one role column.
-Diagram pagination preserves the complete matching node and relationship indexes.
-
-Inspectors redact secret-bearing property fields and configuration values.
-Additional evidence records remain available through an expandable section.
-Source evidence limits remain visible when an independent Git revision is unavailable.
-
-Do not merge different protocols, methods, or provider statuses through matching labels.
-Keep package boundaries distinct from API targets.
-Preserve API, data, and shared-code boundaries even when their providers remain unknown.
-
-## Validation limits
-
-Use skill regressions to check hierarchy, filters, pagination, evidence retention, and safe source embedding.
-Check that diagram pages cover every indexed item across API-heavy and mixed-family fixtures.
-Check storage, messaging, configuration, component, and business views separately.
-DOM logic checks do not establish visual layout quality.
-Record visual review separately from syntax and interaction checks.
-If browser access blocks observation, state that visual review remains incomplete.
+Use `WORKBENCH_GRAPH_BROWSER` to select an already installed browser executable when necessary.
+The command uses the existing optional Playwright tooling. It downloads nothing.
+It checks viewport overflow, lazy startup, expansion, evidence inspection, and collapse in local Chromium.
+Record the actual browser version and platform. Unchecked browsers remain explicit limits.

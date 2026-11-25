@@ -80,7 +80,9 @@ def write_ai_outputs(candidate: Path, descriptions: Path) -> None:
     artifacts = []
     for path in sorted(item for item in candidate.rglob('*') if item.is_file()):
         relative = path.relative_to(candidate).as_posix()
-        role = 'user_architecture_source_snapshot' if relative.startswith('architecture-context-sources/') else roles.get(relative, 'repository_projection')
+        role = ('interactive_visualization_data' if relative.startswith('relationship-viewer.data/') else
+                'user_architecture_source_snapshot' if relative.startswith('architecture-context-sources/') else
+                roles.get(relative, 'repository_projection'))
         artifacts.append({'path': relative, 'role': role,
                           'bytes': path.stat().st_size, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
     manifest = {

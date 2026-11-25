@@ -93,7 +93,7 @@ def _method(node: dict, name: str | None, line: int | None = None,
 
 
 def build_trace_model(graph: dict[str, Any], *, max_hops: int = 6,
-                      max_nodes: int = 160, max_edges: int = 240) -> dict[str, Any]:
+                      max_nodes: int = 160, max_edges: int = 240, trace_sink=None) -> dict[str, Any]:
     """Return canonical IDs, scoped steps, explicit breaks, and display limits."""
     nodes = {node['id']: node for node in graph.get('nodes', [])}
     incoming: dict[str, list[dict]] = defaultdict(list)
@@ -117,6 +117,7 @@ def build_trace_model(graph: dict[str, Any], *, max_hops: int = 6,
         elif relation in _MESSAGES:
             anchors.setdefault(edge['source'], 'message_component')
     traces, by_repository, by_node = {}, defaultdict(list), defaultdict(list)
+    counts = {'entries': 0, 'truncated': 0, 'with_breaks': 0}
     for anchor, kind in sorted(anchors.items()):
         selected_nodes = {anchor}
         steps: dict[str, dict] = {}
@@ -335,6 +336,12 @@ def build_trace_model(graph: dict[str, Any], *, max_hops: int = 6,
                         'by_role': dict(sorted(Counter(step['role'] for step in steps.values()).items()))},
             'evidence_limit': 'Static dependencies and declaration context do not establish executed end-to-end behavior.',
         }
+        counts['entries'] += 1
+        counts['truncated'] += bool(trace['limits']['truncated'])
+        counts['with_breaks'] += bool(trace['breaks'])
+        if trace_sink is not None:
+            trace_sink(trace)
+            continue
         traces[anchor] = trace
         if trace['repository']:
             by_repository[trace['repository']].append(anchor)
@@ -345,6 +352,5 @@ def build_trace_model(graph: dict[str, Any], *, max_hops: int = 6,
         'trace_index': {'schema_version': '1.0.0',
                         'by_repository': {key: sorted(value) for key, value in sorted(by_repository.items())},
                         'by_node': {key: sorted(value) for key, value in sorted(by_node.items())},
-                        'counts': {'entries': len(traces), 'truncated': sum(t['limits']['truncated'] for t in traces.values()),
-                                   'with_breaks': sum(bool(t['breaks']) for t in traces.values())}},
+                        'counts': counts},
     }
