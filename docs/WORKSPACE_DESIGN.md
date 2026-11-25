@@ -77,10 +77,18 @@ Workspace `settings.auto_commit_staged_changes` controls agent commits after req
 It defaults to `true`; `false` leaves task-owned changes staged until the user requests a commit.
 Explicit user instructions take precedence. Unrelated staged files retain their ownership.
 
-Status reports the effective value, and native session-start context includes it.
-Agents reread status before stage completion. The runtime and hooks do not execute commits.
-New workspaces write the default explicitly. Older YAML and JSON declarations can omit it.
-Use [the configuration guide](../README.md#configure-automatic-commits) for the supported format and limits.
+Other agent settings control commit style, commit granularity, branch prefixes, Ponytail mode, and report detail.
+Their defaults are `plain`, `per_stage`, `feature/`, `full`, and `standard`.
+Plain allows descriptive subjects without requiring a fixed convention.
+Granularity applies when automatic commits are enabled; `per_task` leaves interim stages staged until task completion.
+
+Status and native session-start context report all effective settings.
+Agents reread status before branch creation and stage or task completion.
+The runtime and hooks do not create branches or execute commits.
+Schema defaults supply omitted fields without rewriting existing files.
+New workspaces write those defaults explicitly. Older YAML and JSON declarations can omit them.
+
+Use [the configuration guide](../README.md#configure-agent-settings) for the supported format and limits.
 
 Implementation evidence for these boundaries is in the complete source checkout at `core/workspace.py`, `core/store.py`, and `core/schemas/workspace.schema.json`.
 Generated workspaces use the installed runtime and omit those implementation files.

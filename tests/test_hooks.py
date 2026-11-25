@@ -223,6 +223,66 @@ class HookRuntimeTests(unittest.TestCase):
                 self.assertNotIn("additionalContext", output)
                 self.assertIn("Load a valid workspace.yaml or legacy workspace.json.", result.stdout + result.stderr)
 
+    def test_start_context_reports_all_settings_and_commit_timing_without_running_commands(self):
+        path = self.root / "workspace.yaml"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        profiles = (
+            {"auto_commit_staged_changes": True, "commit_message_style": "plain",
+             "commit_granularity": "per_stage", "branch_prefix": "feature/",
+             "ponytail_mode": "full", "report_verbosity": "standard"},
+            {"auto_commit_staged_changes": True, "commit_message_style": "conventional",
+             "commit_granularity": "per_task", "branch_prefix": "fix/",
+             "ponytail_mode": "ultra", "report_verbosity": "detailed"},
+            {"auto_commit_staged_changes": False, "commit_message_style": "plain",
+             "commit_granularity": "per_task", "branch_prefix": "chore/",
+             "ponytail_mode": "off", "report_verbosity": "concise"},
+        )
+        for client in ("codex", "copilot", "claude"):
+            for bound in (False, True):
+                if bound:
+                    self.bind(client)
+                for settings in profiles:
+                    with self.subTest(client=client, bound=bound, settings=settings):
+                        payload["settings"] = settings
+                        path.write_text(json.dumps(payload), encoding="utf-8")
+                        before = self.snapshot()
+                        with self.successful_runner() as runner:
+                            output, diagnostic, code = module.run_hook(self.root, client, "start", self.payload(client))
+                        context = (output["additionalContext"] if client == "copilot" else
+                                   output["hookSpecificOutput"]["additionalContext"])
+                        configured = next(line.removeprefix("Workspace agent settings: ")
+                                          for line in context.splitlines() if line.startswith("Workspace agent settings: "))
+                        self.assertEqual(json.loads(configured), settings)
+                        self.assertEqual((diagnostic, code), ("", 0))
+                        if not settings["auto_commit_staged_changes"]:
+                            self.assertIn("Leave changes staged unless the user explicitly requests a commit.", context)
+                            self.assertNotIn("Commit at task completion", context)
+                        elif settings["commit_granularity"] == "per_task":
+                            self.assertIn("Commit at task completion; leave interim stages staged.", context)
+                            self.assertNotIn("Commit after each completed stage.", context)
+                        else:
+                            self.assertIn("Commit after each completed stage.", context)
+                        self.assertIn("Explicit user instructions take precedence", context)
+                        self.assertEqual(self.snapshot(), before)
+                        runner.assert_not_called()
+
+    def test_invalid_workflow_setting_cannot_supply_default_start_context(self):
+        path = self.root / "workspace.yaml"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for settings in ({"commit_message_style": "invalid"}, {"commit_granularity": "invalid"},
+                         {"branch_prefix": ""}, {"ponytail_mode": False}, {"report_verbosity": "invalid"}):
+            for client in ("codex", "copilot", "claude"):
+                with self.subTest(client=client, settings=settings):
+                    payload["settings"] = settings
+                    path.write_text(json.dumps(payload), encoding="utf-8")
+                    result = self.cli("run", "--client", client, "--event", "start",
+                                      payload=json.dumps(self.payload(client)))
+                    self.assertEqual(result.returncode, 2 if client == "copilot" else 0)
+                    output = json.loads(result.stdout)
+                    self.assertNotIn("hookSpecificOutput", output)
+                    self.assertNotIn("additionalContext", output)
+                    self.assertIn("Load a valid workspace.yaml or legacy workspace.json.", result.stdout + result.stderr)
+
     def test_public_cli_rejects_malformed_and_oversized_payloads_without_leaking_input(self):
         private = "private-input-must-not-be-printed"
         payloads = [f'{{"session_id": "{private}", "session_id": "duplicate"}}',

@@ -174,31 +174,60 @@ Existing `workspace.json` configurations remain supported when YAML is absent.
 The runtime merges tool registry records with inline `resources` and rejects duplicate IDs.
 Restart CLI or MCP processes after configuration changes.
 
-### Configure automatic commits
+### Configure agent settings
 
-Set the agent commit policy in `workspace.yaml`:
+Set agent defaults in `workspace.yaml`:
 
 ```yaml
 settings:
   auto_commit_staged_changes: true
+  commit_message_style: plain
+  commit_granularity: per_stage
+  branch_prefix: feature/
+  ponytail_mode: full
+  report_verbosity: standard
 ```
 
-The default is `true`, including configurations that omit this field.
-Agents commit reviewed, task-owned staged changes after the completed stage passes its required checks.
-Set this option to `false` to leave changes staged until you explicitly request a commit.
-Explicit user instructions take precedence over this default.
-Unrelated staged files retain their ownership in both modes.
-The setting does not authorize pushes, publication, or deployment.
+These defaults preserve the current behavior.
+Plain commit subjects allow descriptive free-form messages; the existing instructions impose no fixed subject convention.
+Omitted fields receive these defaults in memory without rewriting existing configuration files.
+New workspaces write all six defaults explicitly.
+
+| Setting | Accepted values | Agent behavior |
+| --- | --- | --- |
+| `auto_commit_staged_changes` | `true`, `false` | Automatically commit reviewed task-owned changes when enabled. |
+| `commit_message_style` | `plain`, `conventional` | Use free-form subjects or require `type(scope): summary`, with optional scope. |
+| `commit_granularity` | `per_stage`, `per_task` | Commit each completed stage or hold staged changes until task completion. |
+| `branch_prefix` | String, 1–80 characters | Prefix an authorized new branch unless the user supplies its name. |
+| `ponytail_mode` | `lite`, `full`, `ultra`, `"off"` | Select [Ponytail](.agents/skills/ponytail/SKILL.md) style or disable its style rules. |
+| `report_verbosity` | `concise`, `standard`, `detailed` | Give essential results, balanced explanation, or supporting rationale and case details. |
+
+Quote `"off"` in YAML to preserve its string type.
+Agents validate the complete branch name with `git check-ref-format --branch NAME` before creating it.
+Every mode retains required checks, evidence, findings, risks, and authorization limits.
+Explicit user instructions take precedence over these defaults.
+Settings do not authorize branch creation, pushes, publication, or deployment.
 
 `ai-sdlc --workspace . status` reports effective settings.
-Session-start hooks include the current commit setting for each supported agent client.
-Without hooks, agents read status as directed by [the project guide](AGENTS.md#validation-and-commits).
-Agents reread status before stage completion to detect changes during a session.
+Session-start hooks include all six effective settings for each supported agent client.
+Without hooks, agents read status as directed by [the project guide](AGENTS.md#workspace-agent-settings).
+Agents reread status before branch creation and stage or task completion.
+The runtime and hooks supply policy context; agents apply the settings.
 
-The runtime and hooks supply policy context; they do not run Git commits.
-Use YAML booleans `true` or `false`; invalid values and unknown setting names fail validation.
+Invalid types, unsupported values, and unknown setting names fail validation.
 Legacy `workspace.json` supports the same `settings` object when YAML is absent.
 `workspace.local.yaml` continues to supply repository paths only.
+
+#### Configure automatic commits
+
+The default is `true`, including configurations that omit this field.
+With `per_stage`, agents commit reviewed task-owned changes after each completed stage passes its required checks.
+With `per_task`, agents leave interim stages staged and commit the reviewed changes after the whole task completes.
+Set this option to `false` to leave changes staged until you explicitly request a commit.
+Disabling automatic commits takes precedence over either granularity value.
+Unrelated staged files retain their ownership in both modes.
+
+The runtime and hooks do not stage files or run Git commits.
 
 ## Preserve and govern knowledge
 
@@ -319,7 +348,8 @@ Launch Claude with `claude --settings .claude/workbench-hooks.json` to avoid Cop
 Hooks remain advisory. Bind the active session scope before edits; existing skills retain workflow decisions.
 
 Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.
-Use [Ponytail](.agents/skills/ponytail/SKILL.md) for coding tasks, with `full` mode selected by [project guidance](AGENTS.md#coding-tasks-with-ponytail).
+Use [Ponytail](.agents/skills/ponytail/SKILL.md) for coding tasks, with `settings.ponytail_mode` selected by [project guidance](AGENTS.md#coding-tasks-with-ponytail).
+The default mode remains `full`; explicit user choices take precedence.
 It selects the smallest complete change and preserves required validation, security, accessibility, and evidence.
 Read it with `ai-sdlc --workspace PATH skills ponytail`, or invoke `$ponytail` when your client supports skills.
 Request `lite`, `ultra`, or `off` in conversation to change its use.

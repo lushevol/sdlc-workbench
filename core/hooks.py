@@ -294,7 +294,8 @@ def run_hook(root, client, event, payload):
         from .workspace import load_workspace
 
         configuration, _ = load_workspace(root)
-        auto_commit = configuration["settings"]["auto_commit_staged_changes"]
+        settings = configuration["settings"]
+        auto_commit = settings["auto_commit_staged_changes"]
         state = _load(root, client, session)
         relative_root = os.path.relpath(root, Path(cwd).resolve()).replace(os.sep, "/")
         argv = ["ai-sdlc", "--workspace", relative_root, "hooks", "bind", "--client", client,
@@ -303,9 +304,13 @@ def run_hook(root, client, event, payload):
                    if sys.platform == "win32" else shlex.join(argv))
         lines = ["Workbench workspace (relative to native cwd): " + relative_root,
                  "Native hook client/session: " + client + "/" + session,
+                 "Workspace agent settings: " + json.dumps(settings, ensure_ascii=True, separators=(",", ":")),
                  "Workspace setting settings.auto_commit_staged_changes=" + str(auto_commit).lower() + ". " + (
-                     "After required checks pass, commit only reviewed task-owned staged changes."
-                     if auto_commit else "Leave changes staged unless the user explicitly requests a commit.")]
+                     "After required checks pass, commit only reviewed task-owned staged changes. " + (
+                         "Commit after each completed stage." if settings["commit_granularity"] == "per_stage"
+                         else "Commit at task completion; leave interim stages staged.")
+                     if auto_commit else "Leave changes staged unless the user explicitly requests a commit."),
+                 "Apply settings through AGENTS.md. Explicit user instructions take precedence; reread status before completion."]
         if state:
             lines += ["Declared living record: " + state["scope"]["record"],
                       "Next check: inspect this record and its sources; completion checks run after declared inputs change."]

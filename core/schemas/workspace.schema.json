@@ -15,6 +15,26 @@
         "auto_commit_staged_changes": {
           "type": "boolean", "default": true,
           "description": "Commit reviewed task-owned staged changes after required checks pass. Agents follow this policy; the runtime does not commit."
+        },
+        "commit_message_style": {
+          "type": "string", "enum": ["plain", "conventional"], "default": "plain",
+          "description": "Use a descriptive free-form subject, or require a Conventional Commit subject."
+        },
+        "commit_granularity": {
+          "type": "string", "enum": ["per_stage", "per_task"], "default": "per_stage",
+          "description": "When automatic commits are enabled, commit after each completed stage or after the whole task completes."
+        },
+        "branch_prefix": {
+          "type": "string", "minLength": 1, "maxLength": 80, "default": "feature/",
+          "description": "Prefix for an authorized new branch. Validate the complete branch name before creating it."
+        },
+        "ponytail_mode": {
+          "type": "string", "enum": ["lite", "full", "ultra", "off"], "default": "full",
+          "description": "Select the Ponytail coding style; off disables that style without waiving project requirements."
+        },
+        "report_verbosity": {
+          "type": "string", "enum": ["concise", "standard", "detailed"], "default": "standard",
+          "description": "Select report detail while retaining required evidence, findings, risks, and limits."
         }
       }
     },

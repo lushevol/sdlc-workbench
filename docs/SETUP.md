@@ -340,7 +340,10 @@ See [hook dependencies and limits](DEPENDENCIES.md#workbench-hooks) before selec
 
 The [Ponytail skill](../.agents/skills/ponytail/SKILL.md) ships as project-local instructions for your existing coding agent.
 The wheel and generated workspaces include its [source attribution](../.agents/skills/ponytail/SOURCE.md), [MIT license](../.agents/skills/ponytail/LICENSE.md), and Claude discovery alias.
-[Project guidance](../AGENTS.md#coding-tasks-with-ponytail) selects `full` mode for coding tasks.
+[Project guidance](../AGENTS.md#coding-tasks-with-ponytail) selects `settings.ponytail_mode` for coding tasks.
+The default remains `full`; explicit user choices take precedence.
+Project settings select its mode while preserving the upstream skill bytes and attribution.
+
 Read it with `ai-sdlc --workspace PATH skills ponytail`, or invoke `$ponytail` in clients that support skills.
 Request `lite`, `ultra`, or `off` in conversation to change its use.
 Client discovery can require the next turn or a new session.

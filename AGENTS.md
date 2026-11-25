@@ -5,6 +5,20 @@ This file is the entry guide. Follow the linked procedures when their scope appl
 Read relevant sections and operation references as needed. Do not load every workflow for an unrelated task.
 Before structural changes, read [principles](PRINCIPLE.md), [architecture](ARCHITECTURE.md), and [workspace design](docs/WORKSPACE_DESIGN.md).
 
+## Workspace agent settings
+
+At workspace entry, read effective `settings` with `ai-sdlc --workspace . status`.
+Configure defaults in `workspace.yaml`, or legacy `workspace.json` when YAML is absent.
+Omitted fields retain the current defaults documented in [the configuration guide](README.md#configure-agent-settings).
+Explicit user instructions take precedence over workspace defaults.
+Reread settings before branch creation and stage or task completion.
+Invalid settings require correction before automatic commits.
+
+Use `settings.branch_prefix` for an authorized new branch unless the user supplies a name.
+Validate the complete name with `git check-ref-format --branch NAME` before creation.
+Settings do not authorize branch creation, pushes, publication, or deployment.
+They do not waive validation, evidence, review, or unrelated-file preservation.
+
 ## Implementation boundary
 
 - Keep the single Python runtime and responsibility guides under `core/`; preserve the installed package name `ai_sdlc_workbench`.
@@ -192,7 +206,9 @@ Direct domain extraction follows the extractor workflow. Registry work remains s
 ### Coding tasks with Ponytail
 
 Read [Ponytail](.agents/skills/ponytail/SKILL.md) before coding, reviewing code, refactoring, or choosing dependencies.
-Use `full` mode unless the user selects `lite`, `ultra`, or `off`. Preserve architecture and required intake, evidence, coverage, tests, security, accessibility, and authorization.
+Use `settings.ponytail_mode`; its default is `full`. Explicit user choices override that default.
+Mode `off` disables Ponytail style rules.
+Preserve architecture and required intake, evidence, coverage, tests, security, accessibility, and authorization in every mode.
 
 ### Shared native hooks
 
@@ -250,18 +266,29 @@ ai-sdlc --workspace PATH validate
 
 For package/distribution changes, initialize from the built wheel outside this checkout and verify shipped guides, skills, schemas, and templates.
 Generated workspaces omit runtime source, `pyproject.toml`, and runtime tests. Do not rebuild unrelated indexes or generated graphs.
-At workspace entry and before stage completion, read `settings.auto_commit_staged_changes` with `ai-sdlc --workspace . status`.
-Configure it in `workspace.yaml`, or legacy `workspace.json` when YAML is absent. Missing settings default to `true`.
+Read the [workspace agent settings](#workspace-agent-settings) before stage or task completion.
+`settings.auto_commit_staged_changes` defaults to `true`.
 
 After a completed stage passes required checks, explicitly stage its complete change and review the staged diff.
-When this setting is `true`, commit the reviewed task-owned changes automatically.
-When this setting is `false`, leave those changes staged unless the user explicitly requests a commit.
-An explicit user instruction overrides the workspace default. Invalid settings require correction before automatic commits.
+When automatic commits are enabled, follow `settings.commit_granularity`.
+Value `per_stage` commits after each completed stage. Value `per_task` leaves interim stages staged until the task completes.
+When `settings.auto_commit_staged_changes` is `false`, leave changes staged unless the user explicitly requests a commit.
+The granularity setting does not enable commits when automatic commits are disabled.
+
+Use `settings.commit_message_style` for commits.
+Value `plain` permits a descriptive free-form subject. Value `conventional` requires `type[(scope)]: summary`, such as `feat: add settings`.
+An explicit user instruction overrides these defaults.
 
 This setting guides agents; the runtime and hooks do not execute Git commits.
 Keep commits scoped and preserve unrelated edits. Never use `git add repos/`. Report commit, checks, and remaining blockers.
 
 ## SDLC output standard
+
+Use `settings.report_verbosity` when the user does not specify detail.
+Value `concise` gives the outcome, essential evidence, and remaining actions.
+Value `standard` adds the scope, checks, and material limits.
+Value `detailed` includes supporting rationale and relevant case details.
+Every value retains required findings, evidence, risks, and authorization limits.
 
 Follow [task naming and content](tasks/README.md#document-order) and the [authoring catalog](core/knowledge/templates/sdlc/README.md#task-document-selection).
 Use ASD-STE100: active voice, stable terms, one main idea per sentence, at most 20 prose words per sentence and six sentences per paragraph.

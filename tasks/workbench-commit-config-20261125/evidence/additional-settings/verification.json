@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "task": "workbench-commit-config-20261125",
+  "source_revision": "c6475b148981d79ea481b7541856b69a1ceec134",
+  "user_confirmation": {
+    "date": "2026-11-25",
+    "source": "Codex chat 01a2118d-d014-74f2-ab0c-70913e950bd6",
+    "exact_input": "yes add these configs, use current value as default.",
+    "confirmed_settings": [
+      "commit_message_style",
+      "commit_granularity",
+      "branch_prefix",
+      "ponytail_mode",
+      "report_verbosity"
+    ]
+  },
+  "defaults": {
+    "auto_commit_staged_changes": true,
+    "commit_message_style": "plain",
+    "commit_granularity": "per_stage",
+    "branch_prefix": "feature/",
+    "ponytail_mode": "full",
+    "report_verbosity": "standard"
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_workspace_v2 tests.test_hooks tests.test_workspace_layout -v",
+      "status": "PASSED",
+      "tests": 66
+    },
+    {
+      "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+      "status": "PASSED",
+      "tests": 1173,
+      "passed": 1173,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "status": "PASSED",
+      "documents": 119,
+      "findings": 0
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "status": "PASSED"
+    },
+    {
+      "command": "isolated installed-wheel probe retained in logs/additional-settings-20261125/wheel-smoke-probe.py",
+      "status": "PASSED",
+      "native_context_cases": 30,
+      "shipped_files_checked": 8,
+      "yaml_and_json": true
+    },
+    {
+      "command": "changed Markdown link and anchor check",
+      "status": "PASSED",
+      "links_checked": 25
+    },
+    {
+      "command": "git check-ref-format --branch feature/config-defaults-check",
+      "status": "PASSED",
+      "branch_created": false
+    },
+    {
+      "command": "git diff --check",
+      "status": "PASSED"
+    },
+    {
+      "command": "git diff --cached --check",
+      "status": "PASSED"
+    }
+  ],
+  "environment": {
+    "python": "3.14.5",
+    "platform": "Darwin",
+    "machine": "arm64",
+    "test_runtime": ".venv",
+    "scope": "local fixtures; no live external mutations"
+  },
+  "source_files": {
+    "AGENTS.md": "d0577e9595ebd7214f45e6a86a69604dabfa41749700e52dae97f4cf82485064",
+    "README.md": "ee9a225ab9ba33b41b341dccdc7445c368eab9e848cf7a7d75d0416b7fe1fdd2",
+    "core/hooks.py": "4bb00ae4c382b76e5f7f8b24e0c36d64455d051dac0d65f5b6012996a4998007",
+    "core/schemas/workspace.schema.json": "8f33df99127fe55c064b71505be9660347ac2605784ca79415b7e611c8b6d027",
+    "core/workspace.py": "d47843e09add39359d49bb1fb320983fd9b8a610d2a4d9e0892033b8c66f09b8",
+    "docs/HOOKS.md": "9793fbefbc022a08386010768df622050578b99c64a910047e9e2e58e32ec0d9",
+    "docs/SETUP.md": "d85c403e5c77cd8a4928d9cd8fa12032b651b671d56d7e4f4a73ed27f3906655",
+    "docs/WORKSPACE_DESIGN.md": "7d26317c58960dfb7ac7e081424bbd38f669694951f2f5737ecc2e574940a66d",
+    "tests/test_hooks.py": "48443a24a41817ffa1f027e9bfe0f43ee29165380d529d7f9868aab870409fcb",
+    "tests/test_workspace_layout.py": "1d2c21757c0944019e1c77789eade817c6fd1e0c0e0e62cb89f8514a130b929c",
+    "tests/test_workspace_v2.py": "323394d7752298955d02c09b2d93eb9aebf469dd403169f5791343cde6d5b3a6",
+    "workspace.yaml": "51b8a25c53125e83ba902d5d47f40c65d9beaa924d505051a80f1ddb0535728f"
+  },
+  "evidence_files": {
+    "unit-suite.txt.gz": {
+      "sha256": "ca2904d28301c5d4ad869a85eabc6a4f6ac8beefd1ecc8dfd4cf055139cae7b7",
+      "bytes": 39467
+    },
+    "wheel-smoke.json": {
+      "sha256": "0a394204e11ec44847cae9de8ea1ceb27134b3b4a0b0e02b7b8a9c85f388b61c",
+      "bytes": 3644
+    }
+  },
+  "limitations": [
+    "These settings guide agents; the runtime and hooks do not create branches or execute commits.",
+    "Controlled adapter checks do not establish live native client or Windows execution.",
+    "Automated checks do not establish complete ASD writing review."
+  ]
+}

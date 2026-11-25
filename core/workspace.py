@@ -16,13 +16,17 @@ from .models import Resource, WorkbenchError, validate_arguments
 from .context.catalogs import CATALOG_NAMES, declaration_path, load_catalogs, read_declaration
 
 
+def _workspace_schema() -> dict:
+    return json.loads(files("ai_sdlc_workbench").joinpath("schemas", "workspace.schema.json").read_text(encoding="utf-8"))
+
+
 def load_workspace(root: Path) -> tuple[dict, dict[str, Resource]]:
     try:
         path = root / "workspace.yaml"
         if not path.exists():
             path = root / "workspace.json"
         payload = read_declaration(path)
-        schema = json.loads(files("ai_sdlc_workbench").joinpath("schemas", "workspace.schema.json").read_text(encoding="utf-8"))
+        schema = _workspace_schema()
         validate_arguments(payload, schema, "workspace")
     except (OSError, ValueError):
         raise WorkbenchError("Load a valid workspace.yaml or legacy workspace.json. Use init for a new workspace.") from None
@@ -30,7 +34,9 @@ def load_workspace(root: Path) -> tuple[dict, dict[str, Resource]]:
     _apply_local_repository_paths(root, catalogs)
     payload["resources"] = [*payload["resources"], *tools]
     validate_arguments(payload, schema, "workspace")
-    payload.setdefault("settings", {}).setdefault("auto_commit_staged_changes", True)
+    settings = payload.setdefault("settings", {})
+    for name, definition in schema["properties"]["settings"]["properties"].items():
+        settings.setdefault(name, definition["default"])
     payload["_catalogs"] = catalogs
     resources = {}
     for item in payload["resources"]:
@@ -128,7 +134,8 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace") -> P
     (evidence / "manifest.yaml").write_text(
         yaml.safe_dump({"schema_version": 1, "sources": []}, sort_keys=False), encoding="utf-8")
     payload = {"schema_version": 1, "id": uuid.uuid4().hex, "name": name, "timeout_seconds": 30,
-               "settings": {"auto_commit_staged_changes": True},
+               "settings": {name: definition["default"]
+                            for name, definition in _workspace_schema()["properties"]["settings"]["properties"].items()},
                "plugins": [], "resources": [], "registries": registries}
     (root / "workspace.yaml").write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
     return root

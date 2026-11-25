@@ -1,10 +1,10 @@
-# Configurable automatic commits
+# Configurable agent workflow defaults
 
-> **Critical conclusions: Implemented and checked**
+> **Critical conclusions: All requested settings implemented and checked**
 >
-> **Automatic commits are now a workspace setting.**
-> Owner: Workbench maintainer. Next action: use `settings.auto_commit_staged_changes` at stage completion.
-> Evidence: [Configuration guide](../../README.md#configure-automatic-commits) and [verification](evidence/verification.json).
+> **All five confirmed additions preserve current behavior through explicit defaults.**
+> Owner: Workbench maintainer. Next action: read effective settings before branch creation and stage or task completion.
+> Evidence: [Follow-up request](#exact-user-input), [configuration guide](../../README.md#configure-agent-settings), and [verification](evidence/additional-settings/verification.json).
 
 ## Exact user input
 
@@ -13,13 +13,25 @@ Date: 25 November 2026, Asia/Singapore.
 
 > Create a workbench config that includes an option for whether to always automatically commit staged changes. I mentioned this rule in agent.md, but I'd like it to be configurable. Can you provide other configurable suggestions?
 
+Follow-up source: the same Codex chat, 25 November 2026, Asia/Singapore.
+
+> yes add these configs, use current value as default.
+
+The follow-up authorizes the five previously proposed settings and their applicable guides, consumers, and tests.
+The follow-up implementation starts from commit `c6475b148`.
+The refreshed checkout has five unpublished commits, no incoming commits, and no unrelated local changes.
+
 ## Scope and authorization
 
-Implement configurable automatic commits in the existing Workbench configuration.
-Keep the current default unless source inspection requires another choice.
-Suggest other useful settings without implementing them.
+Implement all six settings in the existing Workbench configuration.
+The follow-up authorizes the five earlier suggestions.
+Keep current behavior as each default.
 This request authorizes configuration, runtime, tests, and applicable guide changes.
 It is direct maintenance, not extracted session learning.
+
+The follow-up extends implementation to all five proposed settings.
+Defaults preserve free-form commit subjects, stage commits, `feature/` branch names, `full` Ponytail mode, and standard report detail.
+The schema is the single owner for omitted-field and initialization defaults.
 
 ## Source and risk
 
@@ -27,8 +39,8 @@ Repository: `https://github.com/lushevol/sdlc-workbench.git`.
 Branch: `feature/knowledge-layout-consolidation`.
 Starting revision: `800e28395`.
 Fetched comparison: `origin/feature/knowledge-layout-consolidation`, at `b3df0435d`.
-The checkout has four unpublished commits and no incoming commits.
-The initial worktree is clean.
+The original stage starts with four unpublished commits and no incoming commits.
+Both stage-entry worktrees are clean.
 
 The sandbox blocked the first fetch; the approved retry completed successfully.
 
@@ -37,7 +49,10 @@ Qualitative risk: moderate.
 Incorrect defaults could change existing commit behavior.
 Unrelated staged changes must retain their ownership.
 
-## Work and checks
+## Initial automatic-commit change and checks
+
+Commit `c6475b148` completed this initial scope.
+The following results retain their original execution scope.
 
 The workspace schema now accepts `settings.auto_commit_staged_changes`.
 The effective default is `true` for new and older YAML or JSON declarations.
@@ -77,30 +92,63 @@ Resolving both paths fixed the probe. The installed package already came from th
 The passing probe also uses the existing requirement schema filename.
 These probe errors did not require product changes.
 
-## Suggested future settings
+## Confirmed additional settings
 
-These are proposals only.
-They need a separate user decision and implementation scope.
+The [follow-up request](#exact-user-input) confirms all five earlier proposals.
+The following defaults preserve current instructions and behavior.
 
-| Setting | Purpose | Suggested default |
+| Setting | Purpose | Default |
 | --- | --- | --- |
 | `commit_message_style` | Choose plain or Conventional Commit messages. | `plain` |
 | `commit_granularity` | Commit after each completed stage or once per completed task. | `per_stage` |
 | `branch_prefix` | Supply the default prefix when branch creation is authorized. | `feature/` |
-| `ponytail_mode` | Choose the existing `lite`, `full`, or `ultra` implementation style. | `full` |
+| `ponytail_mode` | Choose `lite`, `full`, `ultra`, or `"off"` implementation style. | `full` |
 | `report_verbosity` | Choose concise, standard, or detailed reports. | `standard` |
 
-Commit message style and granularity are the closest useful additions to this request.
+Existing commit subjects have no fixed format requirement; `plain` preserves that freedom.
+The existing stage-completion rule supplies `per_stage`.
+Current branch guidance supplies `feature/`.
+Project instructions supply Ponytail `full`; `standard` preserves the current reporting detail.
 Required checks, staged review, unrelated-file preservation, and external authorization remain mandatory.
-Do not add these proposed keys to the current declaration; unknown settings fail validation.
+
+### Implementation and current checks
+
+Schema defaults now supply both initialization and omitted fields during loading.
+Older configurations can contain no settings, an empty object, or only selected overrides.
+Workspace status and all three native session contexts expose all six effective values.
+The context distinguishes stage commits, task commits, and disabled automatic commits.
+Agent instructions define each setting and retain explicit user precedence.
+
+Ponytail mode uses the project guide; upstream skill bytes and attribution remain unchanged.
+Quote `"off"` in YAML because the existing YAML reader interprets unquoted `off` as a boolean.
+Branch creation still requires authorization and a valid complete Git branch name.
+No new dependencies or automatic branch operations were added.
+
+The focused suite passed 66 tests.
+Full discovery passed 1,173 tests with optional local integrations enabled.
+There were no skips, expected failures, unexpected successes, or runner errors.
+Workspace validation passed with 119 documents and zero findings.
+The wheel build passed without new dependencies or downloads.
+
+The isolated installed-wheel probe passed 30 native-context cases across YAML, JSON, and all three clients.
+It checked eight shipped files, defaults, partial overrides, invalid settings, and omitted runtime source.
+The probe also verified unchanged upstream Ponytail bytes.
+Final Markdown link and staged-diff checks are recorded in [verification](evidence/additional-settings/verification.json).
+
+Selected results include [unit output](evidence/additional-settings/unit-suite.txt.gz) and [wheel verification](evidence/additional-settings/wheel-smoke.json).
+Routine output remains under ignored `logs/additional-settings-20261125/`.
 
 ## Documentation and capability handoff
 
 Updated [agent instructions](../../AGENTS.md#validation-and-commits) to read the setting before stage completion.
-Updated the [configuration guide](../../README.md#configure-automatic-commits), [workspace design](../../docs/WORKSPACE_DESIGN.md#independent-system-workspaces), and [hook guide](../../docs/HOOKS.md#shared-behavior-and-limits).
+Updated the [configuration guide](../../README.md#configure-agent-settings), [workspace design](../../docs/WORKSPACE_DESIGN.md#independent-system-workspaces), and [hook guide](../../docs/HOOKS.md#shared-behavior-and-limits).
+The [setup guide](../../docs/SETUP.md#ponytail-coding-skill) now describes the configured Ponytail mode.
 No dependencies, business records, canonical governance, or repository grants changed.
 Registry lookup found no applicable commit-configuration capability.
 This directly requested feature needs no extracted-learning promotion.
+
+The latest request explicitly confirms the five earlier configuration candidates.
+No separate learning asset, registry promotion, or global memory update is required.
 
 ## Limits and disposition
 
