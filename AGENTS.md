@@ -81,6 +81,8 @@ For mixed work, apply business gates only to the business scope. A configuration
 Supplied implementation retains its actual revisions and dates; do not invent prior intent, history, or approval.
 Only evidence-backed `READY` permits the named phase within existing authorization, including [bounded exploration](tasks/README.md#start-bounded-exploration).
 `READY_WITH_LIMITS` permits intake evidence collection only. `NEEDS_CLARIFICATION` blocks the next phase. These are agent procedures, not runtime gates.
+Use [requirement-grill](.agents/skills/requirement-grill/SKILL.md) during intake or refinement when requirements are ambiguous or acceptance criteria are incomplete.
+It supplies a completeness ledger and focused owner questions within the existing phase rules.
 Follow [task document order](tasks/README.md#document-order), [baseline comparisons](tasks/README.md#compare-behavior-for-gap-analysis), and [knowledge reconciliation](tasks/README.md#update-knowledge-after-clarification).
 Save each completed case immediately, including parallel completions, under the [resume checkpoint rules](tasks/README.md#save-case-evidence-and-resume-checkpoints).
 Apply [critical evidence retention](tasks/README.md#critical-evidence-and-reusable-payloads), [growth controls](tasks/README.md#control-evidence-growth-before-execution), and [cleanup rules](tasks/README.md#evidence-priorities-and-cleanup).

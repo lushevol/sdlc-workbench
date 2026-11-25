@@ -74,6 +74,7 @@ For UI E2E cases, use [gherkin-quality](../gherkin-quality/SKILL.md) to separate
 Keep business-only acceptance criteria independent of UI details. Report missing UI evidence instead of inventing it.
 
 Drill material ambiguities and suspicious conditions with focused questions and evidence checks.
+Use [requirement-grill](../requirement-grill/SKILL.md) for a criterion completeness ledger, predicate review, and focused owner decisions.
 Ask only questions that can change investigation, impact, expected behavior, or the next decision.
 Record source-backed answers with confidence and limits. Send only unresolved material questions for asynchronous answers in the living document.
 Do not re-ask answered details unless evidence conflicts. State the conflict when confirmation is necessary.

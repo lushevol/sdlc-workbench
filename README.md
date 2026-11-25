@@ -404,6 +404,7 @@ Engine selection controls semantic work. Local OpenKB verification and visualiza
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
 It separates automated checks from content review and unresolved evidence.
 Use [gherkin-quality](.agents/skills/gherkin-quality/SKILL.md) for evidence-backed UI scenarios and automation readiness.
+Use [requirement-grill](.agents/skills/requirement-grill/SKILL.md) when a material requirement or acceptance criterion is incomplete or ambiguous before impact analysis.
 The [Gherkin quality guide](docs/GHERKIN_QUALITY.md) records the proposal decisions, command, evidence contract, and session demonstration.
 Links under `.claude/skills/` expose all canonical skills to Claude Code.
 
