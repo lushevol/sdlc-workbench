@@ -172,3 +172,28 @@ The [assessment](evidence/confirmation-gate-assessment.json) passed six criteria
 The [result archive](evidence/confirmation-gate-result.tar.gz) preserves the inspected output.
 This synthetic scenario does not establish universal compliance or live client behavior.
 The requested procedure update is complete.
+
+## Two-day learning review
+
+Source: this Codex chat, 26 November 2026.
+
+> now check sessions in 2 days with this skill, let's see what you can learn from them.
+
+Review the 48 hours ending at execution time, using accessible project chats and retained task evidence.
+Prepare supported learning candidates, reusable drafts, and concrete proposals for human review.
+Do not finalize reusable assets, packets, preferences, or registry rules without confirmation.
+Retain this review under the existing owning task.
+
+Repository: `workbench`, branch `feature/knowledge-layout-consolidation`.
+The configured origin is `https://github.com/lushevol/sdlc-workbench.git`.
+`git fetch --all` succeeded; `HEAD` and its fetched upstream had zero differing commits.
+An unrelated in-progress edit exists in `tasks/service-graph-viewer-20261125/01-maintenance.md`.
+Preserve that file and distinguish its local state from committed evidence.
+Effective settings enable scoped automatic commits after each completed stage, with plain commit subjects.
+Learning proposals require separate human confirmation before activation.
+
+Scope: session and evidence review, task-owned reports, candidate drafts, and local verification only.
+Risk: low for read-only inspection; incomplete sessions can produce uncertain conclusions.
+The [two-day learning review](02-learning-review.md) records seven inspected chats, seven selected task sources, five active preferences, and three pending candidates.
+Its [review receipt](evidence/two-day-learning-review.json) binds source hashes, candidate scope, and evidence limits.
+No reusable Workbench asset, packet, registry rule, or global memory entry changed.
