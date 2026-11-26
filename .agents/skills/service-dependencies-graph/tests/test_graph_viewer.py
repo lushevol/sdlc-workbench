@@ -74,6 +74,36 @@ def graph_fixture():
             "repositories": repositories, "nodes": nodes, "edges": edges, "evidence": evidence, "diagnostics": []}
 
 
+def scale_fixture():
+    """One hundred repositories, a busy hub, cycles, and internal implementation noise."""
+    graph = {**graph_fixture(), 'repositories':[], 'nodes':[], 'edges':[]}
+    graph['generator']['version'] = 'synthetic-scale-fixture'
+    for index in range(100):
+        kind = 'WEB' if index < 12 else 'SPRING' if index < 95 else 'SOURCE_ONLY'
+        rid, root = f'repo:scale-{index:03}', f'service:scale-{index:03}'
+        graph['repositories'].append({'id':rid,'name':rid[5:],'kind':kind,'visible':True,
+                                      'role':'LIBRARY' if 87 <= index < 95 else 'APPLICATION'})
+        if kind == 'SOURCE_ONLY':
+            graph['nodes'].append({'id':rid+':inventory','repository':rid,'name':'Source inventory','type':'COMPONENT'})
+            continue
+        graph['nodes'].append({'id':root,'repository':rid,'name':root[8:],
+                               'type':'APPLICATION' if kind == 'WEB' else 'SERVICE', 'dimensions':['RUNTIME']})
+        for item in range(20):
+            identifier=f'component:{index}:{item}'
+            graph['nodes'].append({'id':identifier,'repository':rid,'name':identifier,'type':'COMPONENT'})
+            graph['edges'].append({'id':f'internal:{index}:{item}','source':root,'target':identifier,
+                                   'relationship':'USES_COMPONENT','dimension':'RUNTIME','evidence':[],
+                                   'assertion_status':'CONFIRMED'})
+        targets = {0, (index+1)%95}
+        targets.discard(index)
+        for target in targets:
+            for call in range(3):
+                graph['edges'].append({'id':f'call:{index}:{target}:{call}','source':root,
+                    'target':f'service:scale-{target:03}','relationship':'CALLS_SERVICE','dimension':'RUNTIME',
+                    'evidence':['ev:client'],'assertion_status':'CONFIRMED','resolution_status':'RESOLVED'})
+    return graph
+
+
 class ScriptCollector(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -208,6 +238,85 @@ class GraphViewerModelTests(unittest.TestCase):
         self.assertEqual(model["nodes"]["COLUMN"]["family"], "data")
         self.assertEqual(model["nodes"]["CONFIGURATION_KEY"]["family"], "configuration")
 
+    def test_service_graph_collapses_calls_and_keeps_internal_details_outside_canvas(self):
+        before = deepcopy(self.graph)
+        projection = build_viewer_model(self.graph)['service_graph']
+        link = next(row for row in projection['links']
+                    if row['source'] == 'application:client' and row['target'] == 'service:orders')
+        self.assertEqual(set(link['edge_ids']), {'edge:rest:get', 'edge:rest:list', 'edge:graphql', 'edge:candidate'})
+        self.assertEqual(link['status'], 'mixed')
+        self.assertEqual(set(link['statuses']), {'resolved', 'candidate'})
+        self.assertEqual(sum(row['count'] for row in link['facets']), link['count'])
+        self.assertNotIn('component:client:call', projection['nodes'])
+        self.assertNotIn('operation:orders:get', projection['nodes'])
+        self.assertNotIn('table:orders', projection['nodes'])
+        self.assertNotIn('external:package', projection['nodes'])
+        self.assertGreater(projection['details']['application:client']['internal_edge_count'], 0)
+        self.assertEqual(self.graph, before)
+
+    def test_separate_services_in_one_repository_use_explicit_ownership(self):
+        graph = deepcopy(self.graph)
+        extra = deepcopy(next(row for row in graph['nodes'] if row['id'] == 'service:orders'))
+        extra.update(id='service:second', name='Second service')
+        graph['nodes'].append(extra)
+        graph['edges'].append({'id':'edge:second-call', 'source':'service:orders', 'target':'service:second',
+                               'relationship':'CALLS_SERVICE', 'dimension':'RUNTIME', 'evidence':[],
+                               'assertion_status':'CONFIRMED', 'resolution_status':'RESOLVED'})
+        projection = build_viewer_model(graph)['service_graph']
+        self.assertTrue({'service:orders','service:second'} <= projection['nodes'].keys())
+        call = next(row for row in projection['links'] if 'edge:second-call' in row['edge_ids'])
+        self.assertEqual((call['source'],call['target']), ('service:orders','service:second'))
+        self.assertNotIn('repo:orders',projection['repository_roots'])
+        # Unowned operations cannot be assigned to the first root in a monorepo.
+        self.assertFalse(any('edge:rest:list' in row['edge_ids'] for row in projection['links']))
+
+    def test_unresolved_urls_are_destination_groups_without_provider_identity(self):
+        graph = deepcopy(self.graph)
+        for index in range(30):
+            graph['nodes'].append({'id':f'url:{index}', 'type':'API_OPERATION','repository':None,
+                                   'name':f'/different/{index}', 'properties':{'protocol':'REST','path':f'/different/{index}'}})
+            graph['edges'].append({'id':f'call:{index}', 'source':'application:client','target':f'url:{index}',
+                                   'relationship':'CALLS_REST','dimension':'RUNTIME','evidence':[],
+                                   'assertion_status':'CONFIRMED','resolution_status':'UNRESOLVED'})
+        projection = build_viewer_model(graph)['service_graph']
+        groups = [row for row in projection['nodes'].values() if row.get('display_kind') == 'Destination group']
+        self.assertEqual(len(groups),1)
+        self.assertIn('No shared provider',groups[0]['provider_limit'])
+        call = next(row for row in projection['links'] if row['target'] == groups[0]['id'])
+        self.assertEqual((call['status'],call['count']),('unresolved',30))
+
+    def test_large_repository_set_uses_service_nodes_and_pair_lines(self):
+        graph = deepcopy(self.graph)
+        for index in range(97):
+            name = f'ui-{index}' if index < 9 else f'service-{index}'
+            kind = 'WEB' if index < 9 else 'SPRING'
+            repository = 'repo:' + name
+            root = ('application:' if kind == 'WEB' else 'service:') + name
+            graph['repositories'].append({'id':repository,'name':name,'path':'repos/'+name,
+                                          'kind':kind,'role':'APPLICATION','visible':True})
+            graph['nodes'].append({'id':root,'type':'APPLICATION' if kind == 'WEB' else 'SERVICE','name':name,
+                                   'repository':repository,'dimensions':['RUNTIME'],'properties':{}})
+            previous = 'application:client' if index == 0 else ('application:ui-'+str(index-1) if index < 10 else 'service-'+str(index-1))
+            previous = previous if previous.startswith(('application:','service:')) else 'service:'+previous
+            graph['edges'].append({'id':f'edge:service:{index}','source':root,'target':previous,
+                                   'relationship':'CALLS_SERVICE','dimension':'RUNTIME','evidence':[],
+                                   'assertion_status':'CONFIRMED','resolution_status':'RESOLVED'})
+            for component in range(12):
+                component_id=f'component:{name}:{component}'
+                graph['nodes'].append({'id':component_id,'type':'COMPONENT','name':component_id,
+                                       'repository':repository,'dimensions':['RUNTIME'],'properties':{}})
+                graph['edges'].append({'id':f'edge:internal:{index}:{component}','source':root,'target':component_id,
+                                       'relationship':'USES_COMPONENT','dimension':'RUNTIME','evidence':[],
+                                       'assertion_status':'CONFIRMED'})
+        projection = build_viewer_model(graph)['service_graph']
+        local_nodes = [row for row in projection['nodes'].values() if row.get('repository')]
+        self.assertEqual(len(projection['repository_roots']),100)
+        self.assertEqual(len(local_nodes),100)
+        self.assertTrue(all(row.get('display_node') for row in local_nodes))
+        self.assertFalse(any(row['id'].startswith('component:') for row in projection['nodes'].values()))
+        self.assertLessEqual(len(projection['links']),100)
+        self.assertTrue(any(row['count'] > 1 for row in projection['links']))
+
 
 def read_chunk(path):
     import base64
@@ -259,14 +368,15 @@ class GraphViewerRendererTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return json.loads(result.stdout)
 
-    def test_overview_contains_every_repository_and_only_repository_links(self):
+    def test_overview_keeps_repository_inventory_and_plots_only_service_nodes(self):
         graph = graph_fixture()
         graph['repositories'].append({'id':'repo:inventory','name':'Inventory','kind':'SOURCE_ONLY','visible':True})
         graph['nodes'].append({'id':'inventory:anchor','name':'Inventory anchor','type':'COMPONENT',
                                'repository':'repo:inventory','dimensions':['RUNTIME']})
         bootstrap = self.render(graph)
-        self.assertEqual(set(bootstrap['roots']), {row['id'] for row in graph['repositories']})
-        self.assertEqual(len(bootstrap['nodes']), len(graph['repositories']))
+        self.assertEqual({row['id'] for row in bootstrap['repositories']}, {row['id'] for row in graph['repositories']})
+        self.assertNotIn('repo:inventory',bootstrap['roots'])
+        self.assertEqual(len(bootstrap['nodes']),3)
         roots = set(bootstrap['roots'].values())
         self.assertTrue(all(row['source'] in roots and row['target'] in roots for row in bootstrap['links']))
         self.assertTrue(all('edge_ids' not in row and 'evidence' not in row for row in bootstrap['links']))
@@ -291,8 +401,10 @@ class GraphViewerRendererTests(unittest.TestCase):
             self.assertEqual(set(ids),{row['id'] for row in graph[kind+'s']})
         neighborhoods=[value for value in data.values() if isinstance(value,dict) and 'node_refs' in value]
         self.assertTrue(neighborhoods)
-        self.assertTrue(all(row.get('navigation') for value in neighborhoods for row in value['edges']))
-        self.assertTrue(all(row['id'].startswith('viewer-') for value in neighborhoods for row in value['nodes']))
+        self.assertTrue(all(row.get('service_link') for value in neighborhoods for row in value['edges']))
+        self.assertFalse(any(row.get('navigation') for value in neighborhoods for row in value['edges']))
+        service_nodes={row['id'] for key, batch in data.items() if key.startswith('service-index-') for row in batch}
+        self.assertTrue(all(ref['id'] in service_nodes for value in neighborhoods for ref in value['node_refs']))
         self.assertEqual(next(row for row in self.bootstrap['nodes'] if row['id']=='application:client')['name'], marker)
         self.assertNotIn('</script><script id="injected">', self.html)
 
@@ -312,7 +424,7 @@ class GraphViewerRendererTests(unittest.TestCase):
         self.assertLess(sum(path.stat().st_size for path in self.data.glob('bucket-*.js')), 150_000)
         self.assertNotIn('large source declaration', self.html)
 
-    def test_groups_and_batches_preserve_all_dependencies_and_isolated_nodes(self):
+    def test_card_and_indexes_preserve_all_dependencies_without_plotting_isolated_components(self):
         graph = graph_fixture()
         sample = deepcopy(graph['nodes'][1])
         for index in range(47):
@@ -321,15 +433,26 @@ class GraphViewerRendererTests(unittest.TestCase):
         result = self.interactions('complete')
         self.assertEqual(result['canonical_nodes'],len(graph['nodes']))
         self.assertEqual(result['canonical_edges'],len(graph['edges']))
+        self.assertTrue(result['only_service_nodes'])
         self.assertGreater(result['batches'],1)
 
     def test_progressive_graph_keeps_overview_deduplicates_loads_and_collapses_branches(self):
         self.render()
         result=self.interactions()
         self.assertTrue(result['same_graph'])
-        self.assertTrue(result['all_roots_retained'])
+        self.assertTrue(result['focused_connections'])
         self.assertTrue(result['collapsed'])
         self.assertTrue(result['deduplicated_requests'])
+
+    def test_hundred_repository_hub_expands_in_bounded_service_batches(self):
+        bootstrap = self.render(scale_fixture())
+        self.assertEqual(len(bootstrap['repositories']),100)
+        self.assertEqual(len(bootstrap['nodes']),95)
+        self.assertLess(self.output.stat().st_size,400_000)
+        result = self.interactions('scale')
+        self.assertTrue(result['bounded_focus'])
+        self.assertTrue(result['more_adds_peers'])
+        self.assertTrue(result['stable_layout'])
 
     def test_failure_is_retryable_and_does_not_leave_loading_or_expansion_stuck(self):
         self.render()

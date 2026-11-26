@@ -229,10 +229,11 @@ It does not establish a resolved provider or active deployment.
 `UNRESOLVED` means missing, conflicting, dynamic, or unsupported evidence prevents resolution.
 These states do not mean a dependency is broken.
 
-The viewer opens one repository relationship map.
-Click repositories to expand collapsible dependency groups, then load direct neighborhoods in the same graph.
-Use **Load more** to append bounded batches and collapse branches when needed.
-Use the complete declaration indexes for isolated nodes and remaining source detail.
+The viewer opens one service and UI module map with direct connection lines.
+Click services to focus inbound callers and outbound dependencies within the same canvas.
+Extend neighboring services, select direction and depth, or load more connections in bounded batches.
+Components and low-priority declarations remain in service cards and complete source indexes.
+Inventory-only repositories do not become inferred runtime services.
 Architecture inventory, legend, and evidence start collapsed.
 Read the [viewer guide](references/architecture/viewer-hierarchy.md) for filters, evidence, and trace limits.
 
@@ -241,7 +242,7 @@ The HTML embeds the repository summary. Compressed local data loads only when re
 A current browser with gzip `DecompressionStream` support is required.
 No server, external script, or additional Python package is required.
 Canonical graph facts and CLI query contracts remain unchanged.
-Navigation groups establish no runtime service or invocation relationship.
+Destination display groups establish no shared provider or invocation relationship.
 
 Exact module names establish `IMPORTS_MODULE` joins with `dependency_kind=MODULE` and evidence from both sides.
 Namespace matching only controls scan scope and cannot prove aliases.

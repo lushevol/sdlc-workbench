@@ -47,31 +47,55 @@ async function main(){
  }
  await value('Promise.all([expand('+JSON.stringify(root)+'),expand('+JSON.stringify(root)+')])');
  assert([...requests.values()].every(count=>count===1));
+ if(mode==='scale'){
+  const first=json('projection()');assert(first.nodes.length<=13,'Hub expansion must be bounded');
+  assert(first.nodes.every(node=>node.display_node));
+  await value('loadPage('+JSON.stringify(root)+')');value('draw()');
+  const second=json('projection()');assert(second.nodes.length>first.nodes.length);assert(second.nodes.length<=25);
+  const coordinates=json('[...positions]');value('draw()');assert.deepEqual(json('[...positions]'),coordinates);
+  assert(!second.nodes.some(node=>node.id.startsWith('component:')));
+  elements.get('collapse').onclick();assert.equal(json('projection().nodes').length,roots.length);
+  console.log(JSON.stringify({bounded_focus:true,more_adds_peers:true,stable_layout:true}));return;
+ }
  if(mode==='complete'||mode==='inspection'){
-  let queue=[...roots],seen=new Set(),batches=0;
-  while(queue.length){const id=queue.shift();if(seen.has(id))continue;seen.add(id);await value('expand('+JSON.stringify(id)+')');const pages=value('nodes.get('+JSON.stringify(id)+').pages');for(let i=1;i<pages;i++){await value('loadPage('+JSON.stringify(id)+')');batches++;}for(const child of json('branches.get('+JSON.stringify(id)+')?[...branches.get('+JSON.stringify(id)+').nodes]:[]'))if(!seen.has(child))queue.push(child);}
+  let batches=0;
+  for(const kind of ['nodes','edges']){
+   elements.get('index-kind').value=kind;
+   const total=value('bootstrap['+JSON.stringify(kind==='nodes'?'node_index':'edge_index')+'].length');
+   for(let page=0;page<total;page++){value('indexPage='+page);await value('renderIndex()');batches++;}
+  }
   if(mode==='complete'){
-   const counts=json('({canonical_nodes:[...nodes.values()].filter(node=>!node.id.startsWith("viewer-")).length,canonical_edges:[...edges.values()].filter(edge=>!edge.navigation).length})');
-   console.log(JSON.stringify({...counts,batches}));return;
+   const counts=json('({canonical_nodes:[...nodes.values()].filter(node=>!node.id.startsWith("viewer-")).length,canonical_edges:[...edges.values()].filter(edge=>!edge.service_link).length})');
+   assert(json('projection().nodes').every(node=>node.display_node));
+   await value("expand('component:client:call')");assert(!value("expanded.has('component:client:call')"));
+   console.log(JSON.stringify({...counts,batches,only_service_nodes:true}));return;
   }
   elements.get('status').value='unresolved';
   assert(json('projection().edges.filter(edge=>!edge.navigation).map(edge=>edge.status)').every(status=>status==='unresolved'));
   await value("selectItem('edge','edge:external')");
   await value("showRecord(edges.get('edge:external'),document.getElementById('record-content'),selectionVersion)");
   const detail=elements.get('record-content').innerHTML;assert.match(detail,/Source evidence/);assert.match(detail,/fixture.txt/);assert(!detail.includes('DO_NOT_DISPLAY'));assert.match(detail,/redacted/);
-  const navigation=json('[...edges.values()].find(edge=>edge.navigation).id');
-  await value('selectItem("edge",'+JSON.stringify(navigation)+')');
-  assert.match(elements.get('selection').innerHTML,/no canonical relationship or runtime call/);
+  const link=json('[...edges.values(),...overviewEdges.values()].find(edge=>edge.service_link&&edge.target==="external:orders")');
+  await value('selectItem("edge",'+JSON.stringify(link.id)+')');
+  await value('declarationRows(edges.get('+JSON.stringify(link.id)+')||overviewEdges.get('+JSON.stringify(link.id)+'))');
+  assert.match(elements.get('source-rows').innerHTML,/Calls REST/);
+  assert(json('projection().nodes').every(node=>node.display_node));
   console.log(JSON.stringify({unresolved_preserved:true,source_evidence:true,redacted:true}));return;
  }
- const group=json('[...nodes.values()].find(node=>node.type==="DEPENDENCY_GROUP"&&node.parent==='+JSON.stringify(root)+')');assert(group);
- await value('expand('+JSON.stringify(group.id)+','+JSON.stringify(root)+')');
- assert(json('projection().nodes.map(node=>node.id)').length>roots.length);
- for(const id of roots)assert(json('projection().nodes.map(node=>node.id)').includes(id));
+ assert.equal(value('focusId'),root);
+ assert(json('projection().nodes').every(node=>node.display_node));
+ assert(json('projection().edges').every(edge=>edge.service_link));
+ assert(!value('[...nodes.values()].some(node=>node.type==="DEPENDENCY_GROUP")'));
+ elements.get('direction').value='outbound';value('draw()');
+ assert(json('projection().edges').every(edge=>edge.source===root));
+ elements.get('direction').value='inbound';value('draw()');
+ assert(json('projection().edges').every(edge=>edge.target===root));
+ elements.get('direction').value='both';
  const viewBefore=elements.get('graph').attributes.viewBox;
  value('collapse('+JSON.stringify(root)+')');
- assert.equal(json('projection().nodes.map(node=>node.id)').length,roots.length);
  assert.equal(elements.get('graph').attributes.viewBox,viewBefore,'Collapse preserves the viewport');
- console.log(JSON.stringify({same_graph:true,all_roots_retained:true,collapsed:true,deduplicated_requests:true}));
+ elements.get('collapse').onclick();
+ assert.equal(value('focusId'),null);assert.equal(json('projection().nodes.map(node=>node.id)').length,roots.length);
+ console.log(JSON.stringify({same_graph:true,focused_connections:true,collapsed:true,deduplicated_requests:true}));
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});

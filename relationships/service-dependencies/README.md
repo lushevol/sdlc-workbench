@@ -43,15 +43,17 @@ Dynamic nginx templates cannot establish concrete upstream identities without su
 
 ## Progressive viewer
 
-The initial map contains every repository and its aggregated relationships.
-Click a repository to expand dependency groups within that graph.
-Expand a group or service to load its direct dependencies. **Load more** appends another bounded batch.
-Collapse branches individually or use **Collapse all** to restore the overview.
+The initial map contains service and UI module nodes with aggregated directed relationships.
+Each service pair has one connection line. Components and other implementation declarations remain in cards and source indexes.
+Click a service to focus inbound callers and outbound dependencies in that graph.
+Select direction and depth, then expand neighbors or use **Load connections** to append bounded batches.
+Use **Overview** to restore the complete service map.
 Use the wheel to zoom, drag the background to pan, and **Fit graph** to fit the current graph.
 
 The architecture inventory and legend start collapsed.
 The inspector loads source evidence when requested.
-Groups are navigation controls. They add no canonical service or runtime relationship.
+The repository inventory includes source-only and testing repositories without creating runtime service identities.
+Unknown destination groups add no common provider or runtime relationship.
 Provider status remains separate from investigation assessments and execution evidence.
 An unresolved dependency does not establish a defect.
 

@@ -156,3 +156,61 @@ reviewed_at: null
 limitations:
   - Automated checks do not establish complete writing review.
 ```
+
+## Follow-up scope: service-centric projection
+
+Date: 26 November 2026. Source: current Codex chat, session `01a2134f-8a1e-7332-a4ab-3d0d409e0e1a`.
+
+> **Critical conclusions: service boundaries are the primary viewer subject.**
+>
+> The main graph must emphasize inbound and outbound relationships between high-priority services, including upstream and downstream dependencies. Low-priority internal relationships may remain in graph data and service cards, but they should not appear as graph nodes. The viewer must represent repositories, services, UI modules, and external boundaries as service-centric nodes, with lines connecting those nodes.
+
+### Exact user input
+
+```text
+What I care about most is the inbound and outbound relationships between high-priority services, as well as their upstream and downstream dependencies. The low-priority internal ones don't need to be displayed in the graph UI, though they can still be mentioned in the underlying graph data and inside service card.
+
+There are a few things that need improvement in the graph:
+
+1. When there are a lot of repos and services, say, around a hundred repos, including a dozen UI repos, over seventy Java services, and things like SDKs or DevOps repos, the layout and relationships get extremely messy. We need a better way to handle correlations there.
+2. I want all nodes to be service-centric rather than focusing on components. We shouldn't use separate nodes to display those kinds of dependencies; instead, we should use lines to connect the different services.
+```
+
+### Implementation scope
+
+Keep canonical graph nodes, edges, evidence, queries, and source extraction unchanged. Add a service-centric viewer projection that collapses component endpoints to repository service roots, preserves cross-repository UI module links, exposes external boundaries on expansion, and aggregates overview links by service pair. Keep low-priority declarations available through the service inspector and complete indexes.
+
+## Follow-up implementation and verification
+
+The viewer now uses a service boundary projection. Each production service or UI module is one display node. Component, method, ORM, package, configuration, and test declarations remain in canonical data and service cards. They do not become canvas nodes.
+
+The overview draws one directed line per service pair. Each line retains source edge IDs, protocol families, relationship facets, matching states, assessments, and evidence. A line with mixed evidence remains visibly uncertain. Unresolved external API destinations use caller and protocol scoped destination groups. These groups retain an explicit provider identity limit.
+
+Service focus shows inbound callers and outbound dependencies with one, two, or three hops. Connection loading is bounded to twelve relationships per batch. The layout uses UI, gateway, service, external, and source lanes. Large overview maps use compact cards. Source-only and testing repositories remain in the repository inventory without inferred runtime service nodes.
+
+The service card reports inbound and outbound connection counts, implementation declaration counts, internal relationship counts, family counts, and low-priority counts. Source declarations and canonical evidence remain inspectable on demand. Complete indexes retain isolated canonical records.
+
+Changed paths:
+
+- `.agents/skills/service-dependencies-graph/tools/viewer_model.py`
+- `.agents/skills/service-dependencies-graph/tools/viewer_bundle.py`
+- `.agents/skills/service-dependencies-graph/tools/viewer.html`
+- `.agents/skills/service-dependencies-graph/tests/test_viewer_services.py`
+- `.agents/skills/service-dependencies-graph/tests/test_graph_viewer.py`
+- `.agents/skills/service-dependencies-graph/tests/viewer_interactions.cjs`
+- `.agents/skills/service-dependencies-graph/tests/viewer_browser.cjs`
+- `.agents/skills/service-dependencies-graph/SKILL.md`
+- `.agents/skills/service-dependencies-graph/references/architecture/viewer-hierarchy.md`
+- `relationships/service-dependencies/README.md`
+- `docs/WORKSPACE_DESIGN.md`
+- `tests/test_viewer_services.py`
+
+Verification:
+
+- `NO_PROXY=127.0.0.1,localhost no_proxy=127.0.0.1,localhost WORKBENCH_CONNECTOR_INTEGRATION=1 PYTHONDONTWRITEBYTECODE=1 ./.venv/bin/python -m unittest discover -s tests -v`: 1,192 passed.
+- `PYTHONDONTWRITEBYTECODE=1 ./.venv/bin/python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -v`: 260 passed.
+- Chromium `158.0.8127.38`: current snapshot and synthetic 100-repository snapshot passed at 1024×768, 1366×768, and 1440×900. Startup made zero data requests. Focus, direction, bounded loading, source inspection, and overview restoration passed.
+- `ai-sdlc --workspace . validate`: `VALID`, 119 documents, no findings.
+- Documentation link check: 53 checked, no missing local targets. `git diff --check`: passed.
+
+The complete unit suite initially used the configured localhost proxy and produced four local mock-server failures. The final run excluded localhost from that proxy and passed all tests. The generated snapshot was not rebuilt from source repositories; browser checks used a rendered copy of the saved graph and a synthetic scale fixture.

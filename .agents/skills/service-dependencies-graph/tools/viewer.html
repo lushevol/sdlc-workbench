@@ -12,6 +12,7 @@
 .inspector{min-width:0;min-height:0;overflow:auto;background:var(--surface);padding:12px}.inspector-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.inspector-head h2{font-size:13px}.selection{border:1px solid var(--line);border-radius:7px;padding:10px}.selection small{overflow-wrap:anywhere}.selection h3{font-size:15px;overflow-wrap:anywhere;margin:4px 0}.selection p{overflow-wrap:anywhere;font-size:11px;margin-top:6px}.selection .actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.selection .actions button{font-size:11px}.tag{display:inline-flex;align-items:center;padding:2px 5px;border-radius:4px;background:#eef2f5;color:#465965;font-size:10px}.tag.resolved{color:#076455;background:#e5f3ee}.tag.unresolved,.tag.ambiguous{color:#8b560d;background:#fff1d9}.tag.candidate{color:#714096;background:#f1e9f8}.property{margin-top:9px;padding:8px;background:#f7f9fa;border:1px solid var(--line);border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace}.evidence{margin-top:11px;border-top:1px solid var(--line);padding-top:8px}.evidence h4{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}.evidence a{display:block;color:var(--accent);font-size:11px;margin-top:5px;overflow-wrap:anywhere}.inspector details{margin-top:13px;border-top:1px solid var(--line);padding-top:9px}.inspector summary{cursor:pointer;font-size:11px;font-weight:700}.legend-row{display:flex;gap:7px;align-items:center;font-size:10px;color:var(--muted);margin-top:6px}.swatch{width:24px;border-top:2px solid var(--api)}.swatch.data{border-color:var(--data)}.swatch.shared{border-color:var(--shared)}.swatch.unresolved{border-color:var(--warning);border-top-style:dashed}.loading{color:var(--accent);font-size:11px}.error{position:fixed;z-index:10;left:20px;right:20px;top:56px;padding:16px;margin:16px;background:#fff;border:1px solid #e2b3a6;color:#8f321a;border-radius:7px}.empty{fill:var(--muted);font-size:13px}
 @media(max-width:880px){.main{grid-template-columns:minmax(0,1fr) 270px}.summary{display:none}.brand h1{font-size:14px}.filters .hint{display:none}}@media(max-width:650px){body{overflow:auto}.app{height:auto;min-height:100%}.main{display:block}.graph-pane{height:calc(100vh - 54px);border-right:0}.inspector{border-top:1px solid var(--line);min-height:220px}.top-actions button{font-size:0}.top-actions button:before{font-size:13px}.top-actions .primary:before{content:"＋"}.top-actions button:last-child:before{content:"⌗"}}
 .advanced{position:relative;font-size:11px}.advanced summary{cursor:pointer}.advanced-options{max-height:70vh;overflow:auto;position:absolute;z-index:3;top:24px;right:0;min-width:250px;padding:12px;background:white;border:1px solid var(--line);border-radius:6px;box-shadow:0 5px 15px #152a4020}.advanced-options label{display:block;margin:7px 0}.advanced-options select{display:block;width:100%;margin-top:3px}.index-item{display:block;text-align:left;width:100%;font-size:11px;margin-top:5px;overflow-wrap:anywhere}.index-item small{display:block;color:var(--muted);font-size:10px}.index-navigation{display:flex;justify-content:space-between;align-items:center;font-size:10px;margin-top:8px}.index-navigation button{font-size:10px}#index-kind{margin-top:8px;width:100%;font-size:11px}#trace-summary{font-size:11px;margin-top:10px}.topbar h1{white-space:nowrap}
+.graph-pane{grid-template-rows:auto auto auto minmax(0,1fr)}.focus-controls{display:flex;gap:8px;align-items:center;padding:5px 12px;border-bottom:1px solid var(--line);background:#fff;font-size:11px}.focus-controls select{font-size:11px;padding:4px}.focus-controls span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lane-box{fill:#f1f5f9;stroke:#dce5ed;stroke-width:1;rx:12}.edge.context .wire{opacity:.12}.node.focused rect{stroke:#1764c0;stroke-width:2.5;fill:#eef5ff}.service-stat{display:inline-block;padding:5px 7px;margin:8px 4px 0 0;border:1px solid var(--line);border-radius:6px;font-size:11px}.service-stat strong{font-size:16px;display:block}.connection-list{margin-top:8px}.connection-list button{display:block;width:100%;text-align:left;margin-top:5px;font-size:11px}.card-row{border-bottom:1px solid var(--line);padding:7px 0;overflow-wrap:anywhere}.card-row button{font-size:11px;text-align:left}.card-row small{display:block;color:var(--muted);font-size:10px}
 </style>
 </head>
 <body>
@@ -19,13 +20,14 @@
   <header class="topbar">
     <div class="brand"><span class="mark" aria-hidden="true"></span><h1>Service dependency graph</h1></div>
     <div id="summary" class="summary" aria-live="polite"></div>
-    <div class="top-actions"><button id="fit" class="primary">Fit graph</button><button id="collapse">Collapse all</button></div>
+    <div class="top-actions"><button id="fit" class="primary">Fit graph</button><button id="collapse">Overview</button></div>
   </header>
   <div id="error" class="error" role="alert" hidden></div>
   <main id="main" class="main">
     <section class="graph-pane" aria-label="Dependency graph">
       <div class="filters"><input id="search" type="search" placeholder="Search services or relationships" aria-label="Search services or relationships"><select id="scope" aria-label="Repository"><option value="all">All repositories</option></select><select id="status" aria-label="Provider status"><option value="all">All statuses</option><option value="resolved">Resolved</option><option value="declared">Declared</option><option value="unresolved">Unresolved</option><option value="ambiguous">Ambiguous</option><option value="candidate">Candidate</option></select><select id="family" aria-label="Relationship family"><option value="all">All relationship types</option><option value="api">API calls</option><option value="data">Data flow</option><option value="shared">Shared code</option><option value="configuration">Configuration</option><option value="package">Packages</option><option value="structure">Ownership</option><option value="other">Other</option></select><button id="reset" title="Reset filters">Reset</button><details class="advanced"><summary>Filters</summary><div class="advanced-options"><label>Scope <select id="dependency-scope"><option value="all">Production and testing</option><option value="PRODUCTION">Production</option><option value="TESTING">Testing</option></select></label><label>Dimension <select id="dimension"><option value="all">Runtime and business</option><option value="RUNTIME">Runtime</option><option value="BUSINESS">Business</option></select></label><label>Repository details <select id="repository-view"><option value="all">All details</option><option value="provided">Provided APIs</option><option value="outbound">Outbound calls</option><option value="messages">Messages</option><option value="storage">Storage</option><option value="configuration">Configuration</option><option value="components">Components</option></select></label><label>Boundary <select id="boundary"><option value="all">All boundaries</option><option value="cross">Between repositories</option><option value="internal">Within repository</option><option value="external">External / unknown</option></select></label><label>Relationship <select id="relationship"><option value="all">All relationships</option></select></label><label>Origin <select id="origin"><option value="all">Extraction and investigation</option><option value="EXTRACTED">Extraction</option><option value="INVESTIGATED">Investigation</option></select></label><label>Assessment <select id="assessment"><option value="all">All evidence</option><option value="SUPPORTED">Supported</option><option value="INFERRED">Inferred</option><option value="CONFLICTED">Conflicted</option><option value="UNVERIFIED">Unverified</option><option value="OUT_OF_SCOPE">Out of scope</option><option value="EXTRACTED">Extracted</option></select></label></div></details><span id="hint" class="hint">Click to expand · wheel to zoom · drag to pan</span></div>
       <details id="overview" class="overview"><summary>Architecture overview <span id="overview-count" class="muted"></span></summary><div id="repo-list" class="repo-list"></div></details>
+      <div class="focus-controls"><select id="direction" aria-label="Connection direction"><option value="both">Callers and dependencies</option><option value="inbound">Inbound callers</option><option value="outbound">Outbound dependencies</option></select><select id="hops" aria-label="Dependency depth"><option value="1">1 hop</option><option value="2">2 hops</option><option value="3">3 hops</option></select><span id="focus-label" class="muted">Select a service to focus its connections</span></div>
       <div id="canvas" class="canvas"><svg id="graph" role="img" aria-label="Directed service dependency graph"></svg><div id="canvas-status" class="footer" aria-live="polite"></div></div>
     </section>
     <aside class="inspector" aria-label="Selection inspector"><div class="inspector-head"><h2>Inspector</h2><span id="loading" class="loading" hidden>Loading…</span></div><div id="selection" class="selection"><p class="muted">Select a repository, service, or relationship.</p></div><div id="trace-summary"></div><details id="index-panel"><summary>Browse all declarations</summary><select id="index-kind" aria-label="Declaration index"><option value="nodes">Nodes</option><option value="edges">Relationships</option></select><div id="index-rows"></div><div class="index-navigation"><button id="index-previous">Previous</button><span id="index-page"></span><button id="index-next">Next</button></div></details><details id="legend"><summary>Legend</summary><div class="legend-row"><span class="swatch"></span>API calls</div><div class="legend-row"><span class="swatch data"></span>Data flow</div><div class="legend-row"><span class="swatch shared"></span>Shared code</div><div class="legend-row"><span class="swatch unresolved"></span>Unresolved or ambiguous</div></details><details id="context-panel" hidden><summary>Architecture evidence</summary><div id="context-content"></div></details></aside>
@@ -46,15 +48,17 @@ catch (error) {
 const repositories = new Map(bootstrap.repositories.map(row => [row.id,row]));
 const nodes = new Map(bootstrap.nodes.map(row => [row.id,row]));
 const edges = new Map(), branches = new Map(), expanded = new Set(), parents = new Map();
-const rootIds = new Set(Object.values(bootstrap.roots));
+const rootIds = new Set(bootstrap.nodes.map(row=>row.id));
 const overviewEdges = new Map(bootstrap.links.map(row => [row.id,{...row,overview:true}]));
 const cache = new Map(), pending = new Map(), busyNodes = new Set();
 const colors = {api:'#1764c0',data:'#007c70',shared:'#8051b5',configuration:'#a64c68',package:'#697383',structure:'#9b6940',other:'#667d8d'};
-const statusNames = {resolved:'Resolved',declared:'Declared only',unresolved:'Unresolved',ambiguous:'Ambiguous',candidate:'Candidate'};
+const statusNames = {resolved:'Resolved',declared:'Declared only',unresolved:'Unresolved',ambiguous:'Ambiguous',candidate:'Candidate',mixed:'Mixed evidence'};
 const assessmentNames = {SUPPORTED:'Source supported',INFERRED:'Inferred',CONFLICTED:'Conflicted',UNVERIFIED:'Unverified',OUT_OF_SCOPE:'Out of scope',EXTRACTED:'Extracted'};
 const statusHelp = {resolved:'Consumer and provider evidence matched. Deployment and execution remain unverified.',declared:'A source declaration exists without a separate provider match.',unresolved:'The provider could not be matched. This does not mean the dependency is broken.',ambiguous:'Several providers match. None has been selected.',candidate:'This relationship is inferred. Inspect its source before relying on it.'};
 let selected = null, selectionVersion = 0, fitNext = true, graphBounds = [0,0,900,500], viewport = null;
 let indexPage = 0, indexKind = 'nodes', indexGeneration = 0, trace = null;
+let focusId=null;
+const sourcePages=new Map(),cardPages=new Map();
 function esc(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function name(id) { return nodes.get(id)?.label || nodes.get(id)?.name || id; }
 function repoName(id) { return repositories.get(id)?.name || 'External / unknown'; }
@@ -103,7 +107,7 @@ function loadBucket(key) {
   pending.set(key,{promise,resolve,reject,script,timer}); busy(); document.head.appendChild(script); return promise;
 }
 function merge(data) {
-  for(const item of data.nodes||[]) nodes.set(item.id,item);
+  for(const item of data.nodes||[]) nodes.set(item.id,{...nodes.get(item.id),...item});
   for(const item of data.edges||[]) edges.set(item.id,item);
 }
 async function loadPage(id) {
@@ -123,20 +127,21 @@ async function loadPage(id) {
     if([...missingNodes].some(key=>!nodes.has(key))||[...missingEdges].some(key=>!edges.has(key)))throw new Error('Incomplete graph neighborhood');
     for(const node of data.nodes||[]) branch.nodes.add(node.id);
     for(const ref of nodeRefs)branch.nodes.add(ref.id);
-    for(const edge of data.edges||[]) branch.edges.add(edge.id);
+    for(const edge of data.edges||[]){edges.set(edge.id,edge);branch.edges.add(edge.id);}
     for(const ref of edgeRefs)branch.edges.add(ref.id);
     branch.pages++; branches.set(id,branch);
   } finally { busyNodes.delete(id); }
 }
 async function expand(id, parent=null) {
   if(busyNodes.has(id)) return;
+  if(!nodes.get(id)?.display_node){await selectItem('node',id);return;}
+  if(!focusId)focusId=id;
   expanded.add(id);
   if(!rootIds.has(id) && !parents.has(id)) { const owner=nodes.get(id)?.parent||parent; if(owner&&owner!==id)parents.set(id,owner); }
   try { if(!branches.has(id)) await loadPage(id); }
   catch(error) { expanded.delete(id); throw error; }
   if(expanded.has(id)) { selected={kind:'node',id}; await renderInspector(); }
-  fitNext=rootIds.has(id); draw();
-  if(!rootIds.has(id)){const p=positions.get(id);if(p)setViewport([Math.max(0,p.x-80),Math.max(0,p.y-60),1200,700]);}
+  fitNext=true; draw();
 }
 function collapse(id) {
   const remove=new Set([id]);
@@ -169,10 +174,21 @@ function filterEdge(edge) {
   const a=nodes.get(edge.source), b=nodes.get(edge.target), rid=$('scope').value;
   if(rid!=='all'&&a?.repository!==rid&&b?.repository!==rid) return false;
   if($('dependency-scope').value!=='all'&&(edge.dependency_scope||'PRODUCTION')!==$('dependency-scope').value) return false;
-  if(!sliceEdge(edge))return false;
+  if(!edge.service_link&&!sliceEdge(edge))return false;
   if($('boundary').value!=='all'&&boundaryOf(edge)!==$('boundary').value)return false;
   if($('relationship').value!=='all'&&!(edge.relationships||[edge.relationship]).includes($('relationship').value))return false;
-  if($('origin').value!=='all'&&!edge.navigation&&(edge.origin||'EXTRACTED')!==$('origin').value)return false;
+  if($('origin').value!=='all'&&!edge.service_link&&(edge.origin||'EXTRACTED')!==$('origin').value)return false;
+  if(edge.service_link){
+    const matching=edge.facets.filter(facet=>
+      ($('status').value==='all'||facet.status===$('status').value)&&
+      ($('family').value==='all'||facet.family===$('family').value)&&
+      ($('origin').value==='all'||facet.origin===$('origin').value)&&
+      ($('relationship').value==='all'||facet.relationship===$('relationship').value)&&
+      ($('assessment').value==='all'||(facet.assessments.length?facet.assessments:['EXTRACTED']).includes($('assessment').value)));
+    if(!matching.length)return false;
+    const query=$('search').value.trim().toLowerCase();
+    return !query||[edge.label,name(edge.source),name(edge.target)].join(' ').toLowerCase().includes(query);
+  }
   if($('status').value!=='all'&&edge.status!==$('status').value) return false;
   if($('family').value!=='all'&&edge.family!==$('family').value) return false;
   if($('dimension').value!=='all' && !edge.overview && !edge.navigation && edge.dimension!==$('dimension').value) return false;
@@ -188,9 +204,38 @@ function projection() {
     for(const nodeId of branch.nodes) visibleNodes.add(nodeId);
     for(const edgeId of branch.edges) if(edges.has(edgeId)) visibleEdges.set(edgeId,edges.get(edgeId));
   }
-  const resultEdges=[...visibleEdges.values()].filter(filterEdge);
+  const resultEdges=[...visibleEdges.values()].filter(edge=>edge.service_link&&filterEdge(edge)).map(filteredLink);
+  if(focusId){
+    const focused=new Set([focusId]),direction=$('direction').value;
+    const traversed=new Set();
+    let frontier=new Set([focusId]);
+    const neighbors=id=>{
+      const connections=resultEdges.filter(edge=>
+        (direction!=='inbound'&&edge.source===id)||(direction!=='outbound'&&edge.target===id))
+        .sort((a,b)=>a.id.localeCompare(b.id)).slice(0,Math.max(1,branches.get(id)?.pages||0)*12);
+      for(const edge of connections)traversed.add(edge.id);
+      return connections.map(edge=>edge.source===id?edge.target:edge.source);
+    };
+    for(let hop=0;hop<Number($('hops').value);hop++){
+      const next=new Set();for(const id of frontier)for(const neighbor of neighbors(id))if(!focused.has(neighbor)){focused.add(neighbor);next.add(neighbor);}frontier=next;
+    }
+    // A click extends the same connected neighborhood without component nodes.
+    for(let changed=true;changed;){changed=false;for(const id of expanded)if(focused.has(id))for(const neighbor of neighbors(id))if(!focused.has(neighbor)){focused.add(neighbor);changed=true;}}
+    for(const id of [...visibleNodes])if(!focused.has(id))visibleNodes.delete(id);
+    resultEdges.splice(0,resultEdges.length,...resultEdges.filter(edge=>traversed.has(edge.id)&&focused.has(edge.source)&&focused.has(edge.target)));
+  }
   const endpointIds=new Set(resultEdges.flatMap(edge=>[edge.source,edge.target]));
-  return {nodes:[...visibleNodes].map(id=>nodes.get(id)).filter(Boolean).filter(node=>filterNode(node)||endpointIds.has(node.id)),edges:resultEdges};
+  return {nodes:[...visibleNodes].map(id=>nodes.get(id)).filter(node=>node?.display_node).filter(node=>filterNode(node)||endpointIds.has(node.id)||node.id===focusId),edges:resultEdges};
+}
+function filteredLink(edge){
+  const facets=edge.facets.filter(facet=>
+    ($('status').value==='all'||facet.status===$('status').value)&&
+    ($('family').value==='all'||facet.family===$('family').value)&&
+    ($('origin').value==='all'||facet.origin===$('origin').value)&&
+    ($('relationship').value==='all'||facet.relationship===$('relationship').value)&&
+    ($('assessment').value==='all'||(facet.assessments.length?facet.assessments:['EXTRACTED']).includes($('assessment').value)));
+  const statuses=[...new Set(facets.map(facet=>facet.status))],families=[...new Set(facets.map(facet=>facet.family))];
+  return {...edge,facets,count:facets.reduce((total,facet)=>total+facet.count,0),statuses,status:statuses.length===1?statuses[0]:'mixed',families,family:families[0]||edge.family};
 }
 function wrap(text,width=25) {
   const parts=[];let value=String(text);
@@ -198,22 +243,41 @@ function wrap(text,width=25) {
   if(value)parts.push(value);return parts;
 }
 const positions=new Map();
-function layout(visibleNodes) {
-  // Keep existing cards fixed while neighborhoods are appended to their repository group.
-  const rootOrder=bootstrap.nodes.map(node=>node.id),cardW=202,cardH=76,colW=268,rowH=100;
-  const roots=visibleNodes.filter(node=>rootIds.has(node.id));
-  const columns=Math.max(1,Math.min(3,Math.ceil(Math.sqrt(roots.length))));
-  for(const node of roots) if(!positions.has(node.id)) {
-    const index=rootOrder.indexOf(node.id);positions.set(node.id,{x:32+(index%columns)*colW,y:40+Math.floor(index/columns)*rowH,w:cardW,h:cardH});
+let layoutGroups=[],layoutKey='';
+function layout(visibleNodes,visibleEdges) {
+  const key=JSON.stringify([focusId,visibleNodes.map(node=>node.id).sort(),visibleEdges.map(edge=>edge.id).sort()]);
+  if(key===layoutKey)return graphBounds;
+  layoutKey=key;
+  const grouped=new Map(),rank=new Map(),ids=new Set(visibleNodes.map(node=>node.id));
+  if(focusId){
+    rank.set(focusId,0);
+    for(const [sign,reverse] of [[1,false],[-1,true]]){
+      let frontier=[focusId];const seen=new Set(frontier);
+      for(let hop=1;frontier.length&&hop<=visibleNodes.length;hop++){
+        const next=[];
+        for(const id of frontier)for(const edge of visibleEdges){const from=reverse?edge.target:edge.source,to=reverse?edge.source:edge.target;if(from!==id||seen.has(to)||!ids.has(to))continue;seen.add(to);if(!rank.has(to))rank.set(to,sign*hop);next.push(to);}frontier=next;
+      }
+    }
   }
-  const detailNodes=visibleNodes.filter(node=>!rootIds.has(node.id));
-  const detailLeft=32+columns*colW;
-  for(const node of detailNodes) if(!positions.has(node.id)) {
-    const used=[...positions.keys()].filter(id=>!rootIds.has(id)).length;
-    positions.set(node.id,{x:detailLeft+Math.floor(used/5)*colW,y:40+(used%5)*rowH,w:cardW,h:cardH});
+  const labels={ui:'UI MODULES',infra:'GATEWAYS',service:'SERVICES',external:'EXTERNAL BOUNDARIES',source:'SOURCE INVENTORY'};
+  const laneOrder=['ui','infra','service','external','source'];
+  for(const node of visibleNodes){const key=focusId?(rank.get(node.id)||0):laneOrder.indexOf(node.lane);if(!grouped.has(key))grouped.set(key,[]);grouped.get(key).push(node);}
+  const degree=new Map(visibleNodes.map(node=>[node.id,0]));for(const edge of visibleEdges)for(const id of [edge.source,edge.target])degree.set(id,(degree.get(id)||0)+1);
+  const previous=new Map(positions);positions.clear();layoutGroups=[];
+  const large=!focusId&&visibleNodes.length>40,cardW=large?170:202,cardH=large?58:76,gapX=56,gapY=large?14:24;
+  let x=32;
+  for(const [key,group]of [...grouped].sort((a,b)=>a[0]-b[0])){
+    // Degree and a bounded barycentre pass keep closely related services near each other.
+    const score=node=>{const peers=visibleEdges.filter(edge=>edge.source===node.id||edge.target===node.id).map(edge=>previous.get(edge.source===node.id?edge.target:edge.source)?.y).filter(Number.isFinite);return peers.length?peers.reduce((a,b)=>a+b,0)/peers.length:Infinity;};
+    group.sort((a,b)=>score(a)-score(b)||(degree.get(b.id)-degree.get(a.id))||name(a.id).localeCompare(name(b.id)));
+    const rows=focusId?Math.max(5,Math.ceil(Math.sqrt(group.length)*1.7)):Math.max(6,Math.ceil(Math.sqrt(visibleNodes.length)*.85));
+    const columns=Math.ceil(group.length/rows),height=Math.min(rows,group.length)*(cardH+gapY)+40;
+    layoutGroups.push({x:x-14,y:8,w:columns*(cardW+gapX)-gapX+28,h:height,label:focusId?(key<0?'INBOUND CALLERS':key>0?'OUTBOUND DEPENDENCIES':'SELECTED SERVICE'):(labels[group[0].lane]||'SERVICES')});
+    group.forEach((node,index)=>positions.set(node.id,{x:x+Math.floor(index/rows)*(cardW+gapX),y:42+(index%rows)*(cardH+gapY),w:cardW,h:cardH}));
+    x+=columns*(cardW+gapX)+30;
   }
-  const boxes=visibleNodes.map(node=>positions.get(node.id));
-  return [0,0,Math.max(820,...boxes.map(p=>p.x+p.w+50)),Math.max(380,...boxes.map(p=>p.y+p.h+40))];
+  const boxes=[...positions.values()];
+  return [0,0,Math.max(550,...boxes.map(p=>p.x+p.w+45)),Math.max(260,...boxes.map(p=>p.y+p.h+40))];
 }
 let paintPending=false;
 function setViewport(box) {
@@ -223,13 +287,14 @@ function setViewport(box) {
   }
 }
 function draw() {
-  const data=projection(), svg=$('graph'); graphBounds=layout(data.nodes);
+  const data=projection(), svg=$('graph'); graphBounds=layout(data.nodes,data.edges);
   if(fitNext||!viewport){setViewport([...graphBounds]);fitNext=false;}
   const ids=new Set(data.nodes.map(node=>node.id));
   const visibleEdges=data.edges.filter(edge=>ids.has(edge.source)&&ids.has(edge.target));
   let html='<title>Service dependency graph</title><desc>Expand repositories and services in one graph. Use the wheel to zoom and drag the background to pan.</desc><defs>';
   for(const [family,color]of Object.entries(colors))html+=`<marker id="arrow-${family}" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7z" fill="${color}"/></marker>`;
   html+='</defs>';
+  for(const group of layoutGroups)html+=`<rect class="lane-box" x="${group.x}" y="${group.y}" width="${group.w}" height="${group.h}"/><text class="lane" x="${group.x+14}" y="${group.y+20}">${esc(group.label)}</text>`;
   const tracks=new Map();
   const [vx,vy,vw,vh]=viewport;
   const inView=box=>box.x+box.w>=vx-100&&box.x<=vx+vw+100&&box.y+box.h>=vy-100&&box.y<=vy+vh+100;
@@ -240,20 +305,21 @@ function draw() {
     const ay=a.y+a.h/2,by=b.y+b.h/2,ax=a.x+(same||right?a.w:0),bx=b.x+(same?b.w:right?0:b.w),offset=26+track*10;
     const middle=same?Math.max(ax,bx)+offset:(ax+bx)/2+track*9;
     const path=a===b?`M${ax} ${ay-12} H${middle} V${ay+12} H${bx}`:`M${ax} ${ay} C${middle} ${ay} ${middle} ${by} ${bx} ${by}`;
-    const dash=['unresolved','ambiguous'].includes(edge.status)?'6 5':edge.status==='candidate'?'2 5':'';
+    const dash=['unresolved','ambiguous','mixed'].includes(edge.status)?'6 5':edge.status==='candidate'?'2 5':'';
     const label=(edge.label||edge.relationship)+(edge.count>1?' ×'+edge.count:'');
-    html+=`<g class="edge${selected?.id===edge.id?' selected':''}" data-edge="${esc(edge.id)}" role="button" tabindex="0" aria-label="${esc(name(edge.source)+' to '+name(edge.target)+': '+label)}"><title>${esc(label+' · '+(statusNames[edge.status]||edge.status))}</title><path d="${path}" fill="none" stroke="transparent" stroke-width="14"/><path class="wire" d="${path}" stroke="${colors[edge.family]||colors.other}" stroke-dasharray="${dash}" marker-end="url(#arrow-${edge.family||'other'})"/>${selected?.id===edge.id?`<text x="${middle}" y="${(ay+by)/2-6}" text-anchor="middle">${esc(label)}</text>`:''}</g>`;
+    html+=`<g class="edge${selected?.id===edge.id?' selected':''}${!focusId&&data.nodes.length>40?' context':''}" data-edge="${esc(edge.id)}" role="button" tabindex="0" aria-label="${esc(name(edge.source)+' to '+name(edge.target)+': '+label)}"><title>${esc(label+' · '+(statusNames[edge.status]||edge.status))}</title><path d="${path}" fill="none" stroke="transparent" stroke-width="14"/><path class="wire" d="${path}" stroke="${colors[edge.family]||colors.other}" stroke-dasharray="${dash}" marker-end="url(#arrow-${edge.family||'other'})"/>${selected?.id===edge.id?`<text x="${middle}" y="${(ay+by)/2-6}" text-anchor="middle">${esc(label)}</text>`:''}</g>`;
   }
   for(const node of data.nodes){
     if(!inView(positions.get(node.id)))continue;
     const p=positions.get(node.id),isRoot=rootIds.has(node.id),color=isRoot?'#1764c0':colors[node.family]||colors.other;
     const lines=wrap(name(node.id)),isExpanded=expanded.has(node.id),loaded=branches.get(node.id)?.pages||0;
-    const hint=isExpanded?((loaded<node.pages?'More available · ':'')+'Click to collapse'):node.pages?'Click to expand':repoName(node.repository);
-    html+=`<g class="node${selected?.id===node.id?' selected':''}" data-node="${esc(node.id)}" role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="${esc(name(node.id)+(isExpanded?', collapse':', expand dependencies'))}" transform="translate(${p.x},${p.y})"><title>${esc(name(node.id)+' · '+(node.type||''))}</title><rect width="${p.w}" height="${p.h}" rx="8"/><circle cx="13" cy="15" r="4" fill="${color}"/><text class="kind" x="24" y="18" style="fill:${color}">${esc(isRoot?'REPOSITORY':(node.type||'NODE').replaceAll('_',' '))}</text>${lines.slice(0,2).map((line,index)=>`<text class="name" x="12" y="37" dy="${index*14}">${esc(line+(index===1&&lines.length>2?'…':''))}</text>`).join('')}<text class="hint" x="12" y="66">${esc(hint)}</text>${node.pages?`<text class="expand" x="${p.w-18}" y="19">${isExpanded?'−':'+'}</text>`:''}</g>`;
+    const summary=node.service_summary||{},hint=`${summary.inbound_relationship_count||0} in · ${summary.outbound_relationship_count||0} out`;
+    html+=`<g class="node${selected?.id===node.id?' selected':''}${focusId===node.id?' focused':''}" data-node="${esc(node.id)}" role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="${esc(name(node.id)+', focus connections')}" transform="translate(${p.x},${p.y})"><title>${esc(name(node.id)+' · '+node.display_kind+' · '+hint)}</title><rect width="${p.w}" height="${p.h}" rx="8"/><circle cx="13" cy="15" r="4" fill="${color}"/><text class="kind" x="24" y="18" style="fill:${color}">${esc(node.display_kind||'Service')}</text>${lines.slice(0,2).map((line,index)=>`<text class="name" x="12" y="37" dy="${index*14}">${esc(line+(index===1&&lines.length>2?'…':''))}</text>`).join('')}${p.h>60?`<text class="hint" x="12" y="66">${esc(hint)}</text>`:''}${node.pages?`<text class="expand" x="${p.w-18}" y="19">${isExpanded?'−':'+'}</text>`:''}</g>`;
   }
   if(!data.nodes.length)html+='<text class="empty" x="40" y="80">No matches. Change filters or reset.</text>';
   svg.innerHTML=html;
-  $('canvas-status').textContent=`${data.nodes.length} nodes · ${visibleEdges.length} links · ${expanded.size} expanded`;
+  $('canvas-status').textContent=`${data.nodes.length} service boundaries · ${visibleEdges.length} connections`;
+  $('focus-label').textContent=focusId?name(focusId):'Select a service to focus its connections';
 }
 function redacted(value) {
   const sensitive=/(?:^|[_-])(password|passwd|secret|token|credentials?|private.?key|authorization|cookie)(?:$|[_-])|^(value|values|default_value|resolved_value)$/i;
@@ -278,6 +344,19 @@ async function renderInspector() {
   if(!selected){target.innerHTML='<p class="muted">Select a repository, service, or relationship.</p>';return;}
   const item=selected.kind==='node'?nodes.get(selected.id):(edges.get(selected.id)||overviewEdges.get(selected.id));
   if(!item)return;
+  if(item.display_node){
+    const summary=item.service_summary||{},loaded=branches.get(item.id)?.pages||0;
+    const related=[...new Map([...overviewEdges,...edges]).values()].filter(edge=>edge.service_link&&(edge.source===item.id||edge.target===item.id));
+    const list=(inbound)=>related.filter(edge=>(inbound?edge.target:edge.source)===item.id).sort((a,b)=>a.id.localeCompare(b.id)).slice(0,Math.max(1,loaded)*12).map(edge=>`<button data-edge="${esc(edge.id)}">${esc(name(inbound?edge.source:edge.target))}<small> · ${esc(edge.label)} · ${edge.count}</small></button>`).join('');
+    target.innerHTML=`<div class="eyebrow">${esc(item.display_kind)} · ${esc(repoName(item.repository))}</div><h3>${esc(name(item.id))}</h3>${item.provider_limit?`<p>${esc(item.provider_limit)}</p>`:''}<span class="service-stat"><strong>${summary.inbound_relationship_count??related.filter(edge=>edge.target===item.id).length}</strong>Inbound</span><span class="service-stat"><strong>${summary.outbound_relationship_count??related.filter(edge=>edge.source===item.id).length}</strong>Outbound</span><div class="actions"><button data-focus="${esc(item.id)}">Focus here</button>${loaded<item.pages?`<button data-more="${esc(item.id)}">Load connections · ${loaded}/${item.pages}</button>`:''}${expanded.has(item.id)?`<button data-expand="${esc(item.id)}">Collapse branch</button>`:''}</div><details open><summary>Inbound callers</summary><div class="connection-list">${list(true)||'<p class="muted">No loaded inbound relationships.</p>'}</div></details><details open><summary>Outbound dependencies</summary><div class="connection-list">${list(false)||'<p class="muted">No loaded outbound relationships.</p>'}</div></details>${item.card_pages?`<details><summary>Internal and infrastructure details</summary><p>${summary.component_count||0} implementation declarations · ${summary.internal_edge_count||0} internal relationships</p><p>${esc(Object.entries(summary.relationship_families||{}).map(([key,value])=>key+': '+value).join(' · '))}</p><button data-card="${esc(item.id)}">Browse source declarations</button><div id="card-rows"></div></details>`:''}<details id="source-details"><summary>Service source</summary><div id="record-content"></div></details>`;
+    const section=$('source-details'),content=$('record-content');
+    section.addEventListener('toggle',()=>{if(section.open&&item.detail)run(()=>showRecord(item,content,version));});
+    return;
+  }
+  if(item.service_link){
+    target.innerHTML=`<div class="eyebrow">Service relationship</div><h3>${esc(name(item.source))} → ${esc(name(item.target))}</h3><p>${item.count} source declarations</p><p>${(item.statuses||[item.status]).map(tag).join(' ')} ${(item.assessments||[]).map(tag).join(' ')}</p><p>Arrows point from the caller or consumer to its dependency. Matching source declarations does not establish runtime execution.</p><button data-sources="${esc(item.id)}">Inspect declarations</button><div id="source-rows"></div>`;
+    return;
+  }
   if(item.navigation){
     target.innerHTML=`<div class="eyebrow">Navigation group</div><h3>${esc(name(item.target))}</h3><p>This grouping adds no canonical relationship or runtime call.</p><button data-select="${esc(item.target)}">Inspect group</button>`;
     return;
@@ -298,7 +377,20 @@ async function selectItem(kind,id) {selected={kind,id};await renderInspector();d
 async function ensureIndex(kind,needed) {
   const pages=bootstrap[kind==='nodes'?'node_index':'edge_index'];
   const store=kind==='nodes'?nodes:edges;
-  for(const key of pages){if([...needed].every(id=>store.has(id)))break;const rows=await loadChunk(key);for(const row of rows)store.set(row.id,row);}
+  for(const key of pages){if([...needed].every(id=>store.has(id)))break;const rows=await loadChunk(key);for(const row of rows)if(!store.get(row.id)?.display_node)store.set(row.id,row);}
+}
+async function declarationRows(item,card=false){
+  const pageMap=card?cardPages:sourcePages,loaded=pageMap.get(item.id)||0,total=card?item.card_pages:item.source_pages;
+  const page=loaded<total?loaded:0;
+  const refs=await loadChunk(item.key+(card?'-card-':'-sources-')+page);
+  const batches=await Promise.all([...new Set(refs.map(ref=>ref.chunk))].map(loadChunk));
+  const byId=new Map(batches.flat().map(row=>[row.id,row]));
+  for(const ref of refs)edges.set(ref.id,byId.get(ref.id));
+  await ensureIndex('nodes',new Set(refs.flatMap(ref=>{const edge=byId.get(ref.id);return [edge.source,edge.target];})));
+  if(selected?.id!==item.id)return;
+  const target=$(card?'card-rows':'source-rows');
+  target.innerHTML=refs.map(ref=>{const edge=byId.get(ref.id);return `<div class="card-row"><button data-edge="${esc(edge.id)}">${esc(edge.label)}</button><small>${esc(name(edge.source))} → ${esc(name(edge.target))}</small>${tag(edge.status)}</div>`;}).join('')+`<p class="muted">Batch ${page+1}/${total}</p>`;
+  pageMap.set(item.id,page+1);
 }
 async function activateTrace(id) {
   const index=await loadChunk('trace-index'), key=index[id];
@@ -306,8 +398,7 @@ async function activateTrace(id) {
   const entry=await loadChunk(key);
   await ensureIndex('nodes',new Set(entry.node_ids));
   await ensureIndex('edges',new Set(entry.edge_ids));
-  const branch={pages:1,nodes:new Set(entry.node_ids),edges:new Set(entry.edge_ids)};
-  const traceId='trace:'+id;branches.set(traceId,branch);expanded.add(traceId);trace=entry;
+  const traceId='trace:'+id;trace=entry;
   $('trace-summary').innerHTML=`${esc(entry.label)} · ${entry.edge_ids.length} relationships <button id="leave-trace">Clear trace</button><details><summary>Evidence stops · ${entry.breaks.length}</summary><pre class="property">${esc(JSON.stringify(entry.breaks,null,2))}</pre><p>${esc(entry.evidence_limit)}</p></details>`;
   $('leave-trace').onclick=()=>{expanded.delete(traceId);trace=null;$('trace-summary').textContent='';draw();};
   fitNext=true;draw();
@@ -317,7 +408,7 @@ async function renderIndex(reset=false) {
   const generation=++indexGeneration, kind=$('index-kind').value, pages=bootstrap[kind==='nodes'?'node_index':'edge_index'];indexKind=kind;
   if(!pages.length){$('index-rows').innerHTML='<p>No indexed declarations.</p>';return;}
   const rows=await loadChunk(pages[indexPage]);if(generation!==indexGeneration)return;
-  const store=kind==='nodes'?nodes:edges;for(const row of rows)store.set(row.id,row);
+  const store=kind==='nodes'?nodes:edges;for(const row of rows)if(!store.get(row.id)?.display_node)store.set(row.id,row);
   if(kind==='edges')await ensureIndex('nodes',new Set(rows.flatMap(row=>[row.source,row.target])));
   if(generation!==indexGeneration)return;
   const matches=rows.filter(kind==='nodes'?filterNode:filterEdge);
@@ -330,30 +421,37 @@ async function renderContext() {
   $('context-content').innerHTML=`<p class="muted">User-reported architecture and source review retain their recorded states.</p>${doc.layers.map(layer=>`<details><summary>${esc(layer.label)}</summary><p>${esc(layer.description)}</p>${doc.subjects.filter(row=>row.layer_id===layer.id).map(row=>`<p><strong>${esc(row.label)}</strong> · ${tag(row.status)}<br>${esc(row.description)}</p>`).join('')}</details>`).join('')}<details><summary>Supplied relationships</summary>${doc.relationships.map(row=>`<p>${esc(doc.subjects.find(item=>item.id===row.source)?.label)} → ${esc(doc.subjects.find(item=>item.id===row.target)?.label)} · ${esc(row.kind)}<br>${esc(row.description)}</p>`).join('')}</details><details><summary>Captured sources and limits</summary>${data.provenance.sources.map(row=>`<p>${esc(row.path)}<br>SHA-256 ${esc(row.sha256)}<br><a href="${esc(sourceLink(row.path))}">Original source</a> · <a href="${esc(row.snapshot_path)}">Captured source bytes</a></p>`).join('')}${data.provenance.limitations.map(esc).join('<br>')}</details>`;
 }
 function renderOverview() {
-  $('repo-list').innerHTML=bootstrap.repositories.map(repo=>`<button class="repo-chip" data-node="${esc(bootstrap.roots[repo.id])}"><strong>${esc(repo.name)}</strong><span>${esc(repo.kind||'repository')}</span></button>`).join('');
+  $('repo-list').innerHTML=bootstrap.repositories.map(repo=>`<button class="repo-chip" ${bootstrap.roots[repo.id]?`data-focus="${esc(bootstrap.roots[repo.id])}"`:`data-inventory="${esc(repo.id)}"`}><strong>${esc(repo.name)}</strong><span>${esc(repo.kind||'repository')}</span></button>`).join('');
   $('overview-count').textContent=`· ${bootstrap.repositories.length} repositories`;
-  $('summary').innerHTML=`<span class="pill"><strong>${bootstrap.repositories.length}</strong> repositories</span><span class="pill"><strong>${bootstrap.counts.nodes}</strong> nodes</span><span class="pill"><strong>${bootstrap.counts.edges}</strong> relationships</span>`;
+  $('summary').innerHTML=`<span class="pill"><strong>${bootstrap.nodes.length}</strong> service / UI nodes</span><span class="pill"><strong>${bootstrap.links.length}</strong> connections</span>`;
   $('summary').title='Snapshot '+bootstrap.generated_at+' · Static evidence does not establish deployment or execution.';
 }
 function filtersChanged() {fitNext=true;draw();if($('index-panel').open)run(()=>renderIndex(true));}
 function click(event) {
   const target=event.target;
+  const focus=target.closest('[data-focus]'),sources=target.closest('[data-sources]'),card=target.closest('[data-card]'),inventory=target.closest('[data-inventory]');
+  if(focus){run(async()=>{focusId=focus.dataset.focus;fitNext=true;await expand(focusId);});return;}
+  if(sources){run(()=>declarationRows(edges.get(sources.dataset.sources)||overviewEdges.get(sources.dataset.sources)));return;}
+  if(card){run(()=>declarationRows(nodes.get(card.dataset.card),true));return;}
+  if(inventory){$('scope').value=inventory.dataset.inventory;$('index-panel').open=true;run(()=>renderIndex(true));return;}
   const more=target.closest('[data-more]'),expandButton=target.closest('[data-expand]'),select=target.closest('[data-select]'),traceButton=target.closest('[data-trace]'),node=target.closest('[data-node]'),edge=target.closest('[data-edge]');
   if(more){const id=more.dataset.more;run(async()=>{expanded.add(id);await loadPage(id);draw();await renderInspector();});}
   else if(expandButton){const id=expandButton.dataset.expand;run(()=>expanded.has(id)?collapse(id):expand(id));}
   else if(select)run(()=>selectItem('node',select.dataset.select));
   else if(traceButton)run(()=>activateTrace(traceButton.dataset.trace));
-  else if(node){const id=node.dataset.node;run(()=>expanded.has(id)?collapse(id):expand(id,selected?.kind==='node'?selected.id:null));}
+  else if(node){const id=node.dataset.node;run(()=>expanded.has(id)?selectItem('node',id):expand(id,selected?.kind==='node'?selected.id:null));}
   else if(edge)run(()=>selectItem('edge',edge.dataset.edge));
 }
 document.addEventListener('click',click);
 document.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key)&&event.target.matches('g[role="button"]')){event.preventDefault();click(event);}});
 $('relationship').innerHTML+=(bootstrap.relationships||[]).map(value=>`<option value="${esc(value)}">${esc(value.replaceAll('_',' '))}</option>`).join('');
+$('family').innerHTML='<option value="all">All connection types</option><option value="api">API calls</option><option value="shared">UI modules</option><option value="data">Messages / contracts</option><option value="configuration">Routing / contracts</option>';
 $('scope').innerHTML+=bootstrap.repositories.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(repo=>`<option value="${esc(repo.id)}">${esc(repo.name)}</option>`).join('');
 for(const id of ['scope','status','family','dimension','dependency-scope','assessment','boundary','relationship','repository-view','origin'])$(id).addEventListener('change',filtersChanged);
+for(const id of ['direction','hops'])$(id).addEventListener('change',filtersChanged);
 let searchTimer; $('search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(filtersChanged,120);});
-$('reset').onclick=()=>{for(const id of ['scope','status','family','dimension','dependency-scope','assessment','boundary','relationship','repository-view','origin'])$(id).value='all';$('search').value='';filtersChanged();};
-$('collapse').onclick=()=>{expanded.clear();parents.clear();selected=null;trace=null;$('trace-summary').textContent='';fitNext=true;draw();run(renderInspector);};
+$('reset').onclick=()=>{for(const id of ['scope','status','family','dimension','dependency-scope','assessment','boundary','relationship','repository-view','origin'])$(id).value='all';$('direction').value='both';$('hops').value='1';$('search').value='';filtersChanged();};
+$('collapse').onclick=()=>{expanded.clear();parents.clear();focusId=null;selected=null;trace=null;$('trace-summary').textContent='';fitNext=true;draw();run(renderInspector);};
 $('fit').onclick=()=>setViewport([...graphBounds]);
 $('index-kind').onchange=()=>run(()=>renderIndex(true));
 $('index-next').onclick=()=>run(()=>{indexPage++;return renderIndex();});

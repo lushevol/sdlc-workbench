@@ -36,23 +36,32 @@ const {chromium} = require(path.join(process.cwd(), 'node_modules/@playwright/te
   const rootSelector='g.node[data-node='+JSON.stringify(root)+']';
   await page.locator(rootSelector).click();
   await page.waitForFunction(id=>branches.has(id),root);
-  const groups=await page.evaluate(id=>[...nodes.values()].filter(node=>node.parent===id&&node.type==='DEPENDENCY_GROUP').map(node=>({id:node.id,pages:node.pages,family:node.family})),root);
-  assert(groups.length>0);
-  await page.screenshot({path:path.join(output,'repository-expanded.png')});
-  const group=groups.find(row=>row.family==='api')||groups.find(row=>row.family==='shared')||groups[0];
-  await page.locator('g.node[data-node='+JSON.stringify(group.id)+']').click();
-  await page.waitForFunction(id=>branches.has(id),group.id);
-  if(group.pages>1){
-    await page.locator('[data-more='+JSON.stringify(group.id)+']').click();
-    await page.waitForFunction(id=>branches.get(id).pages===2,group.id);
+  assert.equal(await page.evaluate(()=>focusId),root);
+  assert(await page.evaluate(()=>projection().nodes.every(node=>node.display_node)));
+  assert.equal(await page.locator('g.node').count(),await page.evaluate(()=>projection().nodes.length));
+  const initialFocusCount=await page.locator('g.node').count();
+  if(roots.length>=90)assert(initialFocusCount<roots.length/2,'Focus must reduce crowded maps');
+  await page.screenshot({path:path.join(output,'service-focused.png')});
+  const pages=await page.evaluate(id=>nodes.get(id).pages,root);
+  if(pages>1){
+    await page.locator('[data-more='+JSON.stringify(root)+']').click();
+    await page.waitForFunction(id=>branches.get(id).pages===2,root);
   }
-  const rootRetention=await page.evaluate(ids=>ids.every(id=>projection().nodes.some(node=>node.id===id)),roots);
-  assert(rootRetention);
+  await page.selectOption('#direction','outbound');
+  assert(await page.evaluate(id=>projection().edges.every(edge=>edge.source===id),root));
+  await page.selectOption('#direction','both');
+  await page.selectOption('#hops','2');
+  assert(await page.evaluate(()=>projection().nodes.every(node=>node.display_node)));
   const duplicates=await page.locator('g.node').evaluateAll(items=>items.length-new Set(items.map(item=>item.dataset.node)).size);
   assert.equal(duplicates,0);
-  const canonical=await page.evaluate(id=>[...branches.get(id).edges].find(key=>!edges.get(key).navigation),group.id);
-  if(canonical){
-    await page.evaluate(id=>selectItem('edge',id),canonical);
+  const aggregate=await page.evaluate(()=>projection().edges[0]?.id);
+  let canonical=null;
+  if(aggregate){
+    await page.evaluate(id=>selectItem('edge',id),aggregate);
+    await page.locator('[data-sources='+JSON.stringify(aggregate)+']').click();
+    await page.waitForSelector('#source-rows .card-row button');
+    canonical=await page.locator('#source-rows .card-row button').first().getAttribute('data-edge');
+    await page.locator('#source-rows .card-row button').first().click();
     await page.locator('#source-details > summary').click();
     await page.waitForFunction(()=>document.getElementById('record-content').textContent.includes('Source evidence'));
     await page.screenshot({path:path.join(output,'dependency-evidence.png')});
@@ -60,13 +69,14 @@ const {chromium} = require(path.join(process.cwd(), 'node_modules/@playwright/te
   await page.locator('#collapse').click();
   assert.equal(await page.locator('g.node').count(),roots.length);
   await page.locator('#overview > summary').click();
-  assert.equal(await page.locator('.repo-chip').count(),roots.length);
+  assert.equal(await page.locator('.repo-chip').count(),await page.evaluate(()=>bootstrap.repositories.length));
   await page.locator('#overview > summary').click();
   assert.equal(await page.locator('#error').isVisible(),false);
   assert.deepEqual(errors,[]);
   const receipt={status:'PASSED',browser:await browser.version(),initial_ms:initialMs,repositories:roots.length,
-    startup_data_requests:0,layouts,progressive_expansion:true,load_more:group.pages>1,
-    unique_nodes:true,roots_retained:true,evidence_inspected:Boolean(canonical),collapse_restores_overview:true,errors};
+    startup_data_requests:0,layouts,service_focus:true,focused_nodes:initialFocusCount,load_more:pages>1,
+    unique_nodes:true,only_service_nodes:true,direction_filter:true,two_hop_focus:true,
+    evidence_inspected:Boolean(canonical),collapse_restores_overview:true,errors};
   fs.writeFileSync(path.join(output,'browser-result.json'),JSON.stringify(receipt,null,2)+'\n');
   console.log(JSON.stringify(receipt));
   await browser.close();
